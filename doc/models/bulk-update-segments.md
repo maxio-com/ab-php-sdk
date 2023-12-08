@@ -1,0 +1,64 @@
+
+# Bulk Update Segments
+
+## Structure
+
+`BulkUpdateSegments`
+
+## Fields
+
+| Name | Type | Tags | Description | Getter | Setter |
+|  --- | --- | --- | --- | --- | --- |
+| `segments` | [`?(BulkUpdateSegmentsItem[])`](../../doc/models/bulk-update-segments-item.md) | Optional | **Constraints**: *Maximum Items*: `1000` | getSegments(): ?array | setSegments(?array segments): void |
+
+## Example (as JSON)
+
+```json
+{
+  "segments": [
+    {
+      "id": 50,
+      "pricing_scheme": "stairstep",
+      "prices": [
+        {
+          "starting_quantity": 64,
+          "ending_quantity": 38,
+          "unit_price": "String3"
+        },
+        {
+          "starting_quantity": 64,
+          "ending_quantity": 38,
+          "unit_price": "String3"
+        },
+        {
+          "starting_quantity": 64,
+          "ending_quantity": 38,
+          "unit_price": "String3"
+        }
+      ]
+    },
+    {
+      "id": 50,
+      "pricing_scheme": "stairstep",
+      "prices": [
+        {
+          "starting_quantity": 64,
+          "ending_quantity": 38,
+          "unit_price": "String3"
+        },
+        {
+          "starting_quantity": 64,
+          "ending_quantity": 38,
+          "unit_price": "String3"
+        },
+        {
+          "starting_quantity": 64,
+          "ending_quantity": 38,
+          "unit_price": "String3"
+        }
+      ]
+    }
+  ]
+}
+```
+

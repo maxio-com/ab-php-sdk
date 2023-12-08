@@ -1,0 +1,28 @@
+
+# Invoice Event Type
+
+Invoice Event Type
+
+## Enumeration
+
+`InvoiceEventType`
+
+## Fields
+
+| Name |
+|  --- |
+| `ISSUE_INVOICE` |
+| `APPLY_CREDIT_NOTE` |
+| `CREATE_CREDIT_NOTE` |
+| `APPLY_PAYMENT` |
+| `APPLY_DEBIT_NOTE` |
+| `REFUND_INVOICE` |
+| `VOID_INVOICE` |
+| `VOID_REMAINDER` |
+| `BACKPORT_INVOICE` |
+| `CHANGE_INVOICE_STATUS` |
+| `CHANGE_INVOICE_COLLECTION_METHOD` |
+| `REMOVE_PAYMENT` |
+| `FAILED_PAYMENT` |
+| `CHANGE_CHARGEBACK_STATUS` |
+
