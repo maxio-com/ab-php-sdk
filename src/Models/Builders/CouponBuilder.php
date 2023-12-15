@@ -129,6 +129,15 @@ class CouponBuilder
     }
 
     /**
+     * Unsets product family name field.
+     */
+    public function unsetProductFamilyName(): self
+    {
+        $this->instance->unsetProductFamilyName();
+        return $this;
+    }
+
+    /**
      * Sets start date field.
      */
     public function startDate(?string $value): self
@@ -251,6 +260,15 @@ class CouponBuilder
     public function durationIntervalSpan(?string $value): self
     {
         $this->instance->setDurationIntervalSpan($value);
+        return $this;
+    }
+
+    /**
+     * Unsets duration interval span field.
+     */
+    public function unsetDurationIntervalSpan(): self
+    {
+        $this->instance->unsetDurationIntervalSpan();
         return $this;
     }
 

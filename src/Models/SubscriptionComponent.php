@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace AdvancedBillingLib\Models;
 
 use AdvancedBillingLib\ApiHelper;
+use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
 class SubscriptionComponent implements \JsonSerializable
@@ -51,7 +52,7 @@ class SubscriptionComponent implements \JsonSerializable
     private $currency;
 
     /**
-     * @var int|null
+     * @var int|string|null
      */
     private $allocatedQuantity;
 
@@ -126,12 +127,12 @@ class SubscriptionComponent implements \JsonSerializable
     private $productFamilyHandle;
 
     /**
-     * @var string|null
+     * @var \DateTime|null
      */
     private $createdAt;
 
     /**
-     * @var string|null
+     * @var \DateTime|null
      */
     private $updatedAt;
 
@@ -198,6 +199,7 @@ class SubscriptionComponent implements \JsonSerializable
 
     /**
      * Returns Kind.
+     * A handle for the component type
      */
     public function getKind(): ?string
     {
@@ -206,8 +208,10 @@ class SubscriptionComponent implements \JsonSerializable
 
     /**
      * Sets Kind.
+     * A handle for the component type
      *
      * @maps kind
+     * @factory \AdvancedBillingLib\Models\ComponentKind::checkValue
      */
     public function setKind(?string $kind): void
     {
@@ -292,8 +296,10 @@ class SubscriptionComponent implements \JsonSerializable
      * Returns Allocated Quantity.
      * For Quantity-based components: The current allocation for the component on the given subscription.
      * For On/Off components: Use 1 for on. Use 0 for off.
+     *
+     * @return int|string|null
      */
-    public function getAllocatedQuantity(): ?int
+    public function getAllocatedQuantity()
     {
         return $this->allocatedQuantity;
     }
@@ -304,8 +310,11 @@ class SubscriptionComponent implements \JsonSerializable
      * For On/Off components: Use 1 for on. Use 0 for off.
      *
      * @maps allocated_quantity
+     * @mapsBy anyOf(oneOf(int,string),null)
+     *
+     * @param int|string|null $allocatedQuantity
      */
-    public function setAllocatedQuantity(?int $allocatedQuantity): void
+    public function setAllocatedQuantity($allocatedQuantity): void
     {
         $this->allocatedQuantity = $allocatedQuantity;
     }
@@ -677,7 +686,7 @@ class SubscriptionComponent implements \JsonSerializable
     /**
      * Returns Created At.
      */
-    public function getCreatedAt(): ?string
+    public function getCreatedAt(): ?\DateTime
     {
         return $this->createdAt;
     }
@@ -686,8 +695,9 @@ class SubscriptionComponent implements \JsonSerializable
      * Sets Created At.
      *
      * @maps created_at
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setCreatedAt(?string $createdAt): void
+    public function setCreatedAt(?\DateTime $createdAt): void
     {
         $this->createdAt = $createdAt;
     }
@@ -695,7 +705,7 @@ class SubscriptionComponent implements \JsonSerializable
     /**
      * Returns Updated At.
      */
-    public function getUpdatedAt(): ?string
+    public function getUpdatedAt(): ?\DateTime
     {
         return $this->updatedAt;
     }
@@ -704,8 +714,9 @@ class SubscriptionComponent implements \JsonSerializable
      * Sets Updated At.
      *
      * @maps updated_at
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setUpdatedAt(?string $updatedAt): void
+    public function setUpdatedAt(?\DateTime $updatedAt): void
     {
         $this->updatedAt = $updatedAt;
     }
@@ -843,7 +854,7 @@ class SubscriptionComponent implements \JsonSerializable
             $json['name']                        = $this->name;
         }
         if (isset($this->kind)) {
-            $json['kind']                        = $this->kind;
+            $json['kind']                        = ComponentKind::checkValue($this->kind);
         }
         if (isset($this->unitName)) {
             $json['unit_name']                   = $this->unitName;
@@ -858,7 +869,11 @@ class SubscriptionComponent implements \JsonSerializable
             $json['currency']                    = $this->currency;
         }
         if (isset($this->allocatedQuantity)) {
-            $json['allocated_quantity']          = $this->allocatedQuantity;
+            $json['allocated_quantity']          =
+                ApiHelper::getJsonHelper()->verifyTypes(
+                    $this->allocatedQuantity,
+                    'anyOf(oneOf(int,string),null)'
+                );
         }
         if (!empty($this->pricingScheme)) {
             $json['pricing_scheme']              =
@@ -917,10 +932,10 @@ class SubscriptionComponent implements \JsonSerializable
             $json['product_family_handle']       = $this->productFamilyHandle;
         }
         if (isset($this->createdAt)) {
-            $json['created_at']                  = $this->createdAt;
+            $json['created_at']                  = DateTimeHelper::toRfc3339DateTime($this->createdAt);
         }
         if (isset($this->updatedAt)) {
-            $json['updated_at']                  = $this->updatedAt;
+            $json['updated_at']                  = DateTimeHelper::toRfc3339DateTime($this->updatedAt);
         }
         if (!empty($this->useSiteExchangeRate)) {
             $json['use_site_exchange_rate']      = $this->useSiteExchangeRate['value'];

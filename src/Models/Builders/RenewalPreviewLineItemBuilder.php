@@ -147,6 +147,24 @@ class RenewalPreviewLineItemBuilder
     }
 
     /**
+     * Sets period range start field.
+     */
+    public function periodRangeStart(?string $value): self
+    {
+        $this->instance->setPeriodRangeStart($value);
+        return $this;
+    }
+
+    /**
+     * Sets period range end field.
+     */
+    public function periodRangeEnd(?string $value): self
+    {
+        $this->instance->setPeriodRangeEnd($value);
+        return $this;
+    }
+
+    /**
      * Initializes a new renewal preview line item object.
      */
     public function build(): RenewalPreviewLineItem

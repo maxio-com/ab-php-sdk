@@ -75,6 +75,16 @@ class RenewalPreviewLineItem implements \JsonSerializable
     private $productHandle;
 
     /**
+     * @var string|null
+     */
+    private $periodRangeStart;
+
+    /**
+     * @var string|null
+     */
+    private $periodRangeEnd;
+
+    /**
      * Returns Transaction Type.
      */
     public function getTransactionType(): ?string
@@ -291,6 +301,42 @@ class RenewalPreviewLineItem implements \JsonSerializable
     }
 
     /**
+     * Returns Period Range Start.
+     */
+    public function getPeriodRangeStart(): ?string
+    {
+        return $this->periodRangeStart;
+    }
+
+    /**
+     * Sets Period Range Start.
+     *
+     * @maps period_range_start
+     */
+    public function setPeriodRangeStart(?string $periodRangeStart): void
+    {
+        $this->periodRangeStart = $periodRangeStart;
+    }
+
+    /**
+     * Returns Period Range End.
+     */
+    public function getPeriodRangeEnd(): ?string
+    {
+        return $this->periodRangeEnd;
+    }
+
+    /**
+     * Sets Period Range End.
+     *
+     * @maps period_range_end
+     */
+    public function setPeriodRangeEnd(?string $periodRangeEnd): void
+    {
+        $this->periodRangeEnd = $periodRangeEnd;
+    }
+
+    /**
      * Encode this object to JSON
      *
      * @param bool $asArrayWhenEmpty Whether to serialize this model as an array whenever no fields
@@ -337,6 +383,12 @@ class RenewalPreviewLineItem implements \JsonSerializable
         }
         if (isset($this->productHandle)) {
             $json['product_handle']           = $this->productHandle;
+        }
+        if (isset($this->periodRangeStart)) {
+            $json['period_range_start']       = $this->periodRangeStart;
+        }
+        if (isset($this->periodRangeEnd)) {
+            $json['period_range_end']         = $this->periodRangeEnd;
         }
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;

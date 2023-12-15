@@ -51,9 +51,9 @@ class Coupon implements \JsonSerializable
     private $productFamilyId;
 
     /**
-     * @var string|null
+     * @var array
      */
-    private $productFamilyName;
+    private $productFamilyName = [];
 
     /**
      * @var string|null
@@ -96,9 +96,9 @@ class Coupon implements \JsonSerializable
     private $durationIntervalUnit = [];
 
     /**
-     * @var string|null
+     * @var array
      */
-    private $durationIntervalSpan;
+    private $durationIntervalSpan = [];
 
     /**
      * @var bool|null
@@ -313,7 +313,10 @@ class Coupon implements \JsonSerializable
      */
     public function getProductFamilyName(): ?string
     {
-        return $this->productFamilyName;
+        if (count($this->productFamilyName) == 0) {
+            return null;
+        }
+        return $this->productFamilyName['value'];
     }
 
     /**
@@ -323,7 +326,15 @@ class Coupon implements \JsonSerializable
      */
     public function setProductFamilyName(?string $productFamilyName): void
     {
-        $this->productFamilyName = $productFamilyName;
+        $this->productFamilyName['value'] = $productFamilyName;
+    }
+
+    /**
+     * Unsets Product Family Name.
+     */
+    public function unsetProductFamilyName(): void
+    {
+        $this->productFamilyName = [];
     }
 
     /**
@@ -531,7 +542,10 @@ class Coupon implements \JsonSerializable
      */
     public function getDurationIntervalSpan(): ?string
     {
-        return $this->durationIntervalSpan;
+        if (count($this->durationIntervalSpan) == 0) {
+            return null;
+        }
+        return $this->durationIntervalSpan['value'];
     }
 
     /**
@@ -541,7 +555,15 @@ class Coupon implements \JsonSerializable
      */
     public function setDurationIntervalSpan(?string $durationIntervalSpan): void
     {
-        $this->durationIntervalSpan = $durationIntervalSpan;
+        $this->durationIntervalSpan['value'] = $durationIntervalSpan;
+    }
+
+    /**
+     * Unsets Duration Interval Span.
+     */
+    public function unsetDurationIntervalSpan(): void
+    {
+        $this->durationIntervalSpan = [];
     }
 
     /**
@@ -822,8 +844,8 @@ class Coupon implements \JsonSerializable
         if (isset($this->productFamilyId)) {
             $json['product_family_id']                = $this->productFamilyId;
         }
-        if (isset($this->productFamilyName)) {
-            $json['product_family_name']              = $this->productFamilyName;
+        if (!empty($this->productFamilyName)) {
+            $json['product_family_name']              = $this->productFamilyName['value'];
         }
         if (isset($this->startDate)) {
             $json['start_date']                       = $this->startDate;
@@ -849,8 +871,8 @@ class Coupon implements \JsonSerializable
         if (!empty($this->durationIntervalUnit)) {
             $json['duration_interval_unit']           = $this->durationIntervalUnit['value'];
         }
-        if (isset($this->durationIntervalSpan)) {
-            $json['duration_interval_span']           = $this->durationIntervalSpan;
+        if (!empty($this->durationIntervalSpan)) {
+            $json['duration_interval_span']           = $this->durationIntervalSpan['value'];
         }
         if (isset($this->allowNegativeBalance)) {
             $json['allow_negative_balance']           = $this->allowNegativeBalance;

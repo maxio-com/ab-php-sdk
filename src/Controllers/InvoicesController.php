@@ -25,6 +25,7 @@ use AdvancedBillingLib\Models\InvoiceDateField;
 use AdvancedBillingLib\Models\InvoiceEventType;
 use AdvancedBillingLib\Models\InvoiceResponse;
 use AdvancedBillingLib\Models\InvoiceSortField;
+use AdvancedBillingLib\Models\InvoiceStatus;
 use AdvancedBillingLib\Models\IssueInvoiceRequest;
 use AdvancedBillingLib\Models\ListCreditNotesResponse;
 use AdvancedBillingLib\Models\ListInvoiceEventsResponse;
@@ -34,7 +35,6 @@ use AdvancedBillingLib\Models\PaymentResponse;
 use AdvancedBillingLib\Models\RecordPaymentRequest;
 use AdvancedBillingLib\Models\RefundInvoiceRequest;
 use AdvancedBillingLib\Models\SendInvoiceRequest;
-use AdvancedBillingLib\Models\Status;
 use AdvancedBillingLib\Models\VoidInvoiceRequest;
 use Core\Request\Parameters\BodyParam;
 use Core\Request\Parameters\HeaderParam;
@@ -99,7 +99,7 @@ class InvoicesController extends BaseController
                 QueryParam::init('status', $options)
                     ->commaSeparated()
                     ->extract('status')
-                    ->serializeBy([Status::class, 'checkValue']),
+                    ->serializeBy([InvoiceStatus::class, 'checkValue']),
                 QueryParam::init('subscription_id', $options)->commaSeparated()->extract('subscriptionId'),
                 QueryParam::init('subscription_group_uid', $options)
                     ->commaSeparated()

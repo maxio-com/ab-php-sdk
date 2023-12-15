@@ -16,10 +16,10 @@ use AdvancedBillingLib\Exceptions\ErrorMapResponseException;
 use AdvancedBillingLib\Exceptions\ProformaBadRequestErrorResponseException;
 use AdvancedBillingLib\Models\CreateSubscriptionRequest;
 use AdvancedBillingLib\Models\Direction;
+use AdvancedBillingLib\Models\InvoiceStatus;
 use AdvancedBillingLib\Models\ProformaInvoice;
 use AdvancedBillingLib\Models\ProformaInvoicePreview;
 use AdvancedBillingLib\Models\SignupProformaPreviewResponse;
-use AdvancedBillingLib\Models\Status;
 use AdvancedBillingLib\Models\VoidInvoiceRequest;
 use Core\Request\Parameters\BodyParam;
 use Core\Request\Parameters\HeaderParam;
@@ -183,7 +183,7 @@ class ProformaInvoicesController extends BaseController
                 QueryParam::init('status', $options)
                     ->commaSeparated()
                     ->extract('status')
-                    ->serializeBy([Status::class, 'checkValue']),
+                    ->serializeBy([InvoiceStatus::class, 'checkValue']),
                 QueryParam::init('page', $options)->commaSeparated()->extract('page', 1),
                 QueryParam::init('per_page', $options)->commaSeparated()->extract('perPage', 20),
                 QueryParam::init('direction', $options)

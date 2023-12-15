@@ -551,7 +551,12 @@ class SubscriptionStatusController extends BaseController
                 BodyParam::init($body)
             );
 
-        $_resHandler = $this->responseHandler()->type(RenewalPreviewResponse::class);
+        $_resHandler = $this->responseHandler()
+            ->throwErrorOn(
+                '422',
+                ErrorType::init('Unprocessable Entity (WebDAV)', ErrorListResponseException::class)
+            )
+            ->type(RenewalPreviewResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
     }

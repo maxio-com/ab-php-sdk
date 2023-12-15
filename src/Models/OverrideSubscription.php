@@ -10,17 +10,18 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
 class OverrideSubscription implements \JsonSerializable
 {
     /**
-     * @var string|null
+     * @var \DateTime|null
      */
     private $activatedAt;
 
     /**
-     * @var string|null
+     * @var \DateTime|null
      */
     private $canceledAt;
 
@@ -30,21 +31,21 @@ class OverrideSubscription implements \JsonSerializable
     private $cancellationMessage;
 
     /**
-     * @var string|null
+     * @var \DateTime|null
      */
     private $expiresAt;
 
     /**
-     * @var string|null
+     * @var \DateTime|null
      */
     private $currentPeriodStartsAt;
 
     /**
      * Returns Activated At.
      * Can be used to record an external signup date. Chargify uses this field to record when a
-     * subscription first goes active (either at signup or at trial end)
+     * subscription first goes active (either at signup or at trial end). Only ISO8601 format is supported.
      */
-    public function getActivatedAt(): ?string
+    public function getActivatedAt(): ?\DateTime
     {
         return $this->activatedAt;
     }
@@ -52,11 +53,12 @@ class OverrideSubscription implements \JsonSerializable
     /**
      * Sets Activated At.
      * Can be used to record an external signup date. Chargify uses this field to record when a
-     * subscription first goes active (either at signup or at trial end)
+     * subscription first goes active (either at signup or at trial end). Only ISO8601 format is supported.
      *
      * @maps activated_at
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setActivatedAt(?string $activatedAt): void
+    public function setActivatedAt(?\DateTime $activatedAt): void
     {
         $this->activatedAt = $activatedAt;
     }
@@ -64,9 +66,9 @@ class OverrideSubscription implements \JsonSerializable
     /**
      * Returns Canceled At.
      * Can be used to record an external cancellation date. Chargify sets this field automatically when a
-     * subscription is canceled, whether by request or via dunning.
+     * subscription is canceled, whether by request or via dunning. Only ISO8601 format is supported.
      */
-    public function getCanceledAt(): ?string
+    public function getCanceledAt(): ?\DateTime
     {
         return $this->canceledAt;
     }
@@ -74,11 +76,12 @@ class OverrideSubscription implements \JsonSerializable
     /**
      * Sets Canceled At.
      * Can be used to record an external cancellation date. Chargify sets this field automatically when a
-     * subscription is canceled, whether by request or via dunning.
+     * subscription is canceled, whether by request or via dunning. Only ISO8601 format is supported.
      *
      * @maps canceled_at
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setCanceledAt(?string $canceledAt): void
+    public function setCanceledAt(?\DateTime $canceledAt): void
     {
         $this->canceledAt = $canceledAt;
     }
@@ -106,9 +109,10 @@ class OverrideSubscription implements \JsonSerializable
     /**
      * Returns Expires At.
      * Can be used to record an external expiration date. Chargify sets this field automatically when a
-     * subscription expires (ceases billing) after a prescribed amount of time.
+     * subscription expires (ceases billing) after a prescribed amount of time. Only ISO8601 format is
+     * supported.
      */
-    public function getExpiresAt(): ?string
+    public function getExpiresAt(): ?\DateTime
     {
         return $this->expiresAt;
     }
@@ -116,11 +120,13 @@ class OverrideSubscription implements \JsonSerializable
     /**
      * Sets Expires At.
      * Can be used to record an external expiration date. Chargify sets this field automatically when a
-     * subscription expires (ceases billing) after a prescribed amount of time.
+     * subscription expires (ceases billing) after a prescribed amount of time. Only ISO8601 format is
+     * supported.
      *
      * @maps expires_at
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setExpiresAt(?string $expiresAt): void
+    public function setExpiresAt(?\DateTime $expiresAt): void
     {
         $this->expiresAt = $expiresAt;
     }
@@ -130,9 +136,9 @@ class OverrideSubscription implements \JsonSerializable
      * Can only be used when a subscription is unbilled, which happens when a future initial billing date
      * is passed at subscription creation. The value passed must be before the current date and time.
      * Allows you to set when the period started so mid period component allocations have the correct
-     * proration.
+     * proration. Only ISO8601 format is supported.
      */
-    public function getCurrentPeriodStartsAt(): ?string
+    public function getCurrentPeriodStartsAt(): ?\DateTime
     {
         return $this->currentPeriodStartsAt;
     }
@@ -142,11 +148,12 @@ class OverrideSubscription implements \JsonSerializable
      * Can only be used when a subscription is unbilled, which happens when a future initial billing date
      * is passed at subscription creation. The value passed must be before the current date and time.
      * Allows you to set when the period started so mid period component allocations have the correct
-     * proration.
+     * proration. Only ISO8601 format is supported.
      *
      * @maps current_period_starts_at
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setCurrentPeriodStartsAt(?string $currentPeriodStartsAt): void
+    public function setCurrentPeriodStartsAt(?\DateTime $currentPeriodStartsAt): void
     {
         $this->currentPeriodStartsAt = $currentPeriodStartsAt;
     }
@@ -164,19 +171,19 @@ class OverrideSubscription implements \JsonSerializable
     {
         $json = [];
         if (isset($this->activatedAt)) {
-            $json['activated_at']             = $this->activatedAt;
+            $json['activated_at']             = DateTimeHelper::toRfc3339DateTime($this->activatedAt);
         }
         if (isset($this->canceledAt)) {
-            $json['canceled_at']              = $this->canceledAt;
+            $json['canceled_at']              = DateTimeHelper::toRfc3339DateTime($this->canceledAt);
         }
         if (isset($this->cancellationMessage)) {
             $json['cancellation_message']     = $this->cancellationMessage;
         }
         if (isset($this->expiresAt)) {
-            $json['expires_at']               = $this->expiresAt;
+            $json['expires_at']               = DateTimeHelper::toRfc3339DateTime($this->expiresAt);
         }
         if (isset($this->currentPeriodStartsAt)) {
-            $json['current_period_starts_at'] = $this->currentPeriodStartsAt;
+            $json['current_period_starts_at'] = DateTimeHelper::toRfc3339DateTime($this->currentPeriodStartsAt);
         }
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;

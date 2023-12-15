@@ -20,6 +20,11 @@ class SubscriptionAddCouponErrorException extends ApiException
     /**
      * @var string[]|null
      */
+    private $couponCode;
+
+    /**
+     * @var string[]|null
+     */
     private $couponCodes;
 
     /**
@@ -47,6 +52,28 @@ class SubscriptionAddCouponErrorException extends ApiException
     public function setCodes(?array $codes): void
     {
         $this->codes = $codes;
+    }
+
+    /**
+     * Returns Coupon Code.
+     *
+     * @return string[]|null
+     */
+    public function getCouponCode(): ?array
+    {
+        return $this->couponCode;
+    }
+
+    /**
+     * Sets Coupon Code.
+     *
+     * @maps coupon_code
+     *
+     * @param string[]|null $couponCode
+     */
+    public function setCouponCode(?array $couponCode): void
+    {
+        $this->couponCode = $couponCode;
     }
 
     /**

@@ -69,7 +69,7 @@ class CreateSubscriptionComponentBuilder
     /**
      * Sets allocated quantity field.
      */
-    public function allocatedQuantity(?int $value): self
+    public function allocatedQuantity($value): self
     {
         $this->instance->setAllocatedQuantity($value);
         return $this;

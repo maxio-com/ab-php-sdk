@@ -70,7 +70,7 @@ class Payment implements \JsonSerializable
      * us/articles/4407737494171#line-item-breakdowns) for more.
      *
      * @maps status
-     * @factory \AdvancedBillingLib\Models\Status::checkValue
+     * @factory \AdvancedBillingLib\Models\InvoiceStatus::checkValue
      */
     public function setStatus(?string $status): void
     {
@@ -133,7 +133,7 @@ class Payment implements \JsonSerializable
             $json['invoice_uid'] = $this->invoiceUid;
         }
         if (isset($this->status)) {
-            $json['status']      = Status::checkValue($this->status);
+            $json['status']      = InvoiceStatus::checkValue($this->status);
         }
         if (isset($this->dueAmount)) {
             $json['due_amount']  = $this->dueAmount;

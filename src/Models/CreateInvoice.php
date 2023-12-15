@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
 class CreateInvoice implements \JsonSerializable
@@ -20,7 +21,7 @@ class CreateInvoice implements \JsonSerializable
     private $lineItems;
 
     /**
-     * @var string|null
+     * @var \DateTime|null
      */
     private $issueDate;
 
@@ -62,7 +63,7 @@ class CreateInvoice implements \JsonSerializable
     /**
      * @var string|null
      */
-    private $status = Status1::OPEN;
+    private $status = CreateInvoiceStatus::OPEN;
 
     /**
      * Returns Line Items.
@@ -89,7 +90,7 @@ class CreateInvoice implements \JsonSerializable
     /**
      * Returns Issue Date.
      */
-    public function getIssueDate(): ?string
+    public function getIssueDate(): ?\DateTime
     {
         return $this->issueDate;
     }
@@ -98,8 +99,9 @@ class CreateInvoice implements \JsonSerializable
      * Sets Issue Date.
      *
      * @maps issue_date
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromSimpleDate
      */
-    public function setIssueDate(?string $issueDate): void
+    public function setIssueDate(?\DateTime $issueDate): void
     {
         $this->issueDate = $issueDate;
     }
@@ -260,7 +262,7 @@ class CreateInvoice implements \JsonSerializable
      * Sets Status.
      *
      * @maps status
-     * @factory \AdvancedBillingLib\Models\Status1::checkValue
+     * @factory \AdvancedBillingLib\Models\CreateInvoiceStatus::checkValue
      */
     public function setStatus(?string $status): void
     {
@@ -283,7 +285,7 @@ class CreateInvoice implements \JsonSerializable
             $json['line_items']           = $this->lineItems;
         }
         if (isset($this->issueDate)) {
-            $json['issue_date']           = $this->issueDate;
+            $json['issue_date']           = DateTimeHelper::toSimpleDate($this->issueDate);
         }
         if (isset($this->netTerms)) {
             $json['net_terms']            = $this->netTerms;
@@ -307,7 +309,7 @@ class CreateInvoice implements \JsonSerializable
             $json['coupons']              = $this->coupons;
         }
         if (isset($this->status)) {
-            $json['status']               = Status1::checkValue($this->status);
+            $json['status']               = CreateInvoiceStatus::checkValue($this->status);
         }
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;

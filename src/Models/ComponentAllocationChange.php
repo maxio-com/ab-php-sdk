@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class ComponentAllocationChange implements \JsonSerializable
@@ -45,7 +46,7 @@ class ComponentAllocationChange implements \JsonSerializable
     private $allocationId;
 
     /**
-     * @var int|null
+     * @var int|string|null
      */
     private $allocatedQuantity;
 
@@ -189,8 +190,10 @@ class ComponentAllocationChange implements \JsonSerializable
 
     /**
      * Returns Allocated Quantity.
+     *
+     * @return int|string|null
      */
-    public function getAllocatedQuantity(): ?int
+    public function getAllocatedQuantity()
     {
         return $this->allocatedQuantity;
     }
@@ -199,8 +202,11 @@ class ComponentAllocationChange implements \JsonSerializable
      * Sets Allocated Quantity.
      *
      * @maps allocated_quantity
+     * @mapsBy anyOf(oneOf(int,string),null)
+     *
+     * @param int|string|null $allocatedQuantity
      */
-    public function setAllocatedQuantity(?int $allocatedQuantity): void
+    public function setAllocatedQuantity($allocatedQuantity): void
     {
         $this->allocatedQuantity = $allocatedQuantity;
     }
@@ -224,7 +230,11 @@ class ComponentAllocationChange implements \JsonSerializable
         $json['memo']                   = $this->memo;
         $json['allocation_id']          = $this->allocationId;
         if (isset($this->allocatedQuantity)) {
-            $json['allocated_quantity'] = $this->allocatedQuantity;
+            $json['allocated_quantity'] =
+                ApiHelper::getJsonHelper()->verifyTypes(
+                    $this->allocatedQuantity,
+                    'anyOf(oneOf(int,string),null)'
+                );
         }
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;

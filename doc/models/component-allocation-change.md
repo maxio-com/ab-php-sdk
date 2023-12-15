@@ -15,7 +15,7 @@
 | `componentHandle` | `string` | Required | - | getComponentHandle(): string | setComponentHandle(string componentHandle): void |
 | `memo` | `string` | Required | - | getMemo(): string | setMemo(string memo): void |
 | `allocationId` | `int` | Required | - | getAllocationId(): int | setAllocationId(int allocationId): void |
-| `allocatedQuantity` | `?int` | Optional | - | getAllocatedQuantity(): ?int | setAllocatedQuantity(?int allocatedQuantity): void |
+| `allocatedQuantity` | int\|string\|null | Optional | This is a container for one-of cases. | getAllocatedQuantity(): | setAllocatedQuantity( allocatedQuantity): void |
 
 ## Example (as JSON)
 
@@ -27,7 +27,7 @@
   "component_handle": "component_handle8",
   "memo": "memo2",
   "allocation_id": 158,
-  "allocated_quantity": 182
+  "allocated_quantity": 104
 }
 ```
 
