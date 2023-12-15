@@ -35,6 +35,7 @@ use AdvancedBillingLib\Models\SubscriptionResponse;
 use AdvancedBillingLib\Models\SubscriptionStateFilter;
 use AdvancedBillingLib\Models\UpdateAllocationExpirationDate;
 use AdvancedBillingLib\Models\UsageResponse;
+use AdvancedBillingLib\Utils\DateTimeHelper;
 use Core\Request\Parameters\BodyParam;
 use Core\Request\Parameters\HeaderParam;
 use Core\Request\Parameters\QueryParam;
@@ -637,15 +638,15 @@ class SubscriptionComponentsController extends BaseController
      * to record that a subscriber has sent both an SMS Message and an Email, send an API call for each.
      *
      * @param int $subscriptionId The Chargify id of the subscription
-     * @param int $componentId Either the Chargify id for the component or the component's handle
-     *        prefixed by `handle:`
+     * @param int|string $componentId Either the Chargify id for the component or the component's
+     *        handle prefixed by `handle:`
      * @param CreateUsageRequest|null $body
      *
      * @return UsageResponse Response from the API call
      *
      * @throws ApiException Thrown if API call fails
      */
-    public function createUsage(int $subscriptionId, int $componentId, ?CreateUsageRequest $body = null): UsageResponse
+    public function createUsage(int $subscriptionId, $componentId, ?CreateUsageRequest $body = null): UsageResponse
     {
         $_reqBuilder = $this->requestBuilder(
             RequestMethod::POST,
@@ -654,7 +655,7 @@ class SubscriptionComponentsController extends BaseController
             ->auth('global')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
-                TemplateParam::init('component_id', $componentId)->required(),
+                TemplateParam::init('component_id', $componentId)->required()->strictType('oneOf(int,string)'),
                 HeaderParam::init('Content-Type', 'application/json'),
                 BodyParam::init($body)
             );
@@ -706,11 +707,20 @@ class SubscriptionComponentsController extends BaseController
             ->auth('global')
             ->parameters(
                 TemplateParam::init('subscription_id', $options)->extract('subscriptionId')->required(),
-                TemplateParam::init('component_id', $options)->extract('componentId')->required(),
+                TemplateParam::init('component_id', $options)
+                    ->extract('componentId')
+                    ->required()
+                    ->strictType('oneOf(int,string)'),
                 QueryParam::init('since_id', $options)->commaSeparated()->extract('sinceId'),
                 QueryParam::init('max_id', $options)->commaSeparated()->extract('maxId'),
-                QueryParam::init('since_date', $options)->commaSeparated()->extract('sinceDate'),
-                QueryParam::init('until_date', $options)->commaSeparated()->extract('untilDate'),
+                QueryParam::init('since_date', $options)
+                    ->commaSeparated()
+                    ->extract('sinceDate')
+                    ->serializeBy([DateTimeHelper::class, 'toSimpleDate']),
+                QueryParam::init('until_date', $options)
+                    ->commaSeparated()
+                    ->extract('untilDate')
+                    ->serializeBy([DateTimeHelper::class, 'toSimpleDate']),
                 QueryParam::init('page', $options)->commaSeparated()->extract('page', 1),
                 QueryParam::init('per_page', $options)->commaSeparated()->extract('perPage', 20)
             );

@@ -13,6 +13,7 @@ namespace AdvancedBillingLib\Controllers;
 use AdvancedBillingLib\Exceptions\ApiException;
 use AdvancedBillingLib\Exceptions\ErrorListResponseException;
 use AdvancedBillingLib\Exceptions\NestedErrorResponseException;
+use AdvancedBillingLib\Exceptions\SingleErrorResponseErrorException;
 use AdvancedBillingLib\Exceptions\SubscriptionAddCouponErrorException;
 use AdvancedBillingLib\Exceptions\SubscriptionRemoveCouponErrorsException;
 use AdvancedBillingLib\Models\ActivateSubscriptionRequest;
@@ -23,6 +24,7 @@ use AdvancedBillingLib\Models\PrepaidConfigurationResponse;
 use AdvancedBillingLib\Models\SortingDirection;
 use AdvancedBillingLib\Models\SubscriptionDateField;
 use AdvancedBillingLib\Models\SubscriptionInclude;
+use AdvancedBillingLib\Models\SubscriptionListInclude;
 use AdvancedBillingLib\Models\SubscriptionPreviewResponse;
 use AdvancedBillingLib\Models\SubscriptionPurgeType;
 use AdvancedBillingLib\Models\SubscriptionResponse;
@@ -919,7 +921,11 @@ class SubscriptionsController extends BaseController
                 QueryParam::init('sort', $options)
                     ->commaSeparated()
                     ->extract('sort', SubscriptionSort::SIGNUP_DATE)
-                    ->serializeBy([SubscriptionSort::class, 'checkValue'])
+                    ->serializeBy([SubscriptionSort::class, 'checkValue']),
+                QueryParam::init('include[]', $options)
+                    ->commaSeparated()
+                    ->extract('mInclude')
+                    ->serializeBy([SubscriptionListInclude::class, 'checkValue'])
             );
 
         $_resHandler = $this->responseHandler()->type(SubscriptionResponse::class, 1);
@@ -1112,7 +1118,10 @@ class SubscriptionsController extends BaseController
 
         $_resHandler = $this->responseHandler()
             ->throwErrorOn('400', ErrorType::init('Bad Request'))
-            ->throwErrorOn('422', ErrorType::init('Unprocessable Entity (WebDAV)'));
+            ->throwErrorOn(
+                '422',
+                ErrorType::init('Unprocessable Entity (WebDAV)', SingleErrorResponseErrorException::class)
+            );
 
         $this->execute($_reqBuilder, $_resHandler);
     }

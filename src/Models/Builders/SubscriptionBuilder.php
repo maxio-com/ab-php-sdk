@@ -864,6 +864,15 @@ class SubscriptionBuilder
     }
 
     /**
+     * Sets self service page token field.
+     */
+    public function selfServicePageToken(?string $value): self
+    {
+        $this->instance->setSelfServicePageToken($value);
+        return $this;
+    }
+
+    /**
      * Initializes a new subscription object.
      */
     public function build(): Subscription

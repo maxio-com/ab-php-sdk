@@ -41,7 +41,7 @@ class OverrideSubscriptionBuilder
     /**
      * Sets activated at field.
      */
-    public function activatedAt(?string $value): self
+    public function activatedAt(?\DateTime $value): self
     {
         $this->instance->setActivatedAt($value);
         return $this;
@@ -50,7 +50,7 @@ class OverrideSubscriptionBuilder
     /**
      * Sets canceled at field.
      */
-    public function canceledAt(?string $value): self
+    public function canceledAt(?\DateTime $value): self
     {
         $this->instance->setCanceledAt($value);
         return $this;
@@ -68,7 +68,7 @@ class OverrideSubscriptionBuilder
     /**
      * Sets expires at field.
      */
-    public function expiresAt(?string $value): self
+    public function expiresAt(?\DateTime $value): self
     {
         $this->instance->setExpiresAt($value);
         return $this;
@@ -77,7 +77,7 @@ class OverrideSubscriptionBuilder
     /**
      * Sets current period starts at field.
      */
-    public function currentPeriodStartsAt(?string $value): self
+    public function currentPeriodStartsAt(?\DateTime $value): self
     {
         $this->instance->setCurrentPeriodStartsAt($value);
         return $this;

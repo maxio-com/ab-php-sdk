@@ -101,7 +101,7 @@ class IssueInvoiceEventData implements \JsonSerializable
      * com/hc/en-us/articles/4407737494171#line-item-breakdowns) for more.
      *
      * @maps from_status
-     * @factory \AdvancedBillingLib\Models\Status::checkValue
+     * @factory \AdvancedBillingLib\Models\InvoiceStatus::checkValue
      */
     public function setFromStatus(?string $fromStatus): void
     {
@@ -124,7 +124,7 @@ class IssueInvoiceEventData implements \JsonSerializable
      * com/hc/en-us/articles/4407737494171#line-item-breakdowns) for more.
      *
      * @maps to_status
-     * @factory \AdvancedBillingLib\Models\Status::checkValue
+     * @factory \AdvancedBillingLib\Models\InvoiceStatus::checkValue
      */
     public function setToStatus(?string $toStatus): void
     {
@@ -187,10 +187,10 @@ class IssueInvoiceEventData implements \JsonSerializable
             $json['consolidation_level'] = InvoiceConsolidationLevel::checkValue($this->consolidationLevel);
         }
         if (isset($this->fromStatus)) {
-            $json['from_status']         = Status::checkValue($this->fromStatus);
+            $json['from_status']         = InvoiceStatus::checkValue($this->fromStatus);
         }
         if (isset($this->toStatus)) {
-            $json['to_status']           = Status::checkValue($this->toStatus);
+            $json['to_status']           = InvoiceStatus::checkValue($this->toStatus);
         }
         if (isset($this->dueAmount)) {
             $json['due_amount']          = $this->dueAmount;

@@ -14,7 +14,7 @@ use Core\Utils\CoreHelper;
 use Exception;
 use stdClass;
 
-class Status1
+class CreateInvoiceStatus
 {
     public const DRAFT = 'draft';
 
@@ -37,6 +37,6 @@ class Status1
         if (CoreHelper::checkValueOrValuesInList($value, self::_ALL_VALUES)) {
             return $value;
         }
-        throw new Exception("$value is invalid for Status1.");
+        throw new Exception("$value is invalid for CreateInvoiceStatus.");
     }
 }

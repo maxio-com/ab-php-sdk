@@ -322,6 +322,11 @@ class Subscription implements \JsonSerializable
     private $prepaidConfiguration;
 
     /**
+     * @var string|null
+     */
+    private $selfServicePageToken;
+
+    /**
      * Returns Id.
      * The subscription unique id within Chargify.
      */
@@ -2075,6 +2080,28 @@ class Subscription implements \JsonSerializable
     }
 
     /**
+     * Returns Self Service Page Token.
+     * Returned only for list/read Subscription operation when `include[]=self_service_page_token`
+     * parameter is provided.
+     */
+    public function getSelfServicePageToken(): ?string
+    {
+        return $this->selfServicePageToken;
+    }
+
+    /**
+     * Sets Self Service Page Token.
+     * Returned only for list/read Subscription operation when `include[]=self_service_page_token`
+     * parameter is provided.
+     *
+     * @maps self_service_page_token
+     */
+    public function setSelfServicePageToken(?string $selfServicePageToken): void
+    {
+        $this->selfServicePageToken = $selfServicePageToken;
+    }
+
+    /**
      * Encode this object to JSON
      *
      * @param bool $asArrayWhenEmpty Whether to serialize this model as an array whenever no fields
@@ -2308,6 +2335,9 @@ class Subscription implements \JsonSerializable
         }
         if (isset($this->prepaidConfiguration)) {
             $json['prepaid_configuration']                 = $this->prepaidConfiguration;
+        }
+        if (isset($this->selfServicePageToken)) {
+            $json['self_service_page_token']               = $this->selfServicePageToken;
         }
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;

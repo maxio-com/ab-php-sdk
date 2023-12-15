@@ -18,7 +18,7 @@ use stdClass;
  * The current status of the invoice. See [Invoice Statuses](https://chargify.zendesk.com/hc/en-
  * us/articles/4407737494171#line-item-breakdowns) for more.
  */
-class Status
+class InvoiceStatus
 {
     public const DRAFT = 'draft';
 
@@ -49,6 +49,6 @@ class Status
         if (CoreHelper::checkValueOrValuesInList($value, self::_ALL_VALUES)) {
             return $value;
         }
-        throw new Exception("$value is invalid for Status.");
+        throw new Exception("$value is invalid for InvoiceStatus.");
     }
 }

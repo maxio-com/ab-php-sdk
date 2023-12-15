@@ -51,7 +51,7 @@ class CreateInvoiceBuilder
     /**
      * Sets issue date field.
      */
-    public function issueDate(?string $value): self
+    public function issueDate(?\DateTime $value): self
     {
         $this->instance->setIssueDate($value);
         return $this;

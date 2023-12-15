@@ -70,6 +70,7 @@
 | `creditBalanceInCents` | `?int` | Optional | - | getCreditBalanceInCents(): ?int | setCreditBalanceInCents(?int creditBalanceInCents): void |
 | `prepaymentBalanceInCents` | `?int` | Optional | - | getPrepaymentBalanceInCents(): ?int | setPrepaymentBalanceInCents(?int prepaymentBalanceInCents): void |
 | `prepaidConfiguration` | [`?PrepaidConfiguration`](../../doc/models/prepaid-configuration.md) | Optional | - | getPrepaidConfiguration(): ?PrepaidConfiguration | setPrepaidConfiguration(?PrepaidConfiguration prepaidConfiguration): void |
+| `selfServicePageToken` | `?string` | Optional | Returned only for list/read Subscription operation when `include[]=self_service_page_token` parameter is provided. | getSelfServicePageToken(): ?string | setSelfServicePageToken(?string selfServicePageToken): void |
 
 ## Example (as JSON)
 

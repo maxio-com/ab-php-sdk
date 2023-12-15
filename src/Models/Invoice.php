@@ -66,12 +66,12 @@ class Invoice implements \JsonSerializable
     private $updatedAt;
 
     /**
-     * @var string|null
+     * @var \DateTime|null
      */
     private $issueDate;
 
     /**
-     * @var string|null
+     * @var \DateTime|null
      */
     private $dueDate;
 
@@ -487,7 +487,7 @@ class Invoice implements \JsonSerializable
      *
      * The format is `"YYYY-MM-DD"`.
      */
-    public function getIssueDate(): ?string
+    public function getIssueDate(): ?\DateTime
     {
         return $this->issueDate;
     }
@@ -500,8 +500,9 @@ class Invoice implements \JsonSerializable
      * The format is `"YYYY-MM-DD"`.
      *
      * @maps issue_date
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromSimpleDate
      */
-    public function setIssueDate(?string $issueDate): void
+    public function setIssueDate(?\DateTime $issueDate): void
     {
         $this->issueDate = $issueDate;
     }
@@ -512,7 +513,7 @@ class Invoice implements \JsonSerializable
      *
      * The format is `"YYYY-MM-DD"`.
      */
-    public function getDueDate(): ?string
+    public function getDueDate(): ?\DateTime
     {
         return $this->dueDate;
     }
@@ -524,8 +525,9 @@ class Invoice implements \JsonSerializable
      * The format is `"YYYY-MM-DD"`.
      *
      * @maps due_date
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromSimpleDate
      */
-    public function setDueDate(?string $dueDate): void
+    public function setDueDate(?\DateTime $dueDate): void
     {
         $this->dueDate = $dueDate;
     }
@@ -539,7 +541,7 @@ class Invoice implements \JsonSerializable
      *
      * The format is `"YYYY-MM-DD"`.
      */
-    public function getPaidDate(): ?string
+    public function getPaidDate(): ?\DateTime
     {
         if (count($this->paidDate) == 0) {
             return null;
@@ -557,8 +559,9 @@ class Invoice implements \JsonSerializable
      * The format is `"YYYY-MM-DD"`.
      *
      * @maps paid_date
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromSimpleDate
      */
-    public function setPaidDate(?string $paidDate): void
+    public function setPaidDate(?\DateTime $paidDate): void
     {
         $this->paidDate['value'] = $paidDate;
     }
@@ -593,7 +596,7 @@ class Invoice implements \JsonSerializable
      * us/articles/4407737494171#line-item-breakdowns) for more.
      *
      * @maps status
-     * @factory \AdvancedBillingLib\Models\Status::checkValue
+     * @factory \AdvancedBillingLib\Models\InvoiceStatus::checkValue
      */
     public function setStatus(?string $status): void
     {
@@ -1505,16 +1508,16 @@ class Invoice implements \JsonSerializable
             $json['updated_at']                    = DateTimeHelper::toRfc3339DateTime($this->updatedAt);
         }
         if (isset($this->issueDate)) {
-            $json['issue_date']                    = $this->issueDate;
+            $json['issue_date']                    = DateTimeHelper::toSimpleDate($this->issueDate);
         }
         if (isset($this->dueDate)) {
-            $json['due_date']                      = $this->dueDate;
+            $json['due_date']                      = DateTimeHelper::toSimpleDate($this->dueDate);
         }
         if (!empty($this->paidDate)) {
-            $json['paid_date']                     = $this->paidDate['value'];
+            $json['paid_date']                     = DateTimeHelper::toSimpleDate($this->paidDate['value']);
         }
         if (isset($this->status)) {
-            $json['status']                        = Status::checkValue($this->status);
+            $json['status']                        = InvoiceStatus::checkValue($this->status);
         }
         if (isset($this->role)) {
             $json['role']                          = $this->role;

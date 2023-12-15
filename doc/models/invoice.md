@@ -19,10 +19,10 @@
 | `transactionTime` | `?DateTime` | Optional | - | getTransactionTime(): ?\DateTime | setTransactionTime(?\DateTime transactionTime): void |
 | `createdAt` | `?DateTime` | Optional | - | getCreatedAt(): ?\DateTime | setCreatedAt(?\DateTime createdAt): void |
 | `updatedAt` | `?DateTime` | Optional | - | getUpdatedAt(): ?\DateTime | setUpdatedAt(?\DateTime updatedAt): void |
-| `issueDate` | `?string` | Optional | Date the invoice was issued to the customer.  This is the date that the invoice was made available for payment.<br><br>The format is `"YYYY-MM-DD"`. | getIssueDate(): ?string | setIssueDate(?string issueDate): void |
-| `dueDate` | `?string` | Optional | Date the invoice is due.<br><br>The format is `"YYYY-MM-DD"`. | getDueDate(): ?string | setDueDate(?string dueDate): void |
-| `paidDate` | `?string` | Optional | Date the invoice became fully paid.<br><br>If partial payments are applied to the invoice, this date will not be present until payment has been made in full.<br><br>The format is `"YYYY-MM-DD"`. | getPaidDate(): ?string | setPaidDate(?string paidDate): void |
-| `status` | [`?string(Status)`](../../doc/models/status.md) | Optional | The current status of the invoice. See [Invoice Statuses](https://chargify.zendesk.com/hc/en-us/articles/4407737494171#line-item-breakdowns) for more. | getStatus(): ?string | setStatus(?string status): void |
+| `issueDate` | `?DateTime` | Optional | Date the invoice was issued to the customer.  This is the date that the invoice was made available for payment.<br><br>The format is `"YYYY-MM-DD"`. | getIssueDate(): ?\DateTime | setIssueDate(?\DateTime issueDate): void |
+| `dueDate` | `?DateTime` | Optional | Date the invoice is due.<br><br>The format is `"YYYY-MM-DD"`. | getDueDate(): ?\DateTime | setDueDate(?\DateTime dueDate): void |
+| `paidDate` | `?DateTime` | Optional | Date the invoice became fully paid.<br><br>If partial payments are applied to the invoice, this date will not be present until payment has been made in full.<br><br>The format is `"YYYY-MM-DD"`. | getPaidDate(): ?\DateTime | setPaidDate(?\DateTime paidDate): void |
+| `status` | [`?string(InvoiceStatus)`](../../doc/models/invoice-status.md) | Optional | The current status of the invoice. See [Invoice Statuses](https://chargify.zendesk.com/hc/en-us/articles/4407737494171#line-item-breakdowns) for more. | getStatus(): ?string | setStatus(?string status): void |
 | `role` | `?string` | Optional | - | getRole(): ?string | setRole(?string role): void |
 | `parentInvoiceId` | `?int` | Optional | - | getParentInvoiceId(): ?int | setParentInvoiceId(?int parentInvoiceId): void |
 | `collectionMethod` | `?string` | Optional | The collection method of the invoice, which is either "automatic" (tried and retried on an existing payment method by Chargify) or "remittance" (payment must be remitted by the customer or keyed in by the merchant). | getCollectionMethod(): ?string | setCollectionMethod(?string collectionMethod): void |
@@ -66,6 +66,9 @@
 
 ```json
 {
+  "issue_date": "2024-01-01",
+  "due_date": "2024-01-01",
+  "paid_date": "2024-01-01",
   "id": 252,
   "uid": "uid0",
   "site_id": 178,

@@ -11,12 +11,12 @@
 |  --- | --- | --- | --- | --- | --- |
 | `id` | `?int` | Optional | - | getId(): ?int | setId(?int id): void |
 | `name` | `?string` | Optional | - | getName(): ?string | setName(?string name): void |
-| `kind` | `?string` | Optional | - | getKind(): ?string | setKind(?string kind): void |
+| `kind` | [`?string(ComponentKind)`](../../doc/models/component-kind.md) | Optional | A handle for the component type | getKind(): ?string | setKind(?string kind): void |
 | `unitName` | `?string` | Optional | - | getUnitName(): ?string | setUnitName(?string unitName): void |
 | `enabled` | `?bool` | Optional | (for on/off components) indicates if the component is enabled for the subscription | getEnabled(): ?bool | setEnabled(?bool enabled): void |
 | `unitBalance` | `?int` | Optional | - | getUnitBalance(): ?int | setUnitBalance(?int unitBalance): void |
 | `currency` | `?string` | Optional | - | getCurrency(): ?string | setCurrency(?string currency): void |
-| `allocatedQuantity` | `?int` | Optional | For Quantity-based components: The current allocation for the component on the given subscription. For On/Off components: Use 1 for on. Use 0 for off. | getAllocatedQuantity(): ?int | setAllocatedQuantity(?int allocatedQuantity): void |
+| `allocatedQuantity` | int\|string\|null | Optional | This is a container for one-of cases. | getAllocatedQuantity(): | setAllocatedQuantity( allocatedQuantity): void |
 | `pricingScheme` | string([PricingScheme](../../doc/models/pricing-scheme.md))\|null | Optional | This is a container for one-of cases. | getPricingScheme(): ?string | setPricingScheme(?string pricingScheme): void |
 | `componentId` | `?int` | Optional | - | getComponentId(): ?int | setComponentId(?int componentId): void |
 | `componentHandle` | `?string` | Optional | - | getComponentHandle(): ?string | setComponentHandle(?string componentHandle): void |
@@ -31,8 +31,8 @@
 | `pricePointName` | `?string` | Optional | - | getPricePointName(): ?string | setPricePointName(?string pricePointName): void |
 | `productFamilyId` | `?int` | Optional | - | getProductFamilyId(): ?int | setProductFamilyId(?int productFamilyId): void |
 | `productFamilyHandle` | `?string` | Optional | - | getProductFamilyHandle(): ?string | setProductFamilyHandle(?string productFamilyHandle): void |
-| `createdAt` | `?string` | Optional | - | getCreatedAt(): ?string | setCreatedAt(?string createdAt): void |
-| `updatedAt` | `?string` | Optional | - | getUpdatedAt(): ?string | setUpdatedAt(?string updatedAt): void |
+| `createdAt` | `?DateTime` | Optional | - | getCreatedAt(): ?\DateTime | setCreatedAt(?\DateTime createdAt): void |
+| `updatedAt` | `?DateTime` | Optional | - | getUpdatedAt(): ?\DateTime | setUpdatedAt(?\DateTime updatedAt): void |
 | `useSiteExchangeRate` | `?bool` | Optional | - | getUseSiteExchangeRate(): ?bool | setUseSiteExchangeRate(?bool useSiteExchangeRate): void |
 | `description` | `?string` | Optional | - | getDescription(): ?string | setDescription(?string description): void |
 | `allowFractionalQuantities` | `?bool` | Optional | - | getAllowFractionalQuantities(): ?bool | setAllowFractionalQuantities(?bool allowFractionalQuantities): void |
@@ -45,7 +45,7 @@
 {
   "id": 20,
   "name": "name8",
-  "kind": "kind6",
+  "kind": "quantity_based_component",
   "unit_name": "unit_name0",
   "enabled": false
 }

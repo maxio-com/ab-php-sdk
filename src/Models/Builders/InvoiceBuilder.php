@@ -137,7 +137,7 @@ class InvoiceBuilder
     /**
      * Sets issue date field.
      */
-    public function issueDate(?string $value): self
+    public function issueDate(?\DateTime $value): self
     {
         $this->instance->setIssueDate($value);
         return $this;
@@ -146,7 +146,7 @@ class InvoiceBuilder
     /**
      * Sets due date field.
      */
-    public function dueDate(?string $value): self
+    public function dueDate(?\DateTime $value): self
     {
         $this->instance->setDueDate($value);
         return $this;
@@ -155,7 +155,7 @@ class InvoiceBuilder
     /**
      * Sets paid date field.
      */
-    public function paidDate(?string $value): self
+    public function paidDate(?\DateTime $value): self
     {
         $this->instance->setPaidDate($value);
         return $this;

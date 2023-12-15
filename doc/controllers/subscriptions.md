@@ -879,6 +879,7 @@ function listSubscriptions(array $options): array
 | `metadata` | `?array<string,string>` | Query, Optional | The value of the metadata field specified in the parameter. Use in query `metadata[my-field]=value&metadata[other-field]=another_value`. |
 | `direction` | [`?string(SortingDirection)`](../../doc/models/sorting-direction.md) | Query, Optional | Controls the order in which results are returned.<br>Use in query `direction=asc`. |
 | `sort` | [`?string(SubscriptionSort)`](../../doc/models/subscription-sort.md) | Query, Optional | The attribute by which to sort<br>**Default**: `SubscriptionSort::SIGNUP_DATE` |
+| `mInclude` | [`?(string(SubscriptionListInclude)[])`](../../doc/models/subscription-list-include.md) | Query, Optional | Allows including additional data in the response. Use in query: `include[]=self_service_page_token`. |
 
 ## Response Type
 
@@ -887,7 +888,7 @@ function listSubscriptions(array $options): array
 ## Example Usage
 
 ```php
-$collect = [
+$collect = Liquid error: Value cannot be null. (Parameter 'key')[
     'page' => 2,
     'per_page' => 50,
     'start_date' => DateTimeHelper::fromSimpleDate('2022-07-01'),
@@ -1316,10 +1317,10 @@ $subscriptionId = 222;
 
 $body = OverrideSubscriptionRequestBuilder::init(
     OverrideSubscriptionBuilder::init()
-        ->activatedAt('1999-12-01')
-        ->canceledAt('2000-12-31')
+        ->activatedAt(DateTimeHelper::fromRfc3339DateTime('1999-12-01T10:28:34-05:00'))
+        ->canceledAt(DateTimeHelper::fromRfc3339DateTime('2000-12-31T10:28:34-05:00'))
         ->cancellationMessage('Original cancellation in 2000')
-        ->expiresAt('2001-07-15')
+        ->expiresAt(DateTimeHelper::fromRfc3339DateTime('2001-07-15T10:28:34-05:00'))
         ->build()
 )->build();
 
@@ -1334,7 +1335,7 @@ $subscriptionsController->overrideSubscription(
 | HTTP Status Code | Error Description | Exception Class |
 |  --- | --- | --- |
 | 400 | Bad Request | `ApiException` |
-| 422 | Unprocessable Entity (WebDAV) | `ApiException` |
+| 422 | Unprocessable Entity (WebDAV) | [`SingleErrorResponseErrorException`](../../doc/models/single-error-response-error-exception.md) |
 
 
 # Read Subscription by Reference
