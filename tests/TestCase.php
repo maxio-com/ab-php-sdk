@@ -24,7 +24,7 @@ class TestCase extends PhpUnitTestCase
     {
         return AdvancedBillingClientBuilder::init()
             ->basicAuthUserName($configuration->getBasicAuthUserName())
-            ->basicAuthPassword($configuration->getBasicAuthUserName())
+            ->basicAuthPassword($configuration->getBasicAuthPassword())
             ->environment($configuration->getEnvironment())
             ->subdomain($configuration->getSubDomain())
             ->domain($configuration->getDomain())

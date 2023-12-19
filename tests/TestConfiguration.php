@@ -14,26 +14,26 @@ final class TestConfiguration
 
     public function getBasicAuthUserName(): string
     {
-        return $_ENV[self::BASIC_AUTH_USERNAME_KEY];
+        return getenv(self::BASIC_AUTH_USERNAME_KEY);
     }
 
     public function getBasicAuthPassword(): string
     {
-        return $_ENV[self::BASIC_AUTH_PASSWORD_KEY];
+        return getenv(self::BASIC_AUTH_PASSWORD_KEY);
     }
 
     public function getEnvironment(): string
     {
-        return $_ENV[self::ENVIRONMENT_KEY];
+        return getenv(self::ENVIRONMENT_KEY);
     }
 
     public function getDomain(): string
     {
-        return $_ENV[self::DOMAIN_KEY];
+        return getenv(self::DOMAIN_KEY);
     }
 
     public function getSubDomain(): string
     {
-        return $_ENV[self::SUB_DOMAIN_KEY];
+        return getenv(self::SUB_DOMAIN_KEY);
     }
 }
