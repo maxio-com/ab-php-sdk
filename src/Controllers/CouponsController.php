@@ -14,8 +14,8 @@ use AdvancedBillingLib\Exceptions\ApiException;
 use AdvancedBillingLib\Exceptions\ErrorListResponseException;
 use AdvancedBillingLib\Exceptions\SingleStringErrorResponseException;
 use AdvancedBillingLib\Models\BasicDateField;
-use AdvancedBillingLib\Models\CouponCurrency;
 use AdvancedBillingLib\Models\CouponCurrencyRequest;
+use AdvancedBillingLib\Models\CouponCurrencyResponse;
 use AdvancedBillingLib\Models\CouponResponse;
 use AdvancedBillingLib\Models\CouponSubcodes;
 use AdvancedBillingLib\Models\CouponSubcodesResponse;
@@ -444,13 +444,15 @@ class CouponsController extends BaseController
      * @param int $couponId The Chargify id of the coupon
      * @param CouponCurrencyRequest|null $body
      *
-     * @return CouponCurrency[] Response from the API call
+     * @return CouponCurrencyResponse Response from the API call
      *
      * @throws ApiException Thrown if API call fails
      */
-    public function updateCouponCurrencyPrices(int $couponId, ?CouponCurrencyRequest $body = null): array
-    {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::PUT, '/coupon/{coupon_id}/currency_prices.json')
+    public function updateCouponCurrencyPrices(
+        int $couponId,
+        ?CouponCurrencyRequest $body = null
+    ): CouponCurrencyResponse {
+        $_reqBuilder = $this->requestBuilder(RequestMethod::PUT, '/coupons/{coupon_id}/currency_prices.json')
             ->auth('global')
             ->parameters(
                 TemplateParam::init('coupon_id', $couponId)->required(),
@@ -458,7 +460,7 @@ class CouponsController extends BaseController
                 BodyParam::init($body)
             );
 
-        $_resHandler = $this->responseHandler()->type(CouponCurrency::class, 1);
+        $_resHandler = $this->responseHandler()->type(CouponCurrencyResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
     }

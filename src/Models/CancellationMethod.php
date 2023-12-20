@@ -28,7 +28,10 @@ class CancellationMethod
 
     public const BILLING_PORTAL = 'billing_portal';
 
-    private const _ALL_VALUES = [self::MERCHANT_UI, self::MERCHANT_API, self::DUNNING, self::BILLING_PORTAL];
+    public const UNKNOWN = 'unknown';
+
+    private const _ALL_VALUES =
+        [self::MERCHANT_UI, self::MERCHANT_API, self::DUNNING, self::BILLING_PORTAL, self::UNKNOWN];
 
     /**
      * Ensures that all the given values are present in this Enum.

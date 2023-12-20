@@ -23,13 +23,13 @@ class GroupTargetType
 
     public const SUBSCRIPTION = 'subscription';
 
-    public const SELF = 'self';
+    public const SELF_ = 'self';
 
     public const PARENT_ = 'parent';
 
     public const ELDEST = 'eldest';
 
-    private const _ALL_VALUES = [self::CUSTOMER, self::SUBSCRIPTION, self::SELF, self::PARENT_, self::ELDEST];
+    private const _ALL_VALUES = [self::CUSTOMER, self::SUBSCRIPTION, self::SELF_, self::PARENT_, self::ELDEST];
 
     /**
      * Ensures that all the given values are present in this Enum.

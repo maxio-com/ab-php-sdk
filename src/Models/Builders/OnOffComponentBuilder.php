@@ -192,6 +192,24 @@ class OnOffComponentBuilder
     }
 
     /**
+     * Sets interval field.
+     */
+    public function interval(?int $value): self
+    {
+        $this->instance->setInterval($value);
+        return $this;
+    }
+
+    /**
+     * Sets interval unit field.
+     */
+    public function intervalUnit(?string $value): self
+    {
+        $this->instance->setIntervalUnit($value);
+        return $this;
+    }
+
+    /**
      * Initializes a new on off component object.
      */
     public function build(): OnOffComponent
