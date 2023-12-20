@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Controllers;
+namespace AdvancedBillingLib\Tests\Controllers;
 
 use AdvancedBillingLib\Exceptions\ApiException;
 use AdvancedBillingLib\Models\Site;
-use Tests\TestStatusCode;
+use AdvancedBillingLib\Tests\TestStatusCode;
 
 final class SitesControllerTestAssertions
 {

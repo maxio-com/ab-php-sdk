@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests;
+namespace AdvancedBillingLib\Tests;
 
 final class TestConfiguration
 {

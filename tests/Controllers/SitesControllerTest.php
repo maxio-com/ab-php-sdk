@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Tests\Controllers;
+namespace AdvancedBillingLib\Tests\Controllers;
 
-use Tests\TestCase;
-use Tests\TestFactory\TestSiteFactory;
+use AdvancedBillingLib\Tests\TestCase;
+use AdvancedBillingLib\Tests\TestFactory\TestSiteFactory;
 
 final class SitesControllerTest extends TestCase
 {

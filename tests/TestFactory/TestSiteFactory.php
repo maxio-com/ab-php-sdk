@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\TestFactory;
+namespace AdvancedBillingLib\Tests\TestFactory;
 
 use AdvancedBillingLib\Models\AllocationSettings;
 use AdvancedBillingLib\Models\Builders\AllocationSettingsBuilder;

@@ -35,8 +35,11 @@ jobs:
     # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
     # Docs: https://getcomposer.org/doc/articles/scripts.md
 
+    - name: Install PHPUnit dependency
+      run: composer require phpunit/phpunit --dev
+
     - name: Run test suite
-      run: composer run-script test
+      run: vendor/bin/phpunit
       env:
         BASIC_AUTH_USERNAME: ${{ secrets.BASIC_AUTH_USERNAME }}
         BASIC_AUTH_PASSWORD: ${{ secrets.BASIC_AUTH_PASSWORD }}

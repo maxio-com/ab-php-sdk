@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests;
+namespace AdvancedBillingLib\Tests;
 
 use AdvancedBillingLib\AdvancedBillingClient;
 use AdvancedBillingLib\AdvancedBillingClientBuilder;
