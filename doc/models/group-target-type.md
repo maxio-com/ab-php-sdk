@@ -13,7 +13,7 @@ The type of object indicated by the id attribute.
 |  --- |
 | `CUSTOMER` |
 | `SUBSCRIPTION` |
-| `SELF` |
+| `SELF_` |
 | `PARENT_` |
 | `ELDEST` |
 

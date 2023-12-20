@@ -158,7 +158,7 @@ class CreateSubscriptionBuilder
     /**
      * Sets initial billing at field.
      */
-    public function initialBillingAt(?\DateTime $value): self
+    public function initialBillingAt(?string $value): self
     {
         $this->instance->setInitialBillingAt($value);
         return $this;

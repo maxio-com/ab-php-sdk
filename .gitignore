@@ -2,9 +2,3 @@ composer.phar
 vendor/
 .phpunit.result.cache
 coverage/
-.idea
-*.Dockerfile
-docker-compose.yaml
-config
-.env*
-.phpunit.cache
