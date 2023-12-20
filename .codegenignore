@@ -1,8 +1,7 @@
 tests/**
 .gitignore
 .github/**
-config/
-.docker-compose.yaml
-php.Dockerfile
 phpunit.xml
 phpcs.xml
+.env.testing.example
+composer.lock
