@@ -34,13 +34,11 @@
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "^3.5",
-        "phan/phan": "5.4.2",
-        "phpunit/phpunit": "^9.6"
+        "phan/phan": "5.4.2"
     },
     "autoload": {
         "psr-4": {
-            "AdvancedBillingLib\\": "src/",
-            "Tests\\": "tests/"
+            "AdvancedBillingLib\\": "src/"
         }
     },
     "autoload-dev": {
@@ -54,7 +52,6 @@
         "analyze": "phan --allow-polyfill-parser",
         "lint": [
             "@lint-src"
-        ],
-        "test": "vendor/bin/phpunit"
+        ]
     }
 }
