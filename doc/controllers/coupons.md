@@ -763,7 +763,7 @@ This endpoint allows you to create and/or update currency prices for an existing
 Currency pricing for coupons must mirror the setup of the primary coupon pricing - if the primary coupon is percentage based, you will not be able to define pricing in non-primary currencies.
 
 ```php
-function updateCouponCurrencyPrices(int $couponId, ?CouponCurrencyRequest $body = null): array
+function updateCouponCurrencyPrices(int $couponId, ?CouponCurrencyRequest $body = null): CouponCurrencyResponse
 ```
 
 ## Parameters
@@ -775,7 +775,7 @@ function updateCouponCurrencyPrices(int $couponId, ?CouponCurrencyRequest $body 
 
 ## Response Type
 
-[`CouponCurrency[]`](../../doc/models/coupon-currency.md)
+[`CouponCurrencyResponse`](../../doc/models/coupon-currency-response.md)
 
 ## Example Usage
 

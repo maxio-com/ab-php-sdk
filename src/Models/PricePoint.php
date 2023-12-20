@@ -40,6 +40,16 @@ class PricePoint implements \JsonSerializable
     private $useSiteExchangeRate = true;
 
     /**
+     * @var int|null
+     */
+    private $interval;
+
+    /**
+     * @var string|null
+     */
+    private $intervalUnit;
+
+    /**
      * @var OveragePricing|null
      */
     private $overagePricing;
@@ -165,6 +175,53 @@ class PricePoint implements \JsonSerializable
     public function setUseSiteExchangeRate(?bool $useSiteExchangeRate): void
     {
         $this->useSiteExchangeRate = $useSiteExchangeRate;
+    }
+
+    /**
+     * Returns Interval.
+     * The numerical interval. i.e. an interval of ‘30’ coupled with an interval_unit of day would mean
+     * this price point would renew every 30 days. This property is only available for sites with
+     * Multifrequency enabled.
+     */
+    public function getInterval(): ?int
+    {
+        return $this->interval;
+    }
+
+    /**
+     * Sets Interval.
+     * The numerical interval. i.e. an interval of ‘30’ coupled with an interval_unit of day would mean
+     * this price point would renew every 30 days. This property is only available for sites with
+     * Multifrequency enabled.
+     *
+     * @maps interval
+     */
+    public function setInterval(?int $interval): void
+    {
+        $this->interval = $interval;
+    }
+
+    /**
+     * Returns Interval Unit.
+     * A string representing the interval unit for this price point, either month or day. This property is
+     * only available for sites with Multifrequency enabled.
+     */
+    public function getIntervalUnit(): ?string
+    {
+        return $this->intervalUnit;
+    }
+
+    /**
+     * Sets Interval Unit.
+     * A string representing the interval unit for this price point, either month or day. This property is
+     * only available for sites with Multifrequency enabled.
+     *
+     * @maps interval_unit
+     * @factory \AdvancedBillingLib\Models\IntervalUnit::checkValue
+     */
+    public function setIntervalUnit(?string $intervalUnit): void
+    {
+        $this->intervalUnit = $intervalUnit;
     }
 
     /**
@@ -294,6 +351,12 @@ class PricePoint implements \JsonSerializable
         }
         if (isset($this->useSiteExchangeRate)) {
             $json['use_site_exchange_rate']     = $this->useSiteExchangeRate;
+        }
+        if (isset($this->interval)) {
+            $json['interval']                   = $this->interval;
+        }
+        if (isset($this->intervalUnit)) {
+            $json['interval_unit']              = IntervalUnit::checkValue($this->intervalUnit);
         }
         if (isset($this->overagePricing)) {
             $json['overage_pricing']            = $this->overagePricing;

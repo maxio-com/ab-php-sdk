@@ -77,7 +77,7 @@ class CreateSubscription implements \JsonSerializable
     private $nextBillingAt;
 
     /**
-     * @var \DateTime|null
+     * @var string|null
      */
     private $initialBillingAt;
 
@@ -556,7 +556,7 @@ class CreateSubscription implements \JsonSerializable
      * at the initial_billing_at and it fails the subscription will be immediately canceled. See further
      * notes in the section on Delayed Signups.
      */
-    public function getInitialBillingAt(): ?\DateTime
+    public function getInitialBillingAt(): ?string
     {
         return $this->initialBillingAt;
     }
@@ -575,9 +575,8 @@ class CreateSubscription implements \JsonSerializable
      * notes in the section on Delayed Signups.
      *
      * @maps initial_billing_at
-     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setInitialBillingAt(?\DateTime $initialBillingAt): void
+    public function setInitialBillingAt(?string $initialBillingAt): void
     {
         $this->initialBillingAt = $initialBillingAt;
     }
@@ -1452,7 +1451,7 @@ class CreateSubscription implements \JsonSerializable
             $json['next_billing_at']                       = DateTimeHelper::toRfc3339DateTime($this->nextBillingAt);
         }
         if (isset($this->initialBillingAt)) {
-            $json['initial_billing_at']                    = DateTimeHelper::toRfc3339DateTime($this->initialBillingAt);
+            $json['initial_billing_at']                    = $this->initialBillingAt;
         }
         if (isset($this->storedCredentialTransactionId)) {
             $json['stored_credential_transaction_id']      = $this->storedCredentialTransactionId;
