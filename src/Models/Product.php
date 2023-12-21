@@ -57,12 +57,12 @@ class Product implements \JsonSerializable
     private $expirationIntervalUnit = [];
 
     /**
-     * @var \DateTime|null
+     * @var string|null
      */
     private $createdAt;
 
     /**
-     * @var \DateTime|null
+     * @var string|null
      */
     private $updatedAt;
 
@@ -433,7 +433,7 @@ class Product implements \JsonSerializable
      * Returns Created At.
      * Timestamp indicating when this product was created
      */
-    public function getCreatedAt(): ?\DateTime
+    public function getCreatedAt(): ?string
     {
         return $this->createdAt;
     }
@@ -443,9 +443,9 @@ class Product implements \JsonSerializable
      * Timestamp indicating when this product was created
      *
      * @maps created_at
-     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
+     * @factory \AdvancedBillingLib\Models\StringDate::toString
      */
-    public function setCreatedAt(?\DateTime $createdAt): void
+    public function setCreatedAt(?string $createdAt): void
     {
         $this->createdAt = $createdAt;
     }
@@ -454,7 +454,7 @@ class Product implements \JsonSerializable
      * Returns Updated At.
      * Timestamp indicating when this product was last updated
      */
-    public function getUpdatedAt(): ?\DateTime
+    public function getUpdatedAt(): ?string
     {
         return $this->updatedAt;
     }
@@ -464,9 +464,9 @@ class Product implements \JsonSerializable
      * Timestamp indicating when this product was last updated
      *
      * @maps updated_at
-     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
+     * @factory \AdvancedBillingLib\Models\StringDate::toString
      */
-    public function setUpdatedAt(?\DateTime $updatedAt): void
+    public function setUpdatedAt(?string $updatedAt): void
     {
         $this->updatedAt = $updatedAt;
     }
@@ -674,7 +674,7 @@ class Product implements \JsonSerializable
      * Returns Archived At.
      * Timestamp indicating when this product was archived
      */
-    public function getArchivedAt(): ?\DateTime
+    public function getArchivedAt(): ?string
     {
         if (count($this->archivedAt) == 0) {
             return null;
@@ -687,9 +687,9 @@ class Product implements \JsonSerializable
      * Timestamp indicating when this product was archived
      *
      * @maps archived_at
-     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
+     * @factory \AdvancedBillingLib\Models\StringDate::toString
      */
-    public function setArchivedAt(?\DateTime $archivedAt): void
+    public function setArchivedAt(?string $archivedAt): void
     {
         $this->archivedAt['value'] = $archivedAt;
     }
@@ -1207,10 +1207,10 @@ class Product implements \JsonSerializable
                 );
         }
         if (isset($this->createdAt)) {
-            $json['created_at']                     = DateTimeHelper::toRfc3339DateTime($this->createdAt);
+            $json['created_at']                     = $this->createdAt;
         }
         if (isset($this->updatedAt)) {
-            $json['updated_at']                     = DateTimeHelper::toRfc3339DateTime($this->updatedAt);
+            $json['updated_at']                     = $this->updatedAt;
         }
         if (isset($this->priceInCents)) {
             $json['price_in_cents']                 = $this->priceInCents;
@@ -1241,7 +1241,7 @@ class Product implements \JsonSerializable
                 );
         }
         if (!empty($this->archivedAt)) {
-            $json['archived_at']                    = DateTimeHelper::toRfc3339DateTime($this->archivedAt['value']);
+            $json['archived_at']                    = $this->archivedAt['value'];
         }
         if (isset($this->requireCreditCard)) {
             $json['require_credit_card']            = $this->requireCreditCard;

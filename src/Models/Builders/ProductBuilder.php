@@ -159,7 +159,7 @@ class ProductBuilder
     /**
      * Sets created at field.
      */
-    public function createdAt(?\DateTime $value): self
+    public function createdAt(?string $value): self
     {
         $this->instance->setCreatedAt($value);
         return $this;
@@ -168,7 +168,7 @@ class ProductBuilder
     /**
      * Sets updated at field.
      */
-    public function updatedAt(?\DateTime $value): self
+    public function updatedAt(?string $value): self
     {
         $this->instance->setUpdatedAt($value);
         return $this;
