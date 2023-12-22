@@ -101,7 +101,7 @@ class SubscriptionBuilder
     /**
      * Sets current period ends at field.
      */
-    public function currentPeriodEndsAt(?\DateTime $value): self
+    public function currentPeriodEndsAt(?string $value): self
     {
         $this->instance->setCurrentPeriodEndsAt($value);
         return $this;
@@ -110,7 +110,7 @@ class SubscriptionBuilder
     /**
      * Sets next assessment at field.
      */
-    public function nextAssessmentAt(?\DateTime $value): self
+    public function nextAssessmentAt(?string $value): self
     {
         $this->instance->setNextAssessmentAt($value);
         return $this;
@@ -119,7 +119,7 @@ class SubscriptionBuilder
     /**
      * Sets trial started at field.
      */
-    public function trialStartedAt(?\DateTime $value): self
+    public function trialStartedAt(?string $value): self
     {
         $this->instance->setTrialStartedAt($value);
         return $this;
@@ -137,7 +137,7 @@ class SubscriptionBuilder
     /**
      * Sets trial ended at field.
      */
-    public function trialEndedAt(?\DateTime $value): self
+    public function trialEndedAt(?string $value): self
     {
         $this->instance->setTrialEndedAt($value);
         return $this;
@@ -155,7 +155,7 @@ class SubscriptionBuilder
     /**
      * Sets activated at field.
      */
-    public function activatedAt(?\DateTime $value): self
+    public function activatedAt(?string $value): self
     {
         $this->instance->setActivatedAt($value);
         return $this;
@@ -164,7 +164,7 @@ class SubscriptionBuilder
     /**
      * Sets expires at field.
      */
-    public function expiresAt(?\DateTime $value): self
+    public function expiresAt(?string $value): self
     {
         $this->instance->setExpiresAt($value);
         return $this;
@@ -182,7 +182,7 @@ class SubscriptionBuilder
     /**
      * Sets created at field.
      */
-    public function createdAt(?\DateTime $value): self
+    public function createdAt(?string $value): self
     {
         $this->instance->setCreatedAt($value);
         return $this;
@@ -191,7 +191,7 @@ class SubscriptionBuilder
     /**
      * Sets updated at field.
      */
-    public function updatedAt(?\DateTime $value): self
+    public function updatedAt(?string $value): self
     {
         $this->instance->setUpdatedAt($value);
         return $this;
@@ -254,7 +254,7 @@ class SubscriptionBuilder
     /**
      * Sets canceled at field.
      */
-    public function canceledAt(?\DateTime $value): self
+    public function canceledAt(?string $value): self
     {
         $this->instance->setCanceledAt($value);
         return $this;
@@ -272,7 +272,7 @@ class SubscriptionBuilder
     /**
      * Sets current period started at field.
      */
-    public function currentPeriodStartedAt(?\DateTime $value): self
+    public function currentPeriodStartedAt(?string $value): self
     {
         $this->instance->setCurrentPeriodStartedAt($value);
         return $this;
@@ -308,7 +308,7 @@ class SubscriptionBuilder
     /**
      * Sets delayed cancel at field.
      */
-    public function delayedCancelAt(?\DateTime $value): self
+    public function delayedCancelAt(?string $value): self
     {
         $this->instance->setDelayedCancelAt($value);
         return $this;
@@ -551,7 +551,7 @@ class SubscriptionBuilder
     /**
      * Sets automatically resume at field.
      */
-    public function automaticallyResumeAt(?\DateTime $value): self
+    public function automaticallyResumeAt(?string $value): self
     {
         $this->instance->setAutomaticallyResumeAt($value);
         return $this;
@@ -713,7 +713,7 @@ class SubscriptionBuilder
     /**
      * Sets on hold at field.
      */
-    public function onHoldAt(?\DateTime $value): self
+    public function onHoldAt(?string $value): self
     {
         $this->instance->setOnHoldAt($value);
         return $this;
@@ -821,7 +821,7 @@ class SubscriptionBuilder
     /**
      * Sets scheduled cancellation at field.
      */
-    public function scheduledCancellationAt(?\DateTime $value): self
+    public function scheduledCancellationAt(?string $value): self
     {
         $this->instance->setScheduledCancellationAt($value);
         return $this;
