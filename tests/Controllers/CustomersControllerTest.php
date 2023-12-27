@@ -7,6 +7,7 @@ namespace AdvancedBillingLib\Tests\Controllers;
 use AdvancedBillingLib\Tests\TestCase;
 use AdvancedBillingLib\Tests\TestFactory\TestCustomerFactory;
 use AdvancedBillingLib\Tests\TestFactory\TestCustomerRequestFactory;
+use AdvancedBillingLib\Tests\TestFactory\TestCustomerResponseFactory;
 
 final class CustomersControllerTest extends TestCase
 {
@@ -38,31 +39,57 @@ final class CustomersControllerTest extends TestCase
     /**
      * @covers \AdvancedBillingLib\Controllers\CustomersController::createCustomer
      */
-    public function test_CreateCustomer_ShouldThrowException_WhenCustomerAlreadyExists(): void
+    public function test_ReadCustomer_ShouldReturnCustomer_WhenCustomerExists(): void
     {
         $request = $this->testData->getCreateCustomerRequest();
         $customer = $this->client
             ->getCustomersController()
-            ->createCustomer($request)->getCustomer();
+            ->createCustomer($request)
+            ->getCustomer();
 
-        $this->assertions->assertExceptionWasThrown();
-        $this->client
+        $response = $this->client
             ->getCustomersController()
-            ->createCustomer($request);
+            ->readCustomer($customer->getId());
+
+        $this->assertions->assertExpectedCustomerWasReturned($customer, $response->getCustomer());
 
         $this->cleaner->removeCustomerById($customer->getId());
     }
 
-    public function test()
+    public function test_ReadCustomer_ShouldThrow404StatusCodeException_WhenCustomerDoesNotExists(): void
     {
-        $this->client->getSitesController()->clearSite();
+        $this->assertions->assertCustomerNotFound();
+        $this->client
+            ->getCustomersController()
+            ->readCustomer($this->testData->getNotExistingCustomerId());
+
+    }
+
+    public function test_ListCustomers_ShouldReturnListWithCreatedCustomer_WhenCustomerExists(): void
+    {
+        $customer = $this->client
+            ->getCustomersController()
+            ->createCustomer($this->testData->getCreateCustomerRequest())
+            ->getCustomer();
+
+        $response = $this->client
+            ->getCustomersController()
+            ->listCustomers($this->testData->getEmptyListCustomersParametersArray());
+
+        $this->assertions->assertCustomersReturned($this->testData->getCustomersListResponse($customer), $response);
+
+        $this->cleaner->removeCustomerById($customer->getId());
     }
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->testData = new CustomersControllerTestData(new TestCustomerRequestFactory(), new TestCustomerFactory());
+        $this->testData = new CustomersControllerTestData(
+            new TestCustomerRequestFactory(),
+            new TestCustomerFactory(),
+            new TestCustomerResponseFactory()
+        );
         $this->assertions = new CustomersControllerTestAssertions($this);
     }
 }

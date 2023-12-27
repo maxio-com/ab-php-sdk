@@ -7,6 +7,7 @@ namespace AdvancedBillingLib\Tests\Controllers;
 use AdvancedBillingLib\Exceptions\ApiException;
 use AdvancedBillingLib\Exceptions\CustomerErrorResponseException;
 use AdvancedBillingLib\Models\Customer;
+use AdvancedBillingLib\Models\CustomerResponse;
 use AdvancedBillingLib\Tests\TestStatusCode;
 
 final class CustomersControllerTestAssertions
@@ -27,5 +28,25 @@ final class CustomersControllerTestAssertions
     {
         $this->testCase->expectException(CustomerErrorResponseException::class);
         $this->testCase->expectExceptionCode(TestStatusCode::UNPROCESSABLE_CONTENT);
+    }
+
+    public function assertExpectedCustomerWasReturned(Customer $expectedCustomer, Customer $customer): void
+    {
+        $this->testCase::assertEquals($expectedCustomer, $customer);
+    }
+
+    public function assertCustomerNotFound(): void
+    {
+        $this->testCase->expectException(ApiException::class);
+        $this->testCase->expectExceptionCode(TestStatusCode::NOT_FOUND);
+    }
+
+    /**
+     * @param array<int, CustomerResponse> $expectedCustomersList
+     * @param array<int, CustomerResponse> $customersList
+     */
+    public function assertCustomersReturned(array $expectedCustomersList, array $customersList): void
+    {
+        $this->testCase::assertEquals($expectedCustomersList, $customersList);
     }
 }
