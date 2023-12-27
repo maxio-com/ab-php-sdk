@@ -41,7 +41,7 @@ final class TestSiteFactory
     private const ORGANIZATION_ADDRESS_PHONE = '555 111 222';
     private const TAX_CONFIGURATION_KIND = 'custom';
     private const TAX_CONFIGURATION_DESTINATION_ADDRESS = 'shipping_then_billing';
-    private const TAX_CONFIGURATION_FULLY_CONFIGURED = true;
+    private const TAX_CONFIGURATION_FULLY_CONFIGURED = false;
     private const DEFAULT_NET_TERMS = 0;
     private const AUTOMATIC_NET_TERMS = 0;
     private const REMITTANCE_NET_TERMS = 0;

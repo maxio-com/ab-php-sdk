@@ -11,6 +11,7 @@ use PHPUnit\Framework\TestCase as PhpUnitTestCase;
 class TestCase extends PhpUnitTestCase
 {
     protected AdvancedBillingClient $client;
+    protected TestCleaner $cleaner;
 
     protected function setUp(): void
     {
@@ -18,6 +19,7 @@ class TestCase extends PhpUnitTestCase
 
         $testConfiguration = new TestConfiguration();
         $this->client = $this->createClient($testConfiguration);
+        $this->cleaner = new TestCleaner($this->client);
     }
 
     private function createClient(TestConfiguration $configuration): AdvancedBillingClient
