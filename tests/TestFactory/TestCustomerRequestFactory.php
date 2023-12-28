@@ -8,10 +8,11 @@ use AdvancedBillingLib\Models\Builders\CreateCustomerBuilder;
 use AdvancedBillingLib\Models\Builders\CreateCustomerRequestBuilder;
 use AdvancedBillingLib\Models\CreateCustomer;
 use AdvancedBillingLib\Models\CreateCustomerRequest;
+use AdvancedBillingLib\Tests\TestData\CustomerTestData;
 
 final class TestCustomerRequestFactory
 {
-    public function createCreateCustomerRequest(): CreateCustomerRequest
+    public function create(): CreateCustomerRequest
     {
         return CreateCustomerRequestBuilder::init($this->createCreateCustomer())
             ->build();

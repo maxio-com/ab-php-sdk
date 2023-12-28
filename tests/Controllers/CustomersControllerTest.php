@@ -21,7 +21,7 @@ final class CustomersControllerTest extends TestCase
     {
         $response = $this->client
             ->getCustomersController()
-            ->createCustomer($this->testData->getCreateCustomerRequest());
+            ->createCustomer($this->testData->createRequest());
         $customer = $response->getCustomer();
 
         $this->assertions->assertExpectedCustomerCreated(
@@ -37,11 +37,11 @@ final class CustomersControllerTest extends TestCase
     }
 
     /**
-     * @covers \AdvancedBillingLib\Controllers\CustomersController::createCustomer
+     * @covers \AdvancedBillingLib\Controllers\CustomersController::readCustomer
      */
     public function test_ReadCustomer_ShouldReturnCustomer_WhenCustomerExists(): void
     {
-        $request = $this->testData->getCreateCustomerRequest();
+        $request = $this->testData->createRequest();
         $customer = $this->client
             ->getCustomersController()
             ->createCustomer($request)
@@ -56,20 +56,25 @@ final class CustomersControllerTest extends TestCase
         $this->cleaner->removeCustomerById($customer->getId());
     }
 
+    /**
+     * @covers \AdvancedBillingLib\Controllers\CustomersController::readCustomer
+     */
     public function test_ReadCustomer_ShouldThrow404StatusCodeException_WhenCustomerDoesNotExists(): void
     {
         $this->assertions->assertCustomerNotFound();
         $this->client
             ->getCustomersController()
             ->readCustomer($this->testData->getNotExistingCustomerId());
-
     }
 
+    /**
+     * @covers \AdvancedBillingLib\Controllers\CustomersController::listCustomers
+     */
     public function test_ListCustomers_ShouldReturnListWithCreatedCustomer_WhenCustomerExists(): void
     {
         $customer = $this->client
             ->getCustomersController()
-            ->createCustomer($this->testData->getCreateCustomerRequest())
+            ->createCustomer($this->testData->createRequest())
             ->getCustomer();
 
         $response = $this->client

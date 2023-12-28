@@ -46,3 +46,11 @@ jobs:
         ENVIRONMENT: ${{ secrets.ENVIRONMENT }}
         SUB_DOMAIN: ${{ secrets.SUB_DOMAIN }}
         DOMAIN: ${{ secrets.DOMAIN }}
+
+    - name: Cleanup Site
+      run: ./cleanupSite.sh
+      env:
+        BASIC_AUTH_USERNAME: ${{ secrets.BASIC_AUTH_USERNAME }}
+        BASIC_AUTH_PASSWORD: ${{ secrets.BASIC_AUTH_PASSWORD }}
+        SUB_DOMAIN: ${{ secrets.SUB_DOMAIN }}
+        DOMAIN: ${{ secrets.DOMAIN }}

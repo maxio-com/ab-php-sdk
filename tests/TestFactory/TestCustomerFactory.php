@@ -6,10 +6,11 @@ namespace AdvancedBillingLib\Tests\TestFactory;
 
 use AdvancedBillingLib\Models\Builders\CustomerBuilder;
 use AdvancedBillingLib\Models\Customer;
+use AdvancedBillingLib\Tests\TestData\CustomerTestData;
 
 final class TestCustomerFactory
 {
-    public function createWithDefaultValues(int $id, string $createdAt, string $updatedAt): Customer
+    public function create(int $id, string $createdAt, string $updatedAt): Customer
     {
         return CustomerBuilder::init()
             ->id($id)

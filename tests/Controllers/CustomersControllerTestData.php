@@ -7,7 +7,7 @@ namespace AdvancedBillingLib\Tests\Controllers;
 use AdvancedBillingLib\Models\CreateCustomerRequest;
 use AdvancedBillingLib\Models\Customer;
 use AdvancedBillingLib\Models\CustomerResponse;
-use AdvancedBillingLib\Tests\TestFactory\CustomerTestData;
+use AdvancedBillingLib\Tests\TestData\CustomerTestData;
 use AdvancedBillingLib\Tests\TestFactory\TestCustomerFactory;
 use AdvancedBillingLib\Tests\TestFactory\TestCustomerRequestFactory;
 use AdvancedBillingLib\Tests\TestFactory\TestCustomerResponseFactory;
@@ -22,14 +22,14 @@ final class CustomersControllerTestData
     {
     }
 
-    public function getCreateCustomerRequest(): CreateCustomerRequest
+    public function createRequest(): CreateCustomerRequest
     {
-        return $this->customerRequestFactory->createCreateCustomerRequest();
+        return $this->customerRequestFactory->create();
     }
 
     public function getExpectedCustomer(int $id, string $createdAt, string $updatedAt): Customer
     {
-        return $this->customerFactory->createWithDefaultValues($id, $createdAt, $updatedAt);
+        return $this->customerFactory->create($id, $createdAt, $updatedAt);
     }
 
     public function getNotExistingCustomerId(): int

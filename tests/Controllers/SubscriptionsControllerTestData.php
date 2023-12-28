@@ -4,44 +4,158 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Tests\Controllers;
 
+use AdvancedBillingLib\AdvancedBillingClient;
+use AdvancedBillingLib\Models\CreatedPaymentProfile;
 use AdvancedBillingLib\Models\CreateSubscriptionRequest;
+use AdvancedBillingLib\Models\Customer;
+use AdvancedBillingLib\Models\Product;
+use AdvancedBillingLib\Models\ProductFamily;
 use AdvancedBillingLib\Models\Subscription;
-use AdvancedBillingLib\Tests\TestFactory\CustomerTestData;
+use AdvancedBillingLib\Tests\TestData\ProductFamilyTestData;
+use AdvancedBillingLib\Tests\TestData\ProductTestData;
+use AdvancedBillingLib\Tests\TestFactory\TestCustomerRequestFactory;
+use AdvancedBillingLib\Tests\TestFactory\TestPaymentProfileFactory;
+use AdvancedBillingLib\Tests\TestFactory\TestPaymentProfileRequestFactory;
+use AdvancedBillingLib\Tests\TestFactory\TestProductFamilyRequestFactory;
+use AdvancedBillingLib\Tests\TestFactory\TestProductRequestFactory;
 use AdvancedBillingLib\Tests\TestFactory\TestSubscriptionFactory;
 use AdvancedBillingLib\Tests\TestFactory\TestSubscriptionRequestFactory;
 
 final class SubscriptionsControllerTestData
 {
-    private const SUBSCRIPTION_ID = 314179;
-
     public function __construct(
+        private AdvancedBillingClient $client,
+        private TestProductFamilyRequestFactory $productFamilyRequestFactory,
+        private TestProductRequestFactory $productRequestFactory,
+        private TestCustomerRequestFactory $customerRequestFactory,
         private TestSubscriptionFactory $subscriptionFactory,
-        private TestSubscriptionRequestFactory $subscriptionRequestFactory
-    ) {
+        private TestSubscriptionRequestFactory $subscriptionRequestFactory,
+        private TestPaymentProfileRequestFactory $paymentProfileRequestFactory,
+        private TestPaymentProfileFactory $paymentProfileFactory
+    )
+    {
     }
 
-    public function getExpectedSubscription(): Subscription
+    public function getExpectedSubscription(
+        int $subscriptionId,
+        string $createdAt,
+        string $updatedAt,
+        string $activatedAt,
+        Customer $customer,
+        Product $product,
+        CreatedPaymentProfile $paymentProfile,
+        int $productPricePointId,
+        ?int $nextProductPricePointId,
+        int $signupPaymentId,
+        string $currentPeriodStartedAt,
+        string $nextAssessmentAt,
+        string $currentPeriodEndsAt
+    ): Subscription
     {
-        return $this->subscriptionFactory->createWithDefaultValuesAndCustomId($this->getSubscriptionId());
+        return $this->subscriptionFactory->create(
+            $subscriptionId,
+            $createdAt,
+            $updatedAt,
+            $activatedAt,
+            $customer,
+            $product,
+            $this->paymentProfileFactory->fromCreatedPaymentProfile($paymentProfile),
+            $productPricePointId,
+            $nextProductPricePointId,
+            $signupPaymentId,
+            $currentPeriodStartedAt,
+            $nextAssessmentAt,
+            $currentPeriodEndsAt
+        );
     }
 
-    public function getSubscriptionId(): int
+    public function getCreateSubscriptionRequest(
+        int $customerId,
+        int $productId,
+        int $paymentProfileId
+    ): CreateSubscriptionRequest
     {
-        return self::SUBSCRIPTION_ID;
+        return $this->subscriptionRequestFactory->create($customerId, $productId, $paymentProfileId);
     }
 
-    public function getCreateSubscriptionRequest(): CreateSubscriptionRequest
+    public function getRequestWithNonExistingCustomer(int $productId, int $paymentProfileId): CreateSubscriptionRequest
     {
-        return $this->subscriptionRequestFactory->createCreateSubscriptionRequestWithDefaultValues();
+        return $this->subscriptionRequestFactory->createCreateSubscriptionRequestWithNonExistingCustomer(
+            $productId,
+            $paymentProfileId
+        );
     }
 
-    public function getCreateSubscriptionRequestWithNonExistingCustomer(): CreateSubscriptionRequest
+    public function loadProductFamily(): ProductFamily
     {
-        return $this->subscriptionRequestFactory->createCreateSubscriptionRequestWithNonExistingCustomer();
+        return $this->client
+            ->getProductFamiliesController()
+            ->createProductFamily($this->productFamilyRequestFactory->create(ProductFamilyTestData::NAME_SIX))
+            ->getProductFamily();
     }
 
-    public function getCustomerId(): int
+    public function loadProduct(int $productFamilyId): Product
     {
-        return CustomerTestData::CUSTOMER_ID;
+        return $this->client
+            ->getProductsController()
+            ->createProduct(
+                $productFamilyId,
+                $this->productRequestFactory->create(ProductTestData::NAME_TWO, ProductTestData::HANDLE_TWO)
+            )
+            ->getProduct();
+    }
+
+    public function loadCustomer(): Customer
+    {
+        return $this->client
+            ->getCustomersController()
+            ->createCustomer($this->customerRequestFactory->create())
+            ->getCustomer();
+    }
+
+    public function loadPaymentProfile(int $customerId): CreatedPaymentProfile
+    {
+        return $this->client
+            ->getPaymentProfilesController()
+            ->createPaymentProfile($this->paymentProfileRequestFactory->create($customerId))
+            ->getPaymentProfile();
+    }
+
+    public function loadProductFamilyTwo(): ProductFamily
+    {
+        return $this->client
+            ->getProductFamiliesController()
+            ->createProductFamily($this->productFamilyRequestFactory->create(ProductFamilyTestData::NAME_SEVEN))
+            ->getProductFamily();
+    }
+
+    public function loadProductTwo(int $productFamilyId): Product
+    {
+        return $this->client
+            ->getProductsController()
+            ->createProduct(
+                $productFamilyId,
+                $this->productRequestFactory->create(ProductTestData::NAME_THREE, ProductTestData::HANDLE_THREE)
+            )
+            ->getProduct();
+    }
+
+    public function loadProductFamilyThree(): ProductFamily
+    {
+        return $this->client
+            ->getProductFamiliesController()
+            ->createProductFamily($this->productFamilyRequestFactory->create(ProductFamilyTestData::NAME_EIGHT))
+            ->getProductFamily();
+    }
+
+    public function loadProductThree(int $productFamilyId): Product
+    {
+        return $this->client
+            ->getProductsController()
+            ->createProduct(
+                $productFamilyId,
+                $this->productRequestFactory->create(ProductTestData::NAME_FOUR, ProductTestData::HANDLE_FOUR)
+            )
+            ->getProduct();
     }
 }

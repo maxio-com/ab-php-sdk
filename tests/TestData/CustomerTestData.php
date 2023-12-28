@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AdvancedBillingLib\Tests\TestFactory;
+namespace AdvancedBillingLib\Tests\TestData;
 
 final class CustomerTestData
 {
