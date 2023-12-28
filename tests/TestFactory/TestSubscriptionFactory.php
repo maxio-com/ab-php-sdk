@@ -10,23 +10,60 @@ use AdvancedBillingLib\Models\PaymentProfile;
 use AdvancedBillingLib\Models\Product;
 use AdvancedBillingLib\Models\Subscription;
 use AdvancedBillingLib\Tests\TestData\SubscriptionTestData;
+use DateTime;
 
 final class TestSubscriptionFactory
 {
-    public function create(
+    public function createWithoutBillingAmount(
         int $id,
-        string $createdAt,
-        string $updatedAt,
-        string $activatedAt,
+        DateTime $createdAt,
+        DateTime $updatedAt,
+        DateTime $activatedAt,
         Customer $customer,
         Product $product,
         PaymentProfile $paymentProfile,
         int $productPricePointId,
         ?int $nextProductPricePointId,
         int $signupPaymentId,
-        string $currentPeriodStartedAt,
-        string $nextAssessmentAt,
-        string $currentPeriodEndsAt
+        DateTime $currentPeriodStartedAt,
+        DateTime $nextAssessmentAt,
+        DateTime $currentPeriodEndsAt
+    ): Subscription
+    {
+        $subscriptionWithoutBillingAmount = $this->create(
+            $id,
+            $createdAt,
+            $updatedAt,
+            $activatedAt,
+            $customer,
+            $product,
+            $paymentProfile,
+            $productPricePointId,
+            $nextProductPricePointId,
+            $signupPaymentId,
+            $currentPeriodStartedAt,
+            $nextAssessmentAt,
+            $currentPeriodEndsAt
+        );
+        $subscriptionWithoutBillingAmount->setCurrentBillingAmountInCents(null);
+
+        return $subscriptionWithoutBillingAmount;
+    }
+
+    public function create(
+        int $id,
+        DateTime $createdAt,
+        DateTime $updatedAt,
+        DateTime $activatedAt,
+        Customer $customer,
+        Product $product,
+        PaymentProfile $paymentProfile,
+        int $productPricePointId,
+        ?int $nextProductPricePointId,
+        int $signupPaymentId,
+        DateTime $currentPeriodStartedAt,
+        DateTime $nextAssessmentAt,
+        DateTime $currentPeriodEndsAt
     ): Subscription
     {
         return SubscriptionBuilder::init()

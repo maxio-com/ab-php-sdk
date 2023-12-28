@@ -9,11 +9,9 @@ use AdvancedBillingLib\Models\Builders\CreatedPaymentProfileBuilder;
 use AdvancedBillingLib\Models\CreatedPaymentProfile;
 use AdvancedBillingLib\Models\CreatePaymentProfileRequest;
 use AdvancedBillingLib\Models\Customer;
-use AdvancedBillingLib\Models\PaymentProfile;
 use AdvancedBillingLib\Tests\TestData\CustomerTestData;
 use AdvancedBillingLib\Tests\TestData\PaymentProfileTestData;
 use AdvancedBillingLib\Tests\TestFactory\TestCustomerRequestFactory;
-use AdvancedBillingLib\Tests\TestFactory\TestPaymentProfileFactory;
 use AdvancedBillingLib\Tests\TestFactory\TestPaymentProfileRequestFactory;
 
 final class PaymentProfilesControllerTestData
@@ -22,7 +20,6 @@ final class PaymentProfilesControllerTestData
         private AdvancedBillingClient $client,
         private TestCustomerRequestFactory $customerRequestFactory,
         private TestPaymentProfileRequestFactory $paymentProfileRequestFactory,
-        private TestPaymentProfileFactory $paymentProfileFactory
     )
     {
     }

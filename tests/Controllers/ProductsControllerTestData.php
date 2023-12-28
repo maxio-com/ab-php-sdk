@@ -13,6 +13,7 @@ use AdvancedBillingLib\Tests\TestData\ProductTestData;
 use AdvancedBillingLib\Tests\TestFactory\TestProductFactory;
 use AdvancedBillingLib\Tests\TestFactory\TestProductFamilyRequestFactory;
 use AdvancedBillingLib\Tests\TestFactory\TestProductRequestFactory;
+use DateTime;
 
 final class ProductsControllerTestData
 {
@@ -47,8 +48,8 @@ final class ProductsControllerTestData
 
     public function getExpectedProduct(
         int $productId,
-        string $createdAt,
-        string $updatedAt,
+        DateTime $createdAt,
+        DateTime $updatedAt,
         int $productFamilyId,
         string $productFamilyCreatedAt,
         string $productFamilyUpdatedAt,

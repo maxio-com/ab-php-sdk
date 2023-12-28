@@ -43,7 +43,6 @@ final class PaymentProfilesControllerTest extends TestCase
             $this->client,
             new TestCustomerRequestFactory(),
             new TestPaymentProfileRequestFactory(),
-            new TestPaymentProfileFactory()
         );
         $this->assertions = new PaymentProfilesControllerTestAssertions($this);
     }

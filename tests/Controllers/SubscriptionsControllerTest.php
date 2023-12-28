@@ -39,7 +39,24 @@ final class SubscriptionsControllerTest extends TestCase
             );
         $subscription = $response->getSubscription();
 
-        $this->assertions->assertCreatedSubscriptionHasExpectedData($subscription);
+        $this->assertions->assertCreatedSubscriptionHasExpectedData(
+            $this->testData->getExpectedSubscriptionWithoutBillingAmount(
+                $subscription->getId(),
+                $subscription->getCreatedAt(),
+                $subscription->getUpdatedAt(),
+                $subscription->getActivatedAt(),
+                $customer,
+                $product,
+                $paymentProfile,
+                $subscription->getProductPricePointId(),
+                $subscription->getNextProductPricePointId(),
+                $subscription->getSignupPaymentId(),
+                $subscription->getCurrentPeriodStartedAt(),
+                $subscription->getNextAssessmentAt(),
+                $subscription->getCurrentPeriodEndsAt(),
+            ),
+            $subscription
+        );
 
         $this->cleaner->removeSubscriptionById($subscription->getId(), $customer->getId());
         $this->cleaner->removeCustomerById($customer->getId());

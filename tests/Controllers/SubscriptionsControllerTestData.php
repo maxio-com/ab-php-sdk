@@ -20,6 +20,7 @@ use AdvancedBillingLib\Tests\TestFactory\TestProductFamilyRequestFactory;
 use AdvancedBillingLib\Tests\TestFactory\TestProductRequestFactory;
 use AdvancedBillingLib\Tests\TestFactory\TestSubscriptionFactory;
 use AdvancedBillingLib\Tests\TestFactory\TestSubscriptionRequestFactory;
+use DateTime;
 
 final class SubscriptionsControllerTestData
 {
@@ -38,21 +39,53 @@ final class SubscriptionsControllerTestData
 
     public function getExpectedSubscription(
         int $subscriptionId,
-        string $createdAt,
-        string $updatedAt,
-        string $activatedAt,
+        DateTime $createdAt,
+        DateTime $updatedAt,
+        DateTime $activatedAt,
         Customer $customer,
         Product $product,
         CreatedPaymentProfile $paymentProfile,
         int $productPricePointId,
         ?int $nextProductPricePointId,
         int $signupPaymentId,
-        string $currentPeriodStartedAt,
-        string $nextAssessmentAt,
-        string $currentPeriodEndsAt
+        DateTime $currentPeriodStartedAt,
+        DateTime $nextAssessmentAt,
+        DateTime $currentPeriodEndsAt
     ): Subscription
     {
         return $this->subscriptionFactory->create(
+            $subscriptionId,
+            $createdAt,
+            $updatedAt,
+            $activatedAt,
+            $customer,
+            $product,
+            $this->paymentProfileFactory->fromCreatedPaymentProfile($paymentProfile),
+            $productPricePointId,
+            $nextProductPricePointId,
+            $signupPaymentId,
+            $currentPeriodStartedAt,
+            $nextAssessmentAt,
+            $currentPeriodEndsAt
+        );
+    }
+    public function getExpectedSubscriptionWithoutBillingAmount(
+        int $subscriptionId,
+        DateTime $createdAt,
+        DateTime $updatedAt,
+        DateTime $activatedAt,
+        Customer $customer,
+        Product $product,
+        CreatedPaymentProfile $paymentProfile,
+        int $productPricePointId,
+        ?int $nextProductPricePointId,
+        int $signupPaymentId,
+        DateTime $currentPeriodStartedAt,
+        DateTime $nextAssessmentAt,
+        DateTime $currentPeriodEndsAt
+    ): Subscription
+    {
+        return $this->subscriptionFactory->createWithoutBillingAmount(
             $subscriptionId,
             $createdAt,
             $updatedAt,
@@ -76,14 +109,6 @@ final class SubscriptionsControllerTestData
     ): CreateSubscriptionRequest
     {
         return $this->subscriptionRequestFactory->create($customerId, $productId, $paymentProfileId);
-    }
-
-    public function getRequestWithNonExistingCustomer(int $productId, int $paymentProfileId): CreateSubscriptionRequest
-    {
-        return $this->subscriptionRequestFactory->createCreateSubscriptionRequestWithNonExistingCustomer(
-            $productId,
-            $paymentProfileId
-        );
     }
 
     public function loadProductFamily(): ProductFamily
@@ -119,25 +144,6 @@ final class SubscriptionsControllerTestData
             ->getPaymentProfilesController()
             ->createPaymentProfile($this->paymentProfileRequestFactory->create($customerId))
             ->getPaymentProfile();
-    }
-
-    public function loadProductFamilyTwo(): ProductFamily
-    {
-        return $this->client
-            ->getProductFamiliesController()
-            ->createProductFamily($this->productFamilyRequestFactory->create(ProductFamilyTestData::NAME_SEVEN))
-            ->getProductFamily();
-    }
-
-    public function loadProductTwo(int $productFamilyId): Product
-    {
-        return $this->client
-            ->getProductsController()
-            ->createProduct(
-                $productFamilyId,
-                $this->productRequestFactory->create(ProductTestData::NAME_THREE, ProductTestData::HANDLE_THREE)
-            )
-            ->getProduct();
     }
 
     public function loadProductFamilyThree(): ProductFamily
