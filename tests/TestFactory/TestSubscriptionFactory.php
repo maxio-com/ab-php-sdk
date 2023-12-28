@@ -5,18 +5,29 @@ declare(strict_types=1);
 namespace AdvancedBillingLib\Tests\TestFactory;
 
 use AdvancedBillingLib\Models\Builders\SubscriptionBuilder;
+use AdvancedBillingLib\Models\Customer;
+use AdvancedBillingLib\Models\PaymentProfile;
+use AdvancedBillingLib\Models\Product;
 use AdvancedBillingLib\Models\Subscription;
+use AdvancedBillingLib\Tests\TestData\SubscriptionTestData;
 
 final class TestSubscriptionFactory
 {
-    public function __construct(
-        private TestCustomerFactory $customerFactory,
-        private TestProductFactory $productFactory,
-        private TestPaymentProfileFactory $paymentProfileFactory
-    ) {
-    }
-
-    public function createWithDefaultValuesAndCustomId(int $id): Subscription
+    public function create(
+        int $id,
+        string $createdAt,
+        string $updatedAt,
+        string $activatedAt,
+        Customer $customer,
+        Product $product,
+        PaymentProfile $paymentProfile,
+        int $productPricePointId,
+        ?int $nextProductPricePointId,
+        int $signupPaymentId,
+        string $currentPeriodStartedAt,
+        string $nextAssessmentAt,
+        string $currentPeriodEndsAt
+    ): Subscription
     {
         return SubscriptionBuilder::init()
             ->id($id)
@@ -25,23 +36,23 @@ final class TestSubscriptionFactory
             ->totalRevenueInCents(SubscriptionTestData::TOTAL_REVENUE_IN_CENTS)
             ->productPriceInCents(SubscriptionTestData::PRODUCT_PRICE_IN_CENTS)
             ->productVersionNumber(SubscriptionTestData::PRODUCT_VERSION_NUMBER)
-            ->currentPeriodEndsAt(SubscriptionTestData::CURRENT_PERIOD_ENDS_AT)
-            ->nextAssessmentAt(SubscriptionTestData::NEXT_ASSESSMENT_AT)
-            ->activatedAt(SubscriptionTestData::ACTIVATED_AT)
-            ->createdAt(SubscriptionTestData::CREATED_AT)
-            ->updatedAt(SubscriptionTestData::UPDATED_AT)
-            ->currentPeriodStartedAt(SubscriptionTestData::CURRENT_PERIOD_STARTED_AT)
+            ->currentPeriodEndsAt($currentPeriodEndsAt)
+            ->nextAssessmentAt($nextAssessmentAt)
+            ->activatedAt($activatedAt)
+            ->createdAt($createdAt)
+            ->updatedAt($updatedAt)
+            ->currentPeriodStartedAt($currentPeriodStartedAt)
             ->previousState(SubscriptionTestData::PREVIOUS_STATE)
-            ->signupPaymentId(SubscriptionTestData::SIGNUP_PAYMENT_ID)
+            ->signupPaymentId($signupPaymentId)
             ->signupRevenue(SubscriptionTestData::SIGNUP_REVENUE)
             ->paymentCollectionMethod(SubscriptionTestData::PAYMENT_COLLECTION_METHOD)
-            ->customer($this->customerFactory->createWithDefaultValues())
-            ->product($this->productFactory->createWithDefaultValues())
-            ->creditCard($this->paymentProfileFactory->createWithDefaultValues())
+            ->customer($customer)
+            ->product($product)
+            ->creditCard($paymentProfile)
             ->paymentType(SubscriptionTestData::PAYMENT_TYPE)
             ->couponCodes(SubscriptionTestData::COUPON_CODES)
             ->currentBillingAmountInCents(SubscriptionTestData::CURRENT_BILLING_AMOUNT_IN_CENTS)
-            ->productPricePointId(SubscriptionTestData::PRODUCT_PRICE_POINT_ID)
+            ->productPricePointId($productPricePointId)
             ->productPricePointType(SubscriptionTestData::PRODUCT_PRICE_POINT_TYPE)
             ->currency(SubscriptionTestData::CURRENCY)
             ->creditBalanceInCents(SubscriptionTestData::CREDIT_BALANCE_IN_CENTS)
@@ -65,7 +76,7 @@ final class TestSubscriptionFactory
             ->automaticallyResumeAt(SubscriptionTestData::AUTOMATICALLY_RESUME_AT)
             ->offerId(SubscriptionTestData::OFFER_ID)
             ->payerId(SubscriptionTestData::PAYER_ID)
-            ->nextProductPricePointId(SubscriptionTestData::NEXT_PRODUCT_PRICE_POINT_ID)
+            ->nextProductPricePointId($nextProductPricePointId)
             ->netTerms(SubscriptionTestData::NET_TERMS)
             ->storedCredentialTransactionId(SubscriptionTestData::STORED_CREDENTIAL_TRANSACTION_ID)
             ->reference(SubscriptionTestData::REFERENCE)
