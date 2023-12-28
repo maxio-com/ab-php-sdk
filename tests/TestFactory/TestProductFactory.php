@@ -8,6 +8,7 @@ use AdvancedBillingLib\Models\Builders\ProductBuilder;
 use AdvancedBillingLib\Models\Product;
 use AdvancedBillingLib\Tests\TestData\ProductFamilyTestData;
 use AdvancedBillingLib\Tests\TestData\ProductTestData;
+use DateTime;
 
 final class TestProductFactory
 {
@@ -17,8 +18,8 @@ final class TestProductFactory
 
     public function create(
         int $productId,
-        string $createdAt,
-        string $updatedAt,
+        DateTime $createdAt,
+        DateTime $updatedAt,
         int $productFamilyId,
         string $productFamilyCreatedAt,
         string $productFamilyUpdatedAt,

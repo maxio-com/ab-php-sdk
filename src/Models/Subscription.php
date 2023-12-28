@@ -1,7 +1,5 @@
 <?php
-
 declare(strict_types=1);
-
 /*
  * AdvancedBilling
  *
@@ -11,6 +9,7 @@ declare(strict_types=1);
 namespace AdvancedBillingLib\Models;
 
 use AdvancedBillingLib\ApiHelper;
+use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
 class Subscription implements \JsonSerializable
@@ -19,39 +18,34 @@ class Subscription implements \JsonSerializable
      * @var int|null
      */
     private $id;
-
     /**
      * @var string|null
      */
     private $state;
-
     /**
      * @var int|null
      */
     private $balanceInCents;
-
     /**
      * @var int|null
      */
     private $totalRevenueInCents;
-
     /**
      * @var int|null
      */
     private $productPriceInCents;
-
     /**
      * @var int|null
      */
     private $productVersionNumber;
 
     /**
-     * @var string|null
+     * @var \DateTime|null
      */
     private $currentPeriodEndsAt;
 
     /**
-     * @var string|null
+     * @var \DateTime|null
      */
     private $nextAssessmentAt;
 
@@ -59,14 +53,13 @@ class Subscription implements \JsonSerializable
      * @var array
      */
     private $trialStartedAt = [];
-
     /**
      * @var array
      */
     private $trialEndedAt = [];
 
     /**
-     * @var string|null
+     * @var \DateTime|null
      */
     private $activatedAt;
 
@@ -76,12 +69,12 @@ class Subscription implements \JsonSerializable
     private $expiresAt = [];
 
     /**
-     * @var string|null
+     * @var \DateTime|null
      */
     private $createdAt;
 
     /**
-     * @var string|null
+     * @var \DateTime|null
      */
     private $updatedAt;
 
@@ -89,24 +82,21 @@ class Subscription implements \JsonSerializable
      * @var array
      */
     private $cancellationMessage = [];
-
     /**
      * @var array
      */
     private $cancellationMethod = [];
-
     /**
      * @var array
      */
     private $cancelAtEndOfPeriod = [];
-
     /**
      * @var array
      */
     private $canceledAt = [];
 
     /**
-     * @var string|null
+     * @var \DateTime|null
      */
     private $currentPeriodStartedAt;
 
@@ -114,212 +104,170 @@ class Subscription implements \JsonSerializable
      * @var string|null
      */
     private $previousState;
-
     /**
      * @var int|null
      */
     private $signupPaymentId;
-
     /**
      * @var string|null
      */
     private $signupRevenue;
-
     /**
      * @var array
      */
     private $delayedCancelAt = [];
-
     /**
      * @var array
      */
     private $couponCode = [];
-
     /**
      * @var array
      */
     private $snapDay = [];
-
     /**
      * @var string|null
      */
     private $paymentCollectionMethod = PaymentCollectionMethod::AUTOMATIC;
-
     /**
      * @var Customer|null
      */
     private $customer;
-
     /**
      * @var Product|null
      */
     private $product;
-
     /**
      * @var PaymentProfile|null
      */
     private $creditCard;
-
     /**
      * @var array
      */
     private $group = [];
-
     /**
      * @var SubscriptionBankAccount|null
      */
     private $bankAccount;
-
     /**
      * @var array
      */
     private $paymentType = [];
-
     /**
      * @var array
      */
     private $referralCode = [];
-
     /**
      * @var array
      */
     private $nextProductId = [];
-
     /**
      * @var array
      */
     private $nextProductHandle = [];
-
     /**
      * @var array
      */
     private $couponUseCount = [];
-
     /**
      * @var array
      */
     private $couponUsesAllowed = [];
-
     /**
      * @var array
      */
     private $reasonCode = [];
-
     /**
      * @var array
      */
     private $automaticallyResumeAt = [];
-
     /**
      * @var string[]|null
      */
     private $couponCodes;
-
     /**
      * @var array
      */
     private $offerId = [];
-
     /**
      * @var array
      */
     private $payerId = [];
-
     /**
      * @var int|null
      */
     private $currentBillingAmountInCents;
-
     /**
      * @var int|null
      */
     private $productPricePointId;
-
     /**
      * @var string|null
      */
     private $productPricePointType;
-
     /**
      * @var array
      */
     private $nextProductPricePointId = [];
-
     /**
      * @var array
      */
     private $netTerms = [];
-
     /**
      * @var array
      */
     private $storedCredentialTransactionId = [];
-
     /**
      * @var array
      */
     private $reference = [];
-
     /**
      * @var array
      */
     private $onHoldAt = [];
-
     /**
      * @var bool|null
      */
     private $prepaidDunning;
-
     /**
      * @var SubscriptionIncludedCoupon[]|null
      */
     private $coupons;
-
     /**
      * @var bool|null
      */
     private $dunningCommunicationDelayEnabled = false;
-
     /**
      * @var array
      */
     private $dunningCommunicationDelayTimeZone = [];
-
     /**
      * @var array
      */
     private $receivesInvoiceEmails = [];
-
     /**
      * @var array
      */
     private $locale = [];
-
     /**
      * @var string|null
      */
     private $currency;
-
     /**
      * @var array
      */
     private $scheduledCancellationAt = [];
-
     /**
      * @var int|null
      */
     private $creditBalanceInCents;
-
     /**
      * @var int|null
      */
     private $prepaymentBalanceInCents;
-
     /**
      * @var PrepaidConfiguration|null
      */
     private $prepaidConfiguration;
-
     /**
      * @var string|null
      */
@@ -559,7 +507,7 @@ class Subscription implements \JsonSerializable
      * Timestamp relating to the end of the current (recurring) period (i.e.,when the next regularly
      * scheduled attempted charge will occur)
      */
-    public function getCurrentPeriodEndsAt(): ?string
+    public function getCurrentPeriodEndsAt(): ?\DateTime
     {
         return $this->currentPeriodEndsAt;
     }
@@ -570,9 +518,9 @@ class Subscription implements \JsonSerializable
      * scheduled attempted charge will occur)
      *
      * @maps current_period_ends_at
-     * @factory \AdvancedBillingLib\Models\StringDate::toString
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setCurrentPeriodEndsAt(?string $currentPeriodEndsAt): void
+    public function setCurrentPeriodEndsAt(?\DateTime $currentPeriodEndsAt): void
     {
         $this->currentPeriodEndsAt = $currentPeriodEndsAt;
     }
@@ -585,7 +533,7 @@ class Subscription implements \JsonSerializable
      * stop because a payment was missed) but the,next_assessment_at will be scheduled for the auto-retry
      * time (i.e. 24,hours in the future, in some cases)
      */
-    public function getNextAssessmentAt(): ?string
+    public function getNextAssessmentAt(): ?\DateTime
     {
         return $this->nextAssessmentAt;
     }
@@ -599,9 +547,9 @@ class Subscription implements \JsonSerializable
      * time (i.e. 24,hours in the future, in some cases)
      *
      * @maps next_assessment_at
-     * @factory \AdvancedBillingLib\Models\StringDate::toString
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setNextAssessmentAt(?string $nextAssessmentAt): void
+    public function setNextAssessmentAt(?\DateTime $nextAssessmentAt): void
     {
         $this->nextAssessmentAt = $nextAssessmentAt;
     }
@@ -610,7 +558,7 @@ class Subscription implements \JsonSerializable
      * Returns Trial Started At.
      * Timestamp for when the trial period (if any) began
      */
-    public function getTrialStartedAt(): ?string
+    public function getTrialStartedAt(): ?\DateTime
     {
         if (count($this->trialStartedAt) == 0) {
             return null;
@@ -623,9 +571,9 @@ class Subscription implements \JsonSerializable
      * Timestamp for when the trial period (if any) began
      *
      * @maps trial_started_at
-     * @factory \AdvancedBillingLib\Models\StringDate::toString
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setTrialStartedAt(?string $trialStartedAt): void
+    public function setTrialStartedAt(?\DateTime $trialStartedAt): void
     {
         $this->trialStartedAt['value'] = $trialStartedAt;
     }
@@ -643,7 +591,7 @@ class Subscription implements \JsonSerializable
      * Returns Trial Ended At.
      * Timestamp for when the trial period (if any) ended
      */
-    public function getTrialEndedAt(): ?string
+    public function getTrialEndedAt(): ?\DateTime
     {
         if (count($this->trialEndedAt) == 0) {
             return null;
@@ -656,9 +604,9 @@ class Subscription implements \JsonSerializable
      * Timestamp for when the trial period (if any) ended
      *
      * @maps trial_ended_at
-     * @factory \AdvancedBillingLib\Models\StringDate::toString
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setTrialEndedAt(?string $trialEndedAt): void
+    public function setTrialEndedAt(?\DateTime $trialEndedAt): void
     {
         $this->trialEndedAt['value'] = $trialEndedAt;
     }
@@ -677,7 +625,7 @@ class Subscription implements \JsonSerializable
      * Timestamp for when the subscription began (i.e. when it came out of trial, or when it began in the
      * case of no trial)
      */
-    public function getActivatedAt(): ?string
+    public function getActivatedAt(): ?\DateTime
     {
         return $this->activatedAt;
     }
@@ -688,9 +636,9 @@ class Subscription implements \JsonSerializable
      * case of no trial)
      *
      * @maps activated_at
-     * @factory \AdvancedBillingLib\Models\StringDate::toString
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setActivatedAt(?string $activatedAt): void
+    public function setActivatedAt(?\DateTime $activatedAt): void
     {
         $this->activatedAt = $activatedAt;
     }
@@ -699,7 +647,7 @@ class Subscription implements \JsonSerializable
      * Returns Expires At.
      * Timestamp giving the expiration date of this subscription (if any)
      */
-    public function getExpiresAt(): ?string
+    public function getExpiresAt(): ?\DateTime
     {
         if (count($this->expiresAt) == 0) {
             return null;
@@ -712,9 +660,9 @@ class Subscription implements \JsonSerializable
      * Timestamp giving the expiration date of this subscription (if any)
      *
      * @maps expires_at
-     * @factory \AdvancedBillingLib\Models\StringDate::toString
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setExpiresAt(?string $expiresAt): void
+    public function setExpiresAt(?\DateTime $expiresAt): void
     {
         $this->expiresAt['value'] = $expiresAt;
     }
@@ -732,7 +680,7 @@ class Subscription implements \JsonSerializable
      * Returns Created At.
      * The creation date for this subscription
      */
-    public function getCreatedAt(): ?string
+    public function getCreatedAt(): ?\DateTime
     {
         return $this->createdAt;
     }
@@ -742,9 +690,9 @@ class Subscription implements \JsonSerializable
      * The creation date for this subscription
      *
      * @maps created_at
-     * @factory \AdvancedBillingLib\Models\StringDate::toString
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setCreatedAt(?string $createdAt): void
+    public function setCreatedAt(?\DateTime $createdAt): void
     {
         $this->createdAt = $createdAt;
     }
@@ -753,7 +701,7 @@ class Subscription implements \JsonSerializable
      * Returns Updated At.
      * The date of last update for this subscription
      */
-    public function getUpdatedAt(): ?string
+    public function getUpdatedAt(): ?\DateTime
     {
         return $this->updatedAt;
     }
@@ -763,9 +711,9 @@ class Subscription implements \JsonSerializable
      * The date of last update for this subscription
      *
      * @maps updated_at
-     * @factory \AdvancedBillingLib\Models\StringDate::toString
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setUpdatedAt(?string $updatedAt): void
+    public function setUpdatedAt(?\DateTime $updatedAt): void
     {
         $this->updatedAt = $updatedAt;
     }
@@ -874,7 +822,7 @@ class Subscription implements \JsonSerializable
      * Returns Canceled At.
      * The timestamp of the most recent cancellation
      */
-    public function getCanceledAt(): ?string
+    public function getCanceledAt(): ?\DateTime
     {
         if (count($this->canceledAt) == 0) {
             return null;
@@ -887,9 +835,9 @@ class Subscription implements \JsonSerializable
      * The timestamp of the most recent cancellation
      *
      * @maps canceled_at
-     * @factory \AdvancedBillingLib\Models\StringDate::toString
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setCanceledAt(?string $canceledAt): void
+    public function setCanceledAt(?\DateTime $canceledAt): void
     {
         $this->canceledAt['value'] = $canceledAt;
     }
@@ -907,7 +855,7 @@ class Subscription implements \JsonSerializable
      * Returns Current Period Started At.
      * Timestamp relating to the start of the current (recurring) period
      */
-    public function getCurrentPeriodStartedAt(): ?string
+    public function getCurrentPeriodStartedAt(): ?\DateTime
     {
         return $this->currentPeriodStartedAt;
     }
@@ -917,9 +865,9 @@ class Subscription implements \JsonSerializable
      * Timestamp relating to the start of the current (recurring) period
      *
      * @maps current_period_started_at
-     * @factory \AdvancedBillingLib\Models\StringDate::toString
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setCurrentPeriodStartedAt(?string $currentPeriodStartedAt): void
+    public function setCurrentPeriodStartedAt(?\DateTime $currentPeriodStartedAt): void
     {
         $this->currentPeriodStartedAt = $currentPeriodStartedAt;
     }
@@ -993,7 +941,7 @@ class Subscription implements \JsonSerializable
      * Returns Delayed Cancel At.
      * Timestamp for when the subscription is currently set to cancel.
      */
-    public function getDelayedCancelAt(): ?string
+    public function getDelayedCancelAt(): ?\DateTime
     {
         if (count($this->delayedCancelAt) == 0) {
             return null;
@@ -1006,9 +954,9 @@ class Subscription implements \JsonSerializable
      * Timestamp for when the subscription is currently set to cancel.
      *
      * @maps delayed_cancel_at
-     * @factory \AdvancedBillingLib\Models\StringDate::toString
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setDelayedCancelAt(?string $delayedCancelAt): void
+    public function setDelayedCancelAt(?\DateTime $delayedCancelAt): void
     {
         $this->delayedCancelAt['value'] = $delayedCancelAt;
     }
@@ -1456,7 +1404,7 @@ class Subscription implements \JsonSerializable
      * Returns Automatically Resume At.
      * The date the subscription is scheduled to automatically resume from the on_hold state.
      */
-    public function getAutomaticallyResumeAt(): ?string
+    public function getAutomaticallyResumeAt(): ?\DateTime
     {
         if (count($this->automaticallyResumeAt) == 0) {
             return null;
@@ -1469,9 +1417,9 @@ class Subscription implements \JsonSerializable
      * The date the subscription is scheduled to automatically resume from the on_hold state.
      *
      * @maps automatically_resume_at
-     * @factory \AdvancedBillingLib\Models\StringDate::toString
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setAutomaticallyResumeAt(?string $automaticallyResumeAt): void
+    public function setAutomaticallyResumeAt(?\DateTime $automaticallyResumeAt): void
     {
         $this->automaticallyResumeAt['value'] = $automaticallyResumeAt;
     }
@@ -1783,7 +1731,7 @@ class Subscription implements \JsonSerializable
      * Returns On Hold At.
      * The timestamp of the most recent on hold action.
      */
-    public function getOnHoldAt(): ?string
+    public function getOnHoldAt(): ?\DateTime
     {
         if (count($this->onHoldAt) == 0) {
             return null;
@@ -1796,9 +1744,9 @@ class Subscription implements \JsonSerializable
      * The timestamp of the most recent on hold action.
      *
      * @maps on_hold_at
-     * @factory \AdvancedBillingLib\Models\StringDate::toString
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setOnHoldAt(?string $onHoldAt): void
+    public function setOnHoldAt(?\DateTime $onHoldAt): void
     {
         $this->onHoldAt['value'] = $onHoldAt;
     }
@@ -1997,7 +1945,7 @@ class Subscription implements \JsonSerializable
     /**
      * Returns Scheduled Cancellation At.
      */
-    public function getScheduledCancellationAt(): ?string
+    public function getScheduledCancellationAt(): ?\DateTime
     {
         if (count($this->scheduledCancellationAt) == 0) {
             return null;
@@ -2009,9 +1957,9 @@ class Subscription implements \JsonSerializable
      * Sets Scheduled Cancellation At.
      *
      * @maps scheduled_cancellation_at
-     * @factory \AdvancedBillingLib\Models\StringDate::toString
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setScheduledCancellationAt(?string $scheduledCancellationAt): void
+    public function setScheduledCancellationAt(?\DateTime $scheduledCancellationAt): void
     {
         $this->scheduledCancellationAt['value'] = $scheduledCancellationAt;
     }
@@ -2133,28 +2081,40 @@ class Subscription implements \JsonSerializable
             $json['product_version_number'] = $this->productVersionNumber;
         }
         if (isset($this->currentPeriodEndsAt)) {
-            $json['current_period_ends_at'] = $this->currentPeriodEndsAt;
+            $json['current_period_ends_at'] =
+                DateTimeHelper::toRfc3339DateTime(
+                    $this->currentPeriodEndsAt
+                );
         }
         if (isset($this->nextAssessmentAt)) {
-            $json['next_assessment_at'] = $this->nextAssessmentAt;
+            $json['next_assessment_at'] = DateTimeHelper::toRfc3339DateTime($this->nextAssessmentAt);
         }
         if (!empty($this->trialStartedAt)) {
-            $json['trial_started_at'] = $this->trialStartedAt['value'];
+            $json['trial_started_at'] =
+                DateTimeHelper::toRfc3339DateTime(
+                    $this->trialStartedAt['value']
+                );
         }
         if (!empty($this->trialEndedAt)) {
-            $json['trial_ended_at'] = $this->trialEndedAt['value'];
+            $json['trial_ended_at'] =
+                DateTimeHelper::toRfc3339DateTime(
+                    $this->trialEndedAt['value']
+                );
         }
         if (isset($this->activatedAt)) {
-            $json['activated_at'] = $this->activatedAt;
+            $json['activated_at'] = DateTimeHelper::toRfc3339DateTime($this->activatedAt);
         }
         if (!empty($this->expiresAt)) {
-            $json['expires_at'] = $this->expiresAt['value'];
+            $json['expires_at'] =
+                DateTimeHelper::toRfc3339DateTime(
+                    $this->expiresAt['value']
+                );
         }
         if (isset($this->createdAt)) {
-            $json['created_at'] = $this->createdAt;
+            $json['created_at'] = DateTimeHelper::toRfc3339DateTime($this->createdAt);
         }
         if (isset($this->updatedAt)) {
-            $json['updated_at'] = $this->updatedAt;
+            $json['updated_at'] = DateTimeHelper::toRfc3339DateTime($this->updatedAt);
         }
         if (!empty($this->cancellationMessage)) {
             $json['cancellation_message'] = $this->cancellationMessage['value'];
@@ -2169,10 +2129,16 @@ class Subscription implements \JsonSerializable
             $json['cancel_at_end_of_period'] = $this->cancelAtEndOfPeriod['value'];
         }
         if (!empty($this->canceledAt)) {
-            $json['canceled_at'] = $this->canceledAt['value'];
+            $json['canceled_at'] =
+                DateTimeHelper::toRfc3339DateTime(
+                    $this->canceledAt['value']
+                );
         }
         if (isset($this->currentPeriodStartedAt)) {
-            $json['current_period_started_at'] = $this->currentPeriodStartedAt;
+            $json['current_period_started_at'] =
+                DateTimeHelper::toRfc3339DateTime(
+                    $this->currentPeriodStartedAt
+                );
         }
         if (isset($this->previousState)) {
             $json['previous_state'] = SubscriptionState::checkValue($this->previousState);
@@ -2184,7 +2150,10 @@ class Subscription implements \JsonSerializable
             $json['signup_revenue'] = $this->signupRevenue;
         }
         if (!empty($this->delayedCancelAt)) {
-            $json['delayed_cancel_at'] = $this->delayedCancelAt['value'];
+            $json['delayed_cancel_at'] =
+                DateTimeHelper::toRfc3339DateTime(
+                    $this->delayedCancelAt['value']
+                );
         }
         if (!empty($this->couponCode)) {
             $json['coupon_code'] = $this->couponCode['value'];
@@ -2239,7 +2208,10 @@ class Subscription implements \JsonSerializable
             $json['reason_code'] = $this->reasonCode['value'];
         }
         if (!empty($this->automaticallyResumeAt)) {
-            $json['automatically_resume_at'] = $this->automaticallyResumeAt['value'];
+            $json['automatically_resume_at'] =
+                DateTimeHelper::toRfc3339DateTime(
+                    $this->automaticallyResumeAt['value']
+                );
         }
         if (isset($this->couponCodes)) {
             $json['coupon_codes'] = $this->couponCodes;
@@ -2272,7 +2244,10 @@ class Subscription implements \JsonSerializable
             $json['reference'] = $this->reference['value'];
         }
         if (!empty($this->onHoldAt)) {
-            $json['on_hold_at'] = $this->onHoldAt['value'];
+            $json['on_hold_at'] =
+                DateTimeHelper::toRfc3339DateTime(
+                    $this->onHoldAt['value']
+                );
         }
         if (isset($this->prepaidDunning)) {
             $json['prepaid_dunning'] = $this->prepaidDunning;
@@ -2296,7 +2271,10 @@ class Subscription implements \JsonSerializable
             $json['currency'] = $this->currency;
         }
         if (!empty($this->scheduledCancellationAt)) {
-            $json['scheduled_cancellation_at'] = $this->scheduledCancellationAt['value'];
+            $json['scheduled_cancellation_at'] =
+                DateTimeHelper::toRfc3339DateTime(
+                    $this->scheduledCancellationAt['value']
+                );
         }
         if (isset($this->creditBalanceInCents)) {
             $json['credit_balance_in_cents'] = $this->creditBalanceInCents;

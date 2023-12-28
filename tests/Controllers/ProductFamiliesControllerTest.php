@@ -7,7 +7,6 @@ namespace AdvancedBillingLib\Tests\Controllers;
 use AdvancedBillingLib\Tests\TestCase;
 use AdvancedBillingLib\Tests\TestFactory\TestProductFamilyFactory;
 use AdvancedBillingLib\Tests\TestFactory\TestProductFamilyRequestFactory;
-use AdvancedBillingLib\Tests\TestFactory\TestProductFamilyResponseFactory;
 
 final class ProductFamiliesControllerTest extends TestCase
 {
@@ -62,15 +61,7 @@ final class ProductFamiliesControllerTest extends TestCase
         $this->testData = new ProductFamiliesControllerTestData(
             new TestProductFamilyRequestFactory(),
             new TestProductFamilyFactory(),
-            new TestProductFamilyResponseFactory()
         );
         $this->assertions = new ProductFamiliesControllerTestAssertions($this);
     }
-
-//    protected function tearDown(): void
-//    {
-//        $this->client->getSitesController()->clearSite();
-//
-//        parent::tearDown();
-//    }
 }

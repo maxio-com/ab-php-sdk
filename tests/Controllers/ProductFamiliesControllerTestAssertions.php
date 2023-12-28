@@ -29,21 +29,4 @@ final class ProductFamiliesControllerTestAssertions
         $this->testCase->expectException(ApiException::class);
         $this->testCase->expectExceptionCode(TestStatusCode::UNPROCESSABLE_CONTENT);
     }
-
-    /**
-     * @param array<int, ProductFamilyResponse> $expectedListResponse
-     * @param array<int, ProductFamilyResponse> $response
-     */
-    public function assertProductFamiliesListReturned(array $expectedListResponse, array $response): void
-    {
-        $this->testCase::assertEquals($expectedListResponse, $response);
-    }
-
-    /**
-     * @param array<int, ProductFamilyResponse> $response
-     */
-    public function assertEmptyProductFamiliesListReturned(array $response): void
-    {
-        $this->testCase::assertEmpty($response);
-    }
 }

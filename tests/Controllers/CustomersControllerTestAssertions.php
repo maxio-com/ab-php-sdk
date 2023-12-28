@@ -24,12 +24,6 @@ final class CustomersControllerTestAssertions
         $this->testCase::assertEquals($expectedCustomer->jsonSerialize(), $customer->jsonSerialize());
     }
 
-    public function assertExceptionWasThrown(): void
-    {
-        $this->testCase->expectException(CustomerErrorResponseException::class);
-        $this->testCase->expectExceptionCode(TestStatusCode::UNPROCESSABLE_CONTENT);
-    }
-
     public function assertExpectedCustomerWasReturned(Customer $expectedCustomer, Customer $customer): void
     {
         $this->testCase::assertEquals($expectedCustomer, $customer);
