@@ -47,7 +47,9 @@ jobs:
         SUB_DOMAIN: ${{ secrets.SUB_DOMAIN }}
         DOMAIN: ${{ secrets.DOMAIN }}
 
+
     - name: Cleanup Site
+      if: always()
       run: ./cleanupSite.sh
       env:
         BASIC_AUTH_USERNAME: ${{ secrets.BASIC_AUTH_USERNAME }}
