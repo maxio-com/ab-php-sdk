@@ -48,8 +48,8 @@ final class TestProductFactory
                     $productFamilyId,
                     $productFamilyCreatedAt,
                     $productFamilyUpdatedAt,
-                    ProductFamilyTestData::NAME_FOUR,
-                    ProductFamilyTestData::HANDLE_FOUR
+                    ProductFamilyTestData::NAME_THREE,
+                    ProductFamilyTestData::HANDLE_THREE
                 )
             )
             ->productPricePointName(ProductTestData::PRICE_POINT_NAME)

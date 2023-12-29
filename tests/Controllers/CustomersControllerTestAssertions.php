@@ -4,14 +4,19 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Tests\Controllers;
 
+use AdvancedBillingLib\AdvancedBillingClient;
 use AdvancedBillingLib\Exceptions\ApiException;
-use AdvancedBillingLib\Exceptions\CustomerErrorResponseException;
 use AdvancedBillingLib\Models\Customer;
 use AdvancedBillingLib\Models\CustomerResponse;
+use AdvancedBillingLib\Models\Subscription;
+use AdvancedBillingLib\Models\SubscriptionResponse;
+use AdvancedBillingLib\Tests\TestData\CustomerTestData;
 use AdvancedBillingLib\Tests\TestStatusCode;
 
 final class CustomersControllerTestAssertions
 {
+    private const EXPECTED_CUSTOMER_SUBSCRIPTIONS_NUMBER = 1;
+
     public function __construct(private CustomersControllerTest $testCase)
     {
     }
@@ -42,5 +47,38 @@ final class CustomersControllerTestAssertions
     public function assertCustomersReturned(array $expectedCustomersList, array $customersList): void
     {
         $this->testCase::assertEquals($expectedCustomersList, $customersList);
+    }
+
+    public function assertCustomerWasUpdated(Customer $customer, Customer $updatedCustomer): void
+    {
+        $this->testCase::assertNotEquals($customer, $updatedCustomer);
+        $this->testCase::assertEquals(CustomerTestData::UPDATED_FIRST_NAME, $updatedCustomer->getFirstName());
+        $this->testCase::assertEquals(CustomerTestData::UPDATED_LAST_NAME, $updatedCustomer->getLastName());
+    }
+
+    public function assertCustomerWasDeleted(AdvancedBillingClient $client): void
+    {
+        $customers = $client->getCustomersController()->listCustomers([]);
+
+        $this->testCase::assertEmpty($customers);
+    }
+
+    /**
+     * @param array<int, SubscriptionResponse> $subscriptions
+     */
+    public function assertCustomerSubscriptionsNotFound(array $subscriptions): void
+    {
+        $this->testCase::assertEmpty($subscriptions);
+    }
+
+    /**
+     * @param array<int, SubscriptionResponse> $subscriptions
+     */
+    public function assertCustomerSubscriptionsFound(array $subscriptions, Subscription $expectedSubscription): void
+    {
+        $this->testCase::assertCount(self::EXPECTED_CUSTOMER_SUBSCRIPTIONS_NUMBER, $subscriptions);
+
+        $subscription = $subscriptions[0];
+        $this->testCase::assertEquals($expectedSubscription, $subscription->getSubscription());
     }
 }

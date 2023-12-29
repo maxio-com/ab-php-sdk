@@ -115,7 +115,7 @@ final class SubscriptionsControllerTestData
     {
         return $this->client
             ->getProductFamiliesController()
-            ->createProductFamily($this->productFamilyRequestFactory->create(ProductFamilyTestData::NAME_SIX))
+            ->createProductFamily($this->productFamilyRequestFactory->create(ProductFamilyTestData::NAME_FIVE))
             ->getProductFamily();
     }
 
@@ -134,7 +134,7 @@ final class SubscriptionsControllerTestData
     {
         return $this->client
             ->getCustomersController()
-            ->createCustomer($this->customerRequestFactory->create())
+            ->createCustomer($this->customerRequestFactory->createCreateCustomerRequest())
             ->getCustomer();
     }
 
@@ -146,21 +146,21 @@ final class SubscriptionsControllerTestData
             ->getPaymentProfile();
     }
 
-    public function loadProductFamilyThree(): ProductFamily
+    public function loadProductFamilyTwo(): ProductFamily
     {
         return $this->client
             ->getProductFamiliesController()
-            ->createProductFamily($this->productFamilyRequestFactory->create(ProductFamilyTestData::NAME_EIGHT))
+            ->createProductFamily($this->productFamilyRequestFactory->create(ProductFamilyTestData::NAME_SIX))
             ->getProductFamily();
     }
 
-    public function loadProductThree(int $productFamilyId): Product
+    public function loadProductTwo(int $productFamilyId): Product
     {
         return $this->client
             ->getProductsController()
             ->createProduct(
                 $productFamilyId,
-                $this->productRequestFactory->create(ProductTestData::NAME_FOUR, ProductTestData::HANDLE_FOUR)
+                $this->productRequestFactory->create(ProductTestData::NAME_THREE, ProductTestData::HANDLE_THREE)
             )
             ->getProduct();
     }

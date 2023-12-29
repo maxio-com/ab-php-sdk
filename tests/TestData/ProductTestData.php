@@ -14,7 +14,7 @@ final class ProductTestData
     public const HANDLE_ONE = 'test-product';
     public const HANDLE_TWO = 'test-product-2';
     public const HANDLE_THREE = 'test-product-3';
-    public const HANDLE_FOUR = 'test-product-4';
+    public const HANDLE_FOUR = 'test-product-3';
     public const DESCRIPTION = 'test description';
     public const USE_SITE_EXCHANGE_RATE = true;
     public const REQUIRE_SHIPPING_ADDRESS = false;

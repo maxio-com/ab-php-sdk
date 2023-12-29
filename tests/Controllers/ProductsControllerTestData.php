@@ -31,7 +31,7 @@ final class ProductsControllerTestData
         return $this->client
             ->getProductFamiliesController()
             ->createProductFamily(
-                $this->productFamilyRequestFactory->create(ProductFamilyTestData::NAME_FOUR)
+                $this->productFamilyRequestFactory->create(ProductFamilyTestData::NAME_THREE)
             )
             ->getProductFamily();
     }
@@ -41,7 +41,7 @@ final class ProductsControllerTestData
         return $this->client
             ->getProductFamiliesController()
             ->createProductFamily(
-                $this->productFamilyRequestFactory->create(ProductFamilyTestData::NAME_FIVE)
+                $this->productFamilyRequestFactory->create(ProductFamilyTestData::NAME_FOUR)
             )
             ->getProductFamily();
     }

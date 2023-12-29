@@ -6,7 +6,7 @@ namespace AdvancedBillingLib\Tests\TestData;
 
 final class CustomerTestData
 {
-    public const NON_EXISTING_CUSTOMER_ID = 213431414321;
+    public const NOT_EXISTING_CUSTOMER_ID = 213431414321;
     public const FIRST_NAME = 'Example';
     public const LAST_NAME = 'Example';
     public const EMAIL = 'example@example.com';
@@ -30,4 +30,7 @@ final class CustomerTestData
     public const VAT_NUMBER = 'test vat number';
     public const PARENT_ID = null;
     public const LOCALE = null;
+    public const UPDATED_FIRST_NAME = 'UpdatedExample';
+    public const UPDATED_LAST_NAME = 'UpdatedExample';
+    public const NOT_EXISTING_CUSTOMER_REFERENCE = 'not existing reference';
 }

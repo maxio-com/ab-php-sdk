@@ -8,6 +8,10 @@ use AdvancedBillingLib\Tests\TestCase;
 use AdvancedBillingLib\Tests\TestFactory\TestCustomerFactory;
 use AdvancedBillingLib\Tests\TestFactory\TestCustomerRequestFactory;
 use AdvancedBillingLib\Tests\TestFactory\TestCustomerResponseFactory;
+use AdvancedBillingLib\Tests\TestFactory\TestPaymentProfileRequestFactory;
+use AdvancedBillingLib\Tests\TestFactory\TestProductFamilyRequestFactory;
+use AdvancedBillingLib\Tests\TestFactory\TestProductRequestFactory;
+use AdvancedBillingLib\Tests\TestFactory\TestSubscriptionRequestFactory;
 
 final class CustomersControllerTest extends TestCase
 {
@@ -21,7 +25,7 @@ final class CustomersControllerTest extends TestCase
     {
         $response = $this->client
             ->getCustomersController()
-            ->createCustomer($this->testData->createRequest());
+            ->createCustomer($this->testData->getCreateCustomerRequest());
         $customer = $response->getCustomer();
 
         $this->assertions->assertExpectedCustomerCreated(
@@ -41,11 +45,7 @@ final class CustomersControllerTest extends TestCase
      */
     public function test_ReadCustomer_ShouldReturnCustomer_WhenCustomerExists(): void
     {
-        $request = $this->testData->createRequest();
-        $customer = $this->client
-            ->getCustomersController()
-            ->createCustomer($request)
-            ->getCustomer();
+        $customer = $this->testData->loadCustomer();
 
         $response = $this->client
             ->getCustomersController()
@@ -72,10 +72,7 @@ final class CustomersControllerTest extends TestCase
      */
     public function test_ListCustomers_ShouldReturnListWithCreatedCustomer_WhenCustomerExists(): void
     {
-        $customer = $this->client
-            ->getCustomersController()
-            ->createCustomer($this->testData->createRequest())
-            ->getCustomer();
+        $customer = $this->testData->loadCustomer();
 
         $response = $this->client
             ->getCustomersController()
@@ -86,6 +83,121 @@ final class CustomersControllerTest extends TestCase
         $this->cleaner->removeCustomerById($customer->getId());
     }
 
+    /**
+     * @covers \AdvancedBillingLib\Controllers\CustomersController::updateCustomer
+     */
+    public function test_UpdateCustomer_ShouldUpdateCustomer_WhenCustomerFoundAndDataAreCorrect(): void
+    {
+        $customer = $this->testData->loadCustomer();
+
+        $updatedCustomer = $this->client
+            ->getCustomersController()
+            ->updateCustomer(
+                $customer->getId(),
+                $this->testData->getUpdateCustomerRequest()
+            )
+            ->getCustomer();
+
+        $this->assertions->assertCustomerWasUpdated($customer, $updatedCustomer);
+        $this->cleaner->removeCustomerById($customer->getId());
+    }
+
+    /**
+     * @covers \AdvancedBillingLib\Controllers\CustomersController::updateCustomer
+     */
+    public function test_UpdateCustomer_ShouldThrowExceptionWith404StatusCode_WhenCustomerNotFound(): void
+    {
+        $this->assertions->assertCustomerNotFound();
+        $this->client
+            ->getCustomersController()
+            ->updateCustomer(
+                $this->testData->getNotExistingCustomerId(),
+                $this->testData->getUpdateCustomerRequest()
+            )
+            ->getCustomer();
+    }
+
+    /**
+     * @covers \AdvancedBillingLib\Controllers\CustomersController::deleteCustomer
+     */
+    public function test_DeleteCustomer_ShouldDeleteCustomer_WhenCustomerExists(): void
+    {
+        $customer = $this->testData->loadCustomer();
+
+        $this->client->getCustomersController()->deleteCustomer($customer->getId());
+
+        $this->assertions->assertCustomerWasDeleted($this->client);
+    }
+
+    /**
+     * @covers \AdvancedBillingLib\Controllers\CustomersController::deleteCustomer
+     */
+    public function test_DeleteCustomer_ShouldThrowExceptionWith404StatusCode_WhenCustomerNotFound(): void
+    {
+        $this->assertions->assertCustomerNotFound();
+        $this->client->getCustomersController()->deleteCustomer($this->testData->getNotExistingCustomerId());
+    }
+
+    /**
+     * @covers \AdvancedBillingLib\Controllers\CustomersController::readCustomerByReference
+     */
+    public function test_ReadCustomerByReference_ShouldReturnCustomer_WhenFoundByReference(): void
+    {
+        $customer = $this->testData->loadCustomer();
+
+        $foundCustomer = $this->client
+            ->getCustomersController()
+            ->readCustomerByReference($customer->getReference())
+            ->getCustomer();
+
+        $this->assertions->assertExpectedCustomerWasReturned($customer, $foundCustomer);
+
+        $this->cleaner->removeCustomerById($customer->getId());
+    }
+
+    /**
+     * @covers \AdvancedBillingLib\Controllers\CustomersController::readCustomerByReference
+     */
+    public function test_ReadCustomerByReference_ShouldThrowExceptionWith404StatusCode_WhenCustomerNotFound(): void
+    {
+        $this->assertions->assertCustomerNotFound();
+        $this->client
+            ->getCustomersController()
+            ->readCustomerByReference($this->testData->getNotExistingCustomerReference())
+            ->getCustomer();
+    }
+
+    /**
+     * @covers \AdvancedBillingLib\Controllers\CustomersController::listCustomerSubscriptions
+     */
+    public function test_ListCustomerSubscriptions_ShouldReturnEmptyList_WhenCustomerDoesNotHaveAnySubscription(): void
+    {
+        $customer = $this->testData->loadCustomer();
+
+        $subscriptions = $this->client->getCustomersController()->listCustomerSubscriptions($customer->getId());
+
+        $this->assertions->assertCustomerSubscriptionsNotFound($subscriptions);
+
+        $this->cleaner->removeCustomerById($customer->getId());
+    }
+
+    /**
+     * @covers \AdvancedBillingLib\Controllers\CustomersController::listCustomerSubscriptions
+     */
+    public function test_ListCustomerSubscriptions_ShouldSubscriptionsList_WhenCustomerHasOneSubscription(): void
+    {
+        $this->markTestSkipped('Subscription updatedAt is modified on read. Test will stay skipped until problem will be resolved.');
+        $customer = $this->testData->loadCustomer();
+        $subscription = $this->testData->loadSubscription($customer->getId());
+
+        $subscriptions = $this->client->getCustomersController()->listCustomerSubscriptions($customer->getId());
+
+        $this->assertions->assertCustomerSubscriptionsFound($subscriptions, $subscription);
+
+        $this->cleaner->removeSubscriptionById($subscription->getId(), $customer->getId());
+        $this->cleaner->removeCustomerById($customer->getId());
+    }
+
     protected function setUp(): void
     {
         parent::setUp();
@@ -93,7 +205,12 @@ final class CustomersControllerTest extends TestCase
         $this->testData = new CustomersControllerTestData(
             new TestCustomerRequestFactory(),
             new TestCustomerFactory(),
-            new TestCustomerResponseFactory()
+            new TestCustomerResponseFactory(),
+            $this->client,
+            new TestSubscriptionRequestFactory(),
+            new TestProductFamilyRequestFactory(),
+            new TestProductRequestFactory(),
+            new TestPaymentProfileRequestFactory()
         );
         $this->assertions = new CustomersControllerTestAssertions($this);
     }

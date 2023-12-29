@@ -28,7 +28,7 @@ final class PaymentProfilesControllerTestData
     {
         return $this->client
             ->getCustomersController()
-            ->createCustomer($this->customerRequestFactory->create())
+            ->createCustomer($this->customerRequestFactory->createCreateCustomerRequest())
             ->getCustomer();
     }
 
