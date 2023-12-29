@@ -5,7 +5,4 @@ coverage/
 .idea
 .env
 .env.testing
-php.Dockerfile
-docker-compose.yaml
-config
 .phpunit.cache
