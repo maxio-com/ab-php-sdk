@@ -13,7 +13,6 @@ final class PaymentProfileTestData
     public const CARD_EXPIRATION_MONTH = 12;
     public const CARD_TYPE = 'visa';
     public const MASKED_CARD_NUMBER = 'XXXX-XXXX-XXXX-1111';
-    public const ID = 300551;
     public const CUSTOMER_VAULT_TOKEN = null;
     public const BILLING_ADDRESS_TWO = null;
     public const PAYMENT_TYPE = 'credit_card';
@@ -23,4 +22,6 @@ final class PaymentProfileTestData
     public const BANK_ACCOUNT_NUMBER = '111111111111';
     public const BANK_ACCOUNT_TYPE = 'checking';
     public const BANK_ACCOUNT_HOLDER_TYPE = 'business';
+    public const UPDATED_FIRST_NAME = 'UpdatedFirstName';
+    public const UPDATED_LAST_NAME = 'UpdatedLastName';
 }

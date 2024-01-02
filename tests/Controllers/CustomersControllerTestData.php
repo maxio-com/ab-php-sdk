@@ -100,7 +100,7 @@ final class CustomersControllerTestData
             ->getProduct();
         $paymentProfile = $this->client
             ->getPaymentProfilesController()
-            ->createPaymentProfile($this->paymentProfileRequestFactory->create($customerId))
+            ->createPaymentProfile($this->paymentProfileRequestFactory->createCreatePaymentProfileRequest($customerId))
             ->getPaymentProfile();
 
         return $this->client

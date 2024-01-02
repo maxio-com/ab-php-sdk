@@ -186,7 +186,9 @@ final class CustomersControllerTest extends TestCase
      */
     public function test_ListCustomerSubscriptions_ShouldSubscriptionsList_WhenCustomerHasOneSubscription(): void
     {
-        $this->markTestSkipped('Subscription updatedAt is modified on read. Test will stay skipped until problem will be resolved.');
+        $this->markTestSkipped(
+            'Subscription updatedAt is modified on read. Test will stay skipped until problem will be resolved.'
+        );
         $customer = $this->testData->loadCustomer();
         $subscription = $this->testData->loadSubscription($customer->getId());
 

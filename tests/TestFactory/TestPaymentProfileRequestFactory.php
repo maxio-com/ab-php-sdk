@@ -6,13 +6,17 @@ namespace AdvancedBillingLib\Tests\TestFactory;
 
 use AdvancedBillingLib\Models\Builders\CreatePaymentProfileBuilder;
 use AdvancedBillingLib\Models\Builders\CreatePaymentProfileRequestBuilder;
+use AdvancedBillingLib\Models\Builders\UpdatePaymentProfileBuilder;
+use AdvancedBillingLib\Models\Builders\UpdatePaymentProfileRequestBuilder;
 use AdvancedBillingLib\Models\CreatePaymentProfile;
 use AdvancedBillingLib\Models\CreatePaymentProfileRequest;
+use AdvancedBillingLib\Models\UpdatePaymentProfile;
+use AdvancedBillingLib\Models\UpdatePaymentProfileRequest;
 use AdvancedBillingLib\Tests\TestData\PaymentProfileTestData;
 
 final class TestPaymentProfileRequestFactory
 {
-    public function create(int $customerId): CreatePaymentProfileRequest
+    public function createCreatePaymentProfileRequest(int $customerId): CreatePaymentProfileRequest
     {
         return CreatePaymentProfileRequestBuilder::init($this->createCreatePaymentProfile($customerId))
             ->build();
@@ -31,6 +35,20 @@ final class TestPaymentProfileRequestFactory
             ->expirationMonth(PaymentProfileTestData::CARD_EXPIRATION_MONTH)
             ->expirationYear(PaymentProfileTestData::CARD_EXPIRATION_YEAR)
             ->fullNumber(PaymentProfileTestData::FULL_NUMBER)
+            ->build();
+    }
+
+    public function createUpdatePaymentProfileRequest(): UpdatePaymentProfileRequest
+    {
+        return UpdatePaymentProfileRequestBuilder::init($this->createUpdatePaymentProfile())
+            ->build();
+    }
+
+    private function createUpdatePaymentProfile(): UpdatePaymentProfile
+    {
+        return UpdatePaymentProfileBuilder::init()
+            ->firstName(PaymentProfileTestData::UPDATED_FIRST_NAME)
+            ->lastName(PaymentProfileTestData::UPDATED_LAST_NAME)
             ->build();
     }
 }
