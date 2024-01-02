@@ -18,7 +18,15 @@ final class SubscriptionsControllerTestAssertions
     ): void
     {
         $this->testCase::assertNotNull($subscription);
-        $this->testCase::assertEquals($expectedSubscription->jsonSerialize(), $subscription->jsonSerialize());
+
+        $expectedSubscriptionJson = $expectedSubscription->jsonSerialize();
+        $subscriptionJson = $subscription->jsonSerialize();
+
+        // Removed because of modifying value on read.
+        unset($expectedSubscriptionJson['updated_at']);
+        unset($subscriptionJson['updated_at']);
+
+        $this->testCase::assertEquals($expectedSubscriptionJson, $subscriptionJson);
     }
 
     public function assertCreatedSubscriptionHasExpectedData(

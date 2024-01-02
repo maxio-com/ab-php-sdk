@@ -79,6 +79,14 @@ final class CustomersControllerTestAssertions
         $this->testCase::assertCount(self::EXPECTED_CUSTOMER_SUBSCRIPTIONS_NUMBER, $subscriptions);
 
         $subscription = $subscriptions[0];
-        $this->testCase::assertEquals($expectedSubscription, $subscription->getSubscription());
+
+        $expectedSubscriptionJson = $expectedSubscription->jsonSerialize();
+        $subscriptionJson = $subscription->getSubscription()->jsonSerialize();
+
+        // Removed because of modifying value on read.
+        unset($expectedSubscriptionJson['updated_at']);
+        unset($subscriptionJson['updated_at']);
+
+        $this->testCase::assertEquals($expectedSubscriptionJson, $subscriptionJson);
     }
 }
