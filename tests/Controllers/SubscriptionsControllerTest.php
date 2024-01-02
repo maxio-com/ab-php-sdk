@@ -68,9 +68,6 @@ final class SubscriptionsControllerTest extends TestCase
      */
     public function test_ReadSubscription_ShouldReturnSubscription_WhenSubscriptionWithProvidedIdExists(): void
     {
-        $this->markTestSkipped(
-            'Subscription updatedAt is modified on read. Test will stay skipped until problem will be resolved.'
-        );
         $productFamily = $this->testData->loadProductFamilyTwo();
         $product = $this->testData->loadProductTwo($productFamily->getId());
         $customer = $this->testData->loadCustomer();

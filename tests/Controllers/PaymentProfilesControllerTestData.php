@@ -98,7 +98,7 @@ final class PaymentProfilesControllerTestData
             ->getProductsController()
             ->createProduct(
                 $productFamily->getId(),
-                $this->productRequestFactory->create(ProductTestData::NAME_FIVE, ProductTestData::HANDLE_FOUR)
+                $this->productRequestFactory->create(ProductTestData::NAME_FIVE, ProductTestData::HANDLE_FIVE)
             )
             ->getProduct();
 
