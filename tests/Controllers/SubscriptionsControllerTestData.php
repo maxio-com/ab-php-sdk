@@ -142,7 +142,7 @@ final class SubscriptionsControllerTestData
     {
         return $this->client
             ->getPaymentProfilesController()
-            ->createPaymentProfile($this->paymentProfileRequestFactory->create($customerId))
+            ->createPaymentProfile($this->paymentProfileRequestFactory->createCreatePaymentProfileRequest($customerId))
             ->getPaymentProfile();
     }
 
