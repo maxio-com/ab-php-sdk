@@ -80,7 +80,11 @@ class ComponentsController extends BaseController
      *
      * @throws ApiException Thrown if API call fails
      */
-    public function createComponent(int $productFamilyId, string $componentKind, $body = null): ComponentResponse
+    public function createComponent(
+        int $productFamilyId,
+        string $componentKind,
+        CreateMeteredComponent|CreateQuantityBasedComponent $body = null
+    ): ComponentResponse
     {
         $_reqBuilder = $this->requestBuilder(
             RequestMethod::POST,
@@ -94,8 +98,10 @@ class ComponentsController extends BaseController
                     ->serializeBy([ComponentKindPath::class, 'checkValue']),
                 HeaderParam::init('Content-Type', 'application/json'),
                 BodyParam::init($body)
-                    ->strictType('anyOf(oneOf(CreateMeteredComponent,CreateQuantityBasedComponent,CreateOnOf' .
-                    'fComponent,CreatePrepaidComponent,CreateEBBComponent),null)')
+                    ->strictType(
+                        'anyOf(oneOf(CreateMeteredComponent,CreateQuantityBasedComponent,CreateOnOf' .
+                        'fComponent,CreatePrepaidComponent,CreateEBBComponent),null)'
+                    )
             );
 
         $_resHandler = $this->responseHandler()
@@ -181,7 +187,8 @@ class ComponentsController extends BaseController
         int $productFamilyId,
         string $componentId,
         ?UpdateComponentRequest $body = null
-    ): ComponentResponse {
+    ): ComponentResponse
+    {
         $_reqBuilder = $this->requestBuilder(
             RequestMethod::PUT,
             '/product_families/{product_family_id}/components/{component_id}.json'
@@ -394,7 +401,8 @@ class ComponentsController extends BaseController
     public function createComponentPricePoint(
         int $componentId,
         ?CreateComponentPricePointRequest $body = null
-    ): ComponentPricePointResponse {
+    ): ComponentPricePointResponse
+    {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/components/{component_id}/price_points.json')
             ->auth('global')
             ->parameters(
@@ -461,7 +469,8 @@ class ComponentsController extends BaseController
     public function createComponentPricePoints(
         string $componentId,
         ?CreateComponentPricePointsRequest $body = null
-    ): ComponentPricePointsResponse {
+    ): ComponentPricePointsResponse
+    {
         $_reqBuilder = $this->requestBuilder(
             RequestMethod::POST,
             '/components/{component_id}/price_points/bulk.json'
@@ -501,7 +510,8 @@ class ComponentsController extends BaseController
         int $componentId,
         int $pricePointId,
         ?UpdateComponentPricePointRequest $body = null
-    ): ComponentPricePointResponse {
+    ): ComponentPricePointResponse
+    {
         $_reqBuilder = $this->requestBuilder(
             RequestMethod::PUT,
             '/components/{component_id}/price_points/{price_point_id}.json'

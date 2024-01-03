@@ -14,6 +14,9 @@ final class ProductFamilyTestData
     public const NAME_SIX = 'test product family 6';
     public const NAME_SEVEN = 'test product family 7';
     public const NAME_EIGHT = 'test product family 8';
+    public const NAME_NINE = 'test product family 9';
+    public const NAME_TEN = 'test product family 10';
+    public const NAME_ELEVEN = 'test product family 11';
     public const HANDLE_ONE = 'test-product-family-1';
     public const HANDLE_THREE = 'test-product-family-3';
     public const DESCRIPTION = 'test description';

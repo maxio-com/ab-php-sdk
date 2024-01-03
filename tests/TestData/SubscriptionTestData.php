@@ -51,4 +51,6 @@ final class SubscriptionTestData
     public const CANCELED_AT = null;
     public const SKIP_BILLING_MANIFEST_TAXES = false;
     public const DUNNING_COMMUNICATION_DELAY_ENABLED = false;
+    public const TOTAL_REVENUE_IN_CENTS_WITH_ONE_COMPONENT = 200;
+    public const SIGNUP_REVENUE_WITH_ONE_COMPONENT = '2.00';
 }
