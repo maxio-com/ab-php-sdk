@@ -12,11 +12,13 @@ final class ProductTestData
     public const NAME_THREE = 'test product 3';
     public const NAME_FOUR = 'test product 4';
     public const NAME_FIVE = 'test product 5';
+    public const NAME_SIX = 'test product 6';
     public const HANDLE_ONE = 'test-product';
     public const HANDLE_TWO = 'test-product-2';
     public const HANDLE_THREE = 'test-product-3';
     public const HANDLE_FOUR = 'test-product-4';
     public const HANDLE_FIVE = 'test-product-5';
+    public const HANDLE_SIX = 'test-product-6';
     public const DESCRIPTION = 'test description';
     public const USE_SITE_EXCHANGE_RATE = true;
     public const REQUIRE_SHIPPING_ADDRESS = false;

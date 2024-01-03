@@ -5,14 +5,19 @@ declare(strict_types=1);
 namespace AdvancedBillingLib\Tests\Controllers;
 
 use AdvancedBillingLib\AdvancedBillingClient;
+use AdvancedBillingLib\Models\Builders\CreateSubscriptionComponentBuilder;
+use AdvancedBillingLib\Models\Component;
 use AdvancedBillingLib\Models\CreatedPaymentProfile;
+use AdvancedBillingLib\Models\CreateSubscriptionComponent;
 use AdvancedBillingLib\Models\CreateSubscriptionRequest;
 use AdvancedBillingLib\Models\Customer;
 use AdvancedBillingLib\Models\Product;
 use AdvancedBillingLib\Models\ProductFamily;
 use AdvancedBillingLib\Models\Subscription;
+use AdvancedBillingLib\Tests\TestData\ComponentTestData;
 use AdvancedBillingLib\Tests\TestData\ProductFamilyTestData;
 use AdvancedBillingLib\Tests\TestData\ProductTestData;
+use AdvancedBillingLib\Tests\TestFactory\TestComponentRequestFactory;
 use AdvancedBillingLib\Tests\TestFactory\TestCustomerRequestFactory;
 use AdvancedBillingLib\Tests\TestFactory\TestPaymentProfileFactory;
 use AdvancedBillingLib\Tests\TestFactory\TestPaymentProfileRequestFactory;
@@ -32,7 +37,8 @@ final class SubscriptionsControllerTestData
         private TestSubscriptionFactory $subscriptionFactory,
         private TestSubscriptionRequestFactory $subscriptionRequestFactory,
         private TestPaymentProfileRequestFactory $paymentProfileRequestFactory,
-        private TestPaymentProfileFactory $paymentProfileFactory
+        private TestPaymentProfileFactory $paymentProfileFactory,
+        private TestComponentRequestFactory $componentRequestFactory
     )
     {
     }
@@ -62,13 +68,14 @@ final class SubscriptionsControllerTestData
             $product,
             $this->paymentProfileFactory->fromCreatedPaymentProfile($paymentProfile),
             $productPricePointId,
-            $nextProductPricePointId,
             $signupPaymentId,
             $currentPeriodStartedAt,
             $nextAssessmentAt,
-            $currentPeriodEndsAt
+            $currentPeriodEndsAt,
+            $nextProductPricePointId,
         );
     }
+
     public function getExpectedSubscriptionWithoutBillingAmount(
         int $subscriptionId,
         DateTime $createdAt,
@@ -94,11 +101,11 @@ final class SubscriptionsControllerTestData
             $product,
             $this->paymentProfileFactory->fromCreatedPaymentProfile($paymentProfile),
             $productPricePointId,
-            $nextProductPricePointId,
             $signupPaymentId,
             $currentPeriodStartedAt,
             $nextAssessmentAt,
-            $currentPeriodEndsAt
+            $currentPeriodEndsAt,
+            $nextProductPricePointId,
         );
     }
 
@@ -154,6 +161,16 @@ final class SubscriptionsControllerTestData
             ->getProductFamily();
     }
 
+    public function loadProductFamilyThree(): ProductFamily
+    {
+        return $this->client
+            ->getProductFamiliesController()
+            ->createProductFamily(
+                $this->productFamilyRequestFactory->create(ProductFamilyTestData::NAME_ELEVEN)
+            )
+            ->getProductFamily();
+    }
+
     public function loadProductTwo(int $productFamilyId): Product
     {
         return $this->client
@@ -161,6 +178,80 @@ final class SubscriptionsControllerTestData
             ->createProduct(
                 $productFamilyId,
                 $this->productRequestFactory->create(ProductTestData::NAME_THREE, ProductTestData::HANDLE_THREE)
+            )
+            ->getProduct();
+    }
+
+    public function loadComponent(int $productFamilyId): Component
+    {
+        return $this->client
+            ->getComponentsController()
+            ->createComponent(
+                $productFamilyId,
+                ComponentTestData::QUANTITY_BASED_COMPONENT_KIND_PATH,
+                $this->componentRequestFactory->createCreateQuantityBasedComponent()
+            )
+            ->getComponent();
+    }
+
+    /**
+     * @param array<int, CreateSubscriptionComponent> $components
+     */
+    public function getCreateSubscriptionWithComponentsRequest(
+        int $customerId,
+        int $productId,
+        int $paymentProfileId,
+        array $components
+    ): CreateSubscriptionRequest
+    {
+        return $this->subscriptionRequestFactory->createWithComponents(
+            $customerId,
+            $productId,
+            $paymentProfileId,
+            $components
+        );
+    }
+
+    public function getCreateSubscriptionComponent(Component $component): CreateSubscriptionComponent
+    {
+        return CreateSubscriptionComponentBuilder::init()
+            ->componentId($component->getId())
+            ->allocatedQuantity(1)
+            ->pricePointId($component->getDefaultPricePointId())
+            ->build();
+    }
+
+    public function getExpectedSubscriptionWithComponentPrice(
+        Subscription $subscription,
+        Customer $customer,
+        Product $product,
+        CreatedPaymentProfile $paymentProfile,
+    ): Subscription
+    {
+        return $this->subscriptionFactory->createWithComponentPrice(
+            $subscription->getId(),
+            $subscription->getCreatedAt(),
+            $subscription->getUpdatedAt(),
+            $subscription->getActivatedAt(),
+            $customer,
+            $product,
+            $this->paymentProfileFactory->fromCreatedPaymentProfile($paymentProfile),
+            $subscription->getProductPricePointId(),
+            $subscription->getNextProductPricePointId(),
+            $subscription->getSignupPaymentId(),
+            $subscription->getCurrentPeriodStartedAt(),
+            $subscription->getNextAssessmentAt(),
+            $subscription->getCurrentPeriodEndsAt(),
+        );
+    }
+
+    public function loadProductThree(int $productFamilyId): Product
+    {
+        return $this->client
+            ->getProductsController()
+            ->createProduct(
+                $productFamilyId,
+                $this->productRequestFactory->create(ProductTestData::NAME_SIX, ProductTestData::HANDLE_SIX)
             )
             ->getProduct();
     }

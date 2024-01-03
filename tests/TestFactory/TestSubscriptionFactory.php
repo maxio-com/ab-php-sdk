@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace AdvancedBillingLib\Tests\TestFactory;
 
 use AdvancedBillingLib\Models\Builders\SubscriptionBuilder;
+use AdvancedBillingLib\Models\Component;
 use AdvancedBillingLib\Models\Customer;
 use AdvancedBillingLib\Models\PaymentProfile;
 use AdvancedBillingLib\Models\Product;
@@ -14,7 +15,7 @@ use DateTime;
 
 final class TestSubscriptionFactory
 {
-    public function createWithoutBillingAmount(
+    public function createWithComponentPrice(
         int $id,
         DateTime $createdAt,
         DateTime $updatedAt,
@@ -27,10 +28,10 @@ final class TestSubscriptionFactory
         int $signupPaymentId,
         DateTime $currentPeriodStartedAt,
         DateTime $nextAssessmentAt,
-        DateTime $currentPeriodEndsAt
+        DateTime $currentPeriodEndsAt,
     ): Subscription
     {
-        $subscriptionWithoutBillingAmount = $this->create(
+        $subscription = $this->create(
             $id,
             $createdAt,
             $updatedAt,
@@ -39,15 +40,18 @@ final class TestSubscriptionFactory
             $product,
             $paymentProfile,
             $productPricePointId,
-            $nextProductPricePointId,
             $signupPaymentId,
             $currentPeriodStartedAt,
             $nextAssessmentAt,
-            $currentPeriodEndsAt
+            $currentPeriodEndsAt,
+            $nextProductPricePointId,
         );
-        $subscriptionWithoutBillingAmount->setCurrentBillingAmountInCents(null);
 
-        return $subscriptionWithoutBillingAmount;
+        $subscription->setTotalRevenueInCents(SubscriptionTestData::TOTAL_REVENUE_IN_CENTS_WITH_ONE_COMPONENT);
+        $subscription->setSignupRevenue(SubscriptionTestData::SIGNUP_REVENUE_WITH_ONE_COMPONENT);
+        $subscription->setCurrentBillingAmountInCents(null);
+
+        return $subscription;
     }
 
     public function create(
@@ -59,11 +63,11 @@ final class TestSubscriptionFactory
         Product $product,
         PaymentProfile $paymentProfile,
         int $productPricePointId,
-        ?int $nextProductPricePointId,
         int $signupPaymentId,
         DateTime $currentPeriodStartedAt,
         DateTime $nextAssessmentAt,
-        DateTime $currentPeriodEndsAt
+        DateTime $currentPeriodEndsAt,
+        ?int $nextProductPricePointId,
     ): Subscription
     {
         return SubscriptionBuilder::init()
@@ -124,5 +128,51 @@ final class TestSubscriptionFactory
             ->scheduledCancellationAt(SubscriptionTestData::SCHEDULED_CANCELLATION_AT)
             ->prepaymentBalanceInCents(SubscriptionTestData::PREPAYMENT_BALANCE_IN_CENTS)
             ->build();
+    }
+
+    private function getComponentUnitPriceInCents(Component $component): int
+    {
+        return (int) $component->getPrices()[0]->getUnitPrice() * 100;
+    }
+
+    private function getComponentUnitPriceInDollars(Component $component): float
+    {
+        return (float) $component->getPrices()[0]->getUnitPrice();
+    }
+
+    public function createWithoutBillingAmount(
+        int $id,
+        DateTime $createdAt,
+        DateTime $updatedAt,
+        DateTime $activatedAt,
+        Customer $customer,
+        Product $product,
+        PaymentProfile $paymentProfile,
+        int $productPricePointId,
+        int $signupPaymentId,
+        DateTime $currentPeriodStartedAt,
+        DateTime $nextAssessmentAt,
+        DateTime $currentPeriodEndsAt,
+        ?int $nextProductPricePointId,
+    ): Subscription
+    {
+        $subscriptionWithoutBillingAmount = $this->create(
+            $id,
+            $createdAt,
+            $updatedAt,
+            $activatedAt,
+            $customer,
+            $product,
+            $paymentProfile,
+            $productPricePointId,
+            $signupPaymentId,
+            $currentPeriodStartedAt,
+            $nextAssessmentAt,
+            $currentPeriodEndsAt,
+            $nextProductPricePointId,
+        );
+        $subscriptionWithoutBillingAmount->setCurrentBillingAmountInCents(null);
+
+        return $subscriptionWithoutBillingAmount;
     }
 }

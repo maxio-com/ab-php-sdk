@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace AdvancedBillingLib\Tests\Controllers;
 
 use AdvancedBillingLib\Tests\TestCase;
+use AdvancedBillingLib\Tests\TestFactory\TestComponentRequestFactory;
 use AdvancedBillingLib\Tests\TestFactory\TestCustomerRequestFactory;
 use AdvancedBillingLib\Tests\TestFactory\TestPaymentProfileFactory;
 use AdvancedBillingLib\Tests\TestFactory\TestPaymentProfileRequestFactory;
@@ -54,6 +55,44 @@ final class SubscriptionsControllerTest extends TestCase
                 $subscription->getCurrentPeriodStartedAt(),
                 $subscription->getNextAssessmentAt(),
                 $subscription->getCurrentPeriodEndsAt(),
+            ),
+            $subscription
+        );
+
+        $this->cleaner->removeSubscriptionById($subscription->getId(), $customer->getId());
+        $this->cleaner->removeCustomerById($customer->getId());
+        $this->cleaner->archiveProductById($product->getId());
+    }
+
+    /**
+     * @covers \AdvancedBillingLib\Controllers\SubscriptionsController::createSubscription
+     */
+    public function test_CreateSubscription_ShouldCreateSubscription_WhenQuantityBasedComponentProvided(): void
+    {
+        $productFamily = $this->testData->loadProductFamilyThree();
+        $product = $this->testData->loadProductThree($productFamily->getId());
+        $customer = $this->testData->loadCustomer();
+        $paymentProfile = $this->testData->loadPaymentProfile($customer->getId());
+        $component = $this->testData->loadComponent($productFamily->getId());
+
+        $response = $this->client
+            ->getSubscriptionsController()
+            ->createSubscription(
+                $this->testData->getCreateSubscriptionWithComponentsRequest(
+                    $customer->getId(),
+                    $product->getId(),
+                    $paymentProfile->getId(),
+                    [$this->testData->getCreateSubscriptionComponent($component)]
+                )
+            );
+        $subscription = $response->getSubscription();
+
+        $this->assertions->assertCreatedSubscriptionHasExpectedData(
+            $this->testData->getExpectedSubscriptionWithComponentPrice(
+                $subscription,
+                $customer,
+                $product,
+                $paymentProfile,
             ),
             $subscription
         );
@@ -121,7 +160,8 @@ final class SubscriptionsControllerTest extends TestCase
             new TestSubscriptionFactory(),
             new TestSubscriptionRequestFactory(),
             new TestPaymentProfileRequestFactory(),
-            new TestPaymentProfileFactory()
+            new TestPaymentProfileFactory(),
+            new TestComponentRequestFactory()
         );
         $this->assertions = new SubscriptionsControllerTestAssertions($this);
     }
