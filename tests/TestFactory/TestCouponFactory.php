@@ -26,7 +26,7 @@ final class TestCouponFactory
             ->amountInCents(CouponTestData::AMOUNT_IN_CENTS)
             ->productFamilyId($productFamilyId)
             ->productFamilyName($productFamilyName)
-            ->code(CouponTestData::CODE)
+            ->code(CouponTestData::CODE_ONE)
             ->description(CouponTestData::DESCRIPTION)
             ->createdAt($createdAt)
             ->updatedAt($updatedAt)

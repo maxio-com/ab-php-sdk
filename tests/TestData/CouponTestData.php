@@ -12,7 +12,9 @@ final class CouponTestData
     public const DESCRIPTION = 'test description';
     public const RECURRING = false;
     public const NAME = 'test coupon';
-    public const CODE = 'ANY%OFF';
+    public const CODE_ONE = 'TEST_CODE';
+    public const CODE_TWO = 'TEST_CODE2';
+    public const CODE_THREE = 'TEST_CODE3';
     public const PERCENTAGE = '100';
     public const STACKABLE = true;
     public const COMPOUNDING_STRATEGY = CompoundingStrategy::FULLPRICE;

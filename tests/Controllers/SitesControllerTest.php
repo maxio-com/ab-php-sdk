@@ -27,10 +27,7 @@ final class SitesControllerTest extends TestCase
      */
     public function test_ReadSite_ShouldReturn401StatusCode_WhenInvalidCredentialsProvided(): void
     {
-        $clientWithInvalidCredentials = $this->client->toBuilder()
-            ->basicAuthUserName($this->testData->getInvalidAuthUserName())
-            ->basicAuthPassword($this->testData->geInvalidAuthPassword())
-            ->build();
+        $clientWithInvalidCredentials = $this->getUnauthenticatedClient();
 
         $this->assertions->assertUnauthorizedApiExceptionThrown();
         $clientWithInvalidCredentials->getSitesController()->readSite();

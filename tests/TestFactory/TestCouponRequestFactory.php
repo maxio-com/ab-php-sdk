@@ -12,18 +12,24 @@ use AdvancedBillingLib\Tests\TestData\CouponTestData;
 
 final class TestCouponRequestFactory
 {
-    public function createCreateOrUpdatePercentageCouponRequest(string $productFamilyId): CreateOrUpdateCoupon
+    public function createCreateOrUpdatePercentageCouponRequest(
+        string $productFamilyId,
+        string $couponCode
+    ): CreateOrUpdateCoupon
     {
         return CreateOrUpdateCouponBuilder::init()
-            ->coupon($this->createCreateOrUpdatePercentageCoupon($productFamilyId))
+            ->coupon($this->createCreateOrUpdatePercentageCoupon($productFamilyId, $couponCode))
             ->build();
     }
 
-    private function createCreateOrUpdatePercentageCoupon(string $productFamilyId): CreateOrUpdatePercentageCoupon
+    private function createCreateOrUpdatePercentageCoupon(
+        string $productFamilyId,
+        string $couponCode
+    ): CreateOrUpdatePercentageCoupon
     {
         return CreateOrUpdatePercentageCouponBuilder::init(
             CouponTestData::NAME,
-            CouponTestData::CODE,
+            $couponCode,
             CouponTestData::PERCENTAGE
         )
             ->productFamilyId($productFamilyId)
