@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Tests\Controllers;
 
-use AdvancedBillingLib\AdvancedBillingClient;
 use AdvancedBillingLib\Models\Builders\CreateSubscriptionComponentBuilder;
 use AdvancedBillingLib\Models\Component;
 use AdvancedBillingLib\Models\Coupon;
@@ -15,18 +14,15 @@ use AdvancedBillingLib\Models\Customer;
 use AdvancedBillingLib\Models\Product;
 use AdvancedBillingLib\Models\ProductFamily;
 use AdvancedBillingLib\Models\Subscription;
+use AdvancedBillingLib\Tests\DataLoader\TestComponentLoader;
+use AdvancedBillingLib\Tests\DataLoader\TestCouponLoader;
+use AdvancedBillingLib\Tests\DataLoader\TestCustomerLoader;
+use AdvancedBillingLib\Tests\DataLoader\TestPaymentProfileLoader;
+use AdvancedBillingLib\Tests\DataLoader\TestProductFamilyLoader;
+use AdvancedBillingLib\Tests\DataLoader\TestProductLoader;
 use AdvancedBillingLib\Tests\TestData\ComponentTestData;
-use AdvancedBillingLib\Tests\TestData\CouponTestData;
-use AdvancedBillingLib\Tests\TestData\ProductFamilyTestData;
-use AdvancedBillingLib\Tests\TestData\ProductTestData;
 use AdvancedBillingLib\Tests\TestData\SubscriptionTestData;
-use AdvancedBillingLib\Tests\TestFactory\TestComponentRequestFactory;
-use AdvancedBillingLib\Tests\TestFactory\TestCouponRequestFactory;
-use AdvancedBillingLib\Tests\TestFactory\TestCustomerRequestFactory;
 use AdvancedBillingLib\Tests\TestFactory\TestPaymentProfileFactory;
-use AdvancedBillingLib\Tests\TestFactory\TestPaymentProfileRequestFactory;
-use AdvancedBillingLib\Tests\TestFactory\TestProductFamilyRequestFactory;
-use AdvancedBillingLib\Tests\TestFactory\TestProductRequestFactory;
 use AdvancedBillingLib\Tests\TestFactory\TestSubscriptionFactory;
 use AdvancedBillingLib\Tests\TestFactory\TestSubscriptionRequestFactory;
 use DateTime;
@@ -34,16 +30,15 @@ use DateTime;
 final class SubscriptionsControllerTestData
 {
     public function __construct(
-        private AdvancedBillingClient $client,
-        private TestProductFamilyRequestFactory $productFamilyRequestFactory,
-        private TestProductRequestFactory $productRequestFactory,
-        private TestCustomerRequestFactory $customerRequestFactory,
         private TestSubscriptionFactory $subscriptionFactory,
         private TestSubscriptionRequestFactory $subscriptionRequestFactory,
-        private TestPaymentProfileRequestFactory $paymentProfileRequestFactory,
         private TestPaymentProfileFactory $paymentProfileFactory,
-        private TestComponentRequestFactory $componentRequestFactory,
-        private TestCouponRequestFactory $couponRequestFactory
+        private TestCustomerLoader $customerLoader,
+        private TestProductFamilyLoader $productFamilyLoader,
+        private TestPaymentProfileLoader $paymentProfileLoader,
+        private TestProductLoader $productLoader,
+        private TestComponentLoader $componentLoader,
+        private TestCouponLoader $couponLoader
     )
     {
     }
@@ -123,80 +118,37 @@ final class SubscriptionsControllerTestData
         return $this->subscriptionRequestFactory->create($customerId, $productId, $paymentProfileId);
     }
 
-    public function loadProductFamily(): ProductFamily
+    public function loadProductFamily(string $name): ProductFamily
     {
-        return $this->client
-            ->getProductFamiliesController()
-            ->createProductFamily($this->productFamilyRequestFactory->create(ProductFamilyTestData::NAME_FIVE))
-            ->getProductFamily();
+        return $this->productFamilyLoader->load($name);
     }
 
-    public function loadProduct(int $productFamilyId): Product
+    public function loadProduct(string $name, string $handle, int $productFamilyId): Product
     {
-        return $this->client
-            ->getProductsController()
-            ->createProduct(
-                $productFamilyId,
-                $this->productRequestFactory->create(ProductTestData::NAME_TWO, ProductTestData::HANDLE_TWO)
-            )
-            ->getProduct();
+        return $this->productLoader->load($name, $handle, $productFamilyId);
     }
 
-    public function loadCustomer(): Customer
+    public function loadCustomerWithPredefinedData(): Customer
     {
-        return $this->client
-            ->getCustomersController()
-            ->createCustomer($this->customerRequestFactory->createCreateCustomerRequest())
-            ->getCustomer();
+        return $this->customerLoader->loadSimpleCustomerWithPredefinedData();
+    }
+
+    public function loadCustomCustomer(string $firstName, string $lastName, string $email): Customer
+    {
+        return $this->customerLoader->loadSimpleCustomerWithCustomData($firstName, $lastName, $email);
     }
 
     public function loadPaymentProfile(int $customerId): CreatedPaymentProfile
     {
-        return $this->client
-            ->getPaymentProfilesController()
-            ->createPaymentProfile($this->paymentProfileRequestFactory->createCreatePaymentProfileRequest($customerId))
-            ->getPaymentProfile();
-    }
-
-    public function loadProductFamilyTwo(): ProductFamily
-    {
-        return $this->client
-            ->getProductFamiliesController()
-            ->createProductFamily($this->productFamilyRequestFactory->create(ProductFamilyTestData::NAME_SIX))
-            ->getProductFamily();
-    }
-
-    public function loadProductFamilyThree(): ProductFamily
-    {
-        return $this->client
-            ->getProductFamiliesController()
-            ->createProductFamily(
-                $this->productFamilyRequestFactory->create(ProductFamilyTestData::NAME_ELEVEN)
-            )
-            ->getProductFamily();
-    }
-
-    public function loadProductTwo(int $productFamilyId): Product
-    {
-        return $this->client
-            ->getProductsController()
-            ->createProduct(
-                $productFamilyId,
-                $this->productRequestFactory->create(ProductTestData::NAME_THREE, ProductTestData::HANDLE_THREE)
-            )
-            ->getProduct();
+        return $this->paymentProfileLoader->load($customerId);
     }
 
     public function loadComponent(int $productFamilyId): Component
     {
-        return $this->client
-            ->getComponentsController()
-            ->createComponent(
-                $productFamilyId,
-                ComponentTestData::QUANTITY_BASED_COMPONENT_KIND_PATH,
-                $this->componentRequestFactory->createCreateQuantityBasedComponent()
-            )
-            ->getComponent();
+        return $this->componentLoader->loadQuantityBasedComponent(
+            $productFamilyId,
+            ComponentTestData::QUANTITY_BASED_COMPONENT_KIND_PATH
+        );
     }
 
     /**
@@ -250,43 +202,12 @@ final class SubscriptionsControllerTestData
         );
     }
 
-    public function loadProductThree(int $productFamilyId): Product
+    public function loadCoupon(int $productFamilyId, string $couponCode): Coupon
     {
-        return $this->client
-            ->getProductsController()
-            ->createProduct(
-                $productFamilyId,
-                $this->productRequestFactory->create(ProductTestData::NAME_SIX, ProductTestData::HANDLE_SIX)
-            )
-            ->getProduct();
-    }
-
-    public function loadCouponOne(int $productFamilyId): Coupon
-    {
-        return $this->client
-            ->getCouponsController()
-            ->createCoupon(
-                $productFamilyId,
-                $this->couponRequestFactory->createCreateOrUpdatePercentageCouponRequest(
-                    (string) $productFamilyId,
-                    CouponTestData::CODE_TWO
-                )
-            )
-            ->getCoupon();
-    }
-
-    public function loadCouponTwo(int $productFamilyId): Coupon
-    {
-        return $this->client
-            ->getCouponsController()
-            ->createCoupon(
-                $productFamilyId,
-                $this->couponRequestFactory->createCreateOrUpdatePercentageCouponRequest(
-                    (string) $productFamilyId,
-                    CouponTestData::CODE_THREE
-                )
-            )
-            ->getCoupon();
+        return $this->couponLoader->load(
+            productFamilyId: $productFamilyId,
+            couponCode: $couponCode
+        );
     }
 
     /**
@@ -327,68 +248,5 @@ final class SubscriptionsControllerTestData
     public function getSnapDay(): int
     {
         return SubscriptionTestData::SNAP_DAY_15;
-    }
-
-    public function loadProductFamilyFour(): ProductFamily
-    {
-        return $this->client
-            ->getProductFamiliesController()
-            ->createProductFamily(
-                $this->productFamilyRequestFactory->create(ProductFamilyTestData::NAME_TWELVE)
-            )
-            ->getProductFamily();
-    }
-
-    public function loadProductFour(int $productFamilyId): Product
-    {
-        return $this->client
-            ->getProductsController()
-            ->createProduct(
-                $productFamilyId,
-                $this->productRequestFactory->create(ProductTestData::NAME_SEVEN, ProductTestData::HANDLE_SEVEN)
-            )
-            ->getProduct();
-    }
-
-    public function loadProductFamilyFive(): ProductFamily
-    {
-        return $this->client
-            ->getProductFamiliesController()
-            ->createProductFamily(
-                $this->productFamilyRequestFactory->create(ProductFamilyTestData::NAME_THIRTEEN)
-            )
-            ->getProductFamily();
-    }
-
-    public function loadProductFive(int $productFamilyId): Product
-    {
-        return $this->client
-            ->getProductsController()
-            ->createProduct(
-                $productFamilyId,
-                $this->productRequestFactory->create(ProductTestData::NAME_EIGHT, ProductTestData::HANDLE_EIGHT)
-            )
-            ->getProduct();
-    }
-
-    public function loadProductFamilySix(): ProductFamily
-    {
-        return $this->client
-            ->getProductFamiliesController()
-            ->createProductFamily(
-                $this->productFamilyRequestFactory->create(ProductFamilyTestData::NAME_FOURTEEN)
-            )
-            ->getProductFamily();
-    }
-
-    public function loadProductSix(int $productFamilyId): Product
-    {
-        return $this->client
-            ->getProductsController()
-            ->createProduct(
-                $productFamilyId,
-                $this->productRequestFactory->create(ProductTestData::NAME_NINE, ProductTestData::HANDLE_NINE)
-            )
-            ->getProduct();
     }
 }

@@ -4,6 +4,12 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Tests\Controllers;
 
+use AdvancedBillingLib\Tests\DataLoader\TestComponentLoader;
+use AdvancedBillingLib\Tests\DataLoader\TestCouponLoader;
+use AdvancedBillingLib\Tests\DataLoader\TestCustomerLoader;
+use AdvancedBillingLib\Tests\DataLoader\TestPaymentProfileLoader;
+use AdvancedBillingLib\Tests\DataLoader\TestProductFamilyLoader;
+use AdvancedBillingLib\Tests\DataLoader\TestProductLoader;
 use AdvancedBillingLib\Tests\TestCase;
 use AdvancedBillingLib\Tests\TestFactory\TestComponentRequestFactory;
 use AdvancedBillingLib\Tests\TestFactory\TestCouponRequestFactory;
@@ -25,9 +31,13 @@ final class SubscriptionsControllerTest extends TestCase
      */
     public function test_CreateSubscription_ShouldCreateSubscription_WhenAllProvidedDataAreCorrect(): void
     {
-        $productFamily = $this->testData->loadProductFamily();
-        $product = $this->testData->loadProduct($productFamily->getId());
-        $customer = $this->testData->loadCustomer();
+        $productFamily = $this->testData->loadProductFamily(name: 'SubscriptionControllerTest_ProductFamily_1');
+        $product = $this->testData->loadProduct(
+            name: 'SubscriptionsControllerTest Product 1',
+            handle: 'subscriptionscontrollertest-product-1',
+            productFamilyId: $productFamily->getId()
+        );
+        $customer = $this->testData->loadCustomerWithPredefinedData();
         $paymentProfile = $this->testData->loadPaymentProfile($customer->getId());
 
         $response = $this->client
@@ -70,9 +80,13 @@ final class SubscriptionsControllerTest extends TestCase
      */
     public function test_CreateSubscription_ShouldCreateSubscription_WhenQuantityBasedComponentProvided(): void
     {
-        $productFamily = $this->testData->loadProductFamilyThree();
-        $product = $this->testData->loadProductThree($productFamily->getId());
-        $customer = $this->testData->loadCustomer();
+        $productFamily = $this->testData->loadProductFamily(name: 'SubscriptionControllerTest_ProductFamily_2');
+        $product = $this->testData->loadProduct(
+            name: 'SubscriptionsControllerTest Product 2',
+            handle: 'subscriptionscontrollertest-product-2',
+            productFamilyId: $productFamily->getId()
+        );
+        $customer = $this->testData->loadCustomerWithPredefinedData();
         $paymentProfile = $this->testData->loadPaymentProfile($customer->getId());
         $component = $this->testData->loadComponent($productFamily->getId());
 
@@ -108,9 +122,13 @@ final class SubscriptionsControllerTest extends TestCase
      */
     public function test_ReadSubscription_ShouldReturnSubscription_WhenSubscriptionWithProvidedIdExists(): void
     {
-        $productFamily = $this->testData->loadProductFamilyTwo();
-        $product = $this->testData->loadProductTwo($productFamily->getId());
-        $customer = $this->testData->loadCustomer();
+        $productFamily = $this->testData->loadProductFamily(name: 'SubscriptionControllerTest_ProductFamily_3');
+        $product = $this->testData->loadProduct(
+            name: 'SubscriptionsControllerTest Product 3',
+            handle: 'subscriptionscontrollertest-product-3',
+            productFamilyId: $productFamily->getId()
+        );
+        $customer = $this->testData->loadCustomerWithPredefinedData();
         $paymentProfile = $this->testData->loadPaymentProfile($customer->getId());
         $subscription = $this->client
             ->getSubscriptionsController()
@@ -154,13 +172,17 @@ final class SubscriptionsControllerTest extends TestCase
      */
     public function test_CreateSubscription_ShouldCreateSubscription_WhenTwoCouponsAndOneComponentProvided(): void
     {
-        $productFamily = $this->testData->loadProductFamilyFour();
-        $product = $this->testData->loadProductFour($productFamily->getId());
-        $customer = $this->testData->loadCustomer();
+        $productFamily = $this->testData->loadProductFamily(name: 'SubscriptionControllerTest_ProductFamily_4');
+        $product = $this->testData->loadProduct(
+            name: 'SubscriptionsControllerTest Product 4',
+            handle: 'subscriptionscontrollertest-product-4',
+            productFamilyId: $productFamily->getId()
+        );
+        $customer = $this->testData->loadCustomerWithPredefinedData();
         $paymentProfile = $this->testData->loadPaymentProfile($customer->getId());
         $component = $this->testData->loadComponent($productFamily->getId());
-        $couponOne = $this->testData->loadCouponOne($productFamily->getId());
-        $couponTwo = $this->testData->loadCouponTwo($productFamily->getId());
+        $couponOne = $this->testData->loadCoupon($productFamily->getId(), 'SubscriptionsControllerTest_Coupon_1');
+        $couponTwo = $this->testData->loadCoupon($productFamily->getId(), 'SubscriptionsControllerTest_Coupon_2');
 
         $subscription = $this->client
             ->getSubscriptionsController()
@@ -190,9 +212,13 @@ final class SubscriptionsControllerTest extends TestCase
      */
     public function test_CreateSubscription_ShouldCreateSubscription_WhenProratedBillingChargeSet(): void
     {
-        $productFamily = $this->testData->loadProductFamilyFive();
-        $product = $this->testData->loadProductFive($productFamily->getId());
-        $customer = $this->testData->loadCustomer();
+        $productFamily = $this->testData->loadProductFamily(name: 'SubscriptionControllerTest_ProductFamily_5');
+        $product = $this->testData->loadProduct(
+            name: 'SubscriptionsControllerTest Product 5',
+            handle: 'subscriptionscontrollertest-product-5',
+            productFamilyId: $productFamily->getId()
+        );
+        $customer = $this->testData->loadCustomerWithPredefinedData();
         $paymentProfile = $this->testData->loadPaymentProfile($customer->getId());
 
         $subscription = $this->client
@@ -219,12 +245,15 @@ final class SubscriptionsControllerTest extends TestCase
     /**
      * @covers \AdvancedBillingLib\Controllers\SubscriptionsController::createSubscription
      */
-    public function test_CreateSubscription_ShouldThrowExceptionWith401StatusCode_WhenTryToCreateSubscriptionAsUnauthorizedUser(
-    ): void
+    public function test_CreateSubscription_ShouldThrowExceptionWith401StatusCode_WhenTryToCreateSubscriptionAsUnauthorizedUser(): void
     {
-        $productFamily = $this->testData->loadProductFamilySix();
-        $product = $this->testData->loadProductSix($productFamily->getId());
-        $customer = $this->testData->loadCustomer();
+        $productFamily = $this->testData->loadProductFamily(name: 'SubscriptionControllerTest_ProductFamily_6');
+        $product = $this->testData->loadProduct(
+            name: 'SubscriptionsControllerTest Product 6',
+            handle: 'subscriptionscontrollertest-product-6',
+            productFamilyId: $productFamily->getId()
+        );
+        $customer = $this->testData->loadCustomerWithPredefinedData();
         $paymentProfile = $this->testData->loadPaymentProfile($customer->getId());
         $unauthenticatedClient = $this->getUnauthenticatedClient();
 
@@ -239,9 +268,6 @@ final class SubscriptionsControllerTest extends TestCase
                 )
             )
             ->getSubscription();
-
-        $this->cleaner->removeUnusedPaymentProfileById($paymentProfile->getId());
-        $this->cleaner->removeCustomerById($customer->getId());
     }
 
     protected function setUp(): void
@@ -249,16 +275,15 @@ final class SubscriptionsControllerTest extends TestCase
         parent::setUp();
 
         $this->testData = new SubscriptionsControllerTestData(
-            $this->client,
-            new TestProductFamilyRequestFactory(),
-            new TestProductRequestFactory(),
-            new TestCustomerRequestFactory(),
             new TestSubscriptionFactory(),
             new TestSubscriptionRequestFactory(),
-            new TestPaymentProfileRequestFactory(),
             new TestPaymentProfileFactory(),
-            new TestComponentRequestFactory(),
-            new TestCouponRequestFactory()
+            new TestCustomerLoader($this->client, new TestCustomerRequestFactory()),
+            new TestProductFamilyLoader($this->client, new TestProductFamilyRequestFactory()),
+            new TestPaymentProfileLoader($this->client, new TestPaymentProfileRequestFactory()),
+            new TestProductLoader($this->client, new TestProductRequestFactory()),
+            new TestComponentLoader($this->client, new TestComponentRequestFactory()),
+            new TestCouponLoader($this->client, new TestCouponRequestFactory()),
         );
         $this->assertions = new SubscriptionsControllerTestAssertions($this);
     }

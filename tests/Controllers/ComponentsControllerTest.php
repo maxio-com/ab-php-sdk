@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Tests\Controllers;
 
+use AdvancedBillingLib\Tests\DataLoader\TestProductFamilyLoader;
 use AdvancedBillingLib\Tests\TestCase;
 use AdvancedBillingLib\Tests\TestFactory\TestComponentFactory;
 use AdvancedBillingLib\Tests\TestFactory\TestComponentRequestFactory;
@@ -19,7 +20,7 @@ final class ComponentsControllerTest extends TestCase
      */
     public function test_CreateComponent_ShouldCreateComponent_WhenAllDataAreCorrect(): void
     {
-        $productFamily = $this->testData->loadProductFamily();
+        $productFamily = $this->testData->loadProductFamily(name: 'ComponentsControllerTest_ProductFamily_1');
 
         $component = $this->client
             ->getComponentsController()
@@ -50,10 +51,9 @@ final class ComponentsControllerTest extends TestCase
         parent::setUp();
 
         $this->testData = new ComponentsControllerTestData(
-            $this->client,
-            new TestProductFamilyRequestFactory(),
             new TestComponentRequestFactory(),
-            new TestComponentFactory()
+            new TestComponentFactory(),
+            new TestProductFamilyLoader($this->client, new TestProductFamilyRequestFactory())
         );
         $this->assertions = new ComponentsControllerTestAssertions($this);
     }

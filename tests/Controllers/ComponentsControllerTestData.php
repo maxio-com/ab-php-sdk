@@ -4,33 +4,27 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Tests\Controllers;
 
-use AdvancedBillingLib\AdvancedBillingClient;
 use AdvancedBillingLib\Models\Component;
 use AdvancedBillingLib\Models\CreateQuantityBasedComponent;
 use AdvancedBillingLib\Models\ProductFamily;
+use AdvancedBillingLib\Tests\DataLoader\TestProductFamilyLoader;
 use AdvancedBillingLib\Tests\TestData\ComponentTestData;
-use AdvancedBillingLib\Tests\TestData\ProductFamilyTestData;
 use AdvancedBillingLib\Tests\TestFactory\TestComponentFactory;
 use AdvancedBillingLib\Tests\TestFactory\TestComponentRequestFactory;
-use AdvancedBillingLib\Tests\TestFactory\TestProductFamilyRequestFactory;
 
 final class ComponentsControllerTestData
 {
     public function __construct(
-        private AdvancedBillingClient $client,
-        private TestProductFamilyRequestFactory $productFamilyRequestFactory,
         private TestComponentRequestFactory $componentRequestFactory,
-        private TestComponentFactory $componentFactory
+        private TestComponentFactory $componentFactory,
+        private TestProductFamilyLoader $productFamilyLoader
     )
     {
     }
 
-    public function loadProductFamily(): ProductFamily
+    public function loadProductFamily(string $name): ProductFamily
     {
-        return $this->client
-            ->getProductFamiliesController()
-            ->createProductFamily($this->productFamilyRequestFactory->create(ProductFamilyTestData::NAME_NINE))
-            ->getProductFamily();
+        return $this->productFamilyLoader->load($name);
     }
 
     public function getComponentKindPath(): string

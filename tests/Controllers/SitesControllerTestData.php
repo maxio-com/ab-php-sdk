@@ -9,7 +9,6 @@ use AdvancedBillingLib\Tests\TestFactory\TestSiteFactory;
 
 final class SitesControllerTestData
 {
-
     public function __construct(private TestSiteFactory $siteFactory)
     {
     }

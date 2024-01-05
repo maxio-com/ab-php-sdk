@@ -4,43 +4,37 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Tests\Controllers;
 
-use AdvancedBillingLib\AdvancedBillingClient;
-use AdvancedBillingLib\Models\BankAccountVerificationRequest;
 use AdvancedBillingLib\Models\Builders\CreatedPaymentProfileBuilder;
 use AdvancedBillingLib\Models\CreatedPaymentProfile;
 use AdvancedBillingLib\Models\CreatePaymentProfileRequest;
 use AdvancedBillingLib\Models\Customer;
 use AdvancedBillingLib\Models\Subscription;
 use AdvancedBillingLib\Models\UpdatePaymentProfileRequest;
+use AdvancedBillingLib\Tests\DataLoader\TestCustomerLoader;
+use AdvancedBillingLib\Tests\DataLoader\TestPaymentProfileLoader;
+use AdvancedBillingLib\Tests\DataLoader\TestProductFamilyLoader;
+use AdvancedBillingLib\Tests\DataLoader\TestProductLoader;
+use AdvancedBillingLib\Tests\DataLoader\TestSubscriptionsLoader;
 use AdvancedBillingLib\Tests\TestData\CustomerTestData;
 use AdvancedBillingLib\Tests\TestData\PaymentProfileTestData;
-use AdvancedBillingLib\Tests\TestData\ProductFamilyTestData;
-use AdvancedBillingLib\Tests\TestData\ProductTestData;
-use AdvancedBillingLib\Tests\TestFactory\TestCustomerRequestFactory;
 use AdvancedBillingLib\Tests\TestFactory\TestPaymentProfileRequestFactory;
-use AdvancedBillingLib\Tests\TestFactory\TestProductFamilyRequestFactory;
-use AdvancedBillingLib\Tests\TestFactory\TestProductRequestFactory;
-use AdvancedBillingLib\Tests\TestFactory\TestSubscriptionRequestFactory;
 
 final class PaymentProfilesControllerTestData
 {
     public function __construct(
-        private AdvancedBillingClient $client,
-        private TestCustomerRequestFactory $customerRequestFactory,
         private TestPaymentProfileRequestFactory $paymentProfileRequestFactory,
-        private TestProductFamilyRequestFactory $productFamilyRequestFactory,
-        private TestProductRequestFactory $productRequestFactory,
-        private TestSubscriptionRequestFactory $subscriptionRequestFactory
+        private TestCustomerLoader $customerLoader,
+        private TestPaymentProfileLoader $paymentProfileLoader,
+        private TestProductFamilyLoader $productFamilyLoader,
+        private TestSubscriptionsLoader $subscriptionsLoader,
+        private TestProductLoader $productLoader
     )
     {
     }
 
     public function loadCustomer(): Customer
     {
-        return $this->client
-            ->getCustomersController()
-            ->createCustomer($this->customerRequestFactory->createCreateCustomerRequest())
-            ->getCustomer();
+        return $this->customerLoader->loadSimpleCustomerWithPredefinedData();
     }
 
     public function getCreatePaymentProfileRequest(int $customerId): CreatePaymentProfileRequest
@@ -77,10 +71,7 @@ final class PaymentProfilesControllerTestData
 
     public function loadPaymentProfile(int $customerId): CreatedPaymentProfile
     {
-        return $this->client
-            ->getPaymentProfilesController()
-            ->createPaymentProfile($this->paymentProfileRequestFactory->createCreatePaymentProfileRequest($customerId))
-            ->getPaymentProfile();
+        return $this->paymentProfileLoader->load($customerId);
     }
 
     public function getUpdatePaymentProfileRequest(): UpdatePaymentProfileRequest
@@ -90,27 +81,13 @@ final class PaymentProfilesControllerTestData
 
     public function loadSubscription(int $customerId, int $paymentProfileId): Subscription
     {
-        $productFamily = $this->client
-            ->getProductFamiliesController()
-            ->createProductFamily($this->productFamilyRequestFactory->create(ProductFamilyTestData::NAME_EIGHT))
-            ->getProductFamily();
-        $product = $this->client
-            ->getProductsController()
-            ->createProduct(
-                $productFamily->getId(),
-                $this->productRequestFactory->create(ProductTestData::NAME_FIVE, ProductTestData::HANDLE_FIVE)
-            )
-            ->getProduct();
+        $productFamily = $this->productFamilyLoader->load('PaymentProfilesController_ProductFamily_1');
+        $product = $this->productLoader->load(
+            'PaymentProfilesControllerTest Product 1',
+            'paymentprofilescontrollertest-product-1',
+            $productFamily->getId()
+        );
 
-        return $this->client
-            ->getSubscriptionsController()
-            ->createSubscription(
-                $this->subscriptionRequestFactory->create(
-                    $customerId,
-                    $product->getId(),
-                    $paymentProfileId
-                )
-            )
-            ->getSubscription();
+        return $this->subscriptionsLoader->load($customerId, $product->getId(), $paymentProfileId);
     }
 }

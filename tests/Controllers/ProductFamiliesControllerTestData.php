@@ -6,7 +6,6 @@ namespace AdvancedBillingLib\Tests\Controllers;
 
 use AdvancedBillingLib\Models\CreateProductFamilyRequest;
 use AdvancedBillingLib\Models\ProductFamily;
-use AdvancedBillingLib\Tests\TestData\ProductFamilyTestData;
 use AdvancedBillingLib\Tests\TestFactory\TestProductFamilyFactory;
 use AdvancedBillingLib\Tests\TestFactory\TestProductFamilyRequestFactory;
 
@@ -19,14 +18,9 @@ final class ProductFamiliesControllerTestData
     {
     }
 
-    public function createRequestTwo(): CreateProductFamilyRequest
+    public function createRequest(string $name): CreateProductFamilyRequest
     {
-        return $this->productFamilyRequestFactory->create(ProductFamilyTestData::NAME_TWO);
-    }
-
-    public function createRequestOne(): CreateProductFamilyRequest
-    {
-        return $this->productFamilyRequestFactory->create(ProductFamilyTestData::NAME_ONE);
+        return $this->productFamilyRequestFactory->create($name);
     }
 
     public function createExpectedProductFamilyOne(
@@ -39,8 +33,23 @@ final class ProductFamiliesControllerTestData
             $id,
             $createdAt,
             $updatedAt,
-            ProductFamilyTestData::NAME_ONE,
-            ProductFamilyTestData::HANDLE_ONE
+            $this->getNameOne(),
+            $this->getHandleOne()
         );
+    }
+
+    public function getNameOne(): string
+    {
+        return 'ProductFamiliesControllerTest_ProductFamily_1';
+    }
+
+    private function getHandleOne(): string
+    {
+        return 'productfamiliescontrollertest_productfamily_1';
+    }
+
+    public function getNameTwo(): string
+    {
+        return 'ProductFamiliesControllerTest_ProductFamily_2';
     }
 }

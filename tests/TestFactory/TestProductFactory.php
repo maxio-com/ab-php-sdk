@@ -6,7 +6,6 @@ namespace AdvancedBillingLib\Tests\TestFactory;
 
 use AdvancedBillingLib\Models\Builders\ProductBuilder;
 use AdvancedBillingLib\Models\Product;
-use AdvancedBillingLib\Tests\TestData\ProductFamilyTestData;
 use AdvancedBillingLib\Tests\TestData\ProductTestData;
 use DateTime;
 
@@ -18,9 +17,13 @@ final class TestProductFactory
 
     public function create(
         int $productId,
+        string $name,
+        string $handle,
         DateTime $createdAt,
         DateTime $updatedAt,
         int $productFamilyId,
+        string $productFamilyName,
+        string $productFamilyHandle,
         string $productFamilyCreatedAt,
         string $productFamilyUpdatedAt,
         int $defaultProductPricePointId,
@@ -30,8 +33,8 @@ final class TestProductFactory
     {
         return ProductBuilder::init()
             ->id($productId)
-            ->name(ProductTestData::NAME_ONE)
-            ->handle(ProductTestData::HANDLE_ONE)
+            ->name($name)
+            ->handle($handle)
             ->description(ProductTestData::DESCRIPTION)
             ->requestCreditCard(ProductTestData::REQUEST_CREDIT_CARD)
             ->createdAt($createdAt)
@@ -48,8 +51,8 @@ final class TestProductFactory
                     $productFamilyId,
                     $productFamilyCreatedAt,
                     $productFamilyUpdatedAt,
-                    ProductFamilyTestData::NAME_THREE,
-                    ProductFamilyTestData::HANDLE_THREE
+                    $productFamilyName,
+                    $productFamilyHandle
                 )
             )
             ->productPricePointName(ProductTestData::PRICE_POINT_NAME)

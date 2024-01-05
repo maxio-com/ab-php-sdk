@@ -4,38 +4,35 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Tests\Controllers;
 
-use AdvancedBillingLib\AdvancedBillingClient;
 use AdvancedBillingLib\Models\Coupon;
 use AdvancedBillingLib\Models\CreateOrUpdateCoupon;
 use AdvancedBillingLib\Models\ProductFamily;
+use AdvancedBillingLib\Tests\DataLoader\TestProductFamilyLoader;
 use AdvancedBillingLib\Tests\TestData\CouponTestData;
-use AdvancedBillingLib\Tests\TestData\ProductFamilyTestData;
 use AdvancedBillingLib\Tests\TestFactory\TestCouponFactory;
 use AdvancedBillingLib\Tests\TestFactory\TestCouponRequestFactory;
-use AdvancedBillingLib\Tests\TestFactory\TestProductFamilyRequestFactory;
 
 final class CouponsControllerTestData
 {
     public function __construct(
-        private AdvancedBillingClient $client,
-        private TestProductFamilyRequestFactory $productFamilyRequestFactory,
         private TestCouponRequestFactory $couponRequestFactory,
-        private TestCouponFactory $couponFactory
+        private TestCouponFactory $couponFactory,
+        private TestProductFamilyLoader $productFamilyLoader
     )
     {
     }
 
-    public function loadProductFamily(): ProductFamily
+    public function loadProductFamily(string $name): ProductFamily
     {
-        return $this->client
-            ->getProductFamiliesController()
-            ->createProductFamily($this->productFamilyRequestFactory->create(ProductFamilyTestData::NAME_TEN))
-            ->getProductFamily();
+        return $this->productFamilyLoader->load($name);
     }
 
     public function getCreateOrUpdatePercentageCouponRequest(string $productFamilyId): CreateOrUpdateCoupon
     {
-        return $this->couponRequestFactory->createCreateOrUpdatePercentageCouponRequest($productFamilyId, CouponTestData::CODE_ONE);
+        return $this->couponRequestFactory->createCreateOrUpdatePercentageCouponRequest(
+            $productFamilyId,
+            CouponTestData::CODE_ONE
+        );
     }
 
     public function getExpectedCoupon(
