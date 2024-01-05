@@ -69,4 +69,17 @@ final class SubscriptionsControllerTestAssertions
         $this->testCase->expectException(ApiException::class);
         $this->testCase->expectExceptionCode(TestStatusCode::UNAUTHORIZED);
     }
+
+    public function assertSubscriptionCannotBeCreatedBecauseCustomerNotFound(): void
+    {
+        $this->testCase->expectException(ApiException::class);
+        $this->testCase->expectExceptionCode(TestStatusCode::UNPROCESSABLE_CONTENT);
+    }
+
+    public function assertSubscriptionWithCouponsCreated(?Subscription $subscription): void
+    {
+        $this->testCase::assertNotNull($subscription);
+        $this->testCase::assertNotNull($subscription->getCoupons());
+        $this->testCase::assertCount(2, $subscription->getCoupons());
+    }
 }

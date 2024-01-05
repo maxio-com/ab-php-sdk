@@ -118,14 +118,156 @@ final class SubscriptionsControllerTest extends TestCase
     }
 
     /**
-     * @covers \AdvancedBillingLib\Controllers\SubscriptionsController::readSubscription
+     * @covers \AdvancedBillingLib\Controllers\SubscriptionsController::createSubscription
      */
-    public function test_ReadSubscription_ShouldReturnSubscription_WhenSubscriptionWithProvidedIdExists(): void
+    public function test_CreateSubscription_ShouldCreateSubscription_WhenTwoCouponsAndOneComponentProvided(): void
     {
         $productFamily = $this->testData->loadProductFamily(name: 'SubscriptionControllerTest_ProductFamily_3');
         $product = $this->testData->loadProduct(
             name: 'SubscriptionsControllerTest Product 3',
             handle: 'subscriptionscontrollertest-product-3',
+            productFamilyId: $productFamily->getId()
+        );
+        $customer = $this->testData->loadCustomerWithPredefinedData();
+        $paymentProfile = $this->testData->loadPaymentProfile($customer->getId());
+        $component = $this->testData->loadComponent($productFamily->getId());
+        $couponOne = $this->testData->loadCoupon($productFamily->getId(), 'SubscriptionsControllerTest_Coupon_1');
+        $couponTwo = $this->testData->loadCoupon($productFamily->getId(), 'SubscriptionsControllerTest_Coupon_2');
+
+        $subscription = $this->client
+            ->getSubscriptionsController()
+            ->createSubscription(
+                $this->testData->getCreateSubscriptionWithComponentsAndCouponsRequest(
+                    $customer->getId(),
+                    $product->getId(),
+                    $paymentProfile->getId(),
+                    [$this->testData->getCreateSubscriptionComponent($component)],
+                    [$couponOne, $couponTwo]
+                )
+            )
+            ->getSubscription();
+
+        $this->assertions->assertReturnedSubscriptionWithPriceAffectedByCoupons(
+            $subscription,
+            [$couponOne, $couponTwo]
+        );
+
+        $this->cleaner->removeSubscriptionPaymentProfileById($subscription->getId(), $paymentProfile->getId());
+        $this->cleaner->removeSubscriptionById($subscription->getId(), $customer->getId());
+        $this->cleaner->removeCustomerById($customer->getId());
+    }
+
+    /**
+     * @covers \AdvancedBillingLib\Controllers\SubscriptionsController::createSubscription
+     */
+    public function test_CreateSubscription_ShouldCreateSubscription_WhenProratedBillingChargeSet(): void
+    {
+        $productFamily = $this->testData->loadProductFamily(name: 'SubscriptionControllerTest_ProductFamily_4');
+        $product = $this->testData->loadProduct(
+            name: 'SubscriptionsControllerTest Product 4',
+            handle: 'subscriptionscontrollertest-product-4',
+            productFamilyId: $productFamily->getId()
+        );
+        $customer = $this->testData->loadCustomerWithPredefinedData();
+        $paymentProfile = $this->testData->loadPaymentProfile($customer->getId());
+
+        $subscription = $this->client
+            ->getSubscriptionsController()
+            ->createSubscription(
+                $this->testData->getCreateSubscriptionWithProratedBillingRequest(
+                    $customer->getId(),
+                    $product->getId(),
+                    $paymentProfile->getId(),
+                )
+            )
+            ->getSubscription();
+
+        $this->assertions->assertSubscriptionWithProratedCalendarBillingCreated(
+            $subscription,
+            $this->testData->getSnapDay()
+        );
+
+        $this->cleaner->removeSubscriptionPaymentProfileById($subscription->getId(), $paymentProfile->getId());
+        $this->cleaner->removeSubscriptionById($subscription->getId(), $customer->getId());
+        $this->cleaner->removeCustomerById($customer->getId());
+    }
+
+    /**
+     * @covers \AdvancedBillingLib\Controllers\SubscriptionsController::createSubscription
+     */
+    public function test_CreateSubscription_ShouldThrowExceptionWith401StatusCode_WhenTryToCreateSubscriptionAsUnauthorizedUser(): void
+    {
+        $productFamily = $this->testData->loadProductFamily(name: 'SubscriptionControllerTest_ProductFamily_5');
+        $product = $this->testData->loadProduct(
+            name: 'SubscriptionsControllerTest Product 5',
+            handle: 'subscriptionscontrollertest-product-5',
+            productFamilyId: $productFamily->getId()
+        );
+        $customer = $this->testData->loadCustomCustomer(
+            firstName: 'SubscriptionsControllerTest_CustomerFN_1',
+            lastName: 'SubscriptionsControllerTest_CustomerLN_1',
+            email: 'sct1email@example.com',
+            reference: 'sct_ref_1',
+            vatNumber: 'sct_vat_1'
+        );
+        $paymentProfile = $this->testData->loadPaymentProfile($customer->getId());
+        $unauthenticatedClient = $this->getUnauthenticatedClient();
+
+        $this->assertions->assertSubscriptionCannotBeCreatedByUnauthorizedUser();
+        $unauthenticatedClient
+            ->getSubscriptionsController()
+            ->createSubscription(
+                $this->testData->getCreateSubscriptionWithProratedBillingRequest(
+                    $customer->getId(),
+                    $product->getId(),
+                    $paymentProfile->getId(),
+                )
+            )
+            ->getSubscription();
+    }
+
+    /**
+     * @covers \AdvancedBillingLib\Controllers\SubscriptionsController::createSubscription
+     */
+    public function test_CreateSubscription_ShouldThrowExceptionWith404StatusCode_WhenCustomerNotFound(): void
+    {
+        $productFamily = $this->testData->loadProductFamily(name: 'SubscriptionControllerTest_ProductFamily_6');
+        $product = $this->testData->loadProduct(
+            name: 'SubscriptionsControllerTest Product 6',
+            handle: 'subscriptionscontrollertest-product-6',
+            productFamilyId: $productFamily->getId()
+        );
+        $customer = $this->testData->loadCustomCustomer(
+            firstName: 'SubscriptionsControllerTest_CustomerFN_2',
+            lastName: 'SubscriptionsControllerTest_CustomerLN_2',
+            email: 'sct2email@example.com',
+            reference: 'sct_ref_2',
+            vatNumber: 'sct_vat_2'
+        );
+        $paymentProfile = $this->testData->loadPaymentProfile($customer->getId());
+
+        $this->assertions->assertSubscriptionCannotBeCreatedBecauseCustomerNotFound();
+        $this->client
+            ->getSubscriptionsController()
+            ->createSubscription(
+                $this->testData->getCreateSubscriptionWithProratedBillingRequest(
+                    $this->testData->getNotExistingCustomerId(),
+                    $product->getId(),
+                    $paymentProfile->getId(),
+                )
+            )
+            ->getSubscription();
+    }
+
+    /**
+     * @covers \AdvancedBillingLib\Controllers\SubscriptionsController::readSubscription
+     */
+    public function test_ReadSubscription_ShouldReturnSubscription_WhenSubscriptionWithProvidedIdExists(): void
+    {
+        $productFamily = $this->testData->loadProductFamily(name: 'SubscriptionControllerTest_ProductFamily_7');
+        $product = $this->testData->loadProduct(
+            name: 'SubscriptionsControllerTest Product 7',
+            handle: 'subscriptionscontrollertest-product-7',
             productFamilyId: $productFamily->getId()
         );
         $customer = $this->testData->loadCustomerWithPredefinedData();
@@ -168,106 +310,42 @@ final class SubscriptionsControllerTest extends TestCase
     }
 
     /**
-     * @covers \AdvancedBillingLib\Controllers\SubscriptionsController::createSubscription
+     * @covers \AdvancedBillingLib\Controllers\SubscriptionsController::readSubscription
      */
-    public function test_CreateSubscription_ShouldCreateSubscription_WhenTwoCouponsAndOneComponentProvided(): void
+    public function test_ReadSubscription_ShouldReturnSubscriptionWithCoupons_WhenCouponsAddedToSubscription(): void
     {
-        $productFamily = $this->testData->loadProductFamily(name: 'SubscriptionControllerTest_ProductFamily_4');
+        $productFamily = $this->testData->loadProductFamily(name: 'SubscriptionControllerTest_ProductFamily_8');
         $product = $this->testData->loadProduct(
-            name: 'SubscriptionsControllerTest Product 4',
-            handle: 'subscriptionscontrollertest-product-4',
+            name: 'SubscriptionsControllerTest Product 8',
+            handle: 'subscriptionscontrollertest-product-8',
             productFamilyId: $productFamily->getId()
         );
         $customer = $this->testData->loadCustomerWithPredefinedData();
         $paymentProfile = $this->testData->loadPaymentProfile($customer->getId());
-        $component = $this->testData->loadComponent($productFamily->getId());
-        $couponOne = $this->testData->loadCoupon($productFamily->getId(), 'SubscriptionsControllerTest_Coupon_1');
-        $couponTwo = $this->testData->loadCoupon($productFamily->getId(), 'SubscriptionsControllerTest_Coupon_2');
-
+        $couponOne = $this->testData->loadCoupon($productFamily->getId(), 'SubscriptionsControllerTest_Coupon_3');
+        $couponTwo = $this->testData->loadCoupon($productFamily->getId(), 'SubscriptionsControllerTest_Coupon_4');
         $subscription = $this->client
             ->getSubscriptionsController()
             ->createSubscription(
-                $this->testData->getCreateSubscriptionWithComponentsAndCouponsRequest(
+                $this->testData->createSubscriptionWithCouponsRequest(
                     $customer->getId(),
                     $product->getId(),
                     $paymentProfile->getId(),
-                    [$this->testData->getCreateSubscriptionComponent($component)],
                     [$couponOne, $couponTwo]
                 )
             )
             ->getSubscription();
 
-        $this->assertions->assertReturnedSubscriptionWithPriceAffectedByCoupons(
-            $subscription,
-            [$couponOne, $couponTwo]
-        );
+        $response = $this->client
+            ->getSubscriptionsController()
+            ->readSubscription($subscription->getId(), ['coupons'])
+            ->getSubscription();
+
+        $this->assertions->assertSubscriptionWithCouponsCreated($response);
 
         $this->cleaner->removeSubscriptionPaymentProfileById($subscription->getId(), $paymentProfile->getId());
         $this->cleaner->removeSubscriptionById($subscription->getId(), $customer->getId());
         $this->cleaner->removeCustomerById($customer->getId());
-    }
-
-    /**
-     * @covers \AdvancedBillingLib\Controllers\SubscriptionsController::createSubscription
-     */
-    public function test_CreateSubscription_ShouldCreateSubscription_WhenProratedBillingChargeSet(): void
-    {
-        $productFamily = $this->testData->loadProductFamily(name: 'SubscriptionControllerTest_ProductFamily_5');
-        $product = $this->testData->loadProduct(
-            name: 'SubscriptionsControllerTest Product 5',
-            handle: 'subscriptionscontrollertest-product-5',
-            productFamilyId: $productFamily->getId()
-        );
-        $customer = $this->testData->loadCustomerWithPredefinedData();
-        $paymentProfile = $this->testData->loadPaymentProfile($customer->getId());
-
-        $subscription = $this->client
-            ->getSubscriptionsController()
-            ->createSubscription(
-                $this->testData->getCreateSubscriptionWithProratedBillingRequest(
-                    $customer->getId(),
-                    $product->getId(),
-                    $paymentProfile->getId(),
-                )
-            )
-            ->getSubscription();
-
-        $this->assertions->assertSubscriptionWithProratedCalendarBillingCreated(
-            $subscription,
-            $this->testData->getSnapDay()
-        );
-
-        $this->cleaner->removeSubscriptionPaymentProfileById($subscription->getId(), $paymentProfile->getId());
-        $this->cleaner->removeSubscriptionById($subscription->getId(), $customer->getId());
-        $this->cleaner->removeCustomerById($customer->getId());
-    }
-
-    /**
-     * @covers \AdvancedBillingLib\Controllers\SubscriptionsController::createSubscription
-     */
-    public function test_CreateSubscription_ShouldThrowExceptionWith401StatusCode_WhenTryToCreateSubscriptionAsUnauthorizedUser(): void
-    {
-        $productFamily = $this->testData->loadProductFamily(name: 'SubscriptionControllerTest_ProductFamily_6');
-        $product = $this->testData->loadProduct(
-            name: 'SubscriptionsControllerTest Product 6',
-            handle: 'subscriptionscontrollertest-product-6',
-            productFamilyId: $productFamily->getId()
-        );
-        $customer = $this->testData->loadCustomerWithPredefinedData();
-        $paymentProfile = $this->testData->loadPaymentProfile($customer->getId());
-        $unauthenticatedClient = $this->getUnauthenticatedClient();
-
-        $this->assertions->assertSubscriptionCannotBeCreatedByUnauthorizedUser();
-        $unauthenticatedClient
-            ->getSubscriptionsController()
-            ->createSubscription(
-                $this->testData->getCreateSubscriptionWithProratedBillingRequest(
-                    $customer->getId(),
-                    $product->getId(),
-                    $paymentProfile->getId(),
-                )
-            )
-            ->getSubscription();
     }
 
     protected function setUp(): void

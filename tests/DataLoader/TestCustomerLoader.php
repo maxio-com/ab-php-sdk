@@ -41,8 +41,21 @@ final class TestCustomerLoader
             ->getCustomer();
     }
 
-    public function loadSimpleCustomerWithCustomData(string $firstName, string $lastName, string $email): Customer
+    public function loadSimpleCustomerWithCustomData(
+        string $firstName,
+        string $lastName,
+        string $email,
+        string $reference,
+        string $vatNumber
+    ): Customer
     {
-        return $this->load($firstName, $lastName, $email);
+        $request = $this->customerRequestFactory->createCreateCustomerRequest($firstName, $lastName, $email);
+        $request->getCustomer()->setReference($reference);
+        $request->getCustomer()->setVatNumber($reference);
+
+        return $this->client
+            ->getCustomersController()
+            ->createCustomer($request)
+            ->getCustomer();
     }
 }

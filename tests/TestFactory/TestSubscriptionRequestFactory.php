@@ -102,4 +102,23 @@ final class TestSubscriptionRequestFactory
             ->calendarBillingFirstCharge(FirstChargeType::PRORATED)
             ->build();
     }
+
+    /**
+     * @param array<int, Coupon> $coupons
+     */
+    public function createWithCoupons(
+        int $customerId,
+        int $productId,
+        int $paymentProfileId,
+        array $coupons
+    ): CreateSubscriptionRequest
+    {
+        $request = $this->create($customerId, $productId, $paymentProfileId);
+        $couponCodes = array_map(static fn(Coupon $coupon): string => $coupon->getCode(), $coupons);
+
+        $request->getSubscription()
+            ->setCouponCodes($couponCodes);
+
+        return $request;
+    }
 }
