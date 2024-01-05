@@ -7,6 +7,7 @@ namespace AdvancedBillingLib\Tests\Controllers;
 use AdvancedBillingLib\AdvancedBillingClient;
 use AdvancedBillingLib\Models\Builders\CreateSubscriptionComponentBuilder;
 use AdvancedBillingLib\Models\Component;
+use AdvancedBillingLib\Models\Coupon;
 use AdvancedBillingLib\Models\CreatedPaymentProfile;
 use AdvancedBillingLib\Models\CreateSubscriptionComponent;
 use AdvancedBillingLib\Models\CreateSubscriptionRequest;
@@ -15,9 +16,12 @@ use AdvancedBillingLib\Models\Product;
 use AdvancedBillingLib\Models\ProductFamily;
 use AdvancedBillingLib\Models\Subscription;
 use AdvancedBillingLib\Tests\TestData\ComponentTestData;
+use AdvancedBillingLib\Tests\TestData\CouponTestData;
 use AdvancedBillingLib\Tests\TestData\ProductFamilyTestData;
 use AdvancedBillingLib\Tests\TestData\ProductTestData;
+use AdvancedBillingLib\Tests\TestData\SubscriptionTestData;
 use AdvancedBillingLib\Tests\TestFactory\TestComponentRequestFactory;
+use AdvancedBillingLib\Tests\TestFactory\TestCouponRequestFactory;
 use AdvancedBillingLib\Tests\TestFactory\TestCustomerRequestFactory;
 use AdvancedBillingLib\Tests\TestFactory\TestPaymentProfileFactory;
 use AdvancedBillingLib\Tests\TestFactory\TestPaymentProfileRequestFactory;
@@ -38,7 +42,8 @@ final class SubscriptionsControllerTestData
         private TestSubscriptionRequestFactory $subscriptionRequestFactory,
         private TestPaymentProfileRequestFactory $paymentProfileRequestFactory,
         private TestPaymentProfileFactory $paymentProfileFactory,
-        private TestComponentRequestFactory $componentRequestFactory
+        private TestComponentRequestFactory $componentRequestFactory,
+        private TestCouponRequestFactory $couponRequestFactory
     )
     {
     }
@@ -252,6 +257,137 @@ final class SubscriptionsControllerTestData
             ->createProduct(
                 $productFamilyId,
                 $this->productRequestFactory->create(ProductTestData::NAME_SIX, ProductTestData::HANDLE_SIX)
+            )
+            ->getProduct();
+    }
+
+    public function loadCouponOne(int $productFamilyId): Coupon
+    {
+        return $this->client
+            ->getCouponsController()
+            ->createCoupon(
+                $productFamilyId,
+                $this->couponRequestFactory->createCreateOrUpdatePercentageCouponRequest(
+                    (string) $productFamilyId,
+                    CouponTestData::CODE_TWO
+                )
+            )
+            ->getCoupon();
+    }
+
+    public function loadCouponTwo(int $productFamilyId): Coupon
+    {
+        return $this->client
+            ->getCouponsController()
+            ->createCoupon(
+                $productFamilyId,
+                $this->couponRequestFactory->createCreateOrUpdatePercentageCouponRequest(
+                    (string) $productFamilyId,
+                    CouponTestData::CODE_THREE
+                )
+            )
+            ->getCoupon();
+    }
+
+    /**
+     * @param array<int, CreateSubscriptionComponent> $components
+     * @param array<int, Coupon> $coupons
+     */
+    public function getCreateSubscriptionWithComponentsAndCouponsRequest(
+        int $customerId,
+        int $productId,
+        int $paymentProfileId,
+        array $components,
+        array $coupons
+    ): CreateSubscriptionRequest
+    {
+        return $this->subscriptionRequestFactory->createWithComponentsAndCoupons(
+            $customerId,
+            $productId,
+            $paymentProfileId,
+            $components,
+            $coupons
+        );
+    }
+
+    public function getCreateSubscriptionWithProratedBillingRequest(
+        int $customerId,
+        int $productId,
+        int $paymentProfileId,
+    ): CreateSubscriptionRequest
+    {
+        return $this->subscriptionRequestFactory->createCreateSubscriptionWithProratedBillingRequest(
+            $customerId,
+            $productId,
+            $paymentProfileId,
+            $this->getSnapDay()
+        );
+    }
+
+    public function getSnapDay(): int
+    {
+        return SubscriptionTestData::SNAP_DAY_15;
+    }
+
+    public function loadProductFamilyFour(): ProductFamily
+    {
+        return $this->client
+            ->getProductFamiliesController()
+            ->createProductFamily(
+                $this->productFamilyRequestFactory->create(ProductFamilyTestData::NAME_TWELVE)
+            )
+            ->getProductFamily();
+    }
+
+    public function loadProductFour(int $productFamilyId): Product
+    {
+        return $this->client
+            ->getProductsController()
+            ->createProduct(
+                $productFamilyId,
+                $this->productRequestFactory->create(ProductTestData::NAME_SEVEN, ProductTestData::HANDLE_SEVEN)
+            )
+            ->getProduct();
+    }
+
+    public function loadProductFamilyFive(): ProductFamily
+    {
+        return $this->client
+            ->getProductFamiliesController()
+            ->createProductFamily(
+                $this->productFamilyRequestFactory->create(ProductFamilyTestData::NAME_THIRTEEN)
+            )
+            ->getProductFamily();
+    }
+
+    public function loadProductFive(int $productFamilyId): Product
+    {
+        return $this->client
+            ->getProductsController()
+            ->createProduct(
+                $productFamilyId,
+                $this->productRequestFactory->create(ProductTestData::NAME_EIGHT, ProductTestData::HANDLE_EIGHT)
+            )
+            ->getProduct();
+    }
+
+    public function loadProductFamilySix(): ProductFamily
+    {
+        return $this->client
+            ->getProductFamiliesController()
+            ->createProductFamily(
+                $this->productFamilyRequestFactory->create(ProductFamilyTestData::NAME_FOURTEEN)
+            )
+            ->getProductFamily();
+    }
+
+    public function loadProductSix(int $productFamilyId): Product
+    {
+        return $this->client
+            ->getProductsController()
+            ->createProduct(
+                $productFamilyId,
+                $this->productRequestFactory->create(ProductTestData::NAME_NINE, ProductTestData::HANDLE_NINE)
             )
             ->getProduct();
     }

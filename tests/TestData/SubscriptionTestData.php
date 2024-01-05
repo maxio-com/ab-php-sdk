@@ -43,7 +43,7 @@ final class SubscriptionTestData
     public const SIGNUP_REVENUE = '1.00';
     public const PAYMENT_COLLECTION_METHOD = 'automatic';
     public const PAYMENT_TYPE = 'credit_card';
-    public const COUPON_CODES = [];
+    public const EMPTY_COUPON_CODES = [];
     public const CURRENT_BILLING_AMOUNT_IN_CENTS = 100;
     public const PRODUCT_PRICE_POINT_TYPE = 'default';
     public const CURRENCY = 'USD';
@@ -53,4 +53,5 @@ final class SubscriptionTestData
     public const DUNNING_COMMUNICATION_DELAY_ENABLED = false;
     public const TOTAL_REVENUE_IN_CENTS_WITH_ONE_COMPONENT = 200;
     public const SIGNUP_REVENUE_WITH_ONE_COMPONENT = '2.00';
+    public const SNAP_DAY_15 = 15;
 }

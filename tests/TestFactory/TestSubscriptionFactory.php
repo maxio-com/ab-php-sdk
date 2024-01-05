@@ -91,7 +91,7 @@ final class TestSubscriptionFactory
             ->product($product)
             ->creditCard($paymentProfile)
             ->paymentType(SubscriptionTestData::PAYMENT_TYPE)
-            ->couponCodes(SubscriptionTestData::COUPON_CODES)
+            ->couponCodes(SubscriptionTestData::EMPTY_COUPON_CODES)
             ->currentBillingAmountInCents(SubscriptionTestData::CURRENT_BILLING_AMOUNT_IN_CENTS)
             ->productPricePointId($productPricePointId)
             ->productPricePointType(SubscriptionTestData::PRODUCT_PRICE_POINT_TYPE)
@@ -128,16 +128,6 @@ final class TestSubscriptionFactory
             ->scheduledCancellationAt(SubscriptionTestData::SCHEDULED_CANCELLATION_AT)
             ->prepaymentBalanceInCents(SubscriptionTestData::PREPAYMENT_BALANCE_IN_CENTS)
             ->build();
-    }
-
-    private function getComponentUnitPriceInCents(Component $component): int
-    {
-        return (int) $component->getPrices()[0]->getUnitPrice() * 100;
-    }
-
-    private function getComponentUnitPriceInDollars(Component $component): float
-    {
-        return (float) $component->getPrices()[0]->getUnitPrice();
     }
 
     public function createWithoutBillingAmount(

@@ -8,6 +8,7 @@ use AdvancedBillingLib\AdvancedBillingClient;
 use AdvancedBillingLib\Models\Coupon;
 use AdvancedBillingLib\Models\CreateOrUpdateCoupon;
 use AdvancedBillingLib\Models\ProductFamily;
+use AdvancedBillingLib\Tests\TestData\CouponTestData;
 use AdvancedBillingLib\Tests\TestData\ProductFamilyTestData;
 use AdvancedBillingLib\Tests\TestFactory\TestCouponFactory;
 use AdvancedBillingLib\Tests\TestFactory\TestCouponRequestFactory;
@@ -34,7 +35,7 @@ final class CouponsControllerTestData
 
     public function getCreateOrUpdatePercentageCouponRequest(string $productFamilyId): CreateOrUpdateCoupon
     {
-        return $this->couponRequestFactory->createCreateOrUpdatePercentageCouponRequest($productFamilyId);
+        return $this->couponRequestFactory->createCreateOrUpdatePercentageCouponRequest($productFamilyId, CouponTestData::CODE_ONE);
     }
 
     public function getExpectedCoupon(

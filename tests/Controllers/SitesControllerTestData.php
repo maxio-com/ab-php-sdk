@@ -9,8 +9,6 @@ use AdvancedBillingLib\Tests\TestFactory\TestSiteFactory;
 
 final class SitesControllerTestData
 {
-    private const INVALID_AUTH_USER_NAME = 'invalidUserName';
-    private const INVALID_AUTH_PASSWORD = 'invalidPassword';
 
     public function __construct(private TestSiteFactory $siteFactory)
     {
@@ -19,15 +17,5 @@ final class SitesControllerTestData
     public function getExpectedSite(): Site
     {
         return $this->siteFactory->createSiteWithDefaultValues();
-    }
-
-    public function getInvalidAuthUserName(): string
-    {
-        return self::INVALID_AUTH_USER_NAME;
-    }
-
-    public function geInvalidAuthPassword(): string
-    {
-        return self::INVALID_AUTH_PASSWORD;
     }
 }
