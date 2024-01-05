@@ -16,19 +16,19 @@ use AdvancedBillingLib\Tests\TestData\CustomerTestData;
 
 final class TestCustomerRequestFactory
 {
-    public function createCreateCustomerRequest(): CreateCustomerRequest
+    public function createCreateCustomerRequest(
+        string $firstName,
+        string $lastName,
+        string $email
+    ): CreateCustomerRequest
     {
-        return CreateCustomerRequestBuilder::init($this->buildCreateCustomer())
+        return CreateCustomerRequestBuilder::init($this->buildCreateCustomer($firstName, $lastName, $email))
             ->build();
     }
 
-    private function buildCreateCustomer(): CreateCustomer
+    private function buildCreateCustomer(string $firstName, string $lastName, string $email): CreateCustomer
     {
-        return CreateCustomerBuilder::init(
-            CustomerTestData::FIRST_NAME,
-            CustomerTestData::LAST_NAME,
-            CustomerTestData::EMAIL
-        )
+        return CreateCustomerBuilder::init($firstName, $lastName, $email)
             ->ccEmails(CustomerTestData::CC_EMAILS)
             ->organization(CustomerTestData::ORGANIZATION)
             ->reference(CustomerTestData::REFERENCE)

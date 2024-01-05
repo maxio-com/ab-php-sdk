@@ -4,6 +4,11 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Tests\Controllers;
 
+use AdvancedBillingLib\Tests\DataLoader\TestCustomerLoader;
+use AdvancedBillingLib\Tests\DataLoader\TestPaymentProfileLoader;
+use AdvancedBillingLib\Tests\DataLoader\TestProductFamilyLoader;
+use AdvancedBillingLib\Tests\DataLoader\TestProductLoader;
+use AdvancedBillingLib\Tests\DataLoader\TestSubscriptionsLoader;
 use AdvancedBillingLib\Tests\TestCase;
 use AdvancedBillingLib\Tests\TestFactory\TestCustomerRequestFactory;
 use AdvancedBillingLib\Tests\TestFactory\TestPaymentProfileRequestFactory;
@@ -157,12 +162,12 @@ final class PaymentProfilesControllerTest extends TestCase
         parent::setUp();
 
         $this->testData = new PaymentProfilesControllerTestData(
-            $this->client,
-            new TestCustomerRequestFactory(),
             new TestPaymentProfileRequestFactory(),
-            new TestProductFamilyRequestFactory(),
-            new TestProductRequestFactory(),
-            new TestSubscriptionRequestFactory()
+            new TestCustomerLoader($this->client, new TestCustomerRequestFactory()),
+            new TestPaymentProfileLoader($this->client, new TestPaymentProfileRequestFactory()),
+            new TestProductFamilyLoader($this->client, new TestProductFamilyRequestFactory()),
+            new TestSubscriptionsLoader($this->client, new TestSubscriptionRequestFactory()),
+            new TestProductLoader($this->client, new TestProductRequestFactory())
         );
         $this->assertions = new PaymentProfilesControllerTestAssertions($this);
     }

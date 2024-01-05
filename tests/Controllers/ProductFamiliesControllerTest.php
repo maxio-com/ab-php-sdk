@@ -18,7 +18,7 @@ final class ProductFamiliesControllerTest extends TestCase
      */
     public function test_CreateProductFamily_ShouldCreateProductFamily_WhenAllProvidedDataAreValid(): void
     {
-        $request = $this->testData->createRequestOne();
+        $request = $this->testData->createRequest($this->testData->getNameOne());
 
         $productFamily = $this->client
             ->getProductFamiliesController()
@@ -40,7 +40,7 @@ final class ProductFamiliesControllerTest extends TestCase
      */
     public function test_CreateProductFamily_ShouldThrowExceptionWith422Code_WhenProductFamilyAlreadyExists(): void
     {
-        $request = $this->testData->createRequestTwo();
+        $request = $this->testData->createRequest($this->testData->getNameTwo());
 
         $this->client
             ->getProductFamiliesController()

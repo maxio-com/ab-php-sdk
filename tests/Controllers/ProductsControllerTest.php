@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Tests\Controllers;
 
+use AdvancedBillingLib\Tests\DataLoader\TestProductFamilyLoader;
 use AdvancedBillingLib\Tests\TestCase;
 use AdvancedBillingLib\Tests\TestFactory\TestProductFactory;
 use AdvancedBillingLib\Tests\TestFactory\TestProductFamilyFactory;
@@ -20,7 +21,7 @@ final class ProductsControllerTest extends TestCase
      */
     public function test_CreateProduct_ShouldCreateProduct_WhenAllProvidedDataAreValid(): void
     {
-        $productFamily = $this->testData->loadProductFamily();
+        $productFamily = $this->testData->loadProductFamily($this->testData->getProductFamilyName());
 
         $product = $this->client
             ->getProductsController()
@@ -50,9 +51,9 @@ final class ProductsControllerTest extends TestCase
      */
     public function test_CreateProduct_ShouldThrowExceptionWith422Status_WhenProductAlreadyExists(): void
     {
-        $productFamily = $this->testData->loadProductFamilyTwo();
+        $productFamily = $this->testData->loadProductFamily(name: 'ProductsControllerTest_ProductFamily_2');
 
-        $product = $this->client
+        $this->client
             ->getProductsController()
             ->createProduct($productFamily->getId(), $this->testData->createRequest())
             ->getProduct();
@@ -62,8 +63,6 @@ final class ProductsControllerTest extends TestCase
             ->getProductsController()
             ->createProduct($productFamily->getId(), $this->testData->createRequest())
             ->getProduct();
-
-        $this->cleaner->archiveProductById($product->getId());
     }
 
     protected function setUp(): void
@@ -71,10 +70,9 @@ final class ProductsControllerTest extends TestCase
         parent::setUp();
 
         $this->testData = new ProductsControllerTestData(
-            $this->client,
-            new TestProductFamilyRequestFactory(),
             new TestProductFactory(new TestProductFamilyFactory()),
-            new TestProductRequestFactory()
+            new TestProductRequestFactory(),
+            new TestProductFamilyLoader($this->client, new TestProductFamilyRequestFactory())
         );
         $this->assertions = new ProductsControllerTestAssertions($this);
     }
