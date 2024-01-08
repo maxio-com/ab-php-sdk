@@ -21,6 +21,7 @@ use AdvancedBillingLib\Tests\DataLoader\TestPaymentProfileLoader;
 use AdvancedBillingLib\Tests\DataLoader\TestProductFamilyLoader;
 use AdvancedBillingLib\Tests\DataLoader\TestProductLoader;
 use AdvancedBillingLib\Tests\TestData\ComponentTestData;
+use AdvancedBillingLib\Tests\TestData\CustomerTestData;
 use AdvancedBillingLib\Tests\TestData\SubscriptionTestData;
 use AdvancedBillingLib\Tests\TestFactory\TestPaymentProfileFactory;
 use AdvancedBillingLib\Tests\TestFactory\TestSubscriptionFactory;
@@ -133,9 +134,15 @@ final class SubscriptionsControllerTestData
         return $this->customerLoader->loadSimpleCustomerWithPredefinedData();
     }
 
-    public function loadCustomCustomer(string $firstName, string $lastName, string $email): Customer
+    public function loadCustomCustomer(
+        string $firstName,
+        string $lastName,
+        string $email,
+        string $reference,
+        string $vatNumber
+    ): Customer
     {
-        return $this->customerLoader->loadSimpleCustomerWithCustomData($firstName, $lastName, $email);
+        return $this->customerLoader->loadSimpleCustomerWithCustomData($firstName, $lastName, $email, $reference, $vatNumber);
     }
 
     public function loadPaymentProfile(int $customerId): CreatedPaymentProfile
@@ -248,5 +255,28 @@ final class SubscriptionsControllerTestData
     public function getSnapDay(): int
     {
         return SubscriptionTestData::SNAP_DAY_15;
+    }
+
+    public function getNotExistingCustomerId(): int
+    {
+        return CustomerTestData::NOT_EXISTING_CUSTOMER_ID;
+    }
+
+    /**
+     * @param array<int, Coupon> $coupons
+     */
+    public function createSubscriptionWithCouponsRequest(
+        int $customerId,
+        int $productId,
+        int $paymentProfileId,
+        array $coupons
+    ): CreateSubscriptionRequest
+    {
+        return $this->subscriptionRequestFactory->createWithCoupons(
+            $customerId,
+            $productId,
+            $paymentProfileId,
+            $coupons
+        );
     }
 }
