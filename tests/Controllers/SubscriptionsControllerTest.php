@@ -229,7 +229,7 @@ final class SubscriptionsControllerTest extends TestCase
     /**
      * @covers \AdvancedBillingLib\Controllers\SubscriptionsController::createSubscription
      */
-    public function test_CreateSubscription_ShouldThrowExceptionWith404StatusCode_WhenCustomerNotFound(): void
+    public function test_CreateSubscription_ShouldThrowExceptionWith422StatusCode_WhenCustomerNotFound(): void
     {
         $productFamily = $this->testData->loadProductFamily(name: 'SubscriptionControllerTest_ProductFamily_6');
         $product = $this->testData->loadProduct(
