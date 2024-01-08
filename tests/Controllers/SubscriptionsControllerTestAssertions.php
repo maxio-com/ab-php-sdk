@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace AdvancedBillingLib\Tests\Controllers;
 
 use AdvancedBillingLib\Exceptions\ApiException;
+use AdvancedBillingLib\Exceptions\ErrorListResponseException;
 use AdvancedBillingLib\Models\Coupon;
 use AdvancedBillingLib\Models\Subscription;
 use AdvancedBillingLib\Tests\TestStatusCode;
@@ -70,10 +71,15 @@ final class SubscriptionsControllerTestAssertions
         $this->testCase->expectExceptionCode(TestStatusCode::UNAUTHORIZED);
     }
 
-    public function assertSubscriptionCannotBeCreatedBecauseCustomerNotFound(): void
+    public function assertSubscriptionCannotBeCreatedBecauseCustomerNotFound(ApiException $exception): void
     {
-        $this->testCase->expectException(ApiException::class);
-        $this->testCase->expectExceptionCode(TestStatusCode::UNPROCESSABLE_CONTENT);
+        $this->testCase::assertInstanceOf(ErrorListResponseException::class, $exception);
+        $this->testCase::assertEquals(TestStatusCode::UNPROCESSABLE_CONTENT, $exception->getCode());
+        $this->testCase::assertCount(1, $exception->getErrors());
+        $this->testCase::assertEquals(
+            'A Customer must be specified for the subscription to be valid.',
+            $exception->getErrors()[0]
+        );
     }
 
     public function assertSubscriptionWithCouponsCreated(?Subscription $subscription): void

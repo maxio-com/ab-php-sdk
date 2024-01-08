@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Tests\Controllers;
 
+use AdvancedBillingLib\Exceptions\ApiException;
 use AdvancedBillingLib\Tests\DataLoader\TestProductFamilyLoader;
 use AdvancedBillingLib\Tests\TestCase;
 use AdvancedBillingLib\Tests\TestFactory\TestProductFactory;
@@ -58,11 +59,14 @@ final class ProductsControllerTest extends TestCase
             ->createProduct($productFamily->getId(), $this->testData->createRequest())
             ->getProduct();
 
-        $this->assertions->assertProductCannotBeCreated();
-        $this->client
-            ->getProductsController()
-            ->createProduct($productFamily->getId(), $this->testData->createRequest())
-            ->getProduct();
+        try {
+            $this->client
+                ->getProductsController()
+                ->createProduct($productFamily->getId(), $this->testData->createRequest())
+                ->getProduct();
+        } catch (ApiException $e) {
+            $this->assertions->assertProductCannotBeCreated($e);
+        }
     }
 
     protected function setUp(): void

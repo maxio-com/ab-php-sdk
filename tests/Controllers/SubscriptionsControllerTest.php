@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Tests\Controllers;
 
+use AdvancedBillingLib\Exceptions\ApiException;
 use AdvancedBillingLib\Tests\DataLoader\TestComponentLoader;
 use AdvancedBillingLib\Tests\DataLoader\TestCouponLoader;
 use AdvancedBillingLib\Tests\DataLoader\TestCustomerLoader;
@@ -246,17 +247,22 @@ final class SubscriptionsControllerTest extends TestCase
         );
         $paymentProfile = $this->testData->loadPaymentProfile($customer->getId());
 
-        $this->assertions->assertSubscriptionCannotBeCreatedBecauseCustomerNotFound();
-        $this->client
-            ->getSubscriptionsController()
-            ->createSubscription(
-                $this->testData->getCreateSubscriptionWithProratedBillingRequest(
-                    $this->testData->getNotExistingCustomerId(),
-                    $product->getId(),
-                    $paymentProfile->getId(),
+        try {
+            $this->client
+                ->getSubscriptionsController()
+                ->createSubscription(
+                    $this->testData->getCreateSubscriptionWithProratedBillingRequest(
+                        $this->testData->getNotExistingCustomerId(),
+                        $product->getId(),
+                        $paymentProfile->getId(),
+                    )
                 )
-            )
-            ->getSubscription();
+                ->getSubscription();
+        } catch (ApiException $e) {
+            $this->assertions->assertSubscriptionCannotBeCreatedBecauseCustomerNotFound($e);
+        }
+
+        $this->cleaner->removeCustomerById($customer->getId());
     }
 
     /**

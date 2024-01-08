@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace AdvancedBillingLib\Tests\Controllers;
 
 use AdvancedBillingLib\Exceptions\ApiException;
+use AdvancedBillingLib\Exceptions\ErrorListResponseException;
 use AdvancedBillingLib\Models\Product;
 use AdvancedBillingLib\Tests\TestStatusCode;
 
@@ -19,9 +20,14 @@ final class ProductsControllerTestAssertions
         $this->testCase::assertEquals($expectedProduct, $product);
     }
 
-    public function assertProductCannotBeCreated(): void
+    public function assertProductCannotBeCreated(ApiException $exception): void
     {
-        $this->testCase->expectException(ApiException::class);
-        $this->testCase->expectExceptionCode(TestStatusCode::UNPROCESSABLE_CONTENT);
+        $this->testCase::assertInstanceOf(ErrorListResponseException::class, $exception);
+        $this->testCase::assertEquals(TestStatusCode::UNPROCESSABLE_CONTENT, $exception->getCode());
+        $this->testCase::assertCount(1, $exception->getErrors());
+        $this->testCase::assertEquals(
+            'API Handle: must be unique - \'productscontrollertest-product-1\' has been taken by another Product in this Site.',
+            $exception->getErrors()[0]
+        );
     }
 }
