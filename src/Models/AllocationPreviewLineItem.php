@@ -61,6 +61,7 @@ class AllocationPreviewLineItem implements \JsonSerializable
 
     /**
      * Returns Transaction Type.
+     * A handle for the line item transaction type
      */
     public function getTransactionType(): ?string
     {
@@ -69,8 +70,10 @@ class AllocationPreviewLineItem implements \JsonSerializable
 
     /**
      * Sets Transaction Type.
+     * A handle for the line item transaction type
      *
      * @maps transaction_type
+     * @factory \AdvancedBillingLib\Models\LineItemTransactionType::checkValue
      */
     public function setTransactionType(?string $transactionType): void
     {
@@ -79,6 +82,7 @@ class AllocationPreviewLineItem implements \JsonSerializable
 
     /**
      * Returns Kind.
+     * A handle for the line item kind for allocation preview
      */
     public function getKind(): ?string
     {
@@ -87,8 +91,10 @@ class AllocationPreviewLineItem implements \JsonSerializable
 
     /**
      * Sets Kind.
+     * A handle for the line item kind for allocation preview
      *
      * @maps kind
+     * @factory \AdvancedBillingLib\Models\AllocationPreviewLineItemKind::checkValue
      */
     public function setKind(?string $kind): void
     {
@@ -205,6 +211,7 @@ class AllocationPreviewLineItem implements \JsonSerializable
 
     /**
      * Returns Direction.
+     * Visible when using Fine-grained Component Control
      */
     public function getDirection(): ?string
     {
@@ -213,8 +220,10 @@ class AllocationPreviewLineItem implements \JsonSerializable
 
     /**
      * Sets Direction.
+     * Visible when using Fine-grained Component Control
      *
      * @maps direction
+     * @factory \AdvancedBillingLib\Models\AllocationPreviewDirection::checkValue
      */
     public function setDirection(?string $direction): void
     {
@@ -234,10 +243,10 @@ class AllocationPreviewLineItem implements \JsonSerializable
     {
         $json = [];
         if (isset($this->transactionType)) {
-            $json['transaction_type']         = $this->transactionType;
+            $json['transaction_type']         = LineItemTransactionType::checkValue($this->transactionType);
         }
         if (isset($this->kind)) {
-            $json['kind']                     = $this->kind;
+            $json['kind']                     = AllocationPreviewLineItemKind::checkValue($this->kind);
         }
         if (isset($this->amountInCents)) {
             $json['amount_in_cents']          = $this->amountInCents;
@@ -258,7 +267,7 @@ class AllocationPreviewLineItem implements \JsonSerializable
             $json['component_handle']         = $this->componentHandle;
         }
         if (isset($this->direction)) {
-            $json['direction']                = $this->direction;
+            $json['direction']                = AllocationPreviewDirection::checkValue($this->direction);
         }
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;

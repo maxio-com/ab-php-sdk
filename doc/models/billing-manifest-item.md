@@ -9,8 +9,8 @@
 
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
-| `transactionType` | `?string` | Optional | - | getTransactionType(): ?string | setTransactionType(?string transactionType): void |
-| `kind` | `?string` | Optional | - | getKind(): ?string | setKind(?string kind): void |
+| `transactionType` | [`?string(LineItemTransactionType)`](../../doc/models/line-item-transaction-type.md) | Optional | A handle for the line item transaction type | getTransactionType(): ?string | setTransactionType(?string transactionType): void |
+| `kind` | [`?string(BillingManifestLineItemKind)`](../../doc/models/billing-manifest-line-item-kind.md) | Optional | A handle for the billing manifest line item kind | getKind(): ?string | setKind(?string kind): void |
 | `amountInCents` | `?int` | Optional | - | getAmountInCents(): ?int | setAmountInCents(?int amountInCents): void |
 | `memo` | `?string` | Optional | - | getMemo(): ?string | setMemo(?string memo): void |
 | `discountAmountInCents` | `?int` | Optional | - | getDiscountAmountInCents(): ?int | setDiscountAmountInCents(?int discountAmountInCents): void |
@@ -28,8 +28,8 @@
 
 ```json
 {
-  "transaction_type": "transaction_type2",
-  "kind": "kind8",
+  "transaction_type": "info_transaction",
+  "kind": "baseline",
   "amount_in_cents": 216,
   "memo": "memo4",
   "discount_amount_in_cents": 236

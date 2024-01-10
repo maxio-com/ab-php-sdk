@@ -10,7 +10,9 @@
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
 | `allocations` | [`CreateAllocation[]`](../../doc/models/create-allocation.md) | Required | - | getAllocations(): array | setAllocations(array allocations): void |
-| `effectiveProrationDate` | `?string` | Optional | To calculate proration amounts for a future time. Only within a current subscription period. Only ISO8601 format is supported. | getEffectiveProrationDate(): ?string | setEffectiveProrationDate(?string effectiveProrationDate): void |
+| `effectiveProrationDate` | `?DateTime` | Optional | To calculate proration amounts for a future time. Only within a current subscription period. Only ISO8601 format is supported. | getEffectiveProrationDate(): ?\DateTime | setEffectiveProrationDate(?\DateTime effectiveProrationDate): void |
+| `upgradeCharge` | [`?string(CreditType)`](../../doc/models/credit-type.md) | Optional | The type of credit to be created when upgrading/downgrading. Defaults to the component and then site setting if one is not provided.<br>Available values: `full`, `prorated`, `none`. | getUpgradeCharge(): ?string | setUpgradeCharge(?string upgradeCharge): void |
+| `downgradeCredit` | [`?string(CreditType)`](../../doc/models/credit-type.md) | Optional | The type of credit to be created when upgrading/downgrading. Defaults to the component and then site setting if one is not provided.<br>Available values: `full`, `prorated`, `none`. | getDowngradeCredit(): ?string | setDowngradeCredit(?string downgradeCredit): void |
 
 ## Example (as JSON)
 
@@ -26,7 +28,9 @@
       "accrue_charge": false
     }
   ],
-  "effective_proration_date": "2023-12-01"
+  "effective_proration_date": "2023-12-01",
+  "upgrade_charge": "none",
+  "downgrade_credit": "prorated"
 }
 ```
 

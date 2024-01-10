@@ -50,7 +50,7 @@ class CreateOrUpdatePercentageCouponBuilder
     /**
      * Sets allow negative balance field.
      */
-    public function allowNegativeBalance(?string $value): self
+    public function allowNegativeBalance(?bool $value): self
     {
         $this->instance->setAllowNegativeBalance($value);
         return $this;
@@ -59,7 +59,7 @@ class CreateOrUpdatePercentageCouponBuilder
     /**
      * Sets recurring field.
      */
-    public function recurring(?string $value): self
+    public function recurring(?bool $value): self
     {
         $this->instance->setRecurring($value);
         return $this;
@@ -68,7 +68,7 @@ class CreateOrUpdatePercentageCouponBuilder
     /**
      * Sets end date field.
      */
-    public function endDate(?string $value): self
+    public function endDate(?\DateTime $value): self
     {
         $this->instance->setEndDate($value);
         return $this;
@@ -86,7 +86,7 @@ class CreateOrUpdatePercentageCouponBuilder
     /**
      * Sets stackable field.
      */
-    public function stackable(?string $value): self
+    public function stackable(?bool $value): self
     {
         $this->instance->setStackable($value);
         return $this;

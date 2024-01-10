@@ -13,7 +13,7 @@ namespace AdvancedBillingLib\Controllers;
 use AdvancedBillingLib\Exceptions\ApiException;
 use AdvancedBillingLib\Exceptions\ErrorListResponseException;
 use AdvancedBillingLib\Exceptions\NestedErrorResponseException;
-use AdvancedBillingLib\Exceptions\SingleErrorResponseErrorException;
+use AdvancedBillingLib\Exceptions\SingleErrorResponseException;
 use AdvancedBillingLib\Exceptions\SubscriptionAddCouponErrorException;
 use AdvancedBillingLib\Exceptions\SubscriptionRemoveCouponErrorsException;
 use AdvancedBillingLib\Models\ActivateSubscriptionRequest;
@@ -846,7 +846,7 @@ class SubscriptionsController extends BaseController
     public function createSubscription(?CreateSubscriptionRequest $body = null): SubscriptionResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/subscriptions.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(HeaderParam::init('Content-Type', 'application/json'), BodyParam::init($body));
 
         $_resHandler = $this->responseHandler()
@@ -882,7 +882,7 @@ class SubscriptionsController extends BaseController
     public function listSubscriptions(array $options): array
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/subscriptions.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 QueryParam::init('page', $options)->commaSeparated()->extract('page', 1),
                 QueryParam::init('per_page', $options)->commaSeparated()->extract('perPage', 20),
@@ -1016,7 +1016,7 @@ class SubscriptionsController extends BaseController
         ?UpdateSubscriptionRequest $body = null
     ): SubscriptionResponse {
         $_reqBuilder = $this->requestBuilder(RequestMethod::PUT, '/subscriptions/{subscription_id}.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -1052,7 +1052,7 @@ class SubscriptionsController extends BaseController
     public function readSubscription(int $subscriptionId, ?array $mInclude = null): SubscriptionResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/subscriptions/{subscription_id}.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 QueryParam::init('include[]', $mInclude)
@@ -1109,7 +1109,7 @@ class SubscriptionsController extends BaseController
     public function overrideSubscription(int $subscriptionId, ?OverrideSubscriptionRequest $body = null): void
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::PUT, '/subscriptions/{subscription_id}/override.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -1120,7 +1120,7 @@ class SubscriptionsController extends BaseController
             ->throwErrorOn('400', ErrorType::init('Bad Request'))
             ->throwErrorOn(
                 '422',
-                ErrorType::init('Unprocessable Entity (WebDAV)', SingleErrorResponseErrorException::class)
+                ErrorType::init('Unprocessable Entity (WebDAV)', SingleErrorResponseException::class)
             );
 
         $this->execute($_reqBuilder, $_resHandler);
@@ -1138,7 +1138,7 @@ class SubscriptionsController extends BaseController
     public function readSubscriptionByReference(?string $reference = null): SubscriptionResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/subscriptions/lookup.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(QueryParam::init('reference', $reference)->commaSeparated());
 
         $_resHandler = $this->responseHandler()->type(SubscriptionResponse::class);
@@ -1173,7 +1173,7 @@ class SubscriptionsController extends BaseController
     public function purgeSubscription(int $subscriptionId, int $ack, ?array $cascade = null): void
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/subscriptions/{subscription_id}/purge.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 QueryParam::init('ack', $ack)->plain()->required(),
@@ -1205,7 +1205,7 @@ class SubscriptionsController extends BaseController
             RequestMethod::POST,
             '/subscriptions/{subscription_id}/prepaid_configurations.json'
         )
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -1268,7 +1268,7 @@ class SubscriptionsController extends BaseController
     public function previewSubscription(?CreateSubscriptionRequest $body = null): SubscriptionPreviewResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/subscriptions/preview.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(HeaderParam::init('Content-Type', 'application/json'), BodyParam::init($body));
 
         $_resHandler = $this->responseHandler()->type(SubscriptionPreviewResponse::class);
@@ -1308,7 +1308,7 @@ class SubscriptionsController extends BaseController
             RequestMethod::POST,
             '/subscriptions/{subscription_id}/add_coupon.json'
         )
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -1346,7 +1346,7 @@ class SubscriptionsController extends BaseController
             RequestMethod::DELETE,
             '/subscriptions/{subscription_id}/remove_coupon.json'
         )
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 QueryParam::init('coupon_code', $couponCode)->commaSeparated()
@@ -1430,7 +1430,7 @@ class SubscriptionsController extends BaseController
         ?ActivateSubscriptionRequest $body = null
     ): SubscriptionResponse {
         $_reqBuilder = $this->requestBuilder(RequestMethod::PUT, '/subscriptions/{subscription_id}/activate.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),

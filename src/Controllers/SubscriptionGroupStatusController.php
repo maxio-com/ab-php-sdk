@@ -42,7 +42,7 @@ class SubscriptionGroupStatusController extends BaseController
     public function cancelSubscriptionsInGroup(string $uid, ?CancelGroupedSubscriptionsRequest $body = null): void
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/subscription_groups/{uid}/cancel.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('uid', $uid)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -74,7 +74,7 @@ class SubscriptionGroupStatusController extends BaseController
     public function initiateDelayedCancellationForGroup(string $uid): void
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/subscription_groups/{uid}/delayed_cancel.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(TemplateParam::init('uid', $uid)->required());
 
         $_resHandler = $this->responseHandler()
@@ -102,7 +102,7 @@ class SubscriptionGroupStatusController extends BaseController
         $_reqBuilder = $this->requestBuilder(
             RequestMethod::DELETE,
             '/subscription_groups/{uid}/delayed_cancel.json'
-        )->auth('global')->parameters(TemplateParam::init('uid', $uid)->required());
+        )->auth('BasicAuth')->parameters(TemplateParam::init('uid', $uid)->required());
 
         $_resHandler = $this->responseHandler()
             ->throwErrorOn(
@@ -164,7 +164,7 @@ class SubscriptionGroupStatusController extends BaseController
         ?ReactivateSubscriptionGroupRequest $body = null
     ): ReactivateSubscriptionGroupResponse {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/subscription_groups/{uid}/reactivate.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('uid', $uid)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),

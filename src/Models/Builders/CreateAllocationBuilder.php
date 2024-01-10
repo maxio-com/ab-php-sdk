@@ -121,6 +121,15 @@ class CreateAllocationBuilder
     }
 
     /**
+     * Sets initiate dunning field.
+     */
+    public function initiateDunning(?bool $value): self
+    {
+        $this->instance->setInitiateDunning($value);
+        return $this;
+    }
+
+    /**
      * Sets price point id field.
      */
     public function pricePointId($value): self

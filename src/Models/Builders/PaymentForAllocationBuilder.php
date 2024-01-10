@@ -10,32 +10,32 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models\Builders;
 
-use AdvancedBillingLib\Models\AllocationPayment;
+use AdvancedBillingLib\Models\PaymentForAllocation;
 use Core\Utils\CoreHelper;
 
 /**
- * Builder for model AllocationPayment
+ * Builder for model PaymentForAllocation
  *
- * @see AllocationPayment
+ * @see PaymentForAllocation
  */
-class AllocationPaymentBuilder
+class PaymentForAllocationBuilder
 {
     /**
-     * @var AllocationPayment
+     * @var PaymentForAllocation
      */
     private $instance;
 
-    private function __construct(AllocationPayment $instance)
+    private function __construct(PaymentForAllocation $instance)
     {
         $this->instance = $instance;
     }
 
     /**
-     * Initializes a new allocation payment Builder object.
+     * Initializes a new payment for allocation Builder object.
      */
     public static function init(): self
     {
-        return new self(new AllocationPayment());
+        return new self(new PaymentForAllocation());
     }
 
     /**
@@ -75,9 +75,9 @@ class AllocationPaymentBuilder
     }
 
     /**
-     * Initializes a new allocation payment object.
+     * Initializes a new payment for allocation object.
      */
-    public function build(): AllocationPayment
+    public function build(): PaymentForAllocation
     {
         return CoreHelper::clone($this->instance);
     }

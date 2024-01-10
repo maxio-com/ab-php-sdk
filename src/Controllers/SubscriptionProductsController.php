@@ -133,7 +133,7 @@ class SubscriptionProductsController extends BaseController
             RequestMethod::POST,
             '/subscriptions/{subscription_id}/migrations.json'
         )
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -174,7 +174,7 @@ class SubscriptionProductsController extends BaseController
             RequestMethod::POST,
             '/subscriptions/{subscription_id}/migrations/preview.json'
         )
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),

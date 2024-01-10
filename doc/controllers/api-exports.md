@@ -36,8 +36,8 @@ function listExportedProformaInvoices(array $options): array
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `batchId` | `string` | Template, Required | Id of a Batch Job. |
-| `perPage` | `?int` | Query, Optional | This parameter indicates how many records to fetch in each request.<br>Default value is 100.<br>The maximum allowed values is 10000; any per_page value over 10000 will be changed to 10000.<br>**Default**: `100`<br>**Constraints**: `>= 1`, `<= 10000` |
-| `page` | `?int` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`.<br>**Default**: `1`<br>**Constraints**: `>= 1` |
+| `perPage` | `?int` | Query, Optional | This parameter indicates how many records to fetch in each request.<br>Default value is 100.<br>The maximum allowed values is 10000; any per_page value over 10000 will be changed to 10000. |
+| `page` | `?int` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`. |
 
 ## Response Type
 
@@ -77,8 +77,8 @@ function listExportedInvoices(array $options): array
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `batchId` | `string` | Template, Required | Id of a Batch Job. |
-| `perPage` | `?int` | Query, Optional | This parameter indicates how many records to fetch in each request.<br>Default value is 100.<br>The maximum allowed values is 10000; any per_page value over 10000 will be changed to 10000.<br>**Default**: `100`<br>**Constraints**: `>= 1`, `<= 10000` |
-| `page` | `?int` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`.<br>**Default**: `1`<br>**Constraints**: `>= 1` |
+| `perPage` | `?int` | Query, Optional | This parameter indicates how many records to fetch in each request.<br>Default value is 100.<br>The maximum allowed values is 10000; any per_page value over 10000 will be changed to 10000. |
+| `page` | `?int` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`. |
 
 ## Response Type
 
@@ -118,8 +118,8 @@ function listExportedSubscriptions(array $options): array
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `batchId` | `string` | Template, Required | Id of a Batch Job. |
-| `perPage` | `?int` | Query, Optional | This parameter indicates how many records to fetch in each request.<br>Default value is 100.<br>The maximum allowed values is 10000; any per_page value over 10000 will be changed to 10000.<br>**Default**: `100`<br>**Constraints**: `>= 1`, `<= 10000` |
-| `page` | `?int` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`.<br>**Default**: `1`<br>**Constraints**: `>= 1` |
+| `perPage` | `?int` | Query, Optional | This parameter indicates how many records to fetch in each request.<br>Default value is 100.<br>The maximum allowed values is 10000; any per_page value over 10000 will be changed to 10000. |
+| `page` | `?int` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`. |
 
 ## Response Type
 
@@ -169,7 +169,7 @@ $result = $aPIExportsController->exportProformaInvoices();
 | HTTP Status Code | Error Description | Exception Class |
 |  --- | --- | --- |
 | 404 | Not Found | `ApiException` |
-| 409 | Conflict | [`SingleErrorResponseErrorException`](../../doc/models/single-error-response-error-exception.md) |
+| 409 | Conflict | [`SingleErrorResponseException`](../../doc/models/single-error-response-exception.md) |
 
 
 # Export Invoices
@@ -195,7 +195,7 @@ $result = $aPIExportsController->exportInvoices();
 | HTTP Status Code | Error Description | Exception Class |
 |  --- | --- | --- |
 | 404 | Not Found | `ApiException` |
-| 409 | Conflict | [`SingleErrorResponseErrorException`](../../doc/models/single-error-response-error-exception.md) |
+| 409 | Conflict | [`SingleErrorResponseException`](../../doc/models/single-error-response-exception.md) |
 
 
 # Export Subscriptions
@@ -220,7 +220,7 @@ $result = $aPIExportsController->exportSubscriptions();
 
 | HTTP Status Code | Error Description | Exception Class |
 |  --- | --- | --- |
-| 409 | Conflict | [`SingleErrorResponseErrorException`](../../doc/models/single-error-response-error-exception.md) |
+| 409 | Conflict | [`SingleErrorResponseException`](../../doc/models/single-error-response-exception.md) |
 
 
 # Read Proforma Invoices Export

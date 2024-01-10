@@ -41,9 +41,45 @@ class PreviewAllocationsRequestBuilder
     /**
      * Sets effective proration date field.
      */
-    public function effectiveProrationDate(?string $value): self
+    public function effectiveProrationDate(?\DateTime $value): self
     {
         $this->instance->setEffectiveProrationDate($value);
+        return $this;
+    }
+
+    /**
+     * Sets upgrade charge field.
+     */
+    public function upgradeCharge(?string $value): self
+    {
+        $this->instance->setUpgradeCharge($value);
+        return $this;
+    }
+
+    /**
+     * Unsets upgrade charge field.
+     */
+    public function unsetUpgradeCharge(): self
+    {
+        $this->instance->unsetUpgradeCharge();
+        return $this;
+    }
+
+    /**
+     * Sets downgrade credit field.
+     */
+    public function downgradeCredit(?string $value): self
+    {
+        $this->instance->setDowngradeCredit($value);
+        return $this;
+    }
+
+    /**
+     * Unsets downgrade credit field.
+     */
+    public function unsetDowngradeCredit(): self
+    {
+        $this->instance->unsetDowngradeCredit();
         return $this;
     }
 

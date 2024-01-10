@@ -49,7 +49,7 @@ class SubscriptionInvoiceAccountController extends BaseController
         $_reqBuilder = $this->requestBuilder(
             RequestMethod::GET,
             '/subscriptions/{subscription_id}/account_balances.json'
-        )->auth('global')->parameters(TemplateParam::init('subscription_id', $subscriptionId)->required());
+        )->auth('BasicAuth')->parameters(TemplateParam::init('subscription_id', $subscriptionId)->required());
 
         $_resHandler = $this->responseHandler()->type(AccountBalances::class);
 
@@ -84,7 +84,7 @@ class SubscriptionInvoiceAccountController extends BaseController
             RequestMethod::POST,
             '/subscriptions/{subscription_id}/prepayments.json'
         )
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -111,7 +111,7 @@ class SubscriptionInvoiceAccountController extends BaseController
             RequestMethod::GET,
             '/subscriptions/{subscription_id}/prepayments.json'
         )
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('subscription_id', $options)->extract('subscriptionId')->required(),
                 QueryParam::init('page', $options)->commaSeparated()->extract('page', 1),
@@ -156,7 +156,7 @@ class SubscriptionInvoiceAccountController extends BaseController
             RequestMethod::POST,
             '/subscriptions/{subscription_id}/service_credits.json'
         )
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -185,7 +185,7 @@ class SubscriptionInvoiceAccountController extends BaseController
             RequestMethod::POST,
             '/subscriptions/{subscription_id}/service_credit_deductions.json'
         )
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -226,7 +226,7 @@ class SubscriptionInvoiceAccountController extends BaseController
             RequestMethod::POST,
             '/subscriptions/{subscription_id}/prepayments/{prepayment_id}/refunds.json'
         )
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 TemplateParam::init('prepayment_id', $prepaymentId)->required(),

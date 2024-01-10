@@ -15,11 +15,6 @@ use stdClass;
 class Metafields implements \JsonSerializable
 {
     /**
-     * @var int|null
-     */
-    private $id;
-
-    /**
      * @var string|null
      */
     private $name;
@@ -38,24 +33,6 @@ class Metafields implements \JsonSerializable
      * @var string[]|null
      */
     private $enum;
-
-    /**
-     * Returns Id.
-     */
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
-    /**
-     * Sets Id.
-     *
-     * @maps id
-     */
-    public function setId(?int $id): void
-    {
-        $this->id = $id;
-    }
 
     /**
      * Returns Name.
@@ -158,9 +135,6 @@ class Metafields implements \JsonSerializable
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
-        if (isset($this->id)) {
-            $json['id']         = $this->id;
-        }
         if (isset($this->name)) {
             $json['name']       = $this->name;
         }

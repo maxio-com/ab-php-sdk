@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
 class PreviewAllocationsRequest implements \JsonSerializable
@@ -20,9 +21,19 @@ class PreviewAllocationsRequest implements \JsonSerializable
     private $allocations;
 
     /**
-     * @var string|null
+     * @var \DateTime|null
      */
     private $effectiveProrationDate;
+
+    /**
+     * @var array
+     */
+    private $upgradeCharge = [];
+
+    /**
+     * @var array
+     */
+    private $downgradeCredit = [];
 
     /**
      * @param CreateAllocation[] $allocations
@@ -60,7 +71,7 @@ class PreviewAllocationsRequest implements \JsonSerializable
      * To calculate proration amounts for a future time. Only within a current subscription period. Only
      * ISO8601 format is supported.
      */
-    public function getEffectiveProrationDate(): ?string
+    public function getEffectiveProrationDate(): ?\DateTime
     {
         return $this->effectiveProrationDate;
     }
@@ -71,10 +82,89 @@ class PreviewAllocationsRequest implements \JsonSerializable
      * ISO8601 format is supported.
      *
      * @maps effective_proration_date
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromSimpleDate
      */
-    public function setEffectiveProrationDate(?string $effectiveProrationDate): void
+    public function setEffectiveProrationDate(?\DateTime $effectiveProrationDate): void
     {
         $this->effectiveProrationDate = $effectiveProrationDate;
+    }
+
+    /**
+     * Returns Upgrade Charge.
+     * The type of credit to be created when upgrading/downgrading. Defaults to the component and then site
+     * setting if one is not provided.
+     * Available values: `full`, `prorated`, `none`.
+     */
+    public function getUpgradeCharge(): ?string
+    {
+        if (count($this->upgradeCharge) == 0) {
+            return null;
+        }
+        return $this->upgradeCharge['value'];
+    }
+
+    /**
+     * Sets Upgrade Charge.
+     * The type of credit to be created when upgrading/downgrading. Defaults to the component and then site
+     * setting if one is not provided.
+     * Available values: `full`, `prorated`, `none`.
+     *
+     * @maps upgrade_charge
+     * @factory \AdvancedBillingLib\Models\CreditType::checkValue
+     */
+    public function setUpgradeCharge(?string $upgradeCharge): void
+    {
+        $this->upgradeCharge['value'] = $upgradeCharge;
+    }
+
+    /**
+     * Unsets Upgrade Charge.
+     * The type of credit to be created when upgrading/downgrading. Defaults to the component and then site
+     * setting if one is not provided.
+     * Available values: `full`, `prorated`, `none`.
+     */
+    public function unsetUpgradeCharge(): void
+    {
+        $this->upgradeCharge = [];
+    }
+
+    /**
+     * Returns Downgrade Credit.
+     * The type of credit to be created when upgrading/downgrading. Defaults to the component and then site
+     * setting if one is not provided.
+     * Available values: `full`, `prorated`, `none`.
+     */
+    public function getDowngradeCredit(): ?string
+    {
+        if (count($this->downgradeCredit) == 0) {
+            return null;
+        }
+        return $this->downgradeCredit['value'];
+    }
+
+    /**
+     * Sets Downgrade Credit.
+     * The type of credit to be created when upgrading/downgrading. Defaults to the component and then site
+     * setting if one is not provided.
+     * Available values: `full`, `prorated`, `none`.
+     *
+     * @maps downgrade_credit
+     * @factory \AdvancedBillingLib\Models\CreditType::checkValue
+     */
+    public function setDowngradeCredit(?string $downgradeCredit): void
+    {
+        $this->downgradeCredit['value'] = $downgradeCredit;
+    }
+
+    /**
+     * Unsets Downgrade Credit.
+     * The type of credit to be created when upgrading/downgrading. Defaults to the component and then site
+     * setting if one is not provided.
+     * Available values: `full`, `prorated`, `none`.
+     */
+    public function unsetDowngradeCredit(): void
+    {
+        $this->downgradeCredit = [];
     }
 
     /**
@@ -91,7 +181,13 @@ class PreviewAllocationsRequest implements \JsonSerializable
         $json = [];
         $json['allocations']                  = $this->allocations;
         if (isset($this->effectiveProrationDate)) {
-            $json['effective_proration_date'] = $this->effectiveProrationDate;
+            $json['effective_proration_date'] = DateTimeHelper::toSimpleDate($this->effectiveProrationDate);
+        }
+        if (!empty($this->upgradeCharge)) {
+            $json['upgrade_charge']           = CreditType::checkValue($this->upgradeCharge['value']);
+        }
+        if (!empty($this->downgradeCredit)) {
+            $json['downgrade_credit']         = CreditType::checkValue($this->downgradeCredit['value']);
         }
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;

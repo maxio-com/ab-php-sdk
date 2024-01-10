@@ -199,6 +199,7 @@ class AllocationPreview implements \JsonSerializable
      * Sets Direction.
      *
      * @maps direction
+     * @factory \AdvancedBillingLib\Models\AllocationPreviewDirection::checkValue
      */
     public function setDirection(?string $direction): void
     {
@@ -354,7 +355,7 @@ class AllocationPreview implements \JsonSerializable
             $json['total_in_cents']            = $this->totalInCents;
         }
         if (isset($this->direction)) {
-            $json['direction']                 = $this->direction;
+            $json['direction']                 = AllocationPreviewDirection::checkValue($this->direction);
         }
         if (isset($this->prorationScheme)) {
             $json['proration_scheme']          = $this->prorationScheme;
