@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace AdvancedBillingLib\Controllers;
 
 use AdvancedBillingLib\Exceptions\ApiException;
+use AdvancedBillingLib\Exceptions\SingleErrorResponseException;
 use AdvancedBillingLib\Models\BasicDateField;
 use AdvancedBillingLib\Models\CreateMetadataRequest;
 use AdvancedBillingLib\Models\CreateMetafieldsRequest;
@@ -83,7 +84,7 @@ class CustomFieldsController extends BaseController
     public function createMetafields(string $resourceType, ?CreateMetafieldsRequest $body = null): array
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/{resource_type}/metafields.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('resource_type', $resourceType)
                     ->required()
@@ -92,7 +93,12 @@ class CustomFieldsController extends BaseController
                 BodyParam::init($body)
             );
 
-        $_resHandler = $this->responseHandler()->type(Metafield::class, 1);
+        $_resHandler = $this->responseHandler()
+            ->throwErrorOn(
+                '422',
+                ErrorType::init('Unprocessable Entity (WebDAV)', SingleErrorResponseException::class)
+            )
+            ->type(Metafield::class, 1);
 
         return $this->execute($_reqBuilder, $_resHandler);
     }
@@ -110,7 +116,7 @@ class CustomFieldsController extends BaseController
     public function listMetafields(array $options): ListMetafieldsResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/{resource_type}/metafields.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('resource_type', $options)
                     ->extract('resourceType')
@@ -152,7 +158,7 @@ class CustomFieldsController extends BaseController
         ?UpdateMetafieldsRequest $body = null
     ): array {
         $_reqBuilder = $this->requestBuilder(RequestMethod::PUT, '/{resource_type}/metafields.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('resource_type', $resourceType)
                     ->required()
@@ -184,7 +190,7 @@ class CustomFieldsController extends BaseController
     public function deleteMetafield(string $resourceType, ?string $name = null): void
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::DELETE, '/{resource_type}/metafields.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('resource_type', $resourceType)
                     ->required()
@@ -234,7 +240,6 @@ class CustomFieldsController extends BaseController
      * @param string $resourceType the resource type to which the metafields belong
      * @param string $resourceId The Chargify id of the customer or the subscription for which the
      *        metadata applies
-     * @param string|null $value Can be a single item or a list of metadata
      * @param CreateMetadataRequest|null $body
      *
      * @return Metadata[] Response from the API call
@@ -244,22 +249,25 @@ class CustomFieldsController extends BaseController
     public function createMetadata(
         string $resourceType,
         string $resourceId,
-        ?string $value = null,
         ?CreateMetadataRequest $body = null
     ): array {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/{resource_type}/{resource_id}/metadata.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('resource_type', $resourceType)
                     ->required()
                     ->serializeBy([ResourceType::class, 'checkValue']),
                 TemplateParam::init('resource_id', $resourceId)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
-                QueryParam::init('value', $value)->commaSeparated(),
                 BodyParam::init($body)
             );
 
-        $_resHandler = $this->responseHandler()->type(Metadata::class, 1);
+        $_resHandler = $this->responseHandler()
+            ->throwErrorOn(
+                '422',
+                ErrorType::init('Unprocessable Entity (WebDAV)', SingleErrorResponseException::class)
+            )
+            ->type(Metadata::class, 1);
 
         return $this->execute($_reqBuilder, $_resHandler);
     }
@@ -278,18 +286,18 @@ class CustomFieldsController extends BaseController
      *
      * @throws ApiException Thrown if API call fails
      */
-    public function readMetadata(array $options): PaginatedMetadata
+    public function listMetadata(array $options): PaginatedMetadata
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/{resource_type}/{resource_id}/metadata.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('resource_type', $options)
                     ->extract('resourceType')
                     ->required()
                     ->serializeBy([ResourceType::class, 'checkValue']),
                 TemplateParam::init('resource_id', $options)->extract('resourceId')->required(),
-                QueryParam::init('page', $options)->commaSeparated()->extract('page', 1),
-                QueryParam::init('per_page', $options)->commaSeparated()->extract('perPage', 20)
+                QueryParam::init('page', $options)->plain()->extract('page', 1),
+                QueryParam::init('per_page', $options)->plain()->extract('perPage', 20)
             );
 
         $_resHandler = $this->responseHandler()->type(PaginatedMetadata::class);
@@ -303,7 +311,6 @@ class CustomFieldsController extends BaseController
      * @param string $resourceType the resource type to which the metafields belong
      * @param string $resourceId The Chargify id of the customer or the subscription for which the
      *        metadata applies
-     * @param string|null $value Can be a single item or a list of metadata
      * @param UpdateMetadataRequest|null $body
      *
      * @return Metadata[] Response from the API call
@@ -313,18 +320,16 @@ class CustomFieldsController extends BaseController
     public function updateMetadata(
         string $resourceType,
         string $resourceId,
-        ?string $value = null,
         ?UpdateMetadataRequest $body = null
     ): array {
         $_reqBuilder = $this->requestBuilder(RequestMethod::PUT, '/{resource_type}/{resource_id}/metadata.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('resource_type', $resourceType)
                     ->required()
                     ->serializeBy([ResourceType::class, 'checkValue']),
                 TemplateParam::init('resource_id', $resourceId)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
-                QueryParam::init('value', $value)->commaSeparated(),
                 BodyParam::init($body)
             );
 
@@ -377,7 +382,7 @@ class CustomFieldsController extends BaseController
         ?array $names = null
     ): void {
         $_reqBuilder = $this->requestBuilder(RequestMethod::DELETE, '/{resource_type}/{resource_id}/metadata.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('resource_type', $resourceType)
                     ->required()
@@ -414,29 +419,29 @@ class CustomFieldsController extends BaseController
      *
      * @throws ApiException Thrown if API call fails
      */
-    public function listMetadata(array $options): PaginatedMetadata
+    public function listMetadataForResourceType(array $options): PaginatedMetadata
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/{resource_type}/metadata.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('resource_type', $options)
                     ->extract('resourceType')
                     ->required()
                     ->serializeBy([ResourceType::class, 'checkValue']),
-                QueryParam::init('page', $options)->plain()->extract('page', 1),
-                QueryParam::init('per_page', $options)->plain()->extract('perPage', 20),
+                QueryParam::init('page', $options)->commaSeparated()->extract('page', 1),
+                QueryParam::init('per_page', $options)->commaSeparated()->extract('perPage', 20),
                 QueryParam::init('date_field', $options)
-                    ->plain()
+                    ->commaSeparated()
                     ->extract('dateField')
                     ->serializeBy([BasicDateField::class, 'checkValue']),
-                QueryParam::init('start_date', $options)->plain()->extract('startDate'),
-                QueryParam::init('end_date', $options)->plain()->extract('endDate'),
-                QueryParam::init('start_datetime', $options)->plain()->extract('startDatetime'),
-                QueryParam::init('end_datetime', $options)->plain()->extract('endDatetime'),
-                QueryParam::init('with_deleted', $options)->plain()->extract('withDeleted'),
-                QueryParam::init('resource_ids[]', $options)->plain()->extract('resourceIds'),
+                QueryParam::init('start_date', $options)->commaSeparated()->extract('startDate'),
+                QueryParam::init('end_date', $options)->commaSeparated()->extract('endDate'),
+                QueryParam::init('start_datetime', $options)->commaSeparated()->extract('startDatetime'),
+                QueryParam::init('end_datetime', $options)->commaSeparated()->extract('endDatetime'),
+                QueryParam::init('with_deleted', $options)->commaSeparated()->extract('withDeleted'),
+                QueryParam::init('resource_ids[]', $options)->commaSeparated()->extract('resourceIds'),
                 QueryParam::init('direction', $options)
-                    ->plain()
+                    ->commaSeparated()
                     ->extract('direction')
                     ->serializeBy([SortingDirection::class, 'checkValue'])
             );

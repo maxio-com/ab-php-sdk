@@ -10,14 +10,15 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
 class InvoicePreviousBalance implements \JsonSerializable
 {
     /**
-     * @var string|null
+     * @var \DateTime|null
      */
-    private $captureDate;
+    private $capturedAt;
 
     /**
      * @var InvoiceBalanceItem[]|null
@@ -25,21 +26,22 @@ class InvoicePreviousBalance implements \JsonSerializable
     private $invoices;
 
     /**
-     * Returns Capture Date.
+     * Returns Captured At.
      */
-    public function getCaptureDate(): ?string
+    public function getCapturedAt(): ?\DateTime
     {
-        return $this->captureDate;
+        return $this->capturedAt;
     }
 
     /**
-     * Sets Capture Date.
+     * Sets Captured At.
      *
-     * @maps capture_date
+     * @maps captured_at
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setCaptureDate(?string $captureDate): void
+    public function setCapturedAt(?\DateTime $capturedAt): void
     {
-        $this->captureDate = $captureDate;
+        $this->capturedAt = $capturedAt;
     }
 
     /**
@@ -76,11 +78,11 @@ class InvoicePreviousBalance implements \JsonSerializable
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
-        if (isset($this->captureDate)) {
-            $json['capture_date'] = $this->captureDate;
+        if (isset($this->capturedAt)) {
+            $json['captured_at'] = DateTimeHelper::toRfc3339DateTime($this->capturedAt);
         }
         if (isset($this->invoices)) {
-            $json['invoices']     = $this->invoices;
+            $json['invoices']    = $this->invoices;
         }
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;

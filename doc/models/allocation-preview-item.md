@@ -11,8 +11,8 @@
 |  --- | --- | --- | --- | --- | --- |
 | `componentId` | `?int` | Optional | - | getComponentId(): ?int | setComponentId(?int componentId): void |
 | `subscriptionId` | `?int` | Optional | - | getSubscriptionId(): ?int | setSubscriptionId(?int subscriptionId): void |
-| `quantity` | `?float` | Optional | - | getQuantity(): ?float | setQuantity(?float quantity): void |
-| `previousQuantity` | `?int` | Optional | - | getPreviousQuantity(): ?int | setPreviousQuantity(?int previousQuantity): void |
+| `quantity` | int\|string\|null | Optional | This is a container for one-of cases. | getQuantity(): | setQuantity( quantity): void |
+| `previousQuantity` | int\|string\|null | Optional | This is a container for one-of cases. | getPreviousQuantity(): | setPreviousQuantity( previousQuantity): void |
 | `memo` | `?string` | Optional | - | getMemo(): ?string | setMemo(?string memo): void |
 | `timestamp` | `?string` | Optional | - | getTimestamp(): ?string | setTimestamp(?string timestamp): void |
 | `prorationUpgradeScheme` | `?string` | Optional | - | getProrationUpgradeScheme(): ?string | setProrationUpgradeScheme(?string prorationUpgradeScheme): void |
@@ -22,6 +22,8 @@
 | `downgradeCredit` | [`?string(CreditType)`](../../doc/models/credit-type.md) | Optional | The type of credit to be created when upgrading/downgrading. Defaults to the component and then site setting if one is not provided.<br>Available values: `full`, `prorated`, `none`. | getDowngradeCredit(): ?string | setDowngradeCredit(?string downgradeCredit): void |
 | `pricePointId` | `?int` | Optional | - | getPricePointId(): ?int | setPricePointId(?int pricePointId): void |
 | `previousPricePointId` | `?int` | Optional | - | getPreviousPricePointId(): ?int | setPreviousPricePointId(?int previousPricePointId): void |
+| `pricePointHandle` | `?string` | Optional | - | getPricePointHandle(): ?string | setPricePointHandle(?string pricePointHandle): void |
+| `pricePointName` | `?string` | Optional | - | getPricePointName(): ?string | setPricePointName(?string pricePointName): void |
 | `componentHandle` | `?string` | Optional | - | getComponentHandle(): ?string | setComponentHandle(?string componentHandle): void |
 
 ## Example (as JSON)
@@ -30,8 +32,8 @@
 {
   "component_id": 54,
   "subscription_id": 54,
-  "quantity": 173.08,
-  "previous_quantity": 14,
+  "quantity": 78,
+  "previous_quantity": 192,
   "memo": "memo6"
 }
 ```

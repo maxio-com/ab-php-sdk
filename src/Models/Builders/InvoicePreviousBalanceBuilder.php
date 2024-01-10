@@ -39,11 +39,11 @@ class InvoicePreviousBalanceBuilder
     }
 
     /**
-     * Sets capture date field.
+     * Sets captured at field.
      */
-    public function captureDate(?string $value): self
+    public function capturedAt(?\DateTime $value): self
     {
-        $this->instance->setCaptureDate($value);
+        $this->instance->setCapturedAt($value);
         return $this;
     }
 

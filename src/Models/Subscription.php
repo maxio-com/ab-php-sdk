@@ -1,5 +1,7 @@
 <?php
+
 declare(strict_types=1);
+
 /*
  * AdvancedBilling
  *
@@ -18,22 +20,27 @@ class Subscription implements \JsonSerializable
      * @var int|null
      */
     private $id;
+
     /**
      * @var string|null
      */
     private $state;
+
     /**
      * @var int|null
      */
     private $balanceInCents;
+
     /**
      * @var int|null
      */
     private $totalRevenueInCents;
+
     /**
      * @var int|null
      */
     private $productPriceInCents;
+
     /**
      * @var int|null
      */
@@ -53,6 +60,7 @@ class Subscription implements \JsonSerializable
      * @var array
      */
     private $trialStartedAt = [];
+
     /**
      * @var array
      */
@@ -82,14 +90,17 @@ class Subscription implements \JsonSerializable
      * @var array
      */
     private $cancellationMessage = [];
+
     /**
      * @var array
      */
     private $cancellationMethod = [];
+
     /**
      * @var array
      */
     private $cancelAtEndOfPeriod = [];
+
     /**
      * @var array
      */
@@ -104,170 +115,212 @@ class Subscription implements \JsonSerializable
      * @var string|null
      */
     private $previousState;
+
     /**
      * @var int|null
      */
     private $signupPaymentId;
+
     /**
      * @var string|null
      */
     private $signupRevenue;
+
     /**
      * @var array
      */
     private $delayedCancelAt = [];
+
     /**
      * @var array
      */
     private $couponCode = [];
+
     /**
      * @var array
      */
     private $snapDay = [];
+
     /**
      * @var string|null
      */
     private $paymentCollectionMethod = PaymentCollectionMethod::AUTOMATIC;
+
     /**
      * @var Customer|null
      */
     private $customer;
+
     /**
      * @var Product|null
      */
     private $product;
+
     /**
      * @var PaymentProfile|null
      */
     private $creditCard;
+
     /**
      * @var array
      */
     private $group = [];
+
     /**
      * @var SubscriptionBankAccount|null
      */
     private $bankAccount;
+
     /**
      * @var array
      */
     private $paymentType = [];
+
     /**
      * @var array
      */
     private $referralCode = [];
+
     /**
      * @var array
      */
     private $nextProductId = [];
+
     /**
      * @var array
      */
     private $nextProductHandle = [];
+
     /**
      * @var array
      */
     private $couponUseCount = [];
+
     /**
      * @var array
      */
     private $couponUsesAllowed = [];
+
     /**
      * @var array
      */
     private $reasonCode = [];
+
     /**
      * @var array
      */
     private $automaticallyResumeAt = [];
+
     /**
      * @var string[]|null
      */
     private $couponCodes;
+
     /**
      * @var array
      */
     private $offerId = [];
+
     /**
      * @var array
      */
     private $payerId = [];
+
     /**
      * @var int|null
      */
     private $currentBillingAmountInCents;
+
     /**
      * @var int|null
      */
     private $productPricePointId;
+
     /**
      * @var string|null
      */
     private $productPricePointType;
+
     /**
      * @var array
      */
     private $nextProductPricePointId = [];
+
     /**
      * @var array
      */
     private $netTerms = [];
+
     /**
      * @var array
      */
     private $storedCredentialTransactionId = [];
+
     /**
      * @var array
      */
     private $reference = [];
+
     /**
      * @var array
      */
     private $onHoldAt = [];
+
     /**
      * @var bool|null
      */
     private $prepaidDunning;
+
     /**
      * @var SubscriptionIncludedCoupon[]|null
      */
     private $coupons;
+
     /**
      * @var bool|null
      */
     private $dunningCommunicationDelayEnabled = false;
+
     /**
      * @var array
      */
     private $dunningCommunicationDelayTimeZone = [];
+
     /**
      * @var array
      */
     private $receivesInvoiceEmails = [];
+
     /**
      * @var array
      */
     private $locale = [];
+
     /**
      * @var string|null
      */
     private $currency;
+
     /**
      * @var array
      */
     private $scheduledCancellationAt = [];
+
     /**
      * @var int|null
      */
     private $creditBalanceInCents;
+
     /**
      * @var int|null
      */
     private $prepaymentBalanceInCents;
+
     /**
      * @var PrepaidConfiguration|null
      */
     private $prepaidConfiguration;
+
     /**
      * @var string|null
      */
@@ -2057,236 +2110,234 @@ class Subscription implements \JsonSerializable
      * @return array|stdClass
      */
     #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
-    public function jsonSerialize(
-        bool $asArrayWhenEmpty = false
-    )
+    public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (isset($this->id)) {
-            $json['id'] = $this->id;
+            $json['id']                                    = $this->id;
         }
         if (isset($this->state)) {
-            $json['state'] = SubscriptionState::checkValue($this->state);
+            $json['state']                                 = SubscriptionState::checkValue($this->state);
         }
         if (isset($this->balanceInCents)) {
-            $json['balance_in_cents'] = $this->balanceInCents;
+            $json['balance_in_cents']                      = $this->balanceInCents;
         }
         if (isset($this->totalRevenueInCents)) {
-            $json['total_revenue_in_cents'] = $this->totalRevenueInCents;
+            $json['total_revenue_in_cents']                = $this->totalRevenueInCents;
         }
         if (isset($this->productPriceInCents)) {
-            $json['product_price_in_cents'] = $this->productPriceInCents;
+            $json['product_price_in_cents']                = $this->productPriceInCents;
         }
         if (isset($this->productVersionNumber)) {
-            $json['product_version_number'] = $this->productVersionNumber;
+            $json['product_version_number']                = $this->productVersionNumber;
         }
         if (isset($this->currentPeriodEndsAt)) {
-            $json['current_period_ends_at'] =
+            $json['current_period_ends_at']                =
                 DateTimeHelper::toRfc3339DateTime(
                     $this->currentPeriodEndsAt
                 );
         }
         if (isset($this->nextAssessmentAt)) {
-            $json['next_assessment_at'] = DateTimeHelper::toRfc3339DateTime($this->nextAssessmentAt);
+            $json['next_assessment_at']                    = DateTimeHelper::toRfc3339DateTime($this->nextAssessmentAt);
         }
         if (!empty($this->trialStartedAt)) {
-            $json['trial_started_at'] =
+            $json['trial_started_at']                      =
                 DateTimeHelper::toRfc3339DateTime(
                     $this->trialStartedAt['value']
                 );
         }
         if (!empty($this->trialEndedAt)) {
-            $json['trial_ended_at'] =
+            $json['trial_ended_at']                        =
                 DateTimeHelper::toRfc3339DateTime(
                     $this->trialEndedAt['value']
                 );
         }
         if (isset($this->activatedAt)) {
-            $json['activated_at'] = DateTimeHelper::toRfc3339DateTime($this->activatedAt);
+            $json['activated_at']                          = DateTimeHelper::toRfc3339DateTime($this->activatedAt);
         }
         if (!empty($this->expiresAt)) {
-            $json['expires_at'] =
+            $json['expires_at']                            =
                 DateTimeHelper::toRfc3339DateTime(
                     $this->expiresAt['value']
                 );
         }
         if (isset($this->createdAt)) {
-            $json['created_at'] = DateTimeHelper::toRfc3339DateTime($this->createdAt);
+            $json['created_at']                            = DateTimeHelper::toRfc3339DateTime($this->createdAt);
         }
         if (isset($this->updatedAt)) {
-            $json['updated_at'] = DateTimeHelper::toRfc3339DateTime($this->updatedAt);
+            $json['updated_at']                            = DateTimeHelper::toRfc3339DateTime($this->updatedAt);
         }
         if (!empty($this->cancellationMessage)) {
-            $json['cancellation_message'] = $this->cancellationMessage['value'];
+            $json['cancellation_message']                  = $this->cancellationMessage['value'];
         }
         if (!empty($this->cancellationMethod)) {
-            $json['cancellation_method'] =
+            $json['cancellation_method']                   =
                 CancellationMethod::checkValue(
                     $this->cancellationMethod['value']
                 );
         }
         if (!empty($this->cancelAtEndOfPeriod)) {
-            $json['cancel_at_end_of_period'] = $this->cancelAtEndOfPeriod['value'];
+            $json['cancel_at_end_of_period']               = $this->cancelAtEndOfPeriod['value'];
         }
         if (!empty($this->canceledAt)) {
-            $json['canceled_at'] =
+            $json['canceled_at']                           =
                 DateTimeHelper::toRfc3339DateTime(
                     $this->canceledAt['value']
                 );
         }
         if (isset($this->currentPeriodStartedAt)) {
-            $json['current_period_started_at'] =
+            $json['current_period_started_at']             =
                 DateTimeHelper::toRfc3339DateTime(
                     $this->currentPeriodStartedAt
                 );
         }
         if (isset($this->previousState)) {
-            $json['previous_state'] = SubscriptionState::checkValue($this->previousState);
+            $json['previous_state']                        = SubscriptionState::checkValue($this->previousState);
         }
         if (isset($this->signupPaymentId)) {
-            $json['signup_payment_id'] = $this->signupPaymentId;
+            $json['signup_payment_id']                     = $this->signupPaymentId;
         }
         if (isset($this->signupRevenue)) {
-            $json['signup_revenue'] = $this->signupRevenue;
+            $json['signup_revenue']                        = $this->signupRevenue;
         }
         if (!empty($this->delayedCancelAt)) {
-            $json['delayed_cancel_at'] =
+            $json['delayed_cancel_at']                     =
                 DateTimeHelper::toRfc3339DateTime(
                     $this->delayedCancelAt['value']
                 );
         }
         if (!empty($this->couponCode)) {
-            $json['coupon_code'] = $this->couponCode['value'];
+            $json['coupon_code']                           = $this->couponCode['value'];
         }
         if (!empty($this->snapDay)) {
-            $json['snap_day'] = $this->snapDay['value'];
+            $json['snap_day']                              = $this->snapDay['value'];
         }
         if (isset($this->paymentCollectionMethod)) {
-            $json['payment_collection_method'] =
+            $json['payment_collection_method']             =
                 PaymentCollectionMethod::checkValue(
                     $this->paymentCollectionMethod
                 );
         }
         if (isset($this->customer)) {
-            $json['customer'] = $this->customer;
+            $json['customer']                              = $this->customer;
         }
         if (isset($this->product)) {
-            $json['product'] = $this->product;
+            $json['product']                               = $this->product;
         }
         if (isset($this->creditCard)) {
-            $json['credit_card'] = $this->creditCard;
+            $json['credit_card']                           = $this->creditCard;
         }
         if (!empty($this->group)) {
-            $json['group'] =
+            $json['group']                                 =
                 ApiHelper::getJsonHelper()->verifyTypes(
                     $this->group['value'],
                     'anyOf(oneOf(NestedSubscriptionGroup),null)'
                 );
         }
         if (isset($this->bankAccount)) {
-            $json['bank_account'] = $this->bankAccount;
+            $json['bank_account']                          = $this->bankAccount;
         }
         if (!empty($this->paymentType)) {
-            $json['payment_type'] = $this->paymentType['value'];
+            $json['payment_type']                          = $this->paymentType['value'];
         }
         if (!empty($this->referralCode)) {
-            $json['referral_code'] = $this->referralCode['value'];
+            $json['referral_code']                         = $this->referralCode['value'];
         }
         if (!empty($this->nextProductId)) {
-            $json['next_product_id'] = $this->nextProductId['value'];
+            $json['next_product_id']                       = $this->nextProductId['value'];
         }
         if (!empty($this->nextProductHandle)) {
-            $json['next_product_handle'] = $this->nextProductHandle['value'];
+            $json['next_product_handle']                   = $this->nextProductHandle['value'];
         }
         if (!empty($this->couponUseCount)) {
-            $json['coupon_use_count'] = $this->couponUseCount['value'];
+            $json['coupon_use_count']                      = $this->couponUseCount['value'];
         }
         if (!empty($this->couponUsesAllowed)) {
-            $json['coupon_uses_allowed'] = $this->couponUsesAllowed['value'];
+            $json['coupon_uses_allowed']                   = $this->couponUsesAllowed['value'];
         }
         if (!empty($this->reasonCode)) {
-            $json['reason_code'] = $this->reasonCode['value'];
+            $json['reason_code']                           = $this->reasonCode['value'];
         }
         if (!empty($this->automaticallyResumeAt)) {
-            $json['automatically_resume_at'] =
+            $json['automatically_resume_at']               =
                 DateTimeHelper::toRfc3339DateTime(
                     $this->automaticallyResumeAt['value']
                 );
         }
         if (isset($this->couponCodes)) {
-            $json['coupon_codes'] = $this->couponCodes;
+            $json['coupon_codes']                          = $this->couponCodes;
         }
         if (!empty($this->offerId)) {
-            $json['offer_id'] = $this->offerId['value'];
+            $json['offer_id']                              = $this->offerId['value'];
         }
         if (!empty($this->payerId)) {
-            $json['payer_id'] = $this->payerId['value'];
+            $json['payer_id']                              = $this->payerId['value'];
         }
         if (isset($this->currentBillingAmountInCents)) {
-            $json['current_billing_amount_in_cents'] = $this->currentBillingAmountInCents;
+            $json['current_billing_amount_in_cents']       = $this->currentBillingAmountInCents;
         }
         if (isset($this->productPricePointId)) {
-            $json['product_price_point_id'] = $this->productPricePointId;
+            $json['product_price_point_id']                = $this->productPricePointId;
         }
         if (isset($this->productPricePointType)) {
-            $json['product_price_point_type'] = PricePointType::checkValue($this->productPricePointType);
+            $json['product_price_point_type']              = PricePointType::checkValue($this->productPricePointType);
         }
         if (!empty($this->nextProductPricePointId)) {
-            $json['next_product_price_point_id'] = $this->nextProductPricePointId['value'];
+            $json['next_product_price_point_id']           = $this->nextProductPricePointId['value'];
         }
         if (!empty($this->netTerms)) {
-            $json['net_terms'] = $this->netTerms['value'];
+            $json['net_terms']                             = $this->netTerms['value'];
         }
         if (!empty($this->storedCredentialTransactionId)) {
-            $json['stored_credential_transaction_id'] = $this->storedCredentialTransactionId['value'];
+            $json['stored_credential_transaction_id']      = $this->storedCredentialTransactionId['value'];
         }
         if (!empty($this->reference)) {
-            $json['reference'] = $this->reference['value'];
+            $json['reference']                             = $this->reference['value'];
         }
         if (!empty($this->onHoldAt)) {
-            $json['on_hold_at'] =
+            $json['on_hold_at']                            =
                 DateTimeHelper::toRfc3339DateTime(
                     $this->onHoldAt['value']
                 );
         }
         if (isset($this->prepaidDunning)) {
-            $json['prepaid_dunning'] = $this->prepaidDunning;
+            $json['prepaid_dunning']                       = $this->prepaidDunning;
         }
         if (isset($this->coupons)) {
-            $json['coupons'] = $this->coupons;
+            $json['coupons']                               = $this->coupons;
         }
         if (isset($this->dunningCommunicationDelayEnabled)) {
-            $json['dunning_communication_delay_enabled'] = $this->dunningCommunicationDelayEnabled;
+            $json['dunning_communication_delay_enabled']   = $this->dunningCommunicationDelayEnabled;
         }
         if (!empty($this->dunningCommunicationDelayTimeZone)) {
             $json['dunning_communication_delay_time_zone'] = $this->dunningCommunicationDelayTimeZone['value'];
         }
         if (!empty($this->receivesInvoiceEmails)) {
-            $json['receives_invoice_emails'] = $this->receivesInvoiceEmails['value'];
+            $json['receives_invoice_emails']               = $this->receivesInvoiceEmails['value'];
         }
         if (!empty($this->locale)) {
-            $json['locale'] = $this->locale['value'];
+            $json['locale']                                = $this->locale['value'];
         }
         if (isset($this->currency)) {
-            $json['currency'] = $this->currency;
+            $json['currency']                              = $this->currency;
         }
         if (!empty($this->scheduledCancellationAt)) {
-            $json['scheduled_cancellation_at'] =
+            $json['scheduled_cancellation_at']             =
                 DateTimeHelper::toRfc3339DateTime(
                     $this->scheduledCancellationAt['value']
                 );
         }
         if (isset($this->creditBalanceInCents)) {
-            $json['credit_balance_in_cents'] = $this->creditBalanceInCents;
+            $json['credit_balance_in_cents']               = $this->creditBalanceInCents;
         }
         if (isset($this->prepaymentBalanceInCents)) {
-            $json['prepayment_balance_in_cents'] = $this->prepaymentBalanceInCents;
+            $json['prepayment_balance_in_cents']           = $this->prepaymentBalanceInCents;
         }
         if (isset($this->prepaidConfiguration)) {
-            $json['prepaid_configuration'] = $this->prepaidConfiguration;
+            $json['prepaid_configuration']                 = $this->prepaidConfiguration;
         }
         if (isset($this->selfServicePageToken)) {
-            $json['self_service_page_token'] = $this->selfServicePageToken;
+            $json['self_service_page_token']               = $this->selfServicePageToken;
         }
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;

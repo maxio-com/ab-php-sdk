@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace AdvancedBillingLib\Models;
 
 use AdvancedBillingLib\ApiHelper;
+use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
 class Allocation implements \JsonSerializable
@@ -18,7 +19,17 @@ class Allocation implements \JsonSerializable
     /**
      * @var int|null
      */
+    private $allocationId;
+
+    /**
+     * @var int|null
+     */
     private $componentId;
+
+    /**
+     * @var array
+     */
+    private $componentHandle = [];
 
     /**
      * @var int|null
@@ -26,12 +37,12 @@ class Allocation implements \JsonSerializable
     private $subscriptionId;
 
     /**
-     * @var int|null
+     * @var int|string|null
      */
     private $quantity;
 
     /**
-     * @var int|null
+     * @var int|string|null
      */
     private $previousQuantity;
 
@@ -41,9 +52,14 @@ class Allocation implements \JsonSerializable
     private $memo = [];
 
     /**
-     * @var string|null
+     * @var \DateTime|null
      */
     private $timestamp;
+
+    /**
+     * @var \DateTime|null
+     */
+    private $createdAt;
 
     /**
      * @var string|null
@@ -81,6 +97,11 @@ class Allocation implements \JsonSerializable
     private $accrueCharge;
 
     /**
+     * @var bool|null
+     */
+    private $initiateDunning;
+
+    /**
      * @var array
      */
     private $upgradeCharge = [];
@@ -94,6 +115,26 @@ class Allocation implements \JsonSerializable
      * @var array
      */
     private $payment = [];
+
+    /**
+     * Returns Allocation Id.
+     * The allocation unique id
+     */
+    public function getAllocationId(): ?int
+    {
+        return $this->allocationId;
+    }
+
+    /**
+     * Sets Allocation Id.
+     * The allocation unique id
+     *
+     * @maps allocation_id
+     */
+    public function setAllocationId(?int $allocationId): void
+    {
+        $this->allocationId = $allocationId;
+    }
 
     /**
      * Returns Component Id.
@@ -118,6 +159,41 @@ class Allocation implements \JsonSerializable
     }
 
     /**
+     * Returns Component Handle.
+     * The handle of the component. This references a component that you have created in your Product
+     * setup
+     */
+    public function getComponentHandle(): ?string
+    {
+        if (count($this->componentHandle) == 0) {
+            return null;
+        }
+        return $this->componentHandle['value'];
+    }
+
+    /**
+     * Sets Component Handle.
+     * The handle of the component. This references a component that you have created in your Product
+     * setup
+     *
+     * @maps component_handle
+     */
+    public function setComponentHandle(?string $componentHandle): void
+    {
+        $this->componentHandle['value'] = $componentHandle;
+    }
+
+    /**
+     * Unsets Component Handle.
+     * The handle of the component. This references a component that you have created in your Product
+     * setup
+     */
+    public function unsetComponentHandle(): void
+    {
+        $this->componentHandle = [];
+    }
+
+    /**
      * Returns Subscription Id.
      * The integer subscription ID for the allocation. This references a unique subscription in your Site
      */
@@ -139,40 +215,54 @@ class Allocation implements \JsonSerializable
 
     /**
      * Returns Quantity.
-     * The allocated quantity set in to effect by the allocation
+     * The allocated quantity set in to effect by the allocation. String for components supporting
+     * fractional quantities
+     *
+     * @return int|string|null
      */
-    public function getQuantity(): ?int
+    public function getQuantity()
     {
         return $this->quantity;
     }
 
     /**
      * Sets Quantity.
-     * The allocated quantity set in to effect by the allocation
+     * The allocated quantity set in to effect by the allocation. String for components supporting
+     * fractional quantities
      *
      * @maps quantity
+     * @mapsBy anyOf(oneOf(int,string),null)
+     *
+     * @param int|string|null $quantity
      */
-    public function setQuantity(?int $quantity): void
+    public function setQuantity($quantity): void
     {
         $this->quantity = $quantity;
     }
 
     /**
      * Returns Previous Quantity.
-     * The allocated quantity that was in effect before this allocation was created
+     * The allocated quantity that was in effect before this allocation was created. String for components
+     * supporting fractional quantities
+     *
+     * @return int|string|null
      */
-    public function getPreviousQuantity(): ?int
+    public function getPreviousQuantity()
     {
         return $this->previousQuantity;
     }
 
     /**
      * Sets Previous Quantity.
-     * The allocated quantity that was in effect before this allocation was created
+     * The allocated quantity that was in effect before this allocation was created. String for components
+     * supporting fractional quantities
      *
      * @maps previous_quantity
+     * @mapsBy anyOf(oneOf(int,string),null)
+     *
+     * @param int|string|null $previousQuantity
      */
-    public function setPreviousQuantity(?int $previousQuantity): void
+    public function setPreviousQuantity($previousQuantity): void
     {
         $this->previousQuantity = $previousQuantity;
     }
@@ -211,22 +301,44 @@ class Allocation implements \JsonSerializable
 
     /**
      * Returns Timestamp.
-     * The time that the allocation was recorded, in  format and UTC timezone, i.e. 2012-11-20T22:00:37Z
+     * The time that the allocation was recorded, in format and UTC timezone, i.e. 2012-11-20T22:00:37Z
      */
-    public function getTimestamp(): ?string
+    public function getTimestamp(): ?\DateTime
     {
         return $this->timestamp;
     }
 
     /**
      * Sets Timestamp.
-     * The time that the allocation was recorded, in  format and UTC timezone, i.e. 2012-11-20T22:00:37Z
+     * The time that the allocation was recorded, in format and UTC timezone, i.e. 2012-11-20T22:00:37Z
      *
      * @maps timestamp
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setTimestamp(?string $timestamp): void
+    public function setTimestamp(?\DateTime $timestamp): void
     {
         $this->timestamp = $timestamp;
+    }
+
+    /**
+     * Returns Created At.
+     * Timestamp indicating when this allocation was created
+     */
+    public function getCreatedAt(): ?\DateTime
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * Sets Created At.
+     * Timestamp indicating when this allocation was created
+     *
+     * @maps created_at
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
+     */
+    public function setCreatedAt(?\DateTime $createdAt): void
+    {
+        $this->createdAt = $createdAt;
     }
 
     /**
@@ -368,6 +480,28 @@ class Allocation implements \JsonSerializable
     }
 
     /**
+     * Returns Initiate Dunning.
+     * If true, if the immediate component payment fails, initiate dunning for the subscription.
+     * Otherwise, leave the charges on the subscription to pay for at renewal.
+     */
+    public function getInitiateDunning(): ?bool
+    {
+        return $this->initiateDunning;
+    }
+
+    /**
+     * Sets Initiate Dunning.
+     * If true, if the immediate component payment fails, initiate dunning for the subscription.
+     * Otherwise, leave the charges on the subscription to pay for at renewal.
+     *
+     * @maps initiate_dunning
+     */
+    public function setInitiateDunning(?bool $initiateDunning): void
+    {
+        $this->initiateDunning = $initiateDunning;
+    }
+
+    /**
      * Returns Upgrade Charge.
      * The type of credit to be created when upgrading/downgrading. Defaults to the component and then site
      * setting if one is not provided.
@@ -448,7 +582,7 @@ class Allocation implements \JsonSerializable
     /**
      * Returns Payment.
      */
-    public function getPayment(): ?AllocationPayment
+    public function getPayment(): ?PaymentForAllocation
     {
         if (count($this->payment) == 0) {
             return null;
@@ -460,9 +594,9 @@ class Allocation implements \JsonSerializable
      * Sets Payment.
      *
      * @maps payment
-     * @mapsBy anyOf(oneOf(AllocationPayment),null)
+     * @mapsBy anyOf(oneOf(PaymentForAllocation),null)
      */
-    public function setPayment(?AllocationPayment $payment): void
+    public function setPayment(?PaymentForAllocation $payment): void
     {
         $this->payment['value'] = $payment;
     }
@@ -487,23 +621,40 @@ class Allocation implements \JsonSerializable
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
+        if (isset($this->allocationId)) {
+            $json['allocation_id']              = $this->allocationId;
+        }
         if (isset($this->componentId)) {
             $json['component_id']               = $this->componentId;
+        }
+        if (!empty($this->componentHandle)) {
+            $json['component_handle']           = $this->componentHandle['value'];
         }
         if (isset($this->subscriptionId)) {
             $json['subscription_id']            = $this->subscriptionId;
         }
         if (isset($this->quantity)) {
-            $json['quantity']                   = $this->quantity;
+            $json['quantity']                   =
+                ApiHelper::getJsonHelper()->verifyTypes(
+                    $this->quantity,
+                    'anyOf(oneOf(int,string),null)'
+                );
         }
         if (isset($this->previousQuantity)) {
-            $json['previous_quantity']          = $this->previousQuantity;
+            $json['previous_quantity']          =
+                ApiHelper::getJsonHelper()->verifyTypes(
+                    $this->previousQuantity,
+                    'anyOf(oneOf(int,string),null)'
+                );
         }
         if (!empty($this->memo)) {
             $json['memo']                       = $this->memo['value'];
         }
         if (isset($this->timestamp)) {
-            $json['timestamp']                  = $this->timestamp;
+            $json['timestamp']                  = DateTimeHelper::toRfc3339DateTime($this->timestamp);
+        }
+        if (isset($this->createdAt)) {
+            $json['created_at']                 = DateTimeHelper::toRfc3339DateTime($this->createdAt);
         }
         if (isset($this->prorationUpgradeScheme)) {
             $json['proration_upgrade_scheme']   = $this->prorationUpgradeScheme;
@@ -526,6 +677,9 @@ class Allocation implements \JsonSerializable
         if (isset($this->accrueCharge)) {
             $json['accrue_charge']              = $this->accrueCharge;
         }
+        if (isset($this->initiateDunning)) {
+            $json['initiate_dunning']           = $this->initiateDunning;
+        }
         if (!empty($this->upgradeCharge)) {
             $json['upgrade_charge']             = CreditType::checkValue($this->upgradeCharge['value']);
         }
@@ -536,7 +690,7 @@ class Allocation implements \JsonSerializable
             $json['payment']                    =
                 ApiHelper::getJsonHelper()->verifyTypes(
                     $this->payment['value'],
-                    'anyOf(oneOf(AllocationPayment),null)'
+                    'anyOf(oneOf(PaymentForAllocation),null)'
                 );
         }
 

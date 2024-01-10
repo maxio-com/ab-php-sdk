@@ -56,6 +56,11 @@ class CreateAllocation implements \JsonSerializable
     private $upgradeCharge = [];
 
     /**
+     * @var bool|null
+     */
+    private $initiateDunning;
+
+    /**
      * @var array
      */
     private $pricePointId = [];
@@ -281,6 +286,28 @@ class CreateAllocation implements \JsonSerializable
     }
 
     /**
+     * Returns Initiate Dunning.
+     * If set to true, if the immediate component payment fails, initiate dunning for the subscription.
+     * Otherwise, leave the charges on the subscription to pay for at renewal. Defaults to false.
+     */
+    public function getInitiateDunning(): ?bool
+    {
+        return $this->initiateDunning;
+    }
+
+    /**
+     * Sets Initiate Dunning.
+     * If set to true, if the immediate component payment fails, initiate dunning for the subscription.
+     * Otherwise, leave the charges on the subscription to pay for at renewal. Defaults to false.
+     *
+     * @maps initiate_dunning
+     */
+    public function setInitiateDunning(?bool $initiateDunning): void
+    {
+        $this->initiateDunning = $initiateDunning;
+    }
+
+    /**
      * Returns Price Point Id.
      * Price point that the allocation should be charged at. Accepts either the price point's id (integer)
      * or handle (string). When not specified, the default price point will be used.
@@ -377,6 +404,9 @@ class CreateAllocation implements \JsonSerializable
         }
         if (!empty($this->upgradeCharge)) {
             $json['upgrade_charge']             = CreditType::checkValue($this->upgradeCharge['value']);
+        }
+        if (isset($this->initiateDunning)) {
+            $json['initiate_dunning']           = $this->initiateDunning;
         }
         if (!empty($this->pricePointId)) {
             $json['price_point_id']             =

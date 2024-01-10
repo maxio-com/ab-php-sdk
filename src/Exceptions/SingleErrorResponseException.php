@@ -10,7 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Exceptions;
 
-class SingleErrorResponseErrorException extends ApiException
+class SingleErrorResponseException extends ApiException
 {
     /**
      * @var string

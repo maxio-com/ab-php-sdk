@@ -33,15 +33,18 @@ class EventBuilder
     /**
      * Initializes a new event Builder object.
      */
-    public static function init(
-        int $id,
-        string $key,
-        string $message,
-        int $subscriptionId,
-        int $customerId,
-        string $createdAt
-    ): self {
-        return new self(new Event($id, $key, $message, $subscriptionId, $customerId, $createdAt));
+    public static function init(int $id, string $key, string $message, int $customerId, string $createdAt): self
+    {
+        return new self(new Event($id, $key, $message, $customerId, $createdAt));
+    }
+
+    /**
+     * Sets subscription id field.
+     */
+    public function subscriptionId(?int $value): self
+    {
+        $this->instance->setSubscriptionId($value);
+        return $this;
     }
 
     /**

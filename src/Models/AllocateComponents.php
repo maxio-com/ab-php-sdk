@@ -17,15 +17,15 @@ class AllocateComponents implements \JsonSerializable
     /**
      * @var string|null
      */
-    private $prorationUpgradeScheme = 'no-prorate';
+    private $prorationUpgradeScheme;
 
     /**
      * @var string|null
      */
-    private $prorationDowngradeScheme = 'no-prorate';
+    private $prorationDowngradeScheme;
 
     /**
-     * @var CreateAllocationRequest[]|null
+     * @var CreateAllocation[]|null
      */
     private $allocations;
 
@@ -48,6 +48,11 @@ class AllocateComponents implements \JsonSerializable
      * @var string|null
      */
     private $paymentCollectionMethod = PaymentCollectionMethod1::AUTOMATIC;
+
+    /**
+     * @var bool|null
+     */
+    private $initiateDunning;
 
     /**
      * Returns Proration Upgrade Scheme.
@@ -88,7 +93,7 @@ class AllocateComponents implements \JsonSerializable
     /**
      * Returns Allocations.
      *
-     * @return CreateAllocationRequest[]|null
+     * @return CreateAllocation[]|null
      */
     public function getAllocations(): ?array
     {
@@ -100,7 +105,7 @@ class AllocateComponents implements \JsonSerializable
      *
      * @maps allocations
      *
-     * @param CreateAllocationRequest[]|null $allocations
+     * @param CreateAllocation[]|null $allocations
      */
     public function setAllocations(?array $allocations): void
     {
@@ -227,6 +232,28 @@ class AllocateComponents implements \JsonSerializable
     }
 
     /**
+     * Returns Initiate Dunning.
+     * If true, if the immediate component payment fails, initiate dunning for the subscription.
+     * Otherwise, leave the charges on the subscription to pay for at renewal.
+     */
+    public function getInitiateDunning(): ?bool
+    {
+        return $this->initiateDunning;
+    }
+
+    /**
+     * Sets Initiate Dunning.
+     * If true, if the immediate component payment fails, initiate dunning for the subscription.
+     * Otherwise, leave the charges on the subscription to pay for at renewal.
+     *
+     * @maps initiate_dunning
+     */
+    public function setInitiateDunning(?bool $initiateDunning): void
+    {
+        $this->initiateDunning = $initiateDunning;
+    }
+
+    /**
      * Encode this object to JSON
      *
      * @param bool $asArrayWhenEmpty Whether to serialize this model as an array whenever no fields
@@ -258,6 +285,9 @@ class AllocateComponents implements \JsonSerializable
         }
         if (isset($this->paymentCollectionMethod)) {
             $json['payment_collection_method']  = PaymentCollectionMethod1::checkValue($this->paymentCollectionMethod);
+        }
+        if (isset($this->initiateDunning)) {
+            $json['initiate_dunning']           = $this->initiateDunning;
         }
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;

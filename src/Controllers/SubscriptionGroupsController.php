@@ -59,7 +59,7 @@ class SubscriptionGroupsController extends BaseController
         ?SubscriptionGroupSignupRequest $body = null
     ): SubscriptionGroupSignupResponse {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/subscription_groups/signup.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(HeaderParam::init('Content-Type', 'application/json'), BodyParam::init($body));
 
         $_resHandler = $this->responseHandler()
@@ -87,7 +87,7 @@ class SubscriptionGroupsController extends BaseController
     public function createSubscriptionGroup(?CreateSubscriptionGroupRequest $body = null): SubscriptionGroupResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/subscription_groups.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(HeaderParam::init('Content-Type', 'application/json'), BodyParam::init($body));
 
         $_resHandler = $this->responseHandler()
@@ -118,7 +118,7 @@ class SubscriptionGroupsController extends BaseController
     public function listSubscriptionGroups(array $options): ListSubscriptionGroupsResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/subscription_groups.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 QueryParam::init('page', $options)->commaSeparated()->extract('page', 1),
                 QueryParam::init('per_page', $options)->commaSeparated()->extract('perPage', 20),
@@ -147,7 +147,7 @@ class SubscriptionGroupsController extends BaseController
     public function readSubscriptionGroup(string $uid): FullSubscriptionGroupResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/subscription_groups/{uid}.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(TemplateParam::init('uid', $uid)->required());
 
         $_resHandler = $this->responseHandler()->type(FullSubscriptionGroupResponse::class);
@@ -173,7 +173,7 @@ class SubscriptionGroupsController extends BaseController
         ?UpdateSubscriptionGroupRequest $body = null
     ): SubscriptionGroupResponse {
         $_reqBuilder = $this->requestBuilder(RequestMethod::PUT, '/subscription_groups/{uid}.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('uid', $uid)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -206,7 +206,7 @@ class SubscriptionGroupsController extends BaseController
     public function deleteSubscriptionGroup(string $uid): DeleteSubscriptionGroupResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::DELETE, '/subscription_groups/{uid}.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(TemplateParam::init('uid', $uid)->required());
 
         $_resHandler = $this->responseHandler()
@@ -231,7 +231,7 @@ class SubscriptionGroupsController extends BaseController
     public function readSubscriptionGroupBySubscriptionId(string $subscriptionId): FullSubscriptionGroupResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/subscription_groups/lookup.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(QueryParam::init('subscription_id', $subscriptionId)->commaSeparated()->required());
 
         $_resHandler = $this->responseHandler()
@@ -282,7 +282,7 @@ class SubscriptionGroupsController extends BaseController
         ?AddSubscriptionToAGroup $body = null
     ): SubscriptionGroupResponse {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/subscriptions/{subscription_id}/group.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -309,7 +309,7 @@ class SubscriptionGroupsController extends BaseController
     public function removeSubscriptionFromGroup(int $subscriptionId): void
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::DELETE, '/subscriptions/{subscription_id}/group.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(TemplateParam::init('subscription_id', $subscriptionId)->required());
 
         $_resHandler = $this->responseHandler()

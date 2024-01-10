@@ -55,7 +55,7 @@ class ProformaInvoicesController extends BaseController
         $_reqBuilder = $this->requestBuilder(
             RequestMethod::POST,
             '/subscription_groups/{uid}/proforma_invoices.json'
-        )->auth('global')->parameters(TemplateParam::init('uid', $uid)->required());
+        )->auth('BasicAuth')->parameters(TemplateParam::init('uid', $uid)->required());
 
         $_resHandler = $this->responseHandler()
             ->throwErrorOn(
@@ -85,7 +85,7 @@ class ProformaInvoicesController extends BaseController
         $_reqBuilder = $this->requestBuilder(
             RequestMethod::GET,
             '/subscription_groups/{uid}/proforma_invoices.json'
-        )->auth('global')->parameters(TemplateParam::init('uid', $uid)->required());
+        )->auth('BasicAuth')->parameters(TemplateParam::init('uid', $uid)->required());
 
         $_resHandler = $this->responseHandler()
             ->throwErrorOn('403', ErrorType::init('Forbidden'))
@@ -111,7 +111,7 @@ class ProformaInvoicesController extends BaseController
     public function readProformaInvoice(int $proformaInvoiceUid): ProformaInvoice
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/proforma_invoices/{proforma_invoice_uid}.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(TemplateParam::init('proforma_invoice_uid', $proformaInvoiceUid)->required());
 
         $_resHandler = $this->responseHandler()
@@ -145,7 +145,7 @@ class ProformaInvoicesController extends BaseController
         $_reqBuilder = $this->requestBuilder(
             RequestMethod::POST,
             '/subscriptions/{subscription_id}/proforma_invoices.json'
-        )->auth('global')->parameters(TemplateParam::init('subscription_id', $subscriptionId)->required());
+        )->auth('BasicAuth')->parameters(TemplateParam::init('subscription_id', $subscriptionId)->required());
 
         $_resHandler = $this->responseHandler()
             ->throwErrorOn('403', ErrorType::init('Forbidden'))
@@ -175,7 +175,7 @@ class ProformaInvoicesController extends BaseController
             RequestMethod::GET,
             '/subscriptions/{subscription_id}/proforma_invoices.json'
         )
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('subscription_id', $options)->extract('subscriptionId')->required(),
                 QueryParam::init('start_date', $options)->commaSeparated()->extract('startDate'),
@@ -230,7 +230,7 @@ class ProformaInvoicesController extends BaseController
             RequestMethod::POST,
             '/proforma_invoices/{proforma_invoice_uid}/void.json'
         )
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('proforma_invoice_uid', $proformaInvoiceUid)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -277,7 +277,7 @@ class ProformaInvoicesController extends BaseController
         $_reqBuilder = $this->requestBuilder(
             RequestMethod::POST,
             '/subscriptions/{subscription_id}/proforma_invoices/preview.json'
-        )->auth('global')->parameters(TemplateParam::init('subscription_id', $subscriptionId)->required());
+        )->auth('BasicAuth')->parameters(TemplateParam::init('subscription_id', $subscriptionId)->required());
 
         $_resHandler = $this->responseHandler()
             ->throwErrorOn('403', ErrorType::init('Forbidden'))
@@ -315,7 +315,7 @@ class ProformaInvoicesController extends BaseController
     public function createSignupProformaInvoice(?CreateSubscriptionRequest $body = null): ProformaInvoice
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/subscriptions/proforma_invoices.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(HeaderParam::init('Content-Type', 'application/json'), BodyParam::init($body));
 
         $_resHandler = $this->responseHandler()
@@ -357,7 +357,7 @@ class ProformaInvoicesController extends BaseController
         ?CreateSubscriptionRequest $body = null
     ): SignupProformaPreviewResponse {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/subscriptions/proforma_invoices/preview.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 HeaderParam::init('Content-Type', 'application/json'),
                 QueryParam::init('include=next_proforma_invoice', $includeNextProformaInvoice)->commaSeparated(),

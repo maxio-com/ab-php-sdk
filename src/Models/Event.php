@@ -31,7 +31,7 @@ class Event implements \JsonSerializable
     private $message;
 
     /**
-     * @var int
+     * @var int|null
      */
     private $subscriptionId;
 
@@ -54,22 +54,14 @@ class Event implements \JsonSerializable
      * @param int $id
      * @param string $key
      * @param string $message
-     * @param int $subscriptionId
      * @param int $customerId
      * @param string $createdAt
      */
-    public function __construct(
-        int $id,
-        string $key,
-        string $message,
-        int $subscriptionId,
-        int $customerId,
-        string $createdAt
-    ) {
+    public function __construct(int $id, string $key, string $message, int $customerId, string $createdAt)
+    {
         $this->id = $id;
         $this->key = $key;
         $this->message = $message;
-        $this->subscriptionId = $subscriptionId;
         $this->customerId = $customerId;
         $this->createdAt = $createdAt;
     }
@@ -134,7 +126,7 @@ class Event implements \JsonSerializable
     /**
      * Returns Subscription Id.
      */
-    public function getSubscriptionId(): int
+    public function getSubscriptionId(): ?int
     {
         return $this->subscriptionId;
     }
@@ -142,10 +134,9 @@ class Event implements \JsonSerializable
     /**
      * Sets Subscription Id.
      *
-     * @required
      * @maps subscription_id
      */
-    public function setSubscriptionId(int $subscriptionId): void
+    public function setSubscriptionId(?int $subscriptionId): void
     {
         $this->subscriptionId = $subscriptionId;
     }

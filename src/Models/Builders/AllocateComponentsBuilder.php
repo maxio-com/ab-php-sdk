@@ -120,6 +120,15 @@ class AllocateComponentsBuilder
     }
 
     /**
+     * Sets initiate dunning field.
+     */
+    public function initiateDunning(?bool $value): self
+    {
+        $this->instance->setInitiateDunning($value);
+        return $this;
+    }
+
+    /**
      * Initializes a new allocate components object.
      */
     public function build(): AllocateComponents

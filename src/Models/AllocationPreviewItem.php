@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class AllocationPreviewItem implements \JsonSerializable
@@ -25,19 +26,19 @@ class AllocationPreviewItem implements \JsonSerializable
     private $subscriptionId;
 
     /**
-     * @var float|null
+     * @var int|string|null
      */
     private $quantity;
 
     /**
-     * @var int|null
+     * @var int|string|null
      */
     private $previousQuantity;
 
     /**
-     * @var string|null
+     * @var array
      */
-    private $memo;
+    private $memo = [];
 
     /**
      * @var array
@@ -82,7 +83,17 @@ class AllocationPreviewItem implements \JsonSerializable
     /**
      * @var string|null
      */
-    private $componentHandle;
+    private $pricePointHandle;
+
+    /**
+     * @var string|null
+     */
+    private $pricePointName;
+
+    /**
+     * @var array
+     */
+    private $componentHandle = [];
 
     /**
      * Returns Component Id.
@@ -122,8 +133,10 @@ class AllocationPreviewItem implements \JsonSerializable
 
     /**
      * Returns Quantity.
+     *
+     * @return int|string|null
      */
-    public function getQuantity(): ?float
+    public function getQuantity()
     {
         return $this->quantity;
     }
@@ -132,16 +145,21 @@ class AllocationPreviewItem implements \JsonSerializable
      * Sets Quantity.
      *
      * @maps quantity
+     * @mapsBy anyOf(oneOf(int,string),null)
+     *
+     * @param int|string|null $quantity
      */
-    public function setQuantity(?float $quantity): void
+    public function setQuantity($quantity): void
     {
         $this->quantity = $quantity;
     }
 
     /**
      * Returns Previous Quantity.
+     *
+     * @return int|string|null
      */
-    public function getPreviousQuantity(): ?int
+    public function getPreviousQuantity()
     {
         return $this->previousQuantity;
     }
@@ -150,8 +168,11 @@ class AllocationPreviewItem implements \JsonSerializable
      * Sets Previous Quantity.
      *
      * @maps previous_quantity
+     * @mapsBy anyOf(oneOf(int,string),null)
+     *
+     * @param int|string|null $previousQuantity
      */
-    public function setPreviousQuantity(?int $previousQuantity): void
+    public function setPreviousQuantity($previousQuantity): void
     {
         $this->previousQuantity = $previousQuantity;
     }
@@ -161,7 +182,10 @@ class AllocationPreviewItem implements \JsonSerializable
      */
     public function getMemo(): ?string
     {
-        return $this->memo;
+        if (count($this->memo) == 0) {
+            return null;
+        }
+        return $this->memo['value'];
     }
 
     /**
@@ -171,7 +195,15 @@ class AllocationPreviewItem implements \JsonSerializable
      */
     public function setMemo(?string $memo): void
     {
-        $this->memo = $memo;
+        $this->memo['value'] = $memo;
+    }
+
+    /**
+     * Unsets Memo.
+     */
+    public function unsetMemo(): void
+    {
+        $this->memo = [];
     }
 
     /**
@@ -372,11 +404,50 @@ class AllocationPreviewItem implements \JsonSerializable
     }
 
     /**
+     * Returns Price Point Handle.
+     */
+    public function getPricePointHandle(): ?string
+    {
+        return $this->pricePointHandle;
+    }
+
+    /**
+     * Sets Price Point Handle.
+     *
+     * @maps price_point_handle
+     */
+    public function setPricePointHandle(?string $pricePointHandle): void
+    {
+        $this->pricePointHandle = $pricePointHandle;
+    }
+
+    /**
+     * Returns Price Point Name.
+     */
+    public function getPricePointName(): ?string
+    {
+        return $this->pricePointName;
+    }
+
+    /**
+     * Sets Price Point Name.
+     *
+     * @maps price_point_name
+     */
+    public function setPricePointName(?string $pricePointName): void
+    {
+        $this->pricePointName = $pricePointName;
+    }
+
+    /**
      * Returns Component Handle.
      */
     public function getComponentHandle(): ?string
     {
-        return $this->componentHandle;
+        if (count($this->componentHandle) == 0) {
+            return null;
+        }
+        return $this->componentHandle['value'];
     }
 
     /**
@@ -386,7 +457,15 @@ class AllocationPreviewItem implements \JsonSerializable
      */
     public function setComponentHandle(?string $componentHandle): void
     {
-        $this->componentHandle = $componentHandle;
+        $this->componentHandle['value'] = $componentHandle;
+    }
+
+    /**
+     * Unsets Component Handle.
+     */
+    public function unsetComponentHandle(): void
+    {
+        $this->componentHandle = [];
     }
 
     /**
@@ -408,13 +487,21 @@ class AllocationPreviewItem implements \JsonSerializable
             $json['subscription_id']            = $this->subscriptionId;
         }
         if (isset($this->quantity)) {
-            $json['quantity']                   = $this->quantity;
+            $json['quantity']                   =
+                ApiHelper::getJsonHelper()->verifyTypes(
+                    $this->quantity,
+                    'anyOf(oneOf(int,string),null)'
+                );
         }
         if (isset($this->previousQuantity)) {
-            $json['previous_quantity']          = $this->previousQuantity;
+            $json['previous_quantity']          =
+                ApiHelper::getJsonHelper()->verifyTypes(
+                    $this->previousQuantity,
+                    'anyOf(oneOf(int,string),null)'
+                );
         }
-        if (isset($this->memo)) {
-            $json['memo']                       = $this->memo;
+        if (!empty($this->memo)) {
+            $json['memo']                       = $this->memo['value'];
         }
         if (!empty($this->timestamp)) {
             $json['timestamp']                  = $this->timestamp['value'];
@@ -440,8 +527,14 @@ class AllocationPreviewItem implements \JsonSerializable
         if (isset($this->previousPricePointId)) {
             $json['previous_price_point_id']    = $this->previousPricePointId;
         }
-        if (isset($this->componentHandle)) {
-            $json['component_handle']           = $this->componentHandle;
+        if (isset($this->pricePointHandle)) {
+            $json['price_point_handle']         = $this->pricePointHandle;
+        }
+        if (isset($this->pricePointName)) {
+            $json['price_point_name']           = $this->pricePointName;
+        }
+        if (!empty($this->componentHandle)) {
+            $json['component_handle']           = $this->componentHandle['value'];
         }
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;

@@ -15,7 +15,7 @@ use stdClass;
 /**
  * Information for captured payment, if applicable
  */
-class AllocationPayment implements \JsonSerializable
+class PaymentForAllocation implements \JsonSerializable
 {
     /**
      * @var int|null

@@ -1,5 +1,7 @@
 <?php
+
 declare(strict_types=1);
+
 /*
  * AdvancedBilling
  *
@@ -18,30 +20,37 @@ class Product implements \JsonSerializable
      * @var int|null
      */
     private $id;
+
     /**
      * @var string|null
      */
     private $name;
+
     /**
      * @var array
      */
     private $handle = [];
+
     /**
      * @var array
      */
     private $description = [];
+
     /**
      * @var array
      */
     private $accountingCode = [];
+
     /**
      * @var bool|null
      */
     private $requestCreditCard;
+
     /**
      * @var array
      */
     private $expirationInterval = [];
+
     /**
      * @var array
      */
@@ -61,106 +70,132 @@ class Product implements \JsonSerializable
      * @var int|null
      */
     private $priceInCents;
+
     /**
      * @var int|null
      */
     private $interval;
+
     /**
      * @var string|null
      */
     private $intervalUnit;
+
     /**
      * @var array
      */
     private $initialChargeInCents = [];
+
     /**
      * @var array
      */
     private $trialPriceInCents = [];
+
     /**
      * @var array
      */
     private $trialInterval = [];
+
     /**
      * @var array
      */
     private $trialIntervalUnit = [];
+
     /**
      * @var array
      */
     private $archivedAt = [];
+
     /**
      * @var bool|null
      */
     private $requireCreditCard;
+
     /**
      * @var array
      */
     private $returnParams = [];
+
     /**
      * @var bool|null
      */
     private $taxable;
+
     /**
      * @var array
      */
     private $updateReturnUrl = [];
+
     /**
      * @var bool|null
      */
     private $initialChargeAfterTrial;
+
     /**
      * @var int|null
      */
     private $versionNumber;
+
     /**
      * @var array
      */
     private $updateReturnParams = [];
+
     /**
      * @var ProductFamily|null
      */
     private $productFamily;
+
     /**
      * @var PublicSignupPage[]|null
      */
     private $publicSignupPages;
+
     /**
      * @var string|null
      */
     private $productPricePointName;
+
     /**
      * @var bool|null
      */
     private $requestBillingAddress;
+
     /**
      * @var bool|null
      */
     private $requireBillingAddress;
+
     /**
      * @var bool|null
      */
     private $requireShippingAddress;
+
     /**
      * @var array
      */
     private $taxCode = [];
+
     /**
      * @var int|null
      */
     private $defaultProductPricePointId;
+
     /**
      * @var array
      */
     private $useSiteExchangeRate = [];
+
     /**
      * @var array
      */
     private $itemCategory = [];
+
     /**
      * @var int|null
      */
     private $productPricePointId;
+
     /**
      * @var array
      */
@@ -1137,34 +1172,32 @@ class Product implements \JsonSerializable
      * @return array|stdClass
      */
     #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
-    public function jsonSerialize(
-        bool $asArrayWhenEmpty = false
-    )
+    public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
         if (isset($this->id)) {
-            $json['id'] = $this->id;
+            $json['id']                             = $this->id;
         }
         if (isset($this->name)) {
-            $json['name'] = $this->name;
+            $json['name']                           = $this->name;
         }
         if (!empty($this->handle)) {
-            $json['handle'] = $this->handle['value'];
+            $json['handle']                         = $this->handle['value'];
         }
         if (!empty($this->description)) {
-            $json['description'] = $this->description['value'];
+            $json['description']                    = $this->description['value'];
         }
         if (!empty($this->accountingCode)) {
-            $json['accounting_code'] = $this->accountingCode['value'];
+            $json['accounting_code']                = $this->accountingCode['value'];
         }
         if (isset($this->requestCreditCard)) {
-            $json['request_credit_card'] = $this->requestCreditCard;
+            $json['request_credit_card']            = $this->requestCreditCard;
         }
         if (!empty($this->expirationInterval)) {
-            $json['expiration_interval'] = $this->expirationInterval['value'];
+            $json['expiration_interval']            = $this->expirationInterval['value'];
         }
         if (!empty($this->expirationIntervalUnit)) {
-            $json['expiration_interval_unit'] =
+            $json['expiration_interval_unit']       =
                 ApiHelper::getJsonHelper()->verifyTypes(
                     $this->expirationIntervalUnit['value'],
                     'anyOf(oneOf(ExtendedIntervalUnit),null)',
@@ -1174,31 +1207,31 @@ class Product implements \JsonSerializable
                 );
         }
         if (isset($this->createdAt)) {
-            $json['created_at'] = DateTimeHelper::toRfc3339DateTime($this->createdAt);
+            $json['created_at']                     = DateTimeHelper::toRfc3339DateTime($this->createdAt);
         }
         if (isset($this->updatedAt)) {
-            $json['updated_at'] = DateTimeHelper::toRfc3339DateTime($this->updatedAt);
+            $json['updated_at']                     = DateTimeHelper::toRfc3339DateTime($this->updatedAt);
         }
         if (isset($this->priceInCents)) {
-            $json['price_in_cents'] = $this->priceInCents;
+            $json['price_in_cents']                 = $this->priceInCents;
         }
         if (isset($this->interval)) {
-            $json['interval'] = $this->interval;
+            $json['interval']                       = $this->interval;
         }
         if (isset($this->intervalUnit)) {
-            $json['interval_unit'] = IntervalUnit::checkValue($this->intervalUnit);
+            $json['interval_unit']                  = IntervalUnit::checkValue($this->intervalUnit);
         }
         if (!empty($this->initialChargeInCents)) {
-            $json['initial_charge_in_cents'] = $this->initialChargeInCents['value'];
+            $json['initial_charge_in_cents']        = $this->initialChargeInCents['value'];
         }
         if (!empty($this->trialPriceInCents)) {
-            $json['trial_price_in_cents'] = $this->trialPriceInCents['value'];
+            $json['trial_price_in_cents']           = $this->trialPriceInCents['value'];
         }
         if (!empty($this->trialInterval)) {
-            $json['trial_interval'] = $this->trialInterval['value'];
+            $json['trial_interval']                 = $this->trialInterval['value'];
         }
         if (!empty($this->trialIntervalUnit)) {
-            $json['trial_interval_unit'] =
+            $json['trial_interval_unit']            =
                 ApiHelper::getJsonHelper()->verifyTypes(
                     $this->trialIntervalUnit['value'],
                     'anyOf(oneOf(IntervalUnit),null)',
@@ -1208,65 +1241,66 @@ class Product implements \JsonSerializable
                 );
         }
         if (!empty($this->archivedAt)) {
-            $json['archived_at'] = DateTimeHelper::toRfc3339DateTime($this->archivedAt['value']);
+            $json['archived_at']                    = DateTimeHelper::toRfc3339DateTime($this->archivedAt['value']);
         }
         if (isset($this->requireCreditCard)) {
-            $json['require_credit_card'] = $this->requireCreditCard;
+            $json['require_credit_card']            = $this->requireCreditCard;
         }
         if (!empty($this->returnParams)) {
-            $json['return_params'] = $this->returnParams['value'];
+            $json['return_params']                  = $this->returnParams['value'];
         }
         if (isset($this->taxable)) {
-            $json['taxable'] = $this->taxable;
+            $json['taxable']                        = $this->taxable;
         }
         if (!empty($this->updateReturnUrl)) {
-            $json['update_return_url'] = $this->updateReturnUrl['value'];
+            $json['update_return_url']              = $this->updateReturnUrl['value'];
         }
         if (isset($this->initialChargeAfterTrial)) {
-            $json['initial_charge_after_trial'] = $this->initialChargeAfterTrial;
+            $json['initial_charge_after_trial']     = $this->initialChargeAfterTrial;
         }
         if (isset($this->versionNumber)) {
-            $json['version_number'] = $this->versionNumber;
+            $json['version_number']                 = $this->versionNumber;
         }
         if (!empty($this->updateReturnParams)) {
-            $json['update_return_params'] = $this->updateReturnParams['value'];
+            $json['update_return_params']           = $this->updateReturnParams['value'];
         }
         if (isset($this->productFamily)) {
-            $json['product_family'] = $this->productFamily;
+            $json['product_family']                 = $this->productFamily;
         }
         if (isset($this->publicSignupPages)) {
-            $json['public_signup_pages'] = $this->publicSignupPages;
+            $json['public_signup_pages']            = $this->publicSignupPages;
         }
         if (isset($this->productPricePointName)) {
-            $json['product_price_point_name'] = $this->productPricePointName;
+            $json['product_price_point_name']       = $this->productPricePointName;
         }
         if (isset($this->requestBillingAddress)) {
-            $json['request_billing_address'] = $this->requestBillingAddress;
+            $json['request_billing_address']        = $this->requestBillingAddress;
         }
         if (isset($this->requireBillingAddress)) {
-            $json['require_billing_address'] = $this->requireBillingAddress;
+            $json['require_billing_address']        = $this->requireBillingAddress;
         }
         if (isset($this->requireShippingAddress)) {
-            $json['require_shipping_address'] = $this->requireShippingAddress;
+            $json['require_shipping_address']       = $this->requireShippingAddress;
         }
         if (!empty($this->taxCode)) {
-            $json['tax_code'] = $this->taxCode['value'];
+            $json['tax_code']                       = $this->taxCode['value'];
         }
         if (isset($this->defaultProductPricePointId)) {
             $json['default_product_price_point_id'] = $this->defaultProductPricePointId;
         }
         if (!empty($this->useSiteExchangeRate)) {
-            $json['use_site_exchange_rate'] = $this->useSiteExchangeRate['value'];
+            $json['use_site_exchange_rate']         = $this->useSiteExchangeRate['value'];
         }
         if (!empty($this->itemCategory)) {
-            $json['item_category'] = $this->itemCategory['value'];
+            $json['item_category']                  = $this->itemCategory['value'];
         }
         if (isset($this->productPricePointId)) {
-            $json['product_price_point_id'] = $this->productPricePointId;
+            $json['product_price_point_id']         = $this->productPricePointId;
         }
         if (!empty($this->productPricePointHandle)) {
-            $json['product_price_point_handle'] = $this->productPricePointHandle['value'];
+            $json['product_price_point_handle']     = $this->productPricePointHandle['value'];
         }
+
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }
 }
