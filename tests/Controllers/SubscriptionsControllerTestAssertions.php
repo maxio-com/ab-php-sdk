@@ -8,6 +8,7 @@ use AdvancedBillingLib\Exceptions\ApiException;
 use AdvancedBillingLib\Exceptions\ErrorListResponseException;
 use AdvancedBillingLib\Models\Coupon;
 use AdvancedBillingLib\Models\Subscription;
+use AdvancedBillingLib\Models\SubscriptionResponse;
 use AdvancedBillingLib\Tests\TestStatusCode;
 
 final class SubscriptionsControllerTestAssertions
@@ -87,5 +88,25 @@ final class SubscriptionsControllerTestAssertions
         $this->testCase::assertNotNull($subscription);
         $this->testCase::assertNotNull($subscription->getCoupons());
         $this->testCase::assertCount(2, $subscription->getCoupons());
+    }
+
+    /**
+     * @param array<int, SubscriptionResponse> $results
+     */
+    public function assertSubscriptionFoundByMetadata(array $results, Subscription $expectedSubscription): void
+    {
+        $this->testCase::assertNotEmpty($results);
+        $this->testCase::assertCount(1, $results);
+
+        $foundSubscription = $results[0]->getSubscription();
+        $this->testCase::assertEquals($foundSubscription->getId(), $expectedSubscription->getId());
+    }
+
+    /**
+     * @param array<int, SubscriptionResponse> $results
+     */
+    public function assertSubscriptionNotFoundByMetadata(array $results): void
+    {
+        $this->testCase::assertEmpty($results);
     }
 }
