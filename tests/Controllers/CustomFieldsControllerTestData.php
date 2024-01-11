@@ -106,10 +106,11 @@ final class CustomFieldsControllerTestData
     /**
      * @return array<string, string>
      */
-    public function getListSubscriptionMetadataOptions(): array
+    public function getListSubscriptionMetadataOptions(int $subscriptionId): array
     {
         return [
             'resourceType' => $this->getSubscriptionsResourceType(),
+            'resourceId' => $subscriptionId
         ];
     }
 

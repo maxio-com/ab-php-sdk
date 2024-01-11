@@ -40,7 +40,6 @@ final class TestCustomFieldsRequestFactory
     private function createCreateMetaField(string $name, string $inputType): CreateMetafield
     {
         return CreateMetafieldBuilder::init()
-            ->id(123)
             ->name($name)
             ->inputType($inputType)
             ->build();

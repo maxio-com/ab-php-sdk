@@ -34,8 +34,8 @@ final class TestCouponRequestFactory
         )
             ->productFamilyId($productFamilyId)
             ->description(CouponTestData::DESCRIPTION)
-            ->recurring('false')
-            ->stackable('true')
+            ->recurring(false)
+            ->stackable(true)
             ->compoundingStrategy(CouponTestData::COMPOUNDING_STRATEGY)
             ->build();
     }
