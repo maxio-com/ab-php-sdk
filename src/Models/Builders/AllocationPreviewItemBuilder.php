@@ -59,7 +59,7 @@ class AllocationPreviewItemBuilder
     /**
      * Sets quantity field.
      */
-    public function quantity(?float $value): self
+    public function quantity($value): self
     {
         $this->instance->setQuantity($value);
         return $this;
@@ -68,7 +68,7 @@ class AllocationPreviewItemBuilder
     /**
      * Sets previous quantity field.
      */
-    public function previousQuantity(?int $value): self
+    public function previousQuantity($value): self
     {
         $this->instance->setPreviousQuantity($value);
         return $this;
@@ -80,6 +80,15 @@ class AllocationPreviewItemBuilder
     public function memo(?string $value): self
     {
         $this->instance->setMemo($value);
+        return $this;
+    }
+
+    /**
+     * Unsets memo field.
+     */
+    public function unsetMemo(): self
+    {
+        $this->instance->unsetMemo();
         return $this;
     }
 
@@ -183,11 +192,38 @@ class AllocationPreviewItemBuilder
     }
 
     /**
+     * Sets price point handle field.
+     */
+    public function pricePointHandle(?string $value): self
+    {
+        $this->instance->setPricePointHandle($value);
+        return $this;
+    }
+
+    /**
+     * Sets price point name field.
+     */
+    public function pricePointName(?string $value): self
+    {
+        $this->instance->setPricePointName($value);
+        return $this;
+    }
+
+    /**
      * Sets component handle field.
      */
     public function componentHandle(?string $value): self
     {
         $this->instance->setComponentHandle($value);
+        return $this;
+    }
+
+    /**
+     * Unsets component handle field.
+     */
+    public function unsetComponentHandle(): self
+    {
+        $this->instance->unsetComponentHandle();
         return $this;
     }
 

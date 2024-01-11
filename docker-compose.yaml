@@ -3,7 +3,7 @@ version: '3.8'
 services:
   php-dev:
     env_file:
-    - .env
+      - .env
     build:
       dockerfile: php.Dockerfile
     container_name: maxio-php-sdk

@@ -47,7 +47,7 @@ class SubscriptionGroupInvoiceAccountController extends BaseController
         ?SubscriptionGroupPrepaymentRequest $body = null
     ): SubscriptionGroupPrepaymentResponse {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/subscription_groups/{uid}/prepayments.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('uid', $uid)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -76,7 +76,7 @@ class SubscriptionGroupInvoiceAccountController extends BaseController
     public function listPrepaymentsForSubscriptionGroup(array $options): ListSubscriptionGroupPrepaymentResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/subscription_groups/{uid}/prepayments.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('uid', $options)->extract('uid')->required(),
                 QueryParam::init('filter[date_field]', $options)
@@ -124,7 +124,7 @@ class SubscriptionGroupInvoiceAccountController extends BaseController
             RequestMethod::POST,
             '/subscription_groups/{uid}/service_credits.json'
         )
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('uid', $uid)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -160,7 +160,7 @@ class SubscriptionGroupInvoiceAccountController extends BaseController
             RequestMethod::POST,
             '/subscription_groups/{uid}/service_credit_deductions.json'
         )
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('uid', $uid)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),

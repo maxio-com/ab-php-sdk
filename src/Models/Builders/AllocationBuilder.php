@@ -11,7 +11,7 @@ declare(strict_types=1);
 namespace AdvancedBillingLib\Models\Builders;
 
 use AdvancedBillingLib\Models\Allocation;
-use AdvancedBillingLib\Models\AllocationPayment;
+use AdvancedBillingLib\Models\PaymentForAllocation;
 use Core\Utils\CoreHelper;
 
 /**
@@ -40,11 +40,38 @@ class AllocationBuilder
     }
 
     /**
+     * Sets allocation id field.
+     */
+    public function allocationId(?int $value): self
+    {
+        $this->instance->setAllocationId($value);
+        return $this;
+    }
+
+    /**
      * Sets component id field.
      */
     public function componentId(?int $value): self
     {
         $this->instance->setComponentId($value);
+        return $this;
+    }
+
+    /**
+     * Sets component handle field.
+     */
+    public function componentHandle(?string $value): self
+    {
+        $this->instance->setComponentHandle($value);
+        return $this;
+    }
+
+    /**
+     * Unsets component handle field.
+     */
+    public function unsetComponentHandle(): self
+    {
+        $this->instance->unsetComponentHandle();
         return $this;
     }
 
@@ -60,7 +87,7 @@ class AllocationBuilder
     /**
      * Sets quantity field.
      */
-    public function quantity(?int $value): self
+    public function quantity($value): self
     {
         $this->instance->setQuantity($value);
         return $this;
@@ -69,7 +96,7 @@ class AllocationBuilder
     /**
      * Sets previous quantity field.
      */
-    public function previousQuantity(?int $value): self
+    public function previousQuantity($value): self
     {
         $this->instance->setPreviousQuantity($value);
         return $this;
@@ -96,9 +123,18 @@ class AllocationBuilder
     /**
      * Sets timestamp field.
      */
-    public function timestamp(?string $value): self
+    public function timestamp(?\DateTime $value): self
     {
         $this->instance->setTimestamp($value);
+        return $this;
+    }
+
+    /**
+     * Sets created at field.
+     */
+    public function createdAt(?\DateTime $value): self
+    {
+        $this->instance->setCreatedAt($value);
         return $this;
     }
 
@@ -166,6 +202,15 @@ class AllocationBuilder
     }
 
     /**
+     * Sets initiate dunning field.
+     */
+    public function initiateDunning(?bool $value): self
+    {
+        $this->instance->setInitiateDunning($value);
+        return $this;
+    }
+
+    /**
      * Sets upgrade charge field.
      */
     public function upgradeCharge(?string $value): self
@@ -204,7 +249,7 @@ class AllocationBuilder
     /**
      * Sets payment field.
      */
-    public function payment(?AllocationPayment $value): self
+    public function payment(?PaymentForAllocation $value): self
     {
         $this->instance->setPayment($value);
         return $this;

@@ -9,8 +9,8 @@
 
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
-| `transactionType` | `?string` | Optional | - | getTransactionType(): ?string | setTransactionType(?string transactionType): void |
-| `kind` | `?string` | Optional | - | getKind(): ?string | setKind(?string kind): void |
+| `transactionType` | [`?string(LineItemTransactionType)`](../../doc/models/line-item-transaction-type.md) | Optional | A handle for the line item transaction type | getTransactionType(): ?string | setTransactionType(?string transactionType): void |
+| `kind` | [`?string(LineItemKind)`](../../doc/models/line-item-kind.md) | Optional | A handle for the line item kind | getKind(): ?string | setKind(?string kind): void |
 | `amountInCents` | `?int` | Optional | - | getAmountInCents(): ?int | setAmountInCents(?int amountInCents): void |
 | `memo` | `?string` | Optional | - | getMemo(): ?string | setMemo(?string memo): void |
 | `discountAmountInCents` | `?int` | Optional | - | getDiscountAmountInCents(): ?int | setDiscountAmountInCents(?int discountAmountInCents): void |
@@ -28,8 +28,8 @@
 
 ```json
 {
-  "transaction_type": "transaction_type8",
-  "kind": "kind4",
+  "transaction_type": "charge",
+  "kind": "prepaid_usage_component",
   "amount_in_cents": 154,
   "memo": "memo0",
   "discount_amount_in_cents": 214

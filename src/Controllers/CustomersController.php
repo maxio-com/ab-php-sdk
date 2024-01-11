@@ -75,7 +75,7 @@ class CustomersController extends BaseController
     public function createCustomer(?CreateCustomerRequest $body = null): CustomerResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/customers.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(HeaderParam::init('Content-Type', 'application/json'), BodyParam::init($body));
 
         $_resHandler = $this->responseHandler()
@@ -116,7 +116,7 @@ class CustomersController extends BaseController
     public function listCustomers(array $options): array
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/customers.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 QueryParam::init('direction', $options)
                     ->commaSeparated()
@@ -152,7 +152,7 @@ class CustomersController extends BaseController
     public function readCustomer(int $id): CustomerResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/customers/{id}.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(TemplateParam::init('id', $id)->required());
 
         $_resHandler = $this->responseHandler()->type(CustomerResponse::class);
@@ -173,7 +173,7 @@ class CustomersController extends BaseController
     public function updateCustomer(int $id, ?UpdateCustomerRequest $body = null): CustomerResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::PUT, '/customers/{id}.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('id', $id)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -203,7 +203,7 @@ class CustomersController extends BaseController
     public function deleteCustomer(int $id): void
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::DELETE, '/customers/{id}.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(TemplateParam::init('id', $id)->required());
 
         $this->execute($_reqBuilder);
@@ -222,7 +222,7 @@ class CustomersController extends BaseController
     public function readCustomerByReference(string $reference): CustomerResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/customers/lookup.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(QueryParam::init('reference', $reference)->commaSeparated()->required());
 
         $_resHandler = $this->responseHandler()->type(CustomerResponse::class);
@@ -242,7 +242,7 @@ class CustomersController extends BaseController
     public function listCustomerSubscriptions(int $customerId): array
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/customers/{customer_id}/subscriptions.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(TemplateParam::init('customer_id', $customerId)->required());
 
         $_resHandler = $this->responseHandler()->type(SubscriptionResponse::class, 1);

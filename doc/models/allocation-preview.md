@@ -15,7 +15,7 @@
 | `totalTaxInCents` | `?int` | Optional | - | getTotalTaxInCents(): ?int | setTotalTaxInCents(?int totalTaxInCents): void |
 | `totalDiscountInCents` | `?int` | Optional | - | getTotalDiscountInCents(): ?int | setTotalDiscountInCents(?int totalDiscountInCents): void |
 | `totalInCents` | `?int` | Optional | - | getTotalInCents(): ?int | setTotalInCents(?int totalInCents): void |
-| `direction` | `?string` | Optional | - | getDirection(): ?string | setDirection(?string direction): void |
+| `direction` | [`?string(AllocationPreviewDirection)`](../../doc/models/allocation-preview-direction.md) | Optional | - | getDirection(): ?string | setDirection(?string direction): void |
 | `prorationScheme` | `?string` | Optional | - | getProrationScheme(): ?string | setProrationScheme(?string prorationScheme): void |
 | `lineItems` | [`?(AllocationPreviewLineItem[])`](../../doc/models/allocation-preview-line-item.md) | Optional | - | getLineItems(): ?array | setLineItems(?array lineItems): void |
 | `accrueCharge` | `?bool` | Optional | - | getAccrueCharge(): ?bool | setAccrueCharge(?bool accrueCharge): void |

@@ -80,17 +80,13 @@ class ComponentsController extends BaseController
      *
      * @throws ApiException Thrown if API call fails
      */
-    public function createComponent(
-        int $productFamilyId,
-        string $componentKind,
-        CreateMeteredComponent|CreateQuantityBasedComponent $body = null
-    ): ComponentResponse
+    public function createComponent(int $productFamilyId, string $componentKind, $body = null): ComponentResponse
     {
         $_reqBuilder = $this->requestBuilder(
             RequestMethod::POST,
             '/product_families/{product_family_id}/{component_kind}.json'
         )
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('product_family_id', $productFamilyId)->required(),
                 TemplateParam::init('component_kind', $componentKind)
@@ -98,10 +94,8 @@ class ComponentsController extends BaseController
                     ->serializeBy([ComponentKindPath::class, 'checkValue']),
                 HeaderParam::init('Content-Type', 'application/json'),
                 BodyParam::init($body)
-                    ->strictType(
-                        'anyOf(oneOf(CreateMeteredComponent,CreateQuantityBasedComponent,CreateOnOf' .
-                        'fComponent,CreatePrepaidComponent,CreateEBBComponent),null)'
-                    )
+                    ->strictType('anyOf(oneOf(CreateMeteredComponent,CreateQuantityBasedComponent,CreateOnOf' .
+                    'fComponent,CreatePrepaidComponent,CreateEBBComponent),null)')
             );
 
         $_resHandler = $this->responseHandler()
@@ -127,7 +121,7 @@ class ComponentsController extends BaseController
     public function readComponentByHandle(string $handle): ComponentResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/components/lookup.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(QueryParam::init('handle', $handle)->commaSeparated()->required());
 
         $_resHandler = $this->responseHandler()->type(ComponentResponse::class);
@@ -156,7 +150,7 @@ class ComponentsController extends BaseController
             RequestMethod::GET,
             '/product_families/{product_family_id}/components/{component_id}.json'
         )
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('product_family_id', $productFamilyId)->required(),
                 TemplateParam::init('component_id', $componentId)->required()
@@ -187,13 +181,12 @@ class ComponentsController extends BaseController
         int $productFamilyId,
         string $componentId,
         ?UpdateComponentRequest $body = null
-    ): ComponentResponse
-    {
+    ): ComponentResponse {
         $_reqBuilder = $this->requestBuilder(
             RequestMethod::PUT,
             '/product_families/{product_family_id}/components/{component_id}.json'
         )
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('product_family_id', $productFamilyId)->required(),
                 TemplateParam::init('component_id', $componentId)->required(),
@@ -230,7 +223,7 @@ class ComponentsController extends BaseController
             RequestMethod::DELETE,
             '/product_families/{product_family_id}/components/{component_id}.json'
         )
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('product_family_id', $productFamilyId)->required(),
                 TemplateParam::init('component_id', $componentId)->required()
@@ -258,7 +251,7 @@ class ComponentsController extends BaseController
     public function listComponents(array $options): array
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/components.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 QueryParam::init('date_field', $options)
                     ->commaSeparated()
@@ -298,7 +291,7 @@ class ComponentsController extends BaseController
     public function updateComponent(string $componentId, ?UpdateComponentRequest $body = null): ComponentResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::PUT, '/components/{component_id}.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('component_id', $componentId)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -337,7 +330,7 @@ class ComponentsController extends BaseController
             RequestMethod::PUT,
             '/components/{component_id}/price_points/{price_point_id}/default.json'
         )
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('component_id', $componentId)->required(),
                 TemplateParam::init('price_point_id', $pricePointId)->required()
@@ -363,7 +356,7 @@ class ComponentsController extends BaseController
             RequestMethod::GET,
             '/product_families/{product_family_id}/components.json'
         )
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('product_family_id', $options)->extract('productFamilyId')->required(),
                 QueryParam::init('include_archived', $options)->commaSeparated()->extract('includeArchived'),
@@ -401,10 +394,9 @@ class ComponentsController extends BaseController
     public function createComponentPricePoint(
         int $componentId,
         ?CreateComponentPricePointRequest $body = null
-    ): ComponentPricePointResponse
-    {
+    ): ComponentPricePointResponse {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/components/{component_id}/price_points.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('component_id', $componentId)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -438,7 +430,7 @@ class ComponentsController extends BaseController
     public function listComponentPricePoints(array $options): ComponentPricePointsResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/components/{component_id}/price_points.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('component_id', $options)->extract('componentId')->required(),
                 QueryParam::init('currency_prices', $options)->commaSeparated()->extract('currencyPrices'),
@@ -469,13 +461,12 @@ class ComponentsController extends BaseController
     public function createComponentPricePoints(
         string $componentId,
         ?CreateComponentPricePointsRequest $body = null
-    ): ComponentPricePointsResponse
-    {
+    ): ComponentPricePointsResponse {
         $_reqBuilder = $this->requestBuilder(
             RequestMethod::POST,
             '/components/{component_id}/price_points/bulk.json'
         )
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('component_id', $componentId)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -510,13 +501,12 @@ class ComponentsController extends BaseController
         int $componentId,
         int $pricePointId,
         ?UpdateComponentPricePointRequest $body = null
-    ): ComponentPricePointResponse
-    {
+    ): ComponentPricePointResponse {
         $_reqBuilder = $this->requestBuilder(
             RequestMethod::PUT,
             '/components/{component_id}/price_points/{price_point_id}.json'
         )
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('component_id', $componentId)->required(),
                 TemplateParam::init('price_point_id', $pricePointId)->required(),
@@ -546,7 +536,7 @@ class ComponentsController extends BaseController
             RequestMethod::DELETE,
             '/components/{component_id}/price_points/{price_point_id}.json'
         )
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('component_id', $componentId)->required(),
                 TemplateParam::init('price_point_id', $pricePointId)->required()
@@ -573,7 +563,7 @@ class ComponentsController extends BaseController
             RequestMethod::PUT,
             '/components/{component_id}/price_points/{price_point_id}/unarchive.json'
         )
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('component_id', $componentId)->required(),
                 TemplateParam::init('price_point_id', $pricePointId)->required()
@@ -607,7 +597,7 @@ class ComponentsController extends BaseController
             RequestMethod::POST,
             '/price_points/{price_point_id}/currency_prices.json'
         )
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('price_point_id', $pricePointId)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -638,7 +628,7 @@ class ComponentsController extends BaseController
             RequestMethod::PUT,
             '/price_points/{price_point_id}/currency_prices.json'
         )
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('price_point_id', $pricePointId)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -662,7 +652,7 @@ class ComponentsController extends BaseController
     public function listAllComponentPricePoints(array $options): ListComponentsPricePointsResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/components_price_points.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 QueryParam::init('filter[date_field]', $options)
                     ->commaSeparated()

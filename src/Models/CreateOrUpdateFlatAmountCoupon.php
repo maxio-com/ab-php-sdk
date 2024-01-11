@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
 class CreateOrUpdateFlatAmountCoupon implements \JsonSerializable
@@ -35,17 +36,17 @@ class CreateOrUpdateFlatAmountCoupon implements \JsonSerializable
     private $amountInCents;
 
     /**
-     * @var string|null
+     * @var bool|null
      */
     private $allowNegativeBalance;
 
     /**
-     * @var string|null
+     * @var bool|null
      */
     private $recurring;
 
     /**
-     * @var string|null
+     * @var \DateTime|null
      */
     private $endDate;
 
@@ -55,7 +56,7 @@ class CreateOrUpdateFlatAmountCoupon implements \JsonSerializable
     private $productFamilyId;
 
     /**
-     * @var string|null
+     * @var bool|null
      */
     private $stackable;
 
@@ -170,7 +171,7 @@ class CreateOrUpdateFlatAmountCoupon implements \JsonSerializable
     /**
      * Returns Allow Negative Balance.
      */
-    public function getAllowNegativeBalance(): ?string
+    public function getAllowNegativeBalance(): ?bool
     {
         return $this->allowNegativeBalance;
     }
@@ -180,7 +181,7 @@ class CreateOrUpdateFlatAmountCoupon implements \JsonSerializable
      *
      * @maps allow_negative_balance
      */
-    public function setAllowNegativeBalance(?string $allowNegativeBalance): void
+    public function setAllowNegativeBalance(?bool $allowNegativeBalance): void
     {
         $this->allowNegativeBalance = $allowNegativeBalance;
     }
@@ -188,7 +189,7 @@ class CreateOrUpdateFlatAmountCoupon implements \JsonSerializable
     /**
      * Returns Recurring.
      */
-    public function getRecurring(): ?string
+    public function getRecurring(): ?bool
     {
         return $this->recurring;
     }
@@ -198,7 +199,7 @@ class CreateOrUpdateFlatAmountCoupon implements \JsonSerializable
      *
      * @maps recurring
      */
-    public function setRecurring(?string $recurring): void
+    public function setRecurring(?bool $recurring): void
     {
         $this->recurring = $recurring;
     }
@@ -206,7 +207,7 @@ class CreateOrUpdateFlatAmountCoupon implements \JsonSerializable
     /**
      * Returns End Date.
      */
-    public function getEndDate(): ?string
+    public function getEndDate(): ?\DateTime
     {
         return $this->endDate;
     }
@@ -215,8 +216,9 @@ class CreateOrUpdateFlatAmountCoupon implements \JsonSerializable
      * Sets End Date.
      *
      * @maps end_date
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setEndDate(?string $endDate): void
+    public function setEndDate(?\DateTime $endDate): void
     {
         $this->endDate = $endDate;
     }
@@ -242,7 +244,7 @@ class CreateOrUpdateFlatAmountCoupon implements \JsonSerializable
     /**
      * Returns Stackable.
      */
-    public function getStackable(): ?string
+    public function getStackable(): ?bool
     {
         return $this->stackable;
     }
@@ -252,7 +254,7 @@ class CreateOrUpdateFlatAmountCoupon implements \JsonSerializable
      *
      * @maps stackable
      */
-    public function setStackable(?string $stackable): void
+    public function setStackable(?bool $stackable): void
     {
         $this->stackable = $stackable;
     }
@@ -337,7 +339,7 @@ class CreateOrUpdateFlatAmountCoupon implements \JsonSerializable
             $json['recurring']                        = $this->recurring;
         }
         if (isset($this->endDate)) {
-            $json['end_date']                         = $this->endDate;
+            $json['end_date']                         = DateTimeHelper::toRfc3339DateTime($this->endDate);
         }
         if (isset($this->productFamilyId)) {
             $json['product_family_id']                = $this->productFamilyId;

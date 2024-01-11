@@ -174,6 +174,15 @@ class InvoiceLineItemEventDataBuilder
     }
 
     /**
+     * Unsets tax code field.
+     */
+    public function unsetTaxCode(): self
+    {
+        $this->instance->unsetTaxCode();
+        return $this;
+    }
+
+    /**
      * Sets tax amount field.
      */
     public function taxAmount(?string $value): self
@@ -197,6 +206,15 @@ class InvoiceLineItemEventDataBuilder
     public function productPricePointId(?int $value): self
     {
         $this->instance->setProductPricePointId($value);
+        return $this;
+    }
+
+    /**
+     * Unsets product price point id field.
+     */
+    public function unsetProductPricePointId(): self
+    {
+        $this->instance->unsetProductPricePointId();
         return $this;
     }
 
@@ -260,6 +278,15 @@ class InvoiceLineItemEventDataBuilder
     public function customItem(?bool $value): self
     {
         $this->instance->setCustomItem($value);
+        return $this;
+    }
+
+    /**
+     * Unsets custom item field.
+     */
+    public function unsetCustomItem(): self
+    {
+        $this->instance->unsetCustomItem();
         return $this;
     }
 

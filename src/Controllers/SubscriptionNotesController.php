@@ -46,7 +46,7 @@ class SubscriptionNotesController extends BaseController
         ?UpdateSubscriptionNoteRequest $body = null
     ): SubscriptionNoteResponse {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/subscriptions/{subscription_id}/notes.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -71,7 +71,7 @@ class SubscriptionNotesController extends BaseController
     public function listSubscriptionNotes(array $options): array
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/subscriptions/{subscription_id}/notes.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('subscription_id', $options)->extract('subscriptionId')->required(),
                 QueryParam::init('page', $options)->commaSeparated()->extract('page', 1),
@@ -100,7 +100,7 @@ class SubscriptionNotesController extends BaseController
             RequestMethod::GET,
             '/subscriptions/{subscription_id}/notes/{note_id}.json'
         )
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 TemplateParam::init('note_id', $noteId)->required()
@@ -131,7 +131,7 @@ class SubscriptionNotesController extends BaseController
             RequestMethod::PUT,
             '/subscriptions/{subscription_id}/notes/{note_id}.json'
         )
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 TemplateParam::init('note_id', $noteId)->required(),
@@ -160,7 +160,7 @@ class SubscriptionNotesController extends BaseController
             RequestMethod::DELETE,
             '/subscriptions/{subscription_id}/notes/{note_id}.json'
         )
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 TemplateParam::init('note_id', $noteId)->required()

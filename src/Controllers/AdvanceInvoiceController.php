@@ -50,7 +50,7 @@ class AdvanceInvoiceController extends BaseController
             RequestMethod::POST,
             '/subscriptions/{subscription_id}/advance_invoice/issue.json'
         )
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -84,7 +84,7 @@ class AdvanceInvoiceController extends BaseController
         $_reqBuilder = $this->requestBuilder(
             RequestMethod::GET,
             '/subscriptions/{subscription_id}/advance_invoice.json'
-        )->auth('global')->parameters(TemplateParam::init('subscription_id', $subscriptionId)->required());
+        )->auth('BasicAuth')->parameters(TemplateParam::init('subscription_id', $subscriptionId)->required());
 
         $_resHandler = $this->responseHandler()
             ->throwErrorOn('403', ErrorType::init('Forbidden'))
@@ -114,7 +114,7 @@ class AdvanceInvoiceController extends BaseController
             RequestMethod::POST,
             '/subscriptions/{subscription_id}/advance_invoice/void.json'
         )
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),

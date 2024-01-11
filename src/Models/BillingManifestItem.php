@@ -86,6 +86,7 @@ class BillingManifestItem implements \JsonSerializable
 
     /**
      * Returns Transaction Type.
+     * A handle for the line item transaction type
      */
     public function getTransactionType(): ?string
     {
@@ -94,8 +95,10 @@ class BillingManifestItem implements \JsonSerializable
 
     /**
      * Sets Transaction Type.
+     * A handle for the line item transaction type
      *
      * @maps transaction_type
+     * @factory \AdvancedBillingLib\Models\LineItemTransactionType::checkValue
      */
     public function setTransactionType(?string $transactionType): void
     {
@@ -104,6 +107,7 @@ class BillingManifestItem implements \JsonSerializable
 
     /**
      * Returns Kind.
+     * A handle for the billing manifest line item kind
      */
     public function getKind(): ?string
     {
@@ -112,8 +116,10 @@ class BillingManifestItem implements \JsonSerializable
 
     /**
      * Sets Kind.
+     * A handle for the billing manifest line item kind
      *
      * @maps kind
+     * @factory \AdvancedBillingLib\Models\BillingManifestLineItemKind::checkValue
      */
     public function setKind(?string $kind): void
     {
@@ -349,10 +355,10 @@ class BillingManifestItem implements \JsonSerializable
     {
         $json = [];
         if (isset($this->transactionType)) {
-            $json['transaction_type']         = $this->transactionType;
+            $json['transaction_type']         = LineItemTransactionType::checkValue($this->transactionType);
         }
         if (isset($this->kind)) {
-            $json['kind']                     = $this->kind;
+            $json['kind']                     = BillingManifestLineItemKind::checkValue($this->kind);
         }
         if (isset($this->amountInCents)) {
             $json['amount_in_cents']          = $this->amountInCents;

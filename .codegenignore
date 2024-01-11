@@ -5,3 +5,7 @@ phpunit.xml
 phpcs.xml
 .env.testing.example
 composer.lock
+docker-compose.yaml
+php.Dockerfile
+./config/xdebug.ini.example
+cleanupSite.sh

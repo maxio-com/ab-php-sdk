@@ -65,7 +65,7 @@ class WebhooksController extends BaseController
     public function listWebhooks(array $options): array
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/webhooks.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 QueryParam::init('status', $options)
                     ->commaSeparated()
@@ -99,7 +99,7 @@ class WebhooksController extends BaseController
     public function enableWebhooks(?EnableWebhooksRequest $body = null): EnableWebhooksResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::PUT, '/webhooks/settings.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(HeaderParam::init('Content-Type', 'application/json'), BodyParam::init($body));
 
         $_resHandler = $this->responseHandler()->type(EnableWebhooksResponse::class);
@@ -122,7 +122,7 @@ class WebhooksController extends BaseController
     public function replayWebhooks(?ReplayWebhooksRequest $body = null): ReplayWebhooksResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/webhooks/replay.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(HeaderParam::init('Content-Type', 'application/json'), BodyParam::init($body));
 
         $_resHandler = $this->responseHandler()->type(ReplayWebhooksResponse::class);
@@ -147,7 +147,7 @@ class WebhooksController extends BaseController
     public function createEndpoint(?UpdateEndpointRequest $body = null): EndpointResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/endpoints.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(HeaderParam::init('Content-Type', 'application/json'), BodyParam::init($body));
 
         $_resHandler = $this->responseHandler()
@@ -169,7 +169,7 @@ class WebhooksController extends BaseController
      */
     public function listEndpoints(): array
     {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/endpoints.json')->auth('global');
+        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/endpoints.json')->auth('BasicAuth');
 
         $_resHandler = $this->responseHandler()->type(Endpoint::class, 1);
 
@@ -200,7 +200,7 @@ class WebhooksController extends BaseController
     public function updateEndpoint(int $endpointId, ?UpdateEndpointRequest $body = null): EndpointResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::PUT, '/endpoints/{endpoint_id}.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('endpoint_id', $endpointId)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),

@@ -40,15 +40,6 @@ class CreateMetafieldBuilder
     }
 
     /**
-     * Sets id field.
-     */
-    public function id(?int $value): self
-    {
-        $this->instance->setId($value);
-        return $this;
-    }
-
-    /**
      * Sets name field.
      */
     public function name(?string $value): self

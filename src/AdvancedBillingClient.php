@@ -10,6 +10,8 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib;
 
+use AdvancedBillingLib\Authentication\BasicAuthCredentialsBuilder;
+use AdvancedBillingLib\Authentication\BasicAuthManager;
 use AdvancedBillingLib\Controllers\AdvanceInvoiceController;
 use AdvancedBillingLib\Controllers\APIExportsController;
 use AdvancedBillingLib\Controllers\BillingPortalController;
@@ -138,7 +140,7 @@ class AdvancedBillingClient implements ConfigurationInterface
             ->userAgent('AB SDK PHP:0.0.4 on OS {os-info}')
             ->globalConfig($this->getGlobalConfiguration())
             ->serverUrls(self::ENVIRONMENT_MAP[$this->getEnvironment()], Server::DEFAULT_)
-            ->authManagers(['global' => $this->basicAuthManager])
+            ->authManagers(['BasicAuth' => $this->basicAuthManager])
             ->build();
     }
 
@@ -162,8 +164,9 @@ class AdvancedBillingClient implements ConfigurationInterface
             ->environment($this->getEnvironment())
             ->subdomain($this->getSubdomain())
             ->domain($this->getDomain())
-            ->basicAuthUserName($this->basicAuthManager->getBasicAuthUserName())
-            ->basicAuthPassword($this->basicAuthManager->getBasicAuthPassword())
+            ->basicAuthCredentials(BasicAuthCredentialsBuilder::init()
+                ->username($this->basicAuthManager->getBasicAuthUserName())
+                ->password($this->basicAuthManager->getBasicAuthPassword()))
             ->httpCallback($this->config['httpCallback'] ?? null);
     }
 
@@ -227,7 +230,7 @@ class AdvancedBillingClient implements ConfigurationInterface
         return $this->config['domain'] ?? ConfigurationDefaults::DOMAIN;
     }
 
-    public function getBasicAuthCredentials(): ?BasicAuthCredentials
+    public function getBasicAuthCredentials(): BasicAuthCredentials
     {
         return $this->basicAuthManager;
     }

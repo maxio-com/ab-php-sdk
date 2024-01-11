@@ -1,11 +1,15 @@
 <?php
+
 declare(strict_types=1);
+
 /*
  * AdvancedBilling
  *
  * This file was automatically generated for Maxio by APIMATIC v3.0 ( https://www.apimatic.io ).
  */
+
 namespace AdvancedBillingLib\Models\Builders;
+
 use AdvancedBillingLib\Models\Customer;
 use AdvancedBillingLib\Models\NestedSubscriptionGroup;
 use AdvancedBillingLib\Models\PaymentProfile;
@@ -14,6 +18,7 @@ use AdvancedBillingLib\Models\Product;
 use AdvancedBillingLib\Models\Subscription;
 use AdvancedBillingLib\Models\SubscriptionBankAccount;
 use Core\Utils\CoreHelper;
+
 /**
  * Builder for model Subscription
  *
@@ -25,10 +30,12 @@ class SubscriptionBuilder
      * @var Subscription
      */
     private $instance;
+
     private function __construct(Subscription $instance)
     {
         $this->instance = $instance;
     }
+
     /**
      * Initializes a new subscription Builder object.
      */
@@ -36,6 +43,7 @@ class SubscriptionBuilder
     {
         return new self(new Subscription());
     }
+
     /**
      * Sets id field.
      */
@@ -44,6 +52,7 @@ class SubscriptionBuilder
         $this->instance->setId($value);
         return $this;
     }
+
     /**
      * Sets state field.
      */
@@ -52,6 +61,7 @@ class SubscriptionBuilder
         $this->instance->setState($value);
         return $this;
     }
+
     /**
      * Sets balance in cents field.
      */
@@ -60,6 +70,7 @@ class SubscriptionBuilder
         $this->instance->setBalanceInCents($value);
         return $this;
     }
+
     /**
      * Sets total revenue in cents field.
      */
@@ -68,6 +79,7 @@ class SubscriptionBuilder
         $this->instance->setTotalRevenueInCents($value);
         return $this;
     }
+
     /**
      * Sets product price in cents field.
      */
@@ -76,6 +88,7 @@ class SubscriptionBuilder
         $this->instance->setProductPriceInCents($value);
         return $this;
     }
+
     /**
      * Sets product version number field.
      */
@@ -84,6 +97,7 @@ class SubscriptionBuilder
         $this->instance->setProductVersionNumber($value);
         return $this;
     }
+
     /**
      * Sets current period ends at field.
      */
@@ -92,6 +106,7 @@ class SubscriptionBuilder
         $this->instance->setCurrentPeriodEndsAt($value);
         return $this;
     }
+
     /**
      * Sets next assessment at field.
      */
@@ -100,6 +115,7 @@ class SubscriptionBuilder
         $this->instance->setNextAssessmentAt($value);
         return $this;
     }
+
     /**
      * Sets trial started at field.
      */
@@ -108,6 +124,7 @@ class SubscriptionBuilder
         $this->instance->setTrialStartedAt($value);
         return $this;
     }
+
     /**
      * Unsets trial started at field.
      */
@@ -116,6 +133,7 @@ class SubscriptionBuilder
         $this->instance->unsetTrialStartedAt();
         return $this;
     }
+
     /**
      * Sets trial ended at field.
      */
@@ -124,6 +142,7 @@ class SubscriptionBuilder
         $this->instance->setTrialEndedAt($value);
         return $this;
     }
+
     /**
      * Unsets trial ended at field.
      */
@@ -132,6 +151,7 @@ class SubscriptionBuilder
         $this->instance->unsetTrialEndedAt();
         return $this;
     }
+
     /**
      * Sets activated at field.
      */
@@ -140,6 +160,7 @@ class SubscriptionBuilder
         $this->instance->setActivatedAt($value);
         return $this;
     }
+
     /**
      * Sets expires at field.
      */
@@ -148,6 +169,7 @@ class SubscriptionBuilder
         $this->instance->setExpiresAt($value);
         return $this;
     }
+
     /**
      * Unsets expires at field.
      */
@@ -156,6 +178,7 @@ class SubscriptionBuilder
         $this->instance->unsetExpiresAt();
         return $this;
     }
+
     /**
      * Sets created at field.
      */
@@ -164,6 +187,7 @@ class SubscriptionBuilder
         $this->instance->setCreatedAt($value);
         return $this;
     }
+
     /**
      * Sets updated at field.
      */
@@ -172,6 +196,7 @@ class SubscriptionBuilder
         $this->instance->setUpdatedAt($value);
         return $this;
     }
+
     /**
      * Sets cancellation message field.
      */
@@ -180,6 +205,7 @@ class SubscriptionBuilder
         $this->instance->setCancellationMessage($value);
         return $this;
     }
+
     /**
      * Unsets cancellation message field.
      */
@@ -188,6 +214,7 @@ class SubscriptionBuilder
         $this->instance->unsetCancellationMessage();
         return $this;
     }
+
     /**
      * Sets cancellation method field.
      */
@@ -196,6 +223,7 @@ class SubscriptionBuilder
         $this->instance->setCancellationMethod($value);
         return $this;
     }
+
     /**
      * Unsets cancellation method field.
      */
@@ -204,6 +232,7 @@ class SubscriptionBuilder
         $this->instance->unsetCancellationMethod();
         return $this;
     }
+
     /**
      * Sets cancel at end of period field.
      */
@@ -212,6 +241,7 @@ class SubscriptionBuilder
         $this->instance->setCancelAtEndOfPeriod($value);
         return $this;
     }
+
     /**
      * Unsets cancel at end of period field.
      */
@@ -220,6 +250,7 @@ class SubscriptionBuilder
         $this->instance->unsetCancelAtEndOfPeriod();
         return $this;
     }
+
     /**
      * Sets canceled at field.
      */
@@ -228,6 +259,7 @@ class SubscriptionBuilder
         $this->instance->setCanceledAt($value);
         return $this;
     }
+
     /**
      * Unsets canceled at field.
      */
@@ -236,6 +268,7 @@ class SubscriptionBuilder
         $this->instance->unsetCanceledAt();
         return $this;
     }
+
     /**
      * Sets current period started at field.
      */
@@ -244,6 +277,7 @@ class SubscriptionBuilder
         $this->instance->setCurrentPeriodStartedAt($value);
         return $this;
     }
+
     /**
      * Sets previous state field.
      */
@@ -252,6 +286,7 @@ class SubscriptionBuilder
         $this->instance->setPreviousState($value);
         return $this;
     }
+
     /**
      * Sets signup payment id field.
      */
@@ -260,6 +295,7 @@ class SubscriptionBuilder
         $this->instance->setSignupPaymentId($value);
         return $this;
     }
+
     /**
      * Sets signup revenue field.
      */
@@ -268,6 +304,7 @@ class SubscriptionBuilder
         $this->instance->setSignupRevenue($value);
         return $this;
     }
+
     /**
      * Sets delayed cancel at field.
      */
@@ -276,6 +313,7 @@ class SubscriptionBuilder
         $this->instance->setDelayedCancelAt($value);
         return $this;
     }
+
     /**
      * Unsets delayed cancel at field.
      */
@@ -284,6 +322,7 @@ class SubscriptionBuilder
         $this->instance->unsetDelayedCancelAt();
         return $this;
     }
+
     /**
      * Sets coupon code field.
      */
@@ -292,6 +331,7 @@ class SubscriptionBuilder
         $this->instance->setCouponCode($value);
         return $this;
     }
+
     /**
      * Unsets coupon code field.
      */
@@ -300,6 +340,7 @@ class SubscriptionBuilder
         $this->instance->unsetCouponCode();
         return $this;
     }
+
     /**
      * Sets snap day field.
      */
@@ -308,6 +349,7 @@ class SubscriptionBuilder
         $this->instance->setSnapDay($value);
         return $this;
     }
+
     /**
      * Unsets snap day field.
      */
@@ -316,6 +358,7 @@ class SubscriptionBuilder
         $this->instance->unsetSnapDay();
         return $this;
     }
+
     /**
      * Sets payment collection method field.
      */
@@ -324,6 +367,7 @@ class SubscriptionBuilder
         $this->instance->setPaymentCollectionMethod($value);
         return $this;
     }
+
     /**
      * Sets customer field.
      */
@@ -332,6 +376,7 @@ class SubscriptionBuilder
         $this->instance->setCustomer($value);
         return $this;
     }
+
     /**
      * Sets product field.
      */
@@ -340,6 +385,7 @@ class SubscriptionBuilder
         $this->instance->setProduct($value);
         return $this;
     }
+
     /**
      * Sets credit card field.
      */
@@ -348,6 +394,7 @@ class SubscriptionBuilder
         $this->instance->setCreditCard($value);
         return $this;
     }
+
     /**
      * Sets group field.
      */
@@ -356,6 +403,7 @@ class SubscriptionBuilder
         $this->instance->setGroup($value);
         return $this;
     }
+
     /**
      * Unsets group field.
      */
@@ -364,6 +412,7 @@ class SubscriptionBuilder
         $this->instance->unsetGroup();
         return $this;
     }
+
     /**
      * Sets bank account field.
      */
@@ -372,6 +421,7 @@ class SubscriptionBuilder
         $this->instance->setBankAccount($value);
         return $this;
     }
+
     /**
      * Sets payment type field.
      */
@@ -380,6 +430,7 @@ class SubscriptionBuilder
         $this->instance->setPaymentType($value);
         return $this;
     }
+
     /**
      * Unsets payment type field.
      */
@@ -388,6 +439,7 @@ class SubscriptionBuilder
         $this->instance->unsetPaymentType();
         return $this;
     }
+
     /**
      * Sets referral code field.
      */
@@ -396,6 +448,7 @@ class SubscriptionBuilder
         $this->instance->setReferralCode($value);
         return $this;
     }
+
     /**
      * Unsets referral code field.
      */
@@ -404,6 +457,7 @@ class SubscriptionBuilder
         $this->instance->unsetReferralCode();
         return $this;
     }
+
     /**
      * Sets next product id field.
      */
@@ -412,6 +466,7 @@ class SubscriptionBuilder
         $this->instance->setNextProductId($value);
         return $this;
     }
+
     /**
      * Unsets next product id field.
      */
@@ -420,6 +475,7 @@ class SubscriptionBuilder
         $this->instance->unsetNextProductId();
         return $this;
     }
+
     /**
      * Sets next product handle field.
      */
@@ -428,6 +484,7 @@ class SubscriptionBuilder
         $this->instance->setNextProductHandle($value);
         return $this;
     }
+
     /**
      * Unsets next product handle field.
      */
@@ -436,6 +493,7 @@ class SubscriptionBuilder
         $this->instance->unsetNextProductHandle();
         return $this;
     }
+
     /**
      * Sets coupon use count field.
      */
@@ -444,6 +502,7 @@ class SubscriptionBuilder
         $this->instance->setCouponUseCount($value);
         return $this;
     }
+
     /**
      * Unsets coupon use count field.
      */
@@ -452,6 +511,7 @@ class SubscriptionBuilder
         $this->instance->unsetCouponUseCount();
         return $this;
     }
+
     /**
      * Sets coupon uses allowed field.
      */
@@ -460,6 +520,7 @@ class SubscriptionBuilder
         $this->instance->setCouponUsesAllowed($value);
         return $this;
     }
+
     /**
      * Unsets coupon uses allowed field.
      */
@@ -468,6 +529,7 @@ class SubscriptionBuilder
         $this->instance->unsetCouponUsesAllowed();
         return $this;
     }
+
     /**
      * Sets reason code field.
      */
@@ -476,6 +538,7 @@ class SubscriptionBuilder
         $this->instance->setReasonCode($value);
         return $this;
     }
+
     /**
      * Unsets reason code field.
      */
@@ -484,6 +547,7 @@ class SubscriptionBuilder
         $this->instance->unsetReasonCode();
         return $this;
     }
+
     /**
      * Sets automatically resume at field.
      */
@@ -492,6 +556,7 @@ class SubscriptionBuilder
         $this->instance->setAutomaticallyResumeAt($value);
         return $this;
     }
+
     /**
      * Unsets automatically resume at field.
      */
@@ -500,6 +565,7 @@ class SubscriptionBuilder
         $this->instance->unsetAutomaticallyResumeAt();
         return $this;
     }
+
     /**
      * Sets coupon codes field.
      */
@@ -508,6 +574,7 @@ class SubscriptionBuilder
         $this->instance->setCouponCodes($value);
         return $this;
     }
+
     /**
      * Sets offer id field.
      */
@@ -516,6 +583,7 @@ class SubscriptionBuilder
         $this->instance->setOfferId($value);
         return $this;
     }
+
     /**
      * Unsets offer id field.
      */
@@ -524,6 +592,7 @@ class SubscriptionBuilder
         $this->instance->unsetOfferId();
         return $this;
     }
+
     /**
      * Sets payer id field.
      */
@@ -532,6 +601,7 @@ class SubscriptionBuilder
         $this->instance->setPayerId($value);
         return $this;
     }
+
     /**
      * Unsets payer id field.
      */
@@ -540,6 +610,7 @@ class SubscriptionBuilder
         $this->instance->unsetPayerId();
         return $this;
     }
+
     /**
      * Sets current billing amount in cents field.
      */
@@ -548,6 +619,7 @@ class SubscriptionBuilder
         $this->instance->setCurrentBillingAmountInCents($value);
         return $this;
     }
+
     /**
      * Sets product price point id field.
      */
@@ -556,6 +628,7 @@ class SubscriptionBuilder
         $this->instance->setProductPricePointId($value);
         return $this;
     }
+
     /**
      * Sets product price point type field.
      */
@@ -564,6 +637,7 @@ class SubscriptionBuilder
         $this->instance->setProductPricePointType($value);
         return $this;
     }
+
     /**
      * Sets next product price point id field.
      */
@@ -572,6 +646,7 @@ class SubscriptionBuilder
         $this->instance->setNextProductPricePointId($value);
         return $this;
     }
+
     /**
      * Unsets next product price point id field.
      */
@@ -580,6 +655,7 @@ class SubscriptionBuilder
         $this->instance->unsetNextProductPricePointId();
         return $this;
     }
+
     /**
      * Sets net terms field.
      */
@@ -588,6 +664,7 @@ class SubscriptionBuilder
         $this->instance->setNetTerms($value);
         return $this;
     }
+
     /**
      * Unsets net terms field.
      */
@@ -596,6 +673,7 @@ class SubscriptionBuilder
         $this->instance->unsetNetTerms();
         return $this;
     }
+
     /**
      * Sets stored credential transaction id field.
      */
@@ -604,6 +682,7 @@ class SubscriptionBuilder
         $this->instance->setStoredCredentialTransactionId($value);
         return $this;
     }
+
     /**
      * Unsets stored credential transaction id field.
      */
@@ -612,6 +691,7 @@ class SubscriptionBuilder
         $this->instance->unsetStoredCredentialTransactionId();
         return $this;
     }
+
     /**
      * Sets reference field.
      */
@@ -620,6 +700,7 @@ class SubscriptionBuilder
         $this->instance->setReference($value);
         return $this;
     }
+
     /**
      * Unsets reference field.
      */
@@ -628,6 +709,7 @@ class SubscriptionBuilder
         $this->instance->unsetReference();
         return $this;
     }
+
     /**
      * Sets on hold at field.
      */
@@ -636,6 +718,7 @@ class SubscriptionBuilder
         $this->instance->setOnHoldAt($value);
         return $this;
     }
+
     /**
      * Unsets on hold at field.
      */
@@ -644,6 +727,7 @@ class SubscriptionBuilder
         $this->instance->unsetOnHoldAt();
         return $this;
     }
+
     /**
      * Sets prepaid dunning field.
      */
@@ -652,6 +736,7 @@ class SubscriptionBuilder
         $this->instance->setPrepaidDunning($value);
         return $this;
     }
+
     /**
      * Sets coupons field.
      */
@@ -660,6 +745,7 @@ class SubscriptionBuilder
         $this->instance->setCoupons($value);
         return $this;
     }
+
     /**
      * Sets dunning communication delay enabled field.
      */
@@ -668,6 +754,7 @@ class SubscriptionBuilder
         $this->instance->setDunningCommunicationDelayEnabled($value);
         return $this;
     }
+
     /**
      * Sets dunning communication delay time zone field.
      */
@@ -676,6 +763,7 @@ class SubscriptionBuilder
         $this->instance->setDunningCommunicationDelayTimeZone($value);
         return $this;
     }
+
     /**
      * Unsets dunning communication delay time zone field.
      */
@@ -684,6 +772,7 @@ class SubscriptionBuilder
         $this->instance->unsetDunningCommunicationDelayTimeZone();
         return $this;
     }
+
     /**
      * Sets receives invoice emails field.
      */
@@ -692,6 +781,7 @@ class SubscriptionBuilder
         $this->instance->setReceivesInvoiceEmails($value);
         return $this;
     }
+
     /**
      * Unsets receives invoice emails field.
      */
@@ -700,6 +790,7 @@ class SubscriptionBuilder
         $this->instance->unsetReceivesInvoiceEmails();
         return $this;
     }
+
     /**
      * Sets locale field.
      */
@@ -708,6 +799,7 @@ class SubscriptionBuilder
         $this->instance->setLocale($value);
         return $this;
     }
+
     /**
      * Unsets locale field.
      */
@@ -716,6 +808,7 @@ class SubscriptionBuilder
         $this->instance->unsetLocale();
         return $this;
     }
+
     /**
      * Sets currency field.
      */
@@ -724,6 +817,7 @@ class SubscriptionBuilder
         $this->instance->setCurrency($value);
         return $this;
     }
+
     /**
      * Sets scheduled cancellation at field.
      */
@@ -732,6 +826,7 @@ class SubscriptionBuilder
         $this->instance->setScheduledCancellationAt($value);
         return $this;
     }
+
     /**
      * Unsets scheduled cancellation at field.
      */
@@ -740,6 +835,7 @@ class SubscriptionBuilder
         $this->instance->unsetScheduledCancellationAt();
         return $this;
     }
+
     /**
      * Sets credit balance in cents field.
      */
@@ -748,6 +844,7 @@ class SubscriptionBuilder
         $this->instance->setCreditBalanceInCents($value);
         return $this;
     }
+
     /**
      * Sets prepayment balance in cents field.
      */
@@ -756,6 +853,7 @@ class SubscriptionBuilder
         $this->instance->setPrepaymentBalanceInCents($value);
         return $this;
     }
+
     /**
      * Sets prepaid configuration field.
      */
@@ -764,6 +862,7 @@ class SubscriptionBuilder
         $this->instance->setPrepaidConfiguration($value);
         return $this;
     }
+
     /**
      * Sets self service page token field.
      */
@@ -772,6 +871,7 @@ class SubscriptionBuilder
         $this->instance->setSelfServicePageToken($value);
         return $this;
     }
+
     /**
      * Initializes a new subscription object.
      */

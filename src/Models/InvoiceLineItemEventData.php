@@ -75,9 +75,9 @@ class InvoiceLineItemEventData implements \JsonSerializable
     private $pricingDetails;
 
     /**
-     * @var string|null
+     * @var array
      */
-    private $taxCode;
+    private $taxCode = [];
 
     /**
      * @var string|null
@@ -90,9 +90,9 @@ class InvoiceLineItemEventData implements \JsonSerializable
     private $productId;
 
     /**
-     * @var int|null
+     * @var array
      */
-    private $productPricePointId;
+    private $productPricePointId = [];
 
     /**
      * @var array
@@ -110,9 +110,9 @@ class InvoiceLineItemEventData implements \JsonSerializable
     private $billingScheduleItemId = [];
 
     /**
-     * @var bool|null
+     * @var array
      */
-    private $customItem;
+    private $customItem = [];
 
     /**
      * Returns Uid.
@@ -361,7 +361,10 @@ class InvoiceLineItemEventData implements \JsonSerializable
      */
     public function getTaxCode(): ?string
     {
-        return $this->taxCode;
+        if (count($this->taxCode) == 0) {
+            return null;
+        }
+        return $this->taxCode['value'];
     }
 
     /**
@@ -371,7 +374,15 @@ class InvoiceLineItemEventData implements \JsonSerializable
      */
     public function setTaxCode(?string $taxCode): void
     {
-        $this->taxCode = $taxCode;
+        $this->taxCode['value'] = $taxCode;
+    }
+
+    /**
+     * Unsets Tax Code.
+     */
+    public function unsetTaxCode(): void
+    {
+        $this->taxCode = [];
     }
 
     /**
@@ -415,7 +426,10 @@ class InvoiceLineItemEventData implements \JsonSerializable
      */
     public function getProductPricePointId(): ?int
     {
-        return $this->productPricePointId;
+        if (count($this->productPricePointId) == 0) {
+            return null;
+        }
+        return $this->productPricePointId['value'];
     }
 
     /**
@@ -425,7 +439,15 @@ class InvoiceLineItemEventData implements \JsonSerializable
      */
     public function setProductPricePointId(?int $productPricePointId): void
     {
-        $this->productPricePointId = $productPricePointId;
+        $this->productPricePointId['value'] = $productPricePointId;
+    }
+
+    /**
+     * Unsets Product Price Point Id.
+     */
+    public function unsetProductPricePointId(): void
+    {
+        $this->productPricePointId = [];
     }
 
     /**
@@ -520,7 +542,10 @@ class InvoiceLineItemEventData implements \JsonSerializable
      */
     public function getCustomItem(): ?bool
     {
-        return $this->customItem;
+        if (count($this->customItem) == 0) {
+            return null;
+        }
+        return $this->customItem['value'];
     }
 
     /**
@@ -530,7 +555,15 @@ class InvoiceLineItemEventData implements \JsonSerializable
      */
     public function setCustomItem(?bool $customItem): void
     {
-        $this->customItem = $customItem;
+        $this->customItem['value'] = $customItem;
+    }
+
+    /**
+     * Unsets Custom Item.
+     */
+    public function unsetCustomItem(): void
+    {
+        $this->customItem = [];
     }
 
     /**
@@ -581,8 +614,8 @@ class InvoiceLineItemEventData implements \JsonSerializable
         if (isset($this->pricingDetails)) {
             $json['pricing_details']          = $this->pricingDetails;
         }
-        if (isset($this->taxCode)) {
-            $json['tax_code']                 = $this->taxCode;
+        if (!empty($this->taxCode)) {
+            $json['tax_code']                 = $this->taxCode['value'];
         }
         if (isset($this->taxAmount)) {
             $json['tax_amount']               = $this->taxAmount;
@@ -590,8 +623,8 @@ class InvoiceLineItemEventData implements \JsonSerializable
         if (isset($this->productId)) {
             $json['product_id']               = $this->productId;
         }
-        if (isset($this->productPricePointId)) {
-            $json['product_price_point_id']   = $this->productPricePointId;
+        if (!empty($this->productPricePointId)) {
+            $json['product_price_point_id']   = $this->productPricePointId['value'];
         }
         if (!empty($this->pricePointId)) {
             $json['price_point_id']           = $this->pricePointId['value'];
@@ -602,8 +635,8 @@ class InvoiceLineItemEventData implements \JsonSerializable
         if (!empty($this->billingScheduleItemId)) {
             $json['billing_schedule_item_id'] = $this->billingScheduleItemId['value'];
         }
-        if (isset($this->customItem)) {
-            $json['custom_item']              = $this->customItem;
+        if (!empty($this->customItem)) {
+            $json['custom_item']              = $this->customItem['value'];
         }
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
