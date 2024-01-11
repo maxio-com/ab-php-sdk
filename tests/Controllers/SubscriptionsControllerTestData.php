@@ -11,12 +11,14 @@ use AdvancedBillingLib\Models\CreatedPaymentProfile;
 use AdvancedBillingLib\Models\CreateSubscriptionComponent;
 use AdvancedBillingLib\Models\CreateSubscriptionRequest;
 use AdvancedBillingLib\Models\Customer;
+use AdvancedBillingLib\Models\Metadata;
 use AdvancedBillingLib\Models\Product;
 use AdvancedBillingLib\Models\ProductFamily;
 use AdvancedBillingLib\Models\Subscription;
 use AdvancedBillingLib\Tests\DataLoader\TestComponentLoader;
 use AdvancedBillingLib\Tests\DataLoader\TestCouponLoader;
 use AdvancedBillingLib\Tests\DataLoader\TestCustomerLoader;
+use AdvancedBillingLib\Tests\DataLoader\TestMetadataLoader;
 use AdvancedBillingLib\Tests\DataLoader\TestPaymentProfileLoader;
 use AdvancedBillingLib\Tests\DataLoader\TestProductFamilyLoader;
 use AdvancedBillingLib\Tests\DataLoader\TestProductLoader;
@@ -39,7 +41,8 @@ final class SubscriptionsControllerTestData
         private TestPaymentProfileLoader $paymentProfileLoader,
         private TestProductLoader $productLoader,
         private TestComponentLoader $componentLoader,
-        private TestCouponLoader $couponLoader
+        private TestCouponLoader $couponLoader,
+        private TestMetadataLoader $metadataLoader
     )
     {
     }
@@ -142,7 +145,13 @@ final class SubscriptionsControllerTestData
         string $vatNumber
     ): Customer
     {
-        return $this->customerLoader->loadSimpleCustomerWithCustomData($firstName, $lastName, $email, $reference, $vatNumber);
+        return $this->customerLoader->loadSimpleCustomerWithCustomData(
+            $firstName,
+            $lastName,
+            $email,
+            $reference,
+            $vatNumber
+        );
     }
 
     public function loadPaymentProfile(int $customerId): CreatedPaymentProfile
@@ -278,5 +287,51 @@ final class SubscriptionsControllerTestData
             $paymentProfileId,
             $coupons
         );
+    }
+
+    /**
+     * @return array<int, Metadata>
+     */
+    public function loadMetadataForSubscription(int $subscriptionId): array
+    {
+        return $this->metadataLoader->loadMetadataForSubscription(
+            $subscriptionId,
+            $this->getMetadataName(),
+            $this->getMetadataValue()
+        );
+    }
+
+    private function getMetadataName(): string
+    {
+        return 'SubscriptionsControllerTest_Metadata1';
+    }
+
+    private function getMetadataValue(): string
+    {
+        return 'SubscriptionsControllerTest_Metadata1_Value';
+    }
+
+    /**
+     * @return array<string, array<string, string>>
+     */
+    public function getOptionsToFilterByMetadata(): array
+    {
+        return [
+            'metadata' => [
+                $this->getMetadataName() => $this->getMetadataValue()
+            ]
+        ];
+    }
+
+    /**
+     * @return array<string, array<string, string>>
+     */
+    public function getOptionsToFilterByNotExistingMetadata(): array
+    {
+        return [
+            'metadata' => [
+                $this->getMetadataName() => 'not existing metadata'
+            ]
+        ];
     }
 }

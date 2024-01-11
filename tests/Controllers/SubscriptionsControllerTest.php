@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace AdvancedBillingLib\Tests\Controllers;
 
 use AdvancedBillingLib\Exceptions\ApiException;
+use AdvancedBillingLib\Models\ResourceType;
 use AdvancedBillingLib\Tests\DataLoader\TestComponentLoader;
 use AdvancedBillingLib\Tests\DataLoader\TestCouponLoader;
 use AdvancedBillingLib\Tests\DataLoader\TestCustomerLoader;
+use AdvancedBillingLib\Tests\DataLoader\TestMetadataLoader;
 use AdvancedBillingLib\Tests\DataLoader\TestPaymentProfileLoader;
 use AdvancedBillingLib\Tests\DataLoader\TestProductFamilyLoader;
 use AdvancedBillingLib\Tests\DataLoader\TestProductLoader;
@@ -15,6 +17,7 @@ use AdvancedBillingLib\Tests\TestCase;
 use AdvancedBillingLib\Tests\TestFactory\TestComponentRequestFactory;
 use AdvancedBillingLib\Tests\TestFactory\TestCouponRequestFactory;
 use AdvancedBillingLib\Tests\TestFactory\TestCustomerRequestFactory;
+use AdvancedBillingLib\Tests\TestFactory\TestCustomFieldsRequestFactory;
 use AdvancedBillingLib\Tests\TestFactory\TestPaymentProfileFactory;
 use AdvancedBillingLib\Tests\TestFactory\TestPaymentProfileRequestFactory;
 use AdvancedBillingLib\Tests\TestFactory\TestProductFamilyRequestFactory;
@@ -354,6 +357,79 @@ final class SubscriptionsControllerTest extends TestCase
         $this->cleaner->removeCustomerById($customer->getId());
     }
 
+    /**
+     * @covers \AdvancedBillingLib\Controllers\SubscriptionsController::listSubscriptions
+     */
+    public function test_ListSubscriptions_ShouldReturnSubscriptionByMetadata_WhenSubscriptionHasMetadata(): void
+    {
+        $productFamily = $this->testData->loadProductFamily(name: 'SubscriptionControllerTest_ProductFamily_9');
+        $product = $this->testData->loadProduct(
+            name: 'SubscriptionsControllerTest Product 9',
+            handle: 'subscriptionscontrollertest-product-9',
+            productFamilyId: $productFamily->getId()
+        );
+        $customer = $this->testData->loadCustomerWithPredefinedData();
+        $paymentProfile = $this->testData->loadPaymentProfile($customer->getId());
+        $subscription = $this->client
+            ->getSubscriptionsController()
+            ->createSubscription(
+                $this->testData->getCreateSubscriptionRequest(
+                    $customer->getId(),
+                    $product->getId(),
+                    $paymentProfile->getId()
+                )
+            )
+            ->getSubscription();
+        $metadata = $this->testData->loadMetadataForSubscription($subscription->getId());
+
+        $results = $this->client
+            ->getSubscriptionsController()
+            ->listSubscriptions($this->testData->getOptionsToFilterByMetadata());
+
+        $this->assertions->assertSubscriptionFoundByMetadata($results, $subscription);
+
+        $this->cleaner->removeMetadata(ResourceType::SUBSCRIPTIONS, $subscription->getId(), $metadata[0]->getName());
+        $this->cleaner->removeSubscriptionPaymentProfileById($subscription->getId(), $paymentProfile->getId());
+        $this->cleaner->removeSubscriptionById($subscription->getId(), $customer->getId());
+        $this->cleaner->removeCustomerById($customer->getId());
+    }
+
+    /**
+     * @covers \AdvancedBillingLib\Controllers\SubscriptionsController::listSubscriptions
+     */
+    public function test_ListSubscriptions_ShouldEmptyList_WhenNotFoundSubscriptionWithMetadata(): void
+    {
+        $productFamily = $this->testData->loadProductFamily(name: 'SubscriptionControllerTest_ProductFamily_10');
+        $product = $this->testData->loadProduct(
+            name: 'SubscriptionsControllerTest Product 10',
+            handle: 'subscriptionscontrollertest-product-10',
+            productFamilyId: $productFamily->getId()
+        );
+        $customer = $this->testData->loadCustomerWithPredefinedData();
+        $paymentProfile = $this->testData->loadPaymentProfile($customer->getId());
+        $subscription = $this->client
+            ->getSubscriptionsController()
+            ->createSubscription(
+                $this->testData->getCreateSubscriptionRequest(
+                    $customer->getId(),
+                    $product->getId(),
+                    $paymentProfile->getId()
+                )
+            )
+            ->getSubscription();
+        $this->testData->loadMetadataForSubscription($subscription->getId());
+
+        $results = $this->client
+            ->getSubscriptionsController()
+            ->listSubscriptions($this->testData->getOptionsToFilterByNotExistingMetadata());
+
+        $this->assertions->assertSubscriptionNotFoundByMetadata($results);
+
+        $this->cleaner->removeSubscriptionPaymentProfileById($subscription->getId(), $paymentProfile->getId());
+        $this->cleaner->removeSubscriptionById($subscription->getId(), $customer->getId());
+        $this->cleaner->removeCustomerById($customer->getId());
+    }
+
     protected function setUp(): void
     {
         parent::setUp();
@@ -368,6 +444,7 @@ final class SubscriptionsControllerTest extends TestCase
             new TestProductLoader($this->client, new TestProductRequestFactory()),
             new TestComponentLoader($this->client, new TestComponentRequestFactory()),
             new TestCouponLoader($this->client, new TestCouponRequestFactory()),
+            new TestMetadataLoader($this->client, new TestCustomFieldsRequestFactory())
         );
         $this->assertions = new SubscriptionsControllerTestAssertions($this);
     }
