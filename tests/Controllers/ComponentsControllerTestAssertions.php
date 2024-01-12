@@ -12,8 +12,27 @@ final class ComponentsControllerTestAssertions
     {
     }
 
-    public function assertComponentCreated(Component $component, Component $expectedComponent): void
+    public function assertQuantityBasedComponentCreated(Component $component, Component $expectedComponent): void
     {
-        $this->testCase::assertEquals($expectedComponent, $component);
+        $expectedComponentJson = $expectedComponent->jsonSerialize();
+        $componentJson = $component->jsonSerialize();
+
+        // Removed because of modifying value on read.
+        unset($expectedComponentJson['updated_at']);
+        unset($componentJson['updated_at']);
+
+        $this->testCase::assertEquals($expectedComponentJson, $componentJson);
+    }
+
+    public function assertOnOffComponentCreated(Component $component, Component $expectedComponent): void
+    {
+        $expectedComponentJson = $expectedComponent->jsonSerialize();
+        $componentJson = $component->jsonSerialize();
+
+        // Removed because of modifying value on read.
+        unset($expectedComponentJson['updated_at']);
+        unset($componentJson['updated_at']);
+
+        $this->testCase::assertEquals($expectedComponentJson, $componentJson);
     }
 }

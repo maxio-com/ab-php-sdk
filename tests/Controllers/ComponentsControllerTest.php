@@ -18,7 +18,7 @@ final class ComponentsControllerTest extends TestCase
     /**
      * @covers \AdvancedBillingLib\Controllers\ComponentsController::createComponent
      */
-    public function test_CreateComponent_ShouldCreateComponent_WhenAllDataAreCorrect(): void
+    public function test_CreateComponent_ShouldCreateQuantityBasedComponent_WhenAllDataAreCorrect(): void
     {
         $productFamily = $this->testData->loadProductFamily(name: 'ComponentsControllerTest_ProductFamily_1');
 
@@ -26,14 +26,14 @@ final class ComponentsControllerTest extends TestCase
             ->getComponentsController()
             ->createComponent(
                 $productFamily->getId(),
-                $this->testData->getComponentKindPath(),
+                $this->testData->getQuantityBasedComponentKindPath(),
                 $this->testData->getCreateQuantityBasedComponentRequest()
             )
             ->getComponent();
 
-        $this->assertions->assertComponentCreated(
+        $this->assertions->assertQuantityBasedComponentCreated(
             $component,
-            $this->testData->getExpectedComponent(
+            $this->testData->getQuantityBasedExpectedComponent(
                 $component->getId(),
                 $component->getDefaultPricePointId(),
                 $component->getPrices()[0]->getId(),
@@ -41,7 +41,35 @@ final class ComponentsControllerTest extends TestCase
                 $component->getPricePointsUrl(),
                 $component->getDefaultPricePointName(),
                 $component->getCreatedAt(),
-                $component->getUpdatedAt()
+            )
+        );
+    }
+
+    /**
+     * @covers \AdvancedBillingLib\Controllers\ComponentsController::createComponent
+     */
+    public function test_CreateComponent_ShouldCreateOnOffComponent_WhenAllDataAreCorrect(): void
+    {
+        $productFamily = $this->testData->loadProductFamily(name: 'ComponentsControllerTest_ProductFamily_2');
+
+        $component = $this->client
+            ->getComponentsController()
+            ->createComponent(
+                $productFamily->getId(),
+                $this->testData->getOnOffComponentKindPath(),
+                $this->testData->getCreateOnOffComponentRequest()
+            )
+            ->getComponent();
+
+        $this->assertions->assertOnOffComponentCreated(
+            $component,
+            $this->testData->getExpectedOnOffComponent(
+                $component->getId(),
+                $component->getDefaultPricePointId(),
+                $productFamily,
+                $component->getPricePointsUrl(),
+                $component->getDefaultPricePointName(),
+                $component->getCreatedAt(),
             )
         );
     }
