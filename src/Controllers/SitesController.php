@@ -15,7 +15,6 @@ use AdvancedBillingLib\Models\CleanupScope;
 use AdvancedBillingLib\Models\ListPublicKeysResponse;
 use AdvancedBillingLib\Models\SiteResponse;
 use Core\Request\Parameters\QueryParam;
-use Core\Response\Types\ErrorType;
 use CoreInterfaces\Core\Request\RequestMethod;
 
 class SitesController extends BaseController
@@ -44,7 +43,7 @@ class SitesController extends BaseController
      */
     public function readSite(): SiteResponse
     {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/site.json')->auth('BasicAuth');
+        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/site.json')->auth('global');
 
         $_resHandler = $this->responseHandler()->type(SiteResponse::class);
 
@@ -74,14 +73,12 @@ class SitesController extends BaseController
     public function clearSite(?string $cleanupScope = CleanupScope::ALL): void
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/sites/clear_data.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(QueryParam::init('cleanup_scope', $cleanupScope)
                 ->commaSeparated()
                 ->serializeBy([CleanupScope::class, 'checkValue']));
 
-        $_resHandler = $this->responseHandler()->throwErrorOn('403', ErrorType::init('Forbidden'));
-
-        $this->execute($_reqBuilder, $_resHandler);
+        $this->execute($_reqBuilder);
     }
 
     /**
@@ -96,7 +93,7 @@ class SitesController extends BaseController
     public function listChargifyJsPublicKeys(array $options): ListPublicKeysResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/chargify_js_keys.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 QueryParam::init('page', $options)->commaSeparated()->extract('page', 1),
                 QueryParam::init('per_page', $options)->commaSeparated()->extract('perPage', 20)

@@ -52,13 +52,16 @@ class OffersController extends BaseController
     public function createOffer(?CreateOfferRequest $body = null): OfferResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/offers.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(HeaderParam::init('Content-Type', 'application/json'), BodyParam::init($body));
 
         $_resHandler = $this->responseHandler()
             ->throwErrorOn(
                 '422',
-                ErrorType::init('Unprocessable Entity (WebDAV)', ErrorMapResponseException::class)
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorMapResponseException::class
+                )
             )
             ->type(OfferResponse::class);
 
@@ -77,7 +80,7 @@ class OffersController extends BaseController
     public function listOffers(array $options): ListOffersResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/offers.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 QueryParam::init('page', $options)->commaSeparated()->extract('page', 1),
                 QueryParam::init('per_page', $options)->commaSeparated()->extract('perPage', 20),
@@ -102,12 +105,10 @@ class OffersController extends BaseController
     public function readOffers(int $offerId): OfferResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/offers/{offer_id}.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(TemplateParam::init('offer_id', $offerId)->required());
 
-        $_resHandler = $this->responseHandler()
-            ->throwErrorOn('401', ErrorType::init('Unauthorized'))
-            ->type(OfferResponse::class);
+        $_resHandler = $this->responseHandler()->type(OfferResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
     }
@@ -124,12 +125,10 @@ class OffersController extends BaseController
     public function archiveOffer(int $offerId): void
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::PUT, '/offers/{offer_id}/archive.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(TemplateParam::init('offer_id', $offerId)->required());
 
-        $_resHandler = $this->responseHandler()->throwErrorOn('401', ErrorType::init('Unauthorized'));
-
-        $this->execute($_reqBuilder, $_resHandler);
+        $this->execute($_reqBuilder);
     }
 
     /**
@@ -145,11 +144,9 @@ class OffersController extends BaseController
     public function unarchiveOffer(int $offerId): void
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::PUT, '/offers/{offer_id}/unarchive.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(TemplateParam::init('offer_id', $offerId)->required());
 
-        $_resHandler = $this->responseHandler()->throwErrorOn('401', ErrorType::init('Unauthorized'));
-
-        $this->execute($_reqBuilder, $_resHandler);
+        $this->execute($_reqBuilder);
     }
 }

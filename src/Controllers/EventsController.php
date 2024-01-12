@@ -100,7 +100,7 @@ class EventsController extends BaseController
     public function listEvents(array $options): array
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/events.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 QueryParam::init('page', $options)->commaSeparated()->extract('page', 1),
                 QueryParam::init('per_page', $options)->commaSeparated()->extract('perPage', 20),
@@ -143,7 +143,7 @@ class EventsController extends BaseController
     public function listSubscriptionEvents(array $options): array
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/subscriptions/{subscription_id}/events.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('subscription_id', $options)->extract('subscriptionId')->required(),
                 QueryParam::init('page', $options)->commaSeparated()->extract('page', 1),
@@ -177,7 +177,7 @@ class EventsController extends BaseController
     public function readEventsCount(array $options): CountResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/events/count.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 QueryParam::init('page', $options)->commaSeparated()->extract('page', 1),
                 QueryParam::init('per_page', $options)->commaSeparated()->extract('perPage', 20),

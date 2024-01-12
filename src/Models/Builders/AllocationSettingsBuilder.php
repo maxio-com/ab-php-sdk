@@ -77,7 +77,7 @@ class AllocationSettingsBuilder
     /**
      * Sets accrue charge field.
      */
-    public function accrueCharge(?bool $value): self
+    public function accrueCharge(?string $value): self
     {
         $this->instance->setAccrueCharge($value);
         return $this;

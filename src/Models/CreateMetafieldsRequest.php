@@ -43,7 +43,7 @@ class CreateMetafieldsRequest implements \JsonSerializable
      *
      * @required
      * @maps metafields
-     * @mapsBy anyOf(CreateMetafield,CreateMetafield[])
+     * @mapsBy oneOf(CreateMetafield,CreateMetafield[])
      *
      * @param CreateMetafield|CreateMetafield[] $metafields
      */
@@ -67,7 +67,7 @@ class CreateMetafieldsRequest implements \JsonSerializable
         $json['metafields'] =
             ApiHelper::getJsonHelper()->verifyTypes(
                 $this->metafields,
-                'anyOf(CreateMetafield,CreateMetafield[])'
+                'oneOf(CreateMetafield,CreateMetafield[])'
             );
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;

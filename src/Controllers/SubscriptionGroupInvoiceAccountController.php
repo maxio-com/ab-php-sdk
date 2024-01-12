@@ -47,7 +47,7 @@ class SubscriptionGroupInvoiceAccountController extends BaseController
         ?SubscriptionGroupPrepaymentRequest $body = null
     ): SubscriptionGroupPrepaymentResponse {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/subscription_groups/{uid}/prepayments.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('uid', $uid)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -57,7 +57,10 @@ class SubscriptionGroupInvoiceAccountController extends BaseController
         $_resHandler = $this->responseHandler()
             ->throwErrorOn(
                 '422',
-                ErrorType::init('Unprocessable Entity (WebDAV)', ErrorListResponseException::class)
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
             )
             ->type(SubscriptionGroupPrepaymentResponse::class);
 
@@ -76,7 +79,7 @@ class SubscriptionGroupInvoiceAccountController extends BaseController
     public function listPrepaymentsForSubscriptionGroup(array $options): ListSubscriptionGroupPrepaymentResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/subscription_groups/{uid}/prepayments.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('uid', $options)->extract('uid')->required(),
                 QueryParam::init('filter[date_field]', $options)
@@ -96,9 +99,7 @@ class SubscriptionGroupInvoiceAccountController extends BaseController
             );
 
         $_resHandler = $this->responseHandler()
-            ->throwErrorOn('401', ErrorType::init('Unauthorized'))
-            ->throwErrorOn('403', ErrorType::init('Forbidden'))
-            ->throwErrorOn('404', ErrorType::init('Not Found'))
+            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
             ->type(ListSubscriptionGroupPrepaymentResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
@@ -124,7 +125,7 @@ class SubscriptionGroupInvoiceAccountController extends BaseController
             RequestMethod::POST,
             '/subscription_groups/{uid}/service_credits.json'
         )
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('uid', $uid)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -134,7 +135,10 @@ class SubscriptionGroupInvoiceAccountController extends BaseController
         $_resHandler = $this->responseHandler()
             ->throwErrorOn(
                 '422',
-                ErrorType::init('Unprocessable Entity (WebDAV)', ErrorListResponseException::class)
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
             )
             ->type(ServiceCreditResponse::class);
 
@@ -160,7 +164,7 @@ class SubscriptionGroupInvoiceAccountController extends BaseController
             RequestMethod::POST,
             '/subscription_groups/{uid}/service_credit_deductions.json'
         )
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('uid', $uid)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -170,7 +174,10 @@ class SubscriptionGroupInvoiceAccountController extends BaseController
         $_resHandler = $this->responseHandler()
             ->throwErrorOn(
                 '422',
-                ErrorType::init('Unprocessable Entity (WebDAV)', ErrorListResponseException::class)
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
             )
             ->type(ServiceCredit::class);
 

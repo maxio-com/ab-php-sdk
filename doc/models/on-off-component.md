@@ -10,7 +10,6 @@
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
 | `name` | `string` | Required | A name for this component that is suitable for showing customers and displaying on billing statements, ie. "Minutes". | getName(): string | setName(string name): void |
-| `unitName` | `?string` | Optional | The name of the unit of measurement for the component. It should be singular since it will be automatically pluralized when necessary. i.e. “message”, which may then be shown as “5 messages” on a subscription’s component line-item | getUnitName(): ?string | setUnitName(?string unitName): void |
 | `description` | `?string` | Optional | A description for the component that will be displayed to the user on the hosted signup page. | getDescription(): ?string | setDescription(?string description): void |
 | `handle` | `?string` | Optional | A unique identifier for your use that can be used to retrieve this component is subsequent requests.  Must start with a letter or number and may only contain lowercase letters, numbers, or the characters '.', ':', '-', or '_'.<br>**Constraints**: *Pattern*: `^[a-z0-9][a-z0-9\-_:.]*$` | getHandle(): ?string | setHandle(?string handle): void |
 | `taxable` | `?bool` | Optional | Boolean flag describing whether a component is taxable or not. | getTaxable(): ?bool | setTaxable(?bool taxable): void |
@@ -33,7 +32,6 @@
 ```json
 {
   "name": "name2",
-  "unit_name": "unit_name4",
   "description": "description2",
   "handle": "handle8",
   "taxable": false,
@@ -53,7 +51,8 @@
       "ending_quantity": 40,
       "unit_price": 23.26
     }
-  ]
+  ],
+  "upgrade_charge": "prorated"
 }
 ```
 

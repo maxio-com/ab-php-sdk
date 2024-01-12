@@ -42,7 +42,7 @@ class SubscriptionGroupStatusController extends BaseController
     public function cancelSubscriptionsInGroup(string $uid, ?CancelGroupedSubscriptionsRequest $body = null): void
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/subscription_groups/{uid}/cancel.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('uid', $uid)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -52,7 +52,10 @@ class SubscriptionGroupStatusController extends BaseController
         $_resHandler = $this->responseHandler()
             ->throwErrorOn(
                 '422',
-                ErrorType::init('Unprocessable Entity (WebDAV)', ErrorListResponseException::class)
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
             );
 
         $this->execute($_reqBuilder, $_resHandler);
@@ -74,13 +77,16 @@ class SubscriptionGroupStatusController extends BaseController
     public function initiateDelayedCancellationForGroup(string $uid): void
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/subscription_groups/{uid}/delayed_cancel.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(TemplateParam::init('uid', $uid)->required());
 
         $_resHandler = $this->responseHandler()
             ->throwErrorOn(
                 '422',
-                ErrorType::init('Unprocessable Entity (WebDAV)', ErrorListResponseException::class)
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
             );
 
         $this->execute($_reqBuilder, $_resHandler);
@@ -102,12 +108,15 @@ class SubscriptionGroupStatusController extends BaseController
         $_reqBuilder = $this->requestBuilder(
             RequestMethod::DELETE,
             '/subscription_groups/{uid}/delayed_cancel.json'
-        )->auth('BasicAuth')->parameters(TemplateParam::init('uid', $uid)->required());
+        )->auth('global')->parameters(TemplateParam::init('uid', $uid)->required());
 
         $_resHandler = $this->responseHandler()
             ->throwErrorOn(
                 '422',
-                ErrorType::init('Unprocessable Entity (WebDAV)', ErrorListResponseException::class)
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
             );
 
         $this->execute($_reqBuilder, $_resHandler);
@@ -164,7 +173,7 @@ class SubscriptionGroupStatusController extends BaseController
         ?ReactivateSubscriptionGroupRequest $body = null
     ): ReactivateSubscriptionGroupResponse {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/subscription_groups/{uid}/reactivate.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('uid', $uid)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -174,7 +183,10 @@ class SubscriptionGroupStatusController extends BaseController
         $_resHandler = $this->responseHandler()
             ->throwErrorOn(
                 '422',
-                ErrorType::init('Unprocessable Entity (WebDAV)', ErrorListResponseException::class)
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
             )
             ->type(ReactivateSubscriptionGroupResponse::class);
 

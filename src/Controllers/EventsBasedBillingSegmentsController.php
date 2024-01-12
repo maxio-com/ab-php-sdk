@@ -54,7 +54,7 @@ class EventsBasedBillingSegmentsController extends BaseController
             RequestMethod::POST,
             '/components/{component_id}/price_points/{price_point_id}/segments.json'
         )
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('component_id', $componentId)->required(),
                 TemplateParam::init('price_point_id', $pricePointId)->required(),
@@ -63,12 +63,13 @@ class EventsBasedBillingSegmentsController extends BaseController
             );
 
         $_resHandler = $this->responseHandler()
-            ->throwErrorOn('401', ErrorType::init('Unauthorized'))
-            ->throwErrorOn('403', ErrorType::init('Forbidden'))
-            ->throwErrorOn('404', ErrorType::init('Not Found'))
+            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
             ->throwErrorOn(
                 '422',
-                ErrorType::init('Unprocessable Entity (WebDAV)', EventBasedBillingSegmentErrorsException::class)
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    EventBasedBillingSegmentErrorsException::class
+                )
             )
             ->type(SegmentResponse::class);
 
@@ -97,7 +98,7 @@ class EventsBasedBillingSegmentsController extends BaseController
             RequestMethod::GET,
             '/components/{component_id}/price_points/{price_point_id}/segments.json'
         )
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('component_id', $options)->extract('componentId')->required(),
                 TemplateParam::init('price_point_id', $options)->extract('pricePointId')->required(),
@@ -118,13 +119,11 @@ class EventsBasedBillingSegmentsController extends BaseController
             );
 
         $_resHandler = $this->responseHandler()
-            ->throwErrorOn('401', ErrorType::init('Unauthorized'))
-            ->throwErrorOn('403', ErrorType::init('Forbidden'))
-            ->throwErrorOn('404', ErrorType::init('Not Found'))
+            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
             ->throwErrorOn(
                 '422',
-                ErrorType::init(
-                    'Unprocessable Entity (WebDAV)',
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
                     EventBasedBillingListSegmentsErrorsException::class
                 )
             )
@@ -159,7 +158,7 @@ class EventsBasedBillingSegmentsController extends BaseController
             RequestMethod::PUT,
             '/components/{component_id}/price_points/{price_point_id}/segments/{id}.json'
         )
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('component_id', $componentId)->required(),
                 TemplateParam::init('price_point_id', $pricePointId)->required(),
@@ -169,12 +168,13 @@ class EventsBasedBillingSegmentsController extends BaseController
             );
 
         $_resHandler = $this->responseHandler()
-            ->throwErrorOn('401', ErrorType::init('Unauthorized'))
-            ->throwErrorOn('403', ErrorType::init('Forbidden'))
-            ->throwErrorOn('404', ErrorType::init('Not Found'))
+            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
             ->throwErrorOn(
                 '422',
-                ErrorType::init('Unprocessable Entity (WebDAV)', EventBasedBillingSegmentErrorsException::class)
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    EventBasedBillingSegmentErrorsException::class
+                )
             )
             ->type(SegmentResponse::class);
 
@@ -201,7 +201,7 @@ class EventsBasedBillingSegmentsController extends BaseController
             RequestMethod::DELETE,
             '/components/{component_id}/price_points/{price_point_id}/segments/{id}.json'
         )
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('component_id', $componentId)->required(),
                 TemplateParam::init('price_point_id', $pricePointId)->required(),
@@ -209,10 +209,13 @@ class EventsBasedBillingSegmentsController extends BaseController
             );
 
         $_resHandler = $this->responseHandler()
-            ->throwErrorOn('401', ErrorType::init('Unauthorized'))
-            ->throwErrorOn('403', ErrorType::init('Forbidden'))
-            ->throwErrorOn('404', ErrorType::init('Not Found'))
-            ->throwErrorOn('422', ErrorType::init('Unprocessable Entity (WebDAV)'));
+            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
+            ->throwErrorOn(
+                '422',
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.'
+                )
+            );
 
         $this->execute($_reqBuilder, $_resHandler);
     }
@@ -245,7 +248,7 @@ class EventsBasedBillingSegmentsController extends BaseController
             RequestMethod::POST,
             '/components/{component_id}/price_points/{price_point_id}/segments/bulk.json'
         )
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('component_id', $componentId)->required(),
                 TemplateParam::init('price_point_id', $pricePointId)->required(),
@@ -254,12 +257,13 @@ class EventsBasedBillingSegmentsController extends BaseController
             );
 
         $_resHandler = $this->responseHandler()
-            ->throwErrorOn('401', ErrorType::init('Unauthorized'))
-            ->throwErrorOn('403', ErrorType::init('Forbidden'))
-            ->throwErrorOn('404', ErrorType::init('Not Found'))
+            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
             ->throwErrorOn(
                 '422',
-                ErrorType::init('Unprocessable Entity (WebDAV)', EventBasedBillingSegmentException::class)
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    EventBasedBillingSegmentException::class
+                )
             )
             ->type(ListSegmentsResponse::class);
 
@@ -294,7 +298,7 @@ class EventsBasedBillingSegmentsController extends BaseController
             RequestMethod::PUT,
             '/components/{component_id}/price_points/{price_point_id}/segments/bulk.json'
         )
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('component_id', $componentId)->required(),
                 TemplateParam::init('price_point_id', $pricePointId)->required(),
@@ -303,12 +307,13 @@ class EventsBasedBillingSegmentsController extends BaseController
             );
 
         $_resHandler = $this->responseHandler()
-            ->throwErrorOn('401', ErrorType::init('Unauthorized'))
-            ->throwErrorOn('403', ErrorType::init('Forbidden'))
-            ->throwErrorOn('404', ErrorType::init('Not Found'))
+            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
             ->throwErrorOn(
                 '422',
-                ErrorType::init('Unprocessable Entity (WebDAV)', EventBasedBillingSegmentException::class)
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    EventBasedBillingSegmentException::class
+                )
             )
             ->type(ListSegmentsResponse::class);
 

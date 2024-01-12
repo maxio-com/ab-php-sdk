@@ -66,7 +66,7 @@ class InvoicesController extends BaseController
     public function refundInvoice(string $uid, ?RefundInvoiceRequest $body = null): Invoice
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/invoices/{uid}/refunds.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('uid', $uid)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -92,7 +92,7 @@ class InvoicesController extends BaseController
     public function listInvoices(array $options): ListInvoicesResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/invoices.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 QueryParam::init('start_date', $options)->commaSeparated()->extract('startDate'),
                 QueryParam::init('end_date', $options)->commaSeparated()->extract('endDate'),
@@ -150,7 +150,7 @@ class InvoicesController extends BaseController
     public function readInvoice(string $uid): Invoice
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/invoices/{uid}.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(TemplateParam::init('uid', $uid)->required());
 
         $_resHandler = $this->responseHandler()->type(Invoice::class);
@@ -195,7 +195,7 @@ class InvoicesController extends BaseController
     public function listInvoiceEvents(array $options): ListInvoiceEventsResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/invoices/events.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 QueryParam::init('since_date', $options)->commaSeparated()->extract('sinceDate'),
                 QueryParam::init('since_id', $options)->commaSeparated()->extract('sinceId'),
@@ -283,7 +283,7 @@ class InvoicesController extends BaseController
     public function recordPaymentForInvoice(string $uid, ?CreateInvoicePaymentRequest $body = null): Invoice
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/invoices/{uid}/payments.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('uid', $uid)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -335,11 +335,17 @@ class InvoicesController extends BaseController
         ?CreateMultiInvoicePaymentRequest $body = null
     ): MultiInvoicePaymentResponse {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/invoices/payments.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(HeaderParam::init('Content-Type', 'application/json'), BodyParam::init($body));
 
         $_resHandler = $this->responseHandler()
-            ->throwErrorOn('422', ErrorType::init('Unprocessable Entity', ErrorListResponseException::class))
+            ->throwErrorOn(
+                '422',
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
+            )
             ->type(MultiInvoicePaymentResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
@@ -361,7 +367,7 @@ class InvoicesController extends BaseController
     public function listCreditNotes(array $options): ListCreditNotesResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/credit_notes.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 QueryParam::init('subscription_id', $options)->commaSeparated()->extract('subscriptionId'),
                 QueryParam::init('page', $options)->commaSeparated()->extract('page', 1),
@@ -390,7 +396,7 @@ class InvoicesController extends BaseController
     public function readCreditNote(string $uid): CreditNote
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/credit_notes/{uid}.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(TemplateParam::init('uid', $uid)->required());
 
         $_resHandler = $this->responseHandler()->type(CreditNote::class);
@@ -421,7 +427,7 @@ class InvoicesController extends BaseController
         ?RecordPaymentRequest $body = null
     ): PaymentResponse {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/subscriptions/{subscription_id}/payments.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -431,7 +437,10 @@ class InvoicesController extends BaseController
         $_resHandler = $this->responseHandler()
             ->throwErrorOn(
                 '422',
-                ErrorType::init('Unprocessable Entity (WebDAV)', ErrorListResponseException::class)
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
             )
             ->type(PaymentResponse::class);
 
@@ -469,14 +478,17 @@ class InvoicesController extends BaseController
     public function reopenInvoice(string $uid): Invoice
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/invoices/{uid}/reopen.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(TemplateParam::init('uid', $uid)->required());
 
         $_resHandler = $this->responseHandler()
-            ->throwErrorOn('404', ErrorType::init('Not Found'))
+            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
             ->throwErrorOn(
                 '422',
-                ErrorType::init('Unprocessable Entity (WebDAV)', ErrorListResponseException::class)
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
             )
             ->type(Invoice::class);
 
@@ -498,7 +510,7 @@ class InvoicesController extends BaseController
     public function voidInvoice(string $uid, ?VoidInvoiceRequest $body = null): Invoice
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/invoices/{uid}/void.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('uid', $uid)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -506,10 +518,13 @@ class InvoicesController extends BaseController
             );
 
         $_resHandler = $this->responseHandler()
-            ->throwErrorOn('404', ErrorType::init('Not Found'))
+            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
             ->throwErrorOn(
                 '422',
-                ErrorType::init('Unprocessable Entity (WebDAV)', ErrorListResponseException::class)
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
             )
             ->type(Invoice::class);
 
@@ -529,7 +544,7 @@ class InvoicesController extends BaseController
     public function listInvoiceSegments(array $options): ConsolidatedInvoice
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/invoices/{invoice_uid}/segments.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('invoice_uid', $options)->extract('invoiceUid')->required(),
                 QueryParam::init('page', $options)->commaSeparated()->extract('page', 1),
@@ -736,7 +751,7 @@ class InvoicesController extends BaseController
     public function createInvoice(int $subscriptionId, ?CreateInvoiceRequest $body = null): InvoiceResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/subscriptions/{subscription_id}/invoices.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -744,10 +759,12 @@ class InvoicesController extends BaseController
             );
 
         $_resHandler = $this->responseHandler()
-            ->throwErrorOn('401', ErrorType::init('Unauthorized'))
             ->throwErrorOn(
                 '422',
-                ErrorType::init('Unprocessable Entity (WebDAV)', NestedErrorResponseException::class)
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    NestedErrorResponseException::class
+                )
             )
             ->type(InvoiceResponse::class);
 
@@ -780,7 +797,7 @@ class InvoicesController extends BaseController
     public function sendInvoice(string $uid, ?SendInvoiceRequest $body = null): void
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/invoices/{uid}/deliveries.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('uid', $uid)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -790,7 +807,10 @@ class InvoicesController extends BaseController
         $_resHandler = $this->responseHandler()
             ->throwErrorOn(
                 '422',
-                ErrorType::init('Unprocessable Entity (WebDAV)', ErrorListResponseException::class)
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
             );
 
         $this->execute($_reqBuilder, $_resHandler);
@@ -816,13 +836,22 @@ class InvoicesController extends BaseController
         $_reqBuilder = $this->requestBuilder(
             RequestMethod::POST,
             '/invoices/{uid}/customer_information/preview.json'
-        )->auth('BasicAuth')->parameters(TemplateParam::init('uid', $uid)->required());
+        )->auth('global')->parameters(TemplateParam::init('uid', $uid)->required());
 
         $_resHandler = $this->responseHandler()
-            ->throwErrorOn('404', ErrorType::init('Not Found', ErrorListResponseException::class))
+            ->throwErrorOn(
+                '404',
+                ErrorType::initWithErrorTemplate(
+                    'Not Found:\'{$response.body}\'',
+                    ErrorListResponseException::class
+                )
+            )
             ->throwErrorOn(
                 '422',
-                ErrorType::init('Unprocessable Entity (WebDAV)', ErrorListResponseException::class)
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
             )
             ->type(CustomerChangesPreviewResponse::class);
 
@@ -847,14 +876,23 @@ class InvoicesController extends BaseController
     public function updateCustomerInformation(string $uid): Invoice
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::PUT, '/invoices/{uid}/customer_information.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(TemplateParam::init('uid', $uid)->required());
 
         $_resHandler = $this->responseHandler()
-            ->throwErrorOn('404', ErrorType::init('Not Found', ErrorListResponseException::class))
+            ->throwErrorOn(
+                '404',
+                ErrorType::initWithErrorTemplate(
+                    'Not Found:\'{$response.body}\'',
+                    ErrorListResponseException::class
+                )
+            )
             ->throwErrorOn(
                 '422',
-                ErrorType::init('Unprocessable Entity (WebDAV)', ErrorListResponseException::class)
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
             )
             ->type(Invoice::class);
 
@@ -898,7 +936,7 @@ class InvoicesController extends BaseController
     public function issueInvoice(string $uid, ?IssueInvoiceRequest $body = null): Invoice
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/invoices/{uid}/issue.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('uid', $uid)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -906,11 +944,13 @@ class InvoicesController extends BaseController
             );
 
         $_resHandler = $this->responseHandler()
-            ->throwErrorOn('401', ErrorType::init('Unauthorized'))
-            ->throwErrorOn('404', ErrorType::init('Not Found'))
+            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
             ->throwErrorOn(
                 '422',
-                ErrorType::init('Unprocessable Entity (WebDAV)', ErrorListResponseException::class)
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
             )
             ->type(Invoice::class);
 

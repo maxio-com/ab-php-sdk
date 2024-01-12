@@ -86,7 +86,7 @@ class ComponentsController extends BaseController
             RequestMethod::POST,
             '/product_families/{product_family_id}/{component_kind}.json'
         )
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('product_family_id', $productFamilyId)->required(),
                 TemplateParam::init('component_kind', $componentKind)
@@ -101,7 +101,10 @@ class ComponentsController extends BaseController
         $_resHandler = $this->responseHandler()
             ->throwErrorOn(
                 '422',
-                ErrorType::init('Unprocessable Entity (WebDAV)', ErrorListResponseException::class)
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
             )
             ->type(ComponentResponse::class);
 
@@ -121,7 +124,7 @@ class ComponentsController extends BaseController
     public function readComponentByHandle(string $handle): ComponentResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/components/lookup.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(QueryParam::init('handle', $handle)->commaSeparated()->required());
 
         $_resHandler = $this->responseHandler()->type(ComponentResponse::class);
@@ -150,7 +153,7 @@ class ComponentsController extends BaseController
             RequestMethod::GET,
             '/product_families/{product_family_id}/components/{component_id}.json'
         )
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('product_family_id', $productFamilyId)->required(),
                 TemplateParam::init('component_id', $componentId)->required()
@@ -186,7 +189,7 @@ class ComponentsController extends BaseController
             RequestMethod::PUT,
             '/product_families/{product_family_id}/components/{component_id}.json'
         )
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('product_family_id', $productFamilyId)->required(),
                 TemplateParam::init('component_id', $componentId)->required(),
@@ -197,7 +200,10 @@ class ComponentsController extends BaseController
         $_resHandler = $this->responseHandler()
             ->throwErrorOn(
                 '422',
-                ErrorType::init('Unprocessable Entity (WebDAV)', ErrorListResponseException::class)
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
             )
             ->type(ComponentResponse::class);
 
@@ -223,7 +229,7 @@ class ComponentsController extends BaseController
             RequestMethod::DELETE,
             '/product_families/{product_family_id}/components/{component_id}.json'
         )
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('product_family_id', $productFamilyId)->required(),
                 TemplateParam::init('component_id', $componentId)->required()
@@ -232,7 +238,10 @@ class ComponentsController extends BaseController
         $_resHandler = $this->responseHandler()
             ->throwErrorOn(
                 '422',
-                ErrorType::init('Unprocessable Entity (WebDAV)', ErrorListResponseException::class)
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
             )
             ->type(Component::class);
 
@@ -251,7 +260,7 @@ class ComponentsController extends BaseController
     public function listComponents(array $options): array
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/components.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 QueryParam::init('date_field', $options)
                     ->commaSeparated()
@@ -291,7 +300,7 @@ class ComponentsController extends BaseController
     public function updateComponent(string $componentId, ?UpdateComponentRequest $body = null): ComponentResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::PUT, '/components/{component_id}.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('component_id', $componentId)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -301,7 +310,10 @@ class ComponentsController extends BaseController
         $_resHandler = $this->responseHandler()
             ->throwErrorOn(
                 '422',
-                ErrorType::init('Unprocessable Entity (WebDAV)', ErrorListResponseException::class)
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
             )
             ->type(ComponentResponse::class);
 
@@ -330,7 +342,7 @@ class ComponentsController extends BaseController
             RequestMethod::PUT,
             '/components/{component_id}/price_points/{price_point_id}/default.json'
         )
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('component_id', $componentId)->required(),
                 TemplateParam::init('price_point_id', $pricePointId)->required()
@@ -356,7 +368,7 @@ class ComponentsController extends BaseController
             RequestMethod::GET,
             '/product_families/{product_family_id}/components.json'
         )
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('product_family_id', $options)->extract('productFamilyId')->required(),
                 QueryParam::init('include_archived', $options)->commaSeparated()->extract('includeArchived'),
@@ -396,7 +408,7 @@ class ComponentsController extends BaseController
         ?CreateComponentPricePointRequest $body = null
     ): ComponentPricePointResponse {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/components/{component_id}/price_points.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('component_id', $componentId)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -430,7 +442,7 @@ class ComponentsController extends BaseController
     public function listComponentPricePoints(array $options): ComponentPricePointsResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/components/{component_id}/price_points.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('component_id', $options)->extract('componentId')->required(),
                 QueryParam::init('currency_prices', $options)->commaSeparated()->extract('currencyPrices'),
@@ -466,7 +478,7 @@ class ComponentsController extends BaseController
             RequestMethod::POST,
             '/components/{component_id}/price_points/bulk.json'
         )
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('component_id', $componentId)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -506,7 +518,7 @@ class ComponentsController extends BaseController
             RequestMethod::PUT,
             '/components/{component_id}/price_points/{price_point_id}.json'
         )
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('component_id', $componentId)->required(),
                 TemplateParam::init('price_point_id', $pricePointId)->required(),
@@ -536,7 +548,7 @@ class ComponentsController extends BaseController
             RequestMethod::DELETE,
             '/components/{component_id}/price_points/{price_point_id}.json'
         )
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('component_id', $componentId)->required(),
                 TemplateParam::init('price_point_id', $pricePointId)->required()
@@ -563,7 +575,7 @@ class ComponentsController extends BaseController
             RequestMethod::PUT,
             '/components/{component_id}/price_points/{price_point_id}/unarchive.json'
         )
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('component_id', $componentId)->required(),
                 TemplateParam::init('price_point_id', $pricePointId)->required()
@@ -597,7 +609,7 @@ class ComponentsController extends BaseController
             RequestMethod::POST,
             '/price_points/{price_point_id}/currency_prices.json'
         )
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('price_point_id', $pricePointId)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -628,7 +640,7 @@ class ComponentsController extends BaseController
             RequestMethod::PUT,
             '/price_points/{price_point_id}/currency_prices.json'
         )
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('price_point_id', $pricePointId)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -652,7 +664,7 @@ class ComponentsController extends BaseController
     public function listAllComponentPricePoints(array $options): ListComponentsPricePointsResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/components_price_points.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 QueryParam::init('filter[date_field]', $options)
                     ->commaSeparated()
@@ -698,7 +710,10 @@ class ComponentsController extends BaseController
         $_resHandler = $this->responseHandler()
             ->throwErrorOn(
                 '422',
-                ErrorType::init('Unprocessable Entity (WebDAV)', ErrorListResponseException::class)
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
             )
             ->type(ListComponentsPricePointsResponse::class);
 

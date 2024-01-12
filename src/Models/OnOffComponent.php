@@ -23,11 +23,6 @@ class OnOffComponent implements \JsonSerializable
     /**
      * @var string|null
      */
-    private $unitName;
-
-    /**
-     * @var string|null
-     */
     private $description;
 
     /**
@@ -134,30 +129,6 @@ class OnOffComponent implements \JsonSerializable
     public function setName(string $name): void
     {
         $this->name = $name;
-    }
-
-    /**
-     * Returns Unit Name.
-     * The name of the unit of measurement for the component. It should be singular since it will be
-     * automatically pluralized when necessary. i.e. “message”, which may then be shown as “5 messages” on
-     * a subscription’s component line-item
-     */
-    public function getUnitName(): ?string
-    {
-        return $this->unitName;
-    }
-
-    /**
-     * Sets Unit Name.
-     * The name of the unit of measurement for the component. It should be singular since it will be
-     * automatically pluralized when necessary. i.e. “message”, which may then be shown as “5 messages” on
-     * a subscription’s component line-item
-     *
-     * @maps unit_name
-     */
-    public function setUnitName(?string $unitName): void
-    {
-        $this->unitName = $unitName;
     }
 
     /**
@@ -563,9 +534,6 @@ class OnOffComponent implements \JsonSerializable
     {
         $json = [];
         $json['name']                            = $this->name;
-        if (isset($this->unitName)) {
-            $json['unit_name']                   = $this->unitName;
-        }
         if (isset($this->description)) {
             $json['description']                 = $this->description;
         }

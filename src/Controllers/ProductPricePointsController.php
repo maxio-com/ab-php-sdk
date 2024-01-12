@@ -55,7 +55,7 @@ class ProductPricePointsController extends BaseController
         ?CreateProductPricePointRequest $body = null
     ): ProductPricePointResponse {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/products/{product_id}/price_points.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('product_id', $productId)->required()->strictType('oneOf(int,string)'),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -65,7 +65,10 @@ class ProductPricePointsController extends BaseController
         $_resHandler = $this->responseHandler()
             ->throwErrorOn(
                 '422',
-                ErrorType::init('Unprocessable Entity (WebDAV)', ProductPricePointErrorResponseException::class)
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ProductPricePointErrorResponseException::class
+                )
             )
             ->type(ProductPricePointResponse::class);
 
@@ -84,7 +87,7 @@ class ProductPricePointsController extends BaseController
     public function listProductPricePoints(array $options): ListProductPricePointsResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/products/{product_id}/price_points.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('product_id', $options)
                     ->extract('productId')
@@ -128,7 +131,7 @@ class ProductPricePointsController extends BaseController
             RequestMethod::PUT,
             '/products/{product_id}/price_points/{price_point_id}.json'
         )
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('product_id', $productId)->required()->strictType('oneOf(int,string)'),
                 TemplateParam::init('price_point_id', $pricePointId)->required()->strictType('oneOf(int,string)'),
@@ -168,7 +171,7 @@ class ProductPricePointsController extends BaseController
             RequestMethod::GET,
             '/products/{product_id}/price_points/{price_point_id}.json'
         )
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('product_id', $productId)->required()->strictType('oneOf(int,string)'),
                 TemplateParam::init('price_point_id', $pricePointId)->required()->strictType('oneOf(int,string)'),
@@ -198,7 +201,7 @@ class ProductPricePointsController extends BaseController
             RequestMethod::DELETE,
             '/products/{product_id}/price_points/{price_point_id}.json'
         )
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('product_id', $productId)->required()->strictType('oneOf(int,string)'),
                 TemplateParam::init('price_point_id', $pricePointId)->required()->strictType('oneOf(int,string)')
@@ -207,7 +210,10 @@ class ProductPricePointsController extends BaseController
         $_resHandler = $this->responseHandler()
             ->throwErrorOn(
                 '422',
-                ErrorType::init('Unprocessable Entity (WebDAV)', ErrorListResponseException::class)
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
             )
             ->type(ProductPricePointResponse::class);
 
@@ -230,7 +236,7 @@ class ProductPricePointsController extends BaseController
             RequestMethod::PATCH,
             '/products/{product_id}/price_points/{price_point_id}/unarchive.json'
         )
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('product_id', $productId)->required(),
                 TemplateParam::init('price_point_id', $pricePointId)->required()
@@ -259,7 +265,7 @@ class ProductPricePointsController extends BaseController
             RequestMethod::PATCH,
             '/products/{product_id}/price_points/{price_point_id}/default.json'
         )
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('product_id', $productId)->required(),
                 TemplateParam::init('price_point_id', $pricePointId)->required()
@@ -285,7 +291,7 @@ class ProductPricePointsController extends BaseController
         ?BulkCreateProductPricePointsRequest $body = null
     ): BulkCreateProductPricePointsResponse {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/products/{product_id}/price_points/bulk.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('product_id', $productId)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -293,7 +299,12 @@ class ProductPricePointsController extends BaseController
             );
 
         $_resHandler = $this->responseHandler()
-            ->throwErrorOn('422', ErrorType::init('Unprocessable Entity (WebDAV)'))
+            ->throwErrorOn(
+                '422',
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.'
+                )
+            )
             ->type(BulkCreateProductPricePointsResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
@@ -324,7 +335,7 @@ class ProductPricePointsController extends BaseController
             RequestMethod::POST,
             '/product_price_points/{product_price_point_id}/currency_prices.json'
         )
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('product_price_point_id', $productPricePointId)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -334,7 +345,10 @@ class ProductPricePointsController extends BaseController
         $_resHandler = $this->responseHandler()
             ->throwErrorOn(
                 '422',
-                ErrorType::init('Unprocessable Entity (WebDAV)', ErrorMapResponseException::class)
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorMapResponseException::class
+                )
             )
             ->type(ProductPricePointCurrencyPrice::class);
 
@@ -366,7 +380,7 @@ class ProductPricePointsController extends BaseController
             RequestMethod::PUT,
             '/product_price_points/{product_price_point_id}/currency_prices.json'
         )
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('product_price_point_id', $productPricePointId)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -376,7 +390,10 @@ class ProductPricePointsController extends BaseController
         $_resHandler = $this->responseHandler()
             ->throwErrorOn(
                 '422',
-                ErrorType::init('Unprocessable Entity (WebDAV)', ErrorMapResponseException::class)
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorMapResponseException::class
+                )
             )
             ->type(ProductPricePointCurrencyPrice::class);
 
@@ -395,7 +412,7 @@ class ProductPricePointsController extends BaseController
     public function listAllProductPricePoints(array $options): ListProductPricePointsResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/products_price_points.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 QueryParam::init('direction', $options)
                     ->commaSeparated()
@@ -441,7 +458,10 @@ class ProductPricePointsController extends BaseController
         $_resHandler = $this->responseHandler()
             ->throwErrorOn(
                 '422',
-                ErrorType::init('Unprocessable Entity (WebDAV)', ErrorListResponseException::class)
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
             )
             ->type(ListProductPricePointsResponse::class);
 

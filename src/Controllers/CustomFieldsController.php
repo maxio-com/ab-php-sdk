@@ -84,7 +84,7 @@ class CustomFieldsController extends BaseController
     public function createMetafields(string $resourceType, ?CreateMetafieldsRequest $body = null): array
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/{resource_type}/metafields.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('resource_type', $resourceType)
                     ->required()
@@ -96,7 +96,10 @@ class CustomFieldsController extends BaseController
         $_resHandler = $this->responseHandler()
             ->throwErrorOn(
                 '422',
-                ErrorType::init('Unprocessable Entity (WebDAV)', SingleErrorResponseException::class)
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    SingleErrorResponseException::class
+                )
             )
             ->type(Metafield::class, 1);
 
@@ -116,7 +119,7 @@ class CustomFieldsController extends BaseController
     public function listMetafields(array $options): ListMetafieldsResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/{resource_type}/metafields.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('resource_type', $options)
                     ->extract('resourceType')
@@ -158,7 +161,7 @@ class CustomFieldsController extends BaseController
         ?UpdateMetafieldsRequest $body = null
     ): array {
         $_reqBuilder = $this->requestBuilder(RequestMethod::PUT, '/{resource_type}/metafields.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('resource_type', $resourceType)
                     ->required()
@@ -190,7 +193,7 @@ class CustomFieldsController extends BaseController
     public function deleteMetafield(string $resourceType, ?string $name = null): void
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::DELETE, '/{resource_type}/metafields.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('resource_type', $resourceType)
                     ->required()
@@ -198,7 +201,8 @@ class CustomFieldsController extends BaseController
                 QueryParam::init('name', $name)->commaSeparated()
             );
 
-        $_resHandler = $this->responseHandler()->throwErrorOn('404', ErrorType::init('Not Found'));
+        $_resHandler = $this->responseHandler()
+            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''));
 
         $this->execute($_reqBuilder, $_resHandler);
     }
@@ -252,7 +256,7 @@ class CustomFieldsController extends BaseController
         ?CreateMetadataRequest $body = null
     ): array {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/{resource_type}/{resource_id}/metadata.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('resource_type', $resourceType)
                     ->required()
@@ -289,7 +293,7 @@ class CustomFieldsController extends BaseController
     public function listMetadata(array $options): PaginatedMetadata
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/{resource_type}/{resource_id}/metadata.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('resource_type', $options)
                     ->extract('resourceType')
@@ -323,7 +327,7 @@ class CustomFieldsController extends BaseController
         ?UpdateMetadataRequest $body = null
     ): array {
         $_reqBuilder = $this->requestBuilder(RequestMethod::PUT, '/{resource_type}/{resource_id}/metadata.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('resource_type', $resourceType)
                     ->required()
@@ -382,7 +386,7 @@ class CustomFieldsController extends BaseController
         ?array $names = null
     ): void {
         $_reqBuilder = $this->requestBuilder(RequestMethod::DELETE, '/{resource_type}/{resource_id}/metadata.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('resource_type', $resourceType)
                     ->required()
@@ -392,7 +396,8 @@ class CustomFieldsController extends BaseController
                 QueryParam::init('names[]', $names)->plain()
             );
 
-        $_resHandler = $this->responseHandler()->throwErrorOn('404', ErrorType::init('Not Found'));
+        $_resHandler = $this->responseHandler()
+            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''));
 
         $this->execute($_reqBuilder, $_resHandler);
     }
@@ -422,7 +427,7 @@ class CustomFieldsController extends BaseController
     public function listMetadataForResourceType(array $options): PaginatedMetadata
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/{resource_type}/metadata.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('resource_type', $options)
                     ->extract('resourceType')

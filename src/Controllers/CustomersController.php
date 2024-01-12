@@ -75,13 +75,16 @@ class CustomersController extends BaseController
     public function createCustomer(?CreateCustomerRequest $body = null): CustomerResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/customers.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(HeaderParam::init('Content-Type', 'application/json'), BodyParam::init($body));
 
         $_resHandler = $this->responseHandler()
             ->throwErrorOn(
                 '422',
-                ErrorType::init('Unprocessable Entity (WebDAV)', CustomerErrorResponseException::class)
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    CustomerErrorResponseException::class
+                )
             )
             ->type(CustomerResponse::class);
 
@@ -116,7 +119,7 @@ class CustomersController extends BaseController
     public function listCustomers(array $options): array
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/customers.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 QueryParam::init('direction', $options)
                     ->commaSeparated()
@@ -152,7 +155,7 @@ class CustomersController extends BaseController
     public function readCustomer(int $id): CustomerResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/customers/{id}.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(TemplateParam::init('id', $id)->required());
 
         $_resHandler = $this->responseHandler()->type(CustomerResponse::class);
@@ -173,7 +176,7 @@ class CustomersController extends BaseController
     public function updateCustomer(int $id, ?UpdateCustomerRequest $body = null): CustomerResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::PUT, '/customers/{id}.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('id', $id)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -181,10 +184,13 @@ class CustomersController extends BaseController
             );
 
         $_resHandler = $this->responseHandler()
-            ->throwErrorOn('404', ErrorType::init('Not Found'))
+            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
             ->throwErrorOn(
                 '422',
-                ErrorType::init('Unprocessable Entity (WebDAV)', CustomerErrorResponseException::class)
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    CustomerErrorResponseException::class
+                )
             )
             ->type(CustomerResponse::class);
 
@@ -203,7 +209,7 @@ class CustomersController extends BaseController
     public function deleteCustomer(int $id): void
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::DELETE, '/customers/{id}.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(TemplateParam::init('id', $id)->required());
 
         $this->execute($_reqBuilder);
@@ -222,7 +228,7 @@ class CustomersController extends BaseController
     public function readCustomerByReference(string $reference): CustomerResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/customers/lookup.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(QueryParam::init('reference', $reference)->commaSeparated()->required());
 
         $_resHandler = $this->responseHandler()->type(CustomerResponse::class);
@@ -242,7 +248,7 @@ class CustomersController extends BaseController
     public function listCustomerSubscriptions(int $customerId): array
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/customers/{customer_id}/subscriptions.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(TemplateParam::init('customer_id', $customerId)->required());
 
         $_resHandler = $this->responseHandler()->type(SubscriptionResponse::class, 1);

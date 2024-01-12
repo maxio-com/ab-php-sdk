@@ -55,13 +55,16 @@ class ReasonCodesController extends BaseController
     public function createReasonCode(?CreateReasonCodeRequest $body = null): ReasonCodeResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/reason_codes.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(HeaderParam::init('Content-Type', 'application/json'), BodyParam::init($body));
 
         $_resHandler = $this->responseHandler()
             ->throwErrorOn(
                 '422',
-                ErrorType::init('Unprocessable Entity (WebDAV)', ErrorListResponseException::class)
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
             )
             ->type(ReasonCodeResponse::class);
 
@@ -81,7 +84,7 @@ class ReasonCodesController extends BaseController
     public function listReasonCodes(array $options): array
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/reason_codes.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 QueryParam::init('page', $options)->commaSeparated()->extract('page', 1),
                 QueryParam::init('per_page', $options)->commaSeparated()->extract('perPage', 20)
@@ -105,11 +108,11 @@ class ReasonCodesController extends BaseController
     public function readReasonCode(int $reasonCodeId): ReasonCodeResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/reason_codes/{reason_code_id}.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(TemplateParam::init('reason_code_id', $reasonCodeId)->required());
 
         $_resHandler = $this->responseHandler()
-            ->throwErrorOn('404', ErrorType::init('Not Found'))
+            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
             ->type(ReasonCodeResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
@@ -128,7 +131,7 @@ class ReasonCodesController extends BaseController
     public function updateReasonCode(int $reasonCodeId, ?UpdateReasonCodeRequest $body = null): ReasonCodeResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::PUT, '/reason_codes/{reason_code_id}.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('reason_code_id', $reasonCodeId)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -136,7 +139,7 @@ class ReasonCodesController extends BaseController
             );
 
         $_resHandler = $this->responseHandler()
-            ->throwErrorOn('404', ErrorType::init('Not Found'))
+            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
             ->type(ReasonCodeResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
@@ -155,11 +158,11 @@ class ReasonCodesController extends BaseController
     public function deleteReasonCode(int $reasonCodeId): ReasonCodesJsonResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::DELETE, '/reason_codes/{reason_code_id}.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(TemplateParam::init('reason_code_id', $reasonCodeId)->required());
 
         $_resHandler = $this->responseHandler()
-            ->throwErrorOn('404', ErrorType::init('Not Found'))
+            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
             ->type(ReasonCodesJsonResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
