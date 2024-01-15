@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace AdvancedBillingLib\Tests\Controllers;
 
 use AdvancedBillingLib\Models\Component;
+use AdvancedBillingLib\Models\Customer;
 use AdvancedBillingLib\Models\PreviewAllocationsRequest;
 use AdvancedBillingLib\Models\Product;
 use AdvancedBillingLib\Models\ProductFamily;
@@ -15,6 +16,7 @@ use AdvancedBillingLib\Tests\DataLoader\TestPaymentProfileLoader;
 use AdvancedBillingLib\Tests\DataLoader\TestProductFamilyLoader;
 use AdvancedBillingLib\Tests\DataLoader\TestProductLoader;
 use AdvancedBillingLib\Tests\DataLoader\TestSubscriptionsLoader;
+use AdvancedBillingLib\Tests\TestData\AllocationTestData;
 use AdvancedBillingLib\Tests\TestData\ComponentTestData;
 use AdvancedBillingLib\Tests\TestFactory\TestSubscriptionComponentRequestFactory;
 
@@ -55,20 +57,44 @@ final class SubscriptionComponentsControllerTestData
         );
     }
 
+    /**
+     * @param array<int, Component> $components
+     */
     public function loadSubscription(
+        int $customerId,
         int $productId,
-        Component $quantityBasedComponent,
-        Component $onOffComponent
+        array $components
     ): Subscription
     {
-        $customer = $this->customerLoader->loadSimpleCustomerWithPredefinedData();
-        $paymentProfile = $this->paymentProfileLoader->load($customer->getId());
+        $paymentProfile = $this->paymentProfileLoader->load($customerId);
 
         return $this->subscriptionsLoader->loadWithComponents(
-            $customer->getId(),
+            $customerId,
             $productId,
             $paymentProfile->getId(),
-            [$quantityBasedComponent, $onOffComponent]
+            $components
+        );
+    }
+
+    public function loadCustomer(): Customer
+    {
+        return $this->customerLoader->loadSimpleCustomerWithPredefinedData();
+    }
+
+    public function loadCustomCustomer(
+        string $firstName,
+        string $lastName,
+        string $email,
+        string $reference,
+        string $vatNumber
+    ): Customer
+    {
+        return $this->customerLoader->loadSimpleCustomerWithCustomData(
+            $firstName,
+            $lastName,
+            $email,
+            $reference,
+            $vatNumber
         );
     }
 
@@ -83,5 +109,16 @@ final class SubscriptionComponentsControllerTestData
     public function getPreviewAllocationsRequest(array $components): PreviewAllocationsRequest
     {
         return $this->subscriptionComponentRequestFactory->createPreviewAllocationRequest($components);
+    }
+
+    /**
+     * @param array<int, Component> $components
+     */
+    public function getPreviewAllocationsRequestWithInvalidComponentQuantity(array $components): PreviewAllocationsRequest
+    {
+        return $this->subscriptionComponentRequestFactory->createPreviewAllocationRequestWithCustomQuantity(
+            $components,
+            AllocationTestData::INVALID_ON_OFF_COMPONENT_QUANTITY
+        );
     }
 }

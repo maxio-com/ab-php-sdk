@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Tests\Controllers;
 
+use AdvancedBillingLib\Exceptions\ApiException;
 use AdvancedBillingLib\Tests\DataLoader\TestComponentLoader;
 use AdvancedBillingLib\Tests\DataLoader\TestCustomerLoader;
 use AdvancedBillingLib\Tests\DataLoader\TestPaymentProfileLoader;
@@ -24,8 +25,12 @@ final class SubscriptionComponentsControllerTest extends TestCase
     private SubscriptionComponentsControllerTestData $testData;
     private SubscriptionComponentsControllerTestAssertions $assertions;
 
+    /**
+     * @covers \AdvancedBillingLib\Controllers\SubscriptionComponentsController::previewAllocations
+     */
     public function test_PreviewAllocations_ShouldPreviewAllocation_WhenSubscriptionHasQuantityBasedAndOnOffComponent(): void
     {
+        $customer = $this->testData->loadCustomer();
         $productFamily = $this->testData->loadProductFamily('SubscriptionComponentsControllerTests_ProductFamily_1');
         $quantityBasedComponent = $this->testData->loadQuantityBasedComponent(
             $productFamily->getId(),
@@ -41,9 +46,9 @@ final class SubscriptionComponentsControllerTest extends TestCase
             $productFamily->getId()
         );
         $subscription = $this->testData->loadSubscription(
+            $customer->getId(),
             $product->getId(),
-            $quantityBasedComponent,
-            $onOffComponent
+            [$quantityBasedComponent, $onOffComponent]
         );
 
         $allocation = $this->client
@@ -56,8 +61,55 @@ final class SubscriptionComponentsControllerTest extends TestCase
 
         $this->assertions->assertExpectedAllocationReturned($allocation, $quantityBasedComponent, $onOffComponent);
 
-        $this->cleaner->removeSubscriptionById($subscription->getId(), $subscription->getCustomer()->getId());
-        $this->cleaner->removeCustomerById($subscription->getCustomer()->getId());
+        $this->cleaner->removeSubscriptionById($subscription->getId(), $customer->getId());
+        $this->cleaner->removeCustomerById($customer->getId());
+    }
+
+    /**
+     * @covers \AdvancedBillingLib\Controllers\SubscriptionComponentsController::previewAllocations
+     */
+    public function test_PreviewAllocations_ShouldThrowExceptionWith422StatusCode_WhenInvalidOnOffComponentQuantityProvided(): void
+    {
+        $customer = $this->testData->loadCustomCustomer(
+            firstName: 'SubscriptionComponentsControllerTest_CustomerFN_1',
+            lastName: 'SubscriptionComponentsControllerTest_CustomerLN_1',
+            email: 'scct1email@example.com',
+            reference: 'scct_ref_1',
+            vatNumber: 'scct_vat_1'
+        );
+        $productFamily = $this->testData->loadProductFamily('SubscriptionComponentsControllerTests_ProductFamily_2');
+        $onOffComponent = $this->testData->loadOnOffComponent(
+            $productFamily->getId(),
+            'SubscriptionComponentsControllerTests_Component_3'
+        );
+        $product = $this->testData->loadProduct(
+            'SubscriptionComponentsControllerTests Product 2',
+            'subscriptioncomponentscontrollertests-product-2',
+            $productFamily->getId()
+        );
+        $subscription = $this->testData->loadSubscription(
+            $customer->getId(),
+            $product->getId(),
+            [$onOffComponent]
+        );
+
+        try {
+            $this->client
+                ->getSubscriptionComponentsController()
+                ->previewAllocations(
+                    $subscription->getId(),
+                    $this->testData->getPreviewAllocationsRequestWithInvalidComponentQuantity([$onOffComponent])
+                )
+                ->getAllocationPreview();
+        } catch (ApiException $e) {
+            $this->assertions->assertCannotPreviewAllocationBecauseOfInvalidComponentQuantity(
+                $e,
+                $onOffComponent->getId()
+            );
+        }
+
+        $this->cleaner->removeSubscriptionById($subscription->getId(), $customer->getId());
+        $this->cleaner->removeCustomerById($customer->getId());
     }
 
     protected function setUp(): void

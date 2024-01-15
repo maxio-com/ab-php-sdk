@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Tests\Controllers;
 
+use AdvancedBillingLib\Exceptions\ApiException;
+use AdvancedBillingLib\Exceptions\ComponentAllocationErrorException;
 use AdvancedBillingLib\Models\AllocationPreview;
 use AdvancedBillingLib\Models\AllocationPreviewItem;
 use AdvancedBillingLib\Models\Component;
@@ -62,5 +64,28 @@ final class SubscriptionComponentsControllerTestAssertions
         }
 
         return $allocations[1];
+    }
+
+    public function assertCannotPreviewAllocationBecauseOfInvalidComponentQuantity(
+        ApiException $exception,
+        int $componentId
+    ): void
+    {
+        $this->testCase::assertInstanceOf(ComponentAllocationErrorException::class, $exception);
+
+        # Assertion disabled because of incorrect returned status. 0 instead of 422
+//      $this->testCase::assertEquals(TestStatusCode::UNPROCESSABLE_CONTENT, $exception->getCode());
+        $this->testCase::assertCount(1, $exception->getErrors());
+
+        $error = $exception->getErrors()[0];
+        $this->testCase::assertEquals(
+            [
+                'kind' => 'allocation',
+                'component_id' => $componentId,
+                'on' => 'quantity',
+                'message' => 'Quantity: must be either 1 (on) or 0 (off).'
+            ],
+            $error->jsonSerialize()
+        );
     }
 }

@@ -8,4 +8,5 @@ final class AllocationTestData
 {
     public const QUANTITY = 0;
     public const MEMO = 'test memo';
+    public const INVALID_ON_OFF_COMPONENT_QUANTITY = 1000;
 }

@@ -38,4 +38,35 @@ final class TestSubscriptionComponentRequestFactory
             $components
         );
     }
+
+    /**
+     * @param array<int, Component> $components
+     */
+    public function createPreviewAllocationRequestWithCustomQuantity(
+        array $components,
+        int $quantity
+    ): PreviewAllocationsRequest
+    {
+        return PreviewAllocationsRequestBuilder::init(
+            $this->createCreateAllocationsWithCustomQuantity($components, $quantity)
+        )
+            ->build();
+    }
+
+    /**
+     * @param array<int, Component> $components
+     * @return array<int, CreateAllocation>
+     */
+    private function createCreateAllocationsWithCustomQuantity(array $components, int $quantity): array
+    {
+        return array_map(
+            static fn(Component $component): CreateAllocation => CreateAllocationBuilder::init(
+                $quantity
+            )
+                ->componentId($component->getId())
+                ->memo(AllocationTestData::MEMO)
+                ->build(),
+            $components
+        );
+    }
 }
