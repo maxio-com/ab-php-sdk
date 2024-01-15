@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace AdvancedBillingLib\Tests\Controllers;
 
 use AdvancedBillingLib\Models\Component;
+use AdvancedBillingLib\Models\CreateOnOffComponent;
 use AdvancedBillingLib\Models\CreateQuantityBasedComponent;
 use AdvancedBillingLib\Models\ProductFamily;
 use AdvancedBillingLib\Tests\DataLoader\TestProductFamilyLoader;
@@ -27,12 +28,12 @@ final class ComponentsControllerTestData
         return $this->productFamilyLoader->load($name);
     }
 
-    public function getComponentKindPath(): string
+    public function getQuantityBasedComponentKindPath(): string
     {
         return ComponentTestData::QUANTITY_BASED_COMPONENT_KIND_PATH;
     }
 
-    public function getExpectedComponent(
+    public function getQuantityBasedExpectedComponent(
         int $id,
         int $defaultPricePointId,
         int $componentPriceId,
@@ -40,10 +41,9 @@ final class ComponentsControllerTestData
         string $pricePointUrl,
         string $pricePointName,
         string $createdAt,
-        string $updatedAt
     ): Component
     {
-        return $this->componentFactory->create(
+        return $this->componentFactory->createQuantityBasedComponent(
             $id,
             $defaultPricePointId,
             $componentPriceId,
@@ -51,12 +51,46 @@ final class ComponentsControllerTestData
             $pricePointUrl,
             $pricePointName,
             $createdAt,
-            $updatedAt
         );
     }
 
     public function getCreateQuantityBasedComponentRequest(): CreateQuantityBasedComponent
     {
-        return $this->componentRequestFactory->createCreateQuantityBasedComponent();
+        return $this->componentRequestFactory->createCreateQuantityBasedComponent(
+            ComponentTestData::NAME,
+            ComponentTestData::UNIT_NAME,
+            ComponentTestData::PRICING_SCHEME
+        );
+    }
+
+    public function getCreateOnOffComponentRequest(): CreateOnOffComponent
+    {
+        return $this->componentRequestFactory->createCreateOnOffComponent(
+            ComponentTestData::NAME,
+        );
+    }
+
+    public function getOnOffComponentKindPath(): string
+    {
+        return ComponentTestData::ON_OFF_COMPONENT_KIND_PATH;
+    }
+
+    public function getExpectedOnOffComponent(
+        int $id,
+        int $defaultPricePointId,
+        ProductFamily $productFamily,
+        string $pricePointsUrl,
+        string $defaultPricePointName,
+        string $createdAt
+    ): Component
+    {
+        return $this->componentFactory->createOnOffComponent(
+            $id,
+            $defaultPricePointId,
+            $productFamily,
+            $pricePointsUrl,
+            $defaultPricePointName,
+            $createdAt
+        );
     }
 }

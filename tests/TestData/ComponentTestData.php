@@ -12,9 +12,12 @@ final class ComponentTestData
 {
     public const QUANTITY_BASED_COMPONENT_KIND = ComponentKind::QUANTITY_BASED_COMPONENT;
     public const QUANTITY_BASED_COMPONENT_KIND_PATH = ComponentKindPath::QUANTITY_BASED_COMPONENTS;
+    public const ON_OFF_COMPONENT_KIND_PATH = ComponentKindPath::ON_OFF_COMPONENTS;
     public const NAME = 'test component';
     public const UNIT_NAME = 'test unit component';
+    public const ONN_OFF_COMPONENT_UNIT_NAME = 'on/off';
     public const PRICING_SCHEME = PricingScheme::STAIRSTEP;
+    public const NO_PRICING_SCHEME = null;
     public const COMPONENT_PRICE_STARTING_QUANTITY = 1;
     public const COMPONENT_UNIT_PRICE = '1.0';
     public const HANDLE = null;
@@ -37,4 +40,6 @@ final class ComponentTestData
     public const COMPONENT_PRICE_ENDING_QUANTITY = null;
     public const FORMATTED_UNIT_PRICE = '$1.00';
     public const COMPONENT_PRICE_SEGMENT_ID = null;
+    public const ON_OFF_COMPONENT_UNIT_PRICE = '1.0';
+    public const ON_OFF_COMPONENT_KIND = ComponentKind::ON_OFF_COMPONENT;
 }

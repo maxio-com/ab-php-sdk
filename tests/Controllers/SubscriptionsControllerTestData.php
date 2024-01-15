@@ -163,7 +163,9 @@ final class SubscriptionsControllerTestData
     {
         return $this->componentLoader->loadQuantityBasedComponent(
             $productFamilyId,
-            ComponentTestData::QUANTITY_BASED_COMPONENT_KIND_PATH
+            ComponentTestData::NAME,
+            ComponentTestData::UNIT_NAME,
+            ComponentTestData::PRICING_SCHEME
         );
     }
 

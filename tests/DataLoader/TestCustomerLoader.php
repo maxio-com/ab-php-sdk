@@ -51,7 +51,7 @@ final class TestCustomerLoader
     {
         $request = $this->customerRequestFactory->createCreateCustomerRequest($firstName, $lastName, $email);
         $request->getCustomer()->setReference($reference);
-        $request->getCustomer()->setVatNumber($reference);
+        $request->getCustomer()->setVatNumber($vatNumber);
 
         return $this->client
             ->getCustomersController()

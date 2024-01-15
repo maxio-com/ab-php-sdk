@@ -13,7 +13,7 @@ use AdvancedBillingLib\Tests\TestData\ComponentTestData;
 
 final class TestComponentFactory
 {
-    public function create(
+    public function createQuantityBasedComponent(
         int $id,
         int $defaultPricePointId,
         int $componentPriceId,
@@ -21,7 +21,6 @@ final class TestComponentFactory
         string $pricePointUrl,
         string $pricePointName,
         string $createdAt,
-        string $updatedAt
     ): Component
     {
         return ComponentBuilder::init()
@@ -54,7 +53,6 @@ final class TestComponentFactory
             ->useSiteExchangeRate(ComponentTestData::USE_SITE_EXCHANGE_RATE)
             ->accountingCode(ComponentTestData::ACCOUNTING_CODE)
             ->createdAt($createdAt)
-            ->updatedAt($updatedAt)
             ->build();
     }
 
@@ -75,5 +73,46 @@ final class TestComponentFactory
             ->build();
 
         return [$price];
+    }
+
+    public function createOnOffComponent(
+        int $id,
+        int $defaultPricePointId,
+        ProductFamily $productFamily,
+        string $pricePointUrl,
+        string $pricePointName,
+        string $createdAt
+    ): Component
+    {
+        return ComponentBuilder::init()
+            ->id($id)
+            ->name(ComponentTestData::NAME)
+            ->unitName(ComponentTestData::ONN_OFF_COMPONENT_UNIT_NAME)
+            ->unitPrice(ComponentTestData::ON_OFF_COMPONENT_UNIT_PRICE)
+            ->pricingScheme(ComponentTestData::NO_PRICING_SCHEME)
+            ->handle(ComponentTestData::HANDLE)
+            ->productFamilyId($productFamily->getId())
+            ->productFamilyName($productFamily->getName())
+            ->pricePerUnitInCents(ComponentTestData::PRICE_PER_UNIT_IN_CENTS)
+            ->kind(ComponentTestData::ON_OFF_COMPONENT_KIND)
+            ->archived(ComponentTestData::ARCHIVED)
+            ->taxable(ComponentTestData::TAXABLE)
+            ->description(ComponentTestData::DESCRIPTION)
+            ->defaultPricePointId($defaultPricePointId)
+            ->pricePointCount(ComponentTestData::PRICE_POINT_COUNT)
+            ->pricePointsUrl($pricePointUrl)
+            ->defaultPricePointName($pricePointName)
+            ->taxCode(ComponentTestData::TAX_CODE)
+            ->recurring(ComponentTestData::RECURRING)
+            ->upgradeCharge(ComponentTestData::UPGRADE_CHARGE)
+            ->downgradeCredit(ComponentTestData::DOWNGRADE_CREDIT)
+            ->archivedAt(ComponentTestData::ARCHIVED_AT)
+            ->hideDateRangeOnInvoice(ComponentTestData::HIDE_DATE_RANGE_ON_INVOICE)
+            ->allowFractionalQuantities(ComponentTestData::ALLOW_FRACTIONAL_QUANTITIES)
+            ->itemCategory(ComponentTestData::ITEM_CATEGORY)
+            ->useSiteExchangeRate(ComponentTestData::USE_SITE_EXCHANGE_RATE)
+            ->accountingCode(ComponentTestData::ACCOUNTING_CODE)
+            ->createdAt($createdAt)
+            ->build();
     }
 }
