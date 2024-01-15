@@ -7,5 +7,5 @@ phpcs.xml
 composer.lock
 docker-compose.yaml
 php.Dockerfile
-./config/xdebug.ini.example
+config/xdebug.ini.example
 cleanupSite.sh

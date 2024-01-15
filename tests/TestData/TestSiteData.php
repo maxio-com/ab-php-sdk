@@ -16,7 +16,7 @@ final class TestSiteData
     public const CUSTOMER_HIERARCHY_ENABLED = false;
     public const WHOPAYS_ENABLED = false;
     public const WHOPAYS_DEFAULT_PAYER = 'self-ungrouped';
-    public const ALLOCATION_SETTINGS_ACCRUE_CHANGE = true;
+    public const ALLOCATION_SETTINGS_ACCRUE_CHANGE = 'true';
     public const ALLOCATION_SETTINGS_UPGRADE_CHARGE = 'prorated';
     public const ALLOCATION_SETTINGS_DOWNGRADE_CREDIT = 'none';
     public const DEFAULT_PAYMENT_COLLECTION_METHOD = 'automatic';
