@@ -62,14 +62,14 @@ class SubscriptionComponentsController extends BaseController
             RequestMethod::GET,
             '/subscriptions/{subscription_id}/components/{component_id}.json'
         )
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 TemplateParam::init('component_id', $componentId)->required()
             );
 
         $_resHandler = $this->responseHandler()
-            ->throwErrorOn('404', ErrorType::init('Not Found'))
+            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
             ->type(SubscriptionComponentResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
@@ -95,7 +95,7 @@ class SubscriptionComponentsController extends BaseController
             RequestMethod::GET,
             '/subscriptions/{subscription_id}/components.json'
         )
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('subscription_id', $options)->extract('subscriptionId')->required(),
                 QueryParam::init('date_field', $options)
@@ -158,7 +158,7 @@ class SubscriptionComponentsController extends BaseController
             RequestMethod::POST,
             '/subscriptions/{subscription_id}/price_points.json'
         )
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -168,7 +168,10 @@ class SubscriptionComponentsController extends BaseController
         $_resHandler = $this->responseHandler()
             ->throwErrorOn(
                 '422',
-                ErrorType::init('Unprocessable Entity (WebDAV)', ComponentPricePointErrorException::class)
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ComponentPricePointErrorException::class
+                )
             )
             ->type(BulkComponentSPricePointAssignment::class);
 
@@ -192,7 +195,7 @@ class SubscriptionComponentsController extends BaseController
         $_reqBuilder = $this->requestBuilder(
             RequestMethod::POST,
             '/subscriptions/{subscription_id}/price_points/reset.json'
-        )->auth('BasicAuth')->parameters(TemplateParam::init('subscription_id', $subscriptionId)->required());
+        )->auth('global')->parameters(TemplateParam::init('subscription_id', $subscriptionId)->required());
 
         $_resHandler = $this->responseHandler()->type(SubscriptionResponse::class);
 
@@ -285,7 +288,7 @@ class SubscriptionComponentsController extends BaseController
             RequestMethod::POST,
             '/subscriptions/{subscription_id}/components/{component_id}/allocations.json'
         )
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 TemplateParam::init('component_id', $componentId)->required(),
@@ -296,7 +299,10 @@ class SubscriptionComponentsController extends BaseController
         $_resHandler = $this->responseHandler()
             ->throwErrorOn(
                 '422',
-                ErrorType::init('Unprocessable Entity (WebDAV)', ErrorListResponseException::class)
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
             )
             ->type(AllocationResponse::class);
 
@@ -346,7 +352,7 @@ class SubscriptionComponentsController extends BaseController
             RequestMethod::GET,
             '/subscriptions/{subscription_id}/components/{component_id}/allocations.json'
         )
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 TemplateParam::init('component_id', $componentId)->required(),
@@ -354,11 +360,13 @@ class SubscriptionComponentsController extends BaseController
             );
 
         $_resHandler = $this->responseHandler()
-            ->throwErrorOn('401', ErrorType::init('Unauthorized'))
-            ->throwErrorOn('404', ErrorType::init('Not Found'))
+            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
             ->throwErrorOn(
                 '422',
-                ErrorType::init('Unprocessable Entity (WebDAV)', ErrorListResponseException::class)
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
             )
             ->type(AllocationResponse::class, 1);
 
@@ -388,7 +396,7 @@ class SubscriptionComponentsController extends BaseController
             RequestMethod::POST,
             '/subscriptions/{subscription_id}/allocations.json'
         )
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -396,11 +404,13 @@ class SubscriptionComponentsController extends BaseController
             );
 
         $_resHandler = $this->responseHandler()
-            ->throwErrorOn('401', ErrorType::init('Unauthorized'))
-            ->throwErrorOn('404', ErrorType::init('Not Found'))
+            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
             ->throwErrorOn(
                 '422',
-                ErrorType::init('Unprocessable Entity (WebDAV)', ErrorListResponseException::class)
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
             )
             ->type(AllocationResponse::class, 1);
 
@@ -436,7 +446,7 @@ class SubscriptionComponentsController extends BaseController
             RequestMethod::POST,
             '/subscriptions/{subscription_id}/allocations/preview.json'
         )
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -446,7 +456,10 @@ class SubscriptionComponentsController extends BaseController
         $_resHandler = $this->responseHandler()
             ->throwErrorOn(
                 '422',
-                ErrorType::init('Unprocessable Entity (WebDAV)', ComponentAllocationErrorException::class)
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ComponentAllocationErrorException::class
+                )
             )
             ->type(AllocationPreviewResponse::class);
 
@@ -490,7 +503,7 @@ class SubscriptionComponentsController extends BaseController
             RequestMethod::PUT,
             '/subscriptions/{subscription_id}/components/{component_id}/allocations/{allocation_id}.json'
         )
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 TemplateParam::init('component_id', $componentId)->required(),
@@ -502,8 +515,8 @@ class SubscriptionComponentsController extends BaseController
         $_resHandler = $this->responseHandler()
             ->throwErrorOn(
                 '422',
-                ErrorType::init(
-                    'Unprocessable Entity (WebDAV)',
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
                     SubscriptionComponentAllocationErrorException::class
                 )
             );
@@ -548,7 +561,7 @@ class SubscriptionComponentsController extends BaseController
             RequestMethod::DELETE,
             '/subscriptions/{subscription_id}/components/{component_id}/allocations/{allocation_id}.json'
         )
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 TemplateParam::init('component_id', $componentId)->required(),
@@ -560,8 +573,8 @@ class SubscriptionComponentsController extends BaseController
         $_resHandler = $this->responseHandler()
             ->throwErrorOn(
                 '422',
-                ErrorType::init(
-                    'Unprocessable Entity (WebDAV)',
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
                     SubscriptionComponentAllocationErrorException::class
                 )
             );
@@ -660,7 +673,7 @@ class SubscriptionComponentsController extends BaseController
             RequestMethod::POST,
             '/subscriptions/{subscription_id}/components/{component_id}/usages.json'
         )
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 TemplateParam::init('component_id', $componentId)->required()->strictType('oneOf(int,string)'),
@@ -671,7 +684,10 @@ class SubscriptionComponentsController extends BaseController
         $_resHandler = $this->responseHandler()
             ->throwErrorOn(
                 '422',
-                ErrorType::init('Unprocessable Entity (WebDAV)', ErrorListResponseException::class)
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
             )
             ->type(UsageResponse::class);
 
@@ -712,7 +728,7 @@ class SubscriptionComponentsController extends BaseController
             RequestMethod::GET,
             '/subscriptions/{subscription_id}/components/{component_id}/usages.json'
         )
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('subscription_id', $options)->extract('subscriptionId')->required(),
                 TemplateParam::init('component_id', $options)
@@ -765,7 +781,7 @@ class SubscriptionComponentsController extends BaseController
             RequestMethod::POST,
             '/event_based_billing/subscriptions/{subscription_id}/components/{component_id}/activate.json'
         )
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 TemplateParam::init('component_id', $componentId)->required()
@@ -791,7 +807,7 @@ class SubscriptionComponentsController extends BaseController
             RequestMethod::POST,
             '/event_based_billing/subscriptions/{subscription_id}/components/{component_id}/deactivate.json'
         )
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 TemplateParam::init('component_id', $componentId)->required()
@@ -842,7 +858,7 @@ class SubscriptionComponentsController extends BaseController
         ?EBBEvent $body = null
     ): void {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/{subdomain}/events/{api_handle}.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('subdomain', $subdomain)->required(),
                 TemplateParam::init('api_handle', $apiHandle)->required(),
@@ -880,7 +896,7 @@ class SubscriptionComponentsController extends BaseController
         ?array $body = null
     ): void {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/{subdomain}/events/{api_handle}/bulk.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('subdomain', $subdomain)->required(),
                 TemplateParam::init('api_handle', $apiHandle)->required(),
@@ -904,7 +920,7 @@ class SubscriptionComponentsController extends BaseController
     public function listSubscriptionComponentsForSite(array $options): ListSubscriptionComponentsResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/subscriptions_components.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 QueryParam::init('page', $options)->commaSeparated()->extract('page', 1),
                 QueryParam::init('per_page', $options)->commaSeparated()->extract('perPage', 20),

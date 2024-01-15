@@ -2,6 +2,6 @@ composer.phar
 vendor/
 .phpunit.result.cache
 coverage/
-.env
-.env.testing
 .idea
+.env.testing
+.env

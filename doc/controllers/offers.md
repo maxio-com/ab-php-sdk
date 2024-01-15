@@ -241,12 +241,6 @@ $offerId = 130;
 $result = $offersController->readOffers($offerId);
 ```
 
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 401 | Unauthorized | `ApiException` |
-
 
 # Archive Offer
 
@@ -274,12 +268,6 @@ $offerId = 130;
 $offersController->archiveOffer($offerId);
 ```
 
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 401 | Unauthorized | `ApiException` |
-
 
 # Unarchive Offer
 
@@ -306,10 +294,4 @@ $offerId = 130;
 
 $offersController->unarchiveOffer($offerId);
 ```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 401 | Unauthorized | `ApiException` |
 

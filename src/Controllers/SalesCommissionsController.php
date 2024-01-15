@@ -51,7 +51,7 @@ class SalesCommissionsController extends BaseController
             RequestMethod::GET,
             '/sellers/{seller_id}/sales_commission_settings.json'
         )
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('seller_id', $options)->extract('sellerId')->required(),
                 HeaderParam::init('Authorization', $options)->extract('authorization', 'Bearer <<apiKey>>'),
@@ -92,7 +92,7 @@ class SalesCommissionsController extends BaseController
     public function listSalesReps(array $options): array
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/sellers/{seller_id}/sales_reps.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('seller_id', $options)->extract('sellerId')->required(),
                 HeaderParam::init('Authorization', $options)->extract('authorization', 'Bearer <<apiKey>>'),
@@ -156,7 +156,7 @@ class SalesCommissionsController extends BaseController
             RequestMethod::GET,
             '/sellers/{seller_id}/sales_reps/{sales_rep_id}.json'
         )
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('seller_id', $sellerId)->required(),
                 TemplateParam::init('sales_rep_id', $salesRepId)->required(),

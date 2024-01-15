@@ -50,13 +50,16 @@ class SubscriptionStatusController extends BaseController
     public function retrySubscription(int $subscriptionId): SubscriptionResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::PUT, '/subscriptions/{subscription_id}/retry.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(TemplateParam::init('subscription_id', $subscriptionId)->required());
 
         $_resHandler = $this->responseHandler()
             ->throwErrorOn(
                 '422',
-                ErrorType::init('Unprocessable Entity (WebDAV)', ErrorListResponseException::class)
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
             )
             ->type(SubscriptionResponse::class);
 
@@ -77,7 +80,7 @@ class SubscriptionStatusController extends BaseController
     public function cancelSubscription(int $subscriptionId, ?CancellationRequest $body = null): SubscriptionResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::DELETE, '/subscriptions/{subscription_id}.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -85,8 +88,13 @@ class SubscriptionStatusController extends BaseController
             );
 
         $_resHandler = $this->responseHandler()
-            ->throwErrorOn('404', ErrorType::init('Not Found'))
-            ->throwErrorOn('422', ErrorType::init('Unprocessable Entity (WebDAV)'))
+            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
+            ->throwErrorOn(
+                '422',
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.'
+                )
+            )
             ->type(SubscriptionResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
@@ -110,7 +118,7 @@ class SubscriptionStatusController extends BaseController
         ?string $calendarBillingResumptionCharge = ResumptionCharge::PRORATED
     ): SubscriptionResponse {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/subscriptions/{subscription_id}/resume.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 QueryParam::init('calendar_billing[\'resumption_charge\']', $calendarBillingResumptionCharge)
@@ -121,7 +129,10 @@ class SubscriptionStatusController extends BaseController
         $_resHandler = $this->responseHandler()
             ->throwErrorOn(
                 '422',
-                ErrorType::init('Unprocessable Entity (WebDAV)', ErrorListResponseException::class)
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
             )
             ->type(SubscriptionResponse::class);
 
@@ -145,7 +156,7 @@ class SubscriptionStatusController extends BaseController
     public function pauseSubscription(int $subscriptionId, ?PauseRequest $body = null): SubscriptionResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/subscriptions/{subscription_id}/hold.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -155,7 +166,10 @@ class SubscriptionStatusController extends BaseController
         $_resHandler = $this->responseHandler()
             ->throwErrorOn(
                 '422',
-                ErrorType::init('Unprocessable Entity (WebDAV)', ErrorListResponseException::class)
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
             )
             ->type(SubscriptionResponse::class);
 
@@ -186,7 +200,7 @@ class SubscriptionStatusController extends BaseController
         ?PauseRequest $body = null
     ): SubscriptionResponse {
         $_reqBuilder = $this->requestBuilder(RequestMethod::PUT, '/subscriptions/{subscription_id}/hold.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -196,7 +210,10 @@ class SubscriptionStatusController extends BaseController
         $_resHandler = $this->responseHandler()
             ->throwErrorOn(
                 '422',
-                ErrorType::init('Unprocessable Entity (WebDAV)', ErrorListResponseException::class)
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
             )
             ->type(SubscriptionResponse::class);
 
@@ -390,7 +407,7 @@ class SubscriptionStatusController extends BaseController
             RequestMethod::PUT,
             '/subscriptions/{subscription_id}/reactivate.json'
         )
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -400,7 +417,10 @@ class SubscriptionStatusController extends BaseController
         $_resHandler = $this->responseHandler()
             ->throwErrorOn(
                 '422',
-                ErrorType::init('Unprocessable Entity (WebDAV)', ErrorListResponseException::class)
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
             )
             ->type(SubscriptionResponse::class);
 
@@ -432,7 +452,7 @@ class SubscriptionStatusController extends BaseController
             RequestMethod::POST,
             '/subscriptions/{subscription_id}/delayed_cancel.json'
         )
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -440,7 +460,7 @@ class SubscriptionStatusController extends BaseController
             );
 
         $_resHandler = $this->responseHandler()
-            ->throwErrorOn('404', ErrorType::init('Not Found'))
+            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
             ->type(DelayedCancellationResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
@@ -465,10 +485,10 @@ class SubscriptionStatusController extends BaseController
         $_reqBuilder = $this->requestBuilder(
             RequestMethod::DELETE,
             '/subscriptions/{subscription_id}/delayed_cancel.json'
-        )->auth('BasicAuth')->parameters(TemplateParam::init('subscription_id', $subscriptionId)->required());
+        )->auth('global')->parameters(TemplateParam::init('subscription_id', $subscriptionId)->required());
 
         $_resHandler = $this->responseHandler()
-            ->throwErrorOn('404', ErrorType::init('Not Found'))
+            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
             ->type(DelayedCancellationResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
@@ -489,7 +509,7 @@ class SubscriptionStatusController extends BaseController
         $_reqBuilder = $this->requestBuilder(
             RequestMethod::POST,
             '/subscriptions/{subscription_id}/cancel_dunning.json'
-        )->auth('BasicAuth')->parameters(TemplateParam::init('subscription_id', $subscriptionId)->required());
+        )->auth('global')->parameters(TemplateParam::init('subscription_id', $subscriptionId)->required());
 
         $_resHandler = $this->responseHandler()->type(SubscriptionResponse::class);
 
@@ -544,7 +564,7 @@ class SubscriptionStatusController extends BaseController
             RequestMethod::POST,
             '/subscriptions/{subscription_id}/renewals/preview.json'
         )
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -554,7 +574,10 @@ class SubscriptionStatusController extends BaseController
         $_resHandler = $this->responseHandler()
             ->throwErrorOn(
                 '422',
-                ErrorType::init('Unprocessable Entity (WebDAV)', ErrorListResponseException::class)
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
             )
             ->type(RenewalPreviewResponse::class);
 

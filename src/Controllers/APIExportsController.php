@@ -42,7 +42,7 @@ class APIExportsController extends BaseController
             RequestMethod::GET,
             '/api_exports/proforma_invoices/{batch_id}/rows.json'
         )
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('batch_id', $options)->extract('batchId')->required(),
                 QueryParam::init('per_page', $options)->commaSeparated()->extract('perPage', 100),
@@ -50,7 +50,7 @@ class APIExportsController extends BaseController
             );
 
         $_resHandler = $this->responseHandler()
-            ->throwErrorOn('404', ErrorType::init('Not Found'))
+            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
             ->type(ProformaInvoice::class, 1);
 
         return $this->execute($_reqBuilder, $_resHandler);
@@ -71,7 +71,7 @@ class APIExportsController extends BaseController
     public function listExportedInvoices(array $options): array
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/api_exports/invoices/{batch_id}/rows.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('batch_id', $options)->extract('batchId')->required(),
                 QueryParam::init('per_page', $options)->commaSeparated()->extract('perPage', 100),
@@ -79,7 +79,7 @@ class APIExportsController extends BaseController
             );
 
         $_resHandler = $this->responseHandler()
-            ->throwErrorOn('404', ErrorType::init('Not Found'))
+            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
             ->type(Invoice::class, 1);
 
         return $this->execute($_reqBuilder, $_resHandler);
@@ -101,7 +101,7 @@ class APIExportsController extends BaseController
     public function listExportedSubscriptions(array $options): array
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/api_exports/subscriptions/{batch_id}/rows.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('batch_id', $options)->extract('batchId')->required(),
                 QueryParam::init('per_page', $options)->commaSeparated()->extract('perPage', 100),
@@ -109,7 +109,7 @@ class APIExportsController extends BaseController
             );
 
         $_resHandler = $this->responseHandler()
-            ->throwErrorOn('404', ErrorType::init('Not Found'))
+            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
             ->type(Subscription::class, 1);
 
         return $this->execute($_reqBuilder, $_resHandler);
@@ -127,11 +127,17 @@ class APIExportsController extends BaseController
     public function exportProformaInvoices(): BatchJobResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/api_exports/proforma_invoices.json')
-            ->auth('BasicAuth');
+            ->auth('global');
 
         $_resHandler = $this->responseHandler()
-            ->throwErrorOn('404', ErrorType::init('Not Found'))
-            ->throwErrorOn('409', ErrorType::init('Conflict', SingleErrorResponseException::class))
+            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
+            ->throwErrorOn(
+                '409',
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    SingleErrorResponseException::class
+                )
+            )
             ->type(BatchJobResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
@@ -146,11 +152,17 @@ class APIExportsController extends BaseController
      */
     public function exportInvoices(): BatchJobResponse
     {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/api_exports/invoices.json')->auth('BasicAuth');
+        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/api_exports/invoices.json')->auth('global');
 
         $_resHandler = $this->responseHandler()
-            ->throwErrorOn('404', ErrorType::init('Not Found'))
-            ->throwErrorOn('409', ErrorType::init('Conflict', SingleErrorResponseException::class))
+            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
+            ->throwErrorOn(
+                '409',
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    SingleErrorResponseException::class
+                )
+            )
             ->type(BatchJobResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
@@ -165,11 +177,16 @@ class APIExportsController extends BaseController
      */
     public function exportSubscriptions(): BatchJobResponse
     {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/api_exports/subscriptions.json')
-            ->auth('BasicAuth');
+        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/api_exports/subscriptions.json')->auth('global');
 
         $_resHandler = $this->responseHandler()
-            ->throwErrorOn('409', ErrorType::init('Conflict', SingleErrorResponseException::class))
+            ->throwErrorOn(
+                '409',
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    SingleErrorResponseException::class
+                )
+            )
             ->type(BatchJobResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
@@ -187,11 +204,11 @@ class APIExportsController extends BaseController
     public function readProformaInvoicesExport(string $batchId): BatchJobResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/api_exports/proforma_invoices/{batch_id}.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(TemplateParam::init('batch_id', $batchId)->required());
 
         $_resHandler = $this->responseHandler()
-            ->throwErrorOn('404', ErrorType::init('Not Found'))
+            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
             ->type(BatchJobResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
@@ -209,11 +226,11 @@ class APIExportsController extends BaseController
     public function readInvoicesExport(string $batchId): BatchJobResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/api_exports/invoices/{batch_id}.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(TemplateParam::init('batch_id', $batchId)->required());
 
         $_resHandler = $this->responseHandler()
-            ->throwErrorOn('404', ErrorType::init('Not Found'))
+            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
             ->type(BatchJobResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
@@ -231,11 +248,11 @@ class APIExportsController extends BaseController
     public function readSubscriptionsExport(string $batchId): BatchJobResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/api_exports/subscriptions/{batch_id}.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(TemplateParam::init('batch_id', $batchId)->required());
 
         $_resHandler = $this->responseHandler()
-            ->throwErrorOn('404', ErrorType::init('Not Found'))
+            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
             ->type(BatchJobResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);

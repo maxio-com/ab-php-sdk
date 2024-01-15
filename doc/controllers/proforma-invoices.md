@@ -92,7 +92,6 @@ $result = $proformaInvoicesController->listSubscriptionGroupProformaInvoices($ui
 
 | HTTP Status Code | Error Description | Exception Class |
 |  --- | --- | --- |
-| 403 | Forbidden | `ApiException` |
 | 404 | Not Found | `ApiException` |
 
 
@@ -130,7 +129,6 @@ $result = $proformaInvoicesController->readProformaInvoice($proformaInvoiceUid);
 
 | HTTP Status Code | Error Description | Exception Class |
 |  --- | --- | --- |
-| 403 | Forbidden | `ApiException` |
 | 404 | Not Found | `ApiException` |
 
 
@@ -170,7 +168,6 @@ $result = $proformaInvoicesController->createProformaInvoice($subscriptionId);
 
 | HTTP Status Code | Error Description | Exception Class |
 |  --- | --- | --- |
-| 403 | Forbidden | `ApiException` |
 | 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
 
 
@@ -263,7 +260,6 @@ $result = $proformaInvoicesController->voidProformaInvoice($proformaInvoiceUid);
 
 | HTTP Status Code | Error Description | Exception Class |
 |  --- | --- | --- |
-| 403 | Forbidden | `ApiException` |
 | 404 | Not Found | `ApiException` |
 | 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
 
@@ -304,7 +300,6 @@ $result = $proformaInvoicesController->previewProformaInvoice($subscriptionId);
 
 | HTTP Status Code | Error Description | Exception Class |
 |  --- | --- | --- |
-| 403 | Forbidden | `ApiException` |
 | 404 | Not Found | `ApiException` |
 | 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
 
@@ -357,7 +352,6 @@ $result = $proformaInvoicesController->createSignupProformaInvoice($body);
 | HTTP Status Code | Error Description | Exception Class |
 |  --- | --- | --- |
 | 400 | Bad Request | [`ProformaBadRequestErrorResponseException`](../../doc/models/proforma-bad-request-error-response-exception.md) |
-| 403 | Forbidden | `ApiException` |
 | 422 | Unprocessable Entity (WebDAV) | [`ErrorMapResponseException`](../../doc/models/error-map-response-exception.md) |
 
 
@@ -416,6 +410,5 @@ $result = $proformaInvoicesController->previewSignupProformaInvoice(
 | HTTP Status Code | Error Description | Exception Class |
 |  --- | --- | --- |
 | 400 | Bad Request | [`ProformaBadRequestErrorResponseException`](../../doc/models/proforma-bad-request-error-response-exception.md) |
-| 403 | Forbidden | `ApiException` |
 | 422 | Unprocessable Entity (WebDAV) | [`ErrorMapResponseException`](../../doc/models/error-map-response-exception.md) |
 

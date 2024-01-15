@@ -34,7 +34,7 @@ class UpdateMetafieldsRequest implements \JsonSerializable
      * Sets Metafields.
      *
      * @maps metafields
-     * @mapsBy anyOf(anyOf(UpdateMetafield,UpdateMetafield[]),null)
+     * @mapsBy anyOf(oneOf(UpdateMetafield,UpdateMetafield[]),null)
      *
      * @param UpdateMetafield|UpdateMetafield[]|null $metafields
      */
@@ -59,7 +59,7 @@ class UpdateMetafieldsRequest implements \JsonSerializable
             $json['metafields'] =
                 ApiHelper::getJsonHelper()->verifyTypes(
                     $this->metafields,
-                    'anyOf(anyOf(UpdateMetafield,UpdateMetafield[]),null)'
+                    'anyOf(oneOf(UpdateMetafield,UpdateMetafield[]),null)'
                 );
         }
 

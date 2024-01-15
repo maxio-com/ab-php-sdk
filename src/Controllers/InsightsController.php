@@ -45,7 +45,7 @@ class InsightsController extends BaseController
      */
     public function readSiteStats(): SiteSummary
     {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/stats.json')->auth('BasicAuth');
+        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/stats.json')->auth('global');
 
         $_resHandler = $this->responseHandler()->type(SiteSummary::class);
 
@@ -70,7 +70,7 @@ class InsightsController extends BaseController
         trigger_error('Method ' . __METHOD__ . ' is deprecated.', E_USER_DEPRECATED);
 
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/mrr.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 QueryParam::init('at_time', $atTime)
                     ->commaSeparated()
@@ -125,7 +125,7 @@ class InsightsController extends BaseController
         trigger_error('Method ' . __METHOD__ . ' is deprecated.', E_USER_DEPRECATED);
 
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/mrr_movements.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 QueryParam::init('subscription_id', $options)->commaSeparated()->extract('subscriptionId'),
                 QueryParam::init('page', $options)->commaSeparated()->extract('page', 1),
@@ -158,7 +158,7 @@ class InsightsController extends BaseController
         trigger_error('Method ' . __METHOD__ . ' is deprecated.', E_USER_DEPRECATED);
 
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/subscriptions_mrr.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 QueryParam::init('filter[subscription_ids]', $options)
                     ->commaSeparated()
@@ -173,7 +173,13 @@ class InsightsController extends BaseController
             );
 
         $_resHandler = $this->responseHandler()
-            ->throwErrorOn('400', ErrorType::init('Bad Request', SubscriptionsMrrErrorResponseException::class))
+            ->throwErrorOn(
+                '400',
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    SubscriptionsMrrErrorResponseException::class
+                )
+            )
             ->type(SubscriptionMRRResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);

@@ -42,7 +42,7 @@ class ProductFamiliesController extends BaseController
             RequestMethod::GET,
             '/product_families/{product_family_id}/products.json'
         )
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('product_family_id', $options)->extract('productFamilyId')->required(),
                 QueryParam::init('page', $options)->commaSeparated()->extract('page', 1),
@@ -92,13 +92,16 @@ class ProductFamiliesController extends BaseController
     public function createProductFamily(?CreateProductFamilyRequest $body = null): ProductFamilyResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/product_families.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(HeaderParam::init('Content-Type', 'application/json'), BodyParam::init($body));
 
         $_resHandler = $this->responseHandler()
             ->throwErrorOn(
                 '422',
-                ErrorType::init('Unprocessable Entity (WebDAV)', ErrorListResponseException::class)
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
             )
             ->type(ProductFamilyResponse::class);
 
@@ -117,7 +120,7 @@ class ProductFamiliesController extends BaseController
     public function listProductFamilies(array $options): array
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/product_families.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 QueryParam::init('date_field', $options)
                     ->commaSeparated()
@@ -149,7 +152,7 @@ class ProductFamiliesController extends BaseController
     public function readProductFamily(int $id): ProductFamilyResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/product_families/{id}.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(TemplateParam::init('id', $id)->required());
 
         $_resHandler = $this->responseHandler()->type(ProductFamilyResponse::class);

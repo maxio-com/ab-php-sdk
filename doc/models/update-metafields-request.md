@@ -9,7 +9,7 @@
 
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
-| `metafields` | [UpdateMetafield](../../doc/models/update-metafield.md)\|[UpdateMetafield](../../doc/models/update-metafield.md)[]\|null | Optional | This is a container for any-of cases. | getMetafields(): | setMetafields( metafields): void |
+| `metafields` | [UpdateMetafield](../../doc/models/update-metafield.md)\|[UpdateMetafield](../../doc/models/update-metafield.md)[]\|null | Optional | This is a container for one-of cases. | getMetafields(): | setMetafields( metafields): void |
 
 ## Example (as JSON)
 

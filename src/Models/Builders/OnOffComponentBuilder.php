@@ -39,15 +39,6 @@ class OnOffComponentBuilder
     }
 
     /**
-     * Sets unit name field.
-     */
-    public function unitName(?string $value): self
-    {
-        $this->instance->setUnitName($value);
-        return $this;
-    }
-
-    /**
      * Sets description field.
      */
     public function description(?string $value): self

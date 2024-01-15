@@ -55,12 +55,15 @@ class ProformaInvoicesController extends BaseController
         $_reqBuilder = $this->requestBuilder(
             RequestMethod::POST,
             '/subscription_groups/{uid}/proforma_invoices.json'
-        )->auth('BasicAuth')->parameters(TemplateParam::init('uid', $uid)->required());
+        )->auth('global')->parameters(TemplateParam::init('uid', $uid)->required());
 
         $_resHandler = $this->responseHandler()
             ->throwErrorOn(
                 '422',
-                ErrorType::init('Unprocessable Entity (WebDAV)', ErrorListResponseException::class)
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
             );
 
         $this->execute($_reqBuilder, $_resHandler);
@@ -85,11 +88,10 @@ class ProformaInvoicesController extends BaseController
         $_reqBuilder = $this->requestBuilder(
             RequestMethod::GET,
             '/subscription_groups/{uid}/proforma_invoices.json'
-        )->auth('BasicAuth')->parameters(TemplateParam::init('uid', $uid)->required());
+        )->auth('global')->parameters(TemplateParam::init('uid', $uid)->required());
 
         $_resHandler = $this->responseHandler()
-            ->throwErrorOn('403', ErrorType::init('Forbidden'))
-            ->throwErrorOn('404', ErrorType::init('Not Found'))
+            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
             ->type(ProformaInvoice::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
@@ -111,12 +113,11 @@ class ProformaInvoicesController extends BaseController
     public function readProformaInvoice(int $proformaInvoiceUid): ProformaInvoice
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/proforma_invoices/{proforma_invoice_uid}.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(TemplateParam::init('proforma_invoice_uid', $proformaInvoiceUid)->required());
 
         $_resHandler = $this->responseHandler()
-            ->throwErrorOn('403', ErrorType::init('Forbidden'))
-            ->throwErrorOn('404', ErrorType::init('Not Found'))
+            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
             ->type(ProformaInvoice::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
@@ -145,13 +146,15 @@ class ProformaInvoicesController extends BaseController
         $_reqBuilder = $this->requestBuilder(
             RequestMethod::POST,
             '/subscriptions/{subscription_id}/proforma_invoices.json'
-        )->auth('BasicAuth')->parameters(TemplateParam::init('subscription_id', $subscriptionId)->required());
+        )->auth('global')->parameters(TemplateParam::init('subscription_id', $subscriptionId)->required());
 
         $_resHandler = $this->responseHandler()
-            ->throwErrorOn('403', ErrorType::init('Forbidden'))
             ->throwErrorOn(
                 '422',
-                ErrorType::init('Unprocessable Entity (WebDAV)', ErrorListResponseException::class)
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
             )
             ->type(ProformaInvoice::class);
 
@@ -175,7 +178,7 @@ class ProformaInvoicesController extends BaseController
             RequestMethod::GET,
             '/subscriptions/{subscription_id}/proforma_invoices.json'
         )
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('subscription_id', $options)->extract('subscriptionId')->required(),
                 QueryParam::init('start_date', $options)->commaSeparated()->extract('startDate'),
@@ -230,7 +233,7 @@ class ProformaInvoicesController extends BaseController
             RequestMethod::POST,
             '/proforma_invoices/{proforma_invoice_uid}/void.json'
         )
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('proforma_invoice_uid', $proformaInvoiceUid)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -238,11 +241,13 @@ class ProformaInvoicesController extends BaseController
             );
 
         $_resHandler = $this->responseHandler()
-            ->throwErrorOn('403', ErrorType::init('Forbidden'))
-            ->throwErrorOn('404', ErrorType::init('Not Found'))
+            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
             ->throwErrorOn(
                 '422',
-                ErrorType::init('Unprocessable Entity (WebDAV)', ErrorListResponseException::class)
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
             )
             ->type(ProformaInvoice::class);
 
@@ -277,14 +282,16 @@ class ProformaInvoicesController extends BaseController
         $_reqBuilder = $this->requestBuilder(
             RequestMethod::POST,
             '/subscriptions/{subscription_id}/proforma_invoices/preview.json'
-        )->auth('BasicAuth')->parameters(TemplateParam::init('subscription_id', $subscriptionId)->required());
+        )->auth('global')->parameters(TemplateParam::init('subscription_id', $subscriptionId)->required());
 
         $_resHandler = $this->responseHandler()
-            ->throwErrorOn('403', ErrorType::init('Forbidden'))
-            ->throwErrorOn('404', ErrorType::init('Not Found'))
+            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
             ->throwErrorOn(
                 '422',
-                ErrorType::init('Unprocessable Entity (WebDAV)', ErrorListResponseException::class)
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
             )
             ->type(ProformaInvoicePreview::class);
 
@@ -315,15 +322,23 @@ class ProformaInvoicesController extends BaseController
     public function createSignupProformaInvoice(?CreateSubscriptionRequest $body = null): ProformaInvoice
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/subscriptions/proforma_invoices.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(HeaderParam::init('Content-Type', 'application/json'), BodyParam::init($body));
 
         $_resHandler = $this->responseHandler()
-            ->throwErrorOn('400', ErrorType::init('Bad Request', ProformaBadRequestErrorResponseException::class))
-            ->throwErrorOn('403', ErrorType::init('Forbidden'))
+            ->throwErrorOn(
+                '400',
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ProformaBadRequestErrorResponseException::class
+                )
+            )
             ->throwErrorOn(
                 '422',
-                ErrorType::init('Unprocessable Entity (WebDAV)', ErrorMapResponseException::class)
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorMapResponseException::class
+                )
             )
             ->type(ProformaInvoice::class);
 
@@ -357,7 +372,7 @@ class ProformaInvoicesController extends BaseController
         ?CreateSubscriptionRequest $body = null
     ): SignupProformaPreviewResponse {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/subscriptions/proforma_invoices/preview.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 HeaderParam::init('Content-Type', 'application/json'),
                 QueryParam::init('include=next_proforma_invoice', $includeNextProformaInvoice)->commaSeparated(),
@@ -365,11 +380,19 @@ class ProformaInvoicesController extends BaseController
             );
 
         $_resHandler = $this->responseHandler()
-            ->throwErrorOn('400', ErrorType::init('Bad Request', ProformaBadRequestErrorResponseException::class))
-            ->throwErrorOn('403', ErrorType::init('Forbidden'))
+            ->throwErrorOn(
+                '400',
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ProformaBadRequestErrorResponseException::class
+                )
+            )
             ->throwErrorOn(
                 '422',
-                ErrorType::init('Unprocessable Entity (WebDAV)', ErrorMapResponseException::class)
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorMapResponseException::class
+                )
             )
             ->type(SignupProformaPreviewResponse::class);
 

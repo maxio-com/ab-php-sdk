@@ -64,7 +64,7 @@ class BillingPortalController extends BaseController
     public function enableBillingPortalForCustomer(int $customerId, ?int $autoInvite = null): CustomerResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/portal/customers/{customer_id}/enable.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('customer_id', $customerId)->required(),
                 QueryParam::init('auto_invite', $autoInvite)
@@ -75,7 +75,10 @@ class BillingPortalController extends BaseController
         $_resHandler = $this->responseHandler()
             ->throwErrorOn(
                 '422',
-                ErrorType::init('Unprocessable Entity (WebDAV)', ErrorListResponseException::class)
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
             )
             ->type(CustomerResponse::class);
 
@@ -108,16 +111,22 @@ class BillingPortalController extends BaseController
         $_reqBuilder = $this->requestBuilder(
             RequestMethod::GET,
             '/portal/customers/{customer_id}/management_link.json'
-        )->auth('BasicAuth')->parameters(TemplateParam::init('customer_id', $customerId)->required());
+        )->auth('global')->parameters(TemplateParam::init('customer_id', $customerId)->required());
 
         $_resHandler = $this->responseHandler()
             ->throwErrorOn(
                 '422',
-                ErrorType::init('Unprocessable Entity (WebDAV)', ErrorListResponseException::class)
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
             )
             ->throwErrorOn(
                 '429',
-                ErrorType::init('Too Many Requests', TooManyManagementLinkRequestsErrorException::class)
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    TooManyManagementLinkRequestsErrorException::class
+                )
             )
             ->type(PortalManagementLink::class);
 
@@ -154,13 +163,16 @@ class BillingPortalController extends BaseController
         $_reqBuilder = $this->requestBuilder(
             RequestMethod::POST,
             '/portal/customers/{customer_id}/invitations/invite.json'
-        )->auth('BasicAuth')->parameters(TemplateParam::init('customer_id', $customerId)->required());
+        )->auth('global')->parameters(TemplateParam::init('customer_id', $customerId)->required());
 
         $_resHandler = $this->responseHandler()
-            ->throwErrorOn('404', ErrorType::init('Not Found'))
+            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
             ->throwErrorOn(
                 '422',
-                ErrorType::init('Unprocessable Entity (WebDAV)', ErrorListResponseException::class)
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
             )
             ->type(ResentInvitation::class);
 
@@ -188,11 +200,9 @@ class BillingPortalController extends BaseController
         $_reqBuilder = $this->requestBuilder(
             RequestMethod::DELETE,
             '/portal/customers/{customer_id}/invitations/revoke.json'
-        )->auth('BasicAuth')->parameters(TemplateParam::init('customer_id', $customerId)->required());
+        )->auth('global')->parameters(TemplateParam::init('customer_id', $customerId)->required());
 
-        $_resHandler = $this->responseHandler()
-            ->throwErrorOn('422', ErrorType::init('Unprocessable Entity (WebDAV)'))
-            ->type(RevokedInvitation::class);
+        $_resHandler = $this->responseHandler()->type(RevokedInvitation::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
     }

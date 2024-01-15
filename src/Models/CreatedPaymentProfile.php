@@ -145,6 +145,11 @@ class CreatedPaymentProfile implements \JsonSerializable
     private $gatewayHandle;
 
     /**
+     * @var bool|null
+     */
+    private $disabled;
+
+    /**
      * Returns Id.
      */
     public function getId(): ?int
@@ -649,6 +654,24 @@ class CreatedPaymentProfile implements \JsonSerializable
     }
 
     /**
+     * Returns Disabled.
+     */
+    public function getDisabled(): ?bool
+    {
+        return $this->disabled;
+    }
+
+    /**
+     * Sets Disabled.
+     *
+     * @maps disabled
+     */
+    public function setDisabled(?bool $disabled): void
+    {
+        $this->disabled = $disabled;
+    }
+
+    /**
      * Encode this object to JSON
      *
      * @param bool $asArrayWhenEmpty Whether to serialize this model as an array whenever no fields
@@ -737,6 +760,9 @@ class CreatedPaymentProfile implements \JsonSerializable
         }
         if (isset($this->gatewayHandle)) {
             $json['gateway_handle']             = $this->gatewayHandle;
+        }
+        if (isset($this->disabled)) {
+            $json['disabled']                   = $this->disabled;
         }
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;

@@ -25,7 +25,7 @@ class AllocationSettings implements \JsonSerializable
     private $downgradeCredit = [];
 
     /**
-     * @var bool|null
+     * @var string|null
      */
     private $accrueCharge;
 
@@ -109,18 +109,20 @@ class AllocationSettings implements \JsonSerializable
 
     /**
      * Returns Accrue Charge.
+     * Either "true" or "false".
      */
-    public function getAccrueCharge(): ?bool
+    public function getAccrueCharge(): ?string
     {
         return $this->accrueCharge;
     }
 
     /**
      * Sets Accrue Charge.
+     * Either "true" or "false".
      *
      * @maps accrue_charge
      */
-    public function setAccrueCharge(?bool $accrueCharge): void
+    public function setAccrueCharge(?string $accrueCharge): void
     {
         $this->accrueCharge = $accrueCharge;
     }

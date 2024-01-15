@@ -17,7 +17,6 @@ use Core\Request\Parameters\BodyParam;
 use Core\Request\Parameters\HeaderParam;
 use Core\Request\Parameters\QueryParam;
 use Core\Request\Parameters\TemplateParam;
-use Core\Response\Types\ErrorType;
 use CoreInterfaces\Core\Request\RequestMethod;
 
 class SubscriptionNotesController extends BaseController
@@ -46,7 +45,7 @@ class SubscriptionNotesController extends BaseController
         ?UpdateSubscriptionNoteRequest $body = null
     ): SubscriptionNoteResponse {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/subscriptions/{subscription_id}/notes.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -71,7 +70,7 @@ class SubscriptionNotesController extends BaseController
     public function listSubscriptionNotes(array $options): array
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/subscriptions/{subscription_id}/notes.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('subscription_id', $options)->extract('subscriptionId')->required(),
                 QueryParam::init('page', $options)->commaSeparated()->extract('page', 1),
@@ -100,7 +99,7 @@ class SubscriptionNotesController extends BaseController
             RequestMethod::GET,
             '/subscriptions/{subscription_id}/notes/{note_id}.json'
         )
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 TemplateParam::init('note_id', $noteId)->required()
@@ -131,7 +130,7 @@ class SubscriptionNotesController extends BaseController
             RequestMethod::PUT,
             '/subscriptions/{subscription_id}/notes/{note_id}.json'
         )
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 TemplateParam::init('note_id', $noteId)->required(),
@@ -160,14 +159,12 @@ class SubscriptionNotesController extends BaseController
             RequestMethod::DELETE,
             '/subscriptions/{subscription_id}/notes/{note_id}.json'
         )
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 TemplateParam::init('note_id', $noteId)->required()
             );
 
-        $_resHandler = $this->responseHandler()->throwErrorOn('422', ErrorType::init('Unprocessable Entity (WebDAV)'));
-
-        $this->execute($_reqBuilder, $_resHandler);
+        $this->execute($_reqBuilder);
     }
 }

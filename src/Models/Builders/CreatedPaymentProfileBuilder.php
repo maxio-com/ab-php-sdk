@@ -300,6 +300,15 @@ class CreatedPaymentProfileBuilder
     }
 
     /**
+     * Sets disabled field.
+     */
+    public function disabled(?bool $value): self
+    {
+        $this->instance->setDisabled($value);
+        return $this;
+    }
+
+    /**
      * Initializes a new created payment profile object.
      */
     public function build(): CreatedPaymentProfile

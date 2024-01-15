@@ -49,7 +49,7 @@ class SubscriptionInvoiceAccountController extends BaseController
         $_reqBuilder = $this->requestBuilder(
             RequestMethod::GET,
             '/subscriptions/{subscription_id}/account_balances.json'
-        )->auth('BasicAuth')->parameters(TemplateParam::init('subscription_id', $subscriptionId)->required());
+        )->auth('global')->parameters(TemplateParam::init('subscription_id', $subscriptionId)->required());
 
         $_resHandler = $this->responseHandler()->type(AccountBalances::class);
 
@@ -84,7 +84,7 @@ class SubscriptionInvoiceAccountController extends BaseController
             RequestMethod::POST,
             '/subscriptions/{subscription_id}/prepayments.json'
         )
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -111,7 +111,7 @@ class SubscriptionInvoiceAccountController extends BaseController
             RequestMethod::GET,
             '/subscriptions/{subscription_id}/prepayments.json'
         )
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('subscription_id', $options)->extract('subscriptionId')->required(),
                 QueryParam::init('page', $options)->commaSeparated()->extract('page', 1),
@@ -131,9 +131,7 @@ class SubscriptionInvoiceAccountController extends BaseController
             );
 
         $_resHandler = $this->responseHandler()
-            ->throwErrorOn('401', ErrorType::init('Unauthorized'))
-            ->throwErrorOn('403', ErrorType::init('Forbidden'))
-            ->throwErrorOn('404', ErrorType::init('Not Found'))
+            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
             ->type(PrepaymentsResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
@@ -156,7 +154,7 @@ class SubscriptionInvoiceAccountController extends BaseController
             RequestMethod::POST,
             '/subscriptions/{subscription_id}/service_credits.json'
         )
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -185,7 +183,7 @@ class SubscriptionInvoiceAccountController extends BaseController
             RequestMethod::POST,
             '/subscriptions/{subscription_id}/service_credit_deductions.json'
         )
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -195,7 +193,10 @@ class SubscriptionInvoiceAccountController extends BaseController
         $_resHandler = $this->responseHandler()
             ->throwErrorOn(
                 '422',
-                ErrorType::init('Unprocessable Entity (WebDAV)', ErrorListResponseException::class)
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
             );
 
         $this->execute($_reqBuilder, $_resHandler);
@@ -226,7 +227,7 @@ class SubscriptionInvoiceAccountController extends BaseController
             RequestMethod::POST,
             '/subscriptions/{subscription_id}/prepayments/{prepayment_id}/refunds.json'
         )
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 TemplateParam::init('prepayment_id', $prepaymentId)->required(),
@@ -235,14 +236,20 @@ class SubscriptionInvoiceAccountController extends BaseController
             );
 
         $_resHandler = $this->responseHandler()
+            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
             ->throwErrorOn(
                 '400',
-                ErrorType::init('Bad Request', RefundPrepaymentBaseErrorsResponseException::class)
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    RefundPrepaymentBaseErrorsResponseException::class
+                )
             )
-            ->throwErrorOn('404', ErrorType::init('Not Found'))
             ->throwErrorOn(
                 '422',
-                ErrorType::init('Unprocessable Entity', RefundPrepaymentAggregatedErrorsResponseException::class)
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    RefundPrepaymentAggregatedErrorsResponseException::class
+                )
             )
             ->type(PrepaymentResponse::class);
 

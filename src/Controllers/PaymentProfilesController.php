@@ -353,11 +353,18 @@ class PaymentProfilesController extends BaseController
     public function createPaymentProfile(?CreatePaymentProfileRequest $body = null): CreatePaymentProfileResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/payment_profiles.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(HeaderParam::init('Content-Type', 'application/json'), BodyParam::init($body));
 
         $_resHandler = $this->responseHandler()
-            ->throwErrorOn('404', ErrorType::init('Not Found'))
+            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
+            ->throwErrorOn(
+                '422',
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
+            )
             ->type(CreatePaymentProfileResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
@@ -376,7 +383,7 @@ class PaymentProfilesController extends BaseController
     public function listPaymentProfiles(array $options): array
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/payment_profiles.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 QueryParam::init('page', $options)->commaSeparated()->extract('page', 1),
                 QueryParam::init('per_page', $options)->commaSeparated()->extract('perPage', 20),
@@ -435,7 +442,7 @@ class PaymentProfilesController extends BaseController
     public function readPaymentProfile(string $paymentProfileId): ReadPaymentProfileResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/payment_profiles/{payment_profile_id}.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(TemplateParam::init('payment_profile_id', $paymentProfileId)->required());
 
         $_resHandler = $this->responseHandler()->type(ReadPaymentProfileResponse::class);
@@ -503,7 +510,7 @@ class PaymentProfilesController extends BaseController
         ?UpdatePaymentProfileRequest $body = null
     ): UpdatePaymentProfileResponse {
         $_reqBuilder = $this->requestBuilder(RequestMethod::PUT, '/payment_profiles/{payment_profile_id}.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('payment_profile_id', $paymentProfileId)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -530,13 +537,16 @@ class PaymentProfilesController extends BaseController
     public function deleteUnusedPaymentProfile(string $paymentProfileId): void
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::DELETE, '/payment_profiles/{payment_profile_id}.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(TemplateParam::init('payment_profile_id', $paymentProfileId)->required());
 
         $_resHandler = $this->responseHandler()
             ->throwErrorOn(
                 '422',
-                ErrorType::init('Unprocessable Entity (WebDAV)', ErrorListResponseException::class)
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
             );
 
         $this->execute($_reqBuilder, $_resHandler);
@@ -566,7 +576,7 @@ class PaymentProfilesController extends BaseController
             RequestMethod::DELETE,
             '/subscriptions/{subscription_id}/payment_profiles/{payment_profile_id}.json'
         )
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 TemplateParam::init('payment_profile_id', $paymentProfileId)->required()
@@ -594,7 +604,7 @@ class PaymentProfilesController extends BaseController
             RequestMethod::PUT,
             '/bank_accounts/{bank_account_id}/verification.json'
         )
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('bank_account_id', $bankAccountId)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -602,10 +612,13 @@ class PaymentProfilesController extends BaseController
             );
 
         $_resHandler = $this->responseHandler()
-            ->throwErrorOn('404', ErrorType::init('Not Found'))
+            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
             ->throwErrorOn(
                 '422',
-                ErrorType::init('Unprocessable Entity (WebDAV)', ErrorListResponseException::class)
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
             )
             ->type(BankAccountResponse::class);
 
@@ -631,7 +644,7 @@ class PaymentProfilesController extends BaseController
             RequestMethod::DELETE,
             '/subscription_groups/{uid}/payment_profiles/{payment_profile_id}.json'
         )
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('uid', $uid)->required(),
                 TemplateParam::init('payment_profile_id', $paymentProfileId)->required()
@@ -663,7 +676,7 @@ class PaymentProfilesController extends BaseController
             '/subscriptions/{subscription_id}/payment_profiles/{payment_profile_id}/change_paym' .
             'ent_profile.json'
         )
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 TemplateParam::init('payment_profile_id', $paymentProfileId)->required()
@@ -672,7 +685,10 @@ class PaymentProfilesController extends BaseController
         $_resHandler = $this->responseHandler()
             ->throwErrorOn(
                 '422',
-                ErrorType::init('Unprocessable Entity (WebDAV)', ErrorListResponseException::class)
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
             )
             ->type(PaymentProfileResponse::class);
 
@@ -704,7 +720,7 @@ class PaymentProfilesController extends BaseController
             RequestMethod::POST,
             '/subscription_groups/{uid}/payment_profiles/{payment_profile_id}/change_payment_profile.json'
         )
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('uid', $uid)->required(),
                 TemplateParam::init('payment_profile_id', $paymentProfileId)->required()
@@ -713,7 +729,10 @@ class PaymentProfilesController extends BaseController
         $_resHandler = $this->responseHandler()
             ->throwErrorOn(
                 '422',
-                ErrorType::init('Unprocessable Entity (WebDAV)', ErrorListResponseException::class)
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
             )
             ->type(PaymentProfileResponse::class);
 
@@ -739,11 +758,17 @@ class PaymentProfilesController extends BaseController
     public function readOneTimeToken(string $chargifyToken): GetOneTimeTokenRequest
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/one_time_tokens/{chargify_token}.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(TemplateParam::init('chargify_token', $chargifyToken)->required());
 
         $_resHandler = $this->responseHandler()
-            ->throwErrorOn('404', ErrorType::init('Not Found', ErrorListResponseException::class))
+            ->throwErrorOn(
+                '404',
+                ErrorType::initWithErrorTemplate(
+                    'Not Found:\'{$response.body}\'',
+                    ErrorListResponseException::class
+                )
+            )
             ->type(GetOneTimeTokenRequest::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
@@ -776,13 +801,16 @@ class PaymentProfilesController extends BaseController
         $_reqBuilder = $this->requestBuilder(
             RequestMethod::POST,
             '/subscriptions/{subscription_id}/request_payment_profiles_update.json'
-        )->auth('BasicAuth')->parameters(TemplateParam::init('subscription_id', $subscriptionId)->required());
+        )->auth('global')->parameters(TemplateParam::init('subscription_id', $subscriptionId)->required());
 
         $_resHandler = $this->responseHandler()
-            ->throwErrorOn('404', ErrorType::init('Not Found'))
+            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
             ->throwErrorOn(
                 '422',
-                ErrorType::init('Unprocessable Entity (WebDAV)', ErrorListResponseException::class)
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
             );
 
         $this->execute($_reqBuilder, $_resHandler);

@@ -50,7 +50,7 @@ class AdvanceInvoiceController extends BaseController
             RequestMethod::POST,
             '/subscriptions/{subscription_id}/advance_invoice/issue.json'
         )
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -58,11 +58,13 @@ class AdvanceInvoiceController extends BaseController
             );
 
         $_resHandler = $this->responseHandler()
-            ->throwErrorOn('403', ErrorType::init('Forbidden'))
-            ->throwErrorOn('404', ErrorType::init('Not Found'))
+            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
             ->throwErrorOn(
                 '422',
-                ErrorType::init('Unprocessable Entity (WebDAV)', ErrorListResponseException::class)
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
             )
             ->type(Invoice::class);
 
@@ -84,11 +86,10 @@ class AdvanceInvoiceController extends BaseController
         $_reqBuilder = $this->requestBuilder(
             RequestMethod::GET,
             '/subscriptions/{subscription_id}/advance_invoice.json'
-        )->auth('BasicAuth')->parameters(TemplateParam::init('subscription_id', $subscriptionId)->required());
+        )->auth('global')->parameters(TemplateParam::init('subscription_id', $subscriptionId)->required());
 
         $_resHandler = $this->responseHandler()
-            ->throwErrorOn('403', ErrorType::init('Forbidden'))
-            ->throwErrorOn('404', ErrorType::init('Not Found'))
+            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
             ->type(Invoice::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
@@ -114,7 +115,7 @@ class AdvanceInvoiceController extends BaseController
             RequestMethod::POST,
             '/subscriptions/{subscription_id}/advance_invoice/void.json'
         )
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -122,8 +123,7 @@ class AdvanceInvoiceController extends BaseController
             );
 
         $_resHandler = $this->responseHandler()
-            ->throwErrorOn('403', ErrorType::init('Forbidden'))
-            ->throwErrorOn('404', ErrorType::init('Not Found'))
+            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
             ->type(Invoice::class);
 
         return $this->execute($_reqBuilder, $_resHandler);

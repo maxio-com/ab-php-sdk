@@ -10,8 +10,6 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib;
 
-use AdvancedBillingLib\Authentication\BasicAuthCredentialsBuilder;
-use AdvancedBillingLib\Authentication\BasicAuthManager;
 use AdvancedBillingLib\Controllers\AdvanceInvoiceController;
 use AdvancedBillingLib\Controllers\APIExportsController;
 use AdvancedBillingLib\Controllers\BillingPortalController;
@@ -46,6 +44,7 @@ use AdvancedBillingLib\Controllers\WebhooksController;
 use AdvancedBillingLib\Utils\CompatibilityConverter;
 use Core\ClientBuilder;
 use Core\Request\Parameters\TemplateParam;
+use Core\Response\Types\ErrorType;
 use Core\Utils\CoreHelper;
 use Unirest\Configuration;
 use Unirest\HttpClient;
@@ -139,8 +138,9 @@ class AdvancedBillingClient implements ConfigurationInterface
             ->apiCallback($this->config['httpCallback'] ?? null)
             ->userAgent('AB SDK PHP:0.0.4 on OS {os-info}')
             ->globalConfig($this->getGlobalConfiguration())
+            ->globalErrors($this->getGlobalErrors())
             ->serverUrls(self::ENVIRONMENT_MAP[$this->getEnvironment()], Server::DEFAULT_)
-            ->authManagers(['BasicAuth' => $this->basicAuthManager])
+            ->authManagers(['global' => $this->basicAuthManager])
             ->build();
     }
 
@@ -164,9 +164,8 @@ class AdvancedBillingClient implements ConfigurationInterface
             ->environment($this->getEnvironment())
             ->subdomain($this->getSubdomain())
             ->domain($this->getDomain())
-            ->basicAuthCredentials(BasicAuthCredentialsBuilder::init()
-                ->username($this->basicAuthManager->getBasicAuthUserName())
-                ->password($this->basicAuthManager->getBasicAuthPassword()))
+            ->basicAuthUserName($this->basicAuthManager->getBasicAuthUserName())
+            ->basicAuthPassword($this->basicAuthManager->getBasicAuthPassword())
             ->httpCallback($this->config['httpCallback'] ?? null);
     }
 
@@ -230,7 +229,7 @@ class AdvancedBillingClient implements ConfigurationInterface
         return $this->config['domain'] ?? ConfigurationDefaults::DOMAIN;
     }
 
-    public function getBasicAuthCredentials(): BasicAuthCredentials
+    public function getBasicAuthCredentials(): ?BasicAuthCredentials
     {
         return $this->basicAuthManager;
     }
@@ -616,6 +615,19 @@ class AdvancedBillingClient implements ConfigurationInterface
         return [
             TemplateParam::init('subdomain', $this->getSubdomain())->dontEncode(),
             TemplateParam::init('domain', $this->getDomain())->dontEncode()
+        ];
+    }
+
+    /**
+     * Get the defined global errors
+     */
+    private function getGlobalErrors(): array
+    {
+        return [
+            strval(404) => ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''),
+            strval(0) => ErrorType::initWithErrorTemplate(
+                'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.'
+            )
         ];
     }
 

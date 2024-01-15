@@ -9,7 +9,7 @@
 
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
-| `metafields` | [CreateMetafield](../../doc/models/create-metafield.md)\|[CreateMetafield](../../doc/models/create-metafield.md)[] | Required | This is a container for any-of cases. | getMetafields(): | setMetafields( metafields): void |
+| `metafields` | [CreateMetafield](../../doc/models/create-metafield.md)\|[CreateMetafield](../../doc/models/create-metafield.md)[] | Required | This is a container for one-of cases. | getMetafields(): | setMetafields( metafields): void |
 
 ## Example (as JSON)
 

@@ -65,7 +65,7 @@ class WebhooksController extends BaseController
     public function listWebhooks(array $options): array
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/webhooks.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 QueryParam::init('status', $options)
                     ->commaSeparated()
@@ -99,7 +99,7 @@ class WebhooksController extends BaseController
     public function enableWebhooks(?EnableWebhooksRequest $body = null): EnableWebhooksResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::PUT, '/webhooks/settings.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(HeaderParam::init('Content-Type', 'application/json'), BodyParam::init($body));
 
         $_resHandler = $this->responseHandler()->type(EnableWebhooksResponse::class);
@@ -122,7 +122,7 @@ class WebhooksController extends BaseController
     public function replayWebhooks(?ReplayWebhooksRequest $body = null): ReplayWebhooksResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/webhooks/replay.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(HeaderParam::init('Content-Type', 'application/json'), BodyParam::init($body));
 
         $_resHandler = $this->responseHandler()->type(ReplayWebhooksResponse::class);
@@ -147,13 +147,16 @@ class WebhooksController extends BaseController
     public function createEndpoint(?UpdateEndpointRequest $body = null): EndpointResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/endpoints.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(HeaderParam::init('Content-Type', 'application/json'), BodyParam::init($body));
 
         $_resHandler = $this->responseHandler()
             ->throwErrorOn(
                 '422',
-                ErrorType::init('Unprocessable Entity (WebDAV)', ErrorListResponseException::class)
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
             )
             ->type(EndpointResponse::class);
 
@@ -169,7 +172,7 @@ class WebhooksController extends BaseController
      */
     public function listEndpoints(): array
     {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/endpoints.json')->auth('BasicAuth');
+        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/endpoints.json')->auth('global');
 
         $_resHandler = $this->responseHandler()->type(Endpoint::class, 1);
 
@@ -200,7 +203,7 @@ class WebhooksController extends BaseController
     public function updateEndpoint(int $endpointId, ?UpdateEndpointRequest $body = null): EndpointResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::PUT, '/endpoints/{endpoint_id}.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('endpoint_id', $endpointId)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -208,10 +211,13 @@ class WebhooksController extends BaseController
             );
 
         $_resHandler = $this->responseHandler()
-            ->throwErrorOn('404', ErrorType::init('Not Found'))
+            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
             ->throwErrorOn(
                 '422',
-                ErrorType::init('Unprocessable Entity (WebDAV)', ErrorListResponseException::class)
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
             )
             ->type(EndpointResponse::class);
 

@@ -35,6 +35,7 @@
 | `verified` | `?bool` | Optional | - | getVerified(): ?bool | setVerified(?bool verified): void |
 | `siteGatewaySettingId` | `?int` | Optional | - | getSiteGatewaySettingId(): ?int | setSiteGatewaySettingId(?int siteGatewaySettingId): void |
 | `gatewayHandle` | `?string` | Optional | - | getGatewayHandle(): ?string | setGatewayHandle(?string gatewayHandle): void |
+| `disabled` | `?bool` | Optional | - | getDisabled(): ?bool | setDisabled(?bool disabled): void |
 
 ## Example (as JSON)
 

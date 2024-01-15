@@ -872,6 +872,7 @@ $body = CreateComponentPricePointRequestBuilder::init(
         ]
     )
         ->handle('wholesale-handle')
+        ->useSiteExchangeRate(false)
         ->build()
 )->build();
 

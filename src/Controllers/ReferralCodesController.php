@@ -42,11 +42,17 @@ class ReferralCodesController extends BaseController
     public function validateReferralCode(string $code): ReferralValidationResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/referral_codes/validate.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(QueryParam::init('code', $code)->commaSeparated()->required());
 
         $_resHandler = $this->responseHandler()
-            ->throwErrorOn('404', ErrorType::init('Not Found', SingleStringErrorResponseException::class))
+            ->throwErrorOn(
+                '404',
+                ErrorType::initWithErrorTemplate(
+                    'Not Found:\'{$response.body}\'',
+                    SingleStringErrorResponseException::class
+                )
+            )
             ->type(ReferralValidationResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);

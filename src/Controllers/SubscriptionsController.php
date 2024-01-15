@@ -846,13 +846,16 @@ class SubscriptionsController extends BaseController
     public function createSubscription(?CreateSubscriptionRequest $body = null): SubscriptionResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/subscriptions.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(HeaderParam::init('Content-Type', 'application/json'), BodyParam::init($body));
 
         $_resHandler = $this->responseHandler()
             ->throwErrorOn(
                 '422',
-                ErrorType::init('Unprocessable Entity (WebDAV)', ErrorListResponseException::class)
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
             )
             ->type(SubscriptionResponse::class);
 
@@ -882,7 +885,7 @@ class SubscriptionsController extends BaseController
     public function listSubscriptions(array $options): array
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/subscriptions.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 QueryParam::init('page', $options)->commaSeparated()->extract('page', 1),
                 QueryParam::init('per_page', $options)->commaSeparated()->extract('perPage', 20),
@@ -1016,7 +1019,7 @@ class SubscriptionsController extends BaseController
         ?UpdateSubscriptionRequest $body = null
     ): SubscriptionResponse {
         $_reqBuilder = $this->requestBuilder(RequestMethod::PUT, '/subscriptions/{subscription_id}.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -1026,7 +1029,10 @@ class SubscriptionsController extends BaseController
         $_resHandler = $this->responseHandler()
             ->throwErrorOn(
                 '422',
-                ErrorType::init('Unprocessable Entity (WebDAV)', ErrorListResponseException::class)
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
             )
             ->type(SubscriptionResponse::class);
 
@@ -1052,7 +1058,7 @@ class SubscriptionsController extends BaseController
     public function readSubscription(int $subscriptionId, ?array $mInclude = null): SubscriptionResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/subscriptions/{subscription_id}.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 QueryParam::init('include[]', $mInclude)
@@ -1109,7 +1115,7 @@ class SubscriptionsController extends BaseController
     public function overrideSubscription(int $subscriptionId, ?OverrideSubscriptionRequest $body = null): void
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::PUT, '/subscriptions/{subscription_id}/override.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -1117,10 +1123,12 @@ class SubscriptionsController extends BaseController
             );
 
         $_resHandler = $this->responseHandler()
-            ->throwErrorOn('400', ErrorType::init('Bad Request'))
             ->throwErrorOn(
                 '422',
-                ErrorType::init('Unprocessable Entity (WebDAV)', SingleErrorResponseException::class)
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    SingleErrorResponseException::class
+                )
             );
 
         $this->execute($_reqBuilder, $_resHandler);
@@ -1138,7 +1146,7 @@ class SubscriptionsController extends BaseController
     public function readSubscriptionByReference(?string $reference = null): SubscriptionResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/subscriptions/lookup.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(QueryParam::init('reference', $reference)->commaSeparated());
 
         $_resHandler = $this->responseHandler()->type(SubscriptionResponse::class);
@@ -1173,7 +1181,7 @@ class SubscriptionsController extends BaseController
     public function purgeSubscription(int $subscriptionId, int $ack, ?array $cascade = null): void
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/subscriptions/{subscription_id}/purge.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 QueryParam::init('ack', $ack)->plain()->required(),
@@ -1182,9 +1190,7 @@ class SubscriptionsController extends BaseController
                     ->serializeBy([SubscriptionPurgeType::class, 'checkValue'])
             );
 
-        $_resHandler = $this->responseHandler()->throwErrorOn('400', ErrorType::init('Bad Request'));
-
-        $this->execute($_reqBuilder, $_resHandler);
+        $this->execute($_reqBuilder);
     }
 
     /**
@@ -1205,7 +1211,7 @@ class SubscriptionsController extends BaseController
             RequestMethod::POST,
             '/subscriptions/{subscription_id}/prepaid_configurations.json'
         )
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -1268,7 +1274,7 @@ class SubscriptionsController extends BaseController
     public function previewSubscription(?CreateSubscriptionRequest $body = null): SubscriptionPreviewResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/subscriptions/preview.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(HeaderParam::init('Content-Type', 'application/json'), BodyParam::init($body));
 
         $_resHandler = $this->responseHandler()->type(SubscriptionPreviewResponse::class);
@@ -1308,7 +1314,7 @@ class SubscriptionsController extends BaseController
             RequestMethod::POST,
             '/subscriptions/{subscription_id}/add_coupon.json'
         )
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -1319,7 +1325,10 @@ class SubscriptionsController extends BaseController
         $_resHandler = $this->responseHandler()
             ->throwErrorOn(
                 '422',
-                ErrorType::init('Unprocessable Entity (WebDAV)', SubscriptionAddCouponErrorException::class)
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    SubscriptionAddCouponErrorException::class
+                )
             )
             ->type(SubscriptionResponse::class);
 
@@ -1346,7 +1355,7 @@ class SubscriptionsController extends BaseController
             RequestMethod::DELETE,
             '/subscriptions/{subscription_id}/remove_coupon.json'
         )
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 QueryParam::init('coupon_code', $couponCode)->commaSeparated()
@@ -1355,7 +1364,10 @@ class SubscriptionsController extends BaseController
         $_resHandler = $this->responseHandler()
             ->throwErrorOn(
                 '422',
-                ErrorType::init('Unprocessable Entity (WebDAV)', SubscriptionRemoveCouponErrorsException::class)
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    SubscriptionRemoveCouponErrorsException::class
+                )
             );
 
         return $this->execute($_reqBuilder, $_resHandler);
@@ -1430,7 +1442,7 @@ class SubscriptionsController extends BaseController
         ?ActivateSubscriptionRequest $body = null
     ): SubscriptionResponse {
         $_reqBuilder = $this->requestBuilder(RequestMethod::PUT, '/subscriptions/{subscription_id}/activate.json')
-            ->auth('BasicAuth')
+            ->auth('global')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -1438,7 +1450,13 @@ class SubscriptionsController extends BaseController
             );
 
         $_resHandler = $this->responseHandler()
-            ->throwErrorOn('400', ErrorType::init('Bad Request', NestedErrorResponseException::class))
+            ->throwErrorOn(
+                '400',
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    NestedErrorResponseException::class
+                )
+            )
             ->type(SubscriptionResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
