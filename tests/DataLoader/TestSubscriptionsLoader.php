@@ -7,6 +7,7 @@ namespace AdvancedBillingLib\Tests\DataLoader;
 use AdvancedBillingLib\AdvancedBillingClient;
 use AdvancedBillingLib\Models\Builders\CreateSubscriptionComponentBuilder;
 use AdvancedBillingLib\Models\Component;
+use AdvancedBillingLib\Models\Coupon;
 use AdvancedBillingLib\Models\CreateSubscriptionComponent;
 use AdvancedBillingLib\Models\Subscription;
 use AdvancedBillingLib\Tests\TestFactory\TestSubscriptionRequestFactory;
@@ -29,7 +30,7 @@ final class TestSubscriptionsLoader
     }
 
     /**
-     * @param array<int, Component> $array
+     * @param array<int, Component> $components
      */
     public function loadWithComponents(int $customerId, int $productId, int $paymentProfileId, array $components)
     {
@@ -60,5 +61,28 @@ final class TestSubscriptionsLoader
                 ->build(),
             $components
         );
+    }
+
+    /**
+     * @param array<int, Coupon> $coupons
+     */
+    public function loadWithCoupons(
+        int $customerId,
+        int $productId,
+        int $paymentProfileId,
+        array $coupons
+    ): Subscription
+    {
+        return $this->client
+            ->getSubscriptionsController()
+            ->createSubscription(
+                $this->subscriptionRequestFactory->createWithCoupons(
+                    $customerId,
+                    $productId,
+                    $paymentProfileId,
+                    $coupons
+                )
+            )
+            ->getSubscription();
     }
 }

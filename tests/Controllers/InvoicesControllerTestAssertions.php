@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Tests\Controllers;
 
+use AdvancedBillingLib\Models\Coupon;
 use AdvancedBillingLib\Models\Invoice;
 use AdvancedBillingLib\Models\Subscription;
 use AdvancedBillingLib\Tests\TestData\InvoiceTestData;
@@ -52,5 +53,15 @@ final class InvoicesControllerTestAssertions
         $this->testCase::assertEquals(InvoiceTestData::INVOICE_ADDRESS_CITY, $billingAddress->getCity());
         $this->testCase::assertEquals(InvoiceTestData::INVOICE_ADDRESS_COUNTRY, $billingAddress->getCountry());
         $this->testCase::assertEquals(InvoiceTestData::INVOICE_ADDRESS_ZIP, $billingAddress->getZip());
+    }
+
+    public function assertInvoiceWithCouponCreated(Invoice $invoice, Coupon $coupon): void
+    {
+        $this->testCase::assertCount(1, $invoice->getDiscounts());
+
+        $discount = $invoice->getDiscounts()[0];
+        $this->testCase::assertEquals($coupon->getCode(), $discount->getCode());
+        $this->testCase::assertEquals($coupon->getName(), $discount->getTitle());
+        $this->testCase::assertEquals($coupon->getPercentage(), $discount->getPercentage());
     }
 }
