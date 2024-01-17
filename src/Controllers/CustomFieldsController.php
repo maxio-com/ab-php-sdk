@@ -144,31 +144,21 @@ class CustomFieldsController extends BaseController
      * metadata after the fact.
      *
      * @param string $resourceType the resource type to which the metafields belong
-     * @param string $name Name of the custom field.
-     * @param string|null $currentName This only applies when you are updating an existing record
-     *        and you wish to rename the field. Note you must supply name and current_name to
-     *        rename the field
      * @param UpdateMetafieldsRequest|null $body
      *
      * @return Metafield[] Response from the API call
      *
      * @throws ApiException Thrown if API call fails
      */
-    public function updateMetafield(
-        string $resourceType,
-        string $name,
-        ?string $currentName = null,
-        ?UpdateMetafieldsRequest $body = null
-    ): array {
+    public function updateMetafield(string $resourceType, ?UpdateMetafieldsRequest $body = null): array
+    {
         $_reqBuilder = $this->requestBuilder(RequestMethod::PUT, '/{resource_type}/metafields.json')
             ->auth('global')
             ->parameters(
                 TemplateParam::init('resource_type', $resourceType)
                     ->required()
                     ->serializeBy([ResourceType::class, 'checkValue']),
-                QueryParam::init('name', $name)->commaSeparated()->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
-                QueryParam::init('current_name', $currentName)->commaSeparated(),
                 BodyParam::init($body)
             );
 

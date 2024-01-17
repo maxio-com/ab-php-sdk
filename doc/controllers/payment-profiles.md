@@ -357,7 +357,7 @@ function listPaymentProfiles(array $options): array
 
 ## Response Type
 
-[`ListPaymentProfilesResponse[]`](../../doc/models/list-payment-profiles-response.md)
+[`ReadPaymentProfileResponse[]`](../../doc/models/read-payment-profile-response.md)
 
 ## Example Usage
 
@@ -395,6 +395,7 @@ $result = $paymentProfilesController->listPaymentProfiles($collect);
       "bank_account_type": "checking",
       "bank_account_holder_type": "personal",
       "payment_type": "bank_account",
+      "verified": true,
       "site_gateway_setting_id": 1,
       "gateway_handle": "handle"
     }
@@ -420,6 +421,7 @@ $result = $paymentProfilesController->listPaymentProfiles($collect);
       "bank_account_type": "checking",
       "bank_account_holder_type": "personal",
       "payment_type": "bank_account",
+      "verified": true,
       "site_gateway_setting_id": 1,
       "gateway_handle": "handle"
     }

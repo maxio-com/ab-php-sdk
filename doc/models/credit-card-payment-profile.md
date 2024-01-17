@@ -13,7 +13,7 @@
 | `firstName` | `?string` | Optional | - | getFirstName(): ?string | setFirstName(?string firstName): void |
 | `lastName` | `?string` | Optional | - | getLastName(): ?string | setLastName(?string lastName): void |
 | `maskedCardNumber` | `string` | Required | - | getMaskedCardNumber(): string | setMaskedCardNumber(string maskedCardNumber): void |
-| `cardType` | [`?string(CardType1)`](../../doc/models/card-type-1.md) | Optional | - | getCardType(): ?string | setCardType(?string cardType): void |
+| `cardType` | [`?string(CardType)`](../../doc/models/card-type.md) | Optional | The type of card used. | getCardType(): ?string | setCardType(?string cardType): void |
 | `expirationMonth` | `?int` | Optional | - | getExpirationMonth(): ?int | setExpirationMonth(?int expirationMonth): void |
 | `expirationYear` | `?int` | Optional | - | getExpirationYear(): ?int | setExpirationYear(?int expirationYear): void |
 | `customerId` | `?int` | Optional | - | getCustomerId(): ?int | setCustomerId(?int customerId): void |
@@ -39,7 +39,7 @@
   "first_name": "first_name0",
   "last_name": "last_name8",
   "masked_card_number": "masked_card_number8",
-  "card_type": "synchrony",
+  "card_type": "bogus",
   "expiration_month": 170
 }
 ```
