@@ -201,12 +201,7 @@ $result = $customFieldsController->listMetafields($collect);
 Use the following method to update metafields for your Site. Metafields can be populated with metadata after the fact.
 
 ```php
-function updateMetafield(
-    string $resourceType,
-    string $name,
-    ?string $currentName = null,
-    ?UpdateMetafieldsRequest $body = null
-): array
+function updateMetafield(string $resourceType, ?UpdateMetafieldsRequest $body = null): array
 ```
 
 ## Parameters
@@ -214,8 +209,6 @@ function updateMetafield(
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `resourceType` | [`string(ResourceType)`](../../doc/models/resource-type.md) | Template, Required | the resource type to which the metafields belong |
-| `name` | `string` | Query, Required | Name of the custom field. |
-| `currentName` | `?string` | Query, Optional | This only applies when you are updating an existing record and you wish to rename the field. Note you must supply name and current_name to rename the field |
 | `body` | [`?UpdateMetafieldsRequest`](../../doc/models/update-metafields-request.md) | Body, Optional | - |
 
 ## Response Type
@@ -227,12 +220,7 @@ function updateMetafield(
 ```php
 $resourceType = ResourceType::SUBSCRIPTIONS;
 
-$name = 'name0';
-
-$result = $customFieldsController->updateMetafield(
-    $resourceType,
-    $name
-);
+$result = $customFieldsController->updateMetafield($resourceType);
 ```
 
 

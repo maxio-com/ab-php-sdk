@@ -129,11 +129,29 @@ class CreditCardPaymentProfileBuilder
     }
 
     /**
+     * Unsets billing address field.
+     */
+    public function unsetBillingAddress(): self
+    {
+        $this->instance->unsetBillingAddress();
+        return $this;
+    }
+
+    /**
      * Sets billing city field.
      */
     public function billingCity(?string $value): self
     {
         $this->instance->setBillingCity($value);
+        return $this;
+    }
+
+    /**
+     * Unsets billing city field.
+     */
+    public function unsetBillingCity(): self
+    {
+        $this->instance->unsetBillingCity();
         return $this;
     }
 
@@ -147,6 +165,15 @@ class CreditCardPaymentProfileBuilder
     }
 
     /**
+     * Unsets billing state field.
+     */
+    public function unsetBillingState(): self
+    {
+        $this->instance->unsetBillingState();
+        return $this;
+    }
+
+    /**
      * Sets billing zip field.
      */
     public function billingZip(?string $value): self
@@ -156,11 +183,29 @@ class CreditCardPaymentProfileBuilder
     }
 
     /**
+     * Unsets billing zip field.
+     */
+    public function unsetBillingZip(): self
+    {
+        $this->instance->unsetBillingZip();
+        return $this;
+    }
+
+    /**
      * Sets billing country field.
      */
     public function billingCountry(?string $value): self
     {
         $this->instance->setBillingCountry($value);
+        return $this;
+    }
+
+    /**
+     * Unsets billing country field.
+     */
+    public function unsetBillingCountry(): self
+    {
+        $this->instance->unsetBillingCountry();
         return $this;
     }
 
@@ -192,6 +237,15 @@ class CreditCardPaymentProfileBuilder
     }
 
     /**
+     * Unsets billing address 2 field.
+     */
+    public function unsetBillingAddress2(): self
+    {
+        $this->instance->unsetBillingAddress2();
+        return $this;
+    }
+
+    /**
      * Sets payment type field.
      */
     public function paymentType(?string $value): self
@@ -215,6 +269,15 @@ class CreditCardPaymentProfileBuilder
     public function siteGatewaySettingId(?int $value): self
     {
         $this->instance->setSiteGatewaySettingId($value);
+        return $this;
+    }
+
+    /**
+     * Unsets site gateway setting id field.
+     */
+    public function unsetSiteGatewaySettingId(): self
+    {
+        $this->instance->unsetSiteGatewaySettingId();
         return $this;
     }
 

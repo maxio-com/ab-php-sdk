@@ -65,29 +65,29 @@ class CreditCardPaymentProfile implements \JsonSerializable
     private $vaultToken;
 
     /**
-     * @var string|null
+     * @var array
      */
-    private $billingAddress;
+    private $billingAddress = [];
 
     /**
-     * @var string|null
+     * @var array
      */
-    private $billingCity;
+    private $billingCity = [];
 
     /**
-     * @var string|null
+     * @var array
      */
-    private $billingState;
+    private $billingState = [];
 
     /**
-     * @var string|null
+     * @var array
      */
-    private $billingZip;
+    private $billingZip = [];
 
     /**
-     * @var string|null
+     * @var array
      */
-    private $billingCountry;
+    private $billingCountry = [];
 
     /**
      * @var array
@@ -95,9 +95,9 @@ class CreditCardPaymentProfile implements \JsonSerializable
     private $customerVaultToken = [];
 
     /**
-     * @var string|null
+     * @var array
      */
-    private $billingAddress2;
+    private $billingAddress2 = [];
 
     /**
      * @var string|null
@@ -110,9 +110,9 @@ class CreditCardPaymentProfile implements \JsonSerializable
     private $disabled;
 
     /**
-     * @var int|null
+     * @var array
      */
-    private $siteGatewaySettingId;
+    private $siteGatewaySettingId = [];
 
     /**
      * @var array
@@ -202,6 +202,7 @@ class CreditCardPaymentProfile implements \JsonSerializable
 
     /**
      * Returns Card Type.
+     * The type of card used.
      */
     public function getCardType(): ?string
     {
@@ -210,9 +211,10 @@ class CreditCardPaymentProfile implements \JsonSerializable
 
     /**
      * Sets Card Type.
+     * The type of card used.
      *
      * @maps card_type
-     * @factory \AdvancedBillingLib\Models\CardType1::checkValue
+     * @factory \AdvancedBillingLib\Models\CardType::checkValue
      */
     public function setCardType(?string $cardType): void
     {
@@ -317,7 +319,10 @@ class CreditCardPaymentProfile implements \JsonSerializable
      */
     public function getBillingAddress(): ?string
     {
-        return $this->billingAddress;
+        if (count($this->billingAddress) == 0) {
+            return null;
+        }
+        return $this->billingAddress['value'];
     }
 
     /**
@@ -327,7 +332,15 @@ class CreditCardPaymentProfile implements \JsonSerializable
      */
     public function setBillingAddress(?string $billingAddress): void
     {
-        $this->billingAddress = $billingAddress;
+        $this->billingAddress['value'] = $billingAddress;
+    }
+
+    /**
+     * Unsets Billing Address.
+     */
+    public function unsetBillingAddress(): void
+    {
+        $this->billingAddress = [];
     }
 
     /**
@@ -335,7 +348,10 @@ class CreditCardPaymentProfile implements \JsonSerializable
      */
     public function getBillingCity(): ?string
     {
-        return $this->billingCity;
+        if (count($this->billingCity) == 0) {
+            return null;
+        }
+        return $this->billingCity['value'];
     }
 
     /**
@@ -345,7 +361,15 @@ class CreditCardPaymentProfile implements \JsonSerializable
      */
     public function setBillingCity(?string $billingCity): void
     {
-        $this->billingCity = $billingCity;
+        $this->billingCity['value'] = $billingCity;
+    }
+
+    /**
+     * Unsets Billing City.
+     */
+    public function unsetBillingCity(): void
+    {
+        $this->billingCity = [];
     }
 
     /**
@@ -353,7 +377,10 @@ class CreditCardPaymentProfile implements \JsonSerializable
      */
     public function getBillingState(): ?string
     {
-        return $this->billingState;
+        if (count($this->billingState) == 0) {
+            return null;
+        }
+        return $this->billingState['value'];
     }
 
     /**
@@ -363,7 +390,15 @@ class CreditCardPaymentProfile implements \JsonSerializable
      */
     public function setBillingState(?string $billingState): void
     {
-        $this->billingState = $billingState;
+        $this->billingState['value'] = $billingState;
+    }
+
+    /**
+     * Unsets Billing State.
+     */
+    public function unsetBillingState(): void
+    {
+        $this->billingState = [];
     }
 
     /**
@@ -371,7 +406,10 @@ class CreditCardPaymentProfile implements \JsonSerializable
      */
     public function getBillingZip(): ?string
     {
-        return $this->billingZip;
+        if (count($this->billingZip) == 0) {
+            return null;
+        }
+        return $this->billingZip['value'];
     }
 
     /**
@@ -381,7 +419,15 @@ class CreditCardPaymentProfile implements \JsonSerializable
      */
     public function setBillingZip(?string $billingZip): void
     {
-        $this->billingZip = $billingZip;
+        $this->billingZip['value'] = $billingZip;
+    }
+
+    /**
+     * Unsets Billing Zip.
+     */
+    public function unsetBillingZip(): void
+    {
+        $this->billingZip = [];
     }
 
     /**
@@ -389,7 +435,10 @@ class CreditCardPaymentProfile implements \JsonSerializable
      */
     public function getBillingCountry(): ?string
     {
-        return $this->billingCountry;
+        if (count($this->billingCountry) == 0) {
+            return null;
+        }
+        return $this->billingCountry['value'];
     }
 
     /**
@@ -399,7 +448,15 @@ class CreditCardPaymentProfile implements \JsonSerializable
      */
     public function setBillingCountry(?string $billingCountry): void
     {
-        $this->billingCountry = $billingCountry;
+        $this->billingCountry['value'] = $billingCountry;
+    }
+
+    /**
+     * Unsets Billing Country.
+     */
+    public function unsetBillingCountry(): void
+    {
+        $this->billingCountry = [];
     }
 
     /**
@@ -436,7 +493,10 @@ class CreditCardPaymentProfile implements \JsonSerializable
      */
     public function getBillingAddress2(): ?string
     {
-        return $this->billingAddress2;
+        if (count($this->billingAddress2) == 0) {
+            return null;
+        }
+        return $this->billingAddress2['value'];
     }
 
     /**
@@ -446,7 +506,15 @@ class CreditCardPaymentProfile implements \JsonSerializable
      */
     public function setBillingAddress2(?string $billingAddress2): void
     {
-        $this->billingAddress2 = $billingAddress2;
+        $this->billingAddress2['value'] = $billingAddress2;
+    }
+
+    /**
+     * Unsets Billing Address 2.
+     */
+    public function unsetBillingAddress2(): void
+    {
+        $this->billingAddress2 = [];
     }
 
     /**
@@ -490,7 +558,10 @@ class CreditCardPaymentProfile implements \JsonSerializable
      */
     public function getSiteGatewaySettingId(): ?int
     {
-        return $this->siteGatewaySettingId;
+        if (count($this->siteGatewaySettingId) == 0) {
+            return null;
+        }
+        return $this->siteGatewaySettingId['value'];
     }
 
     /**
@@ -500,7 +571,15 @@ class CreditCardPaymentProfile implements \JsonSerializable
      */
     public function setSiteGatewaySettingId(?int $siteGatewaySettingId): void
     {
-        $this->siteGatewaySettingId = $siteGatewaySettingId;
+        $this->siteGatewaySettingId['value'] = $siteGatewaySettingId;
+    }
+
+    /**
+     * Unsets Site Gateway Setting Id.
+     */
+    public function unsetSiteGatewaySettingId(): void
+    {
+        $this->siteGatewaySettingId = [];
     }
 
     /**
@@ -555,7 +634,7 @@ class CreditCardPaymentProfile implements \JsonSerializable
         }
         $json['masked_card_number']          = $this->maskedCardNumber;
         if (isset($this->cardType)) {
-            $json['card_type']               = CardType1::checkValue($this->cardType);
+            $json['card_type']               = CardType::checkValue($this->cardType);
         }
         if (isset($this->expirationMonth)) {
             $json['expiration_month']        = $this->expirationMonth;
@@ -572,26 +651,26 @@ class CreditCardPaymentProfile implements \JsonSerializable
         if (isset($this->vaultToken)) {
             $json['vault_token']             = $this->vaultToken;
         }
-        if (isset($this->billingAddress)) {
-            $json['billing_address']         = $this->billingAddress;
+        if (!empty($this->billingAddress)) {
+            $json['billing_address']         = $this->billingAddress['value'];
         }
-        if (isset($this->billingCity)) {
-            $json['billing_city']            = $this->billingCity;
+        if (!empty($this->billingCity)) {
+            $json['billing_city']            = $this->billingCity['value'];
         }
-        if (isset($this->billingState)) {
-            $json['billing_state']           = $this->billingState;
+        if (!empty($this->billingState)) {
+            $json['billing_state']           = $this->billingState['value'];
         }
-        if (isset($this->billingZip)) {
-            $json['billing_zip']             = $this->billingZip;
+        if (!empty($this->billingZip)) {
+            $json['billing_zip']             = $this->billingZip['value'];
         }
-        if (isset($this->billingCountry)) {
-            $json['billing_country']         = $this->billingCountry;
+        if (!empty($this->billingCountry)) {
+            $json['billing_country']         = $this->billingCountry['value'];
         }
         if (!empty($this->customerVaultToken)) {
             $json['customer_vault_token']    = $this->customerVaultToken['value'];
         }
-        if (isset($this->billingAddress2)) {
-            $json['billing_address_2']       = $this->billingAddress2;
+        if (!empty($this->billingAddress2)) {
+            $json['billing_address_2']       = $this->billingAddress2['value'];
         }
         if (isset($this->paymentType)) {
             $json['payment_type']            = $this->paymentType;
@@ -599,8 +678,8 @@ class CreditCardPaymentProfile implements \JsonSerializable
         if (isset($this->disabled)) {
             $json['disabled']                = $this->disabled;
         }
-        if (isset($this->siteGatewaySettingId)) {
-            $json['site_gateway_setting_id'] = $this->siteGatewaySettingId;
+        if (!empty($this->siteGatewaySettingId)) {
+            $json['site_gateway_setting_id'] = $this->siteGatewaySettingId['value'];
         }
         if (!empty($this->gatewayHandle)) {
             $json['gateway_handle']          = $this->gatewayHandle['value'];

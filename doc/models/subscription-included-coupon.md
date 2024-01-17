@@ -14,7 +14,7 @@
 | `usesAllowed` | `?int` | Optional | - | getUsesAllowed(): ?int | setUsesAllowed(?int usesAllowed): void |
 | `expiresAt` | `?string` | Optional | - | getExpiresAt(): ?string | setExpiresAt(?string expiresAt): void |
 | `recurring` | `?bool` | Optional | - | getRecurring(): ?bool | setRecurring(?bool recurring): void |
-| `amountInCents` | `?int` | Optional | - | getAmountInCents(): ?int | setAmountInCents(?int amountInCents): void |
+| `amountInCents` | `?int` | Optional | **Constraints**: `>= 0` | getAmountInCents(): ?int | setAmountInCents(?int amountInCents): void |
 | `percentage` | `?string` | Optional | - | getPercentage(): ?string | setPercentage(?string percentage): void |
 
 ## Example (as JSON)

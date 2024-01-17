@@ -17,7 +17,6 @@ use AdvancedBillingLib\Models\BankAccountVerificationRequest;
 use AdvancedBillingLib\Models\CreatePaymentProfileRequest;
 use AdvancedBillingLib\Models\CreatePaymentProfileResponse;
 use AdvancedBillingLib\Models\GetOneTimeTokenRequest;
-use AdvancedBillingLib\Models\ListPaymentProfilesResponse;
 use AdvancedBillingLib\Models\PaymentProfileResponse;
 use AdvancedBillingLib\Models\ReadPaymentProfileResponse;
 use AdvancedBillingLib\Models\UpdatePaymentProfileRequest;
@@ -376,7 +375,7 @@ class PaymentProfilesController extends BaseController
      *
      * @param array $options Array with all options for search
      *
-     * @return ListPaymentProfilesResponse[] Response from the API call
+     * @return ReadPaymentProfileResponse[] Response from the API call
      *
      * @throws ApiException Thrown if API call fails
      */
@@ -390,7 +389,7 @@ class PaymentProfilesController extends BaseController
                 QueryParam::init('customer_id', $options)->commaSeparated()->extract('customerId')
             );
 
-        $_resHandler = $this->responseHandler()->type(ListPaymentProfilesResponse::class, 1);
+        $_resHandler = $this->responseHandler()->type(ReadPaymentProfileResponse::class, 1);
 
         return $this->execute($_reqBuilder, $_resHandler);
     }

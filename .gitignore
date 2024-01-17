@@ -3,6 +3,6 @@ vendor/
 .phpunit.result.cache
 coverage/
 .idea
-.env.testing
 .env
+.env.testing
 .phpunit.cache
