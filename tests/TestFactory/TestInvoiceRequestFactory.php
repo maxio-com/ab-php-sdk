@@ -9,12 +9,16 @@ use AdvancedBillingLib\Models\Builders\CreateInvoiceBuilder;
 use AdvancedBillingLib\Models\Builders\CreateInvoiceCouponBuilder;
 use AdvancedBillingLib\Models\Builders\CreateInvoiceRequestBuilder;
 use AdvancedBillingLib\Models\Builders\InvoiceLineItemBuilder;
+use AdvancedBillingLib\Models\Builders\VoidInvoiceBuilder;
+use AdvancedBillingLib\Models\Builders\VoidInvoiceRequestBuilder;
 use AdvancedBillingLib\Models\Coupon;
 use AdvancedBillingLib\Models\CreateInvoice;
 use AdvancedBillingLib\Models\CreateInvoiceAddress;
 use AdvancedBillingLib\Models\CreateInvoiceCoupon;
 use AdvancedBillingLib\Models\CreateInvoiceRequest;
 use AdvancedBillingLib\Models\InvoiceLineItem;
+use AdvancedBillingLib\Models\VoidInvoice;
+use AdvancedBillingLib\Models\VoidInvoiceRequest;
 use AdvancedBillingLib\Tests\TestData\InvoiceTestData;
 use DateTime;
 use DateTimeInterface;
@@ -87,5 +91,17 @@ final class TestInvoiceRequestFactory
                 ->build(),
             $coupons
         );
+    }
+
+    public function createVoidInvoiceRequest(): VoidInvoiceRequest
+    {
+        return VoidInvoiceRequestBuilder::init($this->createVoidInvoice())
+            ->build();
+    }
+
+    private function createVoidInvoice(): VoidInvoice
+    {
+        return VoidInvoiceBuilder::init(InvoiceTestData::VOID_REASON)
+            ->build();
     }
 }

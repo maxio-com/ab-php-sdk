@@ -19,4 +19,6 @@ final class InvoiceTestData
     public const INVOICE_ADDRESS_PHONE = '123456789';
     public const INVOICE_ADDRESS_LAST_NAME = 'test last name';
     public const INVOICE_ADDRESS_FIRST_NAME = 'test first name';
+    public const VOID_REASON = 'Test reason';
+    const VOIDED_STATUS = 'voided';
 }

@@ -6,6 +6,8 @@ namespace AdvancedBillingLib\Tests\Controllers;
 
 use AdvancedBillingLib\Models\Coupon;
 use AdvancedBillingLib\Models\Invoice;
+use AdvancedBillingLib\Models\InvoiceEvent;
+use AdvancedBillingLib\Models\InvoiceEventType;
 use AdvancedBillingLib\Models\Subscription;
 use AdvancedBillingLib\Tests\TestData\InvoiceTestData;
 
@@ -63,5 +65,39 @@ final class InvoicesControllerTestAssertions
         $this->testCase::assertEquals($coupon->getCode(), $discount->getCode());
         $this->testCase::assertEquals($coupon->getName(), $discount->getTitle());
         $this->testCase::assertEquals($coupon->getPercentage(), $discount->getPercentage());
+    }
+
+    public function assertInvoiceVoided(Invoice $voidedInvoice): void
+    {
+        $this->testCase::assertEquals(InvoiceTestData::VOIDED_STATUS, $voidedInvoice->getStatus());
+    }
+
+    /**
+     * @param array<int, InvoiceEvent> $events
+     */
+    public function assertResponseReturnedEvents(array $events, int $paginationLimit): void
+    {
+        $this->testCase::assertGreaterThan(0, count($events));
+        $this->testCase::assertLessThanOrEqual($paginationLimit, count($events));
+    }
+
+    /**
+     * @param array<int, InvoiceEvent> $events
+     */
+    public function assertReturnedOnlyIssueInvoiceEvents(array $events): void
+    {
+        foreach ($events as $event) {
+            $this->testCase::assertEquals(InvoiceEventType::ISSUE_INVOICE, $event->getEventType());
+        }
+    }
+
+    /**
+     * @param array<int, InvoiceEvent> $events
+     */
+    public function assertReturnedOnlyVoidInvoiceEvents(array $events): void
+    {
+        foreach ($events as $event) {
+            $this->testCase::assertEquals(InvoiceEventType::VOID_INVOICE, $event->getEventType());
+        }
     }
 }

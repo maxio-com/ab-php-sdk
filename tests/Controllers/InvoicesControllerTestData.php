@@ -6,8 +6,10 @@ namespace AdvancedBillingLib\Tests\Controllers;
 
 use AdvancedBillingLib\Models\Coupon;
 use AdvancedBillingLib\Models\CreateInvoiceRequest;
+use AdvancedBillingLib\Models\InvoiceEventType;
 use AdvancedBillingLib\Models\ProductFamily;
 use AdvancedBillingLib\Models\Subscription;
+use AdvancedBillingLib\Models\VoidInvoiceRequest;
 use AdvancedBillingLib\Tests\DataLoader\TestCouponLoader;
 use AdvancedBillingLib\Tests\DataLoader\TestCustomerLoader;
 use AdvancedBillingLib\Tests\DataLoader\TestPaymentProfileLoader;
@@ -15,6 +17,8 @@ use AdvancedBillingLib\Tests\DataLoader\TestProductFamilyLoader;
 use AdvancedBillingLib\Tests\DataLoader\TestProductLoader;
 use AdvancedBillingLib\Tests\DataLoader\TestSubscriptionsLoader;
 use AdvancedBillingLib\Tests\TestFactory\TestInvoiceRequestFactory;
+use DateInterval;
+use DateTime;
 
 final class InvoicesControllerTestData
 {
@@ -69,7 +73,12 @@ final class InvoicesControllerTestData
         $customer = $this->customerLoader->loadSimpleCustomerWithPredefinedData();
         $paymentProfile = $this->paymentProfileLoader->load($customer->getId());
 
-        return $this->subscriptionsLoader->loadWithCoupons($customer->getId(), $product->getId(), $paymentProfile->getId(), [$coupon]);
+        return $this->subscriptionsLoader->loadWithCoupons(
+            $customer->getId(),
+            $product->getId(),
+            $paymentProfile->getId(),
+            [$coupon]
+        );
     }
 
     /**
@@ -78,5 +87,10 @@ final class InvoicesControllerTestData
     public function getCreateInvoiceWithCouponsRequest(array $coupons): CreateInvoiceRequest
     {
         return $this->invoiceRequestFactory->createCreateInvoiceRequestWithCoupons($coupons);
+    }
+
+    public function getVoidInvoiceRequest(): VoidInvoiceRequest
+    {
+        return $this->invoiceRequestFactory->createVoidInvoiceRequest();
     }
 }
