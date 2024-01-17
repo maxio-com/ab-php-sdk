@@ -469,14 +469,14 @@ Example response for Bank Account:
 ```
 
 ```php
-function readPaymentProfile(string $paymentProfileId): ReadPaymentProfileResponse
+function readPaymentProfile(int $paymentProfileId): ReadPaymentProfileResponse
 ```
 
 ## Parameters
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `paymentProfileId` | `string` | Template, Required | The Chargify id of the payment profile |
+| `paymentProfileId` | `int` | Template, Required | The Chargify id of the payment profile |
 
 ## Response Type
 
@@ -485,7 +485,7 @@ function readPaymentProfile(string $paymentProfileId): ReadPaymentProfileRespons
 ## Example Usage
 
 ```php
-$paymentProfileId = 'payment_profile_id2';
+$paymentProfileId = 198;
 
 $result = $paymentProfilesController->readPaymentProfile($paymentProfileId);
 ```
@@ -518,6 +518,12 @@ $result = $paymentProfilesController->readPaymentProfile($paymentProfileId);
   }
 }
 ```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 404 | Not Found | `ApiException` |
 
 
 # Update Payment Profile
@@ -559,7 +565,7 @@ The result will be that you have updated the billing information for the card, y
 
 ```php
 function updatePaymentProfile(
-    string $paymentProfileId,
+    int $paymentProfileId,
     ?UpdatePaymentProfileRequest $body = null
 ): UpdatePaymentProfileResponse
 ```
@@ -568,7 +574,7 @@ function updatePaymentProfile(
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `paymentProfileId` | `string` | Template, Required | The Chargify id of the payment profile |
+| `paymentProfileId` | `int` | Template, Required | The Chargify id of the payment profile |
 | `body` | [`?UpdatePaymentProfileRequest`](../../doc/models/update-payment-profile-request.md) | Body, Optional | - |
 
 ## Response Type
@@ -578,7 +584,7 @@ function updatePaymentProfile(
 ## Example Usage
 
 ```php
-$paymentProfileId = 'payment_profile_id2';
+$paymentProfileId = 198;
 
 $body = UpdatePaymentProfileRequestBuilder::init(
     UpdatePaymentProfileBuilder::init()
@@ -633,6 +639,13 @@ $result = $paymentProfilesController->updatePaymentProfile(
 }
 ```
 
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 404 | Not Found | `ApiException` |
+| 422 | Unprocessable Entity (WebDAV) | [`ErrorStringMapResponseException`](../../doc/models/error-string-map-response-exception.md) |
+
 
 # Delete Unused Payment Profile
 
@@ -641,14 +654,14 @@ Deletes an unused payment profile.
 If the payment profile is in use by one or more subscriptions or groups, a 422 and error message will be returned.
 
 ```php
-function deleteUnusedPaymentProfile(string $paymentProfileId): void
+function deleteUnusedPaymentProfile(int $paymentProfileId): void
 ```
 
 ## Parameters
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `paymentProfileId` | `string` | Template, Required | The Chargify id of the payment profile |
+| `paymentProfileId` | `int` | Template, Required | The Chargify id of the payment profile |
 
 ## Response Type
 
@@ -657,7 +670,7 @@ function deleteUnusedPaymentProfile(string $paymentProfileId): void
 ## Example Usage
 
 ```php
-$paymentProfileId = 'payment_profile_id2';
+$paymentProfileId = 198;
 
 $paymentProfilesController->deleteUnusedPaymentProfile($paymentProfileId);
 ```
@@ -678,7 +691,7 @@ This will delete a payment profile belonging to the customer on the subscription
 + If you delete the default payment profile for a subscription, you will need to specify another payment profile to be the default through the api, or either prompt the user to enter a card in the billing portal or on the self-service page, or visit the Payment Details tab on the subscription in the Admin UI and use the “Add New Credit Card” or “Make Active Payment Method” link, (depending on whether there are other cards present).
 
 ```php
-function deleteSubscriptionsPaymentProfile(int $subscriptionId, string $paymentProfileId): void
+function deleteSubscriptionsPaymentProfile(int $subscriptionId, int $paymentProfileId): void
 ```
 
 ## Parameters
@@ -686,7 +699,7 @@ function deleteSubscriptionsPaymentProfile(int $subscriptionId, string $paymentP
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
-| `paymentProfileId` | `string` | Template, Required | The Chargify id of the payment profile |
+| `paymentProfileId` | `int` | Template, Required | The Chargify id of the payment profile |
 
 ## Response Type
 
@@ -697,7 +710,7 @@ function deleteSubscriptionsPaymentProfile(int $subscriptionId, string $paymentP
 ```php
 $subscriptionId = 222;
 
-$paymentProfileId = 'payment_profile_id2';
+$paymentProfileId = 198;
 
 $paymentProfilesController->deleteSubscriptionsPaymentProfile(
     $subscriptionId,
@@ -789,7 +802,7 @@ This will delete a Payment Profile belonging to a Subscription Group.
 **Note**: If the Payment Profile belongs to multiple Subscription Groups and/or Subscriptions, it will be removed from all of them.
 
 ```php
-function deleteSubscriptionGroupPaymentProfile(string $uid, string $paymentProfileId): void
+function deleteSubscriptionGroupPaymentProfile(string $uid, int $paymentProfileId): void
 ```
 
 ## Parameters
@@ -797,7 +810,7 @@ function deleteSubscriptionGroupPaymentProfile(string $uid, string $paymentProfi
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `uid` | `string` | Template, Required | The uid of the subscription group |
-| `paymentProfileId` | `string` | Template, Required | The Chargify id of the payment profile |
+| `paymentProfileId` | `int` | Template, Required | The Chargify id of the payment profile |
 
 ## Response Type
 
@@ -808,7 +821,7 @@ function deleteSubscriptionGroupPaymentProfile(string $uid, string $paymentProfi
 ```php
 $uid = 'uid0';
 
-$paymentProfileId = 'payment_profile_id2';
+$paymentProfileId = 198;
 
 $paymentProfilesController->deleteSubscriptionGroupPaymentProfile(
     $uid,
@@ -901,7 +914,7 @@ The new payment profile must belong to the subscription group's customer, otherw
 ```php
 function updateSubscriptionGroupDefaultPaymentProfile(
     string $uid,
-    string $paymentProfileId
+    int $paymentProfileId
 ): PaymentProfileResponse
 ```
 
@@ -910,7 +923,7 @@ function updateSubscriptionGroupDefaultPaymentProfile(
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `uid` | `string` | Template, Required | The uid of the subscription group |
-| `paymentProfileId` | `string` | Template, Required | The Chargify id of the payment profile |
+| `paymentProfileId` | `int` | Template, Required | The Chargify id of the payment profile |
 
 ## Response Type
 
@@ -921,7 +934,7 @@ function updateSubscriptionGroupDefaultPaymentProfile(
 ```php
 $uid = 'uid0';
 
-$paymentProfileId = 'payment_profile_id2';
+$paymentProfileId = 198;
 
 $result = $paymentProfilesController->updateSubscriptionGroupDefaultPaymentProfile(
     $uid,

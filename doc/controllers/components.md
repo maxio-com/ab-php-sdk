@@ -1166,6 +1166,12 @@ $result = $componentsController->updateComponentPricePoint(
 );
 ```
 
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 422 | Unprocessable Entity (WebDAV) | [`ErrorArrayMapResponseException`](../../doc/models/error-array-map-response-exception.md) |
+
 
 # Archive Component Price Point
 
@@ -1232,6 +1238,12 @@ $result = $componentsController->archiveComponentPricePoint(
   }
 }
 ```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
 
 
 # Unarchive Component Price Point

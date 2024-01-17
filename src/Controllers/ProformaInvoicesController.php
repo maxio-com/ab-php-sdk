@@ -11,8 +11,8 @@ declare(strict_types=1);
 namespace AdvancedBillingLib\Controllers;
 
 use AdvancedBillingLib\Exceptions\ApiException;
+use AdvancedBillingLib\Exceptions\ErrorArrayMapResponseException;
 use AdvancedBillingLib\Exceptions\ErrorListResponseException;
-use AdvancedBillingLib\Exceptions\ErrorMapResponseException;
 use AdvancedBillingLib\Exceptions\ProformaBadRequestErrorResponseException;
 use AdvancedBillingLib\Models\CreateSubscriptionRequest;
 use AdvancedBillingLib\Models\Direction;
@@ -337,7 +337,7 @@ class ProformaInvoicesController extends BaseController
                 '422',
                 ErrorType::initWithErrorTemplate(
                     'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
-                    ErrorMapResponseException::class
+                    ErrorArrayMapResponseException::class
                 )
             )
             ->type(ProformaInvoice::class);
@@ -391,7 +391,7 @@ class ProformaInvoicesController extends BaseController
                 '422',
                 ErrorType::initWithErrorTemplate(
                     'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
-                    ErrorMapResponseException::class
+                    ErrorArrayMapResponseException::class
                 )
             )
             ->type(SignupProformaPreviewResponse::class);

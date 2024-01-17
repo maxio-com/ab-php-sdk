@@ -40,6 +40,11 @@ class CreateComponentPricePoint implements \JsonSerializable
     private $useSiteExchangeRate = true;
 
     /**
+     * @var bool|null
+     */
+    private $taxIncluded;
+
+    /**
      * @var int|null
      */
     private $interval;
@@ -168,6 +173,26 @@ class CreateComponentPricePoint implements \JsonSerializable
     }
 
     /**
+     * Returns Tax Included.
+     * Whether or not the price point includes tax
+     */
+    public function getTaxIncluded(): ?bool
+    {
+        return $this->taxIncluded;
+    }
+
+    /**
+     * Sets Tax Included.
+     * Whether or not the price point includes tax
+     *
+     * @maps tax_included
+     */
+    public function setTaxIncluded(?bool $taxIncluded): void
+    {
+        $this->taxIncluded = $taxIncluded;
+    }
+
+    /**
      * Returns Interval.
      * The numerical interval. i.e. an interval of ‘30’ coupled with an interval_unit of day would mean
      * this price point would renew every 30 days. This property is only available for sites with
@@ -234,6 +259,9 @@ class CreateComponentPricePoint implements \JsonSerializable
         $json['prices']                     = $this->prices;
         if (isset($this->useSiteExchangeRate)) {
             $json['use_site_exchange_rate'] = $this->useSiteExchangeRate;
+        }
+        if (isset($this->taxIncluded)) {
+            $json['tax_included']           = $this->taxIncluded;
         }
         if (isset($this->interval)) {
             $json['interval']               = $this->interval;

@@ -32,6 +32,7 @@
 | `type` | [`?string(PricePointType)`](../../doc/models/price-point-type.md) | Optional | The type of price point | getType(): ?string | setType(?string type): void |
 | `taxIncluded` | `?bool` | Optional | Whether or not the price point includes tax | getTaxIncluded(): ?bool | setTaxIncluded(?bool taxIncluded): void |
 | `subscriptionId` | `?int` | Optional | The subscription id this price point belongs to | getSubscriptionId(): ?int | setSubscriptionId(?int subscriptionId): void |
+| `currencyPrices` | [`?(CurrencyPrice[])`](../../doc/models/currency-price.md) | Optional | An array of currency pricing data is available when multiple currencies are defined for the site. It varies based on the use_site_exchange_rate setting for the price point. This parameter is present only in the response of read endpoints, after including the appropriate query parameter. | getCurrencyPrices(): ?array | setCurrencyPrices(?array currencyPrices): void |
 
 ## Example (as JSON)
 

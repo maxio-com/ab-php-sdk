@@ -48,6 +48,42 @@ class UpdateComponentPricePointBuilder
     }
 
     /**
+     * Sets handle field.
+     */
+    public function handle(?string $value): self
+    {
+        $this->instance->setHandle($value);
+        return $this;
+    }
+
+    /**
+     * Sets pricing scheme field.
+     */
+    public function pricingScheme(?string $value): self
+    {
+        $this->instance->setPricingScheme($value);
+        return $this;
+    }
+
+    /**
+     * Sets use site exchange rate field.
+     */
+    public function useSiteExchangeRate(?bool $value): self
+    {
+        $this->instance->setUseSiteExchangeRate($value);
+        return $this;
+    }
+
+    /**
+     * Sets tax included field.
+     */
+    public function taxIncluded(?bool $value): self
+    {
+        $this->instance->setTaxIncluded($value);
+        return $this;
+    }
+
+    /**
      * Sets interval field.
      */
     public function interval(?int $value): self

@@ -20,6 +20,26 @@ class UpdateComponentPricePoint implements \JsonSerializable
     private $name;
 
     /**
+     * @var string|null
+     */
+    private $handle;
+
+    /**
+     * @var string|null
+     */
+    private $pricingScheme;
+
+    /**
+     * @var bool|null
+     */
+    private $useSiteExchangeRate = true;
+
+    /**
+     * @var bool|null
+     */
+    private $taxIncluded;
+
+    /**
      * @var int|null
      */
     private $interval;
@@ -50,6 +70,89 @@ class UpdateComponentPricePoint implements \JsonSerializable
     public function setName(?string $name): void
     {
         $this->name = $name;
+    }
+
+    /**
+     * Returns Handle.
+     */
+    public function getHandle(): ?string
+    {
+        return $this->handle;
+    }
+
+    /**
+     * Sets Handle.
+     *
+     * @maps handle
+     */
+    public function setHandle(?string $handle): void
+    {
+        $this->handle = $handle;
+    }
+
+    /**
+     * Returns Pricing Scheme.
+     * The identifier for the pricing scheme. See [Product Components](https://help.chargify.
+     * com/products/product-components.html) for an overview of pricing schemes.
+     */
+    public function getPricingScheme(): ?string
+    {
+        return $this->pricingScheme;
+    }
+
+    /**
+     * Sets Pricing Scheme.
+     * The identifier for the pricing scheme. See [Product Components](https://help.chargify.
+     * com/products/product-components.html) for an overview of pricing schemes.
+     *
+     * @maps pricing_scheme
+     * @factory \AdvancedBillingLib\Models\PricingScheme::checkValue
+     */
+    public function setPricingScheme(?string $pricingScheme): void
+    {
+        $this->pricingScheme = $pricingScheme;
+    }
+
+    /**
+     * Returns Use Site Exchange Rate.
+     * Whether to use the site level exchange rate or define your own prices for each currency if you have
+     * multiple currencies defined on the site.
+     */
+    public function getUseSiteExchangeRate(): ?bool
+    {
+        return $this->useSiteExchangeRate;
+    }
+
+    /**
+     * Sets Use Site Exchange Rate.
+     * Whether to use the site level exchange rate or define your own prices for each currency if you have
+     * multiple currencies defined on the site.
+     *
+     * @maps use_site_exchange_rate
+     */
+    public function setUseSiteExchangeRate(?bool $useSiteExchangeRate): void
+    {
+        $this->useSiteExchangeRate = $useSiteExchangeRate;
+    }
+
+    /**
+     * Returns Tax Included.
+     * Whether or not the price point includes tax
+     */
+    public function getTaxIncluded(): ?bool
+    {
+        return $this->taxIncluded;
+    }
+
+    /**
+     * Sets Tax Included.
+     * Whether or not the price point includes tax
+     *
+     * @maps tax_included
+     */
+    public function setTaxIncluded(?bool $taxIncluded): void
+    {
+        $this->taxIncluded = $taxIncluded;
     }
 
     /**
@@ -134,16 +237,28 @@ class UpdateComponentPricePoint implements \JsonSerializable
     {
         $json = [];
         if (isset($this->name)) {
-            $json['name']          = $this->name;
+            $json['name']                   = $this->name;
+        }
+        if (isset($this->handle)) {
+            $json['handle']                 = $this->handle;
+        }
+        if (isset($this->pricingScheme)) {
+            $json['pricing_scheme']         = PricingScheme::checkValue($this->pricingScheme);
+        }
+        if (isset($this->useSiteExchangeRate)) {
+            $json['use_site_exchange_rate'] = $this->useSiteExchangeRate;
+        }
+        if (isset($this->taxIncluded)) {
+            $json['tax_included']           = $this->taxIncluded;
         }
         if (isset($this->interval)) {
-            $json['interval']      = $this->interval;
+            $json['interval']               = $this->interval;
         }
         if (isset($this->intervalUnit)) {
-            $json['interval_unit'] = IntervalUnit::checkValue($this->intervalUnit);
+            $json['interval_unit']          = IntervalUnit::checkValue($this->intervalUnit);
         }
         if (isset($this->prices)) {
-            $json['prices']        = $this->prices;
+            $json['prices']                 = $this->prices;
         }
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;

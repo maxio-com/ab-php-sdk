@@ -11,8 +11,8 @@ declare(strict_types=1);
 namespace AdvancedBillingLib\Controllers;
 
 use AdvancedBillingLib\Exceptions\ApiException;
+use AdvancedBillingLib\Exceptions\ErrorArrayMapResponseException;
 use AdvancedBillingLib\Exceptions\ErrorListResponseException;
-use AdvancedBillingLib\Exceptions\NestedErrorResponseException;
 use AdvancedBillingLib\Models\ConsolidatedInvoice;
 use AdvancedBillingLib\Models\CreateInvoicePaymentRequest;
 use AdvancedBillingLib\Models\CreateInvoiceRequest;
@@ -763,7 +763,7 @@ class InvoicesController extends BaseController
                 '422',
                 ErrorType::initWithErrorTemplate(
                     'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
-                    NestedErrorResponseException::class
+                    ErrorArrayMapResponseException::class
                 )
             )
             ->type(InvoiceResponse::class);
