@@ -17,9 +17,9 @@ final class TestCleaner
     {
         try {
             $this->client->getCustomersController()->deleteCustomer($customerId);
-        } catch (ApiException $e) {
+        } catch (ApiException) {
             sleep(1);
-            $this->client->getCustomersController()->deleteCustomer($customerId);
+            $this->removeCustomerById($customerId);
         }
     }
 

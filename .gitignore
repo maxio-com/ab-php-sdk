@@ -4,5 +4,5 @@ vendor/
 coverage/
 .idea
 .env
-.env.testing
+tests/.env.testing
 .phpunit.cache
