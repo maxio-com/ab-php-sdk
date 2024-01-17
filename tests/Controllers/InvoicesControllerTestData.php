@@ -93,4 +93,9 @@ final class InvoicesControllerTestData
     {
         return $this->invoiceRequestFactory->createVoidInvoiceRequest();
     }
+
+    public function getCreateInvoiceRequestWithInvalidPeriodRangeEndValue(): CreateInvoiceRequest
+    {
+        return $this->invoiceRequestFactory->createCreateInvoiceRequestWithInvalidPeriodRangeEndValue();
+    }
 }

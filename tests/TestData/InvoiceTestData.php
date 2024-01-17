@@ -20,5 +20,7 @@ final class InvoiceTestData
     public const INVOICE_ADDRESS_LAST_NAME = 'test last name';
     public const INVOICE_ADDRESS_FIRST_NAME = 'test first name';
     public const VOID_REASON = 'Test reason';
-    const VOIDED_STATUS = 'voided';
+    public const VOIDED_STATUS = 'voided';
+    public const LINE_ITEM_PERIOD_RANGE_START = 'Mon, 15 Jan 2023 16:23:45 GMT';
+    public const LINE_ITEM_INVALID_PERIOD_RANGE_END = 'Sun, 14 Jan 2023 16:23:45 GMT';
 }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace AdvancedBillingLib\Tests;
 
 use AdvancedBillingLib\AdvancedBillingClient;
+use AdvancedBillingLib\Exceptions\ApiException;
 
 final class TestCleaner
 {
@@ -14,7 +15,12 @@ final class TestCleaner
 
     public function removeCustomerById(int $customerId): void
     {
-        $this->client->getCustomersController()->deleteCustomer($customerId);
+        try {
+            $this->client->getCustomersController()->deleteCustomer($customerId);
+        } catch (ApiException $e) {
+            sleep(1);
+            $this->client->getCustomersController()->deleteCustomer($customerId);
+        }
     }
 
     public function archiveProductById(int $productId): void

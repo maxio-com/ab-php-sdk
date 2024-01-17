@@ -104,4 +104,16 @@ final class TestInvoiceRequestFactory
         return VoidInvoiceBuilder::init(InvoiceTestData::VOID_REASON)
             ->build();
     }
+
+    public function createCreateInvoiceRequestWithInvalidPeriodRangeEndValue(): CreateInvoiceRequest
+    {
+        $request = $this->createCreateInvoiceRequest();
+        $lineItems = $request->getInvoice()->getLineItems();
+        foreach ($lineItems as $lineItem) {
+            $lineItem->setPeriodRangeStart(InvoiceTestData::LINE_ITEM_PERIOD_RANGE_START);
+            $lineItem->setPeriodRangeEnd(InvoiceTestData::LINE_ITEM_INVALID_PERIOD_RANGE_END);
+        }
+
+        return $request;
+    }
 }

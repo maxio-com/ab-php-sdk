@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Tests\Controllers;
 
+use AdvancedBillingLib\Exceptions\ApiException;
 use AdvancedBillingLib\Models\InvoiceEventType;
 use AdvancedBillingLib\Tests\DataLoader\TestCouponLoader;
 use AdvancedBillingLib\Tests\DataLoader\TestCustomerLoader;
@@ -143,6 +144,9 @@ final class InvoicesControllerTest extends TestCase
         $this->cleaner->removeCustomerById($subscription->getCustomer()->getId());
     }
 
+    /**
+     * @covers \AdvancedBillingLib\Controllers\InvoicesController::listInvoiceEvents
+     */
     public function test_ListInvoiceEvents_ShouldReturnFilteredList_WhenFilteredByIssueInvoiceType(): void
     {
         $productFamily = $this->testData->loadProductFamily(
@@ -177,6 +181,9 @@ final class InvoicesControllerTest extends TestCase
         $this->cleaner->removeCustomerById($subscription->getCustomer()->getId());
     }
 
+    /**
+     * @covers \AdvancedBillingLib\Controllers\InvoicesController::listInvoiceEvents
+     */
     public function test_ListInvoiceEvents_ShouldReturnFilteredList_WhenFilteredByVoidInvoiceType(): void
     {
         $productFamily = $this->testData->loadProductFamily(
@@ -209,6 +216,35 @@ final class InvoicesControllerTest extends TestCase
             ->getEvents();
 
         $this->assertions->assertReturnedOnlyVoidInvoiceEvents($response);
+
+        $this->cleaner->removeSubscriptionById($subscription->getId(), $subscription->getCustomer()->getId());
+        $this->cleaner->removeCustomerById($subscription->getCustomer()->getId());
+    }
+
+    /**
+     * @covers \AdvancedBillingLib\Controllers\InvoicesController::createInvoice
+     */
+    public function test_CreateInvoice_ShouldThrowExceptionWith422StatusCode_WhenPeriodRangeEndIsBeforePeriodRangeStart(): void
+    {
+        $productFamily = $this->testData->loadProductFamily(
+            name: 'InvoicesControllerTest_CreateInvoice_ProductFamily_7'
+        );
+        $subscription = $this->testData->loadSubscription(
+            productFamilyId: $productFamily->getId(),
+            productName: 'InvoicesControllerTest CreateInvoice Product 7',
+            productHandle: 'invoicescontrollertest-createinvoice-product-7'
+        );
+        try {
+            $this->client
+                ->getInvoicesController()
+                ->createInvoice(
+                    $subscription->getId(),
+                    $this->testData->getCreateInvoiceRequestWithInvalidPeriodRangeEndValue()
+                )
+                ->getInvoice();
+        } catch (ApiException $e) {
+            $this->assertions->assertCannotCreateInvoiceBecauseOfInvalidPeriodRangeEndValue($e);
+        }
 
         $this->cleaner->removeSubscriptionById($subscription->getId(), $subscription->getCustomer()->getId());
         $this->cleaner->removeCustomerById($subscription->getCustomer()->getId());
