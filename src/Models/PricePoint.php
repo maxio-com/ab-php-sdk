@@ -40,6 +40,11 @@ class PricePoint implements \JsonSerializable
     private $useSiteExchangeRate = true;
 
     /**
+     * @var bool|null
+     */
+    private $taxIncluded;
+
+    /**
      * @var int|null
      */
     private $interval;
@@ -175,6 +180,26 @@ class PricePoint implements \JsonSerializable
     public function setUseSiteExchangeRate(?bool $useSiteExchangeRate): void
     {
         $this->useSiteExchangeRate = $useSiteExchangeRate;
+    }
+
+    /**
+     * Returns Tax Included.
+     * Whether or not the price point includes tax
+     */
+    public function getTaxIncluded(): ?bool
+    {
+        return $this->taxIncluded;
+    }
+
+    /**
+     * Sets Tax Included.
+     * Whether or not the price point includes tax
+     *
+     * @maps tax_included
+     */
+    public function setTaxIncluded(?bool $taxIncluded): void
+    {
+        $this->taxIncluded = $taxIncluded;
     }
 
     /**
@@ -351,6 +376,9 @@ class PricePoint implements \JsonSerializable
         }
         if (isset($this->useSiteExchangeRate)) {
             $json['use_site_exchange_rate']     = $this->useSiteExchangeRate;
+        }
+        if (isset($this->taxIncluded)) {
+            $json['tax_included']               = $this->taxIncluded;
         }
         if (isset($this->interval)) {
             $json['interval']                   = $this->interval;

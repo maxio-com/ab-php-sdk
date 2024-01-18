@@ -11,8 +11,8 @@ declare(strict_types=1);
 namespace AdvancedBillingLib\Controllers;
 
 use AdvancedBillingLib\Exceptions\ApiException;
+use AdvancedBillingLib\Exceptions\ErrorArrayMapResponseException;
 use AdvancedBillingLib\Exceptions\ErrorListResponseException;
-use AdvancedBillingLib\Exceptions\ErrorMapResponseException;
 use AdvancedBillingLib\Exceptions\ProductPricePointErrorResponseException;
 use AdvancedBillingLib\Models\BasicDateField;
 use AdvancedBillingLib\Models\BulkCreateProductPricePointsRequest;
@@ -347,7 +347,7 @@ class ProductPricePointsController extends BaseController
                 '422',
                 ErrorType::initWithErrorTemplate(
                     'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
-                    ErrorMapResponseException::class
+                    ErrorArrayMapResponseException::class
                 )
             )
             ->type(ProductPricePointCurrencyPrice::class);
@@ -392,7 +392,7 @@ class ProductPricePointsController extends BaseController
                 '422',
                 ErrorType::initWithErrorTemplate(
                     'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
-                    ErrorMapResponseException::class
+                    ErrorArrayMapResponseException::class
                 )
             )
             ->type(ProductPricePointCurrencyPrice::class);

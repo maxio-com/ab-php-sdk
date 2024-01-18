@@ -11,8 +11,8 @@ declare(strict_types=1);
 namespace AdvancedBillingLib\Controllers;
 
 use AdvancedBillingLib\Exceptions\ApiException;
+use AdvancedBillingLib\Exceptions\ErrorArrayMapResponseException;
 use AdvancedBillingLib\Exceptions\ErrorListResponseException;
-use AdvancedBillingLib\Exceptions\NestedErrorResponseException;
 use AdvancedBillingLib\Exceptions\SingleErrorResponseException;
 use AdvancedBillingLib\Exceptions\SubscriptionAddCouponErrorException;
 use AdvancedBillingLib\Exceptions\SubscriptionRemoveCouponErrorsException;
@@ -1454,7 +1454,7 @@ class SubscriptionsController extends BaseController
                 '400',
                 ErrorType::initWithErrorTemplate(
                     'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
-                    NestedErrorResponseException::class
+                    ErrorArrayMapResponseException::class
                 )
             )
             ->type(SubscriptionResponse::class);

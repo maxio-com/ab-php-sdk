@@ -10,15 +10,17 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Exceptions;
 
-class NestedErrorResponseException extends ApiException
+class ErrorStringMapResponseException extends ApiException
 {
     /**
-     * @var array|null
+     * @var array<string,string>|null
      */
     private $errors;
 
     /**
      * Returns Errors.
+     *
+     * @return array<string,string>|null
      */
     public function getErrors(): ?array
     {
@@ -29,6 +31,8 @@ class NestedErrorResponseException extends ApiException
      * Sets Errors.
      *
      * @maps errors
+     *
+     * @param array<string,string>|null $errors
      */
     public function setErrors(?array $errors): void
     {

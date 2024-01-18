@@ -25,7 +25,7 @@
 | `billingZip` | `?string` | Optional | - | getBillingZip(): ?string | setBillingZip(?string billingZip): void |
 | `billingCountry` | `?string` | Optional | - | getBillingCountry(): ?string | setBillingCountry(?string billingCountry): void |
 | `lastFour` | `?string` | Optional | - | getLastFour(): ?string | setLastFour(?string lastFour): void |
-| `cardType` | `?string` | Optional | - | getCardType(): ?string | setCardType(?string cardType): void |
+| `cardType` | [`?string(CardType)`](../../doc/models/card-type.md) | Optional | The type of card used. | getCardType(): ?string | setCardType(?string cardType): void |
 | `customerVaultToken` | `?string` | Optional | - | getCustomerVaultToken(): ?string | setCustomerVaultToken(?string customerVaultToken): void |
 | `cvv` | `?string` | Optional | - | getCvv(): ?string | setCvv(?string cvv): void |
 | `paymentType` | `?string` | Optional | - | getPaymentType(): ?string | setPaymentType(?string paymentType): void |
@@ -36,7 +36,6 @@
 {
   "full_number": 4111111111111111,
   "chargify_token": "tok_592nf92ng0sjd4300p",
-  "card_type": "visa",
   "expiration_month": "String1",
   "expiration_year": "String5",
   "vault_token": "vault_token6"

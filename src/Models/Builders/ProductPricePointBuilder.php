@@ -264,6 +264,15 @@ class ProductPricePointBuilder
     }
 
     /**
+     * Sets currency prices field.
+     */
+    public function currencyPrices(?array $value): self
+    {
+        $this->instance->setCurrencyPrices($value);
+        return $this;
+    }
+
+    /**
      * Initializes a new product price point object.
      */
     public function build(): ProductPricePoint

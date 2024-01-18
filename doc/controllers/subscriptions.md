@@ -1962,5 +1962,5 @@ $result = $subscriptionsController->activateSubscription($subscriptionId);
 
 | HTTP Status Code | Error Description | Exception Class |
 |  --- | --- | --- |
-| 400 | Bad Request | [`NestedErrorResponseException`](../../doc/models/nested-error-response-exception.md) |
+| 400 | Bad Request | [`ErrorArrayMapResponseException`](../../doc/models/error-array-map-response-exception.md) |
 

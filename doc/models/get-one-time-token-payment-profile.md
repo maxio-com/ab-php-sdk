@@ -13,7 +13,7 @@
 | `firstName` | `string` | Required | **Constraints**: *Minimum Length*: `1` | getFirstName(): string | setFirstName(string firstName): void |
 | `lastName` | `string` | Required | **Constraints**: *Minimum Length*: `1` | getLastName(): string | setLastName(string lastName): void |
 | `maskedCardNumber` | `string` | Required | **Constraints**: *Minimum Length*: `1` | getMaskedCardNumber(): string | setMaskedCardNumber(string maskedCardNumber): void |
-| `cardType` | `string` | Required | **Constraints**: *Minimum Length*: `1` | getCardType(): string | setCardType(string cardType): void |
+| `cardType` | [`string(CardType)`](../../doc/models/card-type.md) | Required | The type of card used. | getCardType(): string | setCardType(string cardType): void |
 | `expirationMonth` | `float` | Required | - | getExpirationMonth(): float | setExpirationMonth(float expirationMonth): void |
 | `expirationYear` | `float` | Required | - | getExpirationYear(): float | setExpirationYear(float expirationYear): void |
 | `customerId` | `?string` | Optional | - | getCustomerId(): ?string | setCustomerId(?string customerId): void |
@@ -39,7 +39,7 @@
   "first_name": "first_name2",
   "last_name": "last_name0",
   "masked_card_number": "masked_card_number0",
-  "card_type": "card_type8",
+  "card_type": "routex",
   "expiration_month": 187.78,
   "expiration_year": 164.44,
   "customer_id": "customer_id0",

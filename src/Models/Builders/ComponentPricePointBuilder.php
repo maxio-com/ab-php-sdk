@@ -183,11 +183,38 @@ class ComponentPricePointBuilder
     }
 
     /**
+     * Unsets interval field.
+     */
+    public function unsetInterval(): self
+    {
+        $this->instance->unsetInterval();
+        return $this;
+    }
+
+    /**
      * Sets interval unit field.
      */
     public function intervalUnit(?string $value): self
     {
         $this->instance->setIntervalUnit($value);
+        return $this;
+    }
+
+    /**
+     * Unsets interval unit field.
+     */
+    public function unsetIntervalUnit(): self
+    {
+        $this->instance->unsetIntervalUnit();
+        return $this;
+    }
+
+    /**
+     * Sets currency prices field.
+     */
+    public function currencyPrices(?array $value): self
+    {
+        $this->instance->setCurrencyPrices($value);
         return $this;
     }
 

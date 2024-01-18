@@ -2609,7 +2609,7 @@ $result = $invoicesController->createInvoice(
 
 | HTTP Status Code | Error Description | Exception Class |
 |  --- | --- | --- |
-| 422 | Unprocessable Entity (WebDAV) | [`NestedErrorResponseException`](../../doc/models/nested-error-response-exception.md) |
+| 422 | Unprocessable Entity (WebDAV) | [`ErrorArrayMapResponseException`](../../doc/models/error-array-map-response-exception.md) |
 
 
 # Send Invoice

@@ -10,7 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Exceptions;
 
-class ErrorMapResponseException extends ApiException
+class ErrorArrayMapResponseException extends ApiException
 {
     /**
      * @var array|null

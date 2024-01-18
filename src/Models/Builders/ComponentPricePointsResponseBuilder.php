@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace AdvancedBillingLib\Models\Builders;
 
 use AdvancedBillingLib\Models\ComponentPricePointsResponse;
+use AdvancedBillingLib\Models\ListPublicKeysMeta;
 use Core\Utils\CoreHelper;
 
 /**
@@ -44,6 +45,15 @@ class ComponentPricePointsResponseBuilder
     public function pricePoints(?array $value): self
     {
         $this->instance->setPricePoints($value);
+        return $this;
+    }
+
+    /**
+     * Sets meta field.
+     */
+    public function meta(?ListPublicKeysMeta $value): self
+    {
+        $this->instance->setMeta($value);
         return $this;
     }
 
