@@ -35,14 +35,14 @@ final class TestCleaner
 
     public function removeUnusedPaymentProfileById(int $paymentProfileId): void
     {
-        $this->client->getPaymentProfilesController()->deleteUnusedPaymentProfile((string) $paymentProfileId);
+        $this->client->getPaymentProfilesController()->deleteUnusedPaymentProfile($paymentProfileId);
     }
 
     public function removeSubscriptionPaymentProfileById(int $subscriptionId, int $paymentProfileId): void
     {
         $this->client->getPaymentProfilesController()->deleteSubscriptionsPaymentProfile(
             $subscriptionId,
-            (string) $paymentProfileId
+            $paymentProfileId
         );
     }
 
