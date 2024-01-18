@@ -24,7 +24,8 @@
 | `subscriptionId` | `?int` | Optional | (only used for Custom Pricing - ie. when the price point's type is `custom`) The id of the subscription that the custom price point is for. | getSubscriptionId(): ?int | setSubscriptionId(?int subscriptionId): void |
 | `taxIncluded` | `?bool` | Optional | - | getTaxIncluded(): ?bool | setTaxIncluded(?bool taxIncluded): void |
 | `interval` | `?int` | Optional | The numerical interval. i.e. an interval of ‘30’ coupled with an interval_unit of day would mean this component price point would renew every 30 days. This property is only available for sites with Multifrequency enabled. | getInterval(): ?int | setInterval(?int interval): void |
-| `intervalUnit` | [`?string(IntervalUnit)`](../../doc/models/interval-unit.md) | Optional | A string representing the interval unit for this component price point, either month or day. This property is only available for sites with Multifrequency enabled. | getIntervalUnit(): ?string | setIntervalUnit(?string intervalUnit): void |
+| `intervalUnit` | string([IntervalUnit](../../doc/models/interval-unit.md))\|null | Optional | This is a container for one-of cases. | getIntervalUnit(): ?string | setIntervalUnit(?string intervalUnit): void |
+| `currencyPrices` | [`?(ComponentCurrencyPrice[])`](../../doc/models/component-currency-price.md) | Optional | An array of currency pricing data is available when multiple currencies are defined for the site. It varies based on the use_site_exchange_rate setting for the price point. This parameter is present only in the response of read endpoints, after including the appropriate query parameter. | getCurrencyPrices(): ?array | setCurrencyPrices(?array currencyPrices): void |
 
 ## Example (as JSON)
 

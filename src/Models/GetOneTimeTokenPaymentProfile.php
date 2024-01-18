@@ -261,6 +261,7 @@ class GetOneTimeTokenPaymentProfile implements \JsonSerializable
 
     /**
      * Returns Card Type.
+     * The type of card used.
      */
     public function getCardType(): string
     {
@@ -269,9 +270,11 @@ class GetOneTimeTokenPaymentProfile implements \JsonSerializable
 
     /**
      * Sets Card Type.
+     * The type of card used.
      *
      * @required
      * @maps card_type
+     * @factory \AdvancedBillingLib\Models\CardType::checkValue
      */
     public function setCardType(string $cardType): void
     {
@@ -632,7 +635,7 @@ class GetOneTimeTokenPaymentProfile implements \JsonSerializable
         $json['first_name']               = $this->firstName;
         $json['last_name']                = $this->lastName;
         $json['masked_card_number']       = $this->maskedCardNumber;
-        $json['card_type']                = $this->cardType;
+        $json['card_type']                = CardType::checkValue($this->cardType);
         $json['expiration_month']         = $this->expirationMonth;
         $json['expiration_year']          = $this->expirationYear;
         if (!empty($this->customerId)) {

@@ -12,7 +12,7 @@
 | `id` | `?int` | Optional | - | getId(): ?int | setId(?int id): void |
 | `firstName` | `?string` | Optional | - | getFirstName(): ?string | setFirstName(?string firstName): void |
 | `lastName` | `?string` | Optional | - | getLastName(): ?string | setLastName(?string lastName): void |
-| `cardType` | `?string` | Optional | - | getCardType(): ?string | setCardType(?string cardType): void |
+| `cardType` | [`?string(CardType)`](../../doc/models/card-type.md) | Optional | The type of card used. | getCardType(): ?string | setCardType(?string cardType): void |
 | `expirationMonth` | `?int` | Optional | - | getExpirationMonth(): ?int | setExpirationMonth(?int expirationMonth): void |
 | `expirationYear` | `?int` | Optional | - | getExpirationYear(): ?int | setExpirationYear(?int expirationYear): void |
 | `customerId` | `?int` | Optional | - | getCustomerId(): ?int | setCustomerId(?int customerId): void |
@@ -37,7 +37,7 @@
   "id": 232,
   "first_name": "first_name0",
   "last_name": "last_name8",
-  "card_type": "card_type4",
+  "card_type": "olimpica",
   "expiration_month": 150
 }
 ```

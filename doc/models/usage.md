@@ -9,7 +9,7 @@
 
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
-| `id` | `?int` | Optional | - | getId(): ?int | setId(?int id): void |
+| `id` | `?int` | Optional | **Constraints**: `>= 0` | getId(): ?int | setId(?int id): void |
 | `memo` | `?string` | Optional | - | getMemo(): ?string | setMemo(?string memo): void |
 | `createdAt` | `?DateTime` | Optional | - | getCreatedAt(): ?\DateTime | setCreatedAt(?\DateTime createdAt): void |
 | `pricePointId` | `?int` | Optional | - | getPricePointId(): ?int | setPricePointId(?int pricePointId): void |

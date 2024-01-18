@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace AdvancedBillingLib\Tests\Controllers;
 
 use AdvancedBillingLib\Exceptions\ApiException;
-use AdvancedBillingLib\Exceptions\NestedErrorResponseException;
+use AdvancedBillingLib\Exceptions\ErrorArrayMapResponseException;
 use AdvancedBillingLib\Models\Coupon;
 use AdvancedBillingLib\Models\Invoice;
 use AdvancedBillingLib\Models\InvoiceEvent;
@@ -107,8 +107,8 @@ final class InvoicesControllerTestAssertions
 
     public function assertCannotCreateInvoiceBecauseOfInvalidPeriodRangeEndValue(ApiException|Exception $e): void
     {
-        $this->testCase::assertInstanceOf(NestedErrorResponseException::class, $e);
-//        $this->testCase::assertEquals(TestStatusCode::UNPROCESSABLE_CONTENT, $e->getCode());
+        $this->testCase::assertInstanceOf(ErrorArrayMapResponseException::class, $e);
+        $this->testCase::assertEquals(TestStatusCode::UNPROCESSABLE_CONTENT, $e->getCode());
         $this->testCase::assertEquals(
             [
                 'line_items[0].period_range_end' => [

@@ -85,6 +85,15 @@ class PricePointBuilder
     }
 
     /**
+     * Sets tax included field.
+     */
+    public function taxIncluded(?bool $value): self
+    {
+        $this->instance->setTaxIncluded($value);
+        return $this;
+    }
+
+    /**
      * Sets interval field.
      */
     public function interval(?int $value): self

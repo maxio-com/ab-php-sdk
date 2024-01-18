@@ -12,6 +12,7 @@ namespace AdvancedBillingLib\Controllers;
 
 use AdvancedBillingLib\Exceptions\ApiException;
 use AdvancedBillingLib\Exceptions\ErrorListResponseException;
+use AdvancedBillingLib\Exceptions\ErrorStringMapResponseException;
 use AdvancedBillingLib\Models\BankAccountResponse;
 use AdvancedBillingLib\Models\BankAccountVerificationRequest;
 use AdvancedBillingLib\Models\CreatePaymentProfileRequest;
@@ -432,19 +433,21 @@ class PaymentProfilesController extends BaseController
      * }
      * ```
      *
-     * @param string $paymentProfileId The Chargify id of the payment profile
+     * @param int $paymentProfileId The Chargify id of the payment profile
      *
      * @return ReadPaymentProfileResponse Response from the API call
      *
      * @throws ApiException Thrown if API call fails
      */
-    public function readPaymentProfile(string $paymentProfileId): ReadPaymentProfileResponse
+    public function readPaymentProfile(int $paymentProfileId): ReadPaymentProfileResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/payment_profiles/{payment_profile_id}.json')
             ->auth('global')
             ->parameters(TemplateParam::init('payment_profile_id', $paymentProfileId)->required());
 
-        $_resHandler = $this->responseHandler()->type(ReadPaymentProfileResponse::class);
+        $_resHandler = $this->responseHandler()
+            ->throwErrorOn('404', ErrorType::init('Not Found'))
+            ->type(ReadPaymentProfileResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
     }
@@ -497,7 +500,7 @@ class PaymentProfilesController extends BaseController
      * - If you are using Authorize.net or Stripe, you may elect to manually trigger a retry for a past due
      * subscription after a partial update.
      *
-     * @param string $paymentProfileId The Chargify id of the payment profile
+     * @param int $paymentProfileId The Chargify id of the payment profile
      * @param UpdatePaymentProfileRequest|null $body
      *
      * @return UpdatePaymentProfileResponse Response from the API call
@@ -505,7 +508,7 @@ class PaymentProfilesController extends BaseController
      * @throws ApiException Thrown if API call fails
      */
     public function updatePaymentProfile(
-        string $paymentProfileId,
+        int $paymentProfileId,
         ?UpdatePaymentProfileRequest $body = null
     ): UpdatePaymentProfileResponse {
         $_reqBuilder = $this->requestBuilder(RequestMethod::PUT, '/payment_profiles/{payment_profile_id}.json')
@@ -516,7 +519,16 @@ class PaymentProfilesController extends BaseController
                 BodyParam::init($body)
             );
 
-        $_resHandler = $this->responseHandler()->type(UpdatePaymentProfileResponse::class);
+        $_resHandler = $this->responseHandler()
+            ->throwErrorOn('404', ErrorType::init('Not Found'))
+            ->throwErrorOn(
+                '422',
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorStringMapResponseException::class
+                )
+            )
+            ->type(UpdatePaymentProfileResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
     }
@@ -527,13 +539,13 @@ class PaymentProfilesController extends BaseController
      * If the payment profile is in use by one or more subscriptions or groups, a 422 and error message
      * will be returned.
      *
-     * @param string $paymentProfileId The Chargify id of the payment profile
+     * @param int $paymentProfileId The Chargify id of the payment profile
      *
      * @return void Response from the API call
      *
      * @throws ApiException Thrown if API call fails
      */
-    public function deleteUnusedPaymentProfile(string $paymentProfileId): void
+    public function deleteUnusedPaymentProfile(int $paymentProfileId): void
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::DELETE, '/payment_profiles/{payment_profile_id}.json')
             ->auth('global')
@@ -563,13 +575,13 @@ class PaymentProfilesController extends BaseController
      * whether there are other cards present).
      *
      * @param int $subscriptionId The Chargify id of the subscription
-     * @param string $paymentProfileId The Chargify id of the payment profile
+     * @param int $paymentProfileId The Chargify id of the payment profile
      *
      * @return void Response from the API call
      *
      * @throws ApiException Thrown if API call fails
      */
-    public function deleteSubscriptionsPaymentProfile(int $subscriptionId, string $paymentProfileId): void
+    public function deleteSubscriptionsPaymentProfile(int $subscriptionId, int $paymentProfileId): void
     {
         $_reqBuilder = $this->requestBuilder(
             RequestMethod::DELETE,
@@ -631,13 +643,13 @@ class PaymentProfilesController extends BaseController
      * will be removed from all of them.
      *
      * @param string $uid The uid of the subscription group
-     * @param string $paymentProfileId The Chargify id of the payment profile
+     * @param int $paymentProfileId The Chargify id of the payment profile
      *
      * @return void Response from the API call
      *
      * @throws ApiException Thrown if API call fails
      */
-    public function deleteSubscriptionGroupPaymentProfile(string $uid, string $paymentProfileId): void
+    public function deleteSubscriptionGroupPaymentProfile(string $uid, int $paymentProfileId): void
     {
         $_reqBuilder = $this->requestBuilder(
             RequestMethod::DELETE,
@@ -705,7 +717,7 @@ class PaymentProfilesController extends BaseController
      * an error.
      *
      * @param string $uid The uid of the subscription group
-     * @param string $paymentProfileId The Chargify id of the payment profile
+     * @param int $paymentProfileId The Chargify id of the payment profile
      *
      * @return PaymentProfileResponse Response from the API call
      *
@@ -713,7 +725,7 @@ class PaymentProfilesController extends BaseController
      */
     public function updateSubscriptionGroupDefaultPaymentProfile(
         string $uid,
-        string $paymentProfileId
+        int $paymentProfileId
     ): PaymentProfileResponse {
         $_reqBuilder = $this->requestBuilder(
             RequestMethod::POST,

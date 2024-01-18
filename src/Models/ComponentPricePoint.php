@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class ComponentPricePoint implements \JsonSerializable
@@ -85,14 +86,19 @@ class ComponentPricePoint implements \JsonSerializable
     private $taxIncluded;
 
     /**
-     * @var int|null
+     * @var array
      */
-    private $interval;
+    private $interval = [];
 
     /**
-     * @var string|null
+     * @var array
      */
-    private $intervalUnit;
+    private $intervalUnit = [];
+
+    /**
+     * @var ComponentCurrencyPrice[]|null
+     */
+    private $currencyPrices;
 
     /**
      * Returns Id.
@@ -395,7 +401,10 @@ class ComponentPricePoint implements \JsonSerializable
      */
     public function getInterval(): ?int
     {
-        return $this->interval;
+        if (count($this->interval) == 0) {
+            return null;
+        }
+        return $this->interval['value'];
     }
 
     /**
@@ -408,7 +417,18 @@ class ComponentPricePoint implements \JsonSerializable
      */
     public function setInterval(?int $interval): void
     {
-        $this->interval = $interval;
+        $this->interval['value'] = $interval;
+    }
+
+    /**
+     * Unsets Interval.
+     * The numerical interval. i.e. an interval of ‘30’ coupled with an interval_unit of day would mean
+     * this component price point would renew every 30 days. This property is only available for sites with
+     * Multifrequency enabled.
+     */
+    public function unsetInterval(): void
+    {
+        $this->interval = [];
     }
 
     /**
@@ -418,7 +438,10 @@ class ComponentPricePoint implements \JsonSerializable
      */
     public function getIntervalUnit(): ?string
     {
-        return $this->intervalUnit;
+        if (count($this->intervalUnit) == 0) {
+            return null;
+        }
+        return $this->intervalUnit['value'];
     }
 
     /**
@@ -427,11 +450,50 @@ class ComponentPricePoint implements \JsonSerializable
      * property is only available for sites with Multifrequency enabled.
      *
      * @maps interval_unit
-     * @factory \AdvancedBillingLib\Models\IntervalUnit::checkValue
+     * @mapsBy anyOf(oneOf(IntervalUnit),null)
+     * @factory \AdvancedBillingLib\Models\IntervalUnit::checkValue IntervalUnit
      */
     public function setIntervalUnit(?string $intervalUnit): void
     {
-        $this->intervalUnit = $intervalUnit;
+        $this->intervalUnit['value'] = $intervalUnit;
+    }
+
+    /**
+     * Unsets Interval Unit.
+     * A string representing the interval unit for this component price point, either month or day. This
+     * property is only available for sites with Multifrequency enabled.
+     */
+    public function unsetIntervalUnit(): void
+    {
+        $this->intervalUnit = [];
+    }
+
+    /**
+     * Returns Currency Prices.
+     * An array of currency pricing data is available when multiple currencies are defined for the site. It
+     * varies based on the use_site_exchange_rate setting for the price point. This parameter is present
+     * only in the response of read endpoints, after including the appropriate query parameter.
+     *
+     * @return ComponentCurrencyPrice[]|null
+     */
+    public function getCurrencyPrices(): ?array
+    {
+        return $this->currencyPrices;
+    }
+
+    /**
+     * Sets Currency Prices.
+     * An array of currency pricing data is available when multiple currencies are defined for the site. It
+     * varies based on the use_site_exchange_rate setting for the price point. This parameter is present
+     * only in the response of read endpoints, after including the appropriate query parameter.
+     *
+     * @maps currency_prices
+     *
+     * @param ComponentCurrencyPrice[]|null $currencyPrices
+     */
+    public function setCurrencyPrices(?array $currencyPrices): void
+    {
+        $this->currencyPrices = $currencyPrices;
     }
 
     /**
@@ -488,11 +550,21 @@ class ComponentPricePoint implements \JsonSerializable
         if (isset($this->taxIncluded)) {
             $json['tax_included']           = $this->taxIncluded;
         }
-        if (isset($this->interval)) {
-            $json['interval']               = $this->interval;
+        if (!empty($this->interval)) {
+            $json['interval']               = $this->interval['value'];
         }
-        if (isset($this->intervalUnit)) {
-            $json['interval_unit']          = IntervalUnit::checkValue($this->intervalUnit);
+        if (!empty($this->intervalUnit)) {
+            $json['interval_unit']          =
+                ApiHelper::getJsonHelper()->verifyTypes(
+                    $this->intervalUnit['value'],
+                    'anyOf(oneOf(IntervalUnit),null)',
+                    [
+                        '\AdvancedBillingLib\Models\IntervalUnit::checkValue IntervalUnit'
+                    ]
+                );
+        }
+        if (isset($this->currencyPrices)) {
+            $json['currency_prices']        = $this->currencyPrices;
         }
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;

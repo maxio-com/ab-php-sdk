@@ -170,6 +170,7 @@ class UpdatedPaymentProfile implements \JsonSerializable
 
     /**
      * Returns Card Type.
+     * The type of card used.
      */
     public function getCardType(): ?string
     {
@@ -178,8 +179,10 @@ class UpdatedPaymentProfile implements \JsonSerializable
 
     /**
      * Sets Card Type.
+     * The type of card used.
      *
      * @maps card_type
+     * @factory \AdvancedBillingLib\Models\CardType::checkValue
      */
     public function setCardType(?string $cardType): void
     {
@@ -521,7 +524,7 @@ class UpdatedPaymentProfile implements \JsonSerializable
             $json['last_name']               = $this->lastName;
         }
         if (isset($this->cardType)) {
-            $json['card_type']               = $this->cardType;
+            $json['card_type']               = CardType::checkValue($this->cardType);
         }
         if (isset($this->expirationMonth)) {
             $json['expiration_month']        = $this->expirationMonth;

@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace AdvancedBillingLib\Controllers;
 
 use AdvancedBillingLib\Exceptions\ApiException;
+use AdvancedBillingLib\Exceptions\ErrorArrayMapResponseException;
 use AdvancedBillingLib\Exceptions\ErrorListResponseException;
 use AdvancedBillingLib\Models\BasicDateField;
 use AdvancedBillingLib\Models\Component;
@@ -526,7 +527,12 @@ class ComponentsController extends BaseController
                 BodyParam::init($body)
             );
 
-        $_resHandler = $this->responseHandler()->type(ComponentPricePointResponse::class);
+        $_resHandler = $this->responseHandler()
+            ->throwErrorOn(
+                '422',
+                ErrorType::init('Unprocessable Entity (WebDAV)', ErrorArrayMapResponseException::class)
+            )
+            ->type(ComponentPricePointResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
     }
@@ -554,7 +560,12 @@ class ComponentsController extends BaseController
                 TemplateParam::init('price_point_id', $pricePointId)->required()
             );
 
-        $_resHandler = $this->responseHandler()->type(ComponentPricePointResponse::class);
+        $_resHandler = $this->responseHandler()
+            ->throwErrorOn(
+                '422',
+                ErrorType::init('Unprocessable Entity (WebDAV)', ErrorListResponseException::class)
+            )
+            ->type(ComponentPricePointResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
     }

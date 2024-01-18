@@ -8,7 +8,7 @@ use AdvancedBillingLib\Models\BankAccount;
 use AdvancedBillingLib\Models\BankAccountPaymentProfile;
 use AdvancedBillingLib\Models\CreatedPaymentProfile;
 use AdvancedBillingLib\Models\CreditCardPaymentProfile;
-use AdvancedBillingLib\Models\ListPaymentProfilesResponse;
+use AdvancedBillingLib\Models\ReadPaymentProfileResponse;
 use AdvancedBillingLib\Models\UpdatedPaymentProfile;
 use AdvancedBillingLib\Tests\TestData\PaymentProfileTestData;
 
@@ -29,7 +29,7 @@ final class PaymentProfilesControllerTestAssertions
     }
 
     /**
-     * @param array<int, ListPaymentProfilesResponse> $paymentProfiles
+     * @param array<int, ReadPaymentProfileResponse> $paymentProfiles
      */
     public function assertNoPaymentProfilesFound(array $paymentProfiles): void
     {
@@ -37,7 +37,7 @@ final class PaymentProfilesControllerTestAssertions
     }
 
     /**
-     * @param array<int, ListPaymentProfilesResponse> $paymentProfiles
+     * @param array<int, ReadPaymentProfileResponse> $paymentProfiles
      */
     public function assertPaymentProfilesFound(
         array $paymentProfiles,

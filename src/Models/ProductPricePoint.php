@@ -131,6 +131,11 @@ class ProductPricePoint implements \JsonSerializable
     private $subscriptionId = [];
 
     /**
+     * @var CurrencyPrice[]|null
+     */
+    private $currencyPrices;
+
+    /**
      * Returns Id.
      */
     public function getId(): ?int
@@ -626,6 +631,34 @@ class ProductPricePoint implements \JsonSerializable
     }
 
     /**
+     * Returns Currency Prices.
+     * An array of currency pricing data is available when multiple currencies are defined for the site. It
+     * varies based on the use_site_exchange_rate setting for the price point. This parameter is present
+     * only in the response of read endpoints, after including the appropriate query parameter.
+     *
+     * @return CurrencyPrice[]|null
+     */
+    public function getCurrencyPrices(): ?array
+    {
+        return $this->currencyPrices;
+    }
+
+    /**
+     * Sets Currency Prices.
+     * An array of currency pricing data is available when multiple currencies are defined for the site. It
+     * varies based on the use_site_exchange_rate setting for the price point. This parameter is present
+     * only in the response of read endpoints, after including the appropriate query parameter.
+     *
+     * @maps currency_prices
+     *
+     * @param CurrencyPrice[]|null $currencyPrices
+     */
+    public function setCurrencyPrices(?array $currencyPrices): void
+    {
+        $this->currencyPrices = $currencyPrices;
+    }
+
+    /**
      * Encode this object to JSON
      *
      * @param bool $asArrayWhenEmpty Whether to serialize this model as an array whenever no fields
@@ -705,6 +738,9 @@ class ProductPricePoint implements \JsonSerializable
         }
         if (!empty($this->subscriptionId)) {
             $json['subscription_id']            = $this->subscriptionId['value'];
+        }
+        if (isset($this->currencyPrices)) {
+            $json['currency_prices']            = $this->currencyPrices;
         }
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;

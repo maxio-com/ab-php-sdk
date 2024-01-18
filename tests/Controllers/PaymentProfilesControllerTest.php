@@ -86,7 +86,7 @@ final class PaymentProfilesControllerTest extends TestCase
 
         $foundPaymentProfile = $this->client
             ->getPaymentProfilesController()
-            ->readPaymentProfile((string) $paymentProfile->getId())
+            ->readPaymentProfile($paymentProfile->getId())
             ->getPaymentProfile();
 
         $this->assertions->assertPaymentProfileFound($foundPaymentProfile, $paymentProfile);
@@ -105,7 +105,7 @@ final class PaymentProfilesControllerTest extends TestCase
 
         $foundPaymentProfile = $this->client
             ->getPaymentProfilesController()
-            ->updatePaymentProfile((string) $paymentProfile->getId(), $this->testData->getUpdatePaymentProfileRequest())
+            ->updatePaymentProfile($paymentProfile->getId(), $this->testData->getUpdatePaymentProfileRequest())
             ->getPaymentProfile();
 
         $this->assertions->assertPaymentProfileUpdated($foundPaymentProfile, $paymentProfile);
@@ -122,7 +122,7 @@ final class PaymentProfilesControllerTest extends TestCase
         $customer = $this->testData->loadCustomer();
         $paymentProfile = $this->testData->loadPaymentProfile($customer->getId());
 
-        $this->client->getPaymentProfilesController()->deleteUnusedPaymentProfile((string) $paymentProfile->getId());
+        $this->client->getPaymentProfilesController()->deleteUnusedPaymentProfile($paymentProfile->getId());
 
         $this->assertions->assertNoPaymentProfilesFound(
             $this->client->getPaymentProfilesController()->listPaymentProfiles(
@@ -144,7 +144,7 @@ final class PaymentProfilesControllerTest extends TestCase
 
         $this->client->getPaymentProfilesController()->deleteSubscriptionsPaymentProfile(
             $subscription->getId(),
-            (string) $paymentProfile->getId()
+            $paymentProfile->getId()
         );
 
         $this->assertions->assertNoPaymentProfilesFound(

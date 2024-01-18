@@ -423,6 +423,7 @@ class SubscriptionGroupCreditCard implements \JsonSerializable
 
     /**
      * Returns Card Type.
+     * The type of card used.
      */
     public function getCardType(): ?string
     {
@@ -431,8 +432,10 @@ class SubscriptionGroupCreditCard implements \JsonSerializable
 
     /**
      * Sets Card Type.
+     * The type of card used.
      *
      * @maps card_type
+     * @factory \AdvancedBillingLib\Models\CardType::checkValue
      */
     public function setCardType(?string $cardType): void
     {
@@ -566,7 +569,7 @@ class SubscriptionGroupCreditCard implements \JsonSerializable
             $json['last_four']            = $this->lastFour;
         }
         if (isset($this->cardType)) {
-            $json['card_type']            = $this->cardType;
+            $json['card_type']            = CardType::checkValue($this->cardType);
         }
         if (isset($this->customerVaultToken)) {
             $json['customer_vault_token'] = $this->customerVaultToken;
