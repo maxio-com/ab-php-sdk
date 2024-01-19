@@ -10,76 +10,15 @@ $subscriptionGroupsController = $client->getSubscriptionGroupsController();
 
 ## Methods
 
-* [Signup With Subscription Group](../../doc/controllers/subscription-groups.md#signup-with-subscription-group)
 * [Create Subscription Group](../../doc/controllers/subscription-groups.md#create-subscription-group)
 * [List Subscription Groups](../../doc/controllers/subscription-groups.md#list-subscription-groups)
+* [Create Subscription Group Hierarchy](../../doc/controllers/subscription-groups.md#create-subscription-group-hierarchy)
+* [Remove Subscription From Group](../../doc/controllers/subscription-groups.md#remove-subscription-from-group)
+* [Signup With Subscription Group](../../doc/controllers/subscription-groups.md#signup-with-subscription-group)
+* [Read Subscription Group by Subscription Id](../../doc/controllers/subscription-groups.md#read-subscription-group-by-subscription-id)
 * [Read Subscription Group](../../doc/controllers/subscription-groups.md#read-subscription-group)
 * [Update Subscription Group Members](../../doc/controllers/subscription-groups.md#update-subscription-group-members)
 * [Delete Subscription Group](../../doc/controllers/subscription-groups.md#delete-subscription-group)
-* [Read Subscription Group by Subscription Id](../../doc/controllers/subscription-groups.md#read-subscription-group-by-subscription-id)
-* [Create Subscription Group Hierarchy](../../doc/controllers/subscription-groups.md#create-subscription-group-hierarchy)
-* [Remove Subscription From Group](../../doc/controllers/subscription-groups.md#remove-subscription-from-group)
-
-
-# Signup With Subscription Group
-
-Create multiple subscriptions at once under the same customer and consolidate them into a subscription group.
-
-You must provide one and only one of the `payer_id`/`payer_reference`/`payer_attributes` for the customer attached to the group.
-
-You must provide one and only one of the `payment_profile_id`/`credit_card_attributes`/`bank_account_attributes` for the payment profile attached to the group.
-
-Only one of the `subscriptions` can have `"primary": true` attribute set.
-
-When passing product to a subscription you can use either `product_id` or `product_handle` or `offer_id`. You can also use `custom_price` instead.
-
-```php
-function signupWithSubscriptionGroup(
-    ?SubscriptionGroupSignupRequest $body = null
-): SubscriptionGroupSignupResponse
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `body` | [`?SubscriptionGroupSignupRequest`](../../doc/models/subscription-group-signup-request.md) | Body, Optional | - |
-
-## Response Type
-
-[`SubscriptionGroupSignupResponse`](../../doc/models/subscription-group-signup-response.md)
-
-## Example Usage
-
-```php
-$body = SubscriptionGroupSignupRequestBuilder::init(
-    SubscriptionGroupSignupBuilder::init(
-        [
-            SubscriptionGroupSignupItemBuilder::init()
-                ->productId(11)
-                ->primary(true)
-                ->build(),
-            SubscriptionGroupSignupItemBuilder::init()
-                ->productId(12)
-                ->build(),
-            SubscriptionGroupSignupItemBuilder::init()
-                ->productId(13)
-                ->build()
-        ]
-    )
-        ->paymentProfileId(123)
-        ->payerId(123)
-        ->build()
-)->build();
-
-$result = $subscriptionGroupsController->signupWithSubscriptionGroup($body);
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 422 | Unprocessable Entity (WebDAV) | [`SubscriptionGroupSignupErrorResponseException`](../../doc/models/subscription-group-signup-error-response-exception.md) |
 
 
 # Create Subscription Group
@@ -221,6 +160,266 @@ $result = $subscriptionGroupsController->listSubscriptionGroups($collect);
   }
 }
 ```
+
+
+# Create Subscription Group Hierarchy
+
+For sites making use of the [Relationship Billing](https://chargify.zendesk.com/hc/en-us/articles/4407737494171) and [Customer Hierarchy](https://chargify.zendesk.com/hc/en-us/articles/4407746683291) features, it is possible to add existing subscriptions to subscription groups.
+
+Passing `group` parameters with a `target` containing a `type` and optional `id` is all that's needed. When the `target` parameter specifies a `"customer"` or `"subscription"` that is already part of a hierarchy, the subscription will become a member of the customer's subscription group.  If the target customer or subscription is not part of a subscription group, a new group will be created and the subscription will become part of the group with the specified target customer set as the responsible payer for the group's subscriptions.
+
+**Please Note:** In order to add an existing subscription to a subscription group, it must belong to either the same customer record as the target, or be within the same customer hierarchy.
+
+Rather than specifying a customer, the `target` parameter could instead simply have a value of
+
+* `"self"` which indicates the subscription will be paid for not by some other customer, but by the subscribing customer,
+* `"parent"` which indicates the subscription will be paid for by the subscribing customer's parent within a customer hierarchy, or
+* `"eldest"` which indicates the subscription will be paid for by the root-level customer in the subscribing customer's hierarchy.
+
+To create a new subscription into a subscription group, please reference the following:
+[Create Subscription in a Subscription Group](https://developers.chargify.com/docs/api-docs/d571659cf0f24-create-subscription#subscription-in-a-subscription-group)
+
+```php
+function createSubscriptionGroupHierarchy(
+    int $subscriptionId,
+    ?AddSubscriptionToAGroup $body = null
+): SubscriptionGroupResponse
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+| `body` | [`?AddSubscriptionToAGroup`](../../doc/models/add-subscription-to-a-group.md) | Body, Optional | - |
+
+## Response Type
+
+[`SubscriptionGroupResponse`](../../doc/models/subscription-group-response.md)
+
+## Example Usage
+
+```php
+$subscriptionId = 222;
+
+$body = AddSubscriptionToAGroupBuilder::init()
+    ->group(
+        GroupSettingsBuilder::init(
+            GroupTargetBuilder::init(
+                GroupTargetType::SUBSCRIPTION
+            )
+                ->id(32987)
+                ->build()
+        )
+            ->billing(
+                GroupBillingBuilder::init()
+                    ->accrue(true)
+                    ->alignDate(true)
+                    ->prorate(true)
+                    ->build()
+            )
+            ->build()
+    )
+    ->build();
+
+$result = $subscriptionGroupsController->createSubscriptionGroupHierarchy(
+    $subscriptionId,
+    $body
+);
+```
+
+## Example Response *(as JSON)*
+
+```json
+{
+  "subscription_group": {
+    "customer_id": 130690,
+    "payment_profile": {
+      "id": 32055,
+      "first_name": "Marty",
+      "last_name": "McFly",
+      "masked_card_number": "XXXX-XXXX-XXXX-1111"
+    },
+    "subscription_ids": [
+      32988,
+      33060,
+      32986
+    ],
+    "created_at": "2018-08-30T17:14:30-04:00"
+  }
+}
+```
+
+
+# Remove Subscription From Group
+
+For sites making use of the [Relationship Billing](https://chargify.zendesk.com/hc/en-us/articles/4407737494171) and [Customer Hierarchy](https://chargify.zendesk.com/hc/en-us/articles/4407746683291) features, it is possible to remove existing subscription from subscription group.
+
+```php
+function removeSubscriptionFromGroup(int $subscriptionId): void
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+
+## Response Type
+
+`void`
+
+## Example Usage
+
+```php
+$subscriptionId = 222;
+
+$subscriptionGroupsController->removeSubscriptionFromGroup($subscriptionId);
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 404 | Not Found | `ApiException` |
+| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
+
+
+# Signup With Subscription Group
+
+Create multiple subscriptions at once under the same customer and consolidate them into a subscription group.
+
+You must provide one and only one of the `payer_id`/`payer_reference`/`payer_attributes` for the customer attached to the group.
+
+You must provide one and only one of the `payment_profile_id`/`credit_card_attributes`/`bank_account_attributes` for the payment profile attached to the group.
+
+Only one of the `subscriptions` can have `"primary": true` attribute set.
+
+When passing product to a subscription you can use either `product_id` or `product_handle` or `offer_id`. You can also use `custom_price` instead.
+
+```php
+function signupWithSubscriptionGroup(
+    ?SubscriptionGroupSignupRequest $body = null
+): SubscriptionGroupSignupResponse
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `body` | [`?SubscriptionGroupSignupRequest`](../../doc/models/subscription-group-signup-request.md) | Body, Optional | - |
+
+## Response Type
+
+[`SubscriptionGroupSignupResponse`](../../doc/models/subscription-group-signup-response.md)
+
+## Example Usage
+
+```php
+$body = SubscriptionGroupSignupRequestBuilder::init(
+    SubscriptionGroupSignupBuilder::init(
+        [
+            SubscriptionGroupSignupItemBuilder::init()
+                ->productId(11)
+                ->primary(true)
+                ->build(),
+            SubscriptionGroupSignupItemBuilder::init()
+                ->productId(12)
+                ->build(),
+            SubscriptionGroupSignupItemBuilder::init()
+                ->productId(13)
+                ->build()
+        ]
+    )
+        ->paymentProfileId(123)
+        ->payerId(123)
+        ->build()
+)->build();
+
+$result = $subscriptionGroupsController->signupWithSubscriptionGroup($body);
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 422 | Unprocessable Entity (WebDAV) | [`SubscriptionGroupSignupErrorResponseException`](../../doc/models/subscription-group-signup-error-response-exception.md) |
+
+
+# Read Subscription Group by Subscription Id
+
+Use this endpoint to find subscription group associated with subscription.
+
+If the subscription is not in a group endpoint will return 404 code.
+
+```php
+function readSubscriptionGroupBySubscriptionId(string $subscriptionId): FullSubscriptionGroupResponse
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `subscriptionId` | `string` | Query, Required | The Chargify id of the subscription associated with the subscription group |
+
+## Response Type
+
+[`FullSubscriptionGroupResponse`](../../doc/models/full-subscription-group-response.md)
+
+## Example Usage
+
+```php
+$subscriptionId = 'subscription_id0';
+
+$result = $subscriptionGroupsController->readSubscriptionGroupBySubscriptionId($subscriptionId);
+```
+
+## Example Response *(as JSON)*
+
+```json
+{
+  "uid": "grp_939ktzq8v4477",
+  "scheme": 1,
+  "customer_id": 400,
+  "payment_profile_id": 567,
+  "subscription_ids": [
+    101,
+    102,
+    103
+  ],
+  "primary_subscription_id": 101,
+  "next_assessment_at": "2020-08-01T14:00:00-05:00",
+  "state": "active",
+  "cancel_at_end_of_period": false,
+  "customer": {
+    "first_name": "Mark",
+    "last_name": "Wannabewahlberg",
+    "organization": "The Funky Bunch",
+    "email": "markymark@example.com",
+    "reference": "4c92223b-bc16-4d0d-87ff-b177a89a2655"
+  },
+  "account_balances": {
+    "prepayments": {
+      "balance_in_cents": 0
+    },
+    "service_credits": {
+      "balance_in_cents": 0
+    },
+    "open_invoices": {
+      "balance_in_cents": 4400
+    },
+    "pending_discounts": {
+      "balance_in_cents": 0
+    }
+  }
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 404 | Not Found | `ApiException` |
 
 
 # Read Subscription Group
@@ -411,203 +610,4 @@ $result = $subscriptionGroupsController->deleteSubscriptionGroup($uid);
 | HTTP Status Code | Error Description | Exception Class |
 |  --- | --- | --- |
 | 404 | Not Found | `ApiException` |
-
-
-# Read Subscription Group by Subscription Id
-
-Use this endpoint to find subscription group associated with subscription.
-
-If the subscription is not in a group endpoint will return 404 code.
-
-```php
-function readSubscriptionGroupBySubscriptionId(string $subscriptionId): FullSubscriptionGroupResponse
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `subscriptionId` | `string` | Query, Required | The Chargify id of the subscription associated with the subscription group |
-
-## Response Type
-
-[`FullSubscriptionGroupResponse`](../../doc/models/full-subscription-group-response.md)
-
-## Example Usage
-
-```php
-$subscriptionId = 'subscription_id0';
-
-$result = $subscriptionGroupsController->readSubscriptionGroupBySubscriptionId($subscriptionId);
-```
-
-## Example Response *(as JSON)*
-
-```json
-{
-  "uid": "grp_939ktzq8v4477",
-  "scheme": 1,
-  "customer_id": 400,
-  "payment_profile_id": 567,
-  "subscription_ids": [
-    101,
-    102,
-    103
-  ],
-  "primary_subscription_id": 101,
-  "next_assessment_at": "2020-08-01T14:00:00-05:00",
-  "state": "active",
-  "cancel_at_end_of_period": false,
-  "customer": {
-    "first_name": "Mark",
-    "last_name": "Wannabewahlberg",
-    "organization": "The Funky Bunch",
-    "email": "markymark@example.com",
-    "reference": "4c92223b-bc16-4d0d-87ff-b177a89a2655"
-  },
-  "account_balances": {
-    "prepayments": {
-      "balance_in_cents": 0
-    },
-    "service_credits": {
-      "balance_in_cents": 0
-    },
-    "open_invoices": {
-      "balance_in_cents": 4400
-    },
-    "pending_discounts": {
-      "balance_in_cents": 0
-    }
-  }
-}
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 404 | Not Found | `ApiException` |
-
-
-# Create Subscription Group Hierarchy
-
-For sites making use of the [Relationship Billing](https://chargify.zendesk.com/hc/en-us/articles/4407737494171) and [Customer Hierarchy](https://chargify.zendesk.com/hc/en-us/articles/4407746683291) features, it is possible to add existing subscriptions to subscription groups.
-
-Passing `group` parameters with a `target` containing a `type` and optional `id` is all that's needed. When the `target` parameter specifies a `"customer"` or `"subscription"` that is already part of a hierarchy, the subscription will become a member of the customer's subscription group.  If the target customer or subscription is not part of a subscription group, a new group will be created and the subscription will become part of the group with the specified target customer set as the responsible payer for the group's subscriptions.
-
-**Please Note:** In order to add an existing subscription to a subscription group, it must belong to either the same customer record as the target, or be within the same customer hierarchy.
-
-Rather than specifying a customer, the `target` parameter could instead simply have a value of
-
-* `"self"` which indicates the subscription will be paid for not by some other customer, but by the subscribing customer,
-* `"parent"` which indicates the subscription will be paid for by the subscribing customer's parent within a customer hierarchy, or
-* `"eldest"` which indicates the subscription will be paid for by the root-level customer in the subscribing customer's hierarchy.
-
-To create a new subscription into a subscription group, please reference the following:
-[Create Subscription in a Subscription Group](https://developers.chargify.com/docs/api-docs/d571659cf0f24-create-subscription#subscription-in-a-subscription-group)
-
-```php
-function createSubscriptionGroupHierarchy(
-    int $subscriptionId,
-    ?AddSubscriptionToAGroup $body = null
-): SubscriptionGroupResponse
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
-| `body` | [`?AddSubscriptionToAGroup`](../../doc/models/add-subscription-to-a-group.md) | Body, Optional | - |
-
-## Response Type
-
-[`SubscriptionGroupResponse`](../../doc/models/subscription-group-response.md)
-
-## Example Usage
-
-```php
-$subscriptionId = 222;
-
-$body = AddSubscriptionToAGroupBuilder::init()
-    ->group(
-        GroupSettingsBuilder::init(
-            GroupTargetBuilder::init(
-                GroupTargetType::SUBSCRIPTION
-            )
-                ->id(32987)
-                ->build()
-        )
-            ->billing(
-                GroupBillingBuilder::init()
-                    ->accrue(true)
-                    ->alignDate(true)
-                    ->prorate(true)
-                    ->build()
-            )
-            ->build()
-    )
-    ->build();
-
-$result = $subscriptionGroupsController->createSubscriptionGroupHierarchy(
-    $subscriptionId,
-    $body
-);
-```
-
-## Example Response *(as JSON)*
-
-```json
-{
-  "subscription_group": {
-    "customer_id": 130690,
-    "payment_profile": {
-      "id": 32055,
-      "first_name": "Marty",
-      "last_name": "McFly",
-      "masked_card_number": "XXXX-XXXX-XXXX-1111"
-    },
-    "subscription_ids": [
-      32988,
-      33060,
-      32986
-    ],
-    "created_at": "2018-08-30T17:14:30-04:00"
-  }
-}
-```
-
-
-# Remove Subscription From Group
-
-For sites making use of the [Relationship Billing](https://chargify.zendesk.com/hc/en-us/articles/4407737494171) and [Customer Hierarchy](https://chargify.zendesk.com/hc/en-us/articles/4407746683291) features, it is possible to remove existing subscription from subscription group.
-
-```php
-function removeSubscriptionFromGroup(int $subscriptionId): void
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
-
-## Response Type
-
-`void`
-
-## Example Usage
-
-```php
-$subscriptionId = 222;
-
-$subscriptionGroupsController->removeSubscriptionFromGroup($subscriptionId);
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 404 | Not Found | `ApiException` |
-| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
 

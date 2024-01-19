@@ -25,6 +25,64 @@ use CoreInterfaces\Core\Request\RequestMethod;
 class OffersController extends BaseController
 {
     /**
+     * Archive an existing offer. Please provide an `offer_id` in order to archive the correct item.
+     *
+     * @param int $offerId The Chargify id of the offer
+     *
+     * @return void Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function archiveOffer(int $offerId): void
+    {
+        $_reqBuilder = $this->requestBuilder(RequestMethod::PUT, '/offers/{offer_id}/archive.json')
+            ->auth('global')
+            ->parameters(TemplateParam::init('offer_id', $offerId)->required());
+
+        $this->execute($_reqBuilder);
+    }
+
+    /**
+     * This method allows you to list a specific offer's attributes. This is different than list all offers
+     * for a site, as it requires an `offer_id`.
+     *
+     * @param int $offerId The Chargify id of the offer
+     *
+     * @return OfferResponse Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function readOffers(int $offerId): OfferResponse
+    {
+        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/offers/{offer_id}.json')
+            ->auth('global')
+            ->parameters(TemplateParam::init('offer_id', $offerId)->required());
+
+        $_resHandler = $this->responseHandler()->type(OfferResponse::class);
+
+        return $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
+     * Unarchive a previously archived offer. Please provide an `offer_id` in order to un-archive the
+     * correct item.
+     *
+     * @param int $offerId The Chargify id of the offer
+     *
+     * @return void Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function unarchiveOffer(int $offerId): void
+    {
+        $_reqBuilder = $this->requestBuilder(RequestMethod::PUT, '/offers/{offer_id}/unarchive.json')
+            ->auth('global')
+            ->parameters(TemplateParam::init('offer_id', $offerId)->required());
+
+        $this->execute($_reqBuilder);
+    }
+
+    /**
      * Create an offer within your Chargify site by sending a POST request.
      *
      * ## Documentation
@@ -90,63 +148,5 @@ class OffersController extends BaseController
         $_resHandler = $this->responseHandler()->type(ListOffersResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
-     * This method allows you to list a specific offer's attributes. This is different than list all offers
-     * for a site, as it requires an `offer_id`.
-     *
-     * @param int $offerId The Chargify id of the offer
-     *
-     * @return OfferResponse Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function readOffers(int $offerId): OfferResponse
-    {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/offers/{offer_id}.json')
-            ->auth('global')
-            ->parameters(TemplateParam::init('offer_id', $offerId)->required());
-
-        $_resHandler = $this->responseHandler()->type(OfferResponse::class);
-
-        return $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
-     * Archive an existing offer. Please provide an `offer_id` in order to archive the correct item.
-     *
-     * @param int $offerId The Chargify id of the offer
-     *
-     * @return void Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function archiveOffer(int $offerId): void
-    {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::PUT, '/offers/{offer_id}/archive.json')
-            ->auth('global')
-            ->parameters(TemplateParam::init('offer_id', $offerId)->required());
-
-        $this->execute($_reqBuilder);
-    }
-
-    /**
-     * Unarchive a previously archived offer. Please provide an `offer_id` in order to un-archive the
-     * correct item.
-     *
-     * @param int $offerId The Chargify id of the offer
-     *
-     * @return void Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function unarchiveOffer(int $offerId): void
-    {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::PUT, '/offers/{offer_id}/unarchive.json')
-            ->auth('global')
-            ->parameters(TemplateParam::init('offer_id', $offerId)->required());
-
-        $this->execute($_reqBuilder);
     }
 }

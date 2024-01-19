@@ -11,17 +11,17 @@ $subscriptionsController = $client->getSubscriptionsController();
 ## Methods
 
 * [Create Subscription](../../doc/controllers/subscriptions.md#create-subscription)
+* [Read Subscription by Reference](../../doc/controllers/subscriptions.md#read-subscription-by-reference)
+* [Purge Subscription](../../doc/controllers/subscriptions.md#purge-subscription)
+* [Activate Subscription](../../doc/controllers/subscriptions.md#activate-subscription)
 * [List Subscriptions](../../doc/controllers/subscriptions.md#list-subscriptions)
+* [Preview Subscription](../../doc/controllers/subscriptions.md#preview-subscription)
+* [Delete Coupon From Subscription](../../doc/controllers/subscriptions.md#delete-coupon-from-subscription)
 * [Update Subscription](../../doc/controllers/subscriptions.md#update-subscription)
 * [Read Subscription](../../doc/controllers/subscriptions.md#read-subscription)
 * [Override Subscription](../../doc/controllers/subscriptions.md#override-subscription)
-* [Read Subscription by Reference](../../doc/controllers/subscriptions.md#read-subscription-by-reference)
-* [Purge Subscription](../../doc/controllers/subscriptions.md#purge-subscription)
 * [Create Prepaid Subscription](../../doc/controllers/subscriptions.md#create-prepaid-subscription)
-* [Preview Subscription](../../doc/controllers/subscriptions.md#preview-subscription)
 * [Apply Coupon to Subscription](../../doc/controllers/subscriptions.md#apply-coupon-to-subscription)
-* [Delete Coupon From Subscription](../../doc/controllers/subscriptions.md#delete-coupon-from-subscription)
-* [Activate Subscription](../../doc/controllers/subscriptions.md#activate-subscription)
 
 
 # Create Subscription
@@ -845,6 +845,152 @@ $result = $subscriptionsController->createSubscription($body);
 | 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
 
 
+# Read Subscription by Reference
+
+Use this endpoint to find a subscription by its reference.
+
+```php
+function readSubscriptionByReference(?string $reference = null): SubscriptionResponse
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `reference` | `?string` | Query, Optional | Subscription reference |
+
+## Response Type
+
+[`SubscriptionResponse`](../../doc/models/subscription-response.md)
+
+## Example Usage
+
+```php
+$result = $subscriptionsController->readSubscriptionByReference();
+```
+
+
+# Purge Subscription
+
+For sites in test mode, you may purge individual subscriptions.
+
+Provide the subscription ID in the url.  To confirm, supply the customer ID in the query string `ack` parameter. You may also delete the customer record and/or payment profiles by passing `cascade` parameters. For example, to delete just the customer record, the query params would be: `?ack={customer_id}&cascade[]=customer`
+
+If you need to remove subscriptions from a live site, please contact support to discuss your use case.
+
+### Delete customer and payment profile
+
+The query params will be: `?ack={customer_id}&cascade[]=customer&cascade[]=payment_profile`
+
+```php
+function purgeSubscription(int $subscriptionId, int $ack, ?array $cascade = null): void
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+| `ack` | `int` | Query, Required | id of the customer. |
+| `cascade` | [`?(string(SubscriptionPurgeType)[])`](../../doc/models/subscription-purge-type.md) | Query, Optional | Options are "customer" or "payment_profile".<br>Use in query: `cascade[]=customer&cascade[]=payment_profile`. |
+
+## Response Type
+
+`void`
+
+## Example Usage
+
+```php
+$subscriptionId = 222;
+
+$ack = 252;
+
+Liquid error: Value cannot be null. (Parameter 'key')Liquid error: Value cannot be null. (Parameter 'key')$subscriptionsController->purgeSubscription(
+    $subscriptionId,
+    $ack
+);
+```
+
+
+# Activate Subscription
+
+Chargify offers the ability to activate awaiting signup and trialing subscriptions. This feature is only available on the Relationship Invoicing architecture. Subscriptions in a group may not be activated immediately.
+
+For details on how the activation works, and how to activate subscriptions through the application, see [activation](#).
+
+The `revert_on_failure` parameter controls the behavior upon activation failure.
+
+- If set to `true` and something goes wrong i.e. payment fails, then Chargify will not change the subscription's state. The subscription’s billing period will also remain the same.
+- If set to `false` and something goes wrong i.e. payment fails, then Chargify will continue through with the activation and enter an end of life state. For trialing subscriptions, that will either be trial ended (if the trial is no obligation), past due (if the trial has an obligation), or canceled (if the site has no dunning strategy, or has a strategy that says to cancel immediately). For awaiting signup subscriptions, that will always be canceled.
+
+The default activation failure behavior can be configured per activation attempt, or you may set a default value under Config > Settings > Subscription Activation Settings.
+
+## Activation Scenarios
+
+### Activate Awaiting Signup subscription
+
+- Given you have a product without trial
+- Given you have a site without dunning strategy
+
+```mermaid
+  flowchart LR
+    AS[Awaiting Signup] --> A{Activate}
+    A -->|Success| Active
+    A -->|Failure| ROF{revert_on_failure}
+    ROF -->|true| AS
+    ROF -->|false| Canceled
+```
+
+- Given you have a product with trial
+- Given you have a site with dunning strategy
+
+```mermaid
+  flowchart LR
+    AS[Awaiting Signup] --> A{Activate}
+    A -->|Success| Trialing
+    A -->|Failure| ROF{revert_on_failure}
+    ROF -->|true| AS
+    ROF -->|false| PD[Past Due]
+```
+
+### Activate Trialing subscription
+
+You can read more about the behavior of trialing subscriptions [here](https://maxio-chargify.zendesk.com/hc/en-us/articles/5404494617357#trialing-subscriptions-0-0).
+When the `revert_on_failure` parameter is set to `true`, the subscription's state will remain as Trialing, we will void the invoice from activation and return any prepayments and credits applied to the invoice back to the subscription.
+
+```php
+function activateSubscription(
+    int $subscriptionId,
+    ?ActivateSubscriptionRequest $body = null
+): SubscriptionResponse
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+| `body` | [`?ActivateSubscriptionRequest`](../../doc/models/activate-subscription-request.md) | Body, Optional | - |
+
+## Response Type
+
+[`SubscriptionResponse`](../../doc/models/subscription-response.md)
+
+## Example Usage
+
+```php
+$subscriptionId = 222;
+
+$result = $subscriptionsController->activateSubscription($subscriptionId);
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 400 | Bad Request | [`ErrorArrayMapResponseException`](../../doc/models/error-array-map-response-exception.md) |
+
+
 # List Subscriptions
 
 This method will return an array of subscriptions from a Site. Pay close attention to query string filters and pagination in order to control responses from the server.
@@ -900,6 +1046,223 @@ $collect = Liquid error: Value cannot be null. (Parameter 'key')[
 
 $result = $subscriptionsController->listSubscriptions($collect);
 ```
+
+
+# Preview Subscription
+
+The Chargify API allows you to preview a subscription by POSTing the same JSON or XML as for a subscription creation.
+
+The "Next Billing" amount and "Next Billing" date are represented in each Subscriber's Summary. For more information, please see our documentation [here](https://chargify.zendesk.com/hc/en-us/articles/4407884887835#next-billing).
+
+## Side effects
+
+A subscription will not be created by sending a POST to this endpoint. It is meant to serve as a prediction.
+
+## Taxable Subscriptions
+
+This endpoint will preview taxes applicable to a purchase. In order for taxes to be previewed, the following conditions must be met:
+
++ Taxes must be configured on the subscription
++ The preview must be for the purchase of a taxable product or component, or combination of the two.
++ The subscription payload must contain a full billing or shipping address in order to calculate tax
+
+For more information about creating taxable previews, please see our documentation guide on how to create [taxable subscriptions.](https://chargify.zendesk.com/hc/en-us/articles/4407904217755#creating-taxable-subscriptions)
+
+You do **not** need to include a card number to generate tax information when you are previewing a subscription. However, please note that when you actually want to create the subscription, you must include the credit card information if you want the billing address to be stored in Chargify. The billing address and the credit card information are stored together within the payment profile object. Also, you may not send a billing address to Chargify without payment profile information, as the address is stored on the card.
+
+You can pass shipping and billing addresses and still decide not to calculate taxes. To do that, pass `skip_billing_manifest_taxes: true` attribute.
+
+## Non-taxable Subscriptions
+
+If you'd like to calculate subscriptions that do not include tax, please feel free to leave off the billing information.
+
+```php
+function previewSubscription(?CreateSubscriptionRequest $body = null): SubscriptionPreviewResponse
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `body` | [`?CreateSubscriptionRequest`](../../doc/models/create-subscription-request.md) | Body, Optional | - |
+
+## Response Type
+
+[`SubscriptionPreviewResponse`](../../doc/models/subscription-preview-response.md)
+
+## Example Usage
+
+```php
+$body = CreateSubscriptionRequestBuilder::init(
+    CreateSubscriptionBuilder::init()
+        ->productHandle('gold-product')
+        ->build()
+)->build();
+
+$result = $subscriptionsController->previewSubscription($body);
+```
+
+## Example Response *(as JSON)*
+
+```json
+{
+  "subscription_preview": {
+    "current_billing_manifest": {
+      "line_items": [
+        {
+          "transaction_type": "charge",
+          "kind": "baseline",
+          "amount_in_cents": 5000,
+          "memo": "Gold Product (08/21/2018 - 09/21/2018)",
+          "discount_amount_in_cents": 0,
+          "taxable_amount_in_cents": 0,
+          "product_id": 1,
+          "product_handle": "gold-product",
+          "product_name": "Gold Product",
+          "period_range_start": "13 Oct 2023",
+          "period_range_end": "13 Nov 2023"
+        },
+        {
+          "transaction_type": "charge",
+          "kind": "component",
+          "amount_in_cents": 28000,
+          "memo": "Component name: 14 Unit names",
+          "discount_amount_in_cents": 0,
+          "taxable_amount_in_cents": 0,
+          "component_id": 462149,
+          "component_handle": "handle",
+          "component_name": "Component name"
+        },
+        {
+          "transaction_type": "charge",
+          "kind": "component",
+          "amount_in_cents": 2000,
+          "memo": "Fractional Metered Components: 20.0 Fractional Metereds",
+          "discount_amount_in_cents": 0,
+          "taxable_amount_in_cents": 0,
+          "component_id": 426665,
+          "component_handle": "handle",
+          "component_name": "Fractional Metered Components"
+        },
+        {
+          "transaction_type": "charge",
+          "kind": "component",
+          "amount_in_cents": 0,
+          "memo": "On/Off Component",
+          "discount_amount_in_cents": 0,
+          "taxable_amount_in_cents": 0,
+          "component_id": 426670,
+          "component_handle": "handle",
+          "component_name": "On/Off Component"
+        },
+        {
+          "transaction_type": "adjustment",
+          "kind": "coupon",
+          "amount_in_cents": 0,
+          "memo": "Coupon: 1DOLLAR - You only get $1.00 off",
+          "discount_amount_in_cents": 0,
+          "taxable_amount_in_cents": 0
+        }
+      ],
+      "total_in_cents": 35000,
+      "total_discount_in_cents": 0,
+      "total_tax_in_cents": 0,
+      "subtotal_in_cents": 35000,
+      "start_date": "2018-08-21T21:25:21Z",
+      "end_date": "2018-09-21T21:25:21Z",
+      "period_type": "recurring",
+      "existing_balance_in_cents": 0
+    },
+    "next_billing_manifest": {
+      "line_items": [
+        {
+          "transaction_type": "charge",
+          "kind": "baseline",
+          "amount_in_cents": 5000,
+          "memo": "Gold Product (09/21/2018 - 10/21/2018)",
+          "discount_amount_in_cents": 0,
+          "taxable_amount_in_cents": 0,
+          "product_id": 1,
+          "product_handle": "gold-product",
+          "product_name": "Gold Product"
+        },
+        {
+          "transaction_type": "charge",
+          "kind": "component",
+          "amount_in_cents": 28000,
+          "memo": "Component name: 14 Unit names",
+          "discount_amount_in_cents": 0,
+          "taxable_amount_in_cents": 0,
+          "component_id": 462149,
+          "component_handle": "handle",
+          "component_name": "Component name"
+        },
+        {
+          "transaction_type": "charge",
+          "kind": "component",
+          "amount_in_cents": 0,
+          "memo": "On/Off Component",
+          "discount_amount_in_cents": 0,
+          "taxable_amount_in_cents": 0,
+          "component_id": 426670,
+          "component_handle": "handle",
+          "component_name": "On/Off Component"
+        }
+      ],
+      "total_in_cents": 33000,
+      "total_discount_in_cents": 0,
+      "total_tax_in_cents": 0,
+      "subtotal_in_cents": 33000,
+      "start_date": "2018-09-21T21:25:21Z",
+      "end_date": "2018-10-21T21:25:21Z",
+      "period_type": "recurring",
+      "existing_balance_in_cents": 0
+    }
+  }
+}
+```
+
+
+# Delete Coupon From Subscription
+
+Use this endpoint to remove a coupon from an existing subscription.
+
+For more information on the expected behaviour of removing a coupon from a subscription, please see our documentation [here.](https://chargify.zendesk.com/hc/en-us/articles/4407896488987#removing-a-coupon)
+
+```php
+function deleteCouponFromSubscription(int $subscriptionId, ?string $couponCode = null): string
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+| `couponCode` | `?string` | Query, Optional | The coupon code |
+
+## Response Type
+
+`string`
+
+## Example Usage
+
+```php
+$subscriptionId = 222;
+
+$result = $subscriptionsController->deleteCouponFromSubscription($subscriptionId);
+```
+
+## Example Response
+
+```
+"Coupon successfully removed"
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 422 | Unprocessable Entity (WebDAV) | [`SubscriptionRemoveCouponErrorsException`](../../doc/models/subscription-remove-coupon-errors-exception.md) |
 
 
 # Update Subscription
@@ -1337,73 +1700,6 @@ $subscriptionsController->overrideSubscription(
 | 422 | Unprocessable Entity (WebDAV) | [`SingleErrorResponseException`](../../doc/models/single-error-response-exception.md) |
 
 
-# Read Subscription by Reference
-
-Use this endpoint to find a subscription by its reference.
-
-```php
-function readSubscriptionByReference(?string $reference = null): SubscriptionResponse
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `reference` | `?string` | Query, Optional | Subscription reference |
-
-## Response Type
-
-[`SubscriptionResponse`](../../doc/models/subscription-response.md)
-
-## Example Usage
-
-```php
-$result = $subscriptionsController->readSubscriptionByReference();
-```
-
-
-# Purge Subscription
-
-For sites in test mode, you may purge individual subscriptions.
-
-Provide the subscription ID in the url.  To confirm, supply the customer ID in the query string `ack` parameter. You may also delete the customer record and/or payment profiles by passing `cascade` parameters. For example, to delete just the customer record, the query params would be: `?ack={customer_id}&cascade[]=customer`
-
-If you need to remove subscriptions from a live site, please contact support to discuss your use case.
-
-### Delete customer and payment profile
-
-The query params will be: `?ack={customer_id}&cascade[]=customer&cascade[]=payment_profile`
-
-```php
-function purgeSubscription(int $subscriptionId, int $ack, ?array $cascade = null): void
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
-| `ack` | `int` | Query, Required | id of the customer. |
-| `cascade` | [`?(string(SubscriptionPurgeType)[])`](../../doc/models/subscription-purge-type.md) | Query, Optional | Options are "customer" or "payment_profile".<br>Use in query: `cascade[]=customer&cascade[]=payment_profile`. |
-
-## Response Type
-
-`void`
-
-## Example Usage
-
-```php
-$subscriptionId = 222;
-
-$ack = 252;
-
-Liquid error: Value cannot be null. (Parameter 'key')Liquid error: Value cannot be null. (Parameter 'key')$subscriptionsController->purgeSubscription(
-    $subscriptionId,
-    $ack
-);
-```
-
-
 # Create Prepaid Subscription
 
 Use this endpoint to update a subscription's prepaid configuration.
@@ -1456,181 +1752,6 @@ $result = $subscriptionsController->createPrepaidSubscription(
     "auto_replenish": true,
     "replenish_to_amount_in_cents": 50000,
     "replenish_threshold_amount_in_cents": 10000
-  }
-}
-```
-
-
-# Preview Subscription
-
-The Chargify API allows you to preview a subscription by POSTing the same JSON or XML as for a subscription creation.
-
-The "Next Billing" amount and "Next Billing" date are represented in each Subscriber's Summary. For more information, please see our documentation [here](https://chargify.zendesk.com/hc/en-us/articles/4407884887835#next-billing).
-
-## Side effects
-
-A subscription will not be created by sending a POST to this endpoint. It is meant to serve as a prediction.
-
-## Taxable Subscriptions
-
-This endpoint will preview taxes applicable to a purchase. In order for taxes to be previewed, the following conditions must be met:
-
-+ Taxes must be configured on the subscription
-+ The preview must be for the purchase of a taxable product or component, or combination of the two.
-+ The subscription payload must contain a full billing or shipping address in order to calculate tax
-
-For more information about creating taxable previews, please see our documentation guide on how to create [taxable subscriptions.](https://chargify.zendesk.com/hc/en-us/articles/4407904217755#creating-taxable-subscriptions)
-
-You do **not** need to include a card number to generate tax information when you are previewing a subscription. However, please note that when you actually want to create the subscription, you must include the credit card information if you want the billing address to be stored in Chargify. The billing address and the credit card information are stored together within the payment profile object. Also, you may not send a billing address to Chargify without payment profile information, as the address is stored on the card.
-
-You can pass shipping and billing addresses and still decide not to calculate taxes. To do that, pass `skip_billing_manifest_taxes: true` attribute.
-
-## Non-taxable Subscriptions
-
-If you'd like to calculate subscriptions that do not include tax, please feel free to leave off the billing information.
-
-```php
-function previewSubscription(?CreateSubscriptionRequest $body = null): SubscriptionPreviewResponse
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `body` | [`?CreateSubscriptionRequest`](../../doc/models/create-subscription-request.md) | Body, Optional | - |
-
-## Response Type
-
-[`SubscriptionPreviewResponse`](../../doc/models/subscription-preview-response.md)
-
-## Example Usage
-
-```php
-$body = CreateSubscriptionRequestBuilder::init(
-    CreateSubscriptionBuilder::init()
-        ->productHandle('gold-product')
-        ->build()
-)->build();
-
-$result = $subscriptionsController->previewSubscription($body);
-```
-
-## Example Response *(as JSON)*
-
-```json
-{
-  "subscription_preview": {
-    "current_billing_manifest": {
-      "line_items": [
-        {
-          "transaction_type": "charge",
-          "kind": "baseline",
-          "amount_in_cents": 5000,
-          "memo": "Gold Product (08/21/2018 - 09/21/2018)",
-          "discount_amount_in_cents": 0,
-          "taxable_amount_in_cents": 0,
-          "product_id": 1,
-          "product_handle": "gold-product",
-          "product_name": "Gold Product",
-          "period_range_start": "13 Oct 2023",
-          "period_range_end": "13 Nov 2023"
-        },
-        {
-          "transaction_type": "charge",
-          "kind": "component",
-          "amount_in_cents": 28000,
-          "memo": "Component name: 14 Unit names",
-          "discount_amount_in_cents": 0,
-          "taxable_amount_in_cents": 0,
-          "component_id": 462149,
-          "component_handle": "handle",
-          "component_name": "Component name"
-        },
-        {
-          "transaction_type": "charge",
-          "kind": "component",
-          "amount_in_cents": 2000,
-          "memo": "Fractional Metered Components: 20.0 Fractional Metereds",
-          "discount_amount_in_cents": 0,
-          "taxable_amount_in_cents": 0,
-          "component_id": 426665,
-          "component_handle": "handle",
-          "component_name": "Fractional Metered Components"
-        },
-        {
-          "transaction_type": "charge",
-          "kind": "component",
-          "amount_in_cents": 0,
-          "memo": "On/Off Component",
-          "discount_amount_in_cents": 0,
-          "taxable_amount_in_cents": 0,
-          "component_id": 426670,
-          "component_handle": "handle",
-          "component_name": "On/Off Component"
-        },
-        {
-          "transaction_type": "adjustment",
-          "kind": "coupon",
-          "amount_in_cents": 0,
-          "memo": "Coupon: 1DOLLAR - You only get $1.00 off",
-          "discount_amount_in_cents": 0,
-          "taxable_amount_in_cents": 0
-        }
-      ],
-      "total_in_cents": 35000,
-      "total_discount_in_cents": 0,
-      "total_tax_in_cents": 0,
-      "subtotal_in_cents": 35000,
-      "start_date": "2018-08-21T21:25:21Z",
-      "end_date": "2018-09-21T21:25:21Z",
-      "period_type": "recurring",
-      "existing_balance_in_cents": 0
-    },
-    "next_billing_manifest": {
-      "line_items": [
-        {
-          "transaction_type": "charge",
-          "kind": "baseline",
-          "amount_in_cents": 5000,
-          "memo": "Gold Product (09/21/2018 - 10/21/2018)",
-          "discount_amount_in_cents": 0,
-          "taxable_amount_in_cents": 0,
-          "product_id": 1,
-          "product_handle": "gold-product",
-          "product_name": "Gold Product"
-        },
-        {
-          "transaction_type": "charge",
-          "kind": "component",
-          "amount_in_cents": 28000,
-          "memo": "Component name: 14 Unit names",
-          "discount_amount_in_cents": 0,
-          "taxable_amount_in_cents": 0,
-          "component_id": 462149,
-          "component_handle": "handle",
-          "component_name": "Component name"
-        },
-        {
-          "transaction_type": "charge",
-          "kind": "component",
-          "amount_in_cents": 0,
-          "memo": "On/Off Component",
-          "discount_amount_in_cents": 0,
-          "taxable_amount_in_cents": 0,
-          "component_id": 426670,
-          "component_handle": "handle",
-          "component_name": "On/Off Component"
-        }
-      ],
-      "total_in_cents": 33000,
-      "total_discount_in_cents": 0,
-      "total_tax_in_cents": 0,
-      "subtotal_in_cents": 33000,
-      "start_date": "2018-09-21T21:25:21Z",
-      "end_date": "2018-10-21T21:25:21Z",
-      "period_type": "recurring",
-      "existing_balance_in_cents": 0
-    }
   }
 }
 ```
@@ -1842,125 +1963,4 @@ $result = $subscriptionsController->applyCouponToSubscription(
 | HTTP Status Code | Error Description | Exception Class |
 |  --- | --- | --- |
 | 422 | Unprocessable Entity (WebDAV) | [`SubscriptionAddCouponErrorException`](../../doc/models/subscription-add-coupon-error-exception.md) |
-
-
-# Delete Coupon From Subscription
-
-Use this endpoint to remove a coupon from an existing subscription.
-
-For more information on the expected behaviour of removing a coupon from a subscription, please see our documentation [here.](https://chargify.zendesk.com/hc/en-us/articles/4407896488987#removing-a-coupon)
-
-```php
-function deleteCouponFromSubscription(int $subscriptionId, ?string $couponCode = null): string
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
-| `couponCode` | `?string` | Query, Optional | The coupon code |
-
-## Response Type
-
-`string`
-
-## Example Usage
-
-```php
-$subscriptionId = 222;
-
-$result = $subscriptionsController->deleteCouponFromSubscription($subscriptionId);
-```
-
-## Example Response
-
-```
-"Coupon successfully removed"
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 422 | Unprocessable Entity (WebDAV) | [`SubscriptionRemoveCouponErrorsException`](../../doc/models/subscription-remove-coupon-errors-exception.md) |
-
-
-# Activate Subscription
-
-Chargify offers the ability to activate awaiting signup and trialing subscriptions. This feature is only available on the Relationship Invoicing architecture. Subscriptions in a group may not be activated immediately.
-
-For details on how the activation works, and how to activate subscriptions through the application, see [activation](#).
-
-The `revert_on_failure` parameter controls the behavior upon activation failure.
-
-- If set to `true` and something goes wrong i.e. payment fails, then Chargify will not change the subscription's state. The subscription’s billing period will also remain the same.
-- If set to `false` and something goes wrong i.e. payment fails, then Chargify will continue through with the activation and enter an end of life state. For trialing subscriptions, that will either be trial ended (if the trial is no obligation), past due (if the trial has an obligation), or canceled (if the site has no dunning strategy, or has a strategy that says to cancel immediately). For awaiting signup subscriptions, that will always be canceled.
-
-The default activation failure behavior can be configured per activation attempt, or you may set a default value under Config > Settings > Subscription Activation Settings.
-
-## Activation Scenarios
-
-### Activate Awaiting Signup subscription
-
-- Given you have a product without trial
-- Given you have a site without dunning strategy
-
-```mermaid
-  flowchart LR
-    AS[Awaiting Signup] --> A{Activate}
-    A -->|Success| Active
-    A -->|Failure| ROF{revert_on_failure}
-    ROF -->|true| AS
-    ROF -->|false| Canceled
-```
-
-- Given you have a product with trial
-- Given you have a site with dunning strategy
-
-```mermaid
-  flowchart LR
-    AS[Awaiting Signup] --> A{Activate}
-    A -->|Success| Trialing
-    A -->|Failure| ROF{revert_on_failure}
-    ROF -->|true| AS
-    ROF -->|false| PD[Past Due]
-```
-
-### Activate Trialing subscription
-
-You can read more about the behavior of trialing subscriptions [here](https://maxio-chargify.zendesk.com/hc/en-us/articles/5404494617357#trialing-subscriptions-0-0).
-When the `revert_on_failure` parameter is set to `true`, the subscription's state will remain as Trialing, we will void the invoice from activation and return any prepayments and credits applied to the invoice back to the subscription.
-
-```php
-function activateSubscription(
-    int $subscriptionId,
-    ?ActivateSubscriptionRequest $body = null
-): SubscriptionResponse
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
-| `body` | [`?ActivateSubscriptionRequest`](../../doc/models/activate-subscription-request.md) | Body, Optional | - |
-
-## Response Type
-
-[`SubscriptionResponse`](../../doc/models/subscription-response.md)
-
-## Example Usage
-
-```php
-$subscriptionId = 222;
-
-$result = $subscriptionsController->activateSubscription($subscriptionId);
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 400 | Bad Request | [`ErrorArrayMapResponseException`](../../doc/models/error-array-map-response-exception.md) |
 

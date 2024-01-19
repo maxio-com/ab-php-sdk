@@ -10,12 +10,120 @@ $webhooksController = $client->getWebhooksController();
 
 ## Methods
 
+* [Create Endpoint](../../doc/controllers/webhooks.md#create-endpoint)
+* [List Endpoints](../../doc/controllers/webhooks.md#list-endpoints)
 * [List Webhooks](../../doc/controllers/webhooks.md#list-webhooks)
 * [Enable Webhooks](../../doc/controllers/webhooks.md#enable-webhooks)
 * [Replay Webhooks](../../doc/controllers/webhooks.md#replay-webhooks)
-* [Create Endpoint](../../doc/controllers/webhooks.md#create-endpoint)
-* [List Endpoints](../../doc/controllers/webhooks.md#list-endpoints)
 * [Update Endpoint](../../doc/controllers/webhooks.md#update-endpoint)
+
+
+# Create Endpoint
+
+The Chargify API allows you to create an endpoint and assign a list of webhooks subscriptions (events) to it.
+
+You can check available events here.
+[Event keys](https://maxio-chargify.zendesk.com/hc/en-us/articles/5405357509645-Webhooks-Reference#example-payloads)
+
+```php
+function createEndpoint(?UpdateEndpointRequest $body = null): EndpointResponse
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `body` | [`?UpdateEndpointRequest`](../../doc/models/update-endpoint-request.md) | Body, Optional | Used to Create or Update Endpoint |
+
+## Response Type
+
+[`EndpointResponse`](../../doc/models/endpoint-response.md)
+
+## Example Usage
+
+```php
+$body = UpdateEndpointRequestBuilder::init(
+    UpdateEndpointBuilder::init(
+        'https://your.site/webhooks',
+        [
+            WebhookSubscription::PAYMENT_SUCCESS,
+            WebhookSubscription::PAYMENT_FAILURE
+        ]
+    )->build()
+)->build();
+
+$result = $webhooksController->createEndpoint($body);
+```
+
+## Example Response *(as JSON)*
+
+```json
+{
+  "endpoint": {
+    "id": 1,
+    "url": "https://your.site/webhooks",
+    "site_id": 1,
+    "status": "enabled",
+    "webhook_subscriptions": [
+      "payment_success",
+      "payment_failure"
+    ]
+  }
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
+
+
+# List Endpoints
+
+This method returns created endpoints for site.
+
+```php
+function listEndpoints(): array
+```
+
+## Response Type
+
+[`Endpoint[]`](../../doc/models/endpoint.md)
+
+## Example Usage
+
+```php
+$result = $webhooksController->listEndpoints();
+```
+
+## Example Response *(as JSON)*
+
+```json
+[
+  {
+    "id": 11,
+    "url": "https://foobar.com/webhooks",
+    "site_id": 1,
+    "status": "enabled",
+    "webhook_subscriptions": [
+      "payment_success",
+      "payment_failure"
+    ]
+  },
+  {
+    "id": 12,
+    "url": "https:/example.com/webhooks",
+    "site_id": 1,
+    "status": "enabled",
+    "webhook_subscriptions": [
+      "payment_success",
+      "payment_failure",
+      "refund_failure"
+    ]
+  }
+]
+```
 
 
 # List Webhooks
@@ -182,114 +290,6 @@ $result = $webhooksController->replayWebhooks($body);
 {
   "status": "ok"
 }
-```
-
-
-# Create Endpoint
-
-The Chargify API allows you to create an endpoint and assign a list of webhooks subscriptions (events) to it.
-
-You can check available events here.
-[Event keys](https://maxio-chargify.zendesk.com/hc/en-us/articles/5405357509645-Webhooks-Reference#example-payloads)
-
-```php
-function createEndpoint(?UpdateEndpointRequest $body = null): EndpointResponse
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `body` | [`?UpdateEndpointRequest`](../../doc/models/update-endpoint-request.md) | Body, Optional | Used to Create or Update Endpoint |
-
-## Response Type
-
-[`EndpointResponse`](../../doc/models/endpoint-response.md)
-
-## Example Usage
-
-```php
-$body = UpdateEndpointRequestBuilder::init(
-    UpdateEndpointBuilder::init(
-        'https://your.site/webhooks',
-        [
-            WebhookSubscription::PAYMENT_SUCCESS,
-            WebhookSubscription::PAYMENT_FAILURE
-        ]
-    )->build()
-)->build();
-
-$result = $webhooksController->createEndpoint($body);
-```
-
-## Example Response *(as JSON)*
-
-```json
-{
-  "endpoint": {
-    "id": 1,
-    "url": "https://your.site/webhooks",
-    "site_id": 1,
-    "status": "enabled",
-    "webhook_subscriptions": [
-      "payment_success",
-      "payment_failure"
-    ]
-  }
-}
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
-
-
-# List Endpoints
-
-This method returns created endpoints for site.
-
-```php
-function listEndpoints(): array
-```
-
-## Response Type
-
-[`Endpoint[]`](../../doc/models/endpoint.md)
-
-## Example Usage
-
-```php
-$result = $webhooksController->listEndpoints();
-```
-
-## Example Response *(as JSON)*
-
-```json
-[
-  {
-    "id": 11,
-    "url": "https://foobar.com/webhooks",
-    "site_id": 1,
-    "status": "enabled",
-    "webhook_subscriptions": [
-      "payment_success",
-      "payment_failure"
-    ]
-  },
-  {
-    "id": 12,
-    "url": "https:/example.com/webhooks",
-    "site_id": 1,
-    "status": "enabled",
-    "webhook_subscriptions": [
-      "payment_success",
-      "payment_failure",
-      "refund_failure"
-    ]
-  }
-]
 ```
 
 

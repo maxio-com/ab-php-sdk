@@ -10,88 +10,12 @@ $eventsBasedBillingSegmentsController = $client->getEventsBasedBillingSegmentsCo
 
 ## Methods
 
-* [Create Segment](../../doc/controllers/events-based-billing-segments.md#create-segment)
 * [List Segments for Price Point](../../doc/controllers/events-based-billing-segments.md#list-segments-for-price-point)
-* [Update Segment](../../doc/controllers/events-based-billing-segments.md#update-segment)
 * [Delete Segment](../../doc/controllers/events-based-billing-segments.md#delete-segment)
 * [Create Segments](../../doc/controllers/events-based-billing-segments.md#create-segments)
+* [Update Segment](../../doc/controllers/events-based-billing-segments.md#update-segment)
 * [Update Segments](../../doc/controllers/events-based-billing-segments.md#update-segments)
-
-
-# Create Segment
-
-This endpoint creates a new Segment for a Component with segmented Metric. It allows you to specify properties to bill upon and prices for each Segment. You can only pass as many "property_values" as the related Metric has segmenting properties defined.
-
-You may specify component and/or price point by using either the numeric ID or the `handle:gold` syntax.
-
-```php
-function createSegment(
-    string $componentId,
-    string $pricePointId,
-    ?CreateSegmentRequest $body = null
-): SegmentResponse
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `componentId` | `string` | Template, Required | ID or Handle for the Component |
-| `pricePointId` | `string` | Template, Required | ID or Handle for the Price Point belonging to the Component |
-| `body` | [`?CreateSegmentRequest`](../../doc/models/create-segment-request.md) | Body, Optional | - |
-
-## Response Type
-
-[`SegmentResponse`](../../doc/models/segment-response.md)
-
-## Example Usage
-
-```php
-$componentId = 'component_id8';
-
-$pricePointId = 'price_point_id8';
-
-$body = CreateSegmentRequestBuilder::init(
-    CreateSegmentBuilder::init(
-        PricingScheme::VOLUME
-    )
-        ->segmentProperty1Value(
-            'France'
-        )
-        ->segmentProperty2Value(
-            'Spain'
-        )
-        ->prices(
-            [
-                CreateOrUpdateSegmentPriceBuilder::init(
-                    0.19
-                )
-                    ->startingQuantity(1)
-                    ->endingQuantity(10000)
-                    ->build(),
-                CreateOrUpdateSegmentPriceBuilder::init(
-                    0.09
-                )
-                    ->startingQuantity(10001)
-                    ->build()
-            ]
-        )
-        ->build()
-)->build();
-
-$result = $eventsBasedBillingSegmentsController->createSegment(
-    $componentId,
-    $pricePointId,
-    $body
-);
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 404 | Not Found | `ApiException` |
-| 422 | Unprocessable Entity (WebDAV) | [`EventBasedBillingSegmentErrorsException`](../../doc/models/event-based-billing-segment-errors-exception.md) |
+* [Create Segment](../../doc/controllers/events-based-billing-segments.md#create-segment)
 
 
 # List Segments for Price Point
@@ -142,58 +66,6 @@ $result = $eventsBasedBillingSegmentsController->listSegmentsForPricePoint($coll
 |  --- | --- | --- |
 | 404 | Not Found | `ApiException` |
 | 422 | Unprocessable Entity (WebDAV) | [`EventBasedBillingListSegmentsErrorsException`](../../doc/models/event-based-billing-list-segments-errors-exception.md) |
-
-
-# Update Segment
-
-This endpoint updates a single Segment for a Component with a segmented Metric. It allows you to update the pricing for the segment.
-
-You may specify component and/or price point by using either the numeric ID or the `handle:gold` syntax.
-
-```php
-function updateSegment(
-    string $componentId,
-    string $pricePointId,
-    float $id,
-    ?UpdateSegmentRequest $body = null
-): SegmentResponse
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `componentId` | `string` | Template, Required | ID or Handle of the Component |
-| `pricePointId` | `string` | Template, Required | ID or Handle of the Price Point belonging to the Component |
-| `id` | `float` | Template, Required | The ID of the Segment |
-| `body` | [`?UpdateSegmentRequest`](../../doc/models/update-segment-request.md) | Body, Optional | - |
-
-## Response Type
-
-[`SegmentResponse`](../../doc/models/segment-response.md)
-
-## Example Usage
-
-```php
-$componentId = 'component_id8';
-
-$pricePointId = 'price_point_id8';
-
-$id = 60;
-
-$result = $eventsBasedBillingSegmentsController->updateSegment(
-    $componentId,
-    $pricePointId,
-    $id
-);
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 404 | Not Found | `ApiException` |
-| 422 | Unprocessable Entity (WebDAV) | [`EventBasedBillingSegmentErrorsException`](../../doc/models/event-based-billing-segment-errors-exception.md) |
 
 
 # Delete Segment
@@ -291,6 +163,58 @@ $result = $eventsBasedBillingSegmentsController->createSegments(
 | 422 | Unprocessable Entity (WebDAV) | [`EventBasedBillingSegmentException`](../../doc/models/event-based-billing-segment-exception.md) |
 
 
+# Update Segment
+
+This endpoint updates a single Segment for a Component with a segmented Metric. It allows you to update the pricing for the segment.
+
+You may specify component and/or price point by using either the numeric ID or the `handle:gold` syntax.
+
+```php
+function updateSegment(
+    string $componentId,
+    string $pricePointId,
+    float $id,
+    ?UpdateSegmentRequest $body = null
+): SegmentResponse
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `componentId` | `string` | Template, Required | ID or Handle of the Component |
+| `pricePointId` | `string` | Template, Required | ID or Handle of the Price Point belonging to the Component |
+| `id` | `float` | Template, Required | The ID of the Segment |
+| `body` | [`?UpdateSegmentRequest`](../../doc/models/update-segment-request.md) | Body, Optional | - |
+
+## Response Type
+
+[`SegmentResponse`](../../doc/models/segment-response.md)
+
+## Example Usage
+
+```php
+$componentId = 'component_id8';
+
+$pricePointId = 'price_point_id8';
+
+$id = 60;
+
+$result = $eventsBasedBillingSegmentsController->updateSegment(
+    $componentId,
+    $pricePointId,
+    $id
+);
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 404 | Not Found | `ApiException` |
+| 422 | Unprocessable Entity (WebDAV) | [`EventBasedBillingSegmentErrorsException`](../../doc/models/event-based-billing-segment-errors-exception.md) |
+
+
 # Update Segments
 
 This endpoint allows you to update multiple segments in one request. The array of segments can contain up to `1000` records.
@@ -338,4 +262,80 @@ $result = $eventsBasedBillingSegmentsController->updateSegments(
 |  --- | --- | --- |
 | 404 | Not Found | `ApiException` |
 | 422 | Unprocessable Entity (WebDAV) | [`EventBasedBillingSegmentException`](../../doc/models/event-based-billing-segment-exception.md) |
+
+
+# Create Segment
+
+This endpoint creates a new Segment for a Component with segmented Metric. It allows you to specify properties to bill upon and prices for each Segment. You can only pass as many "property_values" as the related Metric has segmenting properties defined.
+
+You may specify component and/or price point by using either the numeric ID or the `handle:gold` syntax.
+
+```php
+function createSegment(
+    string $componentId,
+    string $pricePointId,
+    ?CreateSegmentRequest $body = null
+): SegmentResponse
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `componentId` | `string` | Template, Required | ID or Handle for the Component |
+| `pricePointId` | `string` | Template, Required | ID or Handle for the Price Point belonging to the Component |
+| `body` | [`?CreateSegmentRequest`](../../doc/models/create-segment-request.md) | Body, Optional | - |
+
+## Response Type
+
+[`SegmentResponse`](../../doc/models/segment-response.md)
+
+## Example Usage
+
+```php
+$componentId = 'component_id8';
+
+$pricePointId = 'price_point_id8';
+
+$body = CreateSegmentRequestBuilder::init(
+    CreateSegmentBuilder::init(
+        PricingScheme::VOLUME
+    )
+        ->segmentProperty1Value(
+            'France'
+        )
+        ->segmentProperty2Value(
+            'Spain'
+        )
+        ->prices(
+            [
+                CreateOrUpdateSegmentPriceBuilder::init(
+                    0.19
+                )
+                    ->startingQuantity(1)
+                    ->endingQuantity(10000)
+                    ->build(),
+                CreateOrUpdateSegmentPriceBuilder::init(
+                    0.09
+                )
+                    ->startingQuantity(10001)
+                    ->build()
+            ]
+        )
+        ->build()
+)->build();
+
+$result = $eventsBasedBillingSegmentsController->createSegment(
+    $componentId,
+    $pricePointId,
+    $body
+);
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 404 | Not Found | `ApiException` |
+| 422 | Unprocessable Entity (WebDAV) | [`EventBasedBillingSegmentErrorsException`](../../doc/models/event-based-billing-segment-errors-exception.md) |
 

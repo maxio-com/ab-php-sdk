@@ -10,28 +10,21 @@ $subscriptionNotesController = $client->getSubscriptionNotesController();
 
 ## Methods
 
-* [Create Subscription Note](../../doc/controllers/subscription-notes.md#create-subscription-note)
-* [List Subscription Notes](../../doc/controllers/subscription-notes.md#list-subscription-notes)
-* [Read Subscription Note](../../doc/controllers/subscription-notes.md#read-subscription-note)
 * [Update Subscription Note](../../doc/controllers/subscription-notes.md#update-subscription-note)
 * [Delete Subscription Note](../../doc/controllers/subscription-notes.md#delete-subscription-note)
+* [List Subscription Notes](../../doc/controllers/subscription-notes.md#list-subscription-notes)
+* [Read Subscription Note](../../doc/controllers/subscription-notes.md#read-subscription-note)
+* [Create Subscription Note](../../doc/controllers/subscription-notes.md#create-subscription-note)
 
 
-# Create Subscription Note
+# Update Subscription Note
 
-Use the following method to create a note for a subscription.
-
-## How to Use Subscription Notes
-
-Notes allow you to record information about a particular Subscription in a free text format.
-
-If you have structured data such as birth date, color, etc., consider using Metadata instead.
-
-Full documentation on how to use Notes in the Chargify UI can be located [here](https://maxio-chargify.zendesk.com/hc/en-us/articles/5404434903181-Subscription-Summary#notes).
+Use the following method to update a note for a Subscription.
 
 ```php
-function createSubscriptionNote(
+function updateSubscriptionNote(
     int $subscriptionId,
+    int $noteId,
     ?UpdateSubscriptionNoteRequest $body = null
 ): SubscriptionNoteResponse
 ```
@@ -41,6 +34,7 @@ function createSubscriptionNote(
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+| `noteId` | `int` | Template, Required | The Chargify id of the note |
 | `body` | [`?UpdateSubscriptionNoteRequest`](../../doc/models/update-subscription-note-request.md) | Body, Optional | Updatable fields for Subscription Note |
 
 ## Response Type
@@ -52,16 +46,52 @@ function createSubscriptionNote(
 ```php
 $subscriptionId = 222;
 
+$noteId = 66;
+
 $body = UpdateSubscriptionNoteRequestBuilder::init(
     UpdateSubscriptionNoteBuilder::init(
-        'New test note.',
+        'Modified test note.',
         true
     )->build()
 )->build();
 
-$result = $subscriptionNotesController->createSubscriptionNote(
+$result = $subscriptionNotesController->updateSubscriptionNote(
     $subscriptionId,
+    $noteId,
     $body
+);
+```
+
+
+# Delete Subscription Note
+
+Use the following method to delete a note for a Subscription.
+
+```php
+function deleteSubscriptionNote(int $subscriptionId, int $noteId): void
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+| `noteId` | `int` | Template, Required | The Chargify id of the note |
+
+## Response Type
+
+`void`
+
+## Example Usage
+
+```php
+$subscriptionId = 222;
+
+$noteId = 66;
+
+$subscriptionNotesController->deleteSubscriptionNote(
+    $subscriptionId,
+    $noteId
 );
 ```
 
@@ -174,14 +204,21 @@ $result = $subscriptionNotesController->readSubscriptionNote(
 ```
 
 
-# Update Subscription Note
+# Create Subscription Note
 
-Use the following method to update a note for a Subscription.
+Use the following method to create a note for a subscription.
+
+## How to Use Subscription Notes
+
+Notes allow you to record information about a particular Subscription in a free text format.
+
+If you have structured data such as birth date, color, etc., consider using Metadata instead.
+
+Full documentation on how to use Notes in the Chargify UI can be located [here](https://maxio-chargify.zendesk.com/hc/en-us/articles/5404434903181-Subscription-Summary#notes).
 
 ```php
-function updateSubscriptionNote(
+function createSubscriptionNote(
     int $subscriptionId,
-    int $noteId,
     ?UpdateSubscriptionNoteRequest $body = null
 ): SubscriptionNoteResponse
 ```
@@ -191,7 +228,6 @@ function updateSubscriptionNote(
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
-| `noteId` | `int` | Template, Required | The Chargify id of the note |
 | `body` | [`?UpdateSubscriptionNoteRequest`](../../doc/models/update-subscription-note-request.md) | Body, Optional | Updatable fields for Subscription Note |
 
 ## Response Type
@@ -203,52 +239,16 @@ function updateSubscriptionNote(
 ```php
 $subscriptionId = 222;
 
-$noteId = 66;
-
 $body = UpdateSubscriptionNoteRequestBuilder::init(
     UpdateSubscriptionNoteBuilder::init(
-        'Modified test note.',
+        'New test note.',
         true
     )->build()
 )->build();
 
-$result = $subscriptionNotesController->updateSubscriptionNote(
+$result = $subscriptionNotesController->createSubscriptionNote(
     $subscriptionId,
-    $noteId,
     $body
-);
-```
-
-
-# Delete Subscription Note
-
-Use the following method to delete a note for a Subscription.
-
-```php
-function deleteSubscriptionNote(int $subscriptionId, int $noteId): void
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
-| `noteId` | `int` | Template, Required | The Chargify id of the note |
-
-## Response Type
-
-`void`
-
-## Example Usage
-
-```php
-$subscriptionId = 222;
-
-$noteId = 66;
-
-$subscriptionNotesController->deleteSubscriptionNote(
-    $subscriptionId,
-    $noteId
 );
 ```
 

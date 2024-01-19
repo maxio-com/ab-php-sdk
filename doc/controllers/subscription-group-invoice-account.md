@@ -10,21 +10,21 @@ $subscriptionGroupInvoiceAccountController = $client->getSubscriptionGroupInvoic
 
 ## Methods
 
-* [Create Subscription Group Prepayment](../../doc/controllers/subscription-group-invoice-account.md#create-subscription-group-prepayment)
-* [List Prepayments for Subscription Group](../../doc/controllers/subscription-group-invoice-account.md#list-prepayments-for-subscription-group)
-* [Issue Subscription Group Service Credits](../../doc/controllers/subscription-group-invoice-account.md#issue-subscription-group-service-credits)
 * [Deduct Subscription Group Service Credits](../../doc/controllers/subscription-group-invoice-account.md#deduct-subscription-group-service-credits)
+* [List Prepayments for Subscription Group](../../doc/controllers/subscription-group-invoice-account.md#list-prepayments-for-subscription-group)
+* [Create Subscription Group Prepayment](../../doc/controllers/subscription-group-invoice-account.md#create-subscription-group-prepayment)
+* [Issue Subscription Group Service Credits](../../doc/controllers/subscription-group-invoice-account.md#issue-subscription-group-service-credits)
 
 
-# Create Subscription Group Prepayment
+# Deduct Subscription Group Service Credits
 
-A prepayment can be added for a subscription group identified by the group's `uid`. This endpoint requires a `amount`, `details`, `method`, and `memo`. On success, the prepayment will be added to the group's prepayment balance.
+Credit can be deducted for a subscription group identified by the group's `uid`. Credit will be deducted from the group in the amount specified in the request body.
 
 ```php
-function createSubscriptionGroupPrepayment(
+function deductSubscriptionGroupServiceCredits(
     string $uid,
-    ?SubscriptionGroupPrepaymentRequest $body = null
-): SubscriptionGroupPrepaymentResponse
+    ?DeductServiceCreditRequest $body = null
+): ServiceCredit
 ```
 
 ## Parameters
@@ -32,29 +32,39 @@ function createSubscriptionGroupPrepayment(
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `uid` | `string` | Template, Required | The uid of the subscription group |
-| `body` | [`?SubscriptionGroupPrepaymentRequest`](../../doc/models/subscription-group-prepayment-request.md) | Body, Optional | - |
+| `body` | [`?DeductServiceCreditRequest`](../../doc/models/deduct-service-credit-request.md) | Body, Optional | - |
 
 ## Response Type
 
-[`SubscriptionGroupPrepaymentResponse`](../../doc/models/subscription-group-prepayment-response.md)
+[`ServiceCredit`](../../doc/models/service-credit.md)
 
 ## Example Usage
 
 ```php
 $uid = 'uid0';
 
-$result = $subscriptionGroupInvoiceAccountController->createSubscriptionGroupPrepayment($uid);
+$body = DeductServiceCreditRequestBuilder::init(
+    DeductServiceCreditBuilder::init(
+        10,
+        'Deduct from group account'
+    )->build()
+)->build();
+
+$result = $subscriptionGroupInvoiceAccountController->deductSubscriptionGroupServiceCredits(
+    $uid,
+    $body
+);
 ```
 
 ## Example Response *(as JSON)*
 
 ```json
 {
-  "id": 6049554,
-  "amount_in_cents": 10000,
-  "ending_balance_in_cents": 5000,
+  "id": 100,
+  "amount_in_cents": 1000,
+  "ending_balance_in_cents": 0,
   "entry_type": "Debit",
-  "memo": "Debit from invoice account."
+  "memo": "Debit from group account"
 }
 ```
 
@@ -129,6 +139,55 @@ $result = $subscriptionGroupInvoiceAccountController->listPrepaymentsForSubscrip
 | 404 | Not Found | `ApiException` |
 
 
+# Create Subscription Group Prepayment
+
+A prepayment can be added for a subscription group identified by the group's `uid`. This endpoint requires a `amount`, `details`, `method`, and `memo`. On success, the prepayment will be added to the group's prepayment balance.
+
+```php
+function createSubscriptionGroupPrepayment(
+    string $uid,
+    ?SubscriptionGroupPrepaymentRequest $body = null
+): SubscriptionGroupPrepaymentResponse
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `uid` | `string` | Template, Required | The uid of the subscription group |
+| `body` | [`?SubscriptionGroupPrepaymentRequest`](../../doc/models/subscription-group-prepayment-request.md) | Body, Optional | - |
+
+## Response Type
+
+[`SubscriptionGroupPrepaymentResponse`](../../doc/models/subscription-group-prepayment-response.md)
+
+## Example Usage
+
+```php
+$uid = 'uid0';
+
+$result = $subscriptionGroupInvoiceAccountController->createSubscriptionGroupPrepayment($uid);
+```
+
+## Example Response *(as JSON)*
+
+```json
+{
+  "id": 6049554,
+  "amount_in_cents": 10000,
+  "ending_balance_in_cents": 5000,
+  "entry_type": "Debit",
+  "memo": "Debit from invoice account."
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
+
+
 # Issue Subscription Group Service Credits
 
 Credit can be issued for a subscription group identified by the group's `uid`. Credit will be added to the group in the amount specified in the request body. The credit will be applied to group member invoices as they are generated.
@@ -180,65 +239,6 @@ $result = $subscriptionGroupInvoiceAccountController->issueSubscriptionGroupServ
     "entry_type": "Credit",
     "memo": "Credit to group account"
   }
-}
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
-
-
-# Deduct Subscription Group Service Credits
-
-Credit can be deducted for a subscription group identified by the group's `uid`. Credit will be deducted from the group in the amount specified in the request body.
-
-```php
-function deductSubscriptionGroupServiceCredits(
-    string $uid,
-    ?DeductServiceCreditRequest $body = null
-): ServiceCredit
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `uid` | `string` | Template, Required | The uid of the subscription group |
-| `body` | [`?DeductServiceCreditRequest`](../../doc/models/deduct-service-credit-request.md) | Body, Optional | - |
-
-## Response Type
-
-[`ServiceCredit`](../../doc/models/service-credit.md)
-
-## Example Usage
-
-```php
-$uid = 'uid0';
-
-$body = DeductServiceCreditRequestBuilder::init(
-    DeductServiceCreditBuilder::init(
-        10,
-        'Deduct from group account'
-    )->build()
-)->build();
-
-$result = $subscriptionGroupInvoiceAccountController->deductSubscriptionGroupServiceCredits(
-    $uid,
-    $body
-);
-```
-
-## Example Response *(as JSON)*
-
-```json
-{
-  "id": 100,
-  "amount_in_cents": 1000,
-  "ending_balance_in_cents": 0,
-  "entry_type": "Debit",
-  "memo": "Debit from group account"
 }
 ```
 

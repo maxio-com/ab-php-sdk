@@ -46,6 +46,133 @@ use CoreInterfaces\Core\Request\RequestMethod;
 class InvoicesController extends BaseController
 {
     /**
+     * Record an external payment made against a subscription that will pay partially or in full one or
+     * more invoices.
+     *
+     * Payment will be applied starting with the oldest open invoice and then next oldest, and so on until
+     * the amount of the payment is fully consumed.
+     *
+     * Excess payment will result in the creation of a prepayment on the Invoice Account.
+     *
+     * Only ungrouped or primary subscriptions may be paid using the "bulk" payment request.
+     *
+     * @param int $subscriptionId The Chargify id of the subscription
+     * @param RecordPaymentRequest|null $body
+     *
+     * @return PaymentResponse Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function recordPaymentForSubscription(
+        int $subscriptionId,
+        ?RecordPaymentRequest $body = null
+    ): PaymentResponse {
+        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/subscriptions/{subscription_id}/payments.json')
+            ->auth('global')
+            ->parameters(
+                TemplateParam::init('subscription_id', $subscriptionId)->required(),
+                HeaderParam::init('Content-Type', 'application/json'),
+                BodyParam::init($body)
+            );
+
+        $_resHandler = $this->responseHandler()
+            ->throwErrorOn(
+                '422',
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
+            )
+            ->type(PaymentResponse::class);
+
+        return $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
+     * This endpoint allows you to reopen any invoice with the "canceled" status. Invoices enter "canceled"
+     * status if they were open at the time the subscription was canceled (whether through dunning or an
+     * intentional cancellation).
+     *
+     * Invoices with "canceled" status are no longer considered to be due. Once reopened, they are
+     * considered due for payment. Payment may then be captured in one of the following ways:
+     *
+     * - Reactivating the subscription, which will capture all open invoices (See note below about
+     * automatic reopening of invoices.)
+     * - Recording a payment directly against the invoice
+     *
+     * A note about reactivations: any canceled invoices from the most recent active period are
+     * automatically opened as a part of the reactivation process. Reactivating via this endpoint prior to
+     * reactivation is only necessary when you wish to capture older invoices from previous periods during
+     * the reactivation.
+     *
+     * ### Reopening Consolidated Invoices
+     *
+     * When reopening a consolidated invoice, all of its canceled segments will also be reopened.
+     *
+     * @param string $uid The unique identifier for the invoice, this does not refer to the public
+     *        facing invoice number.
+     *
+     * @return Invoice Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function reopenInvoice(string $uid): Invoice
+    {
+        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/invoices/{uid}/reopen.json')
+            ->auth('global')
+            ->parameters(TemplateParam::init('uid', $uid)->required());
+
+        $_resHandler = $this->responseHandler()
+            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
+            ->throwErrorOn(
+                '422',
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
+            )
+            ->type(Invoice::class);
+
+        return $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
+     * This endpoint allows you to void any invoice with the "open" or "canceled" status.  It will also
+     * allow voiding of an invoice with the "pending" status if it is not a consolidated invoice.
+     *
+     * @param string $uid The unique identifier for the invoice, this does not refer to the public
+     *        facing invoice number.
+     * @param VoidInvoiceRequest|null $body
+     *
+     * @return Invoice Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function voidInvoice(string $uid, ?VoidInvoiceRequest $body = null): Invoice
+    {
+        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/invoices/{uid}/void.json')
+            ->auth('global')
+            ->parameters(
+                TemplateParam::init('uid', $uid)->required(),
+                HeaderParam::init('Content-Type', 'application/json'),
+                BodyParam::init($body)
+            );
+
+        $_resHandler = $this->responseHandler()
+            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
+            ->throwErrorOn(
+                '422',
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
+            )
+            ->type(Invoice::class);
+
+        return $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
      * Refund an invoice, segment, or consolidated invoice.
      *
      * ## Partial Refund for Consolidated Invoice
@@ -72,86 +199,6 @@ class InvoicesController extends BaseController
                 HeaderParam::init('Content-Type', 'application/json'),
                 BodyParam::init($body)
             );
-
-        $_resHandler = $this->responseHandler()->type(Invoice::class);
-
-        return $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
-     * By default, invoices returned on the index will only include totals, not detailed breakdowns for
-     * `line_items`, `discounts`, `taxes`, `credits`, `payments`, `custom_fields`, or `refunds`. To include
-     * breakdowns, pass the specific field as a key in the query with a value set to `true`.
-     *
-     * @param array $options Array with all options for search
-     *
-     * @return ListInvoicesResponse Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function listInvoices(array $options): ListInvoicesResponse
-    {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/invoices.json')
-            ->auth('global')
-            ->parameters(
-                QueryParam::init('start_date', $options)->commaSeparated()->extract('startDate'),
-                QueryParam::init('end_date', $options)->commaSeparated()->extract('endDate'),
-                QueryParam::init('status', $options)
-                    ->commaSeparated()
-                    ->extract('status')
-                    ->serializeBy([InvoiceStatus::class, 'checkValue']),
-                QueryParam::init('subscription_id', $options)->commaSeparated()->extract('subscriptionId'),
-                QueryParam::init('subscription_group_uid', $options)
-                    ->commaSeparated()
-                    ->extract('subscriptionGroupUid'),
-                QueryParam::init('page', $options)->commaSeparated()->extract('page', 1),
-                QueryParam::init('per_page', $options)->commaSeparated()->extract('perPage', 20),
-                QueryParam::init('direction', $options)
-                    ->commaSeparated()
-                    ->extract('direction', Direction::DESC)
-                    ->serializeBy([Direction::class, 'checkValue']),
-                QueryParam::init('line_items', $options)->commaSeparated()->extract('lineItems', false),
-                QueryParam::init('discounts', $options)->commaSeparated()->extract('discounts', false),
-                QueryParam::init('taxes', $options)->commaSeparated()->extract('taxes', false),
-                QueryParam::init('credits', $options)->commaSeparated()->extract('credits', false),
-                QueryParam::init('payments', $options)->commaSeparated()->extract('payments', false),
-                QueryParam::init('custom_fields', $options)->commaSeparated()->extract('customFields', false),
-                QueryParam::init('refunds', $options)->commaSeparated()->extract('refunds', false),
-                QueryParam::init('date_field', $options)
-                    ->commaSeparated()
-                    ->extract('dateField', InvoiceDateField::DUE_DATE)
-                    ->serializeBy([InvoiceDateField::class, 'checkValue']),
-                QueryParam::init('start_datetime', $options)->commaSeparated()->extract('startDatetime'),
-                QueryParam::init('end_datetime', $options)->commaSeparated()->extract('endDatetime'),
-                QueryParam::init('customer_ids', $options)->commaSeparated()->extract('customerIds'),
-                QueryParam::init('number', $options)->commaSeparated()->extract('number'),
-                QueryParam::init('product_ids', $options)->commaSeparated()->extract('productIds'),
-                QueryParam::init('sort', $options)
-                    ->commaSeparated()
-                    ->extract('sort', InvoiceSortField::NUMBER)
-                    ->serializeBy([InvoiceSortField::class, 'checkValue'])
-            );
-
-        $_resHandler = $this->responseHandler()->type(ListInvoicesResponse::class);
-
-        return $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
-     * Use this endpoint to retrieve the details for an invoice.
-     *
-     * @param string $uid The unique identifier for the invoice, this does not refer to the public
-     *        facing invoice number.
-     *
-     * @return Invoice Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function readInvoice(string $uid): Invoice
-    {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/invoices/{uid}.json')
-            ->auth('global')
-            ->parameters(TemplateParam::init('uid', $uid)->required());
 
         $_resHandler = $this->responseHandler()->type(Invoice::class);
 
@@ -352,6 +399,47 @@ class InvoicesController extends BaseController
     }
 
     /**
+     * Use this endpoint to retrieve the details for a credit note.
+     *
+     * @param string $uid The unique identifier of the credit note
+     *
+     * @return CreditNote Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function readCreditNote(string $uid): CreditNote
+    {
+        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/credit_notes/{uid}.json')
+            ->auth('global')
+            ->parameters(TemplateParam::init('uid', $uid)->required());
+
+        $_resHandler = $this->responseHandler()->type(CreditNote::class);
+
+        return $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
+     * Use this endpoint to retrieve the details for an invoice.
+     *
+     * @param string $uid The unique identifier for the invoice, this does not refer to the public
+     *        facing invoice number.
+     *
+     * @return Invoice Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function readInvoice(string $uid): Invoice
+    {
+        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/invoices/{uid}.json')
+            ->auth('global')
+            ->parameters(TemplateParam::init('uid', $uid)->required());
+
+        $_resHandler = $this->responseHandler()->type(Invoice::class);
+
+        return $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
      * Credit Notes are like inverse invoices. They reduce the amount a customer owes.
      *
      * By default, the credit notes returned by this endpoint will exclude the arrays of `line_items`,
@@ -385,148 +473,60 @@ class InvoicesController extends BaseController
     }
 
     /**
-     * Use this endpoint to retrieve the details for a credit note.
+     * By default, invoices returned on the index will only include totals, not detailed breakdowns for
+     * `line_items`, `discounts`, `taxes`, `credits`, `payments`, `custom_fields`, or `refunds`. To include
+     * breakdowns, pass the specific field as a key in the query with a value set to `true`.
      *
-     * @param string $uid The unique identifier of the credit note
+     * @param array $options Array with all options for search
      *
-     * @return CreditNote Response from the API call
+     * @return ListInvoicesResponse Response from the API call
      *
      * @throws ApiException Thrown if API call fails
      */
-    public function readCreditNote(string $uid): CreditNote
+    public function listInvoices(array $options): ListInvoicesResponse
     {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/credit_notes/{uid}.json')
-            ->auth('global')
-            ->parameters(TemplateParam::init('uid', $uid)->required());
-
-        $_resHandler = $this->responseHandler()->type(CreditNote::class);
-
-        return $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
-     * Record an external payment made against a subscription that will pay partially or in full one or
-     * more invoices.
-     *
-     * Payment will be applied starting with the oldest open invoice and then next oldest, and so on until
-     * the amount of the payment is fully consumed.
-     *
-     * Excess payment will result in the creation of a prepayment on the Invoice Account.
-     *
-     * Only ungrouped or primary subscriptions may be paid using the "bulk" payment request.
-     *
-     * @param int $subscriptionId The Chargify id of the subscription
-     * @param RecordPaymentRequest|null $body
-     *
-     * @return PaymentResponse Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function recordPaymentForSubscription(
-        int $subscriptionId,
-        ?RecordPaymentRequest $body = null
-    ): PaymentResponse {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/subscriptions/{subscription_id}/payments.json')
+        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/invoices.json')
             ->auth('global')
             ->parameters(
-                TemplateParam::init('subscription_id', $subscriptionId)->required(),
-                HeaderParam::init('Content-Type', 'application/json'),
-                BodyParam::init($body)
+                QueryParam::init('start_date', $options)->commaSeparated()->extract('startDate'),
+                QueryParam::init('end_date', $options)->commaSeparated()->extract('endDate'),
+                QueryParam::init('status', $options)
+                    ->commaSeparated()
+                    ->extract('status')
+                    ->serializeBy([InvoiceStatus::class, 'checkValue']),
+                QueryParam::init('subscription_id', $options)->commaSeparated()->extract('subscriptionId'),
+                QueryParam::init('subscription_group_uid', $options)
+                    ->commaSeparated()
+                    ->extract('subscriptionGroupUid'),
+                QueryParam::init('page', $options)->commaSeparated()->extract('page', 1),
+                QueryParam::init('per_page', $options)->commaSeparated()->extract('perPage', 20),
+                QueryParam::init('direction', $options)
+                    ->commaSeparated()
+                    ->extract('direction', Direction::DESC)
+                    ->serializeBy([Direction::class, 'checkValue']),
+                QueryParam::init('line_items', $options)->commaSeparated()->extract('lineItems', false),
+                QueryParam::init('discounts', $options)->commaSeparated()->extract('discounts', false),
+                QueryParam::init('taxes', $options)->commaSeparated()->extract('taxes', false),
+                QueryParam::init('credits', $options)->commaSeparated()->extract('credits', false),
+                QueryParam::init('payments', $options)->commaSeparated()->extract('payments', false),
+                QueryParam::init('custom_fields', $options)->commaSeparated()->extract('customFields', false),
+                QueryParam::init('refunds', $options)->commaSeparated()->extract('refunds', false),
+                QueryParam::init('date_field', $options)
+                    ->commaSeparated()
+                    ->extract('dateField', InvoiceDateField::DUE_DATE)
+                    ->serializeBy([InvoiceDateField::class, 'checkValue']),
+                QueryParam::init('start_datetime', $options)->commaSeparated()->extract('startDatetime'),
+                QueryParam::init('end_datetime', $options)->commaSeparated()->extract('endDatetime'),
+                QueryParam::init('customer_ids', $options)->commaSeparated()->extract('customerIds'),
+                QueryParam::init('number', $options)->commaSeparated()->extract('number'),
+                QueryParam::init('product_ids', $options)->commaSeparated()->extract('productIds'),
+                QueryParam::init('sort', $options)
+                    ->commaSeparated()
+                    ->extract('sort', InvoiceSortField::NUMBER)
+                    ->serializeBy([InvoiceSortField::class, 'checkValue'])
             );
 
-        $_resHandler = $this->responseHandler()
-            ->throwErrorOn(
-                '422',
-                ErrorType::initWithErrorTemplate(
-                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
-                    ErrorListResponseException::class
-                )
-            )
-            ->type(PaymentResponse::class);
-
-        return $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
-     * This endpoint allows you to reopen any invoice with the "canceled" status. Invoices enter "canceled"
-     * status if they were open at the time the subscription was canceled (whether through dunning or an
-     * intentional cancellation).
-     *
-     * Invoices with "canceled" status are no longer considered to be due. Once reopened, they are
-     * considered due for payment. Payment may then be captured in one of the following ways:
-     *
-     * - Reactivating the subscription, which will capture all open invoices (See note below about
-     * automatic reopening of invoices.)
-     * - Recording a payment directly against the invoice
-     *
-     * A note about reactivations: any canceled invoices from the most recent active period are
-     * automatically opened as a part of the reactivation process. Reactivating via this endpoint prior to
-     * reactivation is only necessary when you wish to capture older invoices from previous periods during
-     * the reactivation.
-     *
-     * ### Reopening Consolidated Invoices
-     *
-     * When reopening a consolidated invoice, all of its canceled segments will also be reopened.
-     *
-     * @param string $uid The unique identifier for the invoice, this does not refer to the public
-     *        facing invoice number.
-     *
-     * @return Invoice Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function reopenInvoice(string $uid): Invoice
-    {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/invoices/{uid}/reopen.json')
-            ->auth('global')
-            ->parameters(TemplateParam::init('uid', $uid)->required());
-
-        $_resHandler = $this->responseHandler()
-            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
-            ->throwErrorOn(
-                '422',
-                ErrorType::initWithErrorTemplate(
-                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
-                    ErrorListResponseException::class
-                )
-            )
-            ->type(Invoice::class);
-
-        return $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
-     * This endpoint allows you to void any invoice with the "open" or "canceled" status.  It will also
-     * allow voiding of an invoice with the "pending" status if it is not a consolidated invoice.
-     *
-     * @param string $uid The unique identifier for the invoice, this does not refer to the public
-     *        facing invoice number.
-     * @param VoidInvoiceRequest|null $body
-     *
-     * @return Invoice Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function voidInvoice(string $uid, ?VoidInvoiceRequest $body = null): Invoice
-    {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/invoices/{uid}/void.json')
-            ->auth('global')
-            ->parameters(
-                TemplateParam::init('uid', $uid)->required(),
-                HeaderParam::init('Content-Type', 'application/json'),
-                BodyParam::init($body)
-            );
-
-        $_resHandler = $this->responseHandler()
-            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
-            ->throwErrorOn(
-                '422',
-                ErrorType::initWithErrorTemplate(
-                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
-                    ErrorListResponseException::class
-                )
-            )
-            ->type(Invoice::class);
+        $_resHandler = $this->responseHandler()->type(ListInvoicesResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
     }
@@ -556,6 +556,47 @@ class InvoicesController extends BaseController
             );
 
         $_resHandler = $this->responseHandler()->type(ConsolidatedInvoice::class);
+
+        return $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
+     * This endpoint updates customer information on an open invoice and returns the updated invoice. If
+     * you would like to preview changes that will be applied, use the
+     * `/invoices/{uid}/customer_information/preview.json` endpoint before.
+     *
+     * The endpoint doesn't accept a request body. Customer information differences are calculated on the
+     * application side.
+     *
+     * @param string $uid The unique identifier for the invoice, this does not refer to the public
+     *        facing invoice number.
+     *
+     * @return Invoice Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function updateCustomerInformation(string $uid): Invoice
+    {
+        $_reqBuilder = $this->requestBuilder(RequestMethod::PUT, '/invoices/{uid}/customer_information.json')
+            ->auth('global')
+            ->parameters(TemplateParam::init('uid', $uid)->required());
+
+        $_resHandler = $this->responseHandler()
+            ->throwErrorOn(
+                '404',
+                ErrorType::initWithErrorTemplate(
+                    'Not Found:\'{$response.body}\'',
+                    ErrorListResponseException::class
+                )
+            )
+            ->throwErrorOn(
+                '422',
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
+            )
+            ->type(Invoice::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
     }
@@ -772,134 +813,6 @@ class InvoicesController extends BaseController
     }
 
     /**
-     * This endpoint allows for invoices to be programmatically delivered via email. This endpoint supports
-     * the delivery of both ad-hoc and automatically generated invoices. Additionally, this endpoint
-     * supports email delivery to direct recipients, carbon-copy (cc) recipients, and blind carbon-copy
-     * (bcc) recipients.
-     *
-     * Please note that if no recipient email addresses are specified in the request, then the
-     * subscription's default email configuration will be used. For example, if `recipient_emails` is left
-     * blank, then the invoice will be delivered to the subscription's customer email address.
-     *
-     * On success, a 204 no-content response will be returned. Please note that this does not indicate that
-     * email(s) have been delivered, but instead indicates that emails have been successfully queued for
-     * delivery. If _any_ invalid or malformed email address is found in the request body, the entire
-     * request will be rejected and a 422 response will be returned.
-     *
-     * @param string $uid The unique identifier for the invoice, this does not refer to the public
-     *        facing invoice number.
-     * @param SendInvoiceRequest|null $body
-     *
-     * @return void Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function sendInvoice(string $uid, ?SendInvoiceRequest $body = null): void
-    {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/invoices/{uid}/deliveries.json')
-            ->auth('global')
-            ->parameters(
-                TemplateParam::init('uid', $uid)->required(),
-                HeaderParam::init('Content-Type', 'application/json'),
-                BodyParam::init($body)
-            );
-
-        $_resHandler = $this->responseHandler()
-            ->throwErrorOn(
-                '422',
-                ErrorType::initWithErrorTemplate(
-                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
-                    ErrorListResponseException::class
-                )
-            );
-
-        $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
-     * Customer information may change after an invoice is issued which may lead to a mismatch between
-     * customer information that are present on an open invoice and actual customer information. This
-     * endpoint allows to preview these differences, if any.
-     *
-     * The endpoint doesn't accept a request body. Customer information differences are calculated on the
-     * application side.
-     *
-     * @param string $uid The unique identifier for the invoice, this does not refer to the public
-     *        facing invoice number.
-     *
-     * @return CustomerChangesPreviewResponse Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function previewCustomerInformationChanges(string $uid): CustomerChangesPreviewResponse
-    {
-        $_reqBuilder = $this->requestBuilder(
-            RequestMethod::POST,
-            '/invoices/{uid}/customer_information/preview.json'
-        )->auth('global')->parameters(TemplateParam::init('uid', $uid)->required());
-
-        $_resHandler = $this->responseHandler()
-            ->throwErrorOn(
-                '404',
-                ErrorType::initWithErrorTemplate(
-                    'Not Found:\'{$response.body}\'',
-                    ErrorListResponseException::class
-                )
-            )
-            ->throwErrorOn(
-                '422',
-                ErrorType::initWithErrorTemplate(
-                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
-                    ErrorListResponseException::class
-                )
-            )
-            ->type(CustomerChangesPreviewResponse::class);
-
-        return $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
-     * This endpoint updates customer information on an open invoice and returns the updated invoice. If
-     * you would like to preview changes that will be applied, use the
-     * `/invoices/{uid}/customer_information/preview.json` endpoint before.
-     *
-     * The endpoint doesn't accept a request body. Customer information differences are calculated on the
-     * application side.
-     *
-     * @param string $uid The unique identifier for the invoice, this does not refer to the public
-     *        facing invoice number.
-     *
-     * @return Invoice Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function updateCustomerInformation(string $uid): Invoice
-    {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::PUT, '/invoices/{uid}/customer_information.json')
-            ->auth('global')
-            ->parameters(TemplateParam::init('uid', $uid)->required());
-
-        $_resHandler = $this->responseHandler()
-            ->throwErrorOn(
-                '404',
-                ErrorType::initWithErrorTemplate(
-                    'Not Found:\'{$response.body}\'',
-                    ErrorListResponseException::class
-                )
-            )
-            ->throwErrorOn(
-                '422',
-                ErrorType::initWithErrorTemplate(
-                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
-                    ErrorListResponseException::class
-                )
-            )
-            ->type(Invoice::class);
-
-        return $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
      * This endpoint allows you to issue an invoice that is in "pending" status. For example, you can issue
      * an invoice that was created when allocating new quantity on a component and using "accrue charges"
      * option.
@@ -955,5 +868,92 @@ class InvoicesController extends BaseController
             ->type(Invoice::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
+     * Customer information may change after an invoice is issued which may lead to a mismatch between
+     * customer information that are present on an open invoice and actual customer information. This
+     * endpoint allows to preview these differences, if any.
+     *
+     * The endpoint doesn't accept a request body. Customer information differences are calculated on the
+     * application side.
+     *
+     * @param string $uid The unique identifier for the invoice, this does not refer to the public
+     *        facing invoice number.
+     *
+     * @return CustomerChangesPreviewResponse Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function previewCustomerInformationChanges(string $uid): CustomerChangesPreviewResponse
+    {
+        $_reqBuilder = $this->requestBuilder(
+            RequestMethod::POST,
+            '/invoices/{uid}/customer_information/preview.json'
+        )->auth('global')->parameters(TemplateParam::init('uid', $uid)->required());
+
+        $_resHandler = $this->responseHandler()
+            ->throwErrorOn(
+                '404',
+                ErrorType::initWithErrorTemplate(
+                    'Not Found:\'{$response.body}\'',
+                    ErrorListResponseException::class
+                )
+            )
+            ->throwErrorOn(
+                '422',
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
+            )
+            ->type(CustomerChangesPreviewResponse::class);
+
+        return $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
+     * This endpoint allows for invoices to be programmatically delivered via email. This endpoint supports
+     * the delivery of both ad-hoc and automatically generated invoices. Additionally, this endpoint
+     * supports email delivery to direct recipients, carbon-copy (cc) recipients, and blind carbon-copy
+     * (bcc) recipients.
+     *
+     * Please note that if no recipient email addresses are specified in the request, then the
+     * subscription's default email configuration will be used. For example, if `recipient_emails` is left
+     * blank, then the invoice will be delivered to the subscription's customer email address.
+     *
+     * On success, a 204 no-content response will be returned. Please note that this does not indicate that
+     * email(s) have been delivered, but instead indicates that emails have been successfully queued for
+     * delivery. If _any_ invalid or malformed email address is found in the request body, the entire
+     * request will be rejected and a 422 response will be returned.
+     *
+     * @param string $uid The unique identifier for the invoice, this does not refer to the public
+     *        facing invoice number.
+     * @param SendInvoiceRequest|null $body
+     *
+     * @return void Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function sendInvoice(string $uid, ?SendInvoiceRequest $body = null): void
+    {
+        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/invoices/{uid}/deliveries.json')
+            ->auth('global')
+            ->parameters(
+                TemplateParam::init('uid', $uid)->required(),
+                HeaderParam::init('Content-Type', 'application/json'),
+                BodyParam::init($body)
+            );
+
+        $_resHandler = $this->responseHandler()
+            ->throwErrorOn(
+                '422',
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
+            );
+
+        $this->execute($_reqBuilder, $_resHandler);
     }
 }

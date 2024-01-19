@@ -10,12 +10,75 @@ $subscriptionInvoiceAccountController = $client->getSubscriptionInvoiceAccountCo
 
 ## Methods
 
+* [List Prepayments](../../doc/controllers/subscription-invoice-account.md#list-prepayments)
 * [Read Account Balances](../../doc/controllers/subscription-invoice-account.md#read-account-balances)
 * [Create Prepayment](../../doc/controllers/subscription-invoice-account.md#create-prepayment)
-* [List Prepayments](../../doc/controllers/subscription-invoice-account.md#list-prepayments)
 * [Issue Service Credit](../../doc/controllers/subscription-invoice-account.md#issue-service-credit)
-* [Deduct Service Credit](../../doc/controllers/subscription-invoice-account.md#deduct-service-credit)
 * [Refund Prepayment](../../doc/controllers/subscription-invoice-account.md#refund-prepayment)
+* [Deduct Service Credit](../../doc/controllers/subscription-invoice-account.md#deduct-service-credit)
+
+
+# List Prepayments
+
+This request will list a subscription's prepayments.
+
+```php
+function listPrepayments(array $options): PrepaymentsResponse
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+| `page` | `?int` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`. |
+| `perPage` | `?int` | Query, Optional | This parameter indicates how many records to fetch in each request. Default value is 20. The maximum allowed values is 200; any per_page value over 200 will be changed to 200.<br>Use in query `per_page=200`. |
+| `filterDateField` | [`?string(BasicDateField)`](../../doc/models/basic-date-field.md) | Query, Optional | The type of filter you would like to apply to your search. created_at - Time when prepayment was created. application_at - Time when prepayment was applied to invoice. Use in query `filter[date_field]=created_at`. |
+| `filterStartDate` | `?DateTime` | Query, Optional | The start date (format YYYY-MM-DD) with which to filter the date_field. Returns prepayments with a timestamp at or after midnight (12:00:00 AM) in your site’s time zone on the date specified. Use in query `filter[start_date]=2011-12-15`. |
+| `filterEndDate` | `?DateTime` | Query, Optional | The end date (format YYYY-MM-DD) with which to filter the date_field. Returns prepayments with a timestamp up to and including 11:59:59PM in your site’s time zone on the date specified. Use in query `filter[end_date]=2011-12-15`. |
+
+## Response Type
+
+[`PrepaymentsResponse`](../../doc/models/prepayments-response.md)
+
+## Example Usage
+
+```php
+$collect = Liquid error: Value cannot be null. (Parameter 'key')Liquid error: Value cannot be null. (Parameter 'key')Liquid error: Value cannot be null. (Parameter 'key')[
+    'subscription_id' => 222,
+    'page' => 2,
+    'per_page' => 50
+];
+
+$result = $subscriptionInvoiceAccountController->listPrepayments($collect);
+```
+
+## Example Response *(as JSON)*
+
+```json
+{
+  "prepayments": [
+    {
+      "id": 17,
+      "subscription_id": 3558750,
+      "amount_in_cents": 2000,
+      "remaining_amount_in_cents": 1100,
+      "refunded_amount_in_cents": 0,
+      "external": true,
+      "memo": "test",
+      "details": "test details",
+      "payment_type": "cash",
+      "created_at": "2022-01-18T22:45:41+11:00"
+    }
+  ]
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 404 | Not Found | `ApiException` |
 
 
 # Read Account Balances
@@ -107,69 +170,6 @@ $result = $subscriptionInvoiceAccountController->createPrepayment(
 ```
 
 
-# List Prepayments
-
-This request will list a subscription's prepayments.
-
-```php
-function listPrepayments(array $options): PrepaymentsResponse
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
-| `page` | `?int` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`. |
-| `perPage` | `?int` | Query, Optional | This parameter indicates how many records to fetch in each request. Default value is 20. The maximum allowed values is 200; any per_page value over 200 will be changed to 200.<br>Use in query `per_page=200`. |
-| `filterDateField` | [`?string(BasicDateField)`](../../doc/models/basic-date-field.md) | Query, Optional | The type of filter you would like to apply to your search. created_at - Time when prepayment was created. application_at - Time when prepayment was applied to invoice. Use in query `filter[date_field]=created_at`. |
-| `filterStartDate` | `?DateTime` | Query, Optional | The start date (format YYYY-MM-DD) with which to filter the date_field. Returns prepayments with a timestamp at or after midnight (12:00:00 AM) in your site’s time zone on the date specified. Use in query `filter[start_date]=2011-12-15`. |
-| `filterEndDate` | `?DateTime` | Query, Optional | The end date (format YYYY-MM-DD) with which to filter the date_field. Returns prepayments with a timestamp up to and including 11:59:59PM in your site’s time zone on the date specified. Use in query `filter[end_date]=2011-12-15`. |
-
-## Response Type
-
-[`PrepaymentsResponse`](../../doc/models/prepayments-response.md)
-
-## Example Usage
-
-```php
-$collect = Liquid error: Value cannot be null. (Parameter 'key')Liquid error: Value cannot be null. (Parameter 'key')Liquid error: Value cannot be null. (Parameter 'key')[
-    'subscription_id' => 222,
-    'page' => 2,
-    'per_page' => 50
-];
-
-$result = $subscriptionInvoiceAccountController->listPrepayments($collect);
-```
-
-## Example Response *(as JSON)*
-
-```json
-{
-  "prepayments": [
-    {
-      "id": 17,
-      "subscription_id": 3558750,
-      "amount_in_cents": 2000,
-      "remaining_amount_in_cents": 1100,
-      "refunded_amount_in_cents": 0,
-      "external": true,
-      "memo": "test",
-      "details": "test details",
-      "payment_type": "cash",
-      "created_at": "2022-01-18T22:45:41+11:00"
-    }
-  ]
-}
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 404 | Not Found | `ApiException` |
-
-
 # Issue Service Credit
 
 Credit will be added to the subscription in the amount specified in the request body. The credit is subsequently applied to the next generated invoice.
@@ -220,50 +220,6 @@ $result = $subscriptionInvoiceAccountController->issueServiceCredit(
 ```
 
 
-# Deduct Service Credit
-
-Credit will be removed from the subscription in the amount specified in the request body. The credit amount being deducted must be equal to or less than the current credit balance.
-
-```php
-function deductServiceCredit(int $subscriptionId, ?DeductServiceCreditRequest $body = null): void
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
-| `body` | [`?DeductServiceCreditRequest`](../../doc/models/deduct-service-credit-request.md) | Body, Optional | - |
-
-## Response Type
-
-`void`
-
-## Example Usage
-
-```php
-$subscriptionId = 222;
-
-$body = DeductServiceCreditRequestBuilder::init(
-    DeductServiceCreditBuilder::init(
-        '1',
-        'Deduction'
-    )->build()
-)->build();
-
-$subscriptionInvoiceAccountController->deductServiceCredit(
-    $subscriptionId,
-    $body
-);
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
-
-
 # Refund Prepayment
 
 This endpoint will refund, completely or partially, a particular prepayment applied to a subscription. The `prepayment_id` will be the account transaction ID of the original payment. The prepayment must have some amount remaining in order to be refunded.
@@ -310,4 +266,48 @@ $result = $subscriptionInvoiceAccountController->refundPrepayment(
 | 400 | Bad Request | [`RefundPrepaymentBaseErrorsResponseException`](../../doc/models/refund-prepayment-base-errors-response-exception.md) |
 | 404 | Not Found | `ApiException` |
 | 422 | Unprocessable Entity | [`RefundPrepaymentAggregatedErrorsResponseException`](../../doc/models/refund-prepayment-aggregated-errors-response-exception.md) |
+
+
+# Deduct Service Credit
+
+Credit will be removed from the subscription in the amount specified in the request body. The credit amount being deducted must be equal to or less than the current credit balance.
+
+```php
+function deductServiceCredit(int $subscriptionId, ?DeductServiceCreditRequest $body = null): void
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+| `body` | [`?DeductServiceCreditRequest`](../../doc/models/deduct-service-credit-request.md) | Body, Optional | - |
+
+## Response Type
+
+`void`
+
+## Example Usage
+
+```php
+$subscriptionId = 222;
+
+$body = DeductServiceCreditRequestBuilder::init(
+    DeductServiceCreditBuilder::init(
+        '1',
+        'Deduction'
+    )->build()
+)->build();
+
+$subscriptionInvoiceAccountController->deductServiceCredit(
+    $subscriptionId,
+    $body
+);
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
 

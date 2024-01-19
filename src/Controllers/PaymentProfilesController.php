@@ -453,6 +453,36 @@ class PaymentProfilesController extends BaseController
     }
 
     /**
+     * Deletes an unused payment profile.
+     *
+     * If the payment profile is in use by one or more subscriptions or groups, a 422 and error message
+     * will be returned.
+     *
+     * @param int $paymentProfileId The Chargify id of the payment profile
+     *
+     * @return void Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function deleteUnusedPaymentProfile(int $paymentProfileId): void
+    {
+        $_reqBuilder = $this->requestBuilder(RequestMethod::DELETE, '/payment_profiles/{payment_profile_id}.json')
+            ->auth('global')
+            ->parameters(TemplateParam::init('payment_profile_id', $paymentProfileId)->required());
+
+        $_resHandler = $this->responseHandler()
+            ->throwErrorOn(
+                '422',
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
+            );
+
+        $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
      * ## Partial Card Updates
      *
      * In the event that you are using the Authorize.net, Stripe, Cybersource, Forte or Braintree Blue
@@ -529,179 +559,6 @@ class PaymentProfilesController extends BaseController
                 )
             )
             ->type(UpdatePaymentProfileResponse::class);
-
-        return $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
-     * Deletes an unused payment profile.
-     *
-     * If the payment profile is in use by one or more subscriptions or groups, a 422 and error message
-     * will be returned.
-     *
-     * @param int $paymentProfileId The Chargify id of the payment profile
-     *
-     * @return void Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function deleteUnusedPaymentProfile(int $paymentProfileId): void
-    {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::DELETE, '/payment_profiles/{payment_profile_id}.json')
-            ->auth('global')
-            ->parameters(TemplateParam::init('payment_profile_id', $paymentProfileId)->required());
-
-        $_resHandler = $this->responseHandler()
-            ->throwErrorOn(
-                '422',
-                ErrorType::initWithErrorTemplate(
-                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
-                    ErrorListResponseException::class
-                )
-            );
-
-        $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
-     * This will delete a payment profile belonging to the customer on the subscription.
-     *
-     * + If the customer has multiple subscriptions, the payment profile will be removed from all of them.
-     *
-     * + If you delete the default payment profile for a subscription, you will need to specify another
-     * payment profile to be the default through the api, or either prompt the user to enter a card in the
-     * billing portal or on the self-service page, or visit the Payment Details tab on the subscription in
-     * the Admin UI and use the “Add New Credit Card” or “Make Active Payment Method” link, (depending on
-     * whether there are other cards present).
-     *
-     * @param int $subscriptionId The Chargify id of the subscription
-     * @param int $paymentProfileId The Chargify id of the payment profile
-     *
-     * @return void Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function deleteSubscriptionsPaymentProfile(int $subscriptionId, int $paymentProfileId): void
-    {
-        $_reqBuilder = $this->requestBuilder(
-            RequestMethod::DELETE,
-            '/subscriptions/{subscription_id}/payment_profiles/{payment_profile_id}.json'
-        )
-            ->auth('global')
-            ->parameters(
-                TemplateParam::init('subscription_id', $subscriptionId)->required(),
-                TemplateParam::init('payment_profile_id', $paymentProfileId)->required()
-            );
-
-        $this->execute($_reqBuilder);
-    }
-
-    /**
-     * Submit the two small deposit amounts the customer received in their bank account in order to verify
-     * the bank account. (Stripe only)
-     *
-     * @param int $bankAccountId Identifier of the bank account in the system.
-     * @param BankAccountVerificationRequest|null $body
-     *
-     * @return BankAccountResponse Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function verifyBankAccount(
-        int $bankAccountId,
-        ?BankAccountVerificationRequest $body = null
-    ): BankAccountResponse {
-        $_reqBuilder = $this->requestBuilder(
-            RequestMethod::PUT,
-            '/bank_accounts/{bank_account_id}/verification.json'
-        )
-            ->auth('global')
-            ->parameters(
-                TemplateParam::init('bank_account_id', $bankAccountId)->required(),
-                HeaderParam::init('Content-Type', 'application/json'),
-                BodyParam::init($body)
-            );
-
-        $_resHandler = $this->responseHandler()
-            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
-            ->throwErrorOn(
-                '422',
-                ErrorType::initWithErrorTemplate(
-                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
-                    ErrorListResponseException::class
-                )
-            )
-            ->type(BankAccountResponse::class);
-
-        return $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
-     * This will delete a Payment Profile belonging to a Subscription Group.
-     *
-     * **Note**: If the Payment Profile belongs to multiple Subscription Groups and/or Subscriptions, it
-     * will be removed from all of them.
-     *
-     * @param string $uid The uid of the subscription group
-     * @param int $paymentProfileId The Chargify id of the payment profile
-     *
-     * @return void Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function deleteSubscriptionGroupPaymentProfile(string $uid, int $paymentProfileId): void
-    {
-        $_reqBuilder = $this->requestBuilder(
-            RequestMethod::DELETE,
-            '/subscription_groups/{uid}/payment_profiles/{payment_profile_id}.json'
-        )
-            ->auth('global')
-            ->parameters(
-                TemplateParam::init('uid', $uid)->required(),
-                TemplateParam::init('payment_profile_id', $paymentProfileId)->required()
-            );
-
-        $this->execute($_reqBuilder);
-    }
-
-    /**
-     * This will change the default payment profile on the subscription to the existing payment profile
-     * with the id specified.
-     *
-     * You must elect to change the existing payment profile to a new payment profile ID in order to
-     * receive a satisfactory response from this endpoint.
-     *
-     * @param int $subscriptionId The Chargify id of the subscription
-     * @param int $paymentProfileId The Chargify id of the payment profile
-     *
-     * @return PaymentProfileResponse Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function updateSubscriptionDefaultPaymentProfile(
-        int $subscriptionId,
-        int $paymentProfileId
-    ): PaymentProfileResponse {
-        $_reqBuilder = $this->requestBuilder(
-            RequestMethod::POST,
-            '/subscriptions/{subscription_id}/payment_profiles/{payment_profile_id}/change_paym' .
-            'ent_profile.json'
-        )
-            ->auth('global')
-            ->parameters(
-                TemplateParam::init('subscription_id', $subscriptionId)->required(),
-                TemplateParam::init('payment_profile_id', $paymentProfileId)->required()
-            );
-
-        $_resHandler = $this->responseHandler()
-            ->throwErrorOn(
-                '422',
-                ErrorType::initWithErrorTemplate(
-                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
-                    ErrorListResponseException::class
-                )
-            )
-            ->type(PaymentProfileResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
     }
@@ -786,6 +643,109 @@ class PaymentProfilesController extends BaseController
     }
 
     /**
+     * This will delete a payment profile belonging to the customer on the subscription.
+     *
+     * + If the customer has multiple subscriptions, the payment profile will be removed from all of them.
+     *
+     * + If you delete the default payment profile for a subscription, you will need to specify another
+     * payment profile to be the default through the api, or either prompt the user to enter a card in the
+     * billing portal or on the self-service page, or visit the Payment Details tab on the subscription in
+     * the Admin UI and use the “Add New Credit Card” or “Make Active Payment Method” link, (depending on
+     * whether there are other cards present).
+     *
+     * @param int $subscriptionId The Chargify id of the subscription
+     * @param int $paymentProfileId The Chargify id of the payment profile
+     *
+     * @return void Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function deleteSubscriptionsPaymentProfile(int $subscriptionId, int $paymentProfileId): void
+    {
+        $_reqBuilder = $this->requestBuilder(
+            RequestMethod::DELETE,
+            '/subscriptions/{subscription_id}/payment_profiles/{payment_profile_id}.json'
+        )
+            ->auth('global')
+            ->parameters(
+                TemplateParam::init('subscription_id', $subscriptionId)->required(),
+                TemplateParam::init('payment_profile_id', $paymentProfileId)->required()
+            );
+
+        $this->execute($_reqBuilder);
+    }
+
+    /**
+     * This will delete a Payment Profile belonging to a Subscription Group.
+     *
+     * **Note**: If the Payment Profile belongs to multiple Subscription Groups and/or Subscriptions, it
+     * will be removed from all of them.
+     *
+     * @param string $uid The uid of the subscription group
+     * @param int $paymentProfileId The Chargify id of the payment profile
+     *
+     * @return void Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function deleteSubscriptionGroupPaymentProfile(string $uid, int $paymentProfileId): void
+    {
+        $_reqBuilder = $this->requestBuilder(
+            RequestMethod::DELETE,
+            '/subscription_groups/{uid}/payment_profiles/{payment_profile_id}.json'
+        )
+            ->auth('global')
+            ->parameters(
+                TemplateParam::init('uid', $uid)->required(),
+                TemplateParam::init('payment_profile_id', $paymentProfileId)->required()
+            );
+
+        $this->execute($_reqBuilder);
+    }
+
+    /**
+     * This will change the default payment profile on the subscription to the existing payment profile
+     * with the id specified.
+     *
+     * You must elect to change the existing payment profile to a new payment profile ID in order to
+     * receive a satisfactory response from this endpoint.
+     *
+     * @param int $subscriptionId The Chargify id of the subscription
+     * @param int $paymentProfileId The Chargify id of the payment profile
+     *
+     * @return PaymentProfileResponse Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function updateSubscriptionDefaultPaymentProfile(
+        int $subscriptionId,
+        int $paymentProfileId
+    ): PaymentProfileResponse {
+        $_reqBuilder = $this->requestBuilder(
+            RequestMethod::POST,
+            '/subscriptions/{subscription_id}/payment_profiles/{payment_profile_id}/change_paym' .
+            'ent_profile.json'
+        )
+            ->auth('global')
+            ->parameters(
+                TemplateParam::init('subscription_id', $subscriptionId)->required(),
+                TemplateParam::init('payment_profile_id', $paymentProfileId)->required()
+            );
+
+        $_resHandler = $this->responseHandler()
+            ->throwErrorOn(
+                '422',
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
+            )
+            ->type(PaymentProfileResponse::class);
+
+        return $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
      * You can send a "request payment update" email to the customer associated with the subscription.
      *
      * If you attempt to send a "request payment update" email more than five times within a 30-minute
@@ -825,5 +785,45 @@ class PaymentProfilesController extends BaseController
             );
 
         $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
+     * Submit the two small deposit amounts the customer received in their bank account in order to verify
+     * the bank account. (Stripe only)
+     *
+     * @param int $bankAccountId Identifier of the bank account in the system.
+     * @param BankAccountVerificationRequest|null $body
+     *
+     * @return BankAccountResponse Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function verifyBankAccount(
+        int $bankAccountId,
+        ?BankAccountVerificationRequest $body = null
+    ): BankAccountResponse {
+        $_reqBuilder = $this->requestBuilder(
+            RequestMethod::PUT,
+            '/bank_accounts/{bank_account_id}/verification.json'
+        )
+            ->auth('global')
+            ->parameters(
+                TemplateParam::init('bank_account_id', $bankAccountId)->required(),
+                HeaderParam::init('Content-Type', 'application/json'),
+                BodyParam::init($body)
+            );
+
+        $_resHandler = $this->responseHandler()
+            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
+            ->throwErrorOn(
+                '422',
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
+            )
+            ->type(BankAccountResponse::class);
+
+        return $this->execute($_reqBuilder, $_resHandler);
     }
 }

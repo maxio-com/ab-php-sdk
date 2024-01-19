@@ -10,56 +10,10 @@ $insightsController = $client->getInsightsController();
 
 ## Methods
 
-* [Read Site Stats](../../doc/controllers/insights.md#read-site-stats)
 * [Read Mrr](../../doc/controllers/insights.md#read-mrr)
+* [Read Site Stats](../../doc/controllers/insights.md#read-site-stats)
 * [Read Mrr Movements](../../doc/controllers/insights.md#read-mrr-movements)
 * [List Mrr Per Subscription](../../doc/controllers/insights.md#list-mrr-per-subscription)
-
-
-# Read Site Stats
-
-The Stats API is a very basic view of some Site-level stats. This API call only answers with JSON responses. An XML version is not provided.
-
-## Stats Documentation
-
-There currently is not a complimentary matching set of documentation that compliments this endpoint. However, each Site's dashboard will reflect the summary of information provided in the Stats reposnse.
-
-```
-https://subdomain.chargify.com/dashboard
-```
-
-```php
-function readSiteStats(): SiteSummary
-```
-
-## Response Type
-
-[`SiteSummary`](../../doc/models/site-summary.md)
-
-## Example Usage
-
-```php
-$result = $insightsController->readSiteStats();
-```
-
-## Example Response *(as JSON)*
-
-```json
-{
-  "seller_name": "Acme, Inc.",
-  "site_name": "Production",
-  "site_id": 12345,
-  "site_currency": "USD",
-  "stats": {
-    "total_subscriptions": 120,
-    "subscriptions_today": 4,
-    "total_revenue": "$45,978.81",
-    "revenue_today": "$1,405.12",
-    "revenue_this_month": "$10,000.00",
-    "revenue_this_year": "$27,935.24"
-  }
-}
-```
 
 
 # Read Mrr
@@ -105,6 +59,52 @@ $result = $insightsController->readMrr();
       "usage_amount_in_cents": 2000,
       "usage_amount_formatted": "$20.00"
     }
+  }
+}
+```
+
+
+# Read Site Stats
+
+The Stats API is a very basic view of some Site-level stats. This API call only answers with JSON responses. An XML version is not provided.
+
+## Stats Documentation
+
+There currently is not a complimentary matching set of documentation that compliments this endpoint. However, each Site's dashboard will reflect the summary of information provided in the Stats reposnse.
+
+```
+https://subdomain.chargify.com/dashboard
+```
+
+```php
+function readSiteStats(): SiteSummary
+```
+
+## Response Type
+
+[`SiteSummary`](../../doc/models/site-summary.md)
+
+## Example Usage
+
+```php
+$result = $insightsController->readSiteStats();
+```
+
+## Example Response *(as JSON)*
+
+```json
+{
+  "seller_name": "Acme, Inc.",
+  "site_name": "Production",
+  "site_id": 12345,
+  "site_currency": "USD",
+  "stats": {
+    "total_subscriptions": 120,
+    "subscriptions_today": 4,
+    "total_revenue": "$45,978.81",
+    "revenue_today": "$1,405.12",
+    "revenue_this_month": "$10,000.00",
+    "revenue_this_year": "$27,935.24"
   }
 }
 ```

@@ -10,15 +10,249 @@ $proformaInvoicesController = $client->getProformaInvoicesController();
 
 ## Methods
 
-* [Create Consolidated Proforma Invoice](../../doc/controllers/proforma-invoices.md#create-consolidated-proforma-invoice)
 * [List Subscription Group Proforma Invoices](../../doc/controllers/proforma-invoices.md#list-subscription-group-proforma-invoices)
+* [Preview Proforma Invoice](../../doc/controllers/proforma-invoices.md#preview-proforma-invoice)
+* [Preview Signup Proforma Invoice](../../doc/controllers/proforma-invoices.md#preview-signup-proforma-invoice)
+* [Create Signup Proforma Invoice](../../doc/controllers/proforma-invoices.md#create-signup-proforma-invoice)
+* [List Proforma Invoices](../../doc/controllers/proforma-invoices.md#list-proforma-invoices)
+* [Create Consolidated Proforma Invoice](../../doc/controllers/proforma-invoices.md#create-consolidated-proforma-invoice)
 * [Read Proforma Invoice](../../doc/controllers/proforma-invoices.md#read-proforma-invoice)
 * [Create Proforma Invoice](../../doc/controllers/proforma-invoices.md#create-proforma-invoice)
-* [List Proforma Invoices](../../doc/controllers/proforma-invoices.md#list-proforma-invoices)
 * [Void Proforma Invoice](../../doc/controllers/proforma-invoices.md#void-proforma-invoice)
-* [Preview Proforma Invoice](../../doc/controllers/proforma-invoices.md#preview-proforma-invoice)
-* [Create Signup Proforma Invoice](../../doc/controllers/proforma-invoices.md#create-signup-proforma-invoice)
-* [Preview Signup Proforma Invoice](../../doc/controllers/proforma-invoices.md#preview-signup-proforma-invoice)
+
+
+# List Subscription Group Proforma Invoices
+
+Only proforma invoices with a `consolidation_level` of parent are returned.
+
+By default, proforma invoices returned on the index will only include totals, not detailed breakdowns for `line_items`, `discounts`, `taxes`, `credits`, `payments`, `custom_fields`. To include breakdowns, pass the specific field as a key in the query with a value set to true.
+
+```php
+function listSubscriptionGroupProformaInvoices(string $uid): ProformaInvoice
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `uid` | `string` | Template, Required | The uid of the subscription group |
+
+## Response Type
+
+[`ProformaInvoice`](../../doc/models/proforma-invoice.md)
+
+## Example Usage
+
+```php
+$uid = 'uid0';
+
+$result = $proformaInvoicesController->listSubscriptionGroupProformaInvoices($uid);
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 404 | Not Found | `ApiException` |
+
+
+# Preview Proforma Invoice
+
+Return a preview of the data that will be included on a given subscription's proforma invoice if one were to be generated. It will have similar line items and totals as a renewal preview, but the response will be presented in the format of a proforma invoice. Consequently it will include additional information such as the name and addresses that will appear on the proforma invoice.
+
+The preview endpoint is subject to all the same conditions as the proforma invoice endpoint. For example, previews are only available on the Relationship Invoicing architecture, and previews cannot be made for end-of-life subscriptions.
+
+If all the data returned in the preview is as expected, you may then create a static proforma invoice and send it to your customer. The data within a preview will not be saved and will not be accessible after the call is made.
+
+Alternatively, if you have some proforma invoices already, you may make a preview call to determine whether any billing information for the subscription's upcoming renewal has changed.
+
+```php
+function previewProformaInvoice(int $subscriptionId): ProformaInvoicePreview
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+
+## Response Type
+
+[`ProformaInvoicePreview`](../../doc/models/proforma-invoice-preview.md)
+
+## Example Usage
+
+```php
+$subscriptionId = 222;
+
+$result = $proformaInvoicesController->previewProformaInvoice($subscriptionId);
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 404 | Not Found | `ApiException` |
+| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
+
+
+# Preview Signup Proforma Invoice
+
+This endpoint is only available for Relationship Invoicing sites. It cannot be used to create consolidated proforma invoice previews or preview prepaid subscriptions.
+
+Create a signup preview in the format of a proforma invoice to preview costs before a subscription's signup. You have the option of optionally previewing the first renewal's costs as well. The proforma invoice preview will not be persisted.
+
+Pass a payload that resembles a subscription create or signup preview request. For example, you can specify components, coupons/a referral, offers, custom pricing, and an existing customer or payment profile to populate a shipping or billing address.
+
+A product and customer first name, last name, and email are the minimum requirements.
+
+```php
+function previewSignupProformaInvoice(
+    ?string $includeNextProformaInvoice = null,
+    ?CreateSubscriptionRequest $body = null
+): SignupProformaPreviewResponse
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `includeNextProformaInvoice` | `?string` | Query, Optional | Choose to include a proforma invoice preview for the first renewal |
+| `body` | [`?CreateSubscriptionRequest`](../../doc/models/create-subscription-request.md) | Body, Optional | - |
+
+## Response Type
+
+[`SignupProformaPreviewResponse`](../../doc/models/signup-proforma-preview-response.md)
+
+## Example Usage
+
+```php
+$body = CreateSubscriptionRequestBuilder::init(
+    CreateSubscriptionBuilder::init()
+        ->productHandle('gold-plan')
+        ->customerAttributes(
+            CustomerAttributesBuilder::init()
+                ->firstName('first')
+                ->lastName('last')
+                ->email('flast@example.com')
+                ->build()
+        )
+        ->build()
+)->build();
+
+$result = $proformaInvoicesController->previewSignupProformaInvoice(
+    null,
+    $body
+);
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 400 | Bad Request | [`ProformaBadRequestErrorResponseException`](../../doc/models/proforma-bad-request-error-response-exception.md) |
+| 422 | Unprocessable Entity (WebDAV) | [`ErrorArrayMapResponseException`](../../doc/models/error-array-map-response-exception.md) |
+
+
+# Create Signup Proforma Invoice
+
+This endpoint is only available for Relationship Invoicing sites. It cannot be used to create consolidated proforma invoices or preview prepaid subscriptions.
+
+Create a proforma invoice to preview costs before a subscription's signup. Like other proforma invoices, it can be emailed to the customer, voided, and publicly viewed on the chargifypay domain.
+
+Pass a payload that resembles a subscription create or signup preview request. For example, you can specify components, coupons/a referral, offers, custom pricing, and an existing customer or payment profile to populate a shipping or billing address.
+
+A product and customer first name, last name, and email are the minimum requirements. We recommend associating the proforma invoice with a customer_id to easily find their proforma invoices, since the subscription_id will always be blank.
+
+```php
+function createSignupProformaInvoice(?CreateSubscriptionRequest $body = null): ProformaInvoice
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `body` | [`?CreateSubscriptionRequest`](../../doc/models/create-subscription-request.md) | Body, Optional | - |
+
+## Response Type
+
+[`ProformaInvoice`](../../doc/models/proforma-invoice.md)
+
+## Example Usage
+
+```php
+$body = CreateSubscriptionRequestBuilder::init(
+    CreateSubscriptionBuilder::init()
+        ->productHandle('gold-product')
+        ->customerAttributes(
+            CustomerAttributesBuilder::init()
+                ->firstName('Myra')
+                ->lastName('Maisel')
+                ->email('mmaisel@example.com')
+                ->build()
+        )
+        ->build()
+)->build();
+
+$result = $proformaInvoicesController->createSignupProformaInvoice($body);
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 400 | Bad Request | [`ProformaBadRequestErrorResponseException`](../../doc/models/proforma-bad-request-error-response-exception.md) |
+| 422 | Unprocessable Entity (WebDAV) | [`ErrorArrayMapResponseException`](../../doc/models/error-array-map-response-exception.md) |
+
+
+# List Proforma Invoices
+
+By default, proforma invoices returned on the index will only include totals, not detailed breakdowns for `line_items`, `discounts`, `taxes`, `credits`, `payments`, or `custom_fields`. To include breakdowns, pass the specific field as a key in the query with a value set to `true`.
+
+```php
+function listProformaInvoices(array $options): array
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+| `startDate` | `?string` | Query, Optional | The beginning date range for the invoice's Due Date, in the YYYY-MM-DD format. |
+| `endDate` | `?string` | Query, Optional | The ending date range for the invoice's Due Date, in the YYYY-MM-DD format. |
+| `status` | [`?string(InvoiceStatus)`](../../doc/models/invoice-status.md) | Query, Optional | The current status of the invoice.  Allowed Values: draft, open, paid, pending, voided |
+| `page` | `?int` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`. |
+| `perPage` | `?int` | Query, Optional | This parameter indicates how many records to fetch in each request. Default value is 20. The maximum allowed values is 200; any per_page value over 200 will be changed to 200.<br>Use in query `per_page=200`. |
+| `direction` | [`?string(Direction)`](../../doc/models/direction.md) | Query, Optional | The sort direction of the returned invoices. |
+| `lineItems` | `?bool` | Query, Optional | Include line items data |
+| `discounts` | `?bool` | Query, Optional | Include discounts data |
+| `taxes` | `?bool` | Query, Optional | Include taxes data |
+| `credits` | `?bool` | Query, Optional | Include credits data |
+| `payments` | `?bool` | Query, Optional | Include payments data |
+| `customFields` | `?bool` | Query, Optional | Include custom fields data |
+
+## Response Type
+
+[`ProformaInvoice[]`](../../doc/models/proforma-invoice.md)
+
+## Example Usage
+
+```php
+$collect = [
+    'subscription_id' => 222,
+    'page' => 2,
+    'per_page' => 50,
+    'direction' => Direction::DESC,
+    'line_items' => false,
+    'discounts' => false,
+    'taxes' => false,
+    'credits' => false,
+    'payments' => false,
+    'custom_fields' => false
+];
+
+$result = $proformaInvoicesController->listProformaInvoices($collect);
+```
 
 
 # Create Consolidated Proforma Invoice
@@ -58,41 +292,6 @@ $proformaInvoicesController->createConsolidatedProformaInvoice($uid);
 | HTTP Status Code | Error Description | Exception Class |
 |  --- | --- | --- |
 | 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
-
-
-# List Subscription Group Proforma Invoices
-
-Only proforma invoices with a `consolidation_level` of parent are returned.
-
-By default, proforma invoices returned on the index will only include totals, not detailed breakdowns for `line_items`, `discounts`, `taxes`, `credits`, `payments`, `custom_fields`. To include breakdowns, pass the specific field as a key in the query with a value set to true.
-
-```php
-function listSubscriptionGroupProformaInvoices(string $uid): ProformaInvoice
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `uid` | `string` | Template, Required | The uid of the subscription group |
-
-## Response Type
-
-[`ProformaInvoice`](../../doc/models/proforma-invoice.md)
-
-## Example Usage
-
-```php
-$uid = 'uid0';
-
-$result = $proformaInvoicesController->listSubscriptionGroupProformaInvoices($uid);
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 404 | Not Found | `ApiException` |
 
 
 # Read Proforma Invoice
@@ -171,56 +370,6 @@ $result = $proformaInvoicesController->createProformaInvoice($subscriptionId);
 | 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
 
 
-# List Proforma Invoices
-
-By default, proforma invoices returned on the index will only include totals, not detailed breakdowns for `line_items`, `discounts`, `taxes`, `credits`, `payments`, or `custom_fields`. To include breakdowns, pass the specific field as a key in the query with a value set to `true`.
-
-```php
-function listProformaInvoices(array $options): array
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
-| `startDate` | `?string` | Query, Optional | The beginning date range for the invoice's Due Date, in the YYYY-MM-DD format. |
-| `endDate` | `?string` | Query, Optional | The ending date range for the invoice's Due Date, in the YYYY-MM-DD format. |
-| `status` | [`?string(InvoiceStatus)`](../../doc/models/invoice-status.md) | Query, Optional | The current status of the invoice.  Allowed Values: draft, open, paid, pending, voided |
-| `page` | `?int` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`. |
-| `perPage` | `?int` | Query, Optional | This parameter indicates how many records to fetch in each request. Default value is 20. The maximum allowed values is 200; any per_page value over 200 will be changed to 200.<br>Use in query `per_page=200`. |
-| `direction` | [`?string(Direction)`](../../doc/models/direction.md) | Query, Optional | The sort direction of the returned invoices. |
-| `lineItems` | `?bool` | Query, Optional | Include line items data |
-| `discounts` | `?bool` | Query, Optional | Include discounts data |
-| `taxes` | `?bool` | Query, Optional | Include taxes data |
-| `credits` | `?bool` | Query, Optional | Include credits data |
-| `payments` | `?bool` | Query, Optional | Include payments data |
-| `customFields` | `?bool` | Query, Optional | Include custom fields data |
-
-## Response Type
-
-[`ProformaInvoice[]`](../../doc/models/proforma-invoice.md)
-
-## Example Usage
-
-```php
-$collect = [
-    'subscription_id' => 222,
-    'page' => 2,
-    'per_page' => 50,
-    'direction' => Direction::DESC,
-    'line_items' => false,
-    'discounts' => false,
-    'taxes' => false,
-    'credits' => false,
-    'payments' => false,
-    'custom_fields' => false
-];
-
-$result = $proformaInvoicesController->listProformaInvoices($collect);
-```
-
-
 # Void Proforma Invoice
 
 This endpoint will void a proforma invoice that has the status "draft".
@@ -262,153 +411,4 @@ $result = $proformaInvoicesController->voidProformaInvoice($proformaInvoiceUid);
 |  --- | --- | --- |
 | 404 | Not Found | `ApiException` |
 | 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
-
-
-# Preview Proforma Invoice
-
-Return a preview of the data that will be included on a given subscription's proforma invoice if one were to be generated. It will have similar line items and totals as a renewal preview, but the response will be presented in the format of a proforma invoice. Consequently it will include additional information such as the name and addresses that will appear on the proforma invoice.
-
-The preview endpoint is subject to all the same conditions as the proforma invoice endpoint. For example, previews are only available on the Relationship Invoicing architecture, and previews cannot be made for end-of-life subscriptions.
-
-If all the data returned in the preview is as expected, you may then create a static proforma invoice and send it to your customer. The data within a preview will not be saved and will not be accessible after the call is made.
-
-Alternatively, if you have some proforma invoices already, you may make a preview call to determine whether any billing information for the subscription's upcoming renewal has changed.
-
-```php
-function previewProformaInvoice(int $subscriptionId): ProformaInvoicePreview
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
-
-## Response Type
-
-[`ProformaInvoicePreview`](../../doc/models/proforma-invoice-preview.md)
-
-## Example Usage
-
-```php
-$subscriptionId = 222;
-
-$result = $proformaInvoicesController->previewProformaInvoice($subscriptionId);
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 404 | Not Found | `ApiException` |
-| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
-
-
-# Create Signup Proforma Invoice
-
-This endpoint is only available for Relationship Invoicing sites. It cannot be used to create consolidated proforma invoices or preview prepaid subscriptions.
-
-Create a proforma invoice to preview costs before a subscription's signup. Like other proforma invoices, it can be emailed to the customer, voided, and publicly viewed on the chargifypay domain.
-
-Pass a payload that resembles a subscription create or signup preview request. For example, you can specify components, coupons/a referral, offers, custom pricing, and an existing customer or payment profile to populate a shipping or billing address.
-
-A product and customer first name, last name, and email are the minimum requirements. We recommend associating the proforma invoice with a customer_id to easily find their proforma invoices, since the subscription_id will always be blank.
-
-```php
-function createSignupProformaInvoice(?CreateSubscriptionRequest $body = null): ProformaInvoice
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `body` | [`?CreateSubscriptionRequest`](../../doc/models/create-subscription-request.md) | Body, Optional | - |
-
-## Response Type
-
-[`ProformaInvoice`](../../doc/models/proforma-invoice.md)
-
-## Example Usage
-
-```php
-$body = CreateSubscriptionRequestBuilder::init(
-    CreateSubscriptionBuilder::init()
-        ->productHandle('gold-product')
-        ->customerAttributes(
-            CustomerAttributesBuilder::init()
-                ->firstName('Myra')
-                ->lastName('Maisel')
-                ->email('mmaisel@example.com')
-                ->build()
-        )
-        ->build()
-)->build();
-
-$result = $proformaInvoicesController->createSignupProformaInvoice($body);
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 400 | Bad Request | [`ProformaBadRequestErrorResponseException`](../../doc/models/proforma-bad-request-error-response-exception.md) |
-| 422 | Unprocessable Entity (WebDAV) | [`ErrorArrayMapResponseException`](../../doc/models/error-array-map-response-exception.md) |
-
-
-# Preview Signup Proforma Invoice
-
-This endpoint is only available for Relationship Invoicing sites. It cannot be used to create consolidated proforma invoice previews or preview prepaid subscriptions.
-
-Create a signup preview in the format of a proforma invoice to preview costs before a subscription's signup. You have the option of optionally previewing the first renewal's costs as well. The proforma invoice preview will not be persisted.
-
-Pass a payload that resembles a subscription create or signup preview request. For example, you can specify components, coupons/a referral, offers, custom pricing, and an existing customer or payment profile to populate a shipping or billing address.
-
-A product and customer first name, last name, and email are the minimum requirements.
-
-```php
-function previewSignupProformaInvoice(
-    ?string $includeNextProformaInvoice = null,
-    ?CreateSubscriptionRequest $body = null
-): SignupProformaPreviewResponse
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `includeNextProformaInvoice` | `?string` | Query, Optional | Choose to include a proforma invoice preview for the first renewal |
-| `body` | [`?CreateSubscriptionRequest`](../../doc/models/create-subscription-request.md) | Body, Optional | - |
-
-## Response Type
-
-[`SignupProformaPreviewResponse`](../../doc/models/signup-proforma-preview-response.md)
-
-## Example Usage
-
-```php
-$body = CreateSubscriptionRequestBuilder::init(
-    CreateSubscriptionBuilder::init()
-        ->productHandle('gold-plan')
-        ->customerAttributes(
-            CustomerAttributesBuilder::init()
-                ->firstName('first')
-                ->lastName('last')
-                ->email('flast@example.com')
-                ->build()
-        )
-        ->build()
-)->build();
-
-$result = $proformaInvoicesController->previewSignupProformaInvoice(
-    null,
-    $body
-);
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 400 | Bad Request | [`ProformaBadRequestErrorResponseException`](../../doc/models/proforma-bad-request-error-response-exception.md) |
-| 422 | Unprocessable Entity (WebDAV) | [`ErrorArrayMapResponseException`](../../doc/models/error-array-map-response-exception.md) |
 

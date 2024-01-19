@@ -26,47 +26,51 @@ use CoreInterfaces\Core\Request\RequestMethod;
 class ReasonCodesController extends BaseController
 {
     /**
-     * # Reason Codes Intro
+     * This method gives a merchant the option to update an existing reason code for a given site.
      *
-     * ReasonCodes are a way to gain a high level view of why your customers are cancelling the subcription
-     * to your product or service.
-     *
-     * Add a set of churn reason codes to be displayed in-app and/or the Chargify Billing Portal. As your
-     * subscribers decide to cancel their subscription, learn why they decided to cancel.
-     *
-     * ## Reason Code Documentation
-     *
-     * Full documentation on how Reason Codes operate within Chargify can be located under the following
-     * links.
-     *
-     * [Churn Reason Codes](https://chargify.zendesk.com/hc/en-us/articles/4407896775579#churn-reason-
-     * codes)
-     *
-     * ## Create Reason Code
-     *
-     * This method gives a merchant the option to create a reason codes for a given Site.
-     *
-     * @param CreateReasonCodeRequest|null $body
+     * @param int $reasonCodeId The Chargify id of the reason code
+     * @param UpdateReasonCodeRequest|null $body
      *
      * @return ReasonCodeResponse Response from the API call
      *
      * @throws ApiException Thrown if API call fails
      */
-    public function createReasonCode(?CreateReasonCodeRequest $body = null): ReasonCodeResponse
+    public function updateReasonCode(int $reasonCodeId, ?UpdateReasonCodeRequest $body = null): ReasonCodeResponse
     {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/reason_codes.json')
+        $_reqBuilder = $this->requestBuilder(RequestMethod::PUT, '/reason_codes/{reason_code_id}.json')
             ->auth('global')
-            ->parameters(HeaderParam::init('Content-Type', 'application/json'), BodyParam::init($body));
+            ->parameters(
+                TemplateParam::init('reason_code_id', $reasonCodeId)->required(),
+                HeaderParam::init('Content-Type', 'application/json'),
+                BodyParam::init($body)
+            );
 
         $_resHandler = $this->responseHandler()
-            ->throwErrorOn(
-                '422',
-                ErrorType::initWithErrorTemplate(
-                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
-                    ErrorListResponseException::class
-                )
-            )
+            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
             ->type(ReasonCodeResponse::class);
+
+        return $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
+     * This method gives a merchant the option to delete one reason code from the Churn Reason Codes. This
+     * code will be immediately removed. This action is not reversable.
+     *
+     * @param int $reasonCodeId The Chargify id of the reason code
+     *
+     * @return ReasonCodesJsonResponse Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function deleteReasonCode(int $reasonCodeId): ReasonCodesJsonResponse
+    {
+        $_reqBuilder = $this->requestBuilder(RequestMethod::DELETE, '/reason_codes/{reason_code_id}.json')
+            ->auth('global')
+            ->parameters(TemplateParam::init('reason_code_id', $reasonCodeId)->required());
+
+        $_resHandler = $this->responseHandler()
+            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
+            ->type(ReasonCodesJsonResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
     }
@@ -119,51 +123,47 @@ class ReasonCodesController extends BaseController
     }
 
     /**
-     * This method gives a merchant the option to update an existing reason code for a given site.
+     * # Reason Codes Intro
      *
-     * @param int $reasonCodeId The Chargify id of the reason code
-     * @param UpdateReasonCodeRequest|null $body
+     * ReasonCodes are a way to gain a high level view of why your customers are cancelling the subcription
+     * to your product or service.
+     *
+     * Add a set of churn reason codes to be displayed in-app and/or the Chargify Billing Portal. As your
+     * subscribers decide to cancel their subscription, learn why they decided to cancel.
+     *
+     * ## Reason Code Documentation
+     *
+     * Full documentation on how Reason Codes operate within Chargify can be located under the following
+     * links.
+     *
+     * [Churn Reason Codes](https://chargify.zendesk.com/hc/en-us/articles/4407896775579#churn-reason-
+     * codes)
+     *
+     * ## Create Reason Code
+     *
+     * This method gives a merchant the option to create a reason codes for a given Site.
+     *
+     * @param CreateReasonCodeRequest|null $body
      *
      * @return ReasonCodeResponse Response from the API call
      *
      * @throws ApiException Thrown if API call fails
      */
-    public function updateReasonCode(int $reasonCodeId, ?UpdateReasonCodeRequest $body = null): ReasonCodeResponse
+    public function createReasonCode(?CreateReasonCodeRequest $body = null): ReasonCodeResponse
     {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::PUT, '/reason_codes/{reason_code_id}.json')
+        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/reason_codes.json')
             ->auth('global')
-            ->parameters(
-                TemplateParam::init('reason_code_id', $reasonCodeId)->required(),
-                HeaderParam::init('Content-Type', 'application/json'),
-                BodyParam::init($body)
-            );
+            ->parameters(HeaderParam::init('Content-Type', 'application/json'), BodyParam::init($body));
 
         $_resHandler = $this->responseHandler()
-            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
+            ->throwErrorOn(
+                '422',
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
+            )
             ->type(ReasonCodeResponse::class);
-
-        return $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
-     * This method gives a merchant the option to delete one reason code from the Churn Reason Codes. This
-     * code will be immediately removed. This action is not reversable.
-     *
-     * @param int $reasonCodeId The Chargify id of the reason code
-     *
-     * @return ReasonCodesJsonResponse Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function deleteReasonCode(int $reasonCodeId): ReasonCodesJsonResponse
-    {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::DELETE, '/reason_codes/{reason_code_id}.json')
-            ->auth('global')
-            ->parameters(TemplateParam::init('reason_code_id', $reasonCodeId)->required());
-
-        $_resHandler = $this->responseHandler()
-            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
-            ->type(ReasonCodesJsonResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
     }

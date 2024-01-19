@@ -88,130 +88,6 @@ class CouponsController extends BaseController
     }
 
     /**
-     * List coupons for a specific Product Family in a Site.
-     *
-     * If the coupon is set to `use_site_exchange_rate: true`, it will return pricing based on the current
-     * exchange rate. If the flag is set to false, it will return all of the defined prices for each
-     * currency.
-     *
-     * @param array $options Array with all options for search
-     *
-     * @return CouponResponse[] Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function listCouponsForProductFamily(array $options): array
-    {
-        $_reqBuilder = $this->requestBuilder(
-            RequestMethod::GET,
-            '/product_families/{product_family_id}/coupons.json'
-        )
-            ->auth('global')
-            ->parameters(
-                TemplateParam::init('product_family_id', $options)->extract('productFamilyId')->required(),
-                QueryParam::init('page', $options)->commaSeparated()->extract('page', 1),
-                QueryParam::init('per_page', $options)->commaSeparated()->extract('perPage', 30),
-                QueryParam::init('filter[date_field]', $options)
-                    ->commaSeparated()
-                    ->extract('filterDateField')
-                    ->serializeBy([BasicDateField::class, 'checkValue']),
-                QueryParam::init('filter[end_date]', $options)
-                    ->commaSeparated()
-                    ->extract('filterEndDate')
-                    ->serializeBy([DateTimeHelper::class, 'toSimpleDate']),
-                QueryParam::init('filter[end_datetime]', $options)
-                    ->commaSeparated()
-                    ->extract('filterEndDatetime')
-                    ->serializeBy([DateTimeHelper::class, 'toRfc3339DateTime']),
-                QueryParam::init('filter[start_date]', $options)
-                    ->commaSeparated()
-                    ->extract('filterStartDate')
-                    ->serializeBy([DateTimeHelper::class, 'toSimpleDate']),
-                QueryParam::init('filter[start_datetime]', $options)
-                    ->commaSeparated()
-                    ->extract('filterStartDatetime')
-                    ->serializeBy([DateTimeHelper::class, 'toRfc3339DateTime']),
-                QueryParam::init('filter[ids]', $options)->commaSeparated()->extract('filterIds'),
-                QueryParam::init('filter[codes]', $options)->commaSeparated()->extract('filterCodes'),
-                QueryParam::init('currency_prices', $options)->commaSeparated()->extract('currencyPrices'),
-                QueryParam::init('filter[use_site_exchange_rate]', $options)
-                    ->commaSeparated()
-                    ->extract('filterUseSiteExchangeRate')
-            );
-
-        $_resHandler = $this->responseHandler()->type(CouponResponse::class, 1);
-
-        return $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
-     * You can search for a coupon via the API with the find method. By passing a code parameter, the find
-     * will attempt to locate a coupon that matches that code. If no coupon is found, a 404 is returned.
-     *
-     * If you have more than one product family and if the coupon you are trying to find does not belong to
-     * the default product family in your site, then you will need to specify (either in the url or as a
-     * query string param) the product family id.
-     *
-     * @param int|null $productFamilyId The Chargify id of the product family to which the coupon
-     *        belongs
-     * @param string|null $code The code of the coupon
-     *
-     * @return CouponResponse Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function readCouponByCode(?int $productFamilyId = null, ?string $code = null): CouponResponse
-    {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/coupons/find.json')
-            ->auth('global')
-            ->parameters(
-                QueryParam::init('product_family_id', $productFamilyId)->commaSeparated(),
-                QueryParam::init('code', $code)->commaSeparated()
-            );
-
-        $_resHandler = $this->responseHandler()->type(CouponResponse::class);
-
-        return $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
-     * You can retrieve the Coupon via the API with the Show method. You must identify the Coupon in this
-     * call by the ID parameter that Chargify assigns.
-     * If instead you would like to find a Coupon using a Coupon code, see the Coupon Find method.
-     *
-     * When fetching a coupon, if you have defined multiple currencies at the site level, you can
-     * optionally pass the `?currency_prices=true` query param to include an array of currency price data
-     * in the response.
-     *
-     * If the coupon is set to `use_site_exchange_rate: true`, it will return pricing based on the current
-     * exchange rate. If the flag is set to false, it will return all of the defined prices for each
-     * currency.
-     *
-     * @param int $productFamilyId The Chargify id of the product family to which the coupon belongs
-     * @param int $couponId The Chargify id of the coupon
-     *
-     * @return CouponResponse Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function readCoupon(int $productFamilyId, int $couponId): CouponResponse
-    {
-        $_reqBuilder = $this->requestBuilder(
-            RequestMethod::GET,
-            '/product_families/{product_family_id}/coupons/{coupon_id}.json'
-        )
-            ->auth('global')
-            ->parameters(
-                TemplateParam::init('product_family_id', $productFamilyId)->required(),
-                TemplateParam::init('coupon_id', $couponId)->required()
-            );
-
-        $_resHandler = $this->responseHandler()->type(CouponResponse::class);
-
-        return $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
      * ## Update Coupon
      *
      * You can update a Coupon via the API with a PUT request to the resource endpoint.
@@ -243,36 +119,6 @@ class CouponsController extends BaseController
                 TemplateParam::init('coupon_id', $couponId)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
                 BodyParam::init($body)
-            );
-
-        $_resHandler = $this->responseHandler()->type(CouponResponse::class);
-
-        return $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
-     * You can archive a Coupon via the API with the archive method.
-     * Archiving makes that Coupon unavailable for future use, but allows it to remain attached and
-     * functional on existing Subscriptions that are using it.
-     * The `archived_at` date and time will be assigned.
-     *
-     * @param int $productFamilyId The Chargify id of the product family to which the coupon belongs
-     * @param int $couponId The Chargify id of the coupon
-     *
-     * @return CouponResponse Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function archiveCoupon(int $productFamilyId, int $couponId): CouponResponse
-    {
-        $_reqBuilder = $this->requestBuilder(
-            RequestMethod::DELETE,
-            '/product_families/{product_family_id}/coupons/{coupon_id}.json'
-        )
-            ->auth('global')
-            ->parameters(
-                TemplateParam::init('product_family_id', $productFamilyId)->required(),
-                TemplateParam::init('coupon_id', $couponId)->required()
             );
 
         $_resHandler = $this->responseHandler()->type(CouponResponse::class);
@@ -437,6 +283,36 @@ class CouponsController extends BaseController
     }
 
     /**
+     * You can search for a coupon via the API with the find method. By passing a code parameter, the find
+     * will attempt to locate a coupon that matches that code. If no coupon is found, a 404 is returned.
+     *
+     * If you have more than one product family and if the coupon you are trying to find does not belong to
+     * the default product family in your site, then you will need to specify (either in the url or as a
+     * query string param) the product family id.
+     *
+     * @param int|null $productFamilyId The Chargify id of the product family to which the coupon
+     *        belongs
+     * @param string|null $code The code of the coupon
+     *
+     * @return CouponResponse Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function readCouponByCode(?int $productFamilyId = null, ?string $code = null): CouponResponse
+    {
+        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/coupons/find.json')
+            ->auth('global')
+            ->parameters(
+                QueryParam::init('product_family_id', $productFamilyId)->commaSeparated(),
+                QueryParam::init('code', $code)->commaSeparated()
+            );
+
+        $_resHandler = $this->responseHandler()->type(CouponResponse::class);
+
+        return $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
      * This endpoint allows you to create and/or update currency prices for an existing coupon. Multiple
      * prices can be created or updated in a single request but each of the currencies must be defined on
      * the site level already and the coupon must be an amount-based coupon, not percentage.
@@ -464,6 +340,87 @@ class CouponsController extends BaseController
             );
 
         $_resHandler = $this->responseHandler()->type(CouponCurrencyResponse::class);
+
+        return $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
+     * This request allows you to request the subcodes that are attached to a coupon.
+     *
+     * @param array $options Array with all options for search
+     *
+     * @return CouponSubcodes Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function listCouponSubcodes(array $options): CouponSubcodes
+    {
+        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/coupons/{coupon_id}/codes.json')
+            ->auth('global')
+            ->parameters(
+                TemplateParam::init('coupon_id', $options)->extract('couponId')->required(),
+                QueryParam::init('page', $options)->commaSeparated()->extract('page', 1),
+                QueryParam::init('per_page', $options)->commaSeparated()->extract('perPage', 20)
+            );
+
+        $_resHandler = $this->responseHandler()->type(CouponSubcodes::class);
+
+        return $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
+     * List coupons for a specific Product Family in a Site.
+     *
+     * If the coupon is set to `use_site_exchange_rate: true`, it will return pricing based on the current
+     * exchange rate. If the flag is set to false, it will return all of the defined prices for each
+     * currency.
+     *
+     * @param array $options Array with all options for search
+     *
+     * @return CouponResponse[] Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function listCouponsForProductFamily(array $options): array
+    {
+        $_reqBuilder = $this->requestBuilder(
+            RequestMethod::GET,
+            '/product_families/{product_family_id}/coupons.json'
+        )
+            ->auth('global')
+            ->parameters(
+                TemplateParam::init('product_family_id', $options)->extract('productFamilyId')->required(),
+                QueryParam::init('page', $options)->commaSeparated()->extract('page', 1),
+                QueryParam::init('per_page', $options)->commaSeparated()->extract('perPage', 30),
+                QueryParam::init('filter[date_field]', $options)
+                    ->commaSeparated()
+                    ->extract('filterDateField')
+                    ->serializeBy([BasicDateField::class, 'checkValue']),
+                QueryParam::init('filter[end_date]', $options)
+                    ->commaSeparated()
+                    ->extract('filterEndDate')
+                    ->serializeBy([DateTimeHelper::class, 'toSimpleDate']),
+                QueryParam::init('filter[end_datetime]', $options)
+                    ->commaSeparated()
+                    ->extract('filterEndDatetime')
+                    ->serializeBy([DateTimeHelper::class, 'toRfc3339DateTime']),
+                QueryParam::init('filter[start_date]', $options)
+                    ->commaSeparated()
+                    ->extract('filterStartDate')
+                    ->serializeBy([DateTimeHelper::class, 'toSimpleDate']),
+                QueryParam::init('filter[start_datetime]', $options)
+                    ->commaSeparated()
+                    ->extract('filterStartDatetime')
+                    ->serializeBy([DateTimeHelper::class, 'toRfc3339DateTime']),
+                QueryParam::init('filter[ids]', $options)->commaSeparated()->extract('filterIds'),
+                QueryParam::init('filter[codes]', $options)->commaSeparated()->extract('filterCodes'),
+                QueryParam::init('currency_prices', $options)->commaSeparated()->extract('currencyPrices'),
+                QueryParam::init('filter[use_site_exchange_rate]', $options)
+                    ->commaSeparated()
+                    ->extract('filterUseSiteExchangeRate')
+            );
+
+        $_resHandler = $this->responseHandler()->type(CouponResponse::class, 1);
 
         return $this->execute($_reqBuilder, $_resHandler);
     }
@@ -536,30 +493,6 @@ class CouponsController extends BaseController
             );
 
         $_resHandler = $this->responseHandler()->type(CouponSubcodesResponse::class);
-
-        return $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
-     * This request allows you to request the subcodes that are attached to a coupon.
-     *
-     * @param array $options Array with all options for search
-     *
-     * @return CouponSubcodes Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function listCouponSubcodes(array $options): CouponSubcodes
-    {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/coupons/{coupon_id}/codes.json')
-            ->auth('global')
-            ->parameters(
-                TemplateParam::init('coupon_id', $options)->extract('couponId')->required(),
-                QueryParam::init('page', $options)->commaSeparated()->extract('page', 1),
-                QueryParam::init('per_page', $options)->commaSeparated()->extract('perPage', 20)
-            );
-
-        $_resHandler = $this->responseHandler()->type(CouponSubcodes::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
     }
@@ -648,5 +581,72 @@ class CouponsController extends BaseController
             ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''));
 
         $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
+     * You can retrieve the Coupon via the API with the Show method. You must identify the Coupon in this
+     * call by the ID parameter that Chargify assigns.
+     * If instead you would like to find a Coupon using a Coupon code, see the Coupon Find method.
+     *
+     * When fetching a coupon, if you have defined multiple currencies at the site level, you can
+     * optionally pass the `?currency_prices=true` query param to include an array of currency price data
+     * in the response.
+     *
+     * If the coupon is set to `use_site_exchange_rate: true`, it will return pricing based on the current
+     * exchange rate. If the flag is set to false, it will return all of the defined prices for each
+     * currency.
+     *
+     * @param int $productFamilyId The Chargify id of the product family to which the coupon belongs
+     * @param int $couponId The Chargify id of the coupon
+     *
+     * @return CouponResponse Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function readCoupon(int $productFamilyId, int $couponId): CouponResponse
+    {
+        $_reqBuilder = $this->requestBuilder(
+            RequestMethod::GET,
+            '/product_families/{product_family_id}/coupons/{coupon_id}.json'
+        )
+            ->auth('global')
+            ->parameters(
+                TemplateParam::init('product_family_id', $productFamilyId)->required(),
+                TemplateParam::init('coupon_id', $couponId)->required()
+            );
+
+        $_resHandler = $this->responseHandler()->type(CouponResponse::class);
+
+        return $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
+     * You can archive a Coupon via the API with the archive method.
+     * Archiving makes that Coupon unavailable for future use, but allows it to remain attached and
+     * functional on existing Subscriptions that are using it.
+     * The `archived_at` date and time will be assigned.
+     *
+     * @param int $productFamilyId The Chargify id of the product family to which the coupon belongs
+     * @param int $couponId The Chargify id of the coupon
+     *
+     * @return CouponResponse Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function archiveCoupon(int $productFamilyId, int $couponId): CouponResponse
+    {
+        $_reqBuilder = $this->requestBuilder(
+            RequestMethod::DELETE,
+            '/product_families/{product_family_id}/coupons/{coupon_id}.json'
+        )
+            ->auth('global')
+            ->parameters(
+                TemplateParam::init('product_family_id', $productFamilyId)->required(),
+                TemplateParam::init('coupon_id', $couponId)->required()
+            );
+
+        $_resHandler = $this->responseHandler()->type(CouponResponse::class);
+
+        return $this->execute($_reqBuilder, $_resHandler);
     }
 }

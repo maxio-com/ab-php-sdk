@@ -10,16 +10,43 @@ $subscriptionStatusController = $client->getSubscriptionStatusController();
 
 ## Methods
 
+* [Cancel Dunning](../../doc/controllers/subscription-status.md#cancel-dunning)
 * [Retry Subscription](../../doc/controllers/subscription-status.md#retry-subscription)
 * [Cancel Subscription](../../doc/controllers/subscription-status.md#cancel-subscription)
+* [Preview Renewal](../../doc/controllers/subscription-status.md#preview-renewal)
 * [Resume Subscription](../../doc/controllers/subscription-status.md#resume-subscription)
 * [Pause Subscription](../../doc/controllers/subscription-status.md#pause-subscription)
 * [Update Automatic Subscription Resumption](../../doc/controllers/subscription-status.md#update-automatic-subscription-resumption)
 * [Reactivate Subscription](../../doc/controllers/subscription-status.md#reactivate-subscription)
 * [Initiate Delayed Cancellation](../../doc/controllers/subscription-status.md#initiate-delayed-cancellation)
 * [Stop Delayed Cancellation](../../doc/controllers/subscription-status.md#stop-delayed-cancellation)
-* [Cancel Dunning](../../doc/controllers/subscription-status.md#cancel-dunning)
-* [Preview Renewal](../../doc/controllers/subscription-status.md#preview-renewal)
+
+
+# Cancel Dunning
+
+If a subscription is currently in dunning, the subscription will be set to active and the active Dunner will be resolved.
+
+```php
+function cancelDunning(int $subscriptionId): SubscriptionResponse
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+
+## Response Type
+
+[`SubscriptionResponse`](../../doc/models/subscription-response.md)
+
+## Example Usage
+
+```php
+$subscriptionId = 222;
+
+$result = $subscriptionStatusController->cancelDunning($subscriptionId);
+```
 
 
 # Retry Subscription
@@ -369,6 +396,140 @@ $result = $subscriptionStatusController->cancelSubscription($subscriptionId);
 |  --- | --- | --- |
 | 404 | Not Found | `ApiException` |
 | 422 | Unprocessable Entity (WebDAV) | `ApiException` |
+
+
+# Preview Renewal
+
+The Chargify API allows you to preview a renewal by posting to the renewals endpoint. Renewal Preview is an object representing a subscription’s next assessment. You can retrieve it to see a snapshot of how much your customer will be charged on their next renewal.
+
+The "Next Billing" amount and "Next Billing" date are already represented in the UI on each Subscriber's Summary. For more information, please see our documentation [here](https://chargify.zendesk.com/hc/en-us/articles/4407884887835#next-billing).
+
+## Optional Component Fields
+
+This endpoint is particularly useful due to the fact that it will return the computed billing amount for the base product and the components which are in use by a subscriber.
+
+By default, the preview will include billing details for all components _at their **current** quantities_. This means:
+
+* Current `allocated_quantity` for quantity-based components
+* Current enabled/disabled status for on/off components
+* Current metered usage `unit_balance` for metered components
+* Current metric quantity value for events recorded thus far for events-based components
+
+In the above statements, "current" means the quantity or value as of the call to the renewal preview endpoint. We do not predict end-of-period values for components, so metered or events-based usage may be less than it will eventually be at the end of the period.
+
+Optionally, **you may provide your own custom quantities** for any component to see a billing preview for non-current quantities. This is accomplished by sending a request body with data under the `components` key. See the request body documentation below.
+
+## Subscription Side Effects
+
+You can request a `POST` to obtain this data from the endpoint without any side effects. Plain and simple, this will preview data, not log any changes against a subscription.
+
+```php
+function previewRenewal(int $subscriptionId, ?RenewalPreviewRequest $body = null): RenewalPreviewResponse
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+| `body` | [`?RenewalPreviewRequest`](../../doc/models/renewal-preview-request.md) | Body, Optional | - |
+
+## Response Type
+
+[`RenewalPreviewResponse`](../../doc/models/renewal-preview-response.md)
+
+## Example Usage
+
+```php
+$subscriptionId = 222;
+
+$body = RenewalPreviewRequestBuilder::init()
+    ->components(
+        [
+            RenewalPreviewComponentBuilder::init()
+                ->componentId(
+                    10708
+                )
+                ->quantity(10000)
+                ->build(),
+            RenewalPreviewComponentBuilder::init()
+                ->componentId(
+                    'handle:small-instance-hours'
+                )
+                ->quantity(10000)
+                ->pricePointId(
+                    8712
+                )
+                ->build(),
+            RenewalPreviewComponentBuilder::init()
+                ->componentId(
+                    'handle:large-instance-hours'
+                )
+                ->quantity(100)
+                ->pricePointId(
+                    'handle:startup-pricing'
+                )
+                ->build()
+        ]
+    )
+    ->build();
+
+$result = $subscriptionStatusController->previewRenewal(
+    $subscriptionId,
+    $body
+);
+```
+
+## Example Response *(as JSON)*
+
+```json
+{
+  "renewal_preview": {
+    "next_assessment_at": "2017-03-13T12:50:55-04:00",
+    "subtotal_in_cents": 6000,
+    "total_tax_in_cents": 0,
+    "total_discount_in_cents": 0,
+    "total_in_cents": 6000,
+    "existing_balance_in_cents": 0,
+    "total_amount_due_in_cents": 6000,
+    "uncalculated_taxes": false,
+    "line_items": [
+      {
+        "transaction_type": "charge",
+        "kind": "baseline",
+        "amount_in_cents": 5000,
+        "memo": "Gold Product (03/13/2017 - 04/13/2017)",
+        "discount_amount_in_cents": 0,
+        "taxable_amount_in_cents": 0,
+        "product_id": 1,
+        "product_handle": "gold-product",
+        "product_name": "Gold Product",
+        "period_range_start": "01/10/2024",
+        "period_range_end": "02/10/2024"
+      },
+      {
+        "transaction_type": "charge",
+        "kind": "quantity_based_component",
+        "amount_in_cents": 1000,
+        "memo": "Quantity Component: 10 Quantity Components",
+        "discount_amount_in_cents": 0,
+        "taxable_amount_in_cents": 0,
+        "component_id": 104,
+        "component_handle": "quantity-component",
+        "component_name": "Quantity Component",
+        "period_range_start": "01/10/2024",
+        "period_range_end": "02/10/2024"
+      }
+    ]
+  }
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
 
 
 # Resume Subscription
@@ -1256,165 +1417,4 @@ $result = $subscriptionStatusController->stopDelayedCancellation($subscriptionId
 | HTTP Status Code | Error Description | Exception Class |
 |  --- | --- | --- |
 | 404 | Not Found | `ApiException` |
-
-
-# Cancel Dunning
-
-If a subscription is currently in dunning, the subscription will be set to active and the active Dunner will be resolved.
-
-```php
-function cancelDunning(int $subscriptionId): SubscriptionResponse
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
-
-## Response Type
-
-[`SubscriptionResponse`](../../doc/models/subscription-response.md)
-
-## Example Usage
-
-```php
-$subscriptionId = 222;
-
-$result = $subscriptionStatusController->cancelDunning($subscriptionId);
-```
-
-
-# Preview Renewal
-
-The Chargify API allows you to preview a renewal by posting to the renewals endpoint. Renewal Preview is an object representing a subscription’s next assessment. You can retrieve it to see a snapshot of how much your customer will be charged on their next renewal.
-
-The "Next Billing" amount and "Next Billing" date are already represented in the UI on each Subscriber's Summary. For more information, please see our documentation [here](https://chargify.zendesk.com/hc/en-us/articles/4407884887835#next-billing).
-
-## Optional Component Fields
-
-This endpoint is particularly useful due to the fact that it will return the computed billing amount for the base product and the components which are in use by a subscriber.
-
-By default, the preview will include billing details for all components _at their **current** quantities_. This means:
-
-* Current `allocated_quantity` for quantity-based components
-* Current enabled/disabled status for on/off components
-* Current metered usage `unit_balance` for metered components
-* Current metric quantity value for events recorded thus far for events-based components
-
-In the above statements, "current" means the quantity or value as of the call to the renewal preview endpoint. We do not predict end-of-period values for components, so metered or events-based usage may be less than it will eventually be at the end of the period.
-
-Optionally, **you may provide your own custom quantities** for any component to see a billing preview for non-current quantities. This is accomplished by sending a request body with data under the `components` key. See the request body documentation below.
-
-## Subscription Side Effects
-
-You can request a `POST` to obtain this data from the endpoint without any side effects. Plain and simple, this will preview data, not log any changes against a subscription.
-
-```php
-function previewRenewal(int $subscriptionId, ?RenewalPreviewRequest $body = null): RenewalPreviewResponse
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
-| `body` | [`?RenewalPreviewRequest`](../../doc/models/renewal-preview-request.md) | Body, Optional | - |
-
-## Response Type
-
-[`RenewalPreviewResponse`](../../doc/models/renewal-preview-response.md)
-
-## Example Usage
-
-```php
-$subscriptionId = 222;
-
-$body = RenewalPreviewRequestBuilder::init()
-    ->components(
-        [
-            RenewalPreviewComponentBuilder::init()
-                ->componentId(
-                    10708
-                )
-                ->quantity(10000)
-                ->build(),
-            RenewalPreviewComponentBuilder::init()
-                ->componentId(
-                    'handle:small-instance-hours'
-                )
-                ->quantity(10000)
-                ->pricePointId(
-                    8712
-                )
-                ->build(),
-            RenewalPreviewComponentBuilder::init()
-                ->componentId(
-                    'handle:large-instance-hours'
-                )
-                ->quantity(100)
-                ->pricePointId(
-                    'handle:startup-pricing'
-                )
-                ->build()
-        ]
-    )
-    ->build();
-
-$result = $subscriptionStatusController->previewRenewal(
-    $subscriptionId,
-    $body
-);
-```
-
-## Example Response *(as JSON)*
-
-```json
-{
-  "renewal_preview": {
-    "next_assessment_at": "2017-03-13T12:50:55-04:00",
-    "subtotal_in_cents": 6000,
-    "total_tax_in_cents": 0,
-    "total_discount_in_cents": 0,
-    "total_in_cents": 6000,
-    "existing_balance_in_cents": 0,
-    "total_amount_due_in_cents": 6000,
-    "uncalculated_taxes": false,
-    "line_items": [
-      {
-        "transaction_type": "charge",
-        "kind": "baseline",
-        "amount_in_cents": 5000,
-        "memo": "Gold Product (03/13/2017 - 04/13/2017)",
-        "discount_amount_in_cents": 0,
-        "taxable_amount_in_cents": 0,
-        "product_id": 1,
-        "product_handle": "gold-product",
-        "product_name": "Gold Product",
-        "period_range_start": "01/10/2024",
-        "period_range_end": "02/10/2024"
-      },
-      {
-        "transaction_type": "charge",
-        "kind": "quantity_based_component",
-        "amount_in_cents": 1000,
-        "memo": "Quantity Component: 10 Quantity Components",
-        "discount_amount_in_cents": 0,
-        "taxable_amount_in_cents": 0,
-        "component_id": 104,
-        "component_handle": "quantity-component",
-        "component_name": "Quantity Component",
-        "period_range_start": "01/10/2024",
-        "period_range_end": "02/10/2024"
-      }
-    ]
-  }
-}
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
 

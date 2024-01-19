@@ -130,6 +130,39 @@ class EventsController extends BaseController
     }
 
     /**
+     * Get a count of all the events for a given site by using this method.
+     *
+     * @param array $options Array with all options for search
+     *
+     * @return CountResponse Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function readEventsCount(array $options): CountResponse
+    {
+        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/events/count.json')
+            ->auth('global')
+            ->parameters(
+                QueryParam::init('page', $options)->commaSeparated()->extract('page', 1),
+                QueryParam::init('per_page', $options)->commaSeparated()->extract('perPage', 20),
+                QueryParam::init('since_id', $options)->commaSeparated()->extract('sinceId'),
+                QueryParam::init('max_id', $options)->commaSeparated()->extract('maxId'),
+                QueryParam::init('direction', $options)
+                    ->commaSeparated()
+                    ->extract('direction', Direction::DESC)
+                    ->serializeBy([Direction::class, 'checkValue']),
+                QueryParam::init('filter', $options)
+                    ->commaSeparated()
+                    ->extract('filter')
+                    ->serializeBy([EventType::class, 'checkValue'])
+            );
+
+        $_resHandler = $this->responseHandler()->type(CountResponse::class);
+
+        return $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
      * The following request will return a list of events for a subscription.
      *
      * Each event type has its own `event_specific_data` specified.
@@ -161,39 +194,6 @@ class EventsController extends BaseController
             );
 
         $_resHandler = $this->responseHandler()->type(EventResponse::class, 1);
-
-        return $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
-     * Get a count of all the events for a given site by using this method.
-     *
-     * @param array $options Array with all options for search
-     *
-     * @return CountResponse Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function readEventsCount(array $options): CountResponse
-    {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/events/count.json')
-            ->auth('global')
-            ->parameters(
-                QueryParam::init('page', $options)->commaSeparated()->extract('page', 1),
-                QueryParam::init('per_page', $options)->commaSeparated()->extract('perPage', 20),
-                QueryParam::init('since_id', $options)->commaSeparated()->extract('sinceId'),
-                QueryParam::init('max_id', $options)->commaSeparated()->extract('maxId'),
-                QueryParam::init('direction', $options)
-                    ->commaSeparated()
-                    ->extract('direction', Direction::DESC)
-                    ->serializeBy([Direction::class, 'checkValue']),
-                QueryParam::init('filter', $options)
-                    ->commaSeparated()
-                    ->extract('filter')
-                    ->serializeBy([EventType::class, 'checkValue'])
-            );
-
-        $_resHandler = $this->responseHandler()->type(CountResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
     }

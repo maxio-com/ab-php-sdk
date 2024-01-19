@@ -32,6 +32,55 @@ use CoreInterfaces\Core\Request\RequestMethod;
 class WebhooksController extends BaseController
 {
     /**
+     * The Chargify API allows you to create an endpoint and assign a list of webhooks subscriptions
+     * (events) to it.
+     *
+     * You can check available events here.
+     * [Event keys](https://maxio-chargify.zendesk.com/hc/en-us/articles/5405357509645-Webhooks-
+     * Reference#example-payloads)
+     *
+     * @param UpdateEndpointRequest|null $body
+     *
+     * @return EndpointResponse Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function createEndpoint(?UpdateEndpointRequest $body = null): EndpointResponse
+    {
+        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/endpoints.json')
+            ->auth('global')
+            ->parameters(HeaderParam::init('Content-Type', 'application/json'), BodyParam::init($body));
+
+        $_resHandler = $this->responseHandler()
+            ->throwErrorOn(
+                '422',
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
+            )
+            ->type(EndpointResponse::class);
+
+        return $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
+     * This method returns created endpoints for site.
+     *
+     * @return Endpoint[] Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function listEndpoints(): array
+    {
+        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/endpoints.json')->auth('global');
+
+        $_resHandler = $this->responseHandler()->type(Endpoint::class, 1);
+
+        return $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
      * ## Webhooks Intro
      *
      * The Webhooks API allows you to view a list of all webhooks and to selectively resend individual or
@@ -126,55 +175,6 @@ class WebhooksController extends BaseController
             ->parameters(HeaderParam::init('Content-Type', 'application/json'), BodyParam::init($body));
 
         $_resHandler = $this->responseHandler()->type(ReplayWebhooksResponse::class);
-
-        return $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
-     * The Chargify API allows you to create an endpoint and assign a list of webhooks subscriptions
-     * (events) to it.
-     *
-     * You can check available events here.
-     * [Event keys](https://maxio-chargify.zendesk.com/hc/en-us/articles/5405357509645-Webhooks-
-     * Reference#example-payloads)
-     *
-     * @param UpdateEndpointRequest|null $body
-     *
-     * @return EndpointResponse Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function createEndpoint(?UpdateEndpointRequest $body = null): EndpointResponse
-    {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/endpoints.json')
-            ->auth('global')
-            ->parameters(HeaderParam::init('Content-Type', 'application/json'), BodyParam::init($body));
-
-        $_resHandler = $this->responseHandler()
-            ->throwErrorOn(
-                '422',
-                ErrorType::initWithErrorTemplate(
-                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
-                    ErrorListResponseException::class
-                )
-            )
-            ->type(EndpointResponse::class);
-
-        return $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
-     * This method returns created endpoints for site.
-     *
-     * @return Endpoint[] Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function listEndpoints(): array
-    {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/endpoints.json')->auth('global');
-
-        $_resHandler = $this->responseHandler()->type(Endpoint::class, 1);
 
         return $this->execute($_reqBuilder, $_resHandler);
     }

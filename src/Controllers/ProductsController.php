@@ -69,6 +69,58 @@ class ProductsController extends BaseController
     }
 
     /**
+     * Sending a DELETE request to this endpoint will archive the product. All current subscribers will be
+     * unffected; their subscription/purchase will continue to be charged monthly.
+     *
+     * This will restrict the option to chose the product for purchase via the Billing Portal, as well as
+     * disable Public Signup Pages for the product.
+     *
+     * @param int $productId The Chargify id of the product
+     *
+     * @return ProductResponse Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function archiveProduct(int $productId): ProductResponse
+    {
+        $_reqBuilder = $this->requestBuilder(RequestMethod::DELETE, '/products/{product_id}.json')
+            ->auth('global')
+            ->parameters(TemplateParam::init('product_id', $productId)->required());
+
+        $_resHandler = $this->responseHandler()
+            ->throwErrorOn(
+                '422',
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
+            )
+            ->type(ProductResponse::class);
+
+        return $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
+     * This method allows to retrieve a Product object by its `api_handle`.
+     *
+     * @param string $apiHandle The handle of the product
+     *
+     * @return ProductResponse Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function readProductByHandle(string $apiHandle): ProductResponse
+    {
+        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/products/handle/{api_handle}.json')
+            ->auth('global')
+            ->parameters(TemplateParam::init('api_handle', $apiHandle)->required());
+
+        $_resHandler = $this->responseHandler()->type(ProductResponse::class);
+
+        return $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
      * This endpoint allows you to read the current details of a product that you've created in Chargify.
      *
      * @param int $productId The Chargify id of the product
@@ -128,58 +180,6 @@ class ProductsController extends BaseController
                 )
             )
             ->type(ProductResponse::class);
-
-        return $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
-     * Sending a DELETE request to this endpoint will archive the product. All current subscribers will be
-     * unffected; their subscription/purchase will continue to be charged monthly.
-     *
-     * This will restrict the option to chose the product for purchase via the Billing Portal, as well as
-     * disable Public Signup Pages for the product.
-     *
-     * @param int $productId The Chargify id of the product
-     *
-     * @return ProductResponse Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function archiveProduct(int $productId): ProductResponse
-    {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::DELETE, '/products/{product_id}.json')
-            ->auth('global')
-            ->parameters(TemplateParam::init('product_id', $productId)->required());
-
-        $_resHandler = $this->responseHandler()
-            ->throwErrorOn(
-                '422',
-                ErrorType::initWithErrorTemplate(
-                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
-                    ErrorListResponseException::class
-                )
-            )
-            ->type(ProductResponse::class);
-
-        return $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
-     * This method allows to retrieve a Product object by its `api_handle`.
-     *
-     * @param string $apiHandle The handle of the product
-     *
-     * @return ProductResponse Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function readProductByHandle(string $apiHandle): ProductResponse
-    {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/products/handle/{api_handle}.json')
-            ->auth('global')
-            ->parameters(TemplateParam::init('api_handle', $apiHandle)->required());
-
-        $_resHandler = $this->responseHandler()->type(ProductResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
     }

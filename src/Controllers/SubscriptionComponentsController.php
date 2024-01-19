@@ -203,6 +203,209 @@ class SubscriptionComponentsController extends BaseController
     }
 
     /**
+     * This endpoint returns the 50 most recent Allocations, ordered by most recent first.
+     *
+     * ## On/Off Components
+     *
+     * When a subscription's on/off component has been toggled to on (`1`) or off (`0`), usage will be
+     * logged in this response.
+     *
+     * ## Querying data via Chargify gem
+     *
+     * You can also query the current quantity via the [official Chargify Gem.](http://github.
+     * com/chargify/chargify_api_ares)
+     *
+     * ```# First way
+     * component = Chargify::Subscription::Component.find(1, :params => {:subscription_id => 7})
+     * puts component.allocated_quantity
+     * # => 23
+     *
+     * # Second way
+     * component = Chargify::Subscription.find(7).component(1)
+     * puts component.allocated_quantity
+     * # => 23
+     * ```
+     *
+     * @param int $subscriptionId The Chargify id of the subscription
+     * @param int $componentId The Chargify id of the component
+     * @param int|null $page Result records are organized in pages. By default, the first page of
+     *        results is displayed. The page parameter specifies a page number of results to fetch.
+     *        You can start navigating through the pages to consume the results. You do this by
+     *        passing in a page parameter. Retrieve the next page by adding ?page=2 to the query
+     *        string. If there are no results to return, then an empty result set will be returned.
+     *        Use in query `page=1`.
+     *
+     * @return AllocationResponse[] Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function listAllocations(int $subscriptionId, int $componentId, ?int $page = 1): array
+    {
+        $_reqBuilder = $this->requestBuilder(
+            RequestMethod::GET,
+            '/subscriptions/{subscription_id}/components/{component_id}/allocations.json'
+        )
+            ->auth('global')
+            ->parameters(
+                TemplateParam::init('subscription_id', $subscriptionId)->required(),
+                TemplateParam::init('component_id', $componentId)->required(),
+                QueryParam::init('page', $page)->commaSeparated()
+            );
+
+        $_resHandler = $this->responseHandler()
+            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
+            ->throwErrorOn(
+                '422',
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
+            )
+            ->type(AllocationResponse::class, 1);
+
+        return $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
+     * Chargify offers the ability to preview a potential subscription's **quantity-based** or **on/off**
+     * component allocation in the middle of the current billing period.  This is useful if you want users
+     * to be able to see the effect of a component operation before actually doing it.
+     *
+     * ## Fine-grained Component Control: Use with multiple `upgrade_charge`s or `downgrade_credits`
+     *
+     * When the allocation uses multiple different types of `upgrade_charge`s or `downgrade_credit`s, the
+     * Allocation is viewed as an Allocation which uses "Fine-Grained Component Control". As a result, the
+     * response will not include `direction` and `proration` within the `allocation_preview`, but at the
+     * `line_items` and `allocations` level respectfully.
+     *
+     * See example below for Fine-Grained Component Control response.
+     *
+     * @param int $subscriptionId The Chargify id of the subscription
+     * @param PreviewAllocationsRequest|null $body
+     *
+     * @return AllocationPreviewResponse Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function previewAllocations(
+        int $subscriptionId,
+        ?PreviewAllocationsRequest $body = null
+    ): AllocationPreviewResponse {
+        $_reqBuilder = $this->requestBuilder(
+            RequestMethod::POST,
+            '/subscriptions/{subscription_id}/allocations/preview.json'
+        )
+            ->auth('global')
+            ->parameters(
+                TemplateParam::init('subscription_id', $subscriptionId)->required(),
+                HeaderParam::init('Content-Type', 'application/json'),
+                BodyParam::init($body)
+            );
+
+        $_resHandler = $this->responseHandler()
+            ->throwErrorOn(
+                '422',
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ComponentAllocationErrorException::class
+                )
+            )
+            ->type(AllocationPreviewResponse::class);
+
+        return $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
+     * In order to bill your subscribers on your Events data under the Events-Based Billing feature, the
+     * components must be activated for the subscriber.
+     *
+     * Learn more about the role of activation in the [Events-Based Billing docs](https://chargify.zendesk.
+     * com/hc/en-us/articles/4407720810907#activating-components-for-subscribers).
+     *
+     * Use this endpoint to activate an event-based component for a single subscription. Activating an
+     * event-based component causes Chargify to bill for events when the subscription is renewed.
+     *
+     * *Note: it is possible to stream events for a subscription at any time, regardless of component
+     * activation status. The activation status only determines if the subscription should be billed for
+     * event-based component usage at renewal.*
+     *
+     * @param int $subscriptionId The Chargify id of the subscription
+     * @param int $componentId The Chargify id of the component
+     *
+     * @return void Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function activateEventBasedComponent(int $subscriptionId, int $componentId): void
+    {
+        $_reqBuilder = $this->requestBuilder(
+            RequestMethod::POST,
+            '/event_based_billing/subscriptions/{subscription_id}/components/{component_id}/activate.json'
+        )
+            ->auth('global')
+            ->parameters(
+                TemplateParam::init('subscription_id', $subscriptionId)->required(),
+                TemplateParam::init('component_id', $componentId)->required()
+            );
+
+        $this->execute($_reqBuilder);
+    }
+
+    /**
+     * ## Documentation
+     *
+     * Events-Based Billing is an evolved form of metered billing that is based on data-rich events
+     * streamed in real-time from your system to Chargify.
+     *
+     * These events can then be transformed, enriched, or analyzed to form the computed totals of usage
+     * charges billed to your customers.
+     *
+     * This API allows you to stream events into the Chargify data ingestion engine.
+     *
+     * Learn more about the feature in general in the [Events-Based Billing help docs](https://chargify.
+     * zendesk.com/hc/en-us/articles/4407720613403).
+     *
+     * ## Record Event
+     *
+     * Use this endpoint to record a single event.
+     *
+     * *Note: this endpoint differs from the standard Chargify endpoints in that the URL subdomain will be
+     * `events` and your site subdomain will be included in the URL path. For example:*
+     *
+     * ```
+     * https://events.chargify.com/my-site-subdomain/events/my-stream-api-handle
+     * ```
+     *
+     * @param string $subdomain Your site's subdomain
+     * @param string $apiHandle Identifies the Stream for which the event should be published.
+     * @param string|null $storeUid If you've attached your own Keen project as a Chargify event
+     *        data-store, use this parameter to indicate the data-store.
+     * @param EBBEvent|null $body
+     *
+     * @return void Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function recordEvent(
+        string $subdomain,
+        string $apiHandle,
+        ?string $storeUid = null,
+        ?EBBEvent $body = null
+    ): void {
+        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/{subdomain}/events/{api_handle}.json')
+            ->auth('global')
+            ->parameters(
+                TemplateParam::init('subdomain', $subdomain)->required(),
+                TemplateParam::init('api_handle', $apiHandle)->required(),
+                HeaderParam::init('Content-Type', 'application/json'),
+                QueryParam::init('store_uid', $storeUid)->commaSeparated(),
+                BodyParam::init($body)
+            );
+
+        $this->execute($_reqBuilder);
+    }
+
+    /**
      * This endpoint creates a new allocation, setting the current allocated quantity for the Component and
      * recording a memo.
      *
@@ -310,70 +513,6 @@ class SubscriptionComponentsController extends BaseController
     }
 
     /**
-     * This endpoint returns the 50 most recent Allocations, ordered by most recent first.
-     *
-     * ## On/Off Components
-     *
-     * When a subscription's on/off component has been toggled to on (`1`) or off (`0`), usage will be
-     * logged in this response.
-     *
-     * ## Querying data via Chargify gem
-     *
-     * You can also query the current quantity via the [official Chargify Gem.](http://github.
-     * com/chargify/chargify_api_ares)
-     *
-     * ```# First way
-     * component = Chargify::Subscription::Component.find(1, :params => {:subscription_id => 7})
-     * puts component.allocated_quantity
-     * # => 23
-     *
-     * # Second way
-     * component = Chargify::Subscription.find(7).component(1)
-     * puts component.allocated_quantity
-     * # => 23
-     * ```
-     *
-     * @param int $subscriptionId The Chargify id of the subscription
-     * @param int $componentId The Chargify id of the component
-     * @param int|null $page Result records are organized in pages. By default, the first page of
-     *        results is displayed. The page parameter specifies a page number of results to fetch.
-     *        You can start navigating through the pages to consume the results. You do this by
-     *        passing in a page parameter. Retrieve the next page by adding ?page=2 to the query
-     *        string. If there are no results to return, then an empty result set will be returned.
-     *        Use in query `page=1`.
-     *
-     * @return AllocationResponse[] Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function listAllocations(int $subscriptionId, int $componentId, ?int $page = 1): array
-    {
-        $_reqBuilder = $this->requestBuilder(
-            RequestMethod::GET,
-            '/subscriptions/{subscription_id}/components/{component_id}/allocations.json'
-        )
-            ->auth('global')
-            ->parameters(
-                TemplateParam::init('subscription_id', $subscriptionId)->required(),
-                TemplateParam::init('component_id', $componentId)->required(),
-                QueryParam::init('page', $page)->commaSeparated()
-            );
-
-        $_resHandler = $this->responseHandler()
-            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
-            ->throwErrorOn(
-                '422',
-                ErrorType::initWithErrorTemplate(
-                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
-                    ErrorListResponseException::class
-                )
-            )
-            ->type(AllocationResponse::class, 1);
-
-        return $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
      * Creates multiple allocations, setting the current allocated quantity for each of the components and
      * recording a memo. The charges and/or credits that are created will be rolled up into a single total
      * which is used to determine whether this is an upgrade or a downgrade. Be aware of the Order of
@@ -415,171 +554,6 @@ class SubscriptionComponentsController extends BaseController
             ->type(AllocationResponse::class, 1);
 
         return $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
-     * Chargify offers the ability to preview a potential subscription's **quantity-based** or **on/off**
-     * component allocation in the middle of the current billing period.  This is useful if you want users
-     * to be able to see the effect of a component operation before actually doing it.
-     *
-     * ## Fine-grained Component Control: Use with multiple `upgrade_charge`s or `downgrade_credits`
-     *
-     * When the allocation uses multiple different types of `upgrade_charge`s or `downgrade_credit`s, the
-     * Allocation is viewed as an Allocation which uses "Fine-Grained Component Control". As a result, the
-     * response will not include `direction` and `proration` within the `allocation_preview`, but at the
-     * `line_items` and `allocations` level respectfully.
-     *
-     * See example below for Fine-Grained Component Control response.
-     *
-     * @param int $subscriptionId The Chargify id of the subscription
-     * @param PreviewAllocationsRequest|null $body
-     *
-     * @return AllocationPreviewResponse Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function previewAllocations(
-        int $subscriptionId,
-        ?PreviewAllocationsRequest $body = null
-    ): AllocationPreviewResponse {
-        $_reqBuilder = $this->requestBuilder(
-            RequestMethod::POST,
-            '/subscriptions/{subscription_id}/allocations/preview.json'
-        )
-            ->auth('global')
-            ->parameters(
-                TemplateParam::init('subscription_id', $subscriptionId)->required(),
-                HeaderParam::init('Content-Type', 'application/json'),
-                BodyParam::init($body)
-            );
-
-        $_resHandler = $this->responseHandler()
-            ->throwErrorOn(
-                '422',
-                ErrorType::initWithErrorTemplate(
-                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
-                    ComponentAllocationErrorException::class
-                )
-            )
-            ->type(AllocationPreviewResponse::class);
-
-        return $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
-     * When the expiration interval options are selected on a prepaid usage component price point, all
-     * allocations will be created with an expiration date. This expiration date can be changed after the
-     * fact to allow for extending or shortening the allocation's active window.
-     *
-     * In order to change a prepaid usage allocation's expiration date, a PUT call must be made to the
-     * allocation's endpoint with a new expiration date.
-     *
-     * ## Limitations
-     *
-     * A few limitations exist when changing an allocation's expiration date:
-     *
-     * - An expiration date can only be changed for an allocation that belongs to a price point with
-     * expiration interval options explicitly set.
-     * - An expiration date can be changed towards the future with no limitations.
-     * - An expiration date can be changed towards the past (essentially expiring it) up to the
-     * subscription's current period beginning date.
-     *
-     * @param int $subscriptionId The Chargify id of the subscription
-     * @param int $componentId The Chargify id of the component
-     * @param int $allocationId The Chargify id of the allocation
-     * @param UpdateAllocationExpirationDate|null $body
-     *
-     * @return void Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function updatePrepaidUsageAllocation(
-        int $subscriptionId,
-        int $componentId,
-        int $allocationId,
-        ?UpdateAllocationExpirationDate $body = null
-    ): void {
-        $_reqBuilder = $this->requestBuilder(
-            RequestMethod::PUT,
-            '/subscriptions/{subscription_id}/components/{component_id}/allocations/{allocation_id}.json'
-        )
-            ->auth('global')
-            ->parameters(
-                TemplateParam::init('subscription_id', $subscriptionId)->required(),
-                TemplateParam::init('component_id', $componentId)->required(),
-                TemplateParam::init('allocation_id', $allocationId)->required(),
-                HeaderParam::init('Content-Type', 'application/json'),
-                BodyParam::init($body)
-            );
-
-        $_resHandler = $this->responseHandler()
-            ->throwErrorOn(
-                '422',
-                ErrorType::initWithErrorTemplate(
-                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
-                    SubscriptionComponentAllocationErrorException::class
-                )
-            );
-
-        $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
-     * Prepaid Usage components are unique in that their allocations are always additive. In order to
-     * reduce a subscription's allocated quantity for a prepaid usage component each allocation must be
-     * destroyed individually via this endpoint.
-     *
-     * ## Credit Scheme
-     *
-     * By default, destroying an allocation will generate a service credit on the subscription. This
-     * behavior can be modified with the optional `credit_scheme` parameter on this endpoint. The accepted
-     * values are:
-     *
-     * 1. `none`: The allocation will be destroyed and the balances will be updated but no service credit
-     * or refund will be created.
-     * 2. `credit`: The allocation will be destroyed and the balances will be updated and a service credit
-     * will be generated. This is also the default behavior if the `credit_scheme` param is not passed.
-     * 3. `refund`: The allocation will be destroyed and the balances will be updated and a refund will be
-     * issued along with a Credit Note.
-     *
-     * @param int $subscriptionId The Chargify id of the subscription
-     * @param int $componentId The Chargify id of the component
-     * @param int $allocationId The Chargify id of the allocation
-     * @param CreditSchemeRequest|null $body
-     *
-     * @return void Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function deletePrepaidUsageAllocation(
-        int $subscriptionId,
-        int $componentId,
-        int $allocationId,
-        ?CreditSchemeRequest $body = null
-    ): void {
-        $_reqBuilder = $this->requestBuilder(
-            RequestMethod::DELETE,
-            '/subscriptions/{subscription_id}/components/{component_id}/allocations/{allocation_id}.json'
-        )
-            ->auth('global')
-            ->parameters(
-                TemplateParam::init('subscription_id', $subscriptionId)->required(),
-                TemplateParam::init('component_id', $componentId)->required(),
-                TemplateParam::init('allocation_id', $allocationId)->required(),
-                HeaderParam::init('Content-Type', 'application/json'),
-                BodyParam::init($body)
-            );
-
-        $_resHandler = $this->responseHandler()
-            ->throwErrorOn(
-                '422',
-                ErrorType::initWithErrorTemplate(
-                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
-                    SubscriptionComponentAllocationErrorException::class
-                )
-            );
-
-        $this->execute($_reqBuilder, $_resHandler);
     }
 
     /**
@@ -755,42 +729,6 @@ class SubscriptionComponentsController extends BaseController
     }
 
     /**
-     * In order to bill your subscribers on your Events data under the Events-Based Billing feature, the
-     * components must be activated for the subscriber.
-     *
-     * Learn more about the role of activation in the [Events-Based Billing docs](https://chargify.zendesk.
-     * com/hc/en-us/articles/4407720810907#activating-components-for-subscribers).
-     *
-     * Use this endpoint to activate an event-based component for a single subscription. Activating an
-     * event-based component causes Chargify to bill for events when the subscription is renewed.
-     *
-     * *Note: it is possible to stream events for a subscription at any time, regardless of component
-     * activation status. The activation status only determines if the subscription should be billed for
-     * event-based component usage at renewal.*
-     *
-     * @param int $subscriptionId The Chargify id of the subscription
-     * @param int $componentId The Chargify id of the component
-     *
-     * @return void Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function activateEventBasedComponent(int $subscriptionId, int $componentId): void
-    {
-        $_reqBuilder = $this->requestBuilder(
-            RequestMethod::POST,
-            '/event_based_billing/subscriptions/{subscription_id}/components/{component_id}/activate.json'
-        )
-            ->auth('global')
-            ->parameters(
-                TemplateParam::init('subscription_id', $subscriptionId)->required(),
-                TemplateParam::init('component_id', $componentId)->required()
-            );
-
-        $this->execute($_reqBuilder);
-    }
-
-    /**
      * Use this endpoint to deactivate an event-based component for a single subscription. Deactivating the
      * event-based component causes Chargify to ignore related events at subscription renewal.
      *
@@ -811,98 +749,6 @@ class SubscriptionComponentsController extends BaseController
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 TemplateParam::init('component_id', $componentId)->required()
-            );
-
-        $this->execute($_reqBuilder);
-    }
-
-    /**
-     * ## Documentation
-     *
-     * Events-Based Billing is an evolved form of metered billing that is based on data-rich events
-     * streamed in real-time from your system to Chargify.
-     *
-     * These events can then be transformed, enriched, or analyzed to form the computed totals of usage
-     * charges billed to your customers.
-     *
-     * This API allows you to stream events into the Chargify data ingestion engine.
-     *
-     * Learn more about the feature in general in the [Events-Based Billing help docs](https://chargify.
-     * zendesk.com/hc/en-us/articles/4407720613403).
-     *
-     * ## Record Event
-     *
-     * Use this endpoint to record a single event.
-     *
-     * *Note: this endpoint differs from the standard Chargify endpoints in that the URL subdomain will be
-     * `events` and your site subdomain will be included in the URL path. For example:*
-     *
-     * ```
-     * https://events.chargify.com/my-site-subdomain/events/my-stream-api-handle
-     * ```
-     *
-     * @param string $subdomain Your site's subdomain
-     * @param string $apiHandle Identifies the Stream for which the event should be published.
-     * @param string|null $storeUid If you've attached your own Keen project as a Chargify event
-     *        data-store, use this parameter to indicate the data-store.
-     * @param EBBEvent|null $body
-     *
-     * @return void Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function recordEvent(
-        string $subdomain,
-        string $apiHandle,
-        ?string $storeUid = null,
-        ?EBBEvent $body = null
-    ): void {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/{subdomain}/events/{api_handle}.json')
-            ->auth('global')
-            ->parameters(
-                TemplateParam::init('subdomain', $subdomain)->required(),
-                TemplateParam::init('api_handle', $apiHandle)->required(),
-                HeaderParam::init('Content-Type', 'application/json'),
-                QueryParam::init('store_uid', $storeUid)->commaSeparated(),
-                BodyParam::init($body)
-            );
-
-        $this->execute($_reqBuilder);
-    }
-
-    /**
-     * Use this endpoint to record a collection of events.
-     *
-     * *Note: this endpoint differs from the standard Chargify endpoints in that the subdomain will be
-     * `events` and your site subdomain will be included in the URL path.*
-     *
-     * A maximum of 1000 events can be published in a single request. A 422 will be returned if this limit
-     * is exceeded.
-     *
-     * @param string $subdomain Your site's subdomain
-     * @param string $apiHandle Identifies the Stream for which the events should be published.
-     * @param string|null $storeUid If you've attached your own Keen project as a Chargify event
-     *        data-store, use this parameter to indicate the data-store.
-     * @param EBBEvent[]|null $body
-     *
-     * @return void Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function recordEvents(
-        string $subdomain,
-        string $apiHandle,
-        ?string $storeUid = null,
-        ?array $body = null
-    ): void {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/{subdomain}/events/{api_handle}/bulk.json')
-            ->auth('global')
-            ->parameters(
-                TemplateParam::init('subdomain', $subdomain)->required(),
-                TemplateParam::init('api_handle', $apiHandle)->required(),
-                HeaderParam::init('Content-Type', 'application/json'),
-                QueryParam::init('store_uid', $storeUid)->commaSeparated(),
-                BodyParam::init($body)
             );
 
         $this->execute($_reqBuilder);
@@ -979,5 +825,159 @@ class SubscriptionComponentsController extends BaseController
         $_resHandler = $this->responseHandler()->type(ListSubscriptionComponentsResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
+     * When the expiration interval options are selected on a prepaid usage component price point, all
+     * allocations will be created with an expiration date. This expiration date can be changed after the
+     * fact to allow for extending or shortening the allocation's active window.
+     *
+     * In order to change a prepaid usage allocation's expiration date, a PUT call must be made to the
+     * allocation's endpoint with a new expiration date.
+     *
+     * ## Limitations
+     *
+     * A few limitations exist when changing an allocation's expiration date:
+     *
+     * - An expiration date can only be changed for an allocation that belongs to a price point with
+     * expiration interval options explicitly set.
+     * - An expiration date can be changed towards the future with no limitations.
+     * - An expiration date can be changed towards the past (essentially expiring it) up to the
+     * subscription's current period beginning date.
+     *
+     * @param int $subscriptionId The Chargify id of the subscription
+     * @param int $componentId The Chargify id of the component
+     * @param int $allocationId The Chargify id of the allocation
+     * @param UpdateAllocationExpirationDate|null $body
+     *
+     * @return void Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function updatePrepaidUsageAllocation(
+        int $subscriptionId,
+        int $componentId,
+        int $allocationId,
+        ?UpdateAllocationExpirationDate $body = null
+    ): void {
+        $_reqBuilder = $this->requestBuilder(
+            RequestMethod::PUT,
+            '/subscriptions/{subscription_id}/components/{component_id}/allocations/{allocation_id}.json'
+        )
+            ->auth('global')
+            ->parameters(
+                TemplateParam::init('subscription_id', $subscriptionId)->required(),
+                TemplateParam::init('component_id', $componentId)->required(),
+                TemplateParam::init('allocation_id', $allocationId)->required(),
+                HeaderParam::init('Content-Type', 'application/json'),
+                BodyParam::init($body)
+            );
+
+        $_resHandler = $this->responseHandler()
+            ->throwErrorOn(
+                '422',
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    SubscriptionComponentAllocationErrorException::class
+                )
+            );
+
+        $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
+     * Prepaid Usage components are unique in that their allocations are always additive. In order to
+     * reduce a subscription's allocated quantity for a prepaid usage component each allocation must be
+     * destroyed individually via this endpoint.
+     *
+     * ## Credit Scheme
+     *
+     * By default, destroying an allocation will generate a service credit on the subscription. This
+     * behavior can be modified with the optional `credit_scheme` parameter on this endpoint. The accepted
+     * values are:
+     *
+     * 1. `none`: The allocation will be destroyed and the balances will be updated but no service credit
+     * or refund will be created.
+     * 2. `credit`: The allocation will be destroyed and the balances will be updated and a service credit
+     * will be generated. This is also the default behavior if the `credit_scheme` param is not passed.
+     * 3. `refund`: The allocation will be destroyed and the balances will be updated and a refund will be
+     * issued along with a Credit Note.
+     *
+     * @param int $subscriptionId The Chargify id of the subscription
+     * @param int $componentId The Chargify id of the component
+     * @param int $allocationId The Chargify id of the allocation
+     * @param CreditSchemeRequest|null $body
+     *
+     * @return void Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function deletePrepaidUsageAllocation(
+        int $subscriptionId,
+        int $componentId,
+        int $allocationId,
+        ?CreditSchemeRequest $body = null
+    ): void {
+        $_reqBuilder = $this->requestBuilder(
+            RequestMethod::DELETE,
+            '/subscriptions/{subscription_id}/components/{component_id}/allocations/{allocation_id}.json'
+        )
+            ->auth('global')
+            ->parameters(
+                TemplateParam::init('subscription_id', $subscriptionId)->required(),
+                TemplateParam::init('component_id', $componentId)->required(),
+                TemplateParam::init('allocation_id', $allocationId)->required(),
+                HeaderParam::init('Content-Type', 'application/json'),
+                BodyParam::init($body)
+            );
+
+        $_resHandler = $this->responseHandler()
+            ->throwErrorOn(
+                '422',
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    SubscriptionComponentAllocationErrorException::class
+                )
+            );
+
+        $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
+     * Use this endpoint to record a collection of events.
+     *
+     * *Note: this endpoint differs from the standard Chargify endpoints in that the subdomain will be
+     * `events` and your site subdomain will be included in the URL path.*
+     *
+     * A maximum of 1000 events can be published in a single request. A 422 will be returned if this limit
+     * is exceeded.
+     *
+     * @param string $subdomain Your site's subdomain
+     * @param string $apiHandle Identifies the Stream for which the events should be published.
+     * @param string|null $storeUid If you've attached your own Keen project as a Chargify event
+     *        data-store, use this parameter to indicate the data-store.
+     * @param EBBEvent[]|null $body
+     *
+     * @return void Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function recordEvents(
+        string $subdomain,
+        string $apiHandle,
+        ?string $storeUid = null,
+        ?array $body = null
+    ): void {
+        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/{subdomain}/events/{api_handle}/bulk.json')
+            ->auth('global')
+            ->parameters(
+                TemplateParam::init('subdomain', $subdomain)->required(),
+                TemplateParam::init('api_handle', $apiHandle)->required(),
+                HeaderParam::init('Content-Type', 'application/json'),
+                QueryParam::init('store_uid', $storeUid)->commaSeparated(),
+                BodyParam::init($body)
+            );
+
+        $this->execute($_reqBuilder);
     }
 }

@@ -11,8 +11,8 @@ $eventsController = $client->getEventsController();
 ## Methods
 
 * [List Events](../../doc/controllers/events.md#list-events)
-* [List Subscription Events](../../doc/controllers/events.md#list-subscription-events)
 * [Read Events Count](../../doc/controllers/events.md#read-events-count)
+* [List Subscription Events](../../doc/controllers/events.md#list-subscription-events)
 
 
 # List Events
@@ -184,6 +184,54 @@ $result = $eventsController->listEvents($collect);
 ```
 
 
+# Read Events Count
+
+Get a count of all the events for a given site by using this method.
+
+```php
+function readEventsCount(array $options): CountResponse
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `page` | `?int` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`. |
+| `perPage` | `?int` | Query, Optional | This parameter indicates how many records to fetch in each request. Default value is 20. The maximum allowed values is 200; any per_page value over 200 will be changed to 200.<br>Use in query `per_page=200`. |
+| `sinceId` | `?int` | Query, Optional | Returns events with an id greater than or equal to the one specified |
+| `maxId` | `?int` | Query, Optional | Returns events with an id less than or equal to the one specified |
+| `direction` | [`?string(Direction)`](../../doc/models/direction.md) | Query, Optional | The sort direction of the returned events. |
+| `filter` | [`?(string(EventType)[])`](../../doc/models/event-type.md) | Query, Optional | You can pass multiple event keys after comma.<br>Use in query `filter=signup_success,payment_success`. |
+
+## Response Type
+
+[`CountResponse`](../../doc/models/count-response.md)
+
+## Example Usage
+
+```php
+$collect = [
+    'page' => 2,
+    'per_page' => 50,
+    'direction' => Direction::DESC,
+    'filter' => [
+        EventType::CUSTOM_FIELD_VALUE_CHANGE,
+        EventType::PAYMENT_SUCCESS
+    ]
+];
+
+$result = $eventsController->readEventsCount($collect);
+```
+
+## Example Response *(as JSON)*
+
+```json
+{
+  "count": 144
+}
+```
+
+
 # List Subscription Events
 
 The following request will return a list of events for a subscription.
@@ -268,53 +316,5 @@ $result = $eventsController->listSubscriptionEvents($collect);
     }
   }
 ]
-```
-
-
-# Read Events Count
-
-Get a count of all the events for a given site by using this method.
-
-```php
-function readEventsCount(array $options): CountResponse
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `page` | `?int` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`. |
-| `perPage` | `?int` | Query, Optional | This parameter indicates how many records to fetch in each request. Default value is 20. The maximum allowed values is 200; any per_page value over 200 will be changed to 200.<br>Use in query `per_page=200`. |
-| `sinceId` | `?int` | Query, Optional | Returns events with an id greater than or equal to the one specified |
-| `maxId` | `?int` | Query, Optional | Returns events with an id less than or equal to the one specified |
-| `direction` | [`?string(Direction)`](../../doc/models/direction.md) | Query, Optional | The sort direction of the returned events. |
-| `filter` | [`?(string(EventType)[])`](../../doc/models/event-type.md) | Query, Optional | You can pass multiple event keys after comma.<br>Use in query `filter=signup_success,payment_success`. |
-
-## Response Type
-
-[`CountResponse`](../../doc/models/count-response.md)
-
-## Example Usage
-
-```php
-$collect = [
-    'page' => 2,
-    'per_page' => 50,
-    'direction' => Direction::DESC,
-    'filter' => [
-        EventType::CUSTOM_FIELD_VALUE_CHANGE,
-        EventType::PAYMENT_SUCCESS
-    ]
-];
-
-$result = $eventsController->readEventsCount($collect);
-```
-
-## Example Response *(as JSON)*
-
-```json
-{
-  "count": 144
-}
 ```
 

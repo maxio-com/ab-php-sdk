@@ -33,6 +33,60 @@ use CoreInterfaces\Core\Request\RequestMethod;
 class CustomFieldsController extends BaseController
 {
     /**
+     * This method will provide you information on usage of metadata across your selected resource (ie.
+     * subscriptions, customers)
+     *
+     * ## Metadata Data
+     *
+     * This endpoint will also display the current stats of your metadata to use as a tool for pagination.
+     *
+     * ### Metadata for multiple records
+     *
+     * `https://acme.chargify.com/subscriptions/metadata.json?resource_ids[]=1&resource_ids[]=2`
+     *
+     * ## Read Metadata for a Site
+     *
+     * This endpoint will list the number of pages of metadata information that are contained within a site.
+     *
+     * @param array $options Array with all options for search
+     *
+     * @return PaginatedMetadata Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function listMetadataForResourceType(array $options): PaginatedMetadata
+    {
+        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/{resource_type}/metadata.json')
+            ->auth('global')
+            ->parameters(
+                TemplateParam::init('resource_type', $options)
+                    ->extract('resourceType')
+                    ->required()
+                    ->serializeBy([ResourceType::class, 'checkValue']),
+                QueryParam::init('page', $options)->commaSeparated()->extract('page', 1),
+                QueryParam::init('per_page', $options)->commaSeparated()->extract('perPage', 20),
+                QueryParam::init('date_field', $options)
+                    ->commaSeparated()
+                    ->extract('dateField')
+                    ->serializeBy([BasicDateField::class, 'checkValue']),
+                QueryParam::init('start_date', $options)->commaSeparated()->extract('startDate'),
+                QueryParam::init('end_date', $options)->commaSeparated()->extract('endDate'),
+                QueryParam::init('start_datetime', $options)->commaSeparated()->extract('startDatetime'),
+                QueryParam::init('end_datetime', $options)->commaSeparated()->extract('endDatetime'),
+                QueryParam::init('with_deleted', $options)->commaSeparated()->extract('withDeleted'),
+                QueryParam::init('resource_ids[]', $options)->commaSeparated()->extract('resourceIds'),
+                QueryParam::init('direction', $options)
+                    ->commaSeparated()
+                    ->extract('direction')
+                    ->serializeBy([SortingDirection::class, 'checkValue'])
+            );
+
+        $_resHandler = $this->responseHandler()->type(PaginatedMetadata::class);
+
+        return $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
      * ## Custom Fields: Metafield Intro
      *
      * **Chargify refers to Custom Fields in the API documentation as metafields and metadata.** Within the
@@ -198,6 +252,99 @@ class CustomFieldsController extends BaseController
     }
 
     /**
+     * This request will list all of the metadata belonging to a particular resource (ie. subscription,
+     * customer) that is specified.
+     *
+     * ## Metadata Data
+     *
+     * This endpoint will also display the current stats of your metadata to use as a tool for pagination.
+     *
+     * @param array $options Array with all options for search
+     *
+     * @return PaginatedMetadata Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function listMetadata(array $options): PaginatedMetadata
+    {
+        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/{resource_type}/{resource_id}/metadata.json')
+            ->auth('global')
+            ->parameters(
+                TemplateParam::init('resource_type', $options)
+                    ->extract('resourceType')
+                    ->required()
+                    ->serializeBy([ResourceType::class, 'checkValue']),
+                TemplateParam::init('resource_id', $options)->extract('resourceId')->required(),
+                QueryParam::init('page', $options)->plain()->extract('page', 1),
+                QueryParam::init('per_page', $options)->plain()->extract('perPage', 20)
+            );
+
+        $_resHandler = $this->responseHandler()->type(PaginatedMetadata::class);
+
+        return $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
+     * This method removes the metadata from the subscriber/customer cited.
+     *
+     * ## Query String Usage
+     *
+     * For instance if you wanted to delete the metadata for customer 99 named weight you would request:
+     *
+     * ```
+     * https://acme.chargify.com/customers/99/metadata.json?name=weight
+     * ```
+     *
+     * If you want to delete multiple metadata fields for a customer 99 named: `weight` and `age` you
+     * wrould request:
+     * ```
+     * https://acme.chargify.com/customers/99/metadata.json?names[]=weight&names[]=age
+     * ```
+     *
+     * ## Successful Response
+     *
+     * For a success, there will be a code `200` and the plain text response `true`.
+     *
+     * ## Unsuccessful Response
+     *
+     * When a failed response is encountered, you will receive a `404` response and the plain text response
+     * of `true`.
+     *
+     * @param string $resourceType the resource type to which the metafields belong
+     * @param string $resourceId The Chargify id of the customer or the subscription for which the
+     *        metadata applies
+     * @param string|null $name Name of field to be removed.
+     * @param string[]|null $names Names of fields to be removed. Use in query:
+     *        `names[]=field1&names[]=my-field&names[]=another-field`.
+     *
+     * @return void Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function deleteMetadata(
+        string $resourceType,
+        string $resourceId,
+        ?string $name = null,
+        ?array $names = null
+    ): void {
+        $_reqBuilder = $this->requestBuilder(RequestMethod::DELETE, '/{resource_type}/{resource_id}/metadata.json')
+            ->auth('global')
+            ->parameters(
+                TemplateParam::init('resource_type', $resourceType)
+                    ->required()
+                    ->serializeBy([ResourceType::class, 'checkValue']),
+                TemplateParam::init('resource_id', $resourceId)->required(),
+                QueryParam::init('name', $name)->plain(),
+                QueryParam::init('names[]', $names)->plain()
+            );
+
+        $_resHandler = $this->responseHandler()
+            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''));
+
+        $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
      * ## Custom Fields: Metadata Intro
      *
      * **Chargify refers to Custom Fields in the API documentation as metafields and metadata.** Within the
@@ -267,39 +414,6 @@ class CustomFieldsController extends BaseController
     }
 
     /**
-     * This request will list all of the metadata belonging to a particular resource (ie. subscription,
-     * customer) that is specified.
-     *
-     * ## Metadata Data
-     *
-     * This endpoint will also display the current stats of your metadata to use as a tool for pagination.
-     *
-     * @param array $options Array with all options for search
-     *
-     * @return PaginatedMetadata Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function listMetadata(array $options): PaginatedMetadata
-    {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/{resource_type}/{resource_id}/metadata.json')
-            ->auth('global')
-            ->parameters(
-                TemplateParam::init('resource_type', $options)
-                    ->extract('resourceType')
-                    ->required()
-                    ->serializeBy([ResourceType::class, 'checkValue']),
-                TemplateParam::init('resource_id', $options)->extract('resourceId')->required(),
-                QueryParam::init('page', $options)->plain()->extract('page', 1),
-                QueryParam::init('per_page', $options)->plain()->extract('perPage', 20)
-            );
-
-        $_resHandler = $this->responseHandler()->type(PaginatedMetadata::class);
-
-        return $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
      * This method allows you to update the existing metadata associated with a subscription or customer.
      *
      * @param string $resourceType the resource type to which the metafields belong
@@ -328,120 +442,6 @@ class CustomFieldsController extends BaseController
             );
 
         $_resHandler = $this->responseHandler()->type(Metadata::class, 1);
-
-        return $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
-     * This method removes the metadata from the subscriber/customer cited.
-     *
-     * ## Query String Usage
-     *
-     * For instance if you wanted to delete the metadata for customer 99 named weight you would request:
-     *
-     * ```
-     * https://acme.chargify.com/customers/99/metadata.json?name=weight
-     * ```
-     *
-     * If you want to delete multiple metadata fields for a customer 99 named: `weight` and `age` you
-     * wrould request:
-     * ```
-     * https://acme.chargify.com/customers/99/metadata.json?names[]=weight&names[]=age
-     * ```
-     *
-     * ## Successful Response
-     *
-     * For a success, there will be a code `200` and the plain text response `true`.
-     *
-     * ## Unsuccessful Response
-     *
-     * When a failed response is encountered, you will receive a `404` response and the plain text response
-     * of `true`.
-     *
-     * @param string $resourceType the resource type to which the metafields belong
-     * @param string $resourceId The Chargify id of the customer or the subscription for which the
-     *        metadata applies
-     * @param string|null $name Name of field to be removed.
-     * @param string[]|null $names Names of fields to be removed. Use in query:
-     *        `names[]=field1&names[]=my-field&names[]=another-field`.
-     *
-     * @return void Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function deleteMetadata(
-        string $resourceType,
-        string $resourceId,
-        ?string $name = null,
-        ?array $names = null
-    ): void {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::DELETE, '/{resource_type}/{resource_id}/metadata.json')
-            ->auth('global')
-            ->parameters(
-                TemplateParam::init('resource_type', $resourceType)
-                    ->required()
-                    ->serializeBy([ResourceType::class, 'checkValue']),
-                TemplateParam::init('resource_id', $resourceId)->required(),
-                QueryParam::init('name', $name)->plain(),
-                QueryParam::init('names[]', $names)->plain()
-            );
-
-        $_resHandler = $this->responseHandler()
-            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''));
-
-        $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
-     * This method will provide you information on usage of metadata across your selected resource (ie.
-     * subscriptions, customers)
-     *
-     * ## Metadata Data
-     *
-     * This endpoint will also display the current stats of your metadata to use as a tool for pagination.
-     *
-     * ### Metadata for multiple records
-     *
-     * `https://acme.chargify.com/subscriptions/metadata.json?resource_ids[]=1&resource_ids[]=2`
-     *
-     * ## Read Metadata for a Site
-     *
-     * This endpoint will list the number of pages of metadata information that are contained within a site.
-     *
-     * @param array $options Array with all options for search
-     *
-     * @return PaginatedMetadata Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function listMetadataForResourceType(array $options): PaginatedMetadata
-    {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/{resource_type}/metadata.json')
-            ->auth('global')
-            ->parameters(
-                TemplateParam::init('resource_type', $options)
-                    ->extract('resourceType')
-                    ->required()
-                    ->serializeBy([ResourceType::class, 'checkValue']),
-                QueryParam::init('page', $options)->commaSeparated()->extract('page', 1),
-                QueryParam::init('per_page', $options)->commaSeparated()->extract('perPage', 20),
-                QueryParam::init('date_field', $options)
-                    ->commaSeparated()
-                    ->extract('dateField')
-                    ->serializeBy([BasicDateField::class, 'checkValue']),
-                QueryParam::init('start_date', $options)->commaSeparated()->extract('startDate'),
-                QueryParam::init('end_date', $options)->commaSeparated()->extract('endDate'),
-                QueryParam::init('start_datetime', $options)->commaSeparated()->extract('startDatetime'),
-                QueryParam::init('end_datetime', $options)->commaSeparated()->extract('endDatetime'),
-                QueryParam::init('with_deleted', $options)->commaSeparated()->extract('withDeleted'),
-                QueryParam::init('resource_ids[]', $options)->commaSeparated()->extract('resourceIds'),
-                QueryParam::init('direction', $options)
-                    ->commaSeparated()
-                    ->extract('direction')
-                    ->serializeBy([SortingDirection::class, 'checkValue'])
-            );
-
-        $_resHandler = $this->responseHandler()->type(PaginatedMetadata::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
     }

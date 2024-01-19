@@ -47,6 +47,133 @@ use CoreInterfaces\Core\Request\RequestMethod;
 class ComponentsController extends BaseController
 {
     /**
+     * Sending a DELETE request to this endpoint will archive the component. All current subscribers will
+     * be unffected; their subscription/purchase will continue to be charged as usual.
+     *
+     * @param int $productFamilyId The Chargify id of the product family to which the component
+     *        belongs
+     * @param string $componentId Either the Chargify id of the component or the handle for the
+     *        component prefixed with `handle:`
+     *
+     * @return Component Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function archiveComponent(int $productFamilyId, string $componentId): Component
+    {
+        $_reqBuilder = $this->requestBuilder(
+            RequestMethod::DELETE,
+            '/product_families/{product_family_id}/components/{component_id}.json'
+        )
+            ->auth('global')
+            ->parameters(
+                TemplateParam::init('product_family_id', $productFamilyId)->required(),
+                TemplateParam::init('component_id', $componentId)->required()
+            );
+
+        $_resHandler = $this->responseHandler()
+            ->throwErrorOn(
+                '422',
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
+            )
+            ->type(Component::class);
+
+        return $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
+     * This request will return information regarding a component having the handle you provide. You can
+     * identify your components with a handle so you don't have to save or reference the IDs we generate.
+     *
+     * @param string $handle The handle of the component to find
+     *
+     * @return ComponentResponse Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function readComponentByHandle(string $handle): ComponentResponse
+    {
+        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/components/lookup.json')
+            ->auth('global')
+            ->parameters(QueryParam::init('handle', $handle)->commaSeparated()->required());
+
+        $_resHandler = $this->responseHandler()->type(ComponentResponse::class);
+
+        return $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
+     * This request will return information regarding a component from a specific product family.
+     *
+     * You may read the component by either the component's id or handle. When using the handle, it must be
+     * prefixed with `handle:`.
+     *
+     * @param int $productFamilyId The Chargify id of the product family to which the component
+     *        belongs
+     * @param string $componentId Either the Chargify id of the component or the handle for the
+     *        component prefixed with `handle:`
+     *
+     * @return ComponentResponse Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function readComponentById(int $productFamilyId, string $componentId): ComponentResponse
+    {
+        $_reqBuilder = $this->requestBuilder(
+            RequestMethod::GET,
+            '/product_families/{product_family_id}/components/{component_id}.json'
+        )
+            ->auth('global')
+            ->parameters(
+                TemplateParam::init('product_family_id', $productFamilyId)->required(),
+                TemplateParam::init('component_id', $componentId)->required()
+            );
+
+        $_resHandler = $this->responseHandler()->type(ComponentResponse::class);
+
+        return $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
+     * This request will return a list of components for a site.
+     *
+     * @param array $options Array with all options for search
+     *
+     * @return ComponentResponse[] Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function listComponents(array $options): array
+    {
+        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/components.json')
+            ->auth('global')
+            ->parameters(
+                QueryParam::init('date_field', $options)
+                    ->commaSeparated()
+                    ->extract('dateField')
+                    ->serializeBy([BasicDateField::class, 'checkValue']),
+                QueryParam::init('start_date', $options)->commaSeparated()->extract('startDate'),
+                QueryParam::init('end_date', $options)->commaSeparated()->extract('endDate'),
+                QueryParam::init('start_datetime', $options)->commaSeparated()->extract('startDatetime'),
+                QueryParam::init('end_datetime', $options)->commaSeparated()->extract('endDatetime'),
+                QueryParam::init('include_archived', $options)->commaSeparated()->extract('includeArchived'),
+                QueryParam::init('page', $options)->commaSeparated()->extract('page', 1),
+                QueryParam::init('per_page', $options)->commaSeparated()->extract('perPage', 20),
+                QueryParam::init('filter[ids]', $options)->commaSeparated()->extract('filterIds'),
+                QueryParam::init('filter[use_site_exchange_rate]', $options)
+                    ->commaSeparated()
+                    ->extract('filterUseSiteExchangeRate')
+            );
+
+        $_resHandler = $this->responseHandler()->type(ComponentResponse::class, 1);
+
+        return $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
      * This request will create a component definition under the specified product family. These component
      * definitions determine what components are named, how they are measured, and how much they cost.
      *
@@ -113,59 +240,6 @@ class ComponentsController extends BaseController
     }
 
     /**
-     * This request will return information regarding a component having the handle you provide. You can
-     * identify your components with a handle so you don't have to save or reference the IDs we generate.
-     *
-     * @param string $handle The handle of the component to find
-     *
-     * @return ComponentResponse Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function readComponentByHandle(string $handle): ComponentResponse
-    {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/components/lookup.json')
-            ->auth('global')
-            ->parameters(QueryParam::init('handle', $handle)->commaSeparated()->required());
-
-        $_resHandler = $this->responseHandler()->type(ComponentResponse::class);
-
-        return $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
-     * This request will return information regarding a component from a specific product family.
-     *
-     * You may read the component by either the component's id or handle. When using the handle, it must be
-     * prefixed with `handle:`.
-     *
-     * @param int $productFamilyId The Chargify id of the product family to which the component
-     *        belongs
-     * @param string $componentId Either the Chargify id of the component or the handle for the
-     *        component prefixed with `handle:`
-     *
-     * @return ComponentResponse Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function readComponentById(int $productFamilyId, string $componentId): ComponentResponse
-    {
-        $_reqBuilder = $this->requestBuilder(
-            RequestMethod::GET,
-            '/product_families/{product_family_id}/components/{component_id}.json'
-        )
-            ->auth('global')
-            ->parameters(
-                TemplateParam::init('product_family_id', $productFamilyId)->required(),
-                TemplateParam::init('component_id', $componentId)->required()
-            );
-
-        $_resHandler = $this->responseHandler()->type(ComponentResponse::class);
-
-        return $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
      * This request will update a component from a specific product family.
      *
      * You may read the component by either the component's id or handle. When using the handle, it must be
@@ -212,80 +286,6 @@ class ComponentsController extends BaseController
     }
 
     /**
-     * Sending a DELETE request to this endpoint will archive the component. All current subscribers will
-     * be unffected; their subscription/purchase will continue to be charged as usual.
-     *
-     * @param int $productFamilyId The Chargify id of the product family to which the component
-     *        belongs
-     * @param string $componentId Either the Chargify id of the component or the handle for the
-     *        component prefixed with `handle:`
-     *
-     * @return Component Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function archiveComponent(int $productFamilyId, string $componentId): Component
-    {
-        $_reqBuilder = $this->requestBuilder(
-            RequestMethod::DELETE,
-            '/product_families/{product_family_id}/components/{component_id}.json'
-        )
-            ->auth('global')
-            ->parameters(
-                TemplateParam::init('product_family_id', $productFamilyId)->required(),
-                TemplateParam::init('component_id', $componentId)->required()
-            );
-
-        $_resHandler = $this->responseHandler()
-            ->throwErrorOn(
-                '422',
-                ErrorType::initWithErrorTemplate(
-                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
-                    ErrorListResponseException::class
-                )
-            )
-            ->type(Component::class);
-
-        return $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
-     * This request will return a list of components for a site.
-     *
-     * @param array $options Array with all options for search
-     *
-     * @return ComponentResponse[] Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function listComponents(array $options): array
-    {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/components.json')
-            ->auth('global')
-            ->parameters(
-                QueryParam::init('date_field', $options)
-                    ->commaSeparated()
-                    ->extract('dateField')
-                    ->serializeBy([BasicDateField::class, 'checkValue']),
-                QueryParam::init('start_date', $options)->commaSeparated()->extract('startDate'),
-                QueryParam::init('end_date', $options)->commaSeparated()->extract('endDate'),
-                QueryParam::init('start_datetime', $options)->commaSeparated()->extract('startDatetime'),
-                QueryParam::init('end_datetime', $options)->commaSeparated()->extract('endDatetime'),
-                QueryParam::init('include_archived', $options)->commaSeparated()->extract('includeArchived'),
-                QueryParam::init('page', $options)->commaSeparated()->extract('page', 1),
-                QueryParam::init('per_page', $options)->commaSeparated()->extract('perPage', 20),
-                QueryParam::init('filter[ids]', $options)->commaSeparated()->extract('filterIds'),
-                QueryParam::init('filter[use_site_exchange_rate]', $options)
-                    ->commaSeparated()
-                    ->extract('filterUseSiteExchangeRate')
-            );
-
-        $_resHandler = $this->responseHandler()->type(ComponentResponse::class, 1);
-
-        return $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
      * This request will update a component.
      *
      * You may read the component by either the component's id or handle. When using the handle, it must be
@@ -317,39 +317,6 @@ class ComponentsController extends BaseController
                 )
             )
             ->type(ComponentResponse::class);
-
-        return $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
-     * Sets a new default price point for the component. This new default will apply to all new
-     * subscriptions going forward - existing subscriptions will remain on their current price point.
-     *
-     * See [Price Points Documentation](https://chargify.zendesk.com/hc/en-us/articles/4407755865883#price-
-     * points) for more information on price points and moving subscriptions between price points.
-     *
-     * Note: Custom price points are not able to be set as the default for a component.
-     *
-     * @param int $componentId The Chargify id of the component to which the price point belongs
-     * @param int $pricePointId The Chargify id of the price point
-     *
-     * @return ComponentResponse Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function updateDefaultPricePointForComponent(int $componentId, int $pricePointId): ComponentResponse
-    {
-        $_reqBuilder = $this->requestBuilder(
-            RequestMethod::PUT,
-            '/components/{component_id}/price_points/{price_point_id}/default.json'
-        )
-            ->auth('global')
-            ->parameters(
-                TemplateParam::init('component_id', $componentId)->required(),
-                TemplateParam::init('price_point_id', $pricePointId)->required()
-            );
-
-        $_resHandler = $this->responseHandler()->type(ComponentResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
     }
@@ -395,33 +362,6 @@ class ComponentsController extends BaseController
     }
 
     /**
-     * This endpoint can be used to create a new price point for an existing component.
-     *
-     * @param int $componentId The Chargify id of the component
-     * @param CreateComponentPricePointRequest|null $body
-     *
-     * @return ComponentPricePointResponse Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function createComponentPricePoint(
-        int $componentId,
-        ?CreateComponentPricePointRequest $body = null
-    ): ComponentPricePointResponse {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/components/{component_id}/price_points.json')
-            ->auth('global')
-            ->parameters(
-                TemplateParam::init('component_id', $componentId)->required(),
-                HeaderParam::init('Content-Type', 'application/json'),
-                BodyParam::init($body)
-            );
-
-        $_resHandler = $this->responseHandler()->type(ComponentPricePointResponse::class);
-
-        return $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
      * Use this endpoint to read current price points that are associated with a component.
      *
      * You may specify the component by using either the numeric id or the `handle:gold` syntax.
@@ -461,24 +401,111 @@ class ComponentsController extends BaseController
     }
 
     /**
-     * Use this endpoint to create multiple component price points in one request.
+     * This endpoint allows you to update currency prices for a given currency that has been defined on the
+     * site level in your settings.
      *
-     * @param string $componentId The Chargify id of the component for which you want to fetch price
-     *        points.
-     * @param CreateComponentPricePointsRequest|null $body
+     * Note: Currency Prices are not able to be updated for custom price points.
      *
-     * @return ComponentPricePointsResponse Response from the API call
+     * @param int $pricePointId The Chargify id of the price point
+     * @param UpdateCurrencyPricesRequest|null $body
+     *
+     * @return CurrencyPrice[] Response from the API call
      *
      * @throws ApiException Thrown if API call fails
      */
-    public function createComponentPricePoints(
-        string $componentId,
-        ?CreateComponentPricePointsRequest $body = null
-    ): ComponentPricePointsResponse {
+    public function updateCurrencyPrices(int $pricePointId, ?UpdateCurrencyPricesRequest $body = null): array
+    {
         $_reqBuilder = $this->requestBuilder(
-            RequestMethod::POST,
-            '/components/{component_id}/price_points/bulk.json'
+            RequestMethod::PUT,
+            '/price_points/{price_point_id}/currency_prices.json'
         )
+            ->auth('global')
+            ->parameters(
+                TemplateParam::init('price_point_id', $pricePointId)->required(),
+                HeaderParam::init('Content-Type', 'application/json'),
+                BodyParam::init($body)
+            );
+
+        $_resHandler = $this->responseHandler()->type(CurrencyPrice::class, 1);
+
+        return $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
+     * Sets a new default price point for the component. This new default will apply to all new
+     * subscriptions going forward - existing subscriptions will remain on their current price point.
+     *
+     * See [Price Points Documentation](https://chargify.zendesk.com/hc/en-us/articles/4407755865883#price-
+     * points) for more information on price points and moving subscriptions between price points.
+     *
+     * Note: Custom price points are not able to be set as the default for a component.
+     *
+     * @param int $componentId The Chargify id of the component to which the price point belongs
+     * @param int $pricePointId The Chargify id of the price point
+     *
+     * @return ComponentResponse Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function updateDefaultPricePointForComponent(int $componentId, int $pricePointId): ComponentResponse
+    {
+        $_reqBuilder = $this->requestBuilder(
+            RequestMethod::PUT,
+            '/components/{component_id}/price_points/{price_point_id}/default.json'
+        )
+            ->auth('global')
+            ->parameters(
+                TemplateParam::init('component_id', $componentId)->required(),
+                TemplateParam::init('price_point_id', $pricePointId)->required()
+            );
+
+        $_resHandler = $this->responseHandler()->type(ComponentResponse::class);
+
+        return $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
+     * Use this endpoint to unarchive a component price point.
+     *
+     * @param int $componentId The Chargify id of the component to which the price point belongs
+     * @param int $pricePointId The Chargify id of the price point
+     *
+     * @return ComponentPricePointResponse Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function unarchiveComponentPricePoint(int $componentId, int $pricePointId): ComponentPricePointResponse
+    {
+        $_reqBuilder = $this->requestBuilder(
+            RequestMethod::PUT,
+            '/components/{component_id}/price_points/{price_point_id}/unarchive.json'
+        )
+            ->auth('global')
+            ->parameters(
+                TemplateParam::init('component_id', $componentId)->required(),
+                TemplateParam::init('price_point_id', $pricePointId)->required()
+            );
+
+        $_resHandler = $this->responseHandler()->type(ComponentPricePointResponse::class);
+
+        return $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
+     * This endpoint can be used to create a new price point for an existing component.
+     *
+     * @param int $componentId The Chargify id of the component
+     * @param CreateComponentPricePointRequest|null $body
+     *
+     * @return ComponentPricePointResponse Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function createComponentPricePoint(
+        int $componentId,
+        ?CreateComponentPricePointRequest $body = null
+    ): ComponentPricePointResponse {
+        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/components/{component_id}/price_points.json')
             ->auth('global')
             ->parameters(
                 TemplateParam::init('component_id', $componentId)->required(),
@@ -486,7 +513,7 @@ class ComponentsController extends BaseController
                 BodyParam::init($body)
             );
 
-        $_resHandler = $this->responseHandler()->type(ComponentPricePointsResponse::class);
+        $_resHandler = $this->responseHandler()->type(ComponentPricePointResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
     }
@@ -571,99 +598,6 @@ class ComponentsController extends BaseController
     }
 
     /**
-     * Use this endpoint to unarchive a component price point.
-     *
-     * @param int $componentId The Chargify id of the component to which the price point belongs
-     * @param int $pricePointId The Chargify id of the price point
-     *
-     * @return ComponentPricePointResponse Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function unarchiveComponentPricePoint(int $componentId, int $pricePointId): ComponentPricePointResponse
-    {
-        $_reqBuilder = $this->requestBuilder(
-            RequestMethod::PUT,
-            '/components/{component_id}/price_points/{price_point_id}/unarchive.json'
-        )
-            ->auth('global')
-            ->parameters(
-                TemplateParam::init('component_id', $componentId)->required(),
-                TemplateParam::init('price_point_id', $pricePointId)->required()
-            );
-
-        $_resHandler = $this->responseHandler()->type(ComponentPricePointResponse::class);
-
-        return $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
-     * This endpoint allows you to create currency prices for a given currency that has been defined on the
-     * site level in your settings.
-     *
-     * When creating currency prices, they need to mirror the structure of your primary pricing. For each
-     * price level defined on the component price point, there should be a matching price level created in
-     * the given currency.
-     *
-     * Note: Currency Prices are not able to be created for custom price points.
-     *
-     * @param int $pricePointId The Chargify id of the price point
-     * @param CreateCurrencyPricesRequest|null $body
-     *
-     * @return CurrencyPrice[] Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function createCurrencyPrices(int $pricePointId, ?CreateCurrencyPricesRequest $body = null): array
-    {
-        $_reqBuilder = $this->requestBuilder(
-            RequestMethod::POST,
-            '/price_points/{price_point_id}/currency_prices.json'
-        )
-            ->auth('global')
-            ->parameters(
-                TemplateParam::init('price_point_id', $pricePointId)->required(),
-                HeaderParam::init('Content-Type', 'application/json'),
-                BodyParam::init($body)
-            );
-
-        $_resHandler = $this->responseHandler()->type(CurrencyPrice::class, 1);
-
-        return $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
-     * This endpoint allows you to update currency prices for a given currency that has been defined on the
-     * site level in your settings.
-     *
-     * Note: Currency Prices are not able to be updated for custom price points.
-     *
-     * @param int $pricePointId The Chargify id of the price point
-     * @param UpdateCurrencyPricesRequest|null $body
-     *
-     * @return CurrencyPrice[] Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function updateCurrencyPrices(int $pricePointId, ?UpdateCurrencyPricesRequest $body = null): array
-    {
-        $_reqBuilder = $this->requestBuilder(
-            RequestMethod::PUT,
-            '/price_points/{price_point_id}/currency_prices.json'
-        )
-            ->auth('global')
-            ->parameters(
-                TemplateParam::init('price_point_id', $pricePointId)->required(),
-                HeaderParam::init('Content-Type', 'application/json'),
-                BodyParam::init($body)
-            );
-
-        $_resHandler = $this->responseHandler()->type(CurrencyPrice::class, 1);
-
-        return $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
      * This method allows to retrieve a list of Components Price Points belonging to a Site.
      *
      * @param array $options Array with all options for search
@@ -727,6 +661,72 @@ class ComponentsController extends BaseController
                 )
             )
             ->type(ListComponentsPricePointsResponse::class);
+
+        return $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
+     * Use this endpoint to create multiple component price points in one request.
+     *
+     * @param string $componentId The Chargify id of the component for which you want to fetch price
+     *        points.
+     * @param CreateComponentPricePointsRequest|null $body
+     *
+     * @return ComponentPricePointsResponse Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function createComponentPricePoints(
+        string $componentId,
+        ?CreateComponentPricePointsRequest $body = null
+    ): ComponentPricePointsResponse {
+        $_reqBuilder = $this->requestBuilder(
+            RequestMethod::POST,
+            '/components/{component_id}/price_points/bulk.json'
+        )
+            ->auth('global')
+            ->parameters(
+                TemplateParam::init('component_id', $componentId)->required(),
+                HeaderParam::init('Content-Type', 'application/json'),
+                BodyParam::init($body)
+            );
+
+        $_resHandler = $this->responseHandler()->type(ComponentPricePointsResponse::class);
+
+        return $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
+     * This endpoint allows you to create currency prices for a given currency that has been defined on the
+     * site level in your settings.
+     *
+     * When creating currency prices, they need to mirror the structure of your primary pricing. For each
+     * price level defined on the component price point, there should be a matching price level created in
+     * the given currency.
+     *
+     * Note: Currency Prices are not able to be created for custom price points.
+     *
+     * @param int $pricePointId The Chargify id of the price point
+     * @param CreateCurrencyPricesRequest|null $body
+     *
+     * @return CurrencyPrice[] Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function createCurrencyPrices(int $pricePointId, ?CreateCurrencyPricesRequest $body = null): array
+    {
+        $_reqBuilder = $this->requestBuilder(
+            RequestMethod::POST,
+            '/price_points/{price_point_id}/currency_prices.json'
+        )
+            ->auth('global')
+            ->parameters(
+                TemplateParam::init('price_point_id', $pricePointId)->required(),
+                HeaderParam::init('Content-Type', 'application/json'),
+                BodyParam::init($body)
+            );
+
+        $_resHandler = $this->responseHandler()->type(CurrencyPrice::class, 1);
 
         return $this->execute($_reqBuilder, $_resHandler);
     }

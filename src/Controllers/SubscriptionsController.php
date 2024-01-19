@@ -863,6 +863,154 @@ class SubscriptionsController extends BaseController
     }
 
     /**
+     * Use this endpoint to find a subscription by its reference.
+     *
+     * @param string|null $reference Subscription reference
+     *
+     * @return SubscriptionResponse Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function readSubscriptionByReference(?string $reference = null): SubscriptionResponse
+    {
+        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/subscriptions/lookup.json')
+            ->auth('global')
+            ->parameters(QueryParam::init('reference', $reference)->commaSeparated());
+
+        $_resHandler = $this->responseHandler()->type(SubscriptionResponse::class);
+
+        return $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
+     * For sites in test mode, you may purge individual subscriptions.
+     *
+     * Provide the subscription ID in the url.  To confirm, supply the customer ID in the query string
+     * `ack` parameter. You may also delete the customer record and/or payment profiles by passing
+     * `cascade` parameters. For example, to delete just the customer record, the query params would be: `?
+     * ack={customer_id}&cascade[]=customer`
+     *
+     * If you need to remove subscriptions from a live site, please contact support to discuss your use
+     * case.
+     *
+     * ### Delete customer and payment profile
+     *
+     * The query params will be: `?ack={customer_id}&cascade[]=customer&cascade[]=payment_profile`
+     *
+     * @param int $subscriptionId The Chargify id of the subscription
+     * @param int $ack id of the customer.
+     * @param string[]|null $cascade Options are "customer" or "payment_profile". Use in query:
+     *        `cascade[]=customer&cascade[]=payment_profile`.
+     *
+     * @return void Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function purgeSubscription(int $subscriptionId, int $ack, ?array $cascade = null): void
+    {
+        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/subscriptions/{subscription_id}/purge.json')
+            ->auth('global')
+            ->parameters(
+                TemplateParam::init('subscription_id', $subscriptionId)->required(),
+                QueryParam::init('ack', $ack)->plain()->required(),
+                QueryParam::init('cascade[]', $cascade)
+                    ->plain()
+                    ->serializeBy([SubscriptionPurgeType::class, 'checkValue'])
+            );
+
+        $this->execute($_reqBuilder);
+    }
+
+    /**
+     * Chargify offers the ability to activate awaiting signup and trialing subscriptions. This feature is
+     * only available on the Relationship Invoicing architecture. Subscriptions in a group may not be
+     * activated immediately.
+     *
+     * For details on how the activation works, and how to activate subscriptions through the application,
+     * see [activation](#).
+     *
+     * The `revert_on_failure` parameter controls the behavior upon activation failure.
+     * - If set to `true` and something goes wrong i.e. payment fails, then Chargify will not change the
+     * subscription's state. The subscription’s billing period will also remain the same.
+     * - If set to `false` and something goes wrong i.e. payment fails, then Chargify will continue through
+     * with the activation and enter an end of life state. For trialing subscriptions, that will either be
+     * trial ended (if the trial is no obligation), past due (if the trial has an obligation), or canceled
+     * (if the site has no dunning strategy, or has a strategy that says to cancel immediately). For
+     * awaiting signup subscriptions, that will always be canceled.
+     *
+     * The default activation failure behavior can be configured per activation attempt, or you may set a
+     * default value under Config > Settings > Subscription Activation Settings.
+     *
+     * ## Activation Scenarios
+     *
+     * ### Activate Awaiting Signup subscription
+     *
+     * - Given you have a product without trial
+     * - Given you have a site without dunning strategy
+     *
+     * ```mermaid
+     * flowchart LR
+     * AS[Awaiting Signup] --> A{Activate}
+     * A -->|Success| Active
+     * A -->|Failure| ROF{revert_on_failure}
+     * ROF -->|true| AS
+     * ROF -->|false| Canceled
+     * ```
+     *
+     * - Given you have a product with trial
+     * - Given you have a site with dunning strategy
+     *
+     * ```mermaid
+     * flowchart LR
+     * AS[Awaiting Signup] --> A{Activate}
+     * A -->|Success| Trialing
+     * A -->|Failure| ROF{revert_on_failure}
+     * ROF -->|true| AS
+     * ROF -->|false| PD[Past Due]
+     * ```
+     *
+     * ### Activate Trialing subscription
+     *
+     * You can read more about the behavior of trialing subscriptions [here](https://maxio-chargify.zendesk.
+     * com/hc/en-us/articles/5404494617357#trialing-subscriptions-0-0).
+     * When the `revert_on_failure` parameter is set to `true`, the subscription's state will remain as
+     * Trialing, we will void the invoice from activation and return any prepayments and credits applied to
+     * the invoice back to the subscription.
+     *
+     *
+     * @param int $subscriptionId The Chargify id of the subscription
+     * @param ActivateSubscriptionRequest|null $body
+     *
+     * @return SubscriptionResponse Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function activateSubscription(
+        int $subscriptionId,
+        ?ActivateSubscriptionRequest $body = null
+    ): SubscriptionResponse {
+        $_reqBuilder = $this->requestBuilder(RequestMethod::PUT, '/subscriptions/{subscription_id}/activate.json')
+            ->auth('global')
+            ->parameters(
+                TemplateParam::init('subscription_id', $subscriptionId)->required(),
+                HeaderParam::init('Content-Type', 'application/json'),
+                BodyParam::init($body)
+            );
+
+        $_resHandler = $this->responseHandler()
+            ->throwErrorOn(
+                '400',
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorArrayMapResponseException::class
+                )
+            )
+            ->type(SubscriptionResponse::class);
+
+        return $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
      * This method will return an array of subscriptions from a Site. Pay close attention to query string
      * filters and pagination in order to control responses from the server.
      *
@@ -932,6 +1080,103 @@ class SubscriptionsController extends BaseController
             );
 
         $_resHandler = $this->responseHandler()->type(SubscriptionResponse::class, 1);
+
+        return $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
+     * The Chargify API allows you to preview a subscription by POSTing the same JSON or XML as for a
+     * subscription creation.
+     *
+     * The "Next Billing" amount and "Next Billing" date are represented in each Subscriber's Summary. For
+     * more information, please see our documentation [here](https://chargify.zendesk.com/hc/en-
+     * us/articles/4407884887835#next-billing).
+     *
+     * ## Side effects
+     *
+     * A subscription will not be created by sending a POST to this endpoint. It is meant to serve as a
+     * prediction.
+     *
+     * ## Taxable Subscriptions
+     *
+     * This endpoint will preview taxes applicable to a purchase. In order for taxes to be previewed, the
+     * following conditions must be met:
+     *
+     * + Taxes must be configured on the subscription
+     * + The preview must be for the purchase of a taxable product or component, or combination of the two.
+     * + The subscription payload must contain a full billing or shipping address in order to calculate
+     * tax
+     *
+     * For more information about creating taxable previews, please see our documentation guide on how to
+     * create [taxable subscriptions.](https://chargify.zendesk.com/hc/en-
+     * us/articles/4407904217755#creating-taxable-subscriptions)
+     *
+     * You do **not** need to include a card number to generate tax information when you are previewing a
+     * subscription. However, please note that when you actually want to create the subscription, you must
+     * include the credit card information if you want the billing address to be stored in Chargify. The
+     * billing address and the credit card information are stored together within the payment profile
+     * object. Also, you may not send a billing address to Chargify without payment profile information, as
+     * the address is stored on the card.
+     *
+     * You can pass shipping and billing addresses and still decide not to calculate taxes. To do that,
+     * pass `skip_billing_manifest_taxes: true` attribute.
+     *
+     * ## Non-taxable Subscriptions
+     *
+     * If you'd like to calculate subscriptions that do not include tax, please feel free to leave off the
+     * billing information.
+     *
+     * @param CreateSubscriptionRequest|null $body
+     *
+     * @return SubscriptionPreviewResponse Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function previewSubscription(?CreateSubscriptionRequest $body = null): SubscriptionPreviewResponse
+    {
+        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/subscriptions/preview.json')
+            ->auth('global')
+            ->parameters(HeaderParam::init('Content-Type', 'application/json'), BodyParam::init($body));
+
+        $_resHandler = $this->responseHandler()->type(SubscriptionPreviewResponse::class);
+
+        return $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
+     * Use this endpoint to remove a coupon from an existing subscription.
+     *
+     * For more information on the expected behaviour of removing a coupon from a subscription, please see
+     * our documentation [here.](https://chargify.zendesk.com/hc/en-us/articles/4407896488987#removing-a-
+     * coupon)
+     *
+     * @param int $subscriptionId The Chargify id of the subscription
+     * @param string|null $couponCode The coupon code
+     *
+     * @return string Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function deleteCouponFromSubscription(int $subscriptionId, ?string $couponCode = null): string
+    {
+        $_reqBuilder = $this->requestBuilder(
+            RequestMethod::DELETE,
+            '/subscriptions/{subscription_id}/remove_coupon.json'
+        )
+            ->auth('global')
+            ->parameters(
+                TemplateParam::init('subscription_id', $subscriptionId)->required(),
+                QueryParam::init('coupon_code', $couponCode)->commaSeparated()
+            );
+
+        $_resHandler = $this->responseHandler()
+            ->throwErrorOn(
+                '422',
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    SubscriptionRemoveCouponErrorsException::class
+                )
+            );
 
         return $this->execute($_reqBuilder, $_resHandler);
     }
@@ -1135,65 +1380,6 @@ class SubscriptionsController extends BaseController
     }
 
     /**
-     * Use this endpoint to find a subscription by its reference.
-     *
-     * @param string|null $reference Subscription reference
-     *
-     * @return SubscriptionResponse Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function readSubscriptionByReference(?string $reference = null): SubscriptionResponse
-    {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/subscriptions/lookup.json')
-            ->auth('global')
-            ->parameters(QueryParam::init('reference', $reference)->commaSeparated());
-
-        $_resHandler = $this->responseHandler()->type(SubscriptionResponse::class);
-
-        return $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
-     * For sites in test mode, you may purge individual subscriptions.
-     *
-     * Provide the subscription ID in the url.  To confirm, supply the customer ID in the query string
-     * `ack` parameter. You may also delete the customer record and/or payment profiles by passing
-     * `cascade` parameters. For example, to delete just the customer record, the query params would be: `?
-     * ack={customer_id}&cascade[]=customer`
-     *
-     * If you need to remove subscriptions from a live site, please contact support to discuss your use
-     * case.
-     *
-     * ### Delete customer and payment profile
-     *
-     * The query params will be: `?ack={customer_id}&cascade[]=customer&cascade[]=payment_profile`
-     *
-     * @param int $subscriptionId The Chargify id of the subscription
-     * @param int $ack id of the customer.
-     * @param string[]|null $cascade Options are "customer" or "payment_profile". Use in query:
-     *        `cascade[]=customer&cascade[]=payment_profile`.
-     *
-     * @return void Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function purgeSubscription(int $subscriptionId, int $ack, ?array $cascade = null): void
-    {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/subscriptions/{subscription_id}/purge.json')
-            ->auth('global')
-            ->parameters(
-                TemplateParam::init('subscription_id', $subscriptionId)->required(),
-                QueryParam::init('ack', $ack)->plain()->required(),
-                QueryParam::init('cascade[]', $cascade)
-                    ->plain()
-                    ->serializeBy([SubscriptionPurgeType::class, 'checkValue'])
-            );
-
-        $this->execute($_reqBuilder);
-    }
-
-    /**
      * Use this endpoint to update a subscription's prepaid configuration.
      *
      * @param int $subscriptionId The Chargify id of the subscription
@@ -1219,65 +1405,6 @@ class SubscriptionsController extends BaseController
             );
 
         $_resHandler = $this->responseHandler()->type(PrepaidConfigurationResponse::class);
-
-        return $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
-     * The Chargify API allows you to preview a subscription by POSTing the same JSON or XML as for a
-     * subscription creation.
-     *
-     * The "Next Billing" amount and "Next Billing" date are represented in each Subscriber's Summary. For
-     * more information, please see our documentation [here](https://chargify.zendesk.com/hc/en-
-     * us/articles/4407884887835#next-billing).
-     *
-     * ## Side effects
-     *
-     * A subscription will not be created by sending a POST to this endpoint. It is meant to serve as a
-     * prediction.
-     *
-     * ## Taxable Subscriptions
-     *
-     * This endpoint will preview taxes applicable to a purchase. In order for taxes to be previewed, the
-     * following conditions must be met:
-     *
-     * + Taxes must be configured on the subscription
-     * + The preview must be for the purchase of a taxable product or component, or combination of the two.
-     * + The subscription payload must contain a full billing or shipping address in order to calculate
-     * tax
-     *
-     * For more information about creating taxable previews, please see our documentation guide on how to
-     * create [taxable subscriptions.](https://chargify.zendesk.com/hc/en-
-     * us/articles/4407904217755#creating-taxable-subscriptions)
-     *
-     * You do **not** need to include a card number to generate tax information when you are previewing a
-     * subscription. However, please note that when you actually want to create the subscription, you must
-     * include the credit card information if you want the billing address to be stored in Chargify. The
-     * billing address and the credit card information are stored together within the payment profile
-     * object. Also, you may not send a billing address to Chargify without payment profile information, as
-     * the address is stored on the card.
-     *
-     * You can pass shipping and billing addresses and still decide not to calculate taxes. To do that,
-     * pass `skip_billing_manifest_taxes: true` attribute.
-     *
-     * ## Non-taxable Subscriptions
-     *
-     * If you'd like to calculate subscriptions that do not include tax, please feel free to leave off the
-     * billing information.
-     *
-     * @param CreateSubscriptionRequest|null $body
-     *
-     * @return SubscriptionPreviewResponse Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function previewSubscription(?CreateSubscriptionRequest $body = null): SubscriptionPreviewResponse
-    {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/subscriptions/preview.json')
-            ->auth('global')
-            ->parameters(HeaderParam::init('Content-Type', 'application/json'), BodyParam::init($body));
-
-        $_resHandler = $this->responseHandler()->type(SubscriptionPreviewResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
     }
@@ -1328,133 +1455,6 @@ class SubscriptionsController extends BaseController
                 ErrorType::initWithErrorTemplate(
                     'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
                     SubscriptionAddCouponErrorException::class
-                )
-            )
-            ->type(SubscriptionResponse::class);
-
-        return $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
-     * Use this endpoint to remove a coupon from an existing subscription.
-     *
-     * For more information on the expected behaviour of removing a coupon from a subscription, please see
-     * our documentation [here.](https://chargify.zendesk.com/hc/en-us/articles/4407896488987#removing-a-
-     * coupon)
-     *
-     * @param int $subscriptionId The Chargify id of the subscription
-     * @param string|null $couponCode The coupon code
-     *
-     * @return string Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function deleteCouponFromSubscription(int $subscriptionId, ?string $couponCode = null): string
-    {
-        $_reqBuilder = $this->requestBuilder(
-            RequestMethod::DELETE,
-            '/subscriptions/{subscription_id}/remove_coupon.json'
-        )
-            ->auth('global')
-            ->parameters(
-                TemplateParam::init('subscription_id', $subscriptionId)->required(),
-                QueryParam::init('coupon_code', $couponCode)->commaSeparated()
-            );
-
-        $_resHandler = $this->responseHandler()
-            ->throwErrorOn(
-                '422',
-                ErrorType::initWithErrorTemplate(
-                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
-                    SubscriptionRemoveCouponErrorsException::class
-                )
-            );
-
-        return $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
-     * Chargify offers the ability to activate awaiting signup and trialing subscriptions. This feature is
-     * only available on the Relationship Invoicing architecture. Subscriptions in a group may not be
-     * activated immediately.
-     *
-     * For details on how the activation works, and how to activate subscriptions through the application,
-     * see [activation](#).
-     *
-     * The `revert_on_failure` parameter controls the behavior upon activation failure.
-     * - If set to `true` and something goes wrong i.e. payment fails, then Chargify will not change the
-     * subscription's state. The subscription’s billing period will also remain the same.
-     * - If set to `false` and something goes wrong i.e. payment fails, then Chargify will continue through
-     * with the activation and enter an end of life state. For trialing subscriptions, that will either be
-     * trial ended (if the trial is no obligation), past due (if the trial has an obligation), or canceled
-     * (if the site has no dunning strategy, or has a strategy that says to cancel immediately). For
-     * awaiting signup subscriptions, that will always be canceled.
-     *
-     * The default activation failure behavior can be configured per activation attempt, or you may set a
-     * default value under Config > Settings > Subscription Activation Settings.
-     *
-     * ## Activation Scenarios
-     *
-     * ### Activate Awaiting Signup subscription
-     *
-     * - Given you have a product without trial
-     * - Given you have a site without dunning strategy
-     *
-     * ```mermaid
-     * flowchart LR
-     * AS[Awaiting Signup] --> A{Activate}
-     * A -->|Success| Active
-     * A -->|Failure| ROF{revert_on_failure}
-     * ROF -->|true| AS
-     * ROF -->|false| Canceled
-     * ```
-     *
-     * - Given you have a product with trial
-     * - Given you have a site with dunning strategy
-     *
-     * ```mermaid
-     * flowchart LR
-     * AS[Awaiting Signup] --> A{Activate}
-     * A -->|Success| Trialing
-     * A -->|Failure| ROF{revert_on_failure}
-     * ROF -->|true| AS
-     * ROF -->|false| PD[Past Due]
-     * ```
-     *
-     * ### Activate Trialing subscription
-     *
-     * You can read more about the behavior of trialing subscriptions [here](https://maxio-chargify.zendesk.
-     * com/hc/en-us/articles/5404494617357#trialing-subscriptions-0-0).
-     * When the `revert_on_failure` parameter is set to `true`, the subscription's state will remain as
-     * Trialing, we will void the invoice from activation and return any prepayments and credits applied to
-     * the invoice back to the subscription.
-     *
-     *
-     * @param int $subscriptionId The Chargify id of the subscription
-     * @param ActivateSubscriptionRequest|null $body
-     *
-     * @return SubscriptionResponse Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function activateSubscription(
-        int $subscriptionId,
-        ?ActivateSubscriptionRequest $body = null
-    ): SubscriptionResponse {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::PUT, '/subscriptions/{subscription_id}/activate.json')
-            ->auth('global')
-            ->parameters(
-                TemplateParam::init('subscription_id', $subscriptionId)->required(),
-                HeaderParam::init('Content-Type', 'application/json'),
-                BodyParam::init($body)
-            );
-
-        $_resHandler = $this->responseHandler()
-            ->throwErrorOn(
-                '400',
-                ErrorType::initWithErrorTemplate(
-                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
-                    ErrorArrayMapResponseException::class
                 )
             )
             ->type(SubscriptionResponse::class);

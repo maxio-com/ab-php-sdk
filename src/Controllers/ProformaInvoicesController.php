@@ -31,6 +31,224 @@ use CoreInterfaces\Core\Request\RequestMethod;
 class ProformaInvoicesController extends BaseController
 {
     /**
+     * Only proforma invoices with a `consolidation_level` of parent are returned.
+     *
+     * By default, proforma invoices returned on the index will only include totals, not detailed
+     * breakdowns for `line_items`, `discounts`, `taxes`, `credits`, `payments`, `custom_fields`. To
+     * include breakdowns, pass the specific field as a key in the query with a value set to true.
+     *
+     *
+     * @param string $uid The uid of the subscription group
+     *
+     * @return ProformaInvoice Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function listSubscriptionGroupProformaInvoices(string $uid): ProformaInvoice
+    {
+        $_reqBuilder = $this->requestBuilder(
+            RequestMethod::GET,
+            '/subscription_groups/{uid}/proforma_invoices.json'
+        )->auth('global')->parameters(TemplateParam::init('uid', $uid)->required());
+
+        $_resHandler = $this->responseHandler()
+            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
+            ->type(ProformaInvoice::class);
+
+        return $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
+     * Return a preview of the data that will be included on a given subscription's proforma invoice if one
+     * were to be generated. It will have similar line items and totals as a renewal preview, but the
+     * response will be presented in the format of a proforma invoice. Consequently it will include
+     * additional information such as the name and addresses that will appear on the proforma invoice.
+     *
+     * The preview endpoint is subject to all the same conditions as the proforma invoice endpoint. For
+     * example, previews are only available on the Relationship Invoicing architecture, and previews cannot
+     * be made for end-of-life subscriptions.
+     *
+     * If all the data returned in the preview is as expected, you may then create a static proforma
+     * invoice and send it to your customer. The data within a preview will not be saved and will not be
+     * accessible after the call is made.
+     *
+     * Alternatively, if you have some proforma invoices already, you may make a preview call to determine
+     * whether any billing information for the subscription's upcoming renewal has changed.
+     *
+     * @param int $subscriptionId The Chargify id of the subscription
+     *
+     * @return ProformaInvoicePreview Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function previewProformaInvoice(int $subscriptionId): ProformaInvoicePreview
+    {
+        $_reqBuilder = $this->requestBuilder(
+            RequestMethod::POST,
+            '/subscriptions/{subscription_id}/proforma_invoices/preview.json'
+        )->auth('global')->parameters(TemplateParam::init('subscription_id', $subscriptionId)->required());
+
+        $_resHandler = $this->responseHandler()
+            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
+            ->throwErrorOn(
+                '422',
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
+            )
+            ->type(ProformaInvoicePreview::class);
+
+        return $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
+     * This endpoint is only available for Relationship Invoicing sites. It cannot be used to create
+     * consolidated proforma invoice previews or preview prepaid subscriptions.
+     *
+     * Create a signup preview in the format of a proforma invoice to preview costs before a subscription's
+     * signup. You have the option of optionally previewing the first renewal's costs as well. The proforma
+     * invoice preview will not be persisted.
+     *
+     * Pass a payload that resembles a subscription create or signup preview request. For example, you can
+     * specify components, coupons/a referral, offers, custom pricing, and an existing customer or payment
+     * profile to populate a shipping or billing address.
+     *
+     * A product and customer first name, last name, and email are the minimum requirements.
+     *
+     * @param string|null $includeNextProformaInvoice Choose to include a proforma invoice preview
+     *        for the first renewal
+     * @param CreateSubscriptionRequest|null $body
+     *
+     * @return SignupProformaPreviewResponse Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function previewSignupProformaInvoice(
+        ?string $includeNextProformaInvoice = null,
+        ?CreateSubscriptionRequest $body = null
+    ): SignupProformaPreviewResponse {
+        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/subscriptions/proforma_invoices/preview.json')
+            ->auth('global')
+            ->parameters(
+                HeaderParam::init('Content-Type', 'application/json'),
+                QueryParam::init('include=next_proforma_invoice', $includeNextProformaInvoice)->commaSeparated(),
+                BodyParam::init($body)
+            );
+
+        $_resHandler = $this->responseHandler()
+            ->throwErrorOn(
+                '400',
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ProformaBadRequestErrorResponseException::class
+                )
+            )
+            ->throwErrorOn(
+                '422',
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorArrayMapResponseException::class
+                )
+            )
+            ->type(SignupProformaPreviewResponse::class);
+
+        return $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
+     * This endpoint is only available for Relationship Invoicing sites. It cannot be used to create
+     * consolidated proforma invoices or preview prepaid subscriptions.
+     *
+     * Create a proforma invoice to preview costs before a subscription's signup. Like other proforma
+     * invoices, it can be emailed to the customer, voided, and publicly viewed on the chargifypay domain.
+     *
+     * Pass a payload that resembles a subscription create or signup preview request. For example, you can
+     * specify components, coupons/a referral, offers, custom pricing, and an existing customer or payment
+     * profile to populate a shipping or billing address.
+     *
+     * A product and customer first name, last name, and email are the minimum requirements. We recommend
+     * associating the proforma invoice with a customer_id to easily find their proforma invoices, since
+     * the subscription_id will always be blank.
+     *
+     * @param CreateSubscriptionRequest|null $body
+     *
+     * @return ProformaInvoice Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function createSignupProformaInvoice(?CreateSubscriptionRequest $body = null): ProformaInvoice
+    {
+        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/subscriptions/proforma_invoices.json')
+            ->auth('global')
+            ->parameters(HeaderParam::init('Content-Type', 'application/json'), BodyParam::init($body));
+
+        $_resHandler = $this->responseHandler()
+            ->throwErrorOn(
+                '400',
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ProformaBadRequestErrorResponseException::class
+                )
+            )
+            ->throwErrorOn(
+                '422',
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorArrayMapResponseException::class
+                )
+            )
+            ->type(ProformaInvoice::class);
+
+        return $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
+     * By default, proforma invoices returned on the index will only include totals, not detailed
+     * breakdowns for `line_items`, `discounts`, `taxes`, `credits`, `payments`, or `custom_fields`. To
+     * include breakdowns, pass the specific field as a key in the query with a value set to `true`.
+     *
+     * @param array $options Array with all options for search
+     *
+     * @return ProformaInvoice[] Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function listProformaInvoices(array $options): array
+    {
+        $_reqBuilder = $this->requestBuilder(
+            RequestMethod::GET,
+            '/subscriptions/{subscription_id}/proforma_invoices.json'
+        )
+            ->auth('global')
+            ->parameters(
+                TemplateParam::init('subscription_id', $options)->extract('subscriptionId')->required(),
+                QueryParam::init('start_date', $options)->commaSeparated()->extract('startDate'),
+                QueryParam::init('end_date', $options)->commaSeparated()->extract('endDate'),
+                QueryParam::init('status', $options)
+                    ->commaSeparated()
+                    ->extract('status')
+                    ->serializeBy([InvoiceStatus::class, 'checkValue']),
+                QueryParam::init('page', $options)->commaSeparated()->extract('page', 1),
+                QueryParam::init('per_page', $options)->commaSeparated()->extract('perPage', 20),
+                QueryParam::init('direction', $options)
+                    ->commaSeparated()
+                    ->extract('direction', Direction::DESC)
+                    ->serializeBy([Direction::class, 'checkValue']),
+                QueryParam::init('line_items', $options)->commaSeparated()->extract('lineItems', false),
+                QueryParam::init('discounts', $options)->commaSeparated()->extract('discounts', false),
+                QueryParam::init('taxes', $options)->commaSeparated()->extract('taxes', false),
+                QueryParam::init('credits', $options)->commaSeparated()->extract('credits', false),
+                QueryParam::init('payments', $options)->commaSeparated()->extract('payments', false),
+                QueryParam::init('custom_fields', $options)->commaSeparated()->extract('customFields', false)
+            );
+
+        $_resHandler = $this->responseHandler()->type(ProformaInvoice::class, 1);
+
+        return $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
      * This endpoint will trigger the creation of a consolidated proforma invoice asynchronously. It will
      * return a 201 with no message, or a 422 with any errors. To find and view the new consolidated
      * proforma invoice, you may poll the subscription group listing for proforma invoices; only one
@@ -67,34 +285,6 @@ class ProformaInvoicesController extends BaseController
             );
 
         $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
-     * Only proforma invoices with a `consolidation_level` of parent are returned.
-     *
-     * By default, proforma invoices returned on the index will only include totals, not detailed
-     * breakdowns for `line_items`, `discounts`, `taxes`, `credits`, `payments`, `custom_fields`. To
-     * include breakdowns, pass the specific field as a key in the query with a value set to true.
-     *
-     *
-     * @param string $uid The uid of the subscription group
-     *
-     * @return ProformaInvoice Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function listSubscriptionGroupProformaInvoices(string $uid): ProformaInvoice
-    {
-        $_reqBuilder = $this->requestBuilder(
-            RequestMethod::GET,
-            '/subscription_groups/{uid}/proforma_invoices.json'
-        )->auth('global')->parameters(TemplateParam::init('uid', $uid)->required());
-
-        $_resHandler = $this->responseHandler()
-            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
-            ->type(ProformaInvoice::class);
-
-        return $this->execute($_reqBuilder, $_resHandler);
     }
 
     /**
@@ -162,51 +352,6 @@ class ProformaInvoicesController extends BaseController
     }
 
     /**
-     * By default, proforma invoices returned on the index will only include totals, not detailed
-     * breakdowns for `line_items`, `discounts`, `taxes`, `credits`, `payments`, or `custom_fields`. To
-     * include breakdowns, pass the specific field as a key in the query with a value set to `true`.
-     *
-     * @param array $options Array with all options for search
-     *
-     * @return ProformaInvoice[] Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function listProformaInvoices(array $options): array
-    {
-        $_reqBuilder = $this->requestBuilder(
-            RequestMethod::GET,
-            '/subscriptions/{subscription_id}/proforma_invoices.json'
-        )
-            ->auth('global')
-            ->parameters(
-                TemplateParam::init('subscription_id', $options)->extract('subscriptionId')->required(),
-                QueryParam::init('start_date', $options)->commaSeparated()->extract('startDate'),
-                QueryParam::init('end_date', $options)->commaSeparated()->extract('endDate'),
-                QueryParam::init('status', $options)
-                    ->commaSeparated()
-                    ->extract('status')
-                    ->serializeBy([InvoiceStatus::class, 'checkValue']),
-                QueryParam::init('page', $options)->commaSeparated()->extract('page', 1),
-                QueryParam::init('per_page', $options)->commaSeparated()->extract('perPage', 20),
-                QueryParam::init('direction', $options)
-                    ->commaSeparated()
-                    ->extract('direction', Direction::DESC)
-                    ->serializeBy([Direction::class, 'checkValue']),
-                QueryParam::init('line_items', $options)->commaSeparated()->extract('lineItems', false),
-                QueryParam::init('discounts', $options)->commaSeparated()->extract('discounts', false),
-                QueryParam::init('taxes', $options)->commaSeparated()->extract('taxes', false),
-                QueryParam::init('credits', $options)->commaSeparated()->extract('credits', false),
-                QueryParam::init('payments', $options)->commaSeparated()->extract('payments', false),
-                QueryParam::init('custom_fields', $options)->commaSeparated()->extract('customFields', false)
-            );
-
-        $_resHandler = $this->responseHandler()->type(ProformaInvoice::class, 1);
-
-        return $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
      * This endpoint will void a proforma invoice that has the status "draft".
      *
      * ## Restrictions
@@ -250,151 +395,6 @@ class ProformaInvoicesController extends BaseController
                 )
             )
             ->type(ProformaInvoice::class);
-
-        return $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
-     * Return a preview of the data that will be included on a given subscription's proforma invoice if one
-     * were to be generated. It will have similar line items and totals as a renewal preview, but the
-     * response will be presented in the format of a proforma invoice. Consequently it will include
-     * additional information such as the name and addresses that will appear on the proforma invoice.
-     *
-     * The preview endpoint is subject to all the same conditions as the proforma invoice endpoint. For
-     * example, previews are only available on the Relationship Invoicing architecture, and previews cannot
-     * be made for end-of-life subscriptions.
-     *
-     * If all the data returned in the preview is as expected, you may then create a static proforma
-     * invoice and send it to your customer. The data within a preview will not be saved and will not be
-     * accessible after the call is made.
-     *
-     * Alternatively, if you have some proforma invoices already, you may make a preview call to determine
-     * whether any billing information for the subscription's upcoming renewal has changed.
-     *
-     * @param int $subscriptionId The Chargify id of the subscription
-     *
-     * @return ProformaInvoicePreview Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function previewProformaInvoice(int $subscriptionId): ProformaInvoicePreview
-    {
-        $_reqBuilder = $this->requestBuilder(
-            RequestMethod::POST,
-            '/subscriptions/{subscription_id}/proforma_invoices/preview.json'
-        )->auth('global')->parameters(TemplateParam::init('subscription_id', $subscriptionId)->required());
-
-        $_resHandler = $this->responseHandler()
-            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
-            ->throwErrorOn(
-                '422',
-                ErrorType::initWithErrorTemplate(
-                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
-                    ErrorListResponseException::class
-                )
-            )
-            ->type(ProformaInvoicePreview::class);
-
-        return $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
-     * This endpoint is only available for Relationship Invoicing sites. It cannot be used to create
-     * consolidated proforma invoices or preview prepaid subscriptions.
-     *
-     * Create a proforma invoice to preview costs before a subscription's signup. Like other proforma
-     * invoices, it can be emailed to the customer, voided, and publicly viewed on the chargifypay domain.
-     *
-     * Pass a payload that resembles a subscription create or signup preview request. For example, you can
-     * specify components, coupons/a referral, offers, custom pricing, and an existing customer or payment
-     * profile to populate a shipping or billing address.
-     *
-     * A product and customer first name, last name, and email are the minimum requirements. We recommend
-     * associating the proforma invoice with a customer_id to easily find their proforma invoices, since
-     * the subscription_id will always be blank.
-     *
-     * @param CreateSubscriptionRequest|null $body
-     *
-     * @return ProformaInvoice Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function createSignupProformaInvoice(?CreateSubscriptionRequest $body = null): ProformaInvoice
-    {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/subscriptions/proforma_invoices.json')
-            ->auth('global')
-            ->parameters(HeaderParam::init('Content-Type', 'application/json'), BodyParam::init($body));
-
-        $_resHandler = $this->responseHandler()
-            ->throwErrorOn(
-                '400',
-                ErrorType::initWithErrorTemplate(
-                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
-                    ProformaBadRequestErrorResponseException::class
-                )
-            )
-            ->throwErrorOn(
-                '422',
-                ErrorType::initWithErrorTemplate(
-                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
-                    ErrorArrayMapResponseException::class
-                )
-            )
-            ->type(ProformaInvoice::class);
-
-        return $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
-     * This endpoint is only available for Relationship Invoicing sites. It cannot be used to create
-     * consolidated proforma invoice previews or preview prepaid subscriptions.
-     *
-     * Create a signup preview in the format of a proforma invoice to preview costs before a subscription's
-     * signup. You have the option of optionally previewing the first renewal's costs as well. The proforma
-     * invoice preview will not be persisted.
-     *
-     * Pass a payload that resembles a subscription create or signup preview request. For example, you can
-     * specify components, coupons/a referral, offers, custom pricing, and an existing customer or payment
-     * profile to populate a shipping or billing address.
-     *
-     * A product and customer first name, last name, and email are the minimum requirements.
-     *
-     * @param string|null $includeNextProformaInvoice Choose to include a proforma invoice preview
-     *        for the first renewal
-     * @param CreateSubscriptionRequest|null $body
-     *
-     * @return SignupProformaPreviewResponse Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function previewSignupProformaInvoice(
-        ?string $includeNextProformaInvoice = null,
-        ?CreateSubscriptionRequest $body = null
-    ): SignupProformaPreviewResponse {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/subscriptions/proforma_invoices/preview.json')
-            ->auth('global')
-            ->parameters(
-                HeaderParam::init('Content-Type', 'application/json'),
-                QueryParam::init('include=next_proforma_invoice', $includeNextProformaInvoice)->commaSeparated(),
-                BodyParam::init($body)
-            );
-
-        $_resHandler = $this->responseHandler()
-            ->throwErrorOn(
-                '400',
-                ErrorType::initWithErrorTemplate(
-                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
-                    ProformaBadRequestErrorResponseException::class
-                )
-            )
-            ->throwErrorOn(
-                '422',
-                ErrorType::initWithErrorTemplate(
-                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
-                    ErrorArrayMapResponseException::class
-                )
-            )
-            ->type(SignupProformaPreviewResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
     }

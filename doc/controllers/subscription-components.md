@@ -14,19 +14,19 @@ $subscriptionComponentsController = $client->getSubscriptionComponentsController
 * [List Subscription Components](../../doc/controllers/subscription-components.md#list-subscription-components)
 * [Update Subscription Components Price Points](../../doc/controllers/subscription-components.md#update-subscription-components-price-points)
 * [Reset Subscription Components Price Points](../../doc/controllers/subscription-components.md#reset-subscription-components-price-points)
-* [Allocate Component](../../doc/controllers/subscription-components.md#allocate-component)
 * [List Allocations](../../doc/controllers/subscription-components.md#list-allocations)
-* [Allocate Components](../../doc/controllers/subscription-components.md#allocate-components)
 * [Preview Allocations](../../doc/controllers/subscription-components.md#preview-allocations)
-* [Update Prepaid Usage Allocation](../../doc/controllers/subscription-components.md#update-prepaid-usage-allocation)
-* [Delete Prepaid Usage Allocation](../../doc/controllers/subscription-components.md#delete-prepaid-usage-allocation)
+* [Activate Event Based Component](../../doc/controllers/subscription-components.md#activate-event-based-component)
+* [Record Event](../../doc/controllers/subscription-components.md#record-event)
+* [Allocate Component](../../doc/controllers/subscription-components.md#allocate-component)
+* [Allocate Components](../../doc/controllers/subscription-components.md#allocate-components)
 * [Create Usage](../../doc/controllers/subscription-components.md#create-usage)
 * [List Usages](../../doc/controllers/subscription-components.md#list-usages)
-* [Activate Event Based Component](../../doc/controllers/subscription-components.md#activate-event-based-component)
 * [Deactivate Event Based Component](../../doc/controllers/subscription-components.md#deactivate-event-based-component)
-* [Record Event](../../doc/controllers/subscription-components.md#record-event)
-* [Record Events](../../doc/controllers/subscription-components.md#record-events)
 * [List Subscription Components for Site](../../doc/controllers/subscription-components.md#list-subscription-components-for-site)
+* [Update Prepaid Usage Allocation](../../doc/controllers/subscription-components.md#update-prepaid-usage-allocation)
+* [Delete Prepaid Usage Allocation](../../doc/controllers/subscription-components.md#delete-prepaid-usage-allocation)
+* [Record Events](../../doc/controllers/subscription-components.md#record-events)
 
 
 # Read Subscription Component
@@ -388,135 +388,6 @@ $result = $subscriptionComponentsController->resetSubscriptionComponentsPricePoi
 ```
 
 
-# Allocate Component
-
-This endpoint creates a new allocation, setting the current allocated quantity for the Component and recording a memo.
-
-**Notice**: Allocations can only be updated for Quantity, On/Off, and Prepaid Components.
-
-## Allocations Documentation
-
-Full documentation on how to record Allocations in the Chargify UI can be located [here](https://maxio-chargify.zendesk.com/hc/en-us/articles/5404527849997). It is focused on how allocations operate within the Chargify UI.It goes into greater detail on how the user interface will react when recording allocations.
-
-This documentation also goes into greater detail on how proration is taken into consideration when applying component allocations.
-
-## Proration Schemes
-
-Changing the allocated quantity of a component mid-period can result in either a Charge or Credit being applied to the subscription. When creating an allocation via the API, you can pass the `upgrade_charge`, `downgrade_credit`, and `accrue_charge` to be applied.
-
-**Notice:** These proration and accural fields will be ignored for Prepaid Components since this component type always generate charges immediately without proration.
-
-For background information on prorated components and upgrade/downgrade schemes, see [Setting Component Allocations.](https://maxio-chargify.zendesk.com/hc/en-us/articles/5404527849997#proration-upgrades-vs-downgrades).
-See the tables below for valid values.
-
-| upgrade_charge | Definition                                                        |
-|----------------|-------------------------------------------------------------------|
-| `full`         | A charge is added for the full price of the component.            |
-| `prorated`     | A charge is added for the prorated price of the component change. |
-| `none`         | No charge is added.                                               |
-
-| downgrade_credit | Definition                                        |
-|------------------|---------------------------------------------------|
-| `full`           | A full price credit is added for the amount owed. |
-| `prorated`       | A prorated credit is added for the amount owed.   |
-| `none`           | No charge is added.                               |
-
-| accrue_charge | Definition                                                                                                 |
-|---------------|------------------------------------------------------------------------------------------------------------|
-| `true`        | Attempt to charge the customer at next renewal.                                                            |
-| `false`       | Attempt to charge the customer right away. If it fails, the charge will be accrued until the next renewal. |
-
-### Order of Resolution for upgrade_charge and downgrade_credit
-
-1. Per allocation in API call (within a single allocation of the `allocations` array)
-2. [Component-level default value](https://maxio-chargify.zendesk.com/hc/en-us/articles/5404527849997-Component-Allocations#component-allocations-0-0)
-3. Allocation API call top level (outside of the `allocations` array)
-4. [Site-level default value](https://maxio-chargify.zendesk.com/hc/en-us/articles/5404527849997#proration-schemes)
-
-### Order of Resolution for accrue charge
-
-1. Allocation API call top level (outside of the `allocations` array)
-2. [Site-level default value](https://maxio-chargify.zendesk.com/hc/en-us/articles/5404527849997#proration-schemes)
-
-**NOTE: Proration uses the current price of the component as well as the current tax rates. Changes to either may cause the prorated charge/credit to be wrong.**
-
-```php
-function allocateComponent(
-    int $subscriptionId,
-    int $componentId,
-    ?CreateAllocationRequest $body = null
-): AllocationResponse
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
-| `componentId` | `int` | Template, Required | The Chargify id of the component |
-| `body` | [`?CreateAllocationRequest`](../../doc/models/create-allocation-request.md) | Body, Optional | - |
-
-## Response Type
-
-[`AllocationResponse`](../../doc/models/allocation-response.md)
-
-## Example Usage
-
-```php
-$subscriptionId = 222;
-
-$componentId = 222;
-
-$body = CreateAllocationRequestBuilder::init(
-    CreateAllocationBuilder::init(
-        5
-    )
-        ->memo('Recoding component purchase of Acme Support')
-        ->build()
-)->build();
-
-$result = $subscriptionComponentsController->allocateComponent(
-    $subscriptionId,
-    $componentId,
-    $body
-);
-```
-
-## Example Response *(as JSON)*
-
-```json
-{
-  "allocation": {
-    "component_id": 4034995,
-    "subscription_id": 23737320,
-    "quantity": 3,
-    "previous_quantity": 2,
-    "memo": "dolore cupidatat elit",
-    "timestamp": "2022-11-23T10:28:34-05:00",
-    "proration_upgrade_scheme": "laboris ipsum dolore",
-    "proration_downgrade_scheme": "eiusmod dolore",
-    "price_point_id": -69720370,
-    "previous_price_point_id": -76493052,
-    "accrue_charge": true,
-    "upgrade_charge": "full",
-    "downgrade_credit": "full",
-    "payment": {
-      "id": -44566528,
-      "amount_in_cents": 123,
-      "success": false,
-      "memo": "aliqua"
-    }
-  }
-}
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
-
-
 # List Allocations
 
 This endpoint returns the 50 most recent Allocations, ordered by most recent first.
@@ -598,112 +469,6 @@ $result = $subscriptionComponentsController->listAllocations(
       "subscription_id": 2585595,
       "proration_upgrade_scheme": "no-prorate",
       "proration_downgrade_scheme": "no-prorate"
-    }
-  }
-]
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 404 | Not Found | `ApiException` |
-| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
-
-
-# Allocate Components
-
-Creates multiple allocations, setting the current allocated quantity for each of the components and recording a memo. The charges and/or credits that are created will be rolled up into a single total which is used to determine whether this is an upgrade or a downgrade. Be aware of the Order of Resolutions explained below in determining the proration scheme.
-
-A `component_id` is required for each allocation.
-
-This endpoint only responds to JSON. It is not available for XML.
-
-```php
-function allocateComponents(int $subscriptionId, ?AllocateComponents $body = null): array
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
-| `body` | [`?AllocateComponents`](../../doc/models/allocate-components.md) | Body, Optional | - |
-
-## Response Type
-
-[`AllocationResponse[]`](../../doc/models/allocation-response.md)
-
-## Example Usage
-
-```php
-$subscriptionId = 222;
-
-$body = AllocateComponentsBuilder::init()
-    ->prorationUpgradeScheme('prorate-attempt-capture')
-    ->prorationDowngradeScheme('no-prorate')
-    ->allocations(
-        [
-            CreateAllocationBuilder::init(
-                10
-            )
-                ->componentId(123)
-                ->memo('foo')
-                ->build(),
-            CreateAllocationBuilder::init(
-                5
-            )
-                ->componentId(456)
-                ->memo('bar')
-                ->build()
-        ]
-    )
-    ->build();
-
-$result = $subscriptionComponentsController->allocateComponents(
-    $subscriptionId,
-    $body
-);
-```
-
-## Example Response *(as JSON)*
-
-```json
-[
-  {
-    "allocation": {
-      "component_id": 193159,
-      "subscription_id": 15540611,
-      "quantity": 10,
-      "previous_quantity": 0,
-      "memo": "foo",
-      "timestamp": "2016-12-08T19:09:15Z",
-      "proration_upgrade_scheme": "prorate-attempt-capture",
-      "proration_downgrade_scheme": "no-prorate",
-      "payment": {
-        "amount_in_cents": 1451,
-        "success": true,
-        "memo": "Payment for: Prorated component allocation changes.",
-        "id": 165473487
-      }
-    }
-  },
-  {
-    "allocation": {
-      "component_id": 277221,
-      "subscription_id": 15540611,
-      "quantity": 5,
-      "previous_quantity": 0,
-      "memo": "bar",
-      "timestamp": "2016-12-08T19:09:15Z",
-      "proration_upgrade_scheme": "prorate-attempt-capture",
-      "proration_downgrade_scheme": "no-prorate",
-      "payment": {
-        "amount_in_cents": 1451,
-        "success": true,
-        "memo": "Payment for: Prorated component allocation changes.",
-        "id": 165473487
-      }
     }
   }
 ]
@@ -884,27 +649,18 @@ $result = $subscriptionComponentsController->previewAllocations(
 | 422 | Unprocessable Entity (WebDAV) | [`ComponentAllocationErrorException`](../../doc/models/component-allocation-error-exception.md) |
 
 
-# Update Prepaid Usage Allocation
+# Activate Event Based Component
 
-When the expiration interval options are selected on a prepaid usage component price point, all allocations will be created with an expiration date. This expiration date can be changed after the fact to allow for extending or shortening the allocation's active window.
+In order to bill your subscribers on your Events data under the Events-Based Billing feature, the components must be activated for the subscriber.
 
-In order to change a prepaid usage allocation's expiration date, a PUT call must be made to the allocation's endpoint with a new expiration date.
+Learn more about the role of activation in the [Events-Based Billing docs](https://chargify.zendesk.com/hc/en-us/articles/4407720810907#activating-components-for-subscribers).
 
-## Limitations
+Use this endpoint to activate an event-based component for a single subscription. Activating an event-based component causes Chargify to bill for events when the subscription is renewed.
 
-A few limitations exist when changing an allocation's expiration date:
-
-- An expiration date can only be changed for an allocation that belongs to a price point with expiration interval options explicitly set.
-- An expiration date can be changed towards the future with no limitations.
-- An expiration date can be changed towards the past (essentially expiring it) up to the subscription's current period beginning date.
+*Note: it is possible to stream events for a subscription at any time, regardless of component activation status. The activation status only determines if the subscription should be billed for event-based component usage at renewal.*
 
 ```php
-function updatePrepaidUsageAllocation(
-    int $subscriptionId,
-    int $componentId,
-    int $allocationId,
-    ?UpdateAllocationExpirationDate $body = null
-): void
+function activateEventBasedComponent(int $subscriptionId, int $componentId): void
 ```
 
 ## Parameters
@@ -913,8 +669,6 @@ function updatePrepaidUsageAllocation(
 |  --- | --- | --- | --- |
 | `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
 | `componentId` | `int` | Template, Required | The Chargify id of the component |
-| `allocationId` | `int` | Template, Required | The Chargify id of the allocation |
-| `body` | [`?UpdateAllocationExpirationDate`](../../doc/models/update-allocation-expiration-date.md) | Body, Optional | - |
 
 ## Response Type
 
@@ -927,50 +681,140 @@ $subscriptionId = 222;
 
 $componentId = 222;
 
-$allocationId = 24;
+$subscriptionComponentsController->activateEventBasedComponent(
+    $subscriptionId,
+    $componentId
+);
+```
 
-$body = UpdateAllocationExpirationDateBuilder::init()
-    ->allocation(
-        AllocationExpirationDateBuilder::init()
-            ->expiresAt('05/07/2021')
+
+# Record Event
+
+## Documentation
+
+Events-Based Billing is an evolved form of metered billing that is based on data-rich events streamed in real-time from your system to Chargify.
+
+These events can then be transformed, enriched, or analyzed to form the computed totals of usage charges billed to your customers.
+
+This API allows you to stream events into the Chargify data ingestion engine.
+
+Learn more about the feature in general in the [Events-Based Billing help docs](https://chargify.zendesk.com/hc/en-us/articles/4407720613403).
+
+## Record Event
+
+Use this endpoint to record a single event.
+
+*Note: this endpoint differs from the standard Chargify endpoints in that the URL subdomain will be `events` and your site subdomain will be included in the URL path. For example:*
+
+```
+https://events.chargify.com/my-site-subdomain/events/my-stream-api-handle
+```
+
+```php
+function recordEvent(
+    string $subdomain,
+    string $apiHandle,
+    ?string $storeUid = null,
+    ?EBBEvent $body = null
+): void
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `subdomain` | `string` | Template, Required | Your site's subdomain |
+| `apiHandle` | `string` | Template, Required | Identifies the Stream for which the event should be published. |
+| `storeUid` | `?string` | Query, Optional | If you've attached your own Keen project as a Chargify event data-store, use this parameter to indicate the data-store. |
+| `body` | [`?EBBEvent`](../../doc/models/ebb-event.md) | Body, Optional | - |
+
+## Response Type
+
+`void`
+
+## Example Usage
+
+```php
+$subdomain = 'subdomain4';
+
+$apiHandle = 'api_handle6';
+
+$body = EBBEventBuilder::init()
+    ->chargify(
+        ChargifyEBBBuilder::init()
+            ->timestamp('2020-02-27T17:45:50-05:00')
+            ->subscriptionId(1)
             ->build()
     )
     ->build();
 
-$subscriptionComponentsController->updatePrepaidUsageAllocation(
-    $subscriptionId,
-    $componentId,
-    $allocationId,
+$subscriptionComponentsController->recordEvent(
+    $subdomain,
+    $apiHandle,
+    null,
     $body
 );
 ```
 
-## Errors
 
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 422 | Unprocessable Entity (WebDAV) | [`SubscriptionComponentAllocationErrorException`](../../doc/models/subscription-component-allocation-error-exception.md) |
+# Allocate Component
 
+This endpoint creates a new allocation, setting the current allocated quantity for the Component and recording a memo.
 
-# Delete Prepaid Usage Allocation
+**Notice**: Allocations can only be updated for Quantity, On/Off, and Prepaid Components.
 
-Prepaid Usage components are unique in that their allocations are always additive. In order to reduce a subscription's allocated quantity for a prepaid usage component each allocation must be destroyed individually via this endpoint.
+## Allocations Documentation
 
-## Credit Scheme
+Full documentation on how to record Allocations in the Chargify UI can be located [here](https://maxio-chargify.zendesk.com/hc/en-us/articles/5404527849997). It is focused on how allocations operate within the Chargify UI.It goes into greater detail on how the user interface will react when recording allocations.
 
-By default, destroying an allocation will generate a service credit on the subscription. This behavior can be modified with the optional `credit_scheme` parameter on this endpoint. The accepted values are:
+This documentation also goes into greater detail on how proration is taken into consideration when applying component allocations.
 
-1. `none`: The allocation will be destroyed and the balances will be updated but no service credit or refund will be created.
-2. `credit`: The allocation will be destroyed and the balances will be updated and a service credit will be generated. This is also the default behavior if the `credit_scheme` param is not passed.
-3. `refund`: The allocation will be destroyed and the balances will be updated and a refund will be issued along with a Credit Note.
+## Proration Schemes
+
+Changing the allocated quantity of a component mid-period can result in either a Charge or Credit being applied to the subscription. When creating an allocation via the API, you can pass the `upgrade_charge`, `downgrade_credit`, and `accrue_charge` to be applied.
+
+**Notice:** These proration and accural fields will be ignored for Prepaid Components since this component type always generate charges immediately without proration.
+
+For background information on prorated components and upgrade/downgrade schemes, see [Setting Component Allocations.](https://maxio-chargify.zendesk.com/hc/en-us/articles/5404527849997#proration-upgrades-vs-downgrades).
+See the tables below for valid values.
+
+| upgrade_charge | Definition                                                        |
+|----------------|-------------------------------------------------------------------|
+| `full`         | A charge is added for the full price of the component.            |
+| `prorated`     | A charge is added for the prorated price of the component change. |
+| `none`         | No charge is added.                                               |
+
+| downgrade_credit | Definition                                        |
+|------------------|---------------------------------------------------|
+| `full`           | A full price credit is added for the amount owed. |
+| `prorated`       | A prorated credit is added for the amount owed.   |
+| `none`           | No charge is added.                               |
+
+| accrue_charge | Definition                                                                                                 |
+|---------------|------------------------------------------------------------------------------------------------------------|
+| `true`        | Attempt to charge the customer at next renewal.                                                            |
+| `false`       | Attempt to charge the customer right away. If it fails, the charge will be accrued until the next renewal. |
+
+### Order of Resolution for upgrade_charge and downgrade_credit
+
+1. Per allocation in API call (within a single allocation of the `allocations` array)
+2. [Component-level default value](https://maxio-chargify.zendesk.com/hc/en-us/articles/5404527849997-Component-Allocations#component-allocations-0-0)
+3. Allocation API call top level (outside of the `allocations` array)
+4. [Site-level default value](https://maxio-chargify.zendesk.com/hc/en-us/articles/5404527849997#proration-schemes)
+
+### Order of Resolution for accrue charge
+
+1. Allocation API call top level (outside of the `allocations` array)
+2. [Site-level default value](https://maxio-chargify.zendesk.com/hc/en-us/articles/5404527849997#proration-schemes)
+
+**NOTE: Proration uses the current price of the component as well as the current tax rates. Changes to either may cause the prorated charge/credit to be wrong.**
 
 ```php
-function deletePrepaidUsageAllocation(
+function allocateComponent(
     int $subscriptionId,
     int $componentId,
-    int $allocationId,
-    ?CreditSchemeRequest $body = null
-): void
+    ?CreateAllocationRequest $body = null
+): AllocationResponse
 ```
 
 ## Parameters
@@ -979,12 +823,11 @@ function deletePrepaidUsageAllocation(
 |  --- | --- | --- | --- |
 | `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
 | `componentId` | `int` | Template, Required | The Chargify id of the component |
-| `allocationId` | `int` | Template, Required | The Chargify id of the allocation |
-| `body` | [`?CreditSchemeRequest`](../../doc/models/credit-scheme-request.md) | Body, Optional | - |
+| `body` | [`?CreateAllocationRequest`](../../doc/models/create-allocation-request.md) | Body, Optional | - |
 
 ## Response Type
 
-`void`
+[`AllocationResponse`](../../doc/models/allocation-response.md)
 
 ## Example Usage
 
@@ -993,25 +836,160 @@ $subscriptionId = 222;
 
 $componentId = 222;
 
-$allocationId = 24;
-
-$body = CreditSchemeRequestBuilder::init(
-    CreditScheme::NONE
+$body = CreateAllocationRequestBuilder::init(
+    CreateAllocationBuilder::init(
+        5
+    )
+        ->memo('Recoding component purchase of Acme Support')
+        ->build()
 )->build();
 
-$subscriptionComponentsController->deletePrepaidUsageAllocation(
+$result = $subscriptionComponentsController->allocateComponent(
     $subscriptionId,
     $componentId,
-    $allocationId,
     $body
 );
+```
+
+## Example Response *(as JSON)*
+
+```json
+{
+  "allocation": {
+    "component_id": 4034995,
+    "subscription_id": 23737320,
+    "quantity": 3,
+    "previous_quantity": 2,
+    "memo": "dolore cupidatat elit",
+    "timestamp": "2022-11-23T10:28:34-05:00",
+    "proration_upgrade_scheme": "laboris ipsum dolore",
+    "proration_downgrade_scheme": "eiusmod dolore",
+    "price_point_id": -69720370,
+    "previous_price_point_id": -76493052,
+    "accrue_charge": true,
+    "upgrade_charge": "full",
+    "downgrade_credit": "full",
+    "payment": {
+      "id": -44566528,
+      "amount_in_cents": 123,
+      "success": false,
+      "memo": "aliqua"
+    }
+  }
+}
 ```
 
 ## Errors
 
 | HTTP Status Code | Error Description | Exception Class |
 |  --- | --- | --- |
-| 422 | Unprocessable Entity (WebDAV) | [`SubscriptionComponentAllocationErrorException`](../../doc/models/subscription-component-allocation-error-exception.md) |
+| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
+
+
+# Allocate Components
+
+Creates multiple allocations, setting the current allocated quantity for each of the components and recording a memo. The charges and/or credits that are created will be rolled up into a single total which is used to determine whether this is an upgrade or a downgrade. Be aware of the Order of Resolutions explained below in determining the proration scheme.
+
+A `component_id` is required for each allocation.
+
+This endpoint only responds to JSON. It is not available for XML.
+
+```php
+function allocateComponents(int $subscriptionId, ?AllocateComponents $body = null): array
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+| `body` | [`?AllocateComponents`](../../doc/models/allocate-components.md) | Body, Optional | - |
+
+## Response Type
+
+[`AllocationResponse[]`](../../doc/models/allocation-response.md)
+
+## Example Usage
+
+```php
+$subscriptionId = 222;
+
+$body = AllocateComponentsBuilder::init()
+    ->prorationUpgradeScheme('prorate-attempt-capture')
+    ->prorationDowngradeScheme('no-prorate')
+    ->allocations(
+        [
+            CreateAllocationBuilder::init(
+                10
+            )
+                ->componentId(123)
+                ->memo('foo')
+                ->build(),
+            CreateAllocationBuilder::init(
+                5
+            )
+                ->componentId(456)
+                ->memo('bar')
+                ->build()
+        ]
+    )
+    ->build();
+
+$result = $subscriptionComponentsController->allocateComponents(
+    $subscriptionId,
+    $body
+);
+```
+
+## Example Response *(as JSON)*
+
+```json
+[
+  {
+    "allocation": {
+      "component_id": 193159,
+      "subscription_id": 15540611,
+      "quantity": 10,
+      "previous_quantity": 0,
+      "memo": "foo",
+      "timestamp": "2016-12-08T19:09:15Z",
+      "proration_upgrade_scheme": "prorate-attempt-capture",
+      "proration_downgrade_scheme": "no-prorate",
+      "payment": {
+        "amount_in_cents": 1451,
+        "success": true,
+        "memo": "Payment for: Prorated component allocation changes.",
+        "id": 165473487
+      }
+    }
+  },
+  {
+    "allocation": {
+      "component_id": 277221,
+      "subscription_id": 15540611,
+      "quantity": 5,
+      "previous_quantity": 0,
+      "memo": "bar",
+      "timestamp": "2016-12-08T19:09:15Z",
+      "proration_upgrade_scheme": "prorate-attempt-capture",
+      "proration_downgrade_scheme": "no-prorate",
+      "payment": {
+        "amount_in_cents": 1451,
+        "success": true,
+        "memo": "Payment for: Prorated component allocation changes.",
+        "id": 165473487
+      }
+    }
+  }
+]
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 404 | Not Found | `ApiException` |
+| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
 
 
 # Create Usage
@@ -1219,45 +1197,6 @@ $result = $subscriptionComponentsController->listUsages($collect);
 ```
 
 
-# Activate Event Based Component
-
-In order to bill your subscribers on your Events data under the Events-Based Billing feature, the components must be activated for the subscriber.
-
-Learn more about the role of activation in the [Events-Based Billing docs](https://chargify.zendesk.com/hc/en-us/articles/4407720810907#activating-components-for-subscribers).
-
-Use this endpoint to activate an event-based component for a single subscription. Activating an event-based component causes Chargify to bill for events when the subscription is renewed.
-
-*Note: it is possible to stream events for a subscription at any time, regardless of component activation status. The activation status only determines if the subscription should be billed for event-based component usage at renewal.*
-
-```php
-function activateEventBasedComponent(int $subscriptionId, int $componentId): void
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
-| `componentId` | `int` | Template, Required | The Chargify id of the component |
-
-## Response Type
-
-`void`
-
-## Example Usage
-
-```php
-$subscriptionId = 222;
-
-$componentId = 222;
-
-$subscriptionComponentsController->activateEventBasedComponent(
-    $subscriptionId,
-    $componentId
-);
-```
-
-
 # Deactivate Event Based Component
 
 Use this endpoint to deactivate an event-based component for a single subscription. Deactivating the event-based component causes Chargify to ignore related events at subscription renewal.
@@ -1287,127 +1226,6 @@ $componentId = 222;
 $subscriptionComponentsController->deactivateEventBasedComponent(
     $subscriptionId,
     $componentId
-);
-```
-
-
-# Record Event
-
-## Documentation
-
-Events-Based Billing is an evolved form of metered billing that is based on data-rich events streamed in real-time from your system to Chargify.
-
-These events can then be transformed, enriched, or analyzed to form the computed totals of usage charges billed to your customers.
-
-This API allows you to stream events into the Chargify data ingestion engine.
-
-Learn more about the feature in general in the [Events-Based Billing help docs](https://chargify.zendesk.com/hc/en-us/articles/4407720613403).
-
-## Record Event
-
-Use this endpoint to record a single event.
-
-*Note: this endpoint differs from the standard Chargify endpoints in that the URL subdomain will be `events` and your site subdomain will be included in the URL path. For example:*
-
-```
-https://events.chargify.com/my-site-subdomain/events/my-stream-api-handle
-```
-
-```php
-function recordEvent(
-    string $subdomain,
-    string $apiHandle,
-    ?string $storeUid = null,
-    ?EBBEvent $body = null
-): void
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `subdomain` | `string` | Template, Required | Your site's subdomain |
-| `apiHandle` | `string` | Template, Required | Identifies the Stream for which the event should be published. |
-| `storeUid` | `?string` | Query, Optional | If you've attached your own Keen project as a Chargify event data-store, use this parameter to indicate the data-store. |
-| `body` | [`?EBBEvent`](../../doc/models/ebb-event.md) | Body, Optional | - |
-
-## Response Type
-
-`void`
-
-## Example Usage
-
-```php
-$subdomain = 'subdomain4';
-
-$apiHandle = 'api_handle6';
-
-$body = EBBEventBuilder::init()
-    ->chargify(
-        ChargifyEBBBuilder::init()
-            ->timestamp('2020-02-27T17:45:50-05:00')
-            ->subscriptionId(1)
-            ->build()
-    )
-    ->build();
-
-$subscriptionComponentsController->recordEvent(
-    $subdomain,
-    $apiHandle,
-    null,
-    $body
-);
-```
-
-
-# Record Events
-
-Use this endpoint to record a collection of events.
-
-*Note: this endpoint differs from the standard Chargify endpoints in that the subdomain will be `events` and your site subdomain will be included in the URL path.*
-
-A maximum of 1000 events can be published in a single request. A 422 will be returned if this limit is exceeded.
-
-```php
-function recordEvents(string $subdomain, string $apiHandle, ?string $storeUid = null, ?array $body = null): void
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `subdomain` | `string` | Template, Required | Your site's subdomain |
-| `apiHandle` | `string` | Template, Required | Identifies the Stream for which the events should be published. |
-| `storeUid` | `?string` | Query, Optional | If you've attached your own Keen project as a Chargify event data-store, use this parameter to indicate the data-store. |
-| `body` | [`?(EBBEvent[])`](../../doc/models/ebb-event.md) | Body, Optional | - |
-
-## Response Type
-
-`void`
-
-## Example Usage
-
-```php
-$subdomain = 'subdomain4';
-
-$apiHandle = 'api_handle6';
-
-$body = [
-    EBBEventBuilder::init()
-        ->chargify(
-            ChargifyEBBBuilder::init()
-                ->timestamp('2020-02-27T17:45:50-05:00')
-                ->subscriptionId(1)
-                ->build()
-        )
-        ->build()
-];
-
-$subscriptionComponentsController->recordEvents(
-    $subdomain,
-    $apiHandle,
-    null,
-    $body
 );
 ```
 
@@ -1473,5 +1291,187 @@ $collect = Liquid error: Value cannot be null. (Parameter 'key')Liquid error: Va
 ];
 
 $result = $subscriptionComponentsController->listSubscriptionComponentsForSite($collect);
+```
+
+
+# Update Prepaid Usage Allocation
+
+When the expiration interval options are selected on a prepaid usage component price point, all allocations will be created with an expiration date. This expiration date can be changed after the fact to allow for extending or shortening the allocation's active window.
+
+In order to change a prepaid usage allocation's expiration date, a PUT call must be made to the allocation's endpoint with a new expiration date.
+
+## Limitations
+
+A few limitations exist when changing an allocation's expiration date:
+
+- An expiration date can only be changed for an allocation that belongs to a price point with expiration interval options explicitly set.
+- An expiration date can be changed towards the future with no limitations.
+- An expiration date can be changed towards the past (essentially expiring it) up to the subscription's current period beginning date.
+
+```php
+function updatePrepaidUsageAllocation(
+    int $subscriptionId,
+    int $componentId,
+    int $allocationId,
+    ?UpdateAllocationExpirationDate $body = null
+): void
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+| `componentId` | `int` | Template, Required | The Chargify id of the component |
+| `allocationId` | `int` | Template, Required | The Chargify id of the allocation |
+| `body` | [`?UpdateAllocationExpirationDate`](../../doc/models/update-allocation-expiration-date.md) | Body, Optional | - |
+
+## Response Type
+
+`void`
+
+## Example Usage
+
+```php
+$subscriptionId = 222;
+
+$componentId = 222;
+
+$allocationId = 24;
+
+$body = UpdateAllocationExpirationDateBuilder::init()
+    ->allocation(
+        AllocationExpirationDateBuilder::init()
+            ->expiresAt('05/07/2021')
+            ->build()
+    )
+    ->build();
+
+$subscriptionComponentsController->updatePrepaidUsageAllocation(
+    $subscriptionId,
+    $componentId,
+    $allocationId,
+    $body
+);
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 422 | Unprocessable Entity (WebDAV) | [`SubscriptionComponentAllocationErrorException`](../../doc/models/subscription-component-allocation-error-exception.md) |
+
+
+# Delete Prepaid Usage Allocation
+
+Prepaid Usage components are unique in that their allocations are always additive. In order to reduce a subscription's allocated quantity for a prepaid usage component each allocation must be destroyed individually via this endpoint.
+
+## Credit Scheme
+
+By default, destroying an allocation will generate a service credit on the subscription. This behavior can be modified with the optional `credit_scheme` parameter on this endpoint. The accepted values are:
+
+1. `none`: The allocation will be destroyed and the balances will be updated but no service credit or refund will be created.
+2. `credit`: The allocation will be destroyed and the balances will be updated and a service credit will be generated. This is also the default behavior if the `credit_scheme` param is not passed.
+3. `refund`: The allocation will be destroyed and the balances will be updated and a refund will be issued along with a Credit Note.
+
+```php
+function deletePrepaidUsageAllocation(
+    int $subscriptionId,
+    int $componentId,
+    int $allocationId,
+    ?CreditSchemeRequest $body = null
+): void
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+| `componentId` | `int` | Template, Required | The Chargify id of the component |
+| `allocationId` | `int` | Template, Required | The Chargify id of the allocation |
+| `body` | [`?CreditSchemeRequest`](../../doc/models/credit-scheme-request.md) | Body, Optional | - |
+
+## Response Type
+
+`void`
+
+## Example Usage
+
+```php
+$subscriptionId = 222;
+
+$componentId = 222;
+
+$allocationId = 24;
+
+$body = CreditSchemeRequestBuilder::init(
+    CreditScheme::NONE
+)->build();
+
+$subscriptionComponentsController->deletePrepaidUsageAllocation(
+    $subscriptionId,
+    $componentId,
+    $allocationId,
+    $body
+);
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 422 | Unprocessable Entity (WebDAV) | [`SubscriptionComponentAllocationErrorException`](../../doc/models/subscription-component-allocation-error-exception.md) |
+
+
+# Record Events
+
+Use this endpoint to record a collection of events.
+
+*Note: this endpoint differs from the standard Chargify endpoints in that the subdomain will be `events` and your site subdomain will be included in the URL path.*
+
+A maximum of 1000 events can be published in a single request. A 422 will be returned if this limit is exceeded.
+
+```php
+function recordEvents(string $subdomain, string $apiHandle, ?string $storeUid = null, ?array $body = null): void
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `subdomain` | `string` | Template, Required | Your site's subdomain |
+| `apiHandle` | `string` | Template, Required | Identifies the Stream for which the events should be published. |
+| `storeUid` | `?string` | Query, Optional | If you've attached your own Keen project as a Chargify event data-store, use this parameter to indicate the data-store. |
+| `body` | [`?(EBBEvent[])`](../../doc/models/ebb-event.md) | Body, Optional | - |
+
+## Response Type
+
+`void`
+
+## Example Usage
+
+```php
+$subdomain = 'subdomain4';
+
+$apiHandle = 'api_handle6';
+
+$body = [
+    EBBEventBuilder::init()
+        ->chargify(
+            ChargifyEBBBuilder::init()
+                ->timestamp('2020-02-27T17:45:50-05:00')
+                ->subscriptionId(1)
+                ->build()
+        )
+        ->build()
+];
+
+$subscriptionComponentsController->recordEvents(
+    $subdomain,
+    $apiHandle,
+    null,
+    $body
+);
 ```
 
