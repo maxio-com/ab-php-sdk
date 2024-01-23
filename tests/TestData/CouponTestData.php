@@ -31,4 +31,6 @@ final class CouponTestData
     public const DURATION_INTERVAL_UNIT = null;
     public const DURATION_INTERVAL = null;
     public const DURATION_PERIOD_COUNT = null;
+    public const NOT_EXISTING_COUPON_ID = 1000000;
+    public const NOT_EXISTING_COUPON_CODE = 'Non existing coupon code';
 }
