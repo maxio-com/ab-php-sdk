@@ -23,6 +23,7 @@
 | `taxable` | `?bool` | Optional | Boolean flag describing whether a component is taxable or not. | getTaxable(): ?bool | setTaxable(?bool taxable): void |
 | `description` | `?string` | Optional | The description of the component. | getDescription(): ?string | setDescription(?string description): void |
 | `defaultPricePointId` | `?int` | Optional | - | getDefaultPricePointId(): ?int | setDefaultPricePointId(?int defaultPricePointId): void |
+| `overagePrices` | [`?(ComponentPrice[])`](../../doc/models/component-price.md) | Optional | An array of price brackets. If the component uses the ‘per_unit’ pricing scheme, this array will be empty. | getOveragePrices(): ?array | setOveragePrices(?array overagePrices): void |
 | `prices` | [`?(ComponentPrice[])`](../../doc/models/component-price.md) | Optional | An array of price brackets. If the component uses the ‘per_unit’ pricing scheme, this array will be empty. | getPrices(): ?array | setPrices(?array prices): void |
 | `pricePointCount` | `?int` | Optional | Count for the number of price points associated with the component | getPricePointCount(): ?int | setPricePointCount(?int pricePointCount): void |
 | `pricePointsUrl` | `?string` | Optional | URL that points to the location to read the existing price points via GET request | getPricePointsUrl(): ?string | setPricePointsUrl(?string pricePointsUrl): void |
@@ -31,8 +32,8 @@
 | `recurring` | `?bool` | Optional | - | getRecurring(): ?bool | setRecurring(?bool recurring): void |
 | `upgradeCharge` | [`?string(CreditType)`](../../doc/models/credit-type.md) | Optional | The type of credit to be created when upgrading/downgrading. Defaults to the component and then site setting if one is not provided.<br>Available values: `full`, `prorated`, `none`. | getUpgradeCharge(): ?string | setUpgradeCharge(?string upgradeCharge): void |
 | `downgradeCredit` | [`?string(CreditType)`](../../doc/models/credit-type.md) | Optional | The type of credit to be created when upgrading/downgrading. Defaults to the component and then site setting if one is not provided.<br>Available values: `full`, `prorated`, `none`. | getDowngradeCredit(): ?string | setDowngradeCredit(?string downgradeCredit): void |
-| `createdAt` | `?string` | Optional | Timestamp indicating when this component was created | getCreatedAt(): ?string | setCreatedAt(?string createdAt): void |
-| `updatedAt` | `?string` | Optional | Timestamp indicating when this component was updated | getUpdatedAt(): ?string | setUpdatedAt(?string updatedAt): void |
+| `createdAt` | `?DateTime` | Optional | Timestamp indicating when this component was created | getCreatedAt(): ?\DateTime | setCreatedAt(?\DateTime createdAt): void |
+| `updatedAt` | `?DateTime` | Optional | Timestamp indicating when this component was updated | getUpdatedAt(): ?\DateTime | setUpdatedAt(?\DateTime updatedAt): void |
 | `archivedAt` | `?string` | Optional | Timestamp indicating when this component was archived | getArchivedAt(): ?string | setArchivedAt(?string archivedAt): void |
 | `hideDateRangeOnInvoice` | `?bool` | Optional | (Only available on Relationship Invoicing sites) Boolean flag describing if the service date range should show for the component on generated invoices. | getHideDateRangeOnInvoice(): ?bool | setHideDateRangeOnInvoice(?bool hideDateRangeOnInvoice): void |
 | `allowFractionalQuantities` | `?bool` | Optional | - | getAllowFractionalQuantities(): ?bool | setAllowFractionalQuantities(?bool allowFractionalQuantities): void |

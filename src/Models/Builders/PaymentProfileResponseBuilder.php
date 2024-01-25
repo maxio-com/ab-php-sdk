@@ -10,7 +10,6 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models\Builders;
 
-use AdvancedBillingLib\Models\PaymentProfile;
 use AdvancedBillingLib\Models\PaymentProfileResponse;
 use Core\Utils\CoreHelper;
 
@@ -34,7 +33,7 @@ class PaymentProfileResponseBuilder
     /**
      * Initializes a new payment profile response Builder object.
      */
-    public static function init(PaymentProfile $paymentProfile): self
+    public static function init($paymentProfile): self
     {
         return new self(new PaymentProfileResponse($paymentProfile));
     }

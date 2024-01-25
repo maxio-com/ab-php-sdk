@@ -22,29 +22,32 @@ use CoreInterfaces\Core\Request\RequestMethod;
 class SubscriptionNotesController extends BaseController
 {
     /**
-     * Use the following method to update a note for a Subscription.
+     * Use the following method to create a note for a subscription.
+     *
+     * ## How to Use Subscription Notes
+     *
+     * Notes allow you to record information about a particular Subscription in a free text format.
+     *
+     * If you have structured data such as birth date, color, etc., consider using Metadata instead.
+     *
+     * Full documentation on how to use Notes in the Chargify UI can be located [here](https://maxio-
+     * chargify.zendesk.com/hc/en-us/articles/5404434903181-Subscription-Summary#notes).
      *
      * @param int $subscriptionId The Chargify id of the subscription
-     * @param int $noteId The Chargify id of the note
      * @param UpdateSubscriptionNoteRequest|null $body
      *
      * @return SubscriptionNoteResponse Response from the API call
      *
      * @throws ApiException Thrown if API call fails
      */
-    public function updateSubscriptionNote(
+    public function createSubscriptionNote(
         int $subscriptionId,
-        int $noteId,
         ?UpdateSubscriptionNoteRequest $body = null
     ): SubscriptionNoteResponse {
-        $_reqBuilder = $this->requestBuilder(
-            RequestMethod::PUT,
-            '/subscriptions/{subscription_id}/notes/{note_id}.json'
-        )
+        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/subscriptions/{subscription_id}/notes.json')
             ->auth('global')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
-                TemplateParam::init('note_id', $noteId)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
                 BodyParam::init($body)
             );
@@ -133,32 +136,29 @@ class SubscriptionNotesController extends BaseController
     }
 
     /**
-     * Use the following method to create a note for a subscription.
-     *
-     * ## How to Use Subscription Notes
-     *
-     * Notes allow you to record information about a particular Subscription in a free text format.
-     *
-     * If you have structured data such as birth date, color, etc., consider using Metadata instead.
-     *
-     * Full documentation on how to use Notes in the Chargify UI can be located [here](https://maxio-
-     * chargify.zendesk.com/hc/en-us/articles/5404434903181-Subscription-Summary#notes).
+     * Use the following method to update a note for a Subscription.
      *
      * @param int $subscriptionId The Chargify id of the subscription
+     * @param int $noteId The Chargify id of the note
      * @param UpdateSubscriptionNoteRequest|null $body
      *
      * @return SubscriptionNoteResponse Response from the API call
      *
      * @throws ApiException Thrown if API call fails
      */
-    public function createSubscriptionNote(
+    public function updateSubscriptionNote(
         int $subscriptionId,
+        int $noteId,
         ?UpdateSubscriptionNoteRequest $body = null
     ): SubscriptionNoteResponse {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/subscriptions/{subscription_id}/notes.json')
+        $_reqBuilder = $this->requestBuilder(
+            RequestMethod::PUT,
+            '/subscriptions/{subscription_id}/notes/{note_id}.json'
+        )
             ->auth('global')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
+                TemplateParam::init('note_id', $noteId)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
                 BodyParam::init($body)
             );

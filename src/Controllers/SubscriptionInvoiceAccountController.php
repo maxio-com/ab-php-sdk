@@ -35,6 +35,68 @@ use CoreInterfaces\Core\Request\RequestMethod;
 class SubscriptionInvoiceAccountController extends BaseController
 {
     /**
+     * ## Create Prepayment
+     *
+     * In order to specify a prepayment made against a subscription, specify the `amount, memo, details,
+     * method`.
+     *
+     * When the `method` specified is `"credit_card_on_file"`, the prepayment amount will be collected
+     * using the default credit card payment profile and applied to the prepayment account balance.  This
+     * is especially useful for manual replenishment of prepaid subscriptions.
+     *
+     * Please note that you **can't** pass `amount_in_cents`.
+     *
+     *
+     * @param int $subscriptionId The Chargify id of the subscription
+     * @param CreatePrepaymentRequest|null $body
+     *
+     * @return CreatePrepaymentResponse Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function createPrepayment(
+        int $subscriptionId,
+        ?CreatePrepaymentRequest $body = null
+    ): CreatePrepaymentResponse {
+        $_reqBuilder = $this->requestBuilder(
+            RequestMethod::POST,
+            '/subscriptions/{subscription_id}/prepayments.json'
+        )
+            ->auth('global')
+            ->parameters(
+                TemplateParam::init('subscription_id', $subscriptionId)->required(),
+                HeaderParam::init('Content-Type', 'application/json'),
+                BodyParam::init($body)
+            );
+
+        $_resHandler = $this->responseHandler()->type(CreatePrepaymentResponse::class);
+
+        return $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
+     * Returns the `balance_in_cents` of the Subscription's Pending Discount, Service Credit, and
+     * Prepayment accounts, as well as the sum of the Subscription's open, payable invoices.
+     *
+     * @param int $subscriptionId The Chargify id of the subscription
+     *
+     * @return AccountBalances Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function readAccountBalances(int $subscriptionId): AccountBalances
+    {
+        $_reqBuilder = $this->requestBuilder(
+            RequestMethod::GET,
+            '/subscriptions/{subscription_id}/account_balances.json'
+        )->auth('global')->parameters(TemplateParam::init('subscription_id', $subscriptionId)->required());
+
+        $_resHandler = $this->responseHandler()->type(AccountBalances::class);
+
+        return $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
      * This request will list a subscription's prepayments.
      *
      * @param array $options Array with all options for search
@@ -76,68 +138,6 @@ class SubscriptionInvoiceAccountController extends BaseController
     }
 
     /**
-     * Returns the `balance_in_cents` of the Subscription's Pending Discount, Service Credit, and
-     * Prepayment accounts, as well as the sum of the Subscription's open, payable invoices.
-     *
-     * @param int $subscriptionId The Chargify id of the subscription
-     *
-     * @return AccountBalances Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function readAccountBalances(int $subscriptionId): AccountBalances
-    {
-        $_reqBuilder = $this->requestBuilder(
-            RequestMethod::GET,
-            '/subscriptions/{subscription_id}/account_balances.json'
-        )->auth('global')->parameters(TemplateParam::init('subscription_id', $subscriptionId)->required());
-
-        $_resHandler = $this->responseHandler()->type(AccountBalances::class);
-
-        return $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
-     * ## Create Prepayment
-     *
-     * In order to specify a prepayment made against a subscription, specify the `amount, memo, details,
-     * method`.
-     *
-     * When the `method` specified is `"credit_card_on_file"`, the prepayment amount will be collected
-     * using the default credit card payment profile and applied to the prepayment account balance.  This
-     * is especially useful for manual replenishment of prepaid subscriptions.
-     *
-     * Please note that you **can't** pass `amount_in_cents`.
-     *
-     *
-     * @param int $subscriptionId The Chargify id of the subscription
-     * @param CreatePrepaymentRequest|null $body
-     *
-     * @return CreatePrepaymentResponse Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function createPrepayment(
-        int $subscriptionId,
-        ?CreatePrepaymentRequest $body = null
-    ): CreatePrepaymentResponse {
-        $_reqBuilder = $this->requestBuilder(
-            RequestMethod::POST,
-            '/subscriptions/{subscription_id}/prepayments.json'
-        )
-            ->auth('global')
-            ->parameters(
-                TemplateParam::init('subscription_id', $subscriptionId)->required(),
-                HeaderParam::init('Content-Type', 'application/json'),
-                BodyParam::init($body)
-            );
-
-        $_resHandler = $this->responseHandler()->type(CreatePrepaymentResponse::class);
-
-        return $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
      * Credit will be added to the subscription in the amount specified in the request body. The credit is
      * subsequently applied to the next generated invoice.
      *
@@ -164,6 +164,42 @@ class SubscriptionInvoiceAccountController extends BaseController
         $_resHandler = $this->responseHandler()->type(ServiceCredit::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
+     * Credit will be removed from the subscription in the amount specified in the request body. The credit
+     * amount being deducted must be equal to or less than the current credit balance.
+     *
+     * @param int $subscriptionId The Chargify id of the subscription
+     * @param DeductServiceCreditRequest|null $body
+     *
+     * @return void Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function deductServiceCredit(int $subscriptionId, ?DeductServiceCreditRequest $body = null): void
+    {
+        $_reqBuilder = $this->requestBuilder(
+            RequestMethod::POST,
+            '/subscriptions/{subscription_id}/service_credit_deductions.json'
+        )
+            ->auth('global')
+            ->parameters(
+                TemplateParam::init('subscription_id', $subscriptionId)->required(),
+                HeaderParam::init('Content-Type', 'application/json'),
+                BodyParam::init($body)
+            );
+
+        $_resHandler = $this->responseHandler()
+            ->throwErrorOn(
+                '422',
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
+            );
+
+        $this->execute($_reqBuilder, $_resHandler);
     }
 
     /**
@@ -218,41 +254,5 @@ class SubscriptionInvoiceAccountController extends BaseController
             ->type(PrepaymentResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
-     * Credit will be removed from the subscription in the amount specified in the request body. The credit
-     * amount being deducted must be equal to or less than the current credit balance.
-     *
-     * @param int $subscriptionId The Chargify id of the subscription
-     * @param DeductServiceCreditRequest|null $body
-     *
-     * @return void Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function deductServiceCredit(int $subscriptionId, ?DeductServiceCreditRequest $body = null): void
-    {
-        $_reqBuilder = $this->requestBuilder(
-            RequestMethod::POST,
-            '/subscriptions/{subscription_id}/service_credit_deductions.json'
-        )
-            ->auth('global')
-            ->parameters(
-                TemplateParam::init('subscription_id', $subscriptionId)->required(),
-                HeaderParam::init('Content-Type', 'application/json'),
-                BodyParam::init($body)
-            );
-
-        $_resHandler = $this->responseHandler()
-            ->throwErrorOn(
-                '422',
-                ErrorType::initWithErrorTemplate(
-                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
-                    ErrorListResponseException::class
-                )
-            );
-
-        $this->execute($_reqBuilder, $_resHandler);
     }
 }

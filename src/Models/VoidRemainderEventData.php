@@ -14,9 +14,9 @@ use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
 /**
- * Example schema for an `void_invoice` event
+ * Example schema for an `void_remainder` event
  */
-class VoidInvoiceEventData1 implements \JsonSerializable
+class VoidRemainderEventData implements \JsonSerializable
 {
     /**
      * @var CreditNote|null

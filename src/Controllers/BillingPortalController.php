@@ -26,6 +26,34 @@ use CoreInterfaces\Core\Request\RequestMethod;
 class BillingPortalController extends BaseController
 {
     /**
+     * You can revoke a customer's Billing Portal invitation.
+     *
+     * If you attempt to revoke an invitation when the Billing Portal is already disabled for a Customer,
+     * you will receive a 422 error response.
+     *
+     * ## Limitations
+     *
+     * This endpoint will only return a JSON response.
+     *
+     * @param int $customerId The Chargify id of the customer
+     *
+     * @return RevokedInvitation Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function revokeBillingPortalAccess(int $customerId): RevokedInvitation
+    {
+        $_reqBuilder = $this->requestBuilder(
+            RequestMethod::DELETE,
+            '/portal/customers/{customer_id}/invitations/revoke.json'
+        )->auth('global')->parameters(TemplateParam::init('customer_id', $customerId)->required());
+
+        $_resHandler = $this->responseHandler()->type(RevokedInvitation::class);
+
+        return $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
      * ## Billing Portal Documentation
      *
      * Full documentation on how the Billing Portal operates within the Chargify UI can be located
@@ -175,34 +203,6 @@ class BillingPortalController extends BaseController
                 )
             )
             ->type(ResentInvitation::class);
-
-        return $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
-     * You can revoke a customer's Billing Portal invitation.
-     *
-     * If you attempt to revoke an invitation when the Billing Portal is already disabled for a Customer,
-     * you will receive a 422 error response.
-     *
-     * ## Limitations
-     *
-     * This endpoint will only return a JSON response.
-     *
-     * @param int $customerId The Chargify id of the customer
-     *
-     * @return RevokedInvitation Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function revokeBillingPortalAccess(int $customerId): RevokedInvitation
-    {
-        $_reqBuilder = $this->requestBuilder(
-            RequestMethod::DELETE,
-            '/portal/customers/{customer_id}/invitations/revoke.json'
-        )->auth('global')->parameters(TemplateParam::init('customer_id', $customerId)->required());
-
-        $_resHandler = $this->responseHandler()->type(RevokedInvitation::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
     }

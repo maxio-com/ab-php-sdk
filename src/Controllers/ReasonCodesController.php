@@ -53,29 +53,6 @@ class ReasonCodesController extends BaseController
     }
 
     /**
-     * This method gives a merchant the option to delete one reason code from the Churn Reason Codes. This
-     * code will be immediately removed. This action is not reversable.
-     *
-     * @param int $reasonCodeId The Chargify id of the reason code
-     *
-     * @return ReasonCodesJsonResponse Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function deleteReasonCode(int $reasonCodeId): ReasonCodesJsonResponse
-    {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::DELETE, '/reason_codes/{reason_code_id}.json')
-            ->auth('global')
-            ->parameters(TemplateParam::init('reason_code_id', $reasonCodeId)->required());
-
-        $_resHandler = $this->responseHandler()
-            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
-            ->type(ReasonCodesJsonResponse::class);
-
-        return $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
      * This method gives a merchant the option to retrieve a list of all of the current churn codes for a
      * given site.
      *
@@ -95,29 +72,6 @@ class ReasonCodesController extends BaseController
             );
 
         $_resHandler = $this->responseHandler()->type(ReasonCodeResponse::class, 1);
-
-        return $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
-     * This method gives a merchant the option to retrieve a list of a particular code for a given Site by
-     * providing the unique numerical ID of the code.
-     *
-     * @param int $reasonCodeId The Chargify id of the reason code
-     *
-     * @return ReasonCodeResponse Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function readReasonCode(int $reasonCodeId): ReasonCodeResponse
-    {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/reason_codes/{reason_code_id}.json')
-            ->auth('global')
-            ->parameters(TemplateParam::init('reason_code_id', $reasonCodeId)->required());
-
-        $_resHandler = $this->responseHandler()
-            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
-            ->type(ReasonCodeResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
     }
@@ -164,6 +118,52 @@ class ReasonCodesController extends BaseController
                 )
             )
             ->type(ReasonCodeResponse::class);
+
+        return $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
+     * This method gives a merchant the option to retrieve a list of a particular code for a given Site by
+     * providing the unique numerical ID of the code.
+     *
+     * @param int $reasonCodeId The Chargify id of the reason code
+     *
+     * @return ReasonCodeResponse Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function readReasonCode(int $reasonCodeId): ReasonCodeResponse
+    {
+        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/reason_codes/{reason_code_id}.json')
+            ->auth('global')
+            ->parameters(TemplateParam::init('reason_code_id', $reasonCodeId)->required());
+
+        $_resHandler = $this->responseHandler()
+            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
+            ->type(ReasonCodeResponse::class);
+
+        return $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
+     * This method gives a merchant the option to delete one reason code from the Churn Reason Codes. This
+     * code will be immediately removed. This action is not reversable.
+     *
+     * @param int $reasonCodeId The Chargify id of the reason code
+     *
+     * @return ReasonCodesJsonResponse Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function deleteReasonCode(int $reasonCodeId): ReasonCodesJsonResponse
+    {
+        $_reqBuilder = $this->requestBuilder(RequestMethod::DELETE, '/reason_codes/{reason_code_id}.json')
+            ->auth('global')
+            ->parameters(TemplateParam::init('reason_code_id', $reasonCodeId)->required());
+
+        $_resHandler = $this->responseHandler()
+            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
+            ->type(ReasonCodesJsonResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
     }

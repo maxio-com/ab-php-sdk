@@ -125,56 +125,6 @@ class EventsBasedBillingSegmentsController extends BaseController
     }
 
     /**
-     * This endpoint allows you to create multiple segments in one request. The array of segments can
-     * contain up to `2000` records.
-     *
-     * If any of the records contain an error the whole request would fail and none of the requested
-     * segments get created. The error response contains a message for only the one segment that failed
-     * validation, with the corresponding index in the array.
-     *
-     * You may specify component and/or price point by using either the numeric ID or the `handle:gold`
-     * syntax.
-     *
-     * @param string $componentId ID or Handle for the Component
-     * @param string $pricePointId ID or Handle for the Price Point belonging to the Component
-     * @param BulkCreateSegments|null $body
-     *
-     * @return ListSegmentsResponse Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function createSegments(
-        string $componentId,
-        string $pricePointId,
-        ?BulkCreateSegments $body = null
-    ): ListSegmentsResponse {
-        $_reqBuilder = $this->requestBuilder(
-            RequestMethod::POST,
-            '/components/{component_id}/price_points/{price_point_id}/segments/bulk.json'
-        )
-            ->auth('global')
-            ->parameters(
-                TemplateParam::init('component_id', $componentId)->required(),
-                TemplateParam::init('price_point_id', $pricePointId)->required(),
-                HeaderParam::init('Content-Type', 'application/json'),
-                BodyParam::init($body)
-            );
-
-        $_resHandler = $this->responseHandler()
-            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
-            ->throwErrorOn(
-                '422',
-                ErrorType::initWithErrorTemplate(
-                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
-                    EventBasedBillingSegmentException::class
-                )
-            )
-            ->type(ListSegmentsResponse::class);
-
-        return $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
      * This endpoint updates a single Segment for a Component with a segmented Metric. It allows you to
      * update the pricing for the segment.
      *
@@ -316,6 +266,56 @@ class EventsBasedBillingSegmentsController extends BaseController
                 )
             )
             ->type(SegmentResponse::class);
+
+        return $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
+     * This endpoint allows you to create multiple segments in one request. The array of segments can
+     * contain up to `2000` records.
+     *
+     * If any of the records contain an error the whole request would fail and none of the requested
+     * segments get created. The error response contains a message for only the one segment that failed
+     * validation, with the corresponding index in the array.
+     *
+     * You may specify component and/or price point by using either the numeric ID or the `handle:gold`
+     * syntax.
+     *
+     * @param string $componentId ID or Handle for the Component
+     * @param string $pricePointId ID or Handle for the Price Point belonging to the Component
+     * @param BulkCreateSegments|null $body
+     *
+     * @return ListSegmentsResponse Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function createSegments(
+        string $componentId,
+        string $pricePointId,
+        ?BulkCreateSegments $body = null
+    ): ListSegmentsResponse {
+        $_reqBuilder = $this->requestBuilder(
+            RequestMethod::POST,
+            '/components/{component_id}/price_points/{price_point_id}/segments/bulk.json'
+        )
+            ->auth('global')
+            ->parameters(
+                TemplateParam::init('component_id', $componentId)->required(),
+                TemplateParam::init('price_point_id', $pricePointId)->required(),
+                HeaderParam::init('Content-Type', 'application/json'),
+                BodyParam::init($body)
+            );
+
+        $_resHandler = $this->responseHandler()
+            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
+            ->throwErrorOn(
+                '422',
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    EventBasedBillingSegmentException::class
+                )
+            )
+            ->type(ListSegmentsResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
     }

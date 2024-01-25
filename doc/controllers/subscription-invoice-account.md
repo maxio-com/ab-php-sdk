@@ -10,12 +10,101 @@ $subscriptionInvoiceAccountController = $client->getSubscriptionInvoiceAccountCo
 
 ## Methods
 
-* [List Prepayments](../../doc/controllers/subscription-invoice-account.md#list-prepayments)
-* [Read Account Balances](../../doc/controllers/subscription-invoice-account.md#read-account-balances)
 * [Create Prepayment](../../doc/controllers/subscription-invoice-account.md#create-prepayment)
+* [Read Account Balances](../../doc/controllers/subscription-invoice-account.md#read-account-balances)
+* [List Prepayments](../../doc/controllers/subscription-invoice-account.md#list-prepayments)
 * [Issue Service Credit](../../doc/controllers/subscription-invoice-account.md#issue-service-credit)
-* [Refund Prepayment](../../doc/controllers/subscription-invoice-account.md#refund-prepayment)
 * [Deduct Service Credit](../../doc/controllers/subscription-invoice-account.md#deduct-service-credit)
+* [Refund Prepayment](../../doc/controllers/subscription-invoice-account.md#refund-prepayment)
+
+
+# Create Prepayment
+
+## Create Prepayment
+
+In order to specify a prepayment made against a subscription, specify the `amount, memo, details, method`.
+
+When the `method` specified is `"credit_card_on_file"`, the prepayment amount will be collected using the default credit card payment profile and applied to the prepayment account balance.  This is especially useful for manual replenishment of prepaid subscriptions.
+
+Please note that you **can't** pass `amount_in_cents`.
+
+```php
+function createPrepayment(int $subscriptionId, ?CreatePrepaymentRequest $body = null): CreatePrepaymentResponse
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+| `body` | [`?CreatePrepaymentRequest`](../../doc/models/create-prepayment-request.md) | Body, Optional | - |
+
+## Response Type
+
+[`CreatePrepaymentResponse`](../../doc/models/create-prepayment-response.md)
+
+## Example Usage
+
+```php
+$subscriptionId = 222;
+
+$body = CreatePrepaymentRequestBuilder::init(
+    CreatePrepaymentBuilder::init(
+        100,
+        'John Doe signup for $100',
+        'Signup for $100',
+        PrepaymentMethod::CHECK
+    )->build()
+)->build();
+
+$result = $subscriptionInvoiceAccountController->createPrepayment(
+    $subscriptionId,
+    $body
+);
+```
+
+## Example Response *(as JSON)*
+
+```json
+{
+  "prepayment": {
+    "id": 1,
+    "subscription_id": 1,
+    "amount_in_cents": 10000,
+    "memo": "John Doe - Prepayment",
+    "created_at": "2020-07-31T05:52:32-04:00",
+    "starting_balance_in_cents": 0,
+    "ending_balance_in_cents": -10000
+  }
+}
+```
+
+
+# Read Account Balances
+
+Returns the `balance_in_cents` of the Subscription's Pending Discount, Service Credit, and Prepayment accounts, as well as the sum of the Subscription's open, payable invoices.
+
+```php
+function readAccountBalances(int $subscriptionId): AccountBalances
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+
+## Response Type
+
+[`AccountBalances`](../../doc/models/account-balances.md)
+
+## Example Usage
+
+```php
+$subscriptionId = 222;
+
+$result = $subscriptionInvoiceAccountController->readAccountBalances($subscriptionId);
+```
 
 
 # List Prepayments
@@ -81,95 +170,6 @@ $result = $subscriptionInvoiceAccountController->listPrepayments($collect);
 | 404 | Not Found | `ApiException` |
 
 
-# Read Account Balances
-
-Returns the `balance_in_cents` of the Subscription's Pending Discount, Service Credit, and Prepayment accounts, as well as the sum of the Subscription's open, payable invoices.
-
-```php
-function readAccountBalances(int $subscriptionId): AccountBalances
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
-
-## Response Type
-
-[`AccountBalances`](../../doc/models/account-balances.md)
-
-## Example Usage
-
-```php
-$subscriptionId = 222;
-
-$result = $subscriptionInvoiceAccountController->readAccountBalances($subscriptionId);
-```
-
-
-# Create Prepayment
-
-## Create Prepayment
-
-In order to specify a prepayment made against a subscription, specify the `amount, memo, details, method`.
-
-When the `method` specified is `"credit_card_on_file"`, the prepayment amount will be collected using the default credit card payment profile and applied to the prepayment account balance.  This is especially useful for manual replenishment of prepaid subscriptions.
-
-Please note that you **can't** pass `amount_in_cents`.
-
-```php
-function createPrepayment(int $subscriptionId, ?CreatePrepaymentRequest $body = null): CreatePrepaymentResponse
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
-| `body` | [`?CreatePrepaymentRequest`](../../doc/models/create-prepayment-request.md) | Body, Optional | - |
-
-## Response Type
-
-[`CreatePrepaymentResponse`](../../doc/models/create-prepayment-response.md)
-
-## Example Usage
-
-```php
-$subscriptionId = 222;
-
-$body = CreatePrepaymentRequestBuilder::init(
-    CreatePrepaymentBuilder::init(
-        100,
-        'John Doe signup for $100',
-        'Signup for $100',
-        PrepaymentMethod::CHECK
-    )->build()
-)->build();
-
-$result = $subscriptionInvoiceAccountController->createPrepayment(
-    $subscriptionId,
-    $body
-);
-```
-
-## Example Response *(as JSON)*
-
-```json
-{
-  "prepayment": {
-    "id": 1,
-    "subscription_id": 1,
-    "amount_in_cents": 10000,
-    "memo": "John Doe - Prepayment",
-    "created_at": "2020-07-31T05:52:32-04:00",
-    "starting_balance_in_cents": 0,
-    "ending_balance_in_cents": -10000
-  }
-}
-```
-
-
 # Issue Service Credit
 
 Credit will be added to the subscription in the amount specified in the request body. The credit is subsequently applied to the next generated invoice.
@@ -220,6 +220,50 @@ $result = $subscriptionInvoiceAccountController->issueServiceCredit(
 ```
 
 
+# Deduct Service Credit
+
+Credit will be removed from the subscription in the amount specified in the request body. The credit amount being deducted must be equal to or less than the current credit balance.
+
+```php
+function deductServiceCredit(int $subscriptionId, ?DeductServiceCreditRequest $body = null): void
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+| `body` | [`?DeductServiceCreditRequest`](../../doc/models/deduct-service-credit-request.md) | Body, Optional | - |
+
+## Response Type
+
+`void`
+
+## Example Usage
+
+```php
+$subscriptionId = 222;
+
+$body = DeductServiceCreditRequestBuilder::init(
+    DeductServiceCreditBuilder::init(
+        '1',
+        'Deduction'
+    )->build()
+)->build();
+
+$subscriptionInvoiceAccountController->deductServiceCredit(
+    $subscriptionId,
+    $body
+);
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
+
+
 # Refund Prepayment
 
 This endpoint will refund, completely or partially, a particular prepayment applied to a subscription. The `prepayment_id` will be the account transaction ID of the original payment. The prepayment must have some amount remaining in order to be refunded.
@@ -266,48 +310,4 @@ $result = $subscriptionInvoiceAccountController->refundPrepayment(
 | 400 | Bad Request | [`RefundPrepaymentBaseErrorsResponseException`](../../doc/models/refund-prepayment-base-errors-response-exception.md) |
 | 404 | Not Found | `ApiException` |
 | 422 | Unprocessable Entity | [`RefundPrepaymentAggregatedErrorsResponseException`](../../doc/models/refund-prepayment-aggregated-errors-response-exception.md) |
-
-
-# Deduct Service Credit
-
-Credit will be removed from the subscription in the amount specified in the request body. The credit amount being deducted must be equal to or less than the current credit balance.
-
-```php
-function deductServiceCredit(int $subscriptionId, ?DeductServiceCreditRequest $body = null): void
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
-| `body` | [`?DeductServiceCreditRequest`](../../doc/models/deduct-service-credit-request.md) | Body, Optional | - |
-
-## Response Type
-
-`void`
-
-## Example Usage
-
-```php
-$subscriptionId = 222;
-
-$body = DeductServiceCreditRequestBuilder::init(
-    DeductServiceCreditBuilder::init(
-        '1',
-        'Deduction'
-    )->build()
-)->build();
-
-$subscriptionInvoiceAccountController->deductServiceCredit(
-    $subscriptionId,
-    $body
-);
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
 

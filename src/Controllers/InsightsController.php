@@ -26,6 +26,77 @@ use CoreInterfaces\Core\Request\RequestMethod;
 class InsightsController extends BaseController
 {
     /**
+     * The Stats API is a very basic view of some Site-level stats. This API call only answers with JSON
+     * responses. An XML version is not provided.
+     *
+     * ## Stats Documentation
+     *
+     * There currently is not a complimentary matching set of documentation that compliments this endpoint.
+     * However, each Site's dashboard will reflect the summary of information provided in the Stats
+     * reposnse.
+     *
+     * ```
+     * https://subdomain.chargify.com/dashboard
+     * ```
+     *
+     * @return SiteSummary Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function readSiteStats(): SiteSummary
+    {
+        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/stats.json')->auth('global');
+
+        $_resHandler = $this->responseHandler()->type(SiteSummary::class);
+
+        return $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
+     * This endpoint returns your site's current MRR, including plan and usage breakouts split per
+     * subscription.
+     *
+     * @deprecated
+     *
+     * @param array $options Array with all options for search
+     *
+     * @return SubscriptionMRRResponse Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function listMrrPerSubscription(array $options): SubscriptionMRRResponse
+    {
+        trigger_error('Method ' . __METHOD__ . ' is deprecated.', E_USER_DEPRECATED);
+
+        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/subscriptions_mrr.json')
+            ->auth('global')
+            ->parameters(
+                QueryParam::init('filter[subscription_ids]', $options)
+                    ->commaSeparated()
+                    ->extract('filterSubscriptionIds'),
+                QueryParam::init('at_time', $options)->commaSeparated()->extract('atTime'),
+                QueryParam::init('page', $options)->commaSeparated()->extract('page', 1),
+                QueryParam::init('per_page', $options)->commaSeparated()->extract('perPage', 20),
+                QueryParam::init('direction', $options)
+                    ->commaSeparated()
+                    ->extract('direction')
+                    ->serializeBy([Direction::class, 'checkValue'])
+            );
+
+        $_resHandler = $this->responseHandler()
+            ->throwErrorOn(
+                '400',
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    SubscriptionsMrrErrorResponseException::class
+                )
+            )
+            ->type(SubscriptionMRRResponse::class);
+
+        return $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
      * This endpoint returns your site's current MRR, including plan and usage breakouts.
      *
      * @deprecated
@@ -52,33 +123,6 @@ class InsightsController extends BaseController
             );
 
         $_resHandler = $this->responseHandler()->type(MRRResponse::class);
-
-        return $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
-     * The Stats API is a very basic view of some Site-level stats. This API call only answers with JSON
-     * responses. An XML version is not provided.
-     *
-     * ## Stats Documentation
-     *
-     * There currently is not a complimentary matching set of documentation that compliments this endpoint.
-     * However, each Site's dashboard will reflect the summary of information provided in the Stats
-     * reposnse.
-     *
-     * ```
-     * https://subdomain.chargify.com/dashboard
-     * ```
-     *
-     * @return SiteSummary Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function readSiteStats(): SiteSummary
-    {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/stats.json')->auth('global');
-
-        $_resHandler = $this->responseHandler()->type(SiteSummary::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
     }
@@ -137,50 +181,6 @@ class InsightsController extends BaseController
             );
 
         $_resHandler = $this->responseHandler()->type(ListMRRResponse::class);
-
-        return $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
-     * This endpoint returns your site's current MRR, including plan and usage breakouts split per
-     * subscription.
-     *
-     * @deprecated
-     *
-     * @param array $options Array with all options for search
-     *
-     * @return SubscriptionMRRResponse Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function listMrrPerSubscription(array $options): SubscriptionMRRResponse
-    {
-        trigger_error('Method ' . __METHOD__ . ' is deprecated.', E_USER_DEPRECATED);
-
-        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/subscriptions_mrr.json')
-            ->auth('global')
-            ->parameters(
-                QueryParam::init('filter[subscription_ids]', $options)
-                    ->commaSeparated()
-                    ->extract('filterSubscriptionIds'),
-                QueryParam::init('at_time', $options)->commaSeparated()->extract('atTime'),
-                QueryParam::init('page', $options)->commaSeparated()->extract('page', 1),
-                QueryParam::init('per_page', $options)->commaSeparated()->extract('perPage', 20),
-                QueryParam::init('direction', $options)
-                    ->commaSeparated()
-                    ->extract('direction')
-                    ->serializeBy([Direction::class, 'checkValue'])
-            );
-
-        $_resHandler = $this->responseHandler()
-            ->throwErrorOn(
-                '400',
-                ErrorType::initWithErrorTemplate(
-                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
-                    SubscriptionsMrrErrorResponseException::class
-                )
-            )
-            ->type(SubscriptionMRRResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
     }

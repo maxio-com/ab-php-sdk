@@ -12,38 +12,42 @@ namespace AdvancedBillingLib\Models;
 
 use stdClass;
 
-class CreatePaymentProfileResponse implements \JsonSerializable
+class CurrencyPricesResponse implements \JsonSerializable
 {
     /**
-     * @var CreatedPaymentProfile
+     * @var CurrencyPrice[]
      */
-    private $paymentProfile;
+    private $currencyPrices;
 
     /**
-     * @param CreatedPaymentProfile $paymentProfile
+     * @param CurrencyPrice[] $currencyPrices
      */
-    public function __construct(CreatedPaymentProfile $paymentProfile)
+    public function __construct(array $currencyPrices)
     {
-        $this->paymentProfile = $paymentProfile;
+        $this->currencyPrices = $currencyPrices;
     }
 
     /**
-     * Returns Payment Profile.
+     * Returns Currency Prices.
+     *
+     * @return CurrencyPrice[]
      */
-    public function getPaymentProfile(): CreatedPaymentProfile
+    public function getCurrencyPrices(): array
     {
-        return $this->paymentProfile;
+        return $this->currencyPrices;
     }
 
     /**
-     * Sets Payment Profile.
+     * Sets Currency Prices.
      *
      * @required
-     * @maps payment_profile
+     * @maps currency_prices
+     *
+     * @param CurrencyPrice[] $currencyPrices
      */
-    public function setPaymentProfile(CreatedPaymentProfile $paymentProfile): void
+    public function setCurrencyPrices(array $currencyPrices): void
     {
-        $this->paymentProfile = $paymentProfile;
+        $this->currencyPrices = $currencyPrices;
     }
 
     /**
@@ -58,7 +62,7 @@ class CreatePaymentProfileResponse implements \JsonSerializable
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
-        $json['payment_profile'] = $this->paymentProfile;
+        $json['currency_prices'] = $this->currencyPrices;
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

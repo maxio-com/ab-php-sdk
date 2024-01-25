@@ -28,6 +28,35 @@ use CoreInterfaces\Core\Request\RequestMethod;
 class ProductFamiliesController extends BaseController
 {
     /**
+     * This method allows to retrieve a list of Product Families for a site.
+     *
+     * @param array $options Array with all options for search
+     *
+     * @return ProductFamilyResponse[] Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function listProductFamilies(array $options): array
+    {
+        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/product_families.json')
+            ->auth('global')
+            ->parameters(
+                QueryParam::init('date_field', $options)
+                    ->commaSeparated()
+                    ->extract('dateField')
+                    ->serializeBy([BasicDateField::class, 'checkValue']),
+                QueryParam::init('start_date', $options)->commaSeparated()->extract('startDate'),
+                QueryParam::init('end_date', $options)->commaSeparated()->extract('endDate'),
+                QueryParam::init('start_datetime', $options)->commaSeparated()->extract('startDatetime'),
+                QueryParam::init('end_datetime', $options)->commaSeparated()->extract('endDatetime')
+            );
+
+        $_resHandler = $this->responseHandler()->type(ProductFamilyResponse::class, 1);
+
+        return $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
      * This method will create a Product Family within your Chargify site. Create a Product Family to act
      * as a container for your products, components and coupons.
      *
@@ -55,35 +84,6 @@ class ProductFamiliesController extends BaseController
                 )
             )
             ->type(ProductFamilyResponse::class);
-
-        return $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
-     * This method allows to retrieve a list of Product Families for a site.
-     *
-     * @param array $options Array with all options for search
-     *
-     * @return ProductFamilyResponse[] Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function listProductFamilies(array $options): array
-    {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/product_families.json')
-            ->auth('global')
-            ->parameters(
-                QueryParam::init('date_field', $options)
-                    ->commaSeparated()
-                    ->extract('dateField')
-                    ->serializeBy([BasicDateField::class, 'checkValue']),
-                QueryParam::init('start_date', $options)->commaSeparated()->extract('startDate'),
-                QueryParam::init('end_date', $options)->commaSeparated()->extract('endDate'),
-                QueryParam::init('start_datetime', $options)->commaSeparated()->extract('startDatetime'),
-                QueryParam::init('end_datetime', $options)->commaSeparated()->extract('endDatetime')
-            );
-
-        $_resHandler = $this->responseHandler()->type(ProductFamilyResponse::class, 1);
 
         return $this->execute($_reqBuilder, $_resHandler);
     }

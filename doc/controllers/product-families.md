@@ -10,64 +10,10 @@ $productFamiliesController = $client->getProductFamiliesController();
 
 ## Methods
 
-* [Create Product Family](../../doc/controllers/product-families.md#create-product-family)
 * [List Product Families](../../doc/controllers/product-families.md#list-product-families)
+* [Create Product Family](../../doc/controllers/product-families.md#create-product-family)
 * [List Products for Product Family](../../doc/controllers/product-families.md#list-products-for-product-family)
 * [Read Product Family](../../doc/controllers/product-families.md#read-product-family)
-
-
-# Create Product Family
-
-This method will create a Product Family within your Chargify site. Create a Product Family to act as a container for your products, components and coupons.
-
-Full documentation on how Product Families operate within the Chargify UI can be located [here](https://maxio-chargify.zendesk.com/hc/en-us/articles/5405369633421).
-
-```php
-function createProductFamily(?CreateProductFamilyRequest $body = null): ProductFamilyResponse
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `body` | [`?CreateProductFamilyRequest`](../../doc/models/create-product-family-request.md) | Body, Optional | - |
-
-## Response Type
-
-[`ProductFamilyResponse`](../../doc/models/product-family-response.md)
-
-## Example Usage
-
-```php
-$body = CreateProductFamilyRequestBuilder::init(
-    CreateProductFamilyBuilder::init()
-        ->name('Acme Projects')
-        ->description('Amazing project management tool')
-        ->build()
-)->build();
-
-$result = $productFamiliesController->createProductFamily($body);
-```
-
-## Example Response *(as JSON)*
-
-```json
-{
-  "product_family": {
-    "id": 933860,
-    "name": "Acme Projects",
-    "description": "Amazing project management tool",
-    "handle": "acme-projects",
-    "accounting_code": null
-  }
-}
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
 
 
 # List Product Families
@@ -130,6 +76,60 @@ $result = $productFamiliesController->listProductFamilies($collect);
   }
 ]
 ```
+
+
+# Create Product Family
+
+This method will create a Product Family within your Chargify site. Create a Product Family to act as a container for your products, components and coupons.
+
+Full documentation on how Product Families operate within the Chargify UI can be located [here](https://maxio-chargify.zendesk.com/hc/en-us/articles/5405369633421).
+
+```php
+function createProductFamily(?CreateProductFamilyRequest $body = null): ProductFamilyResponse
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `body` | [`?CreateProductFamilyRequest`](../../doc/models/create-product-family-request.md) | Body, Optional | - |
+
+## Response Type
+
+[`ProductFamilyResponse`](../../doc/models/product-family-response.md)
+
+## Example Usage
+
+```php
+$body = CreateProductFamilyRequestBuilder::init(
+    CreateProductFamilyBuilder::init()
+        ->name('Acme Projects')
+        ->description('Amazing project management tool')
+        ->build()
+)->build();
+
+$result = $productFamiliesController->createProductFamily($body);
+```
+
+## Example Response *(as JSON)*
+
+```json
+{
+  "product_family": {
+    "id": 933860,
+    "name": "Acme Projects",
+    "description": "Amazing project management tool",
+    "handle": "acme-projects",
+    "accounting_code": null
+  }
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
 
 
 # List Products for Product Family

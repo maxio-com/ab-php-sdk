@@ -43,6 +43,405 @@ use CoreInterfaces\Core\Request\RequestMethod;
 class SubscriptionsController extends BaseController
 {
     /**
+     * Use this endpoint to find a subscription by its reference.
+     *
+     * @param string|null $reference Subscription reference
+     *
+     * @return SubscriptionResponse Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function readSubscriptionByReference(?string $reference = null): SubscriptionResponse
+    {
+        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/subscriptions/lookup.json')
+            ->auth('global')
+            ->parameters(QueryParam::init('reference', $reference)->commaSeparated());
+
+        $_resHandler = $this->responseHandler()->type(SubscriptionResponse::class);
+
+        return $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
+     * An existing subscription can accommodate multiple discounts/coupon codes. This is only applicable if
+     * each coupon is stackable. For more information on stackable coupons, we recommend reviewing our
+     * [coupon documentation.](https://chargify.zendesk.com/hc/en-us/articles/4407755909531#stackable-
+     * coupons)
+     *
+     * ## Query Parameters vs Request Body Parameters
+     *
+     * Passing in a coupon code as a query parameter will add the code to the subscription, completely
+     * replacing all existing coupon codes on the subscription.
+     *
+     * For this reason, using this query parameter on this endpoint has been deprecated in favor of using
+     * the request body parameters as described below. When passing in request body parameters, the list of
+     * coupon codes will simply be added to any existing list of codes on the subscription.
+     *
+     * @param int $subscriptionId The Chargify id of the subscription
+     * @param string|null $code A code for the coupon that would be applied to a subscription
+     * @param AddCouponsRequest|null $body
+     *
+     * @return SubscriptionResponse Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function applyCouponToSubscription(
+        int $subscriptionId,
+        ?string $code = null,
+        ?AddCouponsRequest $body = null
+    ): SubscriptionResponse {
+        $_reqBuilder = $this->requestBuilder(
+            RequestMethod::POST,
+            '/subscriptions/{subscription_id}/add_coupon.json'
+        )
+            ->auth('global')
+            ->parameters(
+                TemplateParam::init('subscription_id', $subscriptionId)->required(),
+                HeaderParam::init('Content-Type', 'application/json'),
+                QueryParam::init('code', $code)->commaSeparated(),
+                BodyParam::init($body)
+            );
+
+        $_resHandler = $this->responseHandler()
+            ->throwErrorOn(
+                '422',
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    SubscriptionAddCouponErrorException::class
+                )
+            )
+            ->type(SubscriptionResponse::class);
+
+        return $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
+     * The subscription endpoint allows you to instantly update one or many attributes about a subscription
+     * in a single call.
+     *
+     * ## Update Subscription Payment Method
+     *
+     * Change the card that your Subscriber uses for their subscription. You can also use this method to
+     * simply change the expiration date of the card **if your gateway allows**.
+     *
+     * Note that partial card updates for **Authorize.Net** are not allowed via this endpoint. The existing
+     * Payment Profile must be directly updated instead.
+     *
+     * You also use this method to change the subscription to a different product by setting a new value
+     * for product_handle. A product change can be done in two different ways, **product change** or
+     * **delayed product change**.
+     *
+     * ## Product Change
+     *
+     * This endpoint may be used to change a subscription's product. The new payment amount is calculated
+     * and charged at the normal start of the next period. If you desire complex product changes or
+     * prorated upgrades and downgrades instead, please see the documentation on Migrating Subscription
+     * Products.
+     *
+     * To perform a product change, simply set either the `product_handle` or `product_id` attribute to
+     * that of a different product from the same site as the subscription. You can also change the price
+     * point by passing in either `product_price_point_id` or `product_price_point_handle` - otherwise the
+     * new product's default price point will be used.
+     *
+     * ### Delayed Product Change
+     *
+     * This method also changes the product and/or price point, and the new payment amount is calculated
+     * and charged at the normal start of the next period.
+     *
+     * This method schedules the product change to happen automatically at the subscription’s next renewal
+     * date. To perform a Delayed Product Change, set the `product_handle` attribute as you would in a
+     * regular product change, but also set the `product_change_delayed` attribute to `true`. No proration
+     * applies in this case.
+     *
+     * You can also perform a delayed change to the price point by passing in either
+     * `product_price_point_id` or `product_price_point_handle`
+     *
+     * **Note: To cancel a delayed product change, set `next_product_id` to an empty string.**
+     *
+     * ## Billing Date Changes
+     *
+     * ### Regular Billing Date Changes
+     *
+     * Send the `next_billing_at` to set the next billing date for the subscription. After that date passes
+     * and the subscription is processed, the following billing date will be set according to the
+     * subscription's product period.
+     *
+     * Note that if you pass an invalid date, we will automatically interpret and set the correct date. For
+     * example, when February 30 is entered, the next billing will be set to March 2nd in a non-leap year.
+     *
+     * The server response will not return data under the key/value pair of `next_billing`. Please view the
+     * key/value pair of `current_period_ends_at` to verify that the `next_billing` date has been changed
+     * successfully.
+     *
+     * ### Snap Day Changes
+     *
+     * For a subscription using Calendar Billing, setting the next billing date is a bit different. Send
+     * the `snap_day` attribute to change the calendar billing date for **a subscription using a product
+     * eligible for calendar billing**.
+     *
+     * Note: If you change the product associated with a subscription that contains a `snap_date` and
+     * immediately `READ/GET` the subscription data, it will still contain evidence of the existing
+     * `snap_date`. This is due to the fact that a product change is instantanous and only affects the
+     * product associated with a subscription. After the `next_billing` date arrives, the `snap_day`
+     * associated with the subscription will return to `null.` Another way of looking at this is that you
+     * willl have to wait for the next billing cycle to arrive before the `snap_date` will reset to `null`.
+     *
+     * @param int $subscriptionId The Chargify id of the subscription
+     * @param UpdateSubscriptionRequest|null $body
+     *
+     * @return SubscriptionResponse Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function updateSubscription(
+        int $subscriptionId,
+        ?UpdateSubscriptionRequest $body = null
+    ): SubscriptionResponse {
+        $_reqBuilder = $this->requestBuilder(RequestMethod::PUT, '/subscriptions/{subscription_id}.json')
+            ->auth('global')
+            ->parameters(
+                TemplateParam::init('subscription_id', $subscriptionId)->required(),
+                HeaderParam::init('Content-Type', 'application/json'),
+                BodyParam::init($body)
+            );
+
+        $_resHandler = $this->responseHandler()
+            ->throwErrorOn(
+                '422',
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
+            )
+            ->type(SubscriptionResponse::class);
+
+        return $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
+     * For sites in test mode, you may purge individual subscriptions.
+     *
+     * Provide the subscription ID in the url.  To confirm, supply the customer ID in the query string
+     * `ack` parameter. You may also delete the customer record and/or payment profiles by passing
+     * `cascade` parameters. For example, to delete just the customer record, the query params would be: `?
+     * ack={customer_id}&cascade[]=customer`
+     *
+     * If you need to remove subscriptions from a live site, please contact support to discuss your use
+     * case.
+     *
+     * ### Delete customer and payment profile
+     *
+     * The query params will be: `?ack={customer_id}&cascade[]=customer&cascade[]=payment_profile`
+     *
+     * @param int $subscriptionId The Chargify id of the subscription
+     * @param int $ack id of the customer.
+     * @param string[]|null $cascade Options are "customer" or "payment_profile". Use in query:
+     *        `cascade[]=customer&cascade[]=payment_profile`.
+     *
+     * @return void Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function purgeSubscription(int $subscriptionId, int $ack, ?array $cascade = null): void
+    {
+        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/subscriptions/{subscription_id}/purge.json')
+            ->auth('global')
+            ->parameters(
+                TemplateParam::init('subscription_id', $subscriptionId)->required(),
+                QueryParam::init('ack', $ack)->plain()->required(),
+                QueryParam::init('cascade[]', $cascade)
+                    ->plain()
+                    ->serializeBy([SubscriptionPurgeType::class, 'checkValue'])
+            );
+
+        $this->execute($_reqBuilder);
+    }
+
+    /**
+     * The Chargify API allows you to preview a subscription by POSTing the same JSON or XML as for a
+     * subscription creation.
+     *
+     * The "Next Billing" amount and "Next Billing" date are represented in each Subscriber's Summary. For
+     * more information, please see our documentation [here](https://chargify.zendesk.com/hc/en-
+     * us/articles/4407884887835#next-billing).
+     *
+     * ## Side effects
+     *
+     * A subscription will not be created by sending a POST to this endpoint. It is meant to serve as a
+     * prediction.
+     *
+     * ## Taxable Subscriptions
+     *
+     * This endpoint will preview taxes applicable to a purchase. In order for taxes to be previewed, the
+     * following conditions must be met:
+     *
+     * + Taxes must be configured on the subscription
+     * + The preview must be for the purchase of a taxable product or component, or combination of the two.
+     * + The subscription payload must contain a full billing or shipping address in order to calculate
+     * tax
+     *
+     * For more information about creating taxable previews, please see our documentation guide on how to
+     * create [taxable subscriptions.](https://chargify.zendesk.com/hc/en-
+     * us/articles/4407904217755#creating-taxable-subscriptions)
+     *
+     * You do **not** need to include a card number to generate tax information when you are previewing a
+     * subscription. However, please note that when you actually want to create the subscription, you must
+     * include the credit card information if you want the billing address to be stored in Chargify. The
+     * billing address and the credit card information are stored together within the payment profile
+     * object. Also, you may not send a billing address to Chargify without payment profile information, as
+     * the address is stored on the card.
+     *
+     * You can pass shipping and billing addresses and still decide not to calculate taxes. To do that,
+     * pass `skip_billing_manifest_taxes: true` attribute.
+     *
+     * ## Non-taxable Subscriptions
+     *
+     * If you'd like to calculate subscriptions that do not include tax, please feel free to leave off the
+     * billing information.
+     *
+     * @param CreateSubscriptionRequest|null $body
+     *
+     * @return SubscriptionPreviewResponse Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function previewSubscription(?CreateSubscriptionRequest $body = null): SubscriptionPreviewResponse
+    {
+        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/subscriptions/preview.json')
+            ->auth('global')
+            ->parameters(HeaderParam::init('Content-Type', 'application/json'), BodyParam::init($body));
+
+        $_resHandler = $this->responseHandler()->type(SubscriptionPreviewResponse::class);
+
+        return $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
+     * Use this endpoint to find subscription details.
+     *
+     * ## Self-Service Page token
+     *
+     * Self-Service Page token for the subscription is not returned by default. If this information is
+     * desired, the include[]=self_service_page_token parameter must be provided with the request.
+     *
+     * @param int $subscriptionId The Chargify id of the subscription
+     * @param string[]|null $mInclude Allows including additional data in the response. Use in
+     *        query: `include[]=coupons&include[]=self_service_page_token`.
+     *
+     * @return SubscriptionResponse Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function readSubscription(int $subscriptionId, ?array $mInclude = null): SubscriptionResponse
+    {
+        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/subscriptions/{subscription_id}.json')
+            ->auth('global')
+            ->parameters(
+                TemplateParam::init('subscription_id', $subscriptionId)->required(),
+                QueryParam::init('include[]', $mInclude)
+                    ->plain()
+                    ->serializeBy([SubscriptionInclude::class, 'checkValue'])
+            );
+
+        $_resHandler = $this->responseHandler()->type(SubscriptionResponse::class);
+
+        return $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
+     * This API endpoint allows you to set certain subscription fields that are usually managed for you
+     * automatically. Some of the fields can be set via the normal Subscriptions Update API, but others can
+     * only be set using this endpoint.
+     *
+     * This endpoint is provided for cases where you need to “align” Chargify data with data that happened
+     * in your system, perhaps before you started using Chargify. For example, you may choose to import
+     * your historical subscription data, and would like the activation and cancellation dates in Chargify
+     * to match your existing historical dates. Chargify does not backfill historical events (i.e. from the
+     * Events API), but some static data can be changed via this API.
+     *
+     * Why are some fields only settable from this endpoint, and not the normal subscription create and
+     * update endpoints? Because we want users of this endpoint to be aware that these fields are usually
+     * managed by Chargify, and using this API means **you are stepping out on your own.**
+     *
+     * Changing these fields will not affect any other attributes. For example, adding an expiration date
+     * will not affect the next assessment date on the subscription.
+     *
+     * If you regularly need to override the current_period_starts_at for new subscriptions, this can also
+     * be accomplished by setting both `previous_billing_at` and `next_billing_at` at subscription creation.
+     * See the documentation on [Importing Subscriptions](./b3A6MTQxMDgzODg-create-
+     * subscription#subscriptions-import) for more information.
+     *
+     * ## Limitations
+     *
+     * When passing `current_period_starts_at` some validations are made:
+     *
+     * 1. The subscription needs to be unbilled (no statements or invoices).
+     * 2. The value passed must be a valid date/time. We recommend using the iso 8601 format.
+     * 3. The value passed must be before the current date/time.
+     *
+     * If unpermitted parameters are sent, a 400 HTTP response is sent along with a string giving the
+     * reason for the problem.
+     *
+     * @param int $subscriptionId The Chargify id of the subscription
+     * @param OverrideSubscriptionRequest|null $body Only these fields are available to be set.
+     *
+     * @return void Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function overrideSubscription(int $subscriptionId, ?OverrideSubscriptionRequest $body = null): void
+    {
+        $_reqBuilder = $this->requestBuilder(RequestMethod::PUT, '/subscriptions/{subscription_id}/override.json')
+            ->auth('global')
+            ->parameters(
+                TemplateParam::init('subscription_id', $subscriptionId)->required(),
+                HeaderParam::init('Content-Type', 'application/json'),
+                BodyParam::init($body)
+            );
+
+        $_resHandler = $this->responseHandler()
+            ->throwErrorOn(
+                '422',
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    SingleErrorResponseException::class
+                )
+            );
+
+        $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
+     * Use this endpoint to update a subscription's prepaid configuration.
+     *
+     * @param int $subscriptionId The Chargify id of the subscription
+     * @param UpsertPrepaidConfigurationRequest|null $body
+     *
+     * @return PrepaidConfigurationResponse Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function createPrepaidSubscription(
+        int $subscriptionId,
+        ?UpsertPrepaidConfigurationRequest $body = null
+    ): PrepaidConfigurationResponse {
+        $_reqBuilder = $this->requestBuilder(
+            RequestMethod::POST,
+            '/subscriptions/{subscription_id}/prepaid_configurations.json'
+        )
+            ->auth('global')
+            ->parameters(
+                TemplateParam::init('subscription_id', $subscriptionId)->required(),
+                HeaderParam::init('Content-Type', 'application/json'),
+                BodyParam::init($body)
+            );
+
+        $_resHandler = $this->responseHandler()->type(PrepaidConfigurationResponse::class);
+
+        return $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
      * Full documentation on how subscriptions operate within Chargify can be located under the following
      * topics:
      *
@@ -863,62 +1262,77 @@ class SubscriptionsController extends BaseController
     }
 
     /**
-     * Use this endpoint to find a subscription by its reference.
+     * This method will return an array of subscriptions from a Site. Pay close attention to query string
+     * filters and pagination in order to control responses from the server.
      *
-     * @param string|null $reference Subscription reference
+     * ## Search for a subscription
      *
-     * @return SubscriptionResponse Response from the API call
+     * Use the query strings below to search for a subscription using the criteria available. The return
+     * value will be an array.
      *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function readSubscriptionByReference(?string $reference = null): SubscriptionResponse
-    {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/subscriptions/lookup.json')
-            ->auth('global')
-            ->parameters(QueryParam::init('reference', $reference)->commaSeparated());
-
-        $_resHandler = $this->responseHandler()->type(SubscriptionResponse::class);
-
-        return $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
-     * For sites in test mode, you may purge individual subscriptions.
+     * ## Self-Service Page token
      *
-     * Provide the subscription ID in the url.  To confirm, supply the customer ID in the query string
-     * `ack` parameter. You may also delete the customer record and/or payment profiles by passing
-     * `cascade` parameters. For example, to delete just the customer record, the query params would be: `?
-     * ack={customer_id}&cascade[]=customer`
+     * Self-Service Page token for the subscriptions is not returned by default. If this information is
+     * desired, the include[]=self_service_page_token parameter must be provided with the request.
      *
-     * If you need to remove subscriptions from a live site, please contact support to discuss your use
-     * case.
+     * @param array $options Array with all options for search
      *
-     * ### Delete customer and payment profile
-     *
-     * The query params will be: `?ack={customer_id}&cascade[]=customer&cascade[]=payment_profile`
-     *
-     * @param int $subscriptionId The Chargify id of the subscription
-     * @param int $ack id of the customer.
-     * @param string[]|null $cascade Options are "customer" or "payment_profile". Use in query:
-     *        `cascade[]=customer&cascade[]=payment_profile`.
-     *
-     * @return void Response from the API call
+     * @return SubscriptionResponse[] Response from the API call
      *
      * @throws ApiException Thrown if API call fails
      */
-    public function purgeSubscription(int $subscriptionId, int $ack, ?array $cascade = null): void
+    public function listSubscriptions(array $options): array
     {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/subscriptions/{subscription_id}/purge.json')
+        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/subscriptions.json')
             ->auth('global')
             ->parameters(
-                TemplateParam::init('subscription_id', $subscriptionId)->required(),
-                QueryParam::init('ack', $ack)->plain()->required(),
-                QueryParam::init('cascade[]', $cascade)
-                    ->plain()
-                    ->serializeBy([SubscriptionPurgeType::class, 'checkValue'])
+                QueryParam::init('page', $options)->commaSeparated()->extract('page', 1),
+                QueryParam::init('per_page', $options)->commaSeparated()->extract('perPage', 20),
+                QueryParam::init('state', $options)
+                    ->commaSeparated()
+                    ->extract('state')
+                    ->serializeBy([SubscriptionStateFilter::class, 'checkValue']),
+                QueryParam::init('product', $options)->commaSeparated()->extract('product'),
+                QueryParam::init('product_price_point_id', $options)->commaSeparated()->extract('productPricePointId'),
+                QueryParam::init('coupon', $options)->commaSeparated()->extract('coupon'),
+                QueryParam::init('date_field', $options)
+                    ->commaSeparated()
+                    ->extract('dateField')
+                    ->serializeBy([SubscriptionDateField::class, 'checkValue']),
+                QueryParam::init('start_date', $options)
+                    ->commaSeparated()
+                    ->extract('startDate')
+                    ->serializeBy([DateTimeHelper::class, 'toSimpleDate']),
+                QueryParam::init('end_date', $options)
+                    ->commaSeparated()
+                    ->extract('endDate')
+                    ->serializeBy([DateTimeHelper::class, 'toSimpleDate']),
+                QueryParam::init('start_datetime', $options)
+                    ->commaSeparated()
+                    ->extract('startDatetime')
+                    ->serializeBy([DateTimeHelper::class, 'toRfc3339DateTime']),
+                QueryParam::init('end_datetime', $options)
+                    ->commaSeparated()
+                    ->extract('endDatetime')
+                    ->serializeBy([DateTimeHelper::class, 'toRfc3339DateTime']),
+                QueryParam::init('metadata', $options)->commaSeparated()->extract('metadata'),
+                QueryParam::init('direction', $options)
+                    ->commaSeparated()
+                    ->extract('direction')
+                    ->serializeBy([SortingDirection::class, 'checkValue']),
+                QueryParam::init('sort', $options)
+                    ->commaSeparated()
+                    ->extract('sort', SubscriptionSort::SIGNUP_DATE)
+                    ->serializeBy([SubscriptionSort::class, 'checkValue']),
+                QueryParam::init('include[]', $options)
+                    ->commaSeparated()
+                    ->extract('mInclude')
+                    ->serializeBy([SubscriptionListInclude::class, 'checkValue'])
             );
 
-        $this->execute($_reqBuilder);
+        $_resHandler = $this->responseHandler()->type(SubscriptionResponse::class, 1);
+
+        return $this->execute($_reqBuilder, $_resHandler);
     }
 
     /**
@@ -1011,139 +1425,6 @@ class SubscriptionsController extends BaseController
     }
 
     /**
-     * This method will return an array of subscriptions from a Site. Pay close attention to query string
-     * filters and pagination in order to control responses from the server.
-     *
-     * ## Search for a subscription
-     *
-     * Use the query strings below to search for a subscription using the criteria available. The return
-     * value will be an array.
-     *
-     * ## Self-Service Page token
-     *
-     * Self-Service Page token for the subscriptions is not returned by default. If this information is
-     * desired, the include[]=self_service_page_token parameter must be provided with the request.
-     *
-     * @param array $options Array with all options for search
-     *
-     * @return SubscriptionResponse[] Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function listSubscriptions(array $options): array
-    {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/subscriptions.json')
-            ->auth('global')
-            ->parameters(
-                QueryParam::init('page', $options)->commaSeparated()->extract('page', 1),
-                QueryParam::init('per_page', $options)->commaSeparated()->extract('perPage', 20),
-                QueryParam::init('state', $options)
-                    ->commaSeparated()
-                    ->extract('state')
-                    ->serializeBy([SubscriptionStateFilter::class, 'checkValue']),
-                QueryParam::init('product', $options)->commaSeparated()->extract('product'),
-                QueryParam::init('product_price_point_id', $options)->commaSeparated()->extract('productPricePointId'),
-                QueryParam::init('coupon', $options)->commaSeparated()->extract('coupon'),
-                QueryParam::init('date_field', $options)
-                    ->commaSeparated()
-                    ->extract('dateField')
-                    ->serializeBy([SubscriptionDateField::class, 'checkValue']),
-                QueryParam::init('start_date', $options)
-                    ->commaSeparated()
-                    ->extract('startDate')
-                    ->serializeBy([DateTimeHelper::class, 'toSimpleDate']),
-                QueryParam::init('end_date', $options)
-                    ->commaSeparated()
-                    ->extract('endDate')
-                    ->serializeBy([DateTimeHelper::class, 'toSimpleDate']),
-                QueryParam::init('start_datetime', $options)
-                    ->commaSeparated()
-                    ->extract('startDatetime')
-                    ->serializeBy([DateTimeHelper::class, 'toRfc3339DateTime']),
-                QueryParam::init('end_datetime', $options)
-                    ->commaSeparated()
-                    ->extract('endDatetime')
-                    ->serializeBy([DateTimeHelper::class, 'toRfc3339DateTime']),
-                QueryParam::init('metadata', $options)->commaSeparated()->extract('metadata'),
-                QueryParam::init('direction', $options)
-                    ->commaSeparated()
-                    ->extract('direction')
-                    ->serializeBy([SortingDirection::class, 'checkValue']),
-                QueryParam::init('sort', $options)
-                    ->commaSeparated()
-                    ->extract('sort', SubscriptionSort::SIGNUP_DATE)
-                    ->serializeBy([SubscriptionSort::class, 'checkValue']),
-                QueryParam::init('include[]', $options)
-                    ->commaSeparated()
-                    ->extract('mInclude')
-                    ->serializeBy([SubscriptionListInclude::class, 'checkValue'])
-            );
-
-        $_resHandler = $this->responseHandler()->type(SubscriptionResponse::class, 1);
-
-        return $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
-     * The Chargify API allows you to preview a subscription by POSTing the same JSON or XML as for a
-     * subscription creation.
-     *
-     * The "Next Billing" amount and "Next Billing" date are represented in each Subscriber's Summary. For
-     * more information, please see our documentation [here](https://chargify.zendesk.com/hc/en-
-     * us/articles/4407884887835#next-billing).
-     *
-     * ## Side effects
-     *
-     * A subscription will not be created by sending a POST to this endpoint. It is meant to serve as a
-     * prediction.
-     *
-     * ## Taxable Subscriptions
-     *
-     * This endpoint will preview taxes applicable to a purchase. In order for taxes to be previewed, the
-     * following conditions must be met:
-     *
-     * + Taxes must be configured on the subscription
-     * + The preview must be for the purchase of a taxable product or component, or combination of the two.
-     * + The subscription payload must contain a full billing or shipping address in order to calculate
-     * tax
-     *
-     * For more information about creating taxable previews, please see our documentation guide on how to
-     * create [taxable subscriptions.](https://chargify.zendesk.com/hc/en-
-     * us/articles/4407904217755#creating-taxable-subscriptions)
-     *
-     * You do **not** need to include a card number to generate tax information when you are previewing a
-     * subscription. However, please note that when you actually want to create the subscription, you must
-     * include the credit card information if you want the billing address to be stored in Chargify. The
-     * billing address and the credit card information are stored together within the payment profile
-     * object. Also, you may not send a billing address to Chargify without payment profile information, as
-     * the address is stored on the card.
-     *
-     * You can pass shipping and billing addresses and still decide not to calculate taxes. To do that,
-     * pass `skip_billing_manifest_taxes: true` attribute.
-     *
-     * ## Non-taxable Subscriptions
-     *
-     * If you'd like to calculate subscriptions that do not include tax, please feel free to leave off the
-     * billing information.
-     *
-     * @param CreateSubscriptionRequest|null $body
-     *
-     * @return SubscriptionPreviewResponse Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function previewSubscription(?CreateSubscriptionRequest $body = null): SubscriptionPreviewResponse
-    {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/subscriptions/preview.json')
-            ->auth('global')
-            ->parameters(HeaderParam::init('Content-Type', 'application/json'), BodyParam::init($body));
-
-        $_resHandler = $this->responseHandler()->type(SubscriptionPreviewResponse::class);
-
-        return $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
      * Use this endpoint to remove a coupon from an existing subscription.
      *
      * For more information on the expected behaviour of removing a coupon from a subscription, please see
@@ -1177,287 +1458,6 @@ class SubscriptionsController extends BaseController
                     SubscriptionRemoveCouponErrorsException::class
                 )
             );
-
-        return $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
-     * The subscription endpoint allows you to instantly update one or many attributes about a subscription
-     * in a single call.
-     *
-     * ## Update Subscription Payment Method
-     *
-     * Change the card that your Subscriber uses for their subscription. You can also use this method to
-     * simply change the expiration date of the card **if your gateway allows**.
-     *
-     * Note that partial card updates for **Authorize.Net** are not allowed via this endpoint. The existing
-     * Payment Profile must be directly updated instead.
-     *
-     * You also use this method to change the subscription to a different product by setting a new value
-     * for product_handle. A product change can be done in two different ways, **product change** or
-     * **delayed product change**.
-     *
-     * ## Product Change
-     *
-     * This endpoint may be used to change a subscription's product. The new payment amount is calculated
-     * and charged at the normal start of the next period. If you desire complex product changes or
-     * prorated upgrades and downgrades instead, please see the documentation on Migrating Subscription
-     * Products.
-     *
-     * To perform a product change, simply set either the `product_handle` or `product_id` attribute to
-     * that of a different product from the same site as the subscription. You can also change the price
-     * point by passing in either `product_price_point_id` or `product_price_point_handle` - otherwise the
-     * new product's default price point will be used.
-     *
-     * ### Delayed Product Change
-     *
-     * This method also changes the product and/or price point, and the new payment amount is calculated
-     * and charged at the normal start of the next period.
-     *
-     * This method schedules the product change to happen automatically at the subscription’s next renewal
-     * date. To perform a Delayed Product Change, set the `product_handle` attribute as you would in a
-     * regular product change, but also set the `product_change_delayed` attribute to `true`. No proration
-     * applies in this case.
-     *
-     * You can also perform a delayed change to the price point by passing in either
-     * `product_price_point_id` or `product_price_point_handle`
-     *
-     * **Note: To cancel a delayed product change, set `next_product_id` to an empty string.**
-     *
-     * ## Billing Date Changes
-     *
-     * ### Regular Billing Date Changes
-     *
-     * Send the `next_billing_at` to set the next billing date for the subscription. After that date passes
-     * and the subscription is processed, the following billing date will be set according to the
-     * subscription's product period.
-     *
-     * Note that if you pass an invalid date, we will automatically interpret and set the correct date. For
-     * example, when February 30 is entered, the next billing will be set to March 2nd in a non-leap year.
-     *
-     * The server response will not return data under the key/value pair of `next_billing`. Please view the
-     * key/value pair of `current_period_ends_at` to verify that the `next_billing` date has been changed
-     * successfully.
-     *
-     * ### Snap Day Changes
-     *
-     * For a subscription using Calendar Billing, setting the next billing date is a bit different. Send
-     * the `snap_day` attribute to change the calendar billing date for **a subscription using a product
-     * eligible for calendar billing**.
-     *
-     * Note: If you change the product associated with a subscription that contains a `snap_date` and
-     * immediately `READ/GET` the subscription data, it will still contain evidence of the existing
-     * `snap_date`. This is due to the fact that a product change is instantanous and only affects the
-     * product associated with a subscription. After the `next_billing` date arrives, the `snap_day`
-     * associated with the subscription will return to `null.` Another way of looking at this is that you
-     * willl have to wait for the next billing cycle to arrive before the `snap_date` will reset to `null`.
-     *
-     * @param int $subscriptionId The Chargify id of the subscription
-     * @param UpdateSubscriptionRequest|null $body
-     *
-     * @return SubscriptionResponse Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function updateSubscription(
-        int $subscriptionId,
-        ?UpdateSubscriptionRequest $body = null
-    ): SubscriptionResponse {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::PUT, '/subscriptions/{subscription_id}.json')
-            ->auth('global')
-            ->parameters(
-                TemplateParam::init('subscription_id', $subscriptionId)->required(),
-                HeaderParam::init('Content-Type', 'application/json'),
-                BodyParam::init($body)
-            );
-
-        $_resHandler = $this->responseHandler()
-            ->throwErrorOn(
-                '422',
-                ErrorType::initWithErrorTemplate(
-                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
-                    ErrorListResponseException::class
-                )
-            )
-            ->type(SubscriptionResponse::class);
-
-        return $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
-     * Use this endpoint to find subscription details.
-     *
-     * ## Self-Service Page token
-     *
-     * Self-Service Page token for the subscription is not returned by default. If this information is
-     * desired, the include[]=self_service_page_token parameter must be provided with the request.
-     *
-     * @param int $subscriptionId The Chargify id of the subscription
-     * @param string[]|null $mInclude Allows including additional data in the response. Use in
-     *        query: `include[]=coupons&include[]=self_service_page_token`.
-     *
-     * @return SubscriptionResponse Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function readSubscription(int $subscriptionId, ?array $mInclude = null): SubscriptionResponse
-    {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/subscriptions/{subscription_id}.json')
-            ->auth('global')
-            ->parameters(
-                TemplateParam::init('subscription_id', $subscriptionId)->required(),
-                QueryParam::init('include[]', $mInclude)
-                    ->plain()
-                    ->serializeBy([SubscriptionInclude::class, 'checkValue'])
-            );
-
-        $_resHandler = $this->responseHandler()->type(SubscriptionResponse::class);
-
-        return $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
-     * This API endpoint allows you to set certain subscription fields that are usually managed for you
-     * automatically. Some of the fields can be set via the normal Subscriptions Update API, but others can
-     * only be set using this endpoint.
-     *
-     * This endpoint is provided for cases where you need to “align” Chargify data with data that happened
-     * in your system, perhaps before you started using Chargify. For example, you may choose to import
-     * your historical subscription data, and would like the activation and cancellation dates in Chargify
-     * to match your existing historical dates. Chargify does not backfill historical events (i.e. from the
-     * Events API), but some static data can be changed via this API.
-     *
-     * Why are some fields only settable from this endpoint, and not the normal subscription create and
-     * update endpoints? Because we want users of this endpoint to be aware that these fields are usually
-     * managed by Chargify, and using this API means **you are stepping out on your own.**
-     *
-     * Changing these fields will not affect any other attributes. For example, adding an expiration date
-     * will not affect the next assessment date on the subscription.
-     *
-     * If you regularly need to override the current_period_starts_at for new subscriptions, this can also
-     * be accomplished by setting both `previous_billing_at` and `next_billing_at` at subscription creation.
-     * See the documentation on [Importing Subscriptions](./b3A6MTQxMDgzODg-create-
-     * subscription#subscriptions-import) for more information.
-     *
-     * ## Limitations
-     *
-     * When passing `current_period_starts_at` some validations are made:
-     *
-     * 1. The subscription needs to be unbilled (no statements or invoices).
-     * 2. The value passed must be a valid date/time. We recommend using the iso 8601 format.
-     * 3. The value passed must be before the current date/time.
-     *
-     * If unpermitted parameters are sent, a 400 HTTP response is sent along with a string giving the
-     * reason for the problem.
-     *
-     * @param int $subscriptionId The Chargify id of the subscription
-     * @param OverrideSubscriptionRequest|null $body Only these fields are available to be set.
-     *
-     * @return void Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function overrideSubscription(int $subscriptionId, ?OverrideSubscriptionRequest $body = null): void
-    {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::PUT, '/subscriptions/{subscription_id}/override.json')
-            ->auth('global')
-            ->parameters(
-                TemplateParam::init('subscription_id', $subscriptionId)->required(),
-                HeaderParam::init('Content-Type', 'application/json'),
-                BodyParam::init($body)
-            );
-
-        $_resHandler = $this->responseHandler()
-            ->throwErrorOn(
-                '422',
-                ErrorType::initWithErrorTemplate(
-                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
-                    SingleErrorResponseException::class
-                )
-            );
-
-        $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
-     * Use this endpoint to update a subscription's prepaid configuration.
-     *
-     * @param int $subscriptionId The Chargify id of the subscription
-     * @param UpsertPrepaidConfigurationRequest|null $body
-     *
-     * @return PrepaidConfigurationResponse Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function createPrepaidSubscription(
-        int $subscriptionId,
-        ?UpsertPrepaidConfigurationRequest $body = null
-    ): PrepaidConfigurationResponse {
-        $_reqBuilder = $this->requestBuilder(
-            RequestMethod::POST,
-            '/subscriptions/{subscription_id}/prepaid_configurations.json'
-        )
-            ->auth('global')
-            ->parameters(
-                TemplateParam::init('subscription_id', $subscriptionId)->required(),
-                HeaderParam::init('Content-Type', 'application/json'),
-                BodyParam::init($body)
-            );
-
-        $_resHandler = $this->responseHandler()->type(PrepaidConfigurationResponse::class);
-
-        return $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
-     * An existing subscription can accommodate multiple discounts/coupon codes. This is only applicable if
-     * each coupon is stackable. For more information on stackable coupons, we recommend reviewing our
-     * [coupon documentation.](https://chargify.zendesk.com/hc/en-us/articles/4407755909531#stackable-
-     * coupons)
-     *
-     * ## Query Parameters vs Request Body Parameters
-     *
-     * Passing in a coupon code as a query parameter will add the code to the subscription, completely
-     * replacing all existing coupon codes on the subscription.
-     *
-     * For this reason, using this query parameter on this endpoint has been deprecated in favor of using
-     * the request body parameters as described below. When passing in request body parameters, the list of
-     * coupon codes will simply be added to any existing list of codes on the subscription.
-     *
-     * @param int $subscriptionId The Chargify id of the subscription
-     * @param string|null $code A code for the coupon that would be applied to a subscription
-     * @param AddCouponsRequest|null $body
-     *
-     * @return SubscriptionResponse Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function applyCouponToSubscription(
-        int $subscriptionId,
-        ?string $code = null,
-        ?AddCouponsRequest $body = null
-    ): SubscriptionResponse {
-        $_reqBuilder = $this->requestBuilder(
-            RequestMethod::POST,
-            '/subscriptions/{subscription_id}/add_coupon.json'
-        )
-            ->auth('global')
-            ->parameters(
-                TemplateParam::init('subscription_id', $subscriptionId)->required(),
-                HeaderParam::init('Content-Type', 'application/json'),
-                QueryParam::init('code', $code)->commaSeparated(),
-                BodyParam::init($body)
-            );
-
-        $_resHandler = $this->responseHandler()
-            ->throwErrorOn(
-                '422',
-                ErrorType::initWithErrorTemplate(
-                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
-                    SubscriptionAddCouponErrorException::class
-                )
-            )
-            ->type(SubscriptionResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
     }

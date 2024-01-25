@@ -10,221 +10,16 @@ $subscriptionStatusController = $client->getSubscriptionStatusController();
 
 ## Methods
 
-* [Cancel Dunning](../../doc/controllers/subscription-status.md#cancel-dunning)
-* [Retry Subscription](../../doc/controllers/subscription-status.md#retry-subscription)
 * [Cancel Subscription](../../doc/controllers/subscription-status.md#cancel-subscription)
-* [Preview Renewal](../../doc/controllers/subscription-status.md#preview-renewal)
 * [Resume Subscription](../../doc/controllers/subscription-status.md#resume-subscription)
 * [Pause Subscription](../../doc/controllers/subscription-status.md#pause-subscription)
-* [Update Automatic Subscription Resumption](../../doc/controllers/subscription-status.md#update-automatic-subscription-resumption)
-* [Reactivate Subscription](../../doc/controllers/subscription-status.md#reactivate-subscription)
 * [Initiate Delayed Cancellation](../../doc/controllers/subscription-status.md#initiate-delayed-cancellation)
 * [Stop Delayed Cancellation](../../doc/controllers/subscription-status.md#stop-delayed-cancellation)
-
-
-# Cancel Dunning
-
-If a subscription is currently in dunning, the subscription will be set to active and the active Dunner will be resolved.
-
-```php
-function cancelDunning(int $subscriptionId): SubscriptionResponse
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
-
-## Response Type
-
-[`SubscriptionResponse`](../../doc/models/subscription-response.md)
-
-## Example Usage
-
-```php
-$subscriptionId = 222;
-
-$result = $subscriptionStatusController->cancelDunning($subscriptionId);
-```
-
-
-# Retry Subscription
-
-Chargify offers the ability to retry collecting the balance due on a past due Subscription without waiting for the next scheduled attempt.
-
-## Successful Reactivation
-
-The response will be `200 OK` with the updated Subscription.
-
-## Failed Reactivation
-
-The response will be `422 "Unprocessable Entity`.
-
-```php
-function retrySubscription(int $subscriptionId): SubscriptionResponse
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
-
-## Response Type
-
-[`SubscriptionResponse`](../../doc/models/subscription-response.md)
-
-## Example Usage
-
-```php
-$subscriptionId = 222;
-
-$result = $subscriptionStatusController->retrySubscription($subscriptionId);
-```
-
-## Example Response *(as JSON)*
-
-```json
-{
-  "subscription": {
-    "id": 46330,
-    "state": "active",
-    "trial_started_at": null,
-    "trial_ended_at": null,
-    "activated_at": "2018-10-22T13:10:46-06:00",
-    "created_at": "2018-10-22T13:10:46-06:00",
-    "updated_at": "2021-06-10T09:23:43-06:00",
-    "expires_at": null,
-    "balance_in_cents": 18600,
-    "current_period_ends_at": "2021-06-22T13:10:46-06:00",
-    "next_assessment_at": "2021-06-22T13:10:46-06:00",
-    "canceled_at": null,
-    "cancellation_message": null,
-    "next_product_id": null,
-    "cancel_at_end_of_period": null,
-    "payment_collection_method": "automatic",
-    "snap_day": null,
-    "cancellation_method": null,
-    "product_price_point_id": 3464,
-    "next_product_price_point_id": null,
-    "receives_invoice_emails": null,
-    "net_terms": null,
-    "locale": null,
-    "currency": "USD",
-    "reference": null,
-    "scheduled_cancellation_at": null,
-    "current_period_started_at": "2021-05-22T13:10:46-06:00",
-    "previous_state": "past_due",
-    "signup_payment_id": 651268,
-    "signup_revenue": "6.00",
-    "delayed_cancel_at": null,
-    "coupon_code": null,
-    "total_revenue_in_cents": 600,
-    "product_price_in_cents": 600,
-    "product_version_number": 501,
-    "payment_type": null,
-    "referral_code": "rzqvrx",
-    "coupon_use_count": null,
-    "coupon_uses_allowed": null,
-    "reason_code": null,
-    "automatically_resume_at": null,
-    "coupon_codes": [],
-    "offer_id": null,
-    "credit_balance_in_cents": 0,
-    "prepayment_balance_in_cents": 0,
-    "payer_id": 142365,
-    "stored_credential_transaction_id": null,
-    "next_product_handle": null,
-    "on_hold_at": null,
-    "prepaid_dunning": false,
-    "customer": {
-      "id": 142365,
-      "first_name": "Lavern",
-      "last_name": "Fahey",
-      "organization": null,
-      "email": "millie2@example.com",
-      "created_at": "2018-10-22T13:10:46-06:00",
-      "updated_at": "2018-10-22T13:10:46-06:00",
-      "reference": null,
-      "address": null,
-      "address_2": null,
-      "city": null,
-      "state": null,
-      "zip": null,
-      "country": null,
-      "phone": null,
-      "portal_invite_last_sent_at": null,
-      "portal_invite_last_accepted_at": null,
-      "verified": false,
-      "portal_customer_created_at": "2018-10-22T13:10:46-06:00",
-      "vat_number": null,
-      "cc_emails": "john@example.com, sue@example.com",
-      "tax_exempt": false,
-      "parent_id": null,
-      "locale": null
-    },
-    "product": {
-      "id": 8080,
-      "name": "Pro Versions",
-      "handle": null,
-      "description": "",
-      "accounting_code": "",
-      "request_credit_card": true,
-      "expiration_interval": null,
-      "expiration_interval_unit": "month",
-      "created_at": "2019-02-15T10:15:00-07:00",
-      "updated_at": "2019-02-15T10:30:34-07:00",
-      "price_in_cents": 600,
-      "interval": 1,
-      "interval_unit": "month",
-      "initial_charge_in_cents": null,
-      "trial_price_in_cents": null,
-      "trial_interval": null,
-      "trial_interval_unit": "month",
-      "archived_at": null,
-      "require_credit_card": true,
-      "return_params": "",
-      "require_shipping_address": false,
-      "request_billing_address": false,
-      "require_billing_address": false,
-      "taxable": false,
-      "update_return_url": "",
-      "tax_code": "",
-      "initial_charge_after_trial": false,
-      "default_product_price_point_id": 3464,
-      "version_number": 501,
-      "update_return_params": "",
-      "product_price_point_id": 3464,
-      "product_price_point_name": "Default",
-      "product_price_point_handle": "uuid:5305c3f0-1375-0137-5619-065dfbfdc636",
-      "product_family": {
-        "id": 37,
-        "name": "Acme Projects",
-        "description": null,
-        "handle": "acme-projects",
-        "accounting_code": null,
-        "created_at": "2013-02-20T15:05:51-07:00",
-        "updated_at": "2013-02-20T15:05:51-07:00"
-      },
-      "public_signup_pages": [
-        {
-          "id": 1540,
-          "return_url": null,
-          "return_params": "",
-          "url": "https://acme-test.staging-chargifypay.com/subscribe/2f6y53rrqgsf"
-        }
-      ]
-    }
-  }
-}
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
+* [Retry Subscription](../../doc/controllers/subscription-status.md#retry-subscription)
+* [Update Automatic Subscription Resumption](../../doc/controllers/subscription-status.md#update-automatic-subscription-resumption)
+* [Reactivate Subscription](../../doc/controllers/subscription-status.md#reactivate-subscription)
+* [Cancel Dunning](../../doc/controllers/subscription-status.md#cancel-dunning)
+* [Preview Renewal](../../doc/controllers/subscription-status.md#preview-renewal)
 
 
 # Cancel Subscription
@@ -396,140 +191,6 @@ $result = $subscriptionStatusController->cancelSubscription($subscriptionId);
 |  --- | --- | --- |
 | 404 | Not Found | `ApiException` |
 | 422 | Unprocessable Entity (WebDAV) | `ApiException` |
-
-
-# Preview Renewal
-
-The Chargify API allows you to preview a renewal by posting to the renewals endpoint. Renewal Preview is an object representing a subscription’s next assessment. You can retrieve it to see a snapshot of how much your customer will be charged on their next renewal.
-
-The "Next Billing" amount and "Next Billing" date are already represented in the UI on each Subscriber's Summary. For more information, please see our documentation [here](https://chargify.zendesk.com/hc/en-us/articles/4407884887835#next-billing).
-
-## Optional Component Fields
-
-This endpoint is particularly useful due to the fact that it will return the computed billing amount for the base product and the components which are in use by a subscriber.
-
-By default, the preview will include billing details for all components _at their **current** quantities_. This means:
-
-* Current `allocated_quantity` for quantity-based components
-* Current enabled/disabled status for on/off components
-* Current metered usage `unit_balance` for metered components
-* Current metric quantity value for events recorded thus far for events-based components
-
-In the above statements, "current" means the quantity or value as of the call to the renewal preview endpoint. We do not predict end-of-period values for components, so metered or events-based usage may be less than it will eventually be at the end of the period.
-
-Optionally, **you may provide your own custom quantities** for any component to see a billing preview for non-current quantities. This is accomplished by sending a request body with data under the `components` key. See the request body documentation below.
-
-## Subscription Side Effects
-
-You can request a `POST` to obtain this data from the endpoint without any side effects. Plain and simple, this will preview data, not log any changes against a subscription.
-
-```php
-function previewRenewal(int $subscriptionId, ?RenewalPreviewRequest $body = null): RenewalPreviewResponse
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
-| `body` | [`?RenewalPreviewRequest`](../../doc/models/renewal-preview-request.md) | Body, Optional | - |
-
-## Response Type
-
-[`RenewalPreviewResponse`](../../doc/models/renewal-preview-response.md)
-
-## Example Usage
-
-```php
-$subscriptionId = 222;
-
-$body = RenewalPreviewRequestBuilder::init()
-    ->components(
-        [
-            RenewalPreviewComponentBuilder::init()
-                ->componentId(
-                    10708
-                )
-                ->quantity(10000)
-                ->build(),
-            RenewalPreviewComponentBuilder::init()
-                ->componentId(
-                    'handle:small-instance-hours'
-                )
-                ->quantity(10000)
-                ->pricePointId(
-                    8712
-                )
-                ->build(),
-            RenewalPreviewComponentBuilder::init()
-                ->componentId(
-                    'handle:large-instance-hours'
-                )
-                ->quantity(100)
-                ->pricePointId(
-                    'handle:startup-pricing'
-                )
-                ->build()
-        ]
-    )
-    ->build();
-
-$result = $subscriptionStatusController->previewRenewal(
-    $subscriptionId,
-    $body
-);
-```
-
-## Example Response *(as JSON)*
-
-```json
-{
-  "renewal_preview": {
-    "next_assessment_at": "2017-03-13T12:50:55-04:00",
-    "subtotal_in_cents": 6000,
-    "total_tax_in_cents": 0,
-    "total_discount_in_cents": 0,
-    "total_in_cents": 6000,
-    "existing_balance_in_cents": 0,
-    "total_amount_due_in_cents": 6000,
-    "uncalculated_taxes": false,
-    "line_items": [
-      {
-        "transaction_type": "charge",
-        "kind": "baseline",
-        "amount_in_cents": 5000,
-        "memo": "Gold Product (03/13/2017 - 04/13/2017)",
-        "discount_amount_in_cents": 0,
-        "taxable_amount_in_cents": 0,
-        "product_id": 1,
-        "product_handle": "gold-product",
-        "product_name": "Gold Product",
-        "period_range_start": "01/10/2024",
-        "period_range_end": "02/10/2024"
-      },
-      {
-        "transaction_type": "charge",
-        "kind": "quantity_based_component",
-        "amount_in_cents": 1000,
-        "memo": "Quantity Component: 10 Quantity Components",
-        "discount_amount_in_cents": 0,
-        "taxable_amount_in_cents": 0,
-        "component_id": 104,
-        "component_handle": "quantity-component",
-        "component_name": "Quantity Component",
-        "period_range_start": "01/10/2024",
-        "period_range_end": "02/10/2024"
-      }
-    ]
-  }
-}
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
 
 
 # Resume Subscription
@@ -822,6 +483,268 @@ $result = $subscriptionStatusController->pauseSubscription(
           "return_url": "",
           "return_params": "",
           "url": "https://general-goods.chargify.com/subscribe/69x825m78v3d/zero-dollar-product"
+        }
+      ]
+    }
+  }
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
+
+
+# Initiate Delayed Cancellation
+
+Chargify offers the ability to cancel a subscription at the end of the current billing period. This period is set by its current product.
+
+Requesting to cancel the subscription at the end of the period sets the `cancel_at_end_of_period` flag to true.
+
+Note that you cannot set `cancel_at_end_of_period` at subscription creation, or if the subscription is past due.
+
+```php
+function initiateDelayedCancellation(
+    int $subscriptionId,
+    ?CancellationRequest $body = null
+): DelayedCancellationResponse
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+| `body` | [`?CancellationRequest`](../../doc/models/cancellation-request.md) | Body, Optional | - |
+
+## Response Type
+
+[`DelayedCancellationResponse`](../../doc/models/delayed-cancellation-response.md)
+
+## Example Usage
+
+```php
+$subscriptionId = 222;
+
+$result = $subscriptionStatusController->initiateDelayedCancellation($subscriptionId);
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 404 | Not Found | `ApiException` |
+
+
+# Stop Delayed Cancellation
+
+Removing the delayed cancellation on a subscription will ensure that it doesn't get canceled at the end of the period that it is in. The request will reset the `cancel_at_end_of_period` flag to `false`.
+
+This endpoint is idempotent. If the subscription was not set to cancel in the future, removing the delayed cancellation has no effect and the call will be successful.
+
+```php
+function stopDelayedCancellation(int $subscriptionId): DelayedCancellationResponse
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+
+## Response Type
+
+[`DelayedCancellationResponse`](../../doc/models/delayed-cancellation-response.md)
+
+## Example Usage
+
+```php
+$subscriptionId = 222;
+
+$result = $subscriptionStatusController->stopDelayedCancellation($subscriptionId);
+```
+
+## Example Response *(as JSON)*
+
+```json
+{
+  "message": "This subscription will no longer be canceled"
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 404 | Not Found | `ApiException` |
+
+
+# Retry Subscription
+
+Chargify offers the ability to retry collecting the balance due on a past due Subscription without waiting for the next scheduled attempt.
+
+## Successful Reactivation
+
+The response will be `200 OK` with the updated Subscription.
+
+## Failed Reactivation
+
+The response will be `422 "Unprocessable Entity`.
+
+```php
+function retrySubscription(int $subscriptionId): SubscriptionResponse
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+
+## Response Type
+
+[`SubscriptionResponse`](../../doc/models/subscription-response.md)
+
+## Example Usage
+
+```php
+$subscriptionId = 222;
+
+$result = $subscriptionStatusController->retrySubscription($subscriptionId);
+```
+
+## Example Response *(as JSON)*
+
+```json
+{
+  "subscription": {
+    "id": 46330,
+    "state": "active",
+    "trial_started_at": null,
+    "trial_ended_at": null,
+    "activated_at": "2018-10-22T13:10:46-06:00",
+    "created_at": "2018-10-22T13:10:46-06:00",
+    "updated_at": "2021-06-10T09:23:43-06:00",
+    "expires_at": null,
+    "balance_in_cents": 18600,
+    "current_period_ends_at": "2021-06-22T13:10:46-06:00",
+    "next_assessment_at": "2021-06-22T13:10:46-06:00",
+    "canceled_at": null,
+    "cancellation_message": null,
+    "next_product_id": null,
+    "cancel_at_end_of_period": null,
+    "payment_collection_method": "automatic",
+    "snap_day": null,
+    "cancellation_method": null,
+    "product_price_point_id": 3464,
+    "next_product_price_point_id": null,
+    "receives_invoice_emails": null,
+    "net_terms": null,
+    "locale": null,
+    "currency": "USD",
+    "reference": null,
+    "scheduled_cancellation_at": null,
+    "current_period_started_at": "2021-05-22T13:10:46-06:00",
+    "previous_state": "past_due",
+    "signup_payment_id": 651268,
+    "signup_revenue": "6.00",
+    "delayed_cancel_at": null,
+    "coupon_code": null,
+    "total_revenue_in_cents": 600,
+    "product_price_in_cents": 600,
+    "product_version_number": 501,
+    "payment_type": null,
+    "referral_code": "rzqvrx",
+    "coupon_use_count": null,
+    "coupon_uses_allowed": null,
+    "reason_code": null,
+    "automatically_resume_at": null,
+    "coupon_codes": [],
+    "offer_id": null,
+    "credit_balance_in_cents": 0,
+    "prepayment_balance_in_cents": 0,
+    "payer_id": 142365,
+    "stored_credential_transaction_id": null,
+    "next_product_handle": null,
+    "on_hold_at": null,
+    "prepaid_dunning": false,
+    "customer": {
+      "id": 142365,
+      "first_name": "Lavern",
+      "last_name": "Fahey",
+      "organization": null,
+      "email": "millie2@example.com",
+      "created_at": "2018-10-22T13:10:46-06:00",
+      "updated_at": "2018-10-22T13:10:46-06:00",
+      "reference": null,
+      "address": null,
+      "address_2": null,
+      "city": null,
+      "state": null,
+      "zip": null,
+      "country": null,
+      "phone": null,
+      "portal_invite_last_sent_at": null,
+      "portal_invite_last_accepted_at": null,
+      "verified": false,
+      "portal_customer_created_at": "2018-10-22T13:10:46-06:00",
+      "vat_number": null,
+      "cc_emails": "john@example.com, sue@example.com",
+      "tax_exempt": false,
+      "parent_id": null,
+      "locale": null
+    },
+    "product": {
+      "id": 8080,
+      "name": "Pro Versions",
+      "handle": null,
+      "description": "",
+      "accounting_code": "",
+      "request_credit_card": true,
+      "expiration_interval": null,
+      "expiration_interval_unit": "month",
+      "created_at": "2019-02-15T10:15:00-07:00",
+      "updated_at": "2019-02-15T10:30:34-07:00",
+      "price_in_cents": 600,
+      "interval": 1,
+      "interval_unit": "month",
+      "initial_charge_in_cents": null,
+      "trial_price_in_cents": null,
+      "trial_interval": null,
+      "trial_interval_unit": "month",
+      "archived_at": null,
+      "require_credit_card": true,
+      "return_params": "",
+      "require_shipping_address": false,
+      "request_billing_address": false,
+      "require_billing_address": false,
+      "taxable": false,
+      "update_return_url": "",
+      "tax_code": "",
+      "initial_charge_after_trial": false,
+      "default_product_price_point_id": 3464,
+      "version_number": 501,
+      "update_return_params": "",
+      "product_price_point_id": 3464,
+      "product_price_point_name": "Default",
+      "product_price_point_handle": "uuid:5305c3f0-1375-0137-5619-065dfbfdc636",
+      "product_family": {
+        "id": 37,
+        "name": "Acme Projects",
+        "description": null,
+        "handle": "acme-projects",
+        "accounting_code": null,
+        "created_at": "2013-02-20T15:05:51-07:00",
+        "updated_at": "2013-02-20T15:05:51-07:00"
+      },
+      "public_signup_pages": [
+        {
+          "id": 1540,
+          "return_url": null,
+          "return_params": "",
+          "url": "https://acme-test.staging-chargifypay.com/subscribe/2f6y53rrqgsf"
         }
       ]
     }
@@ -1335,55 +1258,12 @@ $result = $subscriptionStatusController->reactivateSubscription(
 | 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
 
 
-# Initiate Delayed Cancellation
+# Cancel Dunning
 
-Chargify offers the ability to cancel a subscription at the end of the current billing period. This period is set by its current product.
-
-Requesting to cancel the subscription at the end of the period sets the `cancel_at_end_of_period` flag to true.
-
-Note that you cannot set `cancel_at_end_of_period` at subscription creation, or if the subscription is past due.
+If a subscription is currently in dunning, the subscription will be set to active and the active Dunner will be resolved.
 
 ```php
-function initiateDelayedCancellation(
-    int $subscriptionId,
-    ?CancellationRequest $body = null
-): DelayedCancellationResponse
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
-| `body` | [`?CancellationRequest`](../../doc/models/cancellation-request.md) | Body, Optional | - |
-
-## Response Type
-
-[`DelayedCancellationResponse`](../../doc/models/delayed-cancellation-response.md)
-
-## Example Usage
-
-```php
-$subscriptionId = 222;
-
-$result = $subscriptionStatusController->initiateDelayedCancellation($subscriptionId);
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 404 | Not Found | `ApiException` |
-
-
-# Stop Delayed Cancellation
-
-Removing the delayed cancellation on a subscription will ensure that it doesn't get canceled at the end of the period that it is in. The request will reset the `cancel_at_end_of_period` flag to `false`.
-
-This endpoint is idempotent. If the subscription was not set to cancel in the future, removing the delayed cancellation has no effect and the call will be successful.
-
-```php
-function stopDelayedCancellation(int $subscriptionId): DelayedCancellationResponse
+function cancelDunning(int $subscriptionId): SubscriptionResponse
 ```
 
 ## Parameters
@@ -1394,21 +1274,141 @@ function stopDelayedCancellation(int $subscriptionId): DelayedCancellationRespon
 
 ## Response Type
 
-[`DelayedCancellationResponse`](../../doc/models/delayed-cancellation-response.md)
+[`SubscriptionResponse`](../../doc/models/subscription-response.md)
 
 ## Example Usage
 
 ```php
 $subscriptionId = 222;
 
-$result = $subscriptionStatusController->stopDelayedCancellation($subscriptionId);
+$result = $subscriptionStatusController->cancelDunning($subscriptionId);
+```
+
+
+# Preview Renewal
+
+The Chargify API allows you to preview a renewal by posting to the renewals endpoint. Renewal Preview is an object representing a subscription’s next assessment. You can retrieve it to see a snapshot of how much your customer will be charged on their next renewal.
+
+The "Next Billing" amount and "Next Billing" date are already represented in the UI on each Subscriber's Summary. For more information, please see our documentation [here](https://chargify.zendesk.com/hc/en-us/articles/4407884887835#next-billing).
+
+## Optional Component Fields
+
+This endpoint is particularly useful due to the fact that it will return the computed billing amount for the base product and the components which are in use by a subscriber.
+
+By default, the preview will include billing details for all components _at their **current** quantities_. This means:
+
+* Current `allocated_quantity` for quantity-based components
+* Current enabled/disabled status for on/off components
+* Current metered usage `unit_balance` for metered components
+* Current metric quantity value for events recorded thus far for events-based components
+
+In the above statements, "current" means the quantity or value as of the call to the renewal preview endpoint. We do not predict end-of-period values for components, so metered or events-based usage may be less than it will eventually be at the end of the period.
+
+Optionally, **you may provide your own custom quantities** for any component to see a billing preview for non-current quantities. This is accomplished by sending a request body with data under the `components` key. See the request body documentation below.
+
+## Subscription Side Effects
+
+You can request a `POST` to obtain this data from the endpoint without any side effects. Plain and simple, this will preview data, not log any changes against a subscription.
+
+```php
+function previewRenewal(int $subscriptionId, ?RenewalPreviewRequest $body = null): RenewalPreviewResponse
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+| `body` | [`?RenewalPreviewRequest`](../../doc/models/renewal-preview-request.md) | Body, Optional | - |
+
+## Response Type
+
+[`RenewalPreviewResponse`](../../doc/models/renewal-preview-response.md)
+
+## Example Usage
+
+```php
+$subscriptionId = 222;
+
+$body = RenewalPreviewRequestBuilder::init()
+    ->components(
+        [
+            RenewalPreviewComponentBuilder::init()
+                ->componentId(
+                    10708
+                )
+                ->quantity(10000)
+                ->build(),
+            RenewalPreviewComponentBuilder::init()
+                ->componentId(
+                    'handle:small-instance-hours'
+                )
+                ->quantity(10000)
+                ->pricePointId(
+                    8712
+                )
+                ->build(),
+            RenewalPreviewComponentBuilder::init()
+                ->componentId(
+                    'handle:large-instance-hours'
+                )
+                ->quantity(100)
+                ->pricePointId(
+                    'handle:startup-pricing'
+                )
+                ->build()
+        ]
+    )
+    ->build();
+
+$result = $subscriptionStatusController->previewRenewal(
+    $subscriptionId,
+    $body
+);
 ```
 
 ## Example Response *(as JSON)*
 
 ```json
 {
-  "message": "This subscription will no longer be canceled"
+  "renewal_preview": {
+    "next_assessment_at": "2017-03-13T12:50:55-04:00",
+    "subtotal_in_cents": 6000,
+    "total_tax_in_cents": 0,
+    "total_discount_in_cents": 0,
+    "total_in_cents": 6000,
+    "existing_balance_in_cents": 0,
+    "total_amount_due_in_cents": 6000,
+    "uncalculated_taxes": false,
+    "line_items": [
+      {
+        "transaction_type": "charge",
+        "kind": "baseline",
+        "amount_in_cents": 5000,
+        "memo": "Gold Product (03/13/2017 - 04/13/2017)",
+        "discount_amount_in_cents": 0,
+        "taxable_amount_in_cents": 0,
+        "product_id": 1,
+        "product_handle": "gold-product",
+        "product_name": "Gold Product",
+        "period_range_start": "01/10/2024",
+        "period_range_end": "02/10/2024"
+      },
+      {
+        "transaction_type": "charge",
+        "kind": "quantity_based_component",
+        "amount_in_cents": 1000,
+        "memo": "Quantity Component: 10 Quantity Components",
+        "discount_amount_in_cents": 0,
+        "taxable_amount_in_cents": 0,
+        "component_id": 104,
+        "component_handle": "quantity-component",
+        "component_name": "Quantity Component",
+        "period_range_start": "01/10/2024",
+        "period_range_end": "02/10/2024"
+      }
+    ]
+  }
 }
 ```
 
@@ -1416,5 +1416,5 @@ $result = $subscriptionStatusController->stopDelayedCancellation($subscriptionId
 
 | HTTP Status Code | Error Description | Exception Class |
 |  --- | --- | --- |
-| 404 | Not Found | `ApiException` |
+| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
 

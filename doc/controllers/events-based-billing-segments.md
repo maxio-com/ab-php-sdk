@@ -12,10 +12,10 @@ $eventsBasedBillingSegmentsController = $client->getEventsBasedBillingSegmentsCo
 
 * [List Segments for Price Point](../../doc/controllers/events-based-billing-segments.md#list-segments-for-price-point)
 * [Delete Segment](../../doc/controllers/events-based-billing-segments.md#delete-segment)
-* [Create Segments](../../doc/controllers/events-based-billing-segments.md#create-segments)
 * [Update Segment](../../doc/controllers/events-based-billing-segments.md#update-segment)
 * [Update Segments](../../doc/controllers/events-based-billing-segments.md#update-segments)
 * [Create Segment](../../doc/controllers/events-based-billing-segments.md#create-segment)
+* [Create Segments](../../doc/controllers/events-based-billing-segments.md#create-segments)
 
 
 # List Segments for Price Point
@@ -112,55 +112,6 @@ $eventsBasedBillingSegmentsController->deleteSegment(
 |  --- | --- | --- |
 | 404 | Not Found | `ApiException` |
 | 422 | Unprocessable Entity (WebDAV) | `ApiException` |
-
-
-# Create Segments
-
-This endpoint allows you to create multiple segments in one request. The array of segments can contain up to `2000` records.
-
-If any of the records contain an error the whole request would fail and none of the requested segments get created. The error response contains a message for only the one segment that failed validation, with the corresponding index in the array.
-
-You may specify component and/or price point by using either the numeric ID or the `handle:gold` syntax.
-
-```php
-function createSegments(
-    string $componentId,
-    string $pricePointId,
-    ?BulkCreateSegments $body = null
-): ListSegmentsResponse
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `componentId` | `string` | Template, Required | ID or Handle for the Component |
-| `pricePointId` | `string` | Template, Required | ID or Handle for the Price Point belonging to the Component |
-| `body` | [`?BulkCreateSegments`](../../doc/models/bulk-create-segments.md) | Body, Optional | - |
-
-## Response Type
-
-[`ListSegmentsResponse`](../../doc/models/list-segments-response.md)
-
-## Example Usage
-
-```php
-$componentId = 'component_id8';
-
-$pricePointId = 'price_point_id8';
-
-$result = $eventsBasedBillingSegmentsController->createSegments(
-    $componentId,
-    $pricePointId
-);
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 404 | Not Found | `ApiException` |
-| 422 | Unprocessable Entity (WebDAV) | [`EventBasedBillingSegmentException`](../../doc/models/event-based-billing-segment-exception.md) |
 
 
 # Update Segment
@@ -338,4 +289,53 @@ $result = $eventsBasedBillingSegmentsController->createSegment(
 |  --- | --- | --- |
 | 404 | Not Found | `ApiException` |
 | 422 | Unprocessable Entity (WebDAV) | [`EventBasedBillingSegmentErrorsException`](../../doc/models/event-based-billing-segment-errors-exception.md) |
+
+
+# Create Segments
+
+This endpoint allows you to create multiple segments in one request. The array of segments can contain up to `2000` records.
+
+If any of the records contain an error the whole request would fail and none of the requested segments get created. The error response contains a message for only the one segment that failed validation, with the corresponding index in the array.
+
+You may specify component and/or price point by using either the numeric ID or the `handle:gold` syntax.
+
+```php
+function createSegments(
+    string $componentId,
+    string $pricePointId,
+    ?BulkCreateSegments $body = null
+): ListSegmentsResponse
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `componentId` | `string` | Template, Required | ID or Handle for the Component |
+| `pricePointId` | `string` | Template, Required | ID or Handle for the Price Point belonging to the Component |
+| `body` | [`?BulkCreateSegments`](../../doc/models/bulk-create-segments.md) | Body, Optional | - |
+
+## Response Type
+
+[`ListSegmentsResponse`](../../doc/models/list-segments-response.md)
+
+## Example Usage
+
+```php
+$componentId = 'component_id8';
+
+$pricePointId = 'price_point_id8';
+
+$result = $eventsBasedBillingSegmentsController->createSegments(
+    $componentId,
+    $pricePointId
+);
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 404 | Not Found | `ApiException` |
+| 422 | Unprocessable Entity (WebDAV) | [`EventBasedBillingSegmentException`](../../doc/models/event-based-billing-segment-exception.md) |
 

@@ -14,9 +14,9 @@
 | `bankRoutingNumber` | `?string` | Optional | (Required when creating a subscription with ACH. Optional when creating a subscription with GoCardless). The routing number of the bank. It becomes bank_code while passing via GoCardless API | getBankRoutingNumber(): ?string | setBankRoutingNumber(?string bankRoutingNumber): void |
 | `bankIban` | `?string` | Optional | (Optional when creating a subscription with GoCardless). International Bank Account Number. Alternatively, local bank details can be provided | getBankIban(): ?string | setBankIban(?string bankIban): void |
 | `bankBranchCode` | `?string` | Optional | (Optional when creating a subscription with GoCardless) Branch code. Alternatively, an IBAN can be provided | getBankBranchCode(): ?string | setBankBranchCode(?string bankBranchCode): void |
-| `bankAccountType` | [`?string(BankAccountType)`](../../doc/models/bank-account-type.md) | Optional | **Default**: `BankAccountType::CHECKING` | getBankAccountType(): ?string | setBankAccountType(?string bankAccountType): void |
-| `bankAccountHolderType` | [`?string(HolderType)`](../../doc/models/holder-type.md) | Optional | - | getBankAccountHolderType(): ?string | setBankAccountHolderType(?string bankAccountHolderType): void |
-| `paymentType` | `?string` | Optional | - | getPaymentType(): ?string | setPaymentType(?string paymentType): void |
+| `bankAccountType` | [`?string(BankAccountType)`](../../doc/models/bank-account-type.md) | Optional | Defaults to checking<br>**Default**: `BankAccountType::CHECKING` | getBankAccountType(): ?string | setBankAccountType(?string bankAccountType): void |
+| `bankAccountHolderType` | [`?string(BankAccountHolderType)`](../../doc/models/bank-account-holder-type.md) | Optional | Defaults to personal | getBankAccountHolderType(): ?string | setBankAccountHolderType(?string bankAccountHolderType): void |
+| `paymentType` | [`?string(PaymentType)`](../../doc/models/payment-type.md) | Optional | **Default**: `PaymentType::CREDIT_CARD` | getPaymentType(): ?string | setPaymentType(?string paymentType): void |
 | `billingAddress` | `?string` | Optional | - | getBillingAddress(): ?string | setBillingAddress(?string billingAddress): void |
 | `billingCity` | `?string` | Optional | - | getBillingCity(): ?string | setBillingCity(?string billingCity): void |
 | `billingState` | `?string` | Optional | - | getBillingState(): ?string | setBillingState(?string billingState): void |
@@ -31,6 +31,7 @@
 ```json
 {
   "bank_account_type": "checking",
+  "payment_type": "credit_card",
   "bank_name": "bank_name2",
   "bank_account_number": "bank_account_number4",
   "bank_routing_number": "bank_routing_number8",

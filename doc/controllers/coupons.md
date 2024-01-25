@@ -14,16 +14,16 @@ $couponsController = $client->getCouponsController();
 * [Update Coupon](../../doc/controllers/coupons.md#update-coupon)
 * [List Coupons](../../doc/controllers/coupons.md#list-coupons)
 * [Read Coupon Usage](../../doc/controllers/coupons.md#read-coupon-usage)
-* [Validate Coupon](../../doc/controllers/coupons.md#validate-coupon)
-* [Read Coupon by Code](../../doc/controllers/coupons.md#read-coupon-by-code)
-* [Update Coupon Currency Prices](../../doc/controllers/coupons.md#update-coupon-currency-prices)
-* [List Coupon Subcodes](../../doc/controllers/coupons.md#list-coupon-subcodes)
-* [List Coupons for Product Family](../../doc/controllers/coupons.md#list-coupons-for-product-family)
 * [Create Coupon Subcodes](../../doc/controllers/coupons.md#create-coupon-subcodes)
-* [Update Coupon Subcodes](../../doc/controllers/coupons.md#update-coupon-subcodes)
-* [Delete Coupon Subcode](../../doc/controllers/coupons.md#delete-coupon-subcode)
-* [Read Coupon](../../doc/controllers/coupons.md#read-coupon)
+* [Read Coupon by Code](../../doc/controllers/coupons.md#read-coupon-by-code)
 * [Archive Coupon](../../doc/controllers/coupons.md#archive-coupon)
+* [List Coupon Subcodes](../../doc/controllers/coupons.md#list-coupon-subcodes)
+* [Read Coupon](../../doc/controllers/coupons.md#read-coupon)
+* [Validate Coupon](../../doc/controllers/coupons.md#validate-coupon)
+* [Update Coupon Subcodes](../../doc/controllers/coupons.md#update-coupon-subcodes)
+* [List Coupons for Product Family](../../doc/controllers/coupons.md#list-coupons-for-product-family)
+* [Update Coupon Currency Prices](../../doc/controllers/coupons.md#update-coupon-currency-prices)
+* [Delete Coupon Subcode](../../doc/controllers/coupons.md#delete-coupon-subcode)
 
 
 # Create Coupon
@@ -68,7 +68,7 @@ $body = CreateOrUpdateCouponBuilder::init()
         CreateOrUpdatePercentageCouponBuilder::init(
             '15% off',
             '15OFF',
-            '15'
+            15
         )
             ->description('15% off for life')
             ->allowNegativeBalance(false)
@@ -144,7 +144,7 @@ $body = CreateOrUpdateCouponBuilder::init()
         CreateOrUpdatePercentageCouponBuilder::init(
             '15% off',
             '15OFF',
-            '15'
+            15
         )
             ->description('15% off for life')
             ->allowNegativeBalance(false)
@@ -273,7 +273,7 @@ $result = $couponsController->listCoupons($collect);
       "product_family_name": "string",
       "start_date": "string",
       "end_date": "string",
-      "percentage": 0,
+      "percentage": "10",
       "recurring": true,
       "recurring_scheme": "do_not_recur",
       "duration_period_count": 0,
@@ -373,364 +373,6 @@ $result = $couponsController->readCouponUsage(
 ```
 
 
-# Validate Coupon
-
-You can verify if a specific coupon code is valid using the `validate` method. This method is useful for validating coupon codes that are entered by a customer. If the coupon is found and is valid, the coupon will be returned with a 200 status code.
-
-If the coupon is invalid, the status code will be 404 and the response will say why it is invalid. If the coupon is valid, the status code will be 200 and the coupon will be returned. The following reasons for invalidity are supported:
-
-+ Coupon not found
-+ Coupon is invalid
-+ Coupon expired
-
-If you have more than one product family and if the coupon you are validating does not belong to the first product family in your site, then you will need to specify the product family, either in the url or as a query string param. This can be done by supplying the id or the handle in the `handle:my-family` format.
-
-Eg.
-
-```
-https://<subdomain>.chargify.com/product_families/handle:<product_family_handle>/coupons/validate.<format>?code=<coupon_code>
-```
-
-Or:
-
-```
-https://<subdomain>.chargify.com/coupons/validate.<format>?code=<coupon_code>&product_family_id=<id>
-```
-
-```php
-function validateCoupon(string $code, ?int $productFamilyId = null): CouponResponse
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `code` | `string` | Query, Required | The code of the coupon |
-| `productFamilyId` | `?int` | Query, Optional | The Chargify id of the product family to which the coupon belongs |
-
-## Response Type
-
-[`CouponResponse`](../../doc/models/coupon-response.md)
-
-## Example Usage
-
-```php
-$code = 'code8';
-
-$result = $couponsController->validateCoupon($code);
-```
-
-## Example Response *(as JSON)*
-
-```json
-{
-  "coupon": {
-    "id": 66,
-    "name": "Foo Bar",
-    "code": "YEPPER9993",
-    "description": "my cool coupon",
-    "amount_in_cents": 10000,
-    "product_family_id": 4,
-    "created_at": "2017-11-07T14:51:52-05:00",
-    "updated_at": "2017-11-07T15:14:24-05:00",
-    "start_date": "2017-11-07T14:51:52-05:00",
-    "end_date": null,
-    "percentage": null,
-    "recurring": false,
-    "duration_period_count": null,
-    "duration_interval": null,
-    "duration_interval_unit": null,
-    "allow_negative_balance": false,
-    "archived_at": null,
-    "conversion_limit": null,
-    "stackable": true,
-    "compounding_strategy": "full-price",
-    "coupon_restrictions": []
-  }
-}
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 404 | Not Found | [`SingleStringErrorResponseException`](../../doc/models/single-string-error-response-exception.md) |
-
-
-# Read Coupon by Code
-
-You can search for a coupon via the API with the find method. By passing a code parameter, the find will attempt to locate a coupon that matches that code. If no coupon is found, a 404 is returned.
-
-If you have more than one product family and if the coupon you are trying to find does not belong to the default product family in your site, then you will need to specify (either in the url or as a query string param) the product family id.
-
-```php
-function readCouponByCode(?int $productFamilyId = null, ?string $code = null): CouponResponse
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `productFamilyId` | `?int` | Query, Optional | The Chargify id of the product family to which the coupon belongs |
-| `code` | `?string` | Query, Optional | The code of the coupon |
-
-## Response Type
-
-[`CouponResponse`](../../doc/models/coupon-response.md)
-
-## Example Usage
-
-```php
-$result = $couponsController->readCouponByCode();
-```
-
-
-# Update Coupon Currency Prices
-
-This endpoint allows you to create and/or update currency prices for an existing coupon. Multiple prices can be created or updated in a single request but each of the currencies must be defined on the site level already and the coupon must be an amount-based coupon, not percentage.
-
-Currency pricing for coupons must mirror the setup of the primary coupon pricing - if the primary coupon is percentage based, you will not be able to define pricing in non-primary currencies.
-
-```php
-function updateCouponCurrencyPrices(int $couponId, ?CouponCurrencyRequest $body = null): CouponCurrencyResponse
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `couponId` | `int` | Template, Required | The Chargify id of the coupon |
-| `body` | [`?CouponCurrencyRequest`](../../doc/models/coupon-currency-request.md) | Body, Optional | - |
-
-## Response Type
-
-[`CouponCurrencyResponse`](../../doc/models/coupon-currency-response.md)
-
-## Example Usage
-
-```php
-$couponId = 162;
-
-$body = CouponCurrencyRequestBuilder::init(
-    [
-        UpdateCouponCurrencyBuilder::init(
-            'EUR',
-            10
-        )->build(),
-        UpdateCouponCurrencyBuilder::init(
-            'GBP',
-            9
-        )->build()
-    ]
-)->build();
-
-$result = $couponsController->updateCouponCurrencyPrices(
-    $couponId,
-    $body
-);
-```
-
-
-# List Coupon Subcodes
-
-This request allows you to request the subcodes that are attached to a coupon.
-
-```php
-function listCouponSubcodes(array $options): CouponSubcodes
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `couponId` | `int` | Template, Required | The Chargify id of the coupon |
-| `page` | `?int` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`. |
-| `perPage` | `?int` | Query, Optional | This parameter indicates how many records to fetch in each request. Default value is 20. The maximum allowed values is 200; any per_page value over 200 will be changed to 200.<br>Use in query `per_page=200`. |
-
-## Response Type
-
-[`CouponSubcodes`](../../doc/models/coupon-subcodes.md)
-
-## Example Usage
-
-```php
-$collect = [
-    'coupon_id' => 162,
-    'page' => 2,
-    'per_page' => 50
-];
-
-$result = $couponsController->listCouponSubcodes($collect);
-```
-
-## Example Response *(as JSON)*
-
-```json
-{
-  "codes": [
-    "3JU6PR",
-    "9RO6MP",
-    "8OG1VV",
-    "5FL7VV",
-    "2SV8XK",
-    "4LW8LH",
-    "3VL4GZ",
-    "9UI9XO",
-    "0LZ0CC",
-    "8XI9JV",
-    "9UV5YE",
-    "3UI4GX",
-    "6SL5ST",
-    "9WC8IJ",
-    "2KA3PZ",
-    "7WR1VR",
-    "3VY7MN",
-    "6KC3KB",
-    "7DF7YT",
-    "9FH1ED"
-  ]
-}
-```
-
-
-# List Coupons for Product Family
-
-List coupons for a specific Product Family in a Site.
-
-If the coupon is set to `use_site_exchange_rate: true`, it will return pricing based on the current exchange rate. If the flag is set to false, it will return all of the defined prices for each currency.
-
-```php
-function listCouponsForProductFamily(array $options): array
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `productFamilyId` | `int` | Template, Required | The Chargify id of the product family to which the coupon belongs |
-| `page` | `?int` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`. |
-| `perPage` | `?int` | Query, Optional | This parameter indicates how many records to fetch in each request. Default value is 30. The maximum allowed values is 200; any per_page value over 200 will be changed to 200.<br>Use in query `per_page=200`. |
-| `filterDateField` | [`?string(BasicDateField)`](../../doc/models/basic-date-field.md) | Query, Optional | The type of filter you would like to apply to your search. Use in query `filter[date_field]=created_at`. |
-| `filterEndDate` | `?DateTime` | Query, Optional | The end date (format YYYY-MM-DD) with which to filter the date_field. Returns coupons with a timestamp up to and including 11:59:59PM in your site’s time zone on the date specified. Use in query `filter[date_field]=2011-12-15`. |
-| `filterEndDatetime` | `?DateTime` | Query, Optional | The end date and time (format YYYY-MM-DD HH:MM:SS) with which to filter the date_field. Returns coupons with a timestamp at or before exact time provided in query. You can specify timezone in query - otherwise your site's time zone will be used. If provided, this parameter will be used instead of end_date. Use in query `?filter[end_datetime]=2011-12-1T10:15:30+01:00`. |
-| `filterStartDate` | `?DateTime` | Query, Optional | The start date (format YYYY-MM-DD) with which to filter the date_field. Returns coupons with a timestamp at or after midnight (12:00:00 AM) in your site’s time zone on the date specified. Use in query `filter[start_date]=2011-12-17`. |
-| `filterStartDatetime` | `?DateTime` | Query, Optional | The start date and time (format YYYY-MM-DD HH:MM:SS) with which to filter the date_field. Returns coupons with a timestamp at or after exact time provided in query. You can specify timezone in query - otherwise your site's time zone will be used. If provided, this parameter will be used instead of start_date. Use in query `filter[start_datetime]=2011-12-19T10:15:30+01:00`. |
-| `filterIds` | `?(int[])` | Query, Optional | Allows fetching coupons with matching id based on provided values. Use in query `filter[ids]=1,2,3`. |
-| `filterCodes` | `?(string[])` | Query, Optional | Allows fetching coupons with matching codes based on provided values. Use in query `filter[codes]=free,free_trial`. |
-| `currencyPrices` | `?bool` | Query, Optional | When fetching coupons, if you have defined multiple currencies at the site level, you can optionally pass the `?currency_prices=true` query param to include an array of currency price data in the response. Use in query `currency_prices=true`. |
-| `filterUseSiteExchangeRate` | `?bool` | Query, Optional | Allows fetching coupons with matching use_site_exchange_rate based on provided value. Use in query `filter[use_site_exchange_rate]=true`. |
-
-## Response Type
-
-[`CouponResponse[]`](../../doc/models/coupon-response.md)
-
-## Example Usage
-
-```php
-$collect = Liquid error: Value cannot be null. (Parameter 'key')Liquid error: Value cannot be null. (Parameter 'key')Liquid error: Value cannot be null. (Parameter 'key')Liquid error: Value cannot be null. (Parameter 'key')Liquid error: Value cannot be null. (Parameter 'key')Liquid error: Value cannot be null. (Parameter 'key')Liquid error: Value cannot be null. (Parameter 'key')Liquid error: Value cannot be null. (Parameter 'key')[
-    'product_family_id' => 140,
-    'page' => 2,
-    'per_page' => 50,
-    'currency_prices' => true
-];
-
-$result = $couponsController->listCouponsForProductFamily($collect);
-```
-
-## Example Response *(as JSON)*
-
-```json
-[
-  {
-    "coupon": {
-      "id": 999999,
-      "name": "50% coupon",
-      "code": "50PERCENT",
-      "description": "50 PERCENT OFF",
-      "amount_in_cents": null,
-      "product_family_id": 527890,
-      "created_at": "2016-10-21T17:02:08-04:00",
-      "updated_at": "2016-10-21T17:06:11-04:00",
-      "start_date": "2016-10-21T17:02:08-04:00",
-      "end_date": null,
-      "percentage": 50,
-      "recurring": true,
-      "duration_period_count": null,
-      "duration_interval": 1,
-      "duration_interval_unit": "day",
-      "allow_negative_balance": true,
-      "archived_at": null,
-      "conversion_limit": "100",
-      "stackable": false,
-      "compounding_strategy": "compound",
-      "coupon_restrictions": [],
-      "use_site_exchange_rate": true
-    }
-  },
-  {
-    "coupon": {
-      "id": 123456,
-      "name": "100% coupon",
-      "code": "100PERCENT",
-      "description": "100 PERCENT OFF",
-      "amount_in_cents": null,
-      "product_family_id": 527890,
-      "created_at": "2016-10-21T17:02:08-04:00",
-      "updated_at": "2016-10-21T17:06:11-04:00",
-      "start_date": "2016-10-21T17:02:08-04:00",
-      "end_date": null,
-      "percentage": 50,
-      "recurring": true,
-      "duration_period_count": null,
-      "duration_interval": 1,
-      "duration_interval_unit": "day",
-      "allow_negative_balance": true,
-      "archived_at": null,
-      "conversion_limit": "100",
-      "stackable": false,
-      "compounding_strategy": "compound",
-      "coupon_restrictions": [],
-      "use_site_exchange_rate": true
-    }
-  },
-  {
-    "coupon": {
-      "id": 888888,
-      "name": "25% coupon",
-      "code": "25PERCENT",
-      "description": "25 PERCENT OFF",
-      "amount_in_cents": null,
-      "product_family_id": 527890,
-      "created_at": "2016-10-21T17:02:08-04:00",
-      "updated_at": "2016-10-21T17:06:11-04:00",
-      "start_date": "2016-10-21T17:02:08-04:00",
-      "end_date": null,
-      "percentage": 25,
-      "recurring": true,
-      "duration_period_count": null,
-      "duration_interval": 1,
-      "duration_interval_unit": "day",
-      "allow_negative_balance": true,
-      "archived_at": null,
-      "conversion_limit": "100",
-      "stackable": false,
-      "compounding_strategy": "compound",
-      "coupon_restrictions": [
-        {
-          "id": 37,
-          "item_type": "Component",
-          "item_id": 519,
-          "name": "test",
-          "handle": null
-        }
-      ],
-      "use_site_exchange_rate": true
-    }
-  }
-]
-```
-
-
 # Create Coupon Subcodes
 
 ## Coupon Subcodes Intro
@@ -825,136 +467,22 @@ $result = $couponsController->createCouponSubcodes(
 ```
 
 
-# Update Coupon Subcodes
+# Read Coupon by Code
 
-You can update the subcodes for the given Coupon via the API with a PUT request to the resource endpoint.
-Send an array of new coupon subcodes.
+You can search for a coupon via the API with the find method. By passing a code parameter, the find will attempt to locate a coupon that matches that code. If no coupon is found, a 404 is returned.
 
-**Note**: All current subcodes for that Coupon will be deleted first, and replaced with the list of subcodes sent to this endpoint.
-The response will contain:
-
-+ The created subcodes,
-
-+ Subcodes that were not created because they already exist,
-
-+ Any subcodes not created because they are invalid.
+If you have more than one product family and if the coupon you are trying to find does not belong to the default product family in your site, then you will need to specify (either in the url or as a query string param) the product family id.
 
 ```php
-function updateCouponSubcodes(int $couponId, ?CouponSubcodes $body = null): CouponSubcodesResponse
+function readCouponByCode(?int $productFamilyId = null, ?string $code = null): CouponResponse
 ```
 
 ## Parameters
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `couponId` | `int` | Template, Required | The Chargify id of the coupon |
-| `body` | [`?CouponSubcodes`](../../doc/models/coupon-subcodes.md) | Body, Optional | - |
-
-## Response Type
-
-[`CouponSubcodesResponse`](../../doc/models/coupon-subcodes-response.md)
-
-## Example Usage
-
-```php
-$couponId = 162;
-
-$body = CouponSubcodesBuilder::init()
-    ->codes(
-        [
-            'AAAA',
-            'BBBB',
-            'CCCC'
-        ]
-    )
-    ->build();
-
-$result = $couponsController->updateCouponSubcodes(
-    $couponId,
-    $body
-);
-```
-
-
-# Delete Coupon Subcode
-
-## Example
-
-Given a coupon with an ID of 567, and a coupon subcode of 20OFF, the URL to `DELETE` this coupon subcode would be:
-
-```
-http://subdomain.chargify.com/coupons/567/codes/20OFF.<format>
-```
-
-Note: If you are using any of the allowed special characters (“%”, “@”, “+”, “-”, “_”, and “.”), you must encode them for use in the URL.
-
-| Special character | Encoding |
-|-------------------|----------|
-| %                 | %25      |
-| @                 | %40      |
-| +                 | %2B      |
-| –                 | %2D      |
-| _                 | %5F      |
-| .                 | %2E      |
-
-## Percent Encoding Example
-
-Or if the coupon subcode is 20%OFF, the URL to delete this coupon subcode would be: @https://<subdomain>.chargify.com/coupons/567/codes/20%25OFF.<format>
-
-```php
-function deleteCouponSubcode(int $couponId, string $subcode): void
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `couponId` | `int` | Template, Required | The Chargify id of the coupon to which the subcode belongs |
-| `subcode` | `string` | Template, Required | The subcode of the coupon |
-
-## Response Type
-
-`void`
-
-## Example Usage
-
-```php
-$couponId = 162;
-
-$subcode = 'subcode4';
-
-$couponsController->deleteCouponSubcode(
-    $couponId,
-    $subcode
-);
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 404 | Not Found | `ApiException` |
-
-
-# Read Coupon
-
-You can retrieve the Coupon via the API with the Show method. You must identify the Coupon in this call by the ID parameter that Chargify assigns.
-If instead you would like to find a Coupon using a Coupon code, see the Coupon Find method.
-
-When fetching a coupon, if you have defined multiple currencies at the site level, you can optionally pass the `?currency_prices=true` query param to include an array of currency price data in the response.
-
-If the coupon is set to `use_site_exchange_rate: true`, it will return pricing based on the current exchange rate. If the flag is set to false, it will return all of the defined prices for each currency.
-
-```php
-function readCoupon(int $productFamilyId, int $couponId): CouponResponse
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `productFamilyId` | `int` | Template, Required | The Chargify id of the product family to which the coupon belongs |
-| `couponId` | `int` | Template, Required | The Chargify id of the coupon |
+| `productFamilyId` | `?int` | Query, Optional | The Chargify id of the product family to which the coupon belongs |
+| `code` | `?string` | Query, Optional | The code of the coupon |
 
 ## Response Type
 
@@ -963,44 +491,7 @@ function readCoupon(int $productFamilyId, int $couponId): CouponResponse
 ## Example Usage
 
 ```php
-$productFamilyId = 140;
-
-$couponId = 162;
-
-$result = $couponsController->readCoupon(
-    $productFamilyId,
-    $couponId
-);
-```
-
-## Example Response *(as JSON)*
-
-```json
-{
-  "coupon": {
-    "id": 67,
-    "name": "Foo Bar",
-    "code": "YEPPER99934",
-    "description": "my cool coupon",
-    "amount_in_cents": null,
-    "product_family_id": 4,
-    "product_family_name": "Billing Plans",
-    "created_at": "2017-11-08T10:01:15-05:00",
-    "updated_at": "2017-11-08T10:01:15-05:00",
-    "start_date": "2017-11-08T10:01:15-05:00",
-    "end_date": null,
-    "percentage": 33.3333,
-    "duration_period_count": null,
-    "duration_interval": null,
-    "duration_interval_unit": null,
-    "allow_negative_balance": false,
-    "archived_at": null,
-    "conversion_limit": null,
-    "stackable": true,
-    "compounding_strategy": "compound",
-    "coupon_restrictions": []
-  }
-}
+$result = $couponsController->readCouponByCode();
 ```
 
 
@@ -1067,4 +558,513 @@ $result = $couponsController->archiveCoupon(
   }
 }
 ```
+
+
+# List Coupon Subcodes
+
+This request allows you to request the subcodes that are attached to a coupon.
+
+```php
+function listCouponSubcodes(array $options): CouponSubcodes
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `couponId` | `int` | Template, Required | The Chargify id of the coupon |
+| `page` | `?int` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`. |
+| `perPage` | `?int` | Query, Optional | This parameter indicates how many records to fetch in each request. Default value is 20. The maximum allowed values is 200; any per_page value over 200 will be changed to 200.<br>Use in query `per_page=200`. |
+
+## Response Type
+
+[`CouponSubcodes`](../../doc/models/coupon-subcodes.md)
+
+## Example Usage
+
+```php
+$collect = [
+    'coupon_id' => 162,
+    'page' => 2,
+    'per_page' => 50
+];
+
+$result = $couponsController->listCouponSubcodes($collect);
+```
+
+## Example Response *(as JSON)*
+
+```json
+{
+  "codes": [
+    "3JU6PR",
+    "9RO6MP",
+    "8OG1VV",
+    "5FL7VV",
+    "2SV8XK",
+    "4LW8LH",
+    "3VL4GZ",
+    "9UI9XO",
+    "0LZ0CC",
+    "8XI9JV",
+    "9UV5YE",
+    "3UI4GX",
+    "6SL5ST",
+    "9WC8IJ",
+    "2KA3PZ",
+    "7WR1VR",
+    "3VY7MN",
+    "6KC3KB",
+    "7DF7YT",
+    "9FH1ED"
+  ]
+}
+```
+
+
+# Read Coupon
+
+You can retrieve the Coupon via the API with the Show method. You must identify the Coupon in this call by the ID parameter that Chargify assigns.
+If instead you would like to find a Coupon using a Coupon code, see the Coupon Find method.
+
+When fetching a coupon, if you have defined multiple currencies at the site level, you can optionally pass the `?currency_prices=true` query param to include an array of currency price data in the response.
+
+If the coupon is set to `use_site_exchange_rate: true`, it will return pricing based on the current exchange rate. If the flag is set to false, it will return all of the defined prices for each currency.
+
+```php
+function readCoupon(int $productFamilyId, int $couponId): CouponResponse
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `productFamilyId` | `int` | Template, Required | The Chargify id of the product family to which the coupon belongs |
+| `couponId` | `int` | Template, Required | The Chargify id of the coupon |
+
+## Response Type
+
+[`CouponResponse`](../../doc/models/coupon-response.md)
+
+## Example Usage
+
+```php
+$productFamilyId = 140;
+
+$couponId = 162;
+
+$result = $couponsController->readCoupon(
+    $productFamilyId,
+    $couponId
+);
+```
+
+## Example Response *(as JSON)*
+
+```json
+{
+  "coupon": {
+    "id": 67,
+    "name": "Foo Bar",
+    "code": "YEPPER99934",
+    "description": "my cool coupon",
+    "amount_in_cents": null,
+    "product_family_id": 4,
+    "product_family_name": "Billing Plans",
+    "created_at": "2017-11-08T10:01:15-05:00",
+    "updated_at": "2017-11-08T10:01:15-05:00",
+    "start_date": "2017-11-08T10:01:15-05:00",
+    "end_date": null,
+    "percentage": "33.3333",
+    "duration_period_count": null,
+    "duration_interval": null,
+    "duration_interval_unit": null,
+    "allow_negative_balance": false,
+    "archived_at": null,
+    "conversion_limit": null,
+    "stackable": true,
+    "compounding_strategy": "compound",
+    "coupon_restrictions": []
+  }
+}
+```
+
+
+# Validate Coupon
+
+You can verify if a specific coupon code is valid using the `validate` method. This method is useful for validating coupon codes that are entered by a customer. If the coupon is found and is valid, the coupon will be returned with a 200 status code.
+
+If the coupon is invalid, the status code will be 404 and the response will say why it is invalid. If the coupon is valid, the status code will be 200 and the coupon will be returned. The following reasons for invalidity are supported:
+
++ Coupon not found
++ Coupon is invalid
++ Coupon expired
+
+If you have more than one product family and if the coupon you are validating does not belong to the first product family in your site, then you will need to specify the product family, either in the url or as a query string param. This can be done by supplying the id or the handle in the `handle:my-family` format.
+
+Eg.
+
+```
+https://<subdomain>.chargify.com/product_families/handle:<product_family_handle>/coupons/validate.<format>?code=<coupon_code>
+```
+
+Or:
+
+```
+https://<subdomain>.chargify.com/coupons/validate.<format>?code=<coupon_code>&product_family_id=<id>
+```
+
+```php
+function validateCoupon(string $code, ?int $productFamilyId = null): CouponResponse
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `code` | `string` | Query, Required | The code of the coupon |
+| `productFamilyId` | `?int` | Query, Optional | The Chargify id of the product family to which the coupon belongs |
+
+## Response Type
+
+[`CouponResponse`](../../doc/models/coupon-response.md)
+
+## Example Usage
+
+```php
+$code = 'code8';
+
+$result = $couponsController->validateCoupon($code);
+```
+
+## Example Response *(as JSON)*
+
+```json
+{
+  "coupon": {
+    "id": 66,
+    "name": "Foo Bar",
+    "code": "YEPPER9993",
+    "description": "my cool coupon",
+    "amount_in_cents": 10000,
+    "product_family_id": 4,
+    "created_at": "2017-11-07T14:51:52-05:00",
+    "updated_at": "2017-11-07T15:14:24-05:00",
+    "start_date": "2017-11-07T14:51:52-05:00",
+    "end_date": null,
+    "percentage": null,
+    "recurring": false,
+    "duration_period_count": null,
+    "duration_interval": null,
+    "duration_interval_unit": null,
+    "allow_negative_balance": false,
+    "archived_at": null,
+    "conversion_limit": null,
+    "stackable": true,
+    "compounding_strategy": "full-price",
+    "coupon_restrictions": []
+  }
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 404 | Not Found | [`SingleStringErrorResponseException`](../../doc/models/single-string-error-response-exception.md) |
+
+
+# Update Coupon Subcodes
+
+You can update the subcodes for the given Coupon via the API with a PUT request to the resource endpoint.
+Send an array of new coupon subcodes.
+
+**Note**: All current subcodes for that Coupon will be deleted first, and replaced with the list of subcodes sent to this endpoint.
+The response will contain:
+
++ The created subcodes,
+
++ Subcodes that were not created because they already exist,
+
++ Any subcodes not created because they are invalid.
+
+```php
+function updateCouponSubcodes(int $couponId, ?CouponSubcodes $body = null): CouponSubcodesResponse
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `couponId` | `int` | Template, Required | The Chargify id of the coupon |
+| `body` | [`?CouponSubcodes`](../../doc/models/coupon-subcodes.md) | Body, Optional | - |
+
+## Response Type
+
+[`CouponSubcodesResponse`](../../doc/models/coupon-subcodes-response.md)
+
+## Example Usage
+
+```php
+$couponId = 162;
+
+$body = CouponSubcodesBuilder::init()
+    ->codes(
+        [
+            'AAAA',
+            'BBBB',
+            'CCCC'
+        ]
+    )
+    ->build();
+
+$result = $couponsController->updateCouponSubcodes(
+    $couponId,
+    $body
+);
+```
+
+
+# List Coupons for Product Family
+
+List coupons for a specific Product Family in a Site.
+
+If the coupon is set to `use_site_exchange_rate: true`, it will return pricing based on the current exchange rate. If the flag is set to false, it will return all of the defined prices for each currency.
+
+```php
+function listCouponsForProductFamily(array $options): array
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `productFamilyId` | `int` | Template, Required | The Chargify id of the product family to which the coupon belongs |
+| `page` | `?int` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`. |
+| `perPage` | `?int` | Query, Optional | This parameter indicates how many records to fetch in each request. Default value is 30. The maximum allowed values is 200; any per_page value over 200 will be changed to 200.<br>Use in query `per_page=200`. |
+| `filterDateField` | [`?string(BasicDateField)`](../../doc/models/basic-date-field.md) | Query, Optional | The type of filter you would like to apply to your search. Use in query `filter[date_field]=created_at`. |
+| `filterEndDate` | `?DateTime` | Query, Optional | The end date (format YYYY-MM-DD) with which to filter the date_field. Returns coupons with a timestamp up to and including 11:59:59PM in your site’s time zone on the date specified. Use in query `filter[date_field]=2011-12-15`. |
+| `filterEndDatetime` | `?DateTime` | Query, Optional | The end date and time (format YYYY-MM-DD HH:MM:SS) with which to filter the date_field. Returns coupons with a timestamp at or before exact time provided in query. You can specify timezone in query - otherwise your site's time zone will be used. If provided, this parameter will be used instead of end_date. Use in query `?filter[end_datetime]=2011-12-1T10:15:30+01:00`. |
+| `filterStartDate` | `?DateTime` | Query, Optional | The start date (format YYYY-MM-DD) with which to filter the date_field. Returns coupons with a timestamp at or after midnight (12:00:00 AM) in your site’s time zone on the date specified. Use in query `filter[start_date]=2011-12-17`. |
+| `filterStartDatetime` | `?DateTime` | Query, Optional | The start date and time (format YYYY-MM-DD HH:MM:SS) with which to filter the date_field. Returns coupons with a timestamp at or after exact time provided in query. You can specify timezone in query - otherwise your site's time zone will be used. If provided, this parameter will be used instead of start_date. Use in query `filter[start_datetime]=2011-12-19T10:15:30+01:00`. |
+| `filterIds` | `?(int[])` | Query, Optional | Allows fetching coupons with matching id based on provided values. Use in query `filter[ids]=1,2,3`. |
+| `filterCodes` | `?(string[])` | Query, Optional | Allows fetching coupons with matching codes based on provided values. Use in query `filter[codes]=free,free_trial`. |
+| `currencyPrices` | `?bool` | Query, Optional | When fetching coupons, if you have defined multiple currencies at the site level, you can optionally pass the `?currency_prices=true` query param to include an array of currency price data in the response. Use in query `currency_prices=true`. |
+| `filterUseSiteExchangeRate` | `?bool` | Query, Optional | Allows fetching coupons with matching use_site_exchange_rate based on provided value. Use in query `filter[use_site_exchange_rate]=true`. |
+
+## Response Type
+
+[`CouponResponse[]`](../../doc/models/coupon-response.md)
+
+## Example Usage
+
+```php
+$collect = Liquid error: Value cannot be null. (Parameter 'key')Liquid error: Value cannot be null. (Parameter 'key')Liquid error: Value cannot be null. (Parameter 'key')Liquid error: Value cannot be null. (Parameter 'key')Liquid error: Value cannot be null. (Parameter 'key')Liquid error: Value cannot be null. (Parameter 'key')Liquid error: Value cannot be null. (Parameter 'key')Liquid error: Value cannot be null. (Parameter 'key')[
+    'product_family_id' => 140,
+    'page' => 2,
+    'per_page' => 50,
+    'currency_prices' => true
+];
+
+$result = $couponsController->listCouponsForProductFamily($collect);
+```
+
+## Example Response *(as JSON)*
+
+```json
+[
+  {
+    "coupon": {
+      "id": 999999,
+      "name": "50% coupon",
+      "code": "50PERCENT",
+      "description": "50 PERCENT OFF",
+      "amount_in_cents": null,
+      "product_family_id": 527890,
+      "created_at": "2016-10-21T17:02:08-04:00",
+      "updated_at": "2016-10-21T17:06:11-04:00",
+      "start_date": "2016-10-21T17:02:08-04:00",
+      "end_date": null,
+      "percentage": "50",
+      "recurring": true,
+      "duration_period_count": null,
+      "duration_interval": 1,
+      "duration_interval_unit": "day",
+      "allow_negative_balance": true,
+      "archived_at": null,
+      "conversion_limit": "100",
+      "stackable": false,
+      "compounding_strategy": "compound",
+      "coupon_restrictions": [],
+      "use_site_exchange_rate": true
+    }
+  },
+  {
+    "coupon": {
+      "id": 123456,
+      "name": "100% coupon",
+      "code": "100PERCENT",
+      "description": "100 PERCENT OFF",
+      "amount_in_cents": null,
+      "product_family_id": 527890,
+      "created_at": "2016-10-21T17:02:08-04:00",
+      "updated_at": "2016-10-21T17:06:11-04:00",
+      "start_date": "2016-10-21T17:02:08-04:00",
+      "end_date": null,
+      "percentage": "50",
+      "recurring": true,
+      "duration_period_count": null,
+      "duration_interval": 1,
+      "duration_interval_unit": "day",
+      "allow_negative_balance": true,
+      "archived_at": null,
+      "conversion_limit": "100",
+      "stackable": false,
+      "compounding_strategy": "compound",
+      "coupon_restrictions": [],
+      "use_site_exchange_rate": true
+    }
+  },
+  {
+    "coupon": {
+      "id": 888888,
+      "name": "25% coupon",
+      "code": "25PERCENT",
+      "description": "25 PERCENT OFF",
+      "amount_in_cents": null,
+      "product_family_id": 527890,
+      "created_at": "2016-10-21T17:02:08-04:00",
+      "updated_at": "2016-10-21T17:06:11-04:00",
+      "start_date": "2016-10-21T17:02:08-04:00",
+      "end_date": null,
+      "percentage": "25",
+      "recurring": true,
+      "duration_period_count": null,
+      "duration_interval": 1,
+      "duration_interval_unit": "day",
+      "allow_negative_balance": true,
+      "archived_at": null,
+      "conversion_limit": "100",
+      "stackable": false,
+      "compounding_strategy": "compound",
+      "coupon_restrictions": [
+        {
+          "id": 37,
+          "item_type": "Component",
+          "item_id": 519,
+          "name": "test",
+          "handle": null
+        }
+      ],
+      "use_site_exchange_rate": true
+    }
+  }
+]
+```
+
+
+# Update Coupon Currency Prices
+
+This endpoint allows you to create and/or update currency prices for an existing coupon. Multiple prices can be created or updated in a single request but each of the currencies must be defined on the site level already and the coupon must be an amount-based coupon, not percentage.
+
+Currency pricing for coupons must mirror the setup of the primary coupon pricing - if the primary coupon is percentage based, you will not be able to define pricing in non-primary currencies.
+
+```php
+function updateCouponCurrencyPrices(int $couponId, ?CouponCurrencyRequest $body = null): CouponCurrencyResponse
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `couponId` | `int` | Template, Required | The Chargify id of the coupon |
+| `body` | [`?CouponCurrencyRequest`](../../doc/models/coupon-currency-request.md) | Body, Optional | - |
+
+## Response Type
+
+[`CouponCurrencyResponse`](../../doc/models/coupon-currency-response.md)
+
+## Example Usage
+
+```php
+$couponId = 162;
+
+$body = CouponCurrencyRequestBuilder::init(
+    [
+        UpdateCouponCurrencyBuilder::init(
+            'EUR',
+            10
+        )->build(),
+        UpdateCouponCurrencyBuilder::init(
+            'GBP',
+            9
+        )->build()
+    ]
+)->build();
+
+$result = $couponsController->updateCouponCurrencyPrices(
+    $couponId,
+    $body
+);
+```
+
+
+# Delete Coupon Subcode
+
+## Example
+
+Given a coupon with an ID of 567, and a coupon subcode of 20OFF, the URL to `DELETE` this coupon subcode would be:
+
+```
+http://subdomain.chargify.com/coupons/567/codes/20OFF.<format>
+```
+
+Note: If you are using any of the allowed special characters (“%”, “@”, “+”, “-”, “_”, and “.”), you must encode them for use in the URL.
+
+| Special character | Encoding |
+|-------------------|----------|
+| %                 | %25      |
+| @                 | %40      |
+| +                 | %2B      |
+| –                 | %2D      |
+| _                 | %5F      |
+| .                 | %2E      |
+
+## Percent Encoding Example
+
+Or if the coupon subcode is 20%OFF, the URL to delete this coupon subcode would be: @https://<subdomain>.chargify.com/coupons/567/codes/20%25OFF.<format>
+
+```php
+function deleteCouponSubcode(int $couponId, string $subcode): void
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `couponId` | `int` | Template, Required | The Chargify id of the coupon to which the subcode belongs |
+| `subcode` | `string` | Template, Required | The subcode of the coupon |
+
+## Response Type
+
+`void`
+
+## Example Usage
+
+```php
+$couponId = 162;
+
+$subcode = 'subcode4';
+
+$couponsController->deleteCouponSubcode(
+    $couponId,
+    $subcode
+);
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 404 | Not Found | `ApiException` |
 

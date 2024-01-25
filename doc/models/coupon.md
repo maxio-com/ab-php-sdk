@@ -19,7 +19,7 @@
 | `productFamilyName` | `?string` | Optional | - | getProductFamilyName(): ?string | setProductFamilyName(?string productFamilyName): void |
 | `startDate` | `?string` | Optional | - | getStartDate(): ?string | setStartDate(?string startDate): void |
 | `endDate` | `?string` | Optional | - | getEndDate(): ?string | setEndDate(?string endDate): void |
-| `percentage` | `?float` | Optional | - | getPercentage(): ?float | setPercentage(?float percentage): void |
+| `percentage` | `?string` | Optional | - | getPercentage(): ?string | setPercentage(?string percentage): void |
 | `recurring` | `?bool` | Optional | - | getRecurring(): ?bool | setRecurring(?bool recurring): void |
 | `recurringScheme` | [`?string(RecurringScheme)`](../../doc/models/recurring-scheme.md) | Optional | - | getRecurringScheme(): ?string | setRecurringScheme(?string recurringScheme): void |
 | `durationPeriodCount` | `?int` | Optional | - | getDurationPeriodCount(): ?int | setDurationPeriodCount(?int durationPeriodCount): void |

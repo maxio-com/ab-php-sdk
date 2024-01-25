@@ -66,7 +66,7 @@ class InvoiceEvent1 implements \JsonSerializable
     private $consolidatedInvoice;
 
     /**
-     * @var AppliedCreditNote[]|null
+     * @var AppliedCreditNoteData[]|null
      */
     private $appliedCreditNotes;
 
@@ -349,7 +349,7 @@ class InvoiceEvent1 implements \JsonSerializable
      * Returns Applied Credit Notes.
      * List of credit notes applied to children invoices (if consolidated invoice)
      *
-     * @return AppliedCreditNote[]|null
+     * @return AppliedCreditNoteData[]|null
      */
     public function getAppliedCreditNotes(): ?array
     {
@@ -362,7 +362,7 @@ class InvoiceEvent1 implements \JsonSerializable
      *
      * @maps applied_credit_notes
      *
-     * @param AppliedCreditNote[]|null $appliedCreditNotes
+     * @param AppliedCreditNoteData[]|null $appliedCreditNotes
      */
     public function setAppliedCreditNotes(?array $appliedCreditNotes): void
     {

@@ -72,30 +72,6 @@ class AdvanceInvoiceController extends BaseController
     }
 
     /**
-     * Once an advance invoice has been generated for a subscription's upcoming renewal, it can be viewed
-     * through this endpoint. There can only be one advance invoice per subscription per billing cycle.
-     *
-     * @param int $subscriptionId The Chargify id of the subscription
-     *
-     * @return Invoice Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function readAdvanceInvoice(int $subscriptionId): Invoice
-    {
-        $_reqBuilder = $this->requestBuilder(
-            RequestMethod::GET,
-            '/subscriptions/{subscription_id}/advance_invoice.json'
-        )->auth('global')->parameters(TemplateParam::init('subscription_id', $subscriptionId)->required());
-
-        $_resHandler = $this->responseHandler()
-            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
-            ->type(Invoice::class);
-
-        return $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
      * Void a subscription's existing advance invoice. Once voided, it can later be regenerated if desired.
      * A `reason` is required in order to void, and the invoice must have an open status. Voiding will
      * cause any prepayments and credits that were applied to the invoice to be returned to the
@@ -121,6 +97,30 @@ class AdvanceInvoiceController extends BaseController
                 HeaderParam::init('Content-Type', 'application/json'),
                 BodyParam::init($body)
             );
+
+        $_resHandler = $this->responseHandler()
+            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
+            ->type(Invoice::class);
+
+        return $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
+     * Once an advance invoice has been generated for a subscription's upcoming renewal, it can be viewed
+     * through this endpoint. There can only be one advance invoice per subscription per billing cycle.
+     *
+     * @param int $subscriptionId The Chargify id of the subscription
+     *
+     * @return Invoice Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function readAdvanceInvoice(int $subscriptionId): Invoice
+    {
+        $_reqBuilder = $this->requestBuilder(
+            RequestMethod::GET,
+            '/subscriptions/{subscription_id}/advance_invoice.json'
+        )->auth('global')->parameters(TemplateParam::init('subscription_id', $subscriptionId)->required());
 
         $_resHandler = $this->responseHandler()
             ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))

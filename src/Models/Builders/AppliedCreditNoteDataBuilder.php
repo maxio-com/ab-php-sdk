@@ -10,32 +10,32 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models\Builders;
 
-use AdvancedBillingLib\Models\AppliedCreditNote;
+use AdvancedBillingLib\Models\AppliedCreditNoteData;
 use Core\Utils\CoreHelper;
 
 /**
- * Builder for model AppliedCreditNote
+ * Builder for model AppliedCreditNoteData
  *
- * @see AppliedCreditNote
+ * @see AppliedCreditNoteData
  */
-class AppliedCreditNoteBuilder
+class AppliedCreditNoteDataBuilder
 {
     /**
-     * @var AppliedCreditNote
+     * @var AppliedCreditNoteData
      */
     private $instance;
 
-    private function __construct(AppliedCreditNote $instance)
+    private function __construct(AppliedCreditNoteData $instance)
     {
         $this->instance = $instance;
     }
 
     /**
-     * Initializes a new applied credit note Builder object.
+     * Initializes a new applied credit note data Builder object.
      */
     public static function init(): self
     {
-        return new self(new AppliedCreditNote());
+        return new self(new AppliedCreditNoteData());
     }
 
     /**
@@ -57,9 +57,9 @@ class AppliedCreditNoteBuilder
     }
 
     /**
-     * Initializes a new applied credit note object.
+     * Initializes a new applied credit note data object.
      */
-    public function build(): AppliedCreditNote
+    public function build(): AppliedCreditNoteData
     {
         return CoreHelper::clone($this->instance);
     }

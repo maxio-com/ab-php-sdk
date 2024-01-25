@@ -157,7 +157,7 @@ class Subscription implements \JsonSerializable
     private $product;
 
     /**
-     * @var PaymentProfile|null
+     * @var CreditCardPaymentProfile|null
      */
     private $creditCard;
 
@@ -167,7 +167,7 @@ class Subscription implements \JsonSerializable
     private $group = [];
 
     /**
-     * @var SubscriptionBankAccount|null
+     * @var BankAccountPaymentProfile|null
      */
     private $bankAccount;
 
@@ -1154,7 +1154,7 @@ class Subscription implements \JsonSerializable
     /**
      * Returns Credit Card.
      */
-    public function getCreditCard(): ?PaymentProfile
+    public function getCreditCard(): ?CreditCardPaymentProfile
     {
         return $this->creditCard;
     }
@@ -1164,7 +1164,7 @@ class Subscription implements \JsonSerializable
      *
      * @maps credit_card
      */
-    public function setCreditCard(?PaymentProfile $creditCard): void
+    public function setCreditCard(?CreditCardPaymentProfile $creditCard): void
     {
         $this->creditCard = $creditCard;
     }
@@ -1202,7 +1202,7 @@ class Subscription implements \JsonSerializable
     /**
      * Returns Bank Account.
      */
-    public function getBankAccount(): ?SubscriptionBankAccount
+    public function getBankAccount(): ?BankAccountPaymentProfile
     {
         return $this->bankAccount;
     }
@@ -1212,7 +1212,7 @@ class Subscription implements \JsonSerializable
      *
      * @maps bank_account
      */
-    public function setBankAccount(?SubscriptionBankAccount $bankAccount): void
+    public function setBankAccount(?BankAccountPaymentProfile $bankAccount): void
     {
         $this->bankAccount = $bankAccount;
     }

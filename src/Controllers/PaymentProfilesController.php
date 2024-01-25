@@ -16,12 +16,9 @@ use AdvancedBillingLib\Exceptions\ErrorStringMapResponseException;
 use AdvancedBillingLib\Models\BankAccountResponse;
 use AdvancedBillingLib\Models\BankAccountVerificationRequest;
 use AdvancedBillingLib\Models\CreatePaymentProfileRequest;
-use AdvancedBillingLib\Models\CreatePaymentProfileResponse;
 use AdvancedBillingLib\Models\GetOneTimeTokenRequest;
 use AdvancedBillingLib\Models\PaymentProfileResponse;
-use AdvancedBillingLib\Models\ReadPaymentProfileResponse;
 use AdvancedBillingLib\Models\UpdatePaymentProfileRequest;
-use AdvancedBillingLib\Models\UpdatePaymentProfileResponse;
 use Core\Request\Parameters\BodyParam;
 use Core\Request\Parameters\HeaderParam;
 use Core\Request\Parameters\QueryParam;
@@ -31,6 +28,157 @@ use CoreInterfaces\Core\Request\RequestMethod;
 
 class PaymentProfilesController extends BaseController
 {
+    /**
+     * ## Partial Card Updates
+     *
+     * In the event that you are using the Authorize.net, Stripe, Cybersource, Forte or Braintree Blue
+     * payment gateways, you can update just the billing and contact information for a payment method. Note
+     * the lack of credit-card related data contained in the JSON payload.
+     *
+     * In this case, the following JSON is acceptable:
+     *
+     * ```
+     * {
+     * "payment_profile": {
+     * "first_name": "Kelly",
+     * "last_name": "Test",
+     * "billing_address": "789 Juniper Court",
+     * "billing_city": "Boulder",
+     * "billing_state": "CO",
+     * "billing_zip": "80302",
+     * "billing_country": "US",
+     * "billing_address_2": null
+     * }
+     * }
+     * ```
+     *
+     * The result will be that you have updated the billing information for the card, yet retained the
+     * original card number data.
+     *
+     * ## Specific notes on updating payment profiles
+     *
+     * - Merchants with **Authorize.net**, **Cybersource**, **Forte**, **Braintree Blue** or **Stripe** as
+     * their payment gateway can update their Customer’s credit cards without passing in the full credit
+     * card number and CVV.
+     *
+     * - If you are using **Authorize.net**, **Cybersource**, **Forte**, **Braintree Blue** or **Stripe**,
+     * Chargify will ignore the credit card number and CVV when processing an update via the API, and
+     * attempt a partial update instead. If you wish to change the card number on a payment profile, you
+     * will need to create a new payment profile for the given customer.
+     *
+     * - A Payment Profile cannot be updated with the attributes of another type of Payment Profile. For
+     * example, if the payment profile you are attempting to update is a credit card, you cannot pass in
+     * bank account attributes (like `bank_account_number`), and vice versa.
+     *
+     * - Updating a payment profile directly will not trigger an attempt to capture a past-due balance. If
+     * this is the intent, update the card details via the Subscription instead.
+     *
+     * - If you are using Authorize.net or Stripe, you may elect to manually trigger a retry for a past due
+     * subscription after a partial update.
+     *
+     * @param int $paymentProfileId The Chargify id of the payment profile
+     * @param UpdatePaymentProfileRequest|null $body
+     *
+     * @return PaymentProfileResponse Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function updatePaymentProfile(
+        int $paymentProfileId,
+        ?UpdatePaymentProfileRequest $body = null
+    ): PaymentProfileResponse {
+        $_reqBuilder = $this->requestBuilder(RequestMethod::PUT, '/payment_profiles/{payment_profile_id}.json')
+            ->auth('global')
+            ->parameters(
+                TemplateParam::init('payment_profile_id', $paymentProfileId)->required(),
+                HeaderParam::init('Content-Type', 'application/json'),
+                BodyParam::init($body)
+            );
+
+        $_resHandler = $this->responseHandler()
+            ->throwErrorOn('404', ErrorType::init('Not Found'))
+            ->throwErrorOn(
+                '422',
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorStringMapResponseException::class
+                )
+            )
+            ->type(PaymentProfileResponse::class);
+
+        return $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
+     * This will delete a Payment Profile belonging to a Subscription Group.
+     *
+     * **Note**: If the Payment Profile belongs to multiple Subscription Groups and/or Subscriptions, it
+     * will be removed from all of them.
+     *
+     * @param string $uid The uid of the subscription group
+     * @param int $paymentProfileId The Chargify id of the payment profile
+     *
+     * @return void Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function deleteSubscriptionGroupPaymentProfile(string $uid, int $paymentProfileId): void
+    {
+        $_reqBuilder = $this->requestBuilder(
+            RequestMethod::DELETE,
+            '/subscription_groups/{uid}/payment_profiles/{payment_profile_id}.json'
+        )
+            ->auth('global')
+            ->parameters(
+                TemplateParam::init('uid', $uid)->required(),
+                TemplateParam::init('payment_profile_id', $paymentProfileId)->required()
+            );
+
+        $this->execute($_reqBuilder);
+    }
+
+    /**
+     * You can send a "request payment update" email to the customer associated with the subscription.
+     *
+     * If you attempt to send a "request payment update" email more than five times within a 30-minute
+     * period, you will receive a `422` response with an error message in the body. This error message will
+     * indicate that the request has been rejected due to excessive attempts, and will provide instructions
+     * on how to resubmit the request.
+     *
+     * Additionally, if you attempt to send a "request payment update" email for a subscription that does
+     * not exist, you will receive a `404` error response. This error message will indicate that the
+     * subscription could not be found, and will provide instructions on how to correct the error and
+     * resubmit the request.
+     *
+     * These error responses are designed to prevent excessive or invalid requests, and to provide clear
+     * and helpful information to users who encounter errors during the request process.
+     *
+     * @param int $subscriptionId The Chargify id of the subscription
+     *
+     * @return void Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function sendRequestUpdatePaymentEmail(int $subscriptionId): void
+    {
+        $_reqBuilder = $this->requestBuilder(
+            RequestMethod::POST,
+            '/subscriptions/{subscription_id}/request_payment_profiles_update.json'
+        )->auth('global')->parameters(TemplateParam::init('subscription_id', $subscriptionId)->required());
+
+        $_resHandler = $this->responseHandler()
+            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
+            ->throwErrorOn(
+                '422',
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
+            );
+
+        $this->execute($_reqBuilder, $_resHandler);
+    }
+
     /**
      * Use this endpoint to create a payment profile for a customer.
      *
@@ -346,11 +494,11 @@ class PaymentProfilesController extends BaseController
      *        current vault. If the customer, bank account, and mandate already exist in your
      *        vault, follow the Import example to link the payment profile into Chargify.
      *
-     * @return CreatePaymentProfileResponse Response from the API call
+     * @return PaymentProfileResponse Response from the API call
      *
      * @throws ApiException Thrown if API call fails
      */
-    public function createPaymentProfile(?CreatePaymentProfileRequest $body = null): CreatePaymentProfileResponse
+    public function createPaymentProfile(?CreatePaymentProfileRequest $body = null): PaymentProfileResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/payment_profiles.json')
             ->auth('global')
@@ -365,7 +513,7 @@ class PaymentProfilesController extends BaseController
                     ErrorListResponseException::class
                 )
             )
-            ->type(CreatePaymentProfileResponse::class);
+            ->type(PaymentProfileResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
     }
@@ -376,7 +524,7 @@ class PaymentProfilesController extends BaseController
      *
      * @param array $options Array with all options for search
      *
-     * @return ReadPaymentProfileResponse[] Response from the API call
+     * @return PaymentProfileResponse[] Response from the API call
      *
      * @throws ApiException Thrown if API call fails
      */
@@ -390,7 +538,7 @@ class PaymentProfilesController extends BaseController
                 QueryParam::init('customer_id', $options)->commaSeparated()->extract('customerId')
             );
 
-        $_resHandler = $this->responseHandler()->type(ReadPaymentProfileResponse::class, 1);
+        $_resHandler = $this->responseHandler()->type(PaymentProfileResponse::class, 1);
 
         return $this->execute($_reqBuilder, $_resHandler);
     }
@@ -435,11 +583,11 @@ class PaymentProfilesController extends BaseController
      *
      * @param int $paymentProfileId The Chargify id of the payment profile
      *
-     * @return ReadPaymentProfileResponse Response from the API call
+     * @return PaymentProfileResponse Response from the API call
      *
      * @throws ApiException Thrown if API call fails
      */
-    public function readPaymentProfile(int $paymentProfileId): ReadPaymentProfileResponse
+    public function readPaymentProfile(int $paymentProfileId): PaymentProfileResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/payment_profiles/{payment_profile_id}.json')
             ->auth('global')
@@ -447,7 +595,83 @@ class PaymentProfilesController extends BaseController
 
         $_resHandler = $this->responseHandler()
             ->throwErrorOn('404', ErrorType::init('Not Found'))
-            ->type(ReadPaymentProfileResponse::class);
+            ->type(PaymentProfileResponse::class);
+
+        return $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
+     * This will delete a payment profile belonging to the customer on the subscription.
+     *
+     * + If the customer has multiple subscriptions, the payment profile will be removed from all of them.
+     *
+     * + If you delete the default payment profile for a subscription, you will need to specify another
+     * payment profile to be the default through the api, or either prompt the user to enter a card in the
+     * billing portal or on the self-service page, or visit the Payment Details tab on the subscription in
+     * the Admin UI and use the “Add New Credit Card” or “Make Active Payment Method” link, (depending on
+     * whether there are other cards present).
+     *
+     * @param int $subscriptionId The Chargify id of the subscription
+     * @param int $paymentProfileId The Chargify id of the payment profile
+     *
+     * @return void Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function deleteSubscriptionsPaymentProfile(int $subscriptionId, int $paymentProfileId): void
+    {
+        $_reqBuilder = $this->requestBuilder(
+            RequestMethod::DELETE,
+            '/subscriptions/{subscription_id}/payment_profiles/{payment_profile_id}.json'
+        )
+            ->auth('global')
+            ->parameters(
+                TemplateParam::init('subscription_id', $subscriptionId)->required(),
+                TemplateParam::init('payment_profile_id', $paymentProfileId)->required()
+            );
+
+        $this->execute($_reqBuilder);
+    }
+
+    /**
+     * This will change the default payment profile on the subscription to the existing payment profile
+     * with the id specified.
+     *
+     * You must elect to change the existing payment profile to a new payment profile ID in order to
+     * receive a satisfactory response from this endpoint.
+     *
+     * @param int $subscriptionId The Chargify id of the subscription
+     * @param int $paymentProfileId The Chargify id of the payment profile
+     *
+     * @return PaymentProfileResponse Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function updateSubscriptionDefaultPaymentProfile(
+        int $subscriptionId,
+        int $paymentProfileId
+    ): PaymentProfileResponse {
+        $_reqBuilder = $this->requestBuilder(
+            RequestMethod::POST,
+            '/subscriptions/{subscription_id}/payment_profiles/{payment_profile_id}/change_paym' .
+            'ent_profile.json'
+        )
+            ->auth('global')
+            ->parameters(
+                TemplateParam::init('subscription_id', $subscriptionId)->required(),
+                TemplateParam::init('payment_profile_id', $paymentProfileId)->required()
+            );
+
+        $_resHandler = $this->responseHandler()
+            ->throwErrorOn('404', ErrorType::init('Not Found'))
+            ->throwErrorOn(
+                '422',
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
+            )
+            ->type(PaymentProfileResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
     }
@@ -471,6 +695,7 @@ class PaymentProfilesController extends BaseController
             ->parameters(TemplateParam::init('payment_profile_id', $paymentProfileId)->required());
 
         $_resHandler = $this->responseHandler()
+            ->throwErrorOn('404', ErrorType::init('Not Found'))
             ->throwErrorOn(
                 '422',
                 ErrorType::initWithErrorTemplate(
@@ -483,82 +708,41 @@ class PaymentProfilesController extends BaseController
     }
 
     /**
-     * ## Partial Card Updates
+     * Submit the two small deposit amounts the customer received in their bank account in order to verify
+     * the bank account. (Stripe only)
      *
-     * In the event that you are using the Authorize.net, Stripe, Cybersource, Forte or Braintree Blue
-     * payment gateways, you can update just the billing and contact information for a payment method. Note
-     * the lack of credit-card related data contained in the JSON payload.
+     * @param int $bankAccountId Identifier of the bank account in the system.
+     * @param BankAccountVerificationRequest|null $body
      *
-     * In this case, the following JSON is acceptable:
-     *
-     * ```
-     * {
-     * "payment_profile": {
-     * "first_name": "Kelly",
-     * "last_name": "Test",
-     * "billing_address": "789 Juniper Court",
-     * "billing_city": "Boulder",
-     * "billing_state": "CO",
-     * "billing_zip": "80302",
-     * "billing_country": "US",
-     * "billing_address_2": null
-     * }
-     * }
-     * ```
-     *
-     * The result will be that you have updated the billing information for the card, yet retained the
-     * original card number data.
-     *
-     * ## Specific notes on updating payment profiles
-     *
-     * - Merchants with **Authorize.net**, **Cybersource**, **Forte**, **Braintree Blue** or **Stripe** as
-     * their payment gateway can update their Customer’s credit cards without passing in the full credit
-     * card number and CVV.
-     *
-     * - If you are using **Authorize.net**, **Cybersource**, **Forte**, **Braintree Blue** or **Stripe**,
-     * Chargify will ignore the credit card number and CVV when processing an update via the API, and
-     * attempt a partial update instead. If you wish to change the card number on a payment profile, you
-     * will need to create a new payment profile for the given customer.
-     *
-     * - A Payment Profile cannot be updated with the attributes of another type of Payment Profile. For
-     * example, if the payment profile you are attempting to update is a credit card, you cannot pass in
-     * bank account attributes (like `bank_account_number`), and vice versa.
-     *
-     * - Updating a payment profile directly will not trigger an attempt to capture a past-due balance. If
-     * this is the intent, update the card details via the Subscription instead.
-     *
-     * - If you are using Authorize.net or Stripe, you may elect to manually trigger a retry for a past due
-     * subscription after a partial update.
-     *
-     * @param int $paymentProfileId The Chargify id of the payment profile
-     * @param UpdatePaymentProfileRequest|null $body
-     *
-     * @return UpdatePaymentProfileResponse Response from the API call
+     * @return BankAccountResponse Response from the API call
      *
      * @throws ApiException Thrown if API call fails
      */
-    public function updatePaymentProfile(
-        int $paymentProfileId,
-        ?UpdatePaymentProfileRequest $body = null
-    ): UpdatePaymentProfileResponse {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::PUT, '/payment_profiles/{payment_profile_id}.json')
+    public function verifyBankAccount(
+        int $bankAccountId,
+        ?BankAccountVerificationRequest $body = null
+    ): BankAccountResponse {
+        $_reqBuilder = $this->requestBuilder(
+            RequestMethod::PUT,
+            '/bank_accounts/{bank_account_id}/verification.json'
+        )
             ->auth('global')
             ->parameters(
-                TemplateParam::init('payment_profile_id', $paymentProfileId)->required(),
+                TemplateParam::init('bank_account_id', $bankAccountId)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
                 BodyParam::init($body)
             );
 
         $_resHandler = $this->responseHandler()
-            ->throwErrorOn('404', ErrorType::init('Not Found'))
+            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
             ->throwErrorOn(
                 '422',
                 ErrorType::initWithErrorTemplate(
                     'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
-                    ErrorStringMapResponseException::class
+                    ErrorListResponseException::class
                 )
             )
-            ->type(UpdatePaymentProfileResponse::class);
+            ->type(BankAccountResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
     }
@@ -638,191 +822,6 @@ class PaymentProfilesController extends BaseController
                 )
             )
             ->type(GetOneTimeTokenRequest::class);
-
-        return $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
-     * This will delete a payment profile belonging to the customer on the subscription.
-     *
-     * + If the customer has multiple subscriptions, the payment profile will be removed from all of them.
-     *
-     * + If you delete the default payment profile for a subscription, you will need to specify another
-     * payment profile to be the default through the api, or either prompt the user to enter a card in the
-     * billing portal or on the self-service page, or visit the Payment Details tab on the subscription in
-     * the Admin UI and use the “Add New Credit Card” or “Make Active Payment Method” link, (depending on
-     * whether there are other cards present).
-     *
-     * @param int $subscriptionId The Chargify id of the subscription
-     * @param int $paymentProfileId The Chargify id of the payment profile
-     *
-     * @return void Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function deleteSubscriptionsPaymentProfile(int $subscriptionId, int $paymentProfileId): void
-    {
-        $_reqBuilder = $this->requestBuilder(
-            RequestMethod::DELETE,
-            '/subscriptions/{subscription_id}/payment_profiles/{payment_profile_id}.json'
-        )
-            ->auth('global')
-            ->parameters(
-                TemplateParam::init('subscription_id', $subscriptionId)->required(),
-                TemplateParam::init('payment_profile_id', $paymentProfileId)->required()
-            );
-
-        $this->execute($_reqBuilder);
-    }
-
-    /**
-     * This will delete a Payment Profile belonging to a Subscription Group.
-     *
-     * **Note**: If the Payment Profile belongs to multiple Subscription Groups and/or Subscriptions, it
-     * will be removed from all of them.
-     *
-     * @param string $uid The uid of the subscription group
-     * @param int $paymentProfileId The Chargify id of the payment profile
-     *
-     * @return void Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function deleteSubscriptionGroupPaymentProfile(string $uid, int $paymentProfileId): void
-    {
-        $_reqBuilder = $this->requestBuilder(
-            RequestMethod::DELETE,
-            '/subscription_groups/{uid}/payment_profiles/{payment_profile_id}.json'
-        )
-            ->auth('global')
-            ->parameters(
-                TemplateParam::init('uid', $uid)->required(),
-                TemplateParam::init('payment_profile_id', $paymentProfileId)->required()
-            );
-
-        $this->execute($_reqBuilder);
-    }
-
-    /**
-     * This will change the default payment profile on the subscription to the existing payment profile
-     * with the id specified.
-     *
-     * You must elect to change the existing payment profile to a new payment profile ID in order to
-     * receive a satisfactory response from this endpoint.
-     *
-     * @param int $subscriptionId The Chargify id of the subscription
-     * @param int $paymentProfileId The Chargify id of the payment profile
-     *
-     * @return PaymentProfileResponse Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function updateSubscriptionDefaultPaymentProfile(
-        int $subscriptionId,
-        int $paymentProfileId
-    ): PaymentProfileResponse {
-        $_reqBuilder = $this->requestBuilder(
-            RequestMethod::POST,
-            '/subscriptions/{subscription_id}/payment_profiles/{payment_profile_id}/change_paym' .
-            'ent_profile.json'
-        )
-            ->auth('global')
-            ->parameters(
-                TemplateParam::init('subscription_id', $subscriptionId)->required(),
-                TemplateParam::init('payment_profile_id', $paymentProfileId)->required()
-            );
-
-        $_resHandler = $this->responseHandler()
-            ->throwErrorOn(
-                '422',
-                ErrorType::initWithErrorTemplate(
-                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
-                    ErrorListResponseException::class
-                )
-            )
-            ->type(PaymentProfileResponse::class);
-
-        return $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
-     * You can send a "request payment update" email to the customer associated with the subscription.
-     *
-     * If you attempt to send a "request payment update" email more than five times within a 30-minute
-     * period, you will receive a `422` response with an error message in the body. This error message will
-     * indicate that the request has been rejected due to excessive attempts, and will provide instructions
-     * on how to resubmit the request.
-     *
-     * Additionally, if you attempt to send a "request payment update" email for a subscription that does
-     * not exist, you will receive a `404` error response. This error message will indicate that the
-     * subscription could not be found, and will provide instructions on how to correct the error and
-     * resubmit the request.
-     *
-     * These error responses are designed to prevent excessive or invalid requests, and to provide clear
-     * and helpful information to users who encounter errors during the request process.
-     *
-     * @param int $subscriptionId The Chargify id of the subscription
-     *
-     * @return void Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function sendRequestUpdatePaymentEmail(int $subscriptionId): void
-    {
-        $_reqBuilder = $this->requestBuilder(
-            RequestMethod::POST,
-            '/subscriptions/{subscription_id}/request_payment_profiles_update.json'
-        )->auth('global')->parameters(TemplateParam::init('subscription_id', $subscriptionId)->required());
-
-        $_resHandler = $this->responseHandler()
-            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
-            ->throwErrorOn(
-                '422',
-                ErrorType::initWithErrorTemplate(
-                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
-                    ErrorListResponseException::class
-                )
-            );
-
-        $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
-     * Submit the two small deposit amounts the customer received in their bank account in order to verify
-     * the bank account. (Stripe only)
-     *
-     * @param int $bankAccountId Identifier of the bank account in the system.
-     * @param BankAccountVerificationRequest|null $body
-     *
-     * @return BankAccountResponse Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function verifyBankAccount(
-        int $bankAccountId,
-        ?BankAccountVerificationRequest $body = null
-    ): BankAccountResponse {
-        $_reqBuilder = $this->requestBuilder(
-            RequestMethod::PUT,
-            '/bank_accounts/{bank_account_id}/verification.json'
-        )
-            ->auth('global')
-            ->parameters(
-                TemplateParam::init('bank_account_id', $bankAccountId)->required(),
-                HeaderParam::init('Content-Type', 'application/json'),
-                BodyParam::init($body)
-            );
-
-        $_resHandler = $this->responseHandler()
-            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
-            ->throwErrorOn(
-                '422',
-                ErrorType::initWithErrorTemplate(
-                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
-                    ErrorListResponseException::class
-                )
-            )
-            ->type(BankAccountResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
     }

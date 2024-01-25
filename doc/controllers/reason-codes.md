@@ -11,10 +11,10 @@ $reasonCodesController = $client->getReasonCodesController();
 ## Methods
 
 * [Update Reason Code](../../doc/controllers/reason-codes.md#update-reason-code)
-* [Delete Reason Code](../../doc/controllers/reason-codes.md#delete-reason-code)
 * [List Reason Codes](../../doc/controllers/reason-codes.md#list-reason-codes)
-* [Read Reason Code](../../doc/controllers/reason-codes.md#read-reason-code)
 * [Create Reason Code](../../doc/controllers/reason-codes.md#create-reason-code)
+* [Read Reason Code](../../doc/controllers/reason-codes.md#read-reason-code)
+* [Delete Reason Code](../../doc/controllers/reason-codes.md#delete-reason-code)
 
 
 # Update Reason Code
@@ -42,47 +42,6 @@ function updateReasonCode(int $reasonCodeId, ?UpdateReasonCodeRequest $body = nu
 $reasonCodeId = 32;
 
 $result = $reasonCodesController->updateReasonCode($reasonCodeId);
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 404 | Not Found | `ApiException` |
-
-
-# Delete Reason Code
-
-This method gives a merchant the option to delete one reason code from the Churn Reason Codes. This code will be immediately removed. This action is not reversable.
-
-```php
-function deleteReasonCode(int $reasonCodeId): ReasonCodesJsonResponse
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `reasonCodeId` | `int` | Template, Required | The Chargify id of the reason code |
-
-## Response Type
-
-[`ReasonCodesJsonResponse`](../../doc/models/reason-codes-json-response.md)
-
-## Example Usage
-
-```php
-$reasonCodeId = 32;
-
-$result = $reasonCodesController->deleteReasonCode($reasonCodeId);
-```
-
-## Example Response *(as JSON)*
-
-```json
-{
-  "ok": "ok"
-}
 ```
 
 ## Errors
@@ -163,39 +122,6 @@ $result = $reasonCodesController->listReasonCodes($collect);
 ```
 
 
-# Read Reason Code
-
-This method gives a merchant the option to retrieve a list of a particular code for a given Site by providing the unique numerical ID of the code.
-
-```php
-function readReasonCode(int $reasonCodeId): ReasonCodeResponse
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `reasonCodeId` | `int` | Template, Required | The Chargify id of the reason code |
-
-## Response Type
-
-[`ReasonCodeResponse`](../../doc/models/reason-code-response.md)
-
-## Example Usage
-
-```php
-$reasonCodeId = 32;
-
-$result = $reasonCodesController->readReasonCode($reasonCodeId);
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 404 | Not Found | `ApiException` |
-
-
 # Create Reason Code
 
 # Reason Codes Intro
@@ -248,4 +174,78 @@ $result = $reasonCodesController->createReasonCode($body);
 | HTTP Status Code | Error Description | Exception Class |
 |  --- | --- | --- |
 | 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
+
+
+# Read Reason Code
+
+This method gives a merchant the option to retrieve a list of a particular code for a given Site by providing the unique numerical ID of the code.
+
+```php
+function readReasonCode(int $reasonCodeId): ReasonCodeResponse
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `reasonCodeId` | `int` | Template, Required | The Chargify id of the reason code |
+
+## Response Type
+
+[`ReasonCodeResponse`](../../doc/models/reason-code-response.md)
+
+## Example Usage
+
+```php
+$reasonCodeId = 32;
+
+$result = $reasonCodesController->readReasonCode($reasonCodeId);
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 404 | Not Found | `ApiException` |
+
+
+# Delete Reason Code
+
+This method gives a merchant the option to delete one reason code from the Churn Reason Codes. This code will be immediately removed. This action is not reversable.
+
+```php
+function deleteReasonCode(int $reasonCodeId): ReasonCodesJsonResponse
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `reasonCodeId` | `int` | Template, Required | The Chargify id of the reason code |
+
+## Response Type
+
+[`ReasonCodesJsonResponse`](../../doc/models/reason-codes-json-response.md)
+
+## Example Usage
+
+```php
+$reasonCodeId = 32;
+
+$result = $reasonCodesController->deleteReasonCode($reasonCodeId);
+```
+
+## Example Response *(as JSON)*
+
+```json
+{
+  "ok": "ok"
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 404 | Not Found | `ApiException` |
 

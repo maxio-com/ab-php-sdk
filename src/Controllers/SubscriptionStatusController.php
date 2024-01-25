@@ -30,65 +30,6 @@ use CoreInterfaces\Core\Request\RequestMethod;
 class SubscriptionStatusController extends BaseController
 {
     /**
-     * If a subscription is currently in dunning, the subscription will be set to active and the active
-     * Dunner will be resolved.
-     *
-     * @param int $subscriptionId The Chargify id of the subscription
-     *
-     * @return SubscriptionResponse Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function cancelDunning(int $subscriptionId): SubscriptionResponse
-    {
-        $_reqBuilder = $this->requestBuilder(
-            RequestMethod::POST,
-            '/subscriptions/{subscription_id}/cancel_dunning.json'
-        )->auth('global')->parameters(TemplateParam::init('subscription_id', $subscriptionId)->required());
-
-        $_resHandler = $this->responseHandler()->type(SubscriptionResponse::class);
-
-        return $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
-     * Chargify offers the ability to retry collecting the balance due on a past due Subscription without
-     * waiting for the next scheduled attempt.
-     *
-     * ## Successful Reactivation
-     *
-     * The response will be `200 OK` with the updated Subscription.
-     *
-     * ## Failed Reactivation
-     *
-     * The response will be `422 "Unprocessable Entity`.
-     *
-     * @param int $subscriptionId The Chargify id of the subscription
-     *
-     * @return SubscriptionResponse Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function retrySubscription(int $subscriptionId): SubscriptionResponse
-    {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::PUT, '/subscriptions/{subscription_id}/retry.json')
-            ->auth('global')
-            ->parameters(TemplateParam::init('subscription_id', $subscriptionId)->required());
-
-        $_resHandler = $this->responseHandler()
-            ->throwErrorOn(
-                '422',
-                ErrorType::initWithErrorTemplate(
-                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
-                    ErrorListResponseException::class
-                )
-            )
-            ->type(SubscriptionResponse::class);
-
-        return $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
      * The DELETE action causes the cancellation of the Subscription. This means, the method sets the
      * Subscription state to "canceled".
      *
@@ -118,74 +59,6 @@ class SubscriptionStatusController extends BaseController
                 )
             )
             ->type(SubscriptionResponse::class);
-
-        return $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
-     * The Chargify API allows you to preview a renewal by posting to the renewals endpoint. Renewal
-     * Preview is an object representing a subscription’s next assessment. You can retrieve it to see a
-     * snapshot of how much your customer will be charged on their next renewal.
-     *
-     * The "Next Billing" amount and "Next Billing" date are already represented in the UI on each
-     * Subscriber's Summary. For more information, please see our documentation [here](https://chargify.
-     * zendesk.com/hc/en-us/articles/4407884887835#next-billing).
-     *
-     * ## Optional Component Fields
-     *
-     * This endpoint is particularly useful due to the fact that it will return the computed billing amount
-     * for the base product and the components which are in use by a subscriber.
-     *
-     * By default, the preview will include billing details for all components _at their **current**
-     * quantities_. This means:
-     *
-     * * Current `allocated_quantity` for quantity-based components
-     * * Current enabled/disabled status for on/off components
-     * * Current metered usage `unit_balance` for metered components
-     * * Current metric quantity value for events recorded thus far for events-based components
-     *
-     * In the above statements, "current" means the quantity or value as of the call to the renewal preview
-     * endpoint. We do not predict end-of-period values for components, so metered or events-based usage
-     * may be less than it will eventually be at the end of the period.
-     *
-     * Optionally, **you may provide your own custom quantities** for any component to see a billing
-     * preview for non-current quantities. This is accomplished by sending a request body with data under
-     * the `components` key. See the request body documentation below.
-     *
-     * ## Subscription Side Effects
-     *
-     * You can request a `POST` to obtain this data from the endpoint without any side effects. Plain and
-     * simple, this will preview data, not log any changes against a subscription.
-     *
-     * @param int $subscriptionId The Chargify id of the subscription
-     * @param RenewalPreviewRequest|null $body
-     *
-     * @return RenewalPreviewResponse Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function previewRenewal(int $subscriptionId, ?RenewalPreviewRequest $body = null): RenewalPreviewResponse
-    {
-        $_reqBuilder = $this->requestBuilder(
-            RequestMethod::POST,
-            '/subscriptions/{subscription_id}/renewals/preview.json'
-        )
-            ->auth('global')
-            ->parameters(
-                TemplateParam::init('subscription_id', $subscriptionId)->required(),
-                HeaderParam::init('Content-Type', 'application/json'),
-                BodyParam::init($body)
-            );
-
-        $_resHandler = $this->responseHandler()
-            ->throwErrorOn(
-                '422',
-                ErrorType::initWithErrorTemplate(
-                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
-                    ErrorListResponseException::class
-                )
-            )
-            ->type(RenewalPreviewResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
     }
@@ -252,6 +125,110 @@ class SubscriptionStatusController extends BaseController
                 HeaderParam::init('Content-Type', 'application/json'),
                 BodyParam::init($body)
             );
+
+        $_resHandler = $this->responseHandler()
+            ->throwErrorOn(
+                '422',
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
+            )
+            ->type(SubscriptionResponse::class);
+
+        return $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
+     * Chargify offers the ability to cancel a subscription at the end of the current billing period. This
+     * period is set by its current product.
+     *
+     * Requesting to cancel the subscription at the end of the period sets the `cancel_at_end_of_period`
+     * flag to true.
+     *
+     * Note that you cannot set `cancel_at_end_of_period` at subscription creation, or if the subscription
+     * is past due.
+     *
+     * @param int $subscriptionId The Chargify id of the subscription
+     * @param CancellationRequest|null $body
+     *
+     * @return DelayedCancellationResponse Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function initiateDelayedCancellation(
+        int $subscriptionId,
+        ?CancellationRequest $body = null
+    ): DelayedCancellationResponse {
+        $_reqBuilder = $this->requestBuilder(
+            RequestMethod::POST,
+            '/subscriptions/{subscription_id}/delayed_cancel.json'
+        )
+            ->auth('global')
+            ->parameters(
+                TemplateParam::init('subscription_id', $subscriptionId)->required(),
+                HeaderParam::init('Content-Type', 'application/json'),
+                BodyParam::init($body)
+            );
+
+        $_resHandler = $this->responseHandler()
+            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
+            ->type(DelayedCancellationResponse::class);
+
+        return $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
+     * Removing the delayed cancellation on a subscription will ensure that it doesn't get canceled at the
+     * end of the period that it is in. The request will reset the `cancel_at_end_of_period` flag to
+     * `false`.
+     *
+     * This endpoint is idempotent. If the subscription was not set to cancel in the future, removing the
+     * delayed cancellation has no effect and the call will be successful.
+     *
+     * @param int $subscriptionId The Chargify id of the subscription
+     *
+     * @return DelayedCancellationResponse Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function stopDelayedCancellation(int $subscriptionId): DelayedCancellationResponse
+    {
+        $_reqBuilder = $this->requestBuilder(
+            RequestMethod::DELETE,
+            '/subscriptions/{subscription_id}/delayed_cancel.json'
+        )->auth('global')->parameters(TemplateParam::init('subscription_id', $subscriptionId)->required());
+
+        $_resHandler = $this->responseHandler()
+            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
+            ->type(DelayedCancellationResponse::class);
+
+        return $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
+     * Chargify offers the ability to retry collecting the balance due on a past due Subscription without
+     * waiting for the next scheduled attempt.
+     *
+     * ## Successful Reactivation
+     *
+     * The response will be `200 OK` with the updated Subscription.
+     *
+     * ## Failed Reactivation
+     *
+     * The response will be `422 "Unprocessable Entity`.
+     *
+     * @param int $subscriptionId The Chargify id of the subscription
+     *
+     * @return SubscriptionResponse Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function retrySubscription(int $subscriptionId): SubscriptionResponse
+    {
+        $_reqBuilder = $this->requestBuilder(RequestMethod::PUT, '/subscriptions/{subscription_id}/retry.json')
+            ->auth('global')
+            ->parameters(TemplateParam::init('subscription_id', $subscriptionId)->required());
 
         $_resHandler = $this->responseHandler()
             ->throwErrorOn(
@@ -518,29 +495,74 @@ class SubscriptionStatusController extends BaseController
     }
 
     /**
-     * Chargify offers the ability to cancel a subscription at the end of the current billing period. This
-     * period is set by its current product.
-     *
-     * Requesting to cancel the subscription at the end of the period sets the `cancel_at_end_of_period`
-     * flag to true.
-     *
-     * Note that you cannot set `cancel_at_end_of_period` at subscription creation, or if the subscription
-     * is past due.
+     * If a subscription is currently in dunning, the subscription will be set to active and the active
+     * Dunner will be resolved.
      *
      * @param int $subscriptionId The Chargify id of the subscription
-     * @param CancellationRequest|null $body
      *
-     * @return DelayedCancellationResponse Response from the API call
+     * @return SubscriptionResponse Response from the API call
      *
      * @throws ApiException Thrown if API call fails
      */
-    public function initiateDelayedCancellation(
-        int $subscriptionId,
-        ?CancellationRequest $body = null
-    ): DelayedCancellationResponse {
+    public function cancelDunning(int $subscriptionId): SubscriptionResponse
+    {
         $_reqBuilder = $this->requestBuilder(
             RequestMethod::POST,
-            '/subscriptions/{subscription_id}/delayed_cancel.json'
+            '/subscriptions/{subscription_id}/cancel_dunning.json'
+        )->auth('global')->parameters(TemplateParam::init('subscription_id', $subscriptionId)->required());
+
+        $_resHandler = $this->responseHandler()->type(SubscriptionResponse::class);
+
+        return $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
+     * The Chargify API allows you to preview a renewal by posting to the renewals endpoint. Renewal
+     * Preview is an object representing a subscription’s next assessment. You can retrieve it to see a
+     * snapshot of how much your customer will be charged on their next renewal.
+     *
+     * The "Next Billing" amount and "Next Billing" date are already represented in the UI on each
+     * Subscriber's Summary. For more information, please see our documentation [here](https://chargify.
+     * zendesk.com/hc/en-us/articles/4407884887835#next-billing).
+     *
+     * ## Optional Component Fields
+     *
+     * This endpoint is particularly useful due to the fact that it will return the computed billing amount
+     * for the base product and the components which are in use by a subscriber.
+     *
+     * By default, the preview will include billing details for all components _at their **current**
+     * quantities_. This means:
+     *
+     * * Current `allocated_quantity` for quantity-based components
+     * * Current enabled/disabled status for on/off components
+     * * Current metered usage `unit_balance` for metered components
+     * * Current metric quantity value for events recorded thus far for events-based components
+     *
+     * In the above statements, "current" means the quantity or value as of the call to the renewal preview
+     * endpoint. We do not predict end-of-period values for components, so metered or events-based usage
+     * may be less than it will eventually be at the end of the period.
+     *
+     * Optionally, **you may provide your own custom quantities** for any component to see a billing
+     * preview for non-current quantities. This is accomplished by sending a request body with data under
+     * the `components` key. See the request body documentation below.
+     *
+     * ## Subscription Side Effects
+     *
+     * You can request a `POST` to obtain this data from the endpoint without any side effects. Plain and
+     * simple, this will preview data, not log any changes against a subscription.
+     *
+     * @param int $subscriptionId The Chargify id of the subscription
+     * @param RenewalPreviewRequest|null $body
+     *
+     * @return RenewalPreviewResponse Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function previewRenewal(int $subscriptionId, ?RenewalPreviewRequest $body = null): RenewalPreviewResponse
+    {
+        $_reqBuilder = $this->requestBuilder(
+            RequestMethod::POST,
+            '/subscriptions/{subscription_id}/renewals/preview.json'
         )
             ->auth('global')
             ->parameters(
@@ -550,36 +572,14 @@ class SubscriptionStatusController extends BaseController
             );
 
         $_resHandler = $this->responseHandler()
-            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
-            ->type(DelayedCancellationResponse::class);
-
-        return $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
-     * Removing the delayed cancellation on a subscription will ensure that it doesn't get canceled at the
-     * end of the period that it is in. The request will reset the `cancel_at_end_of_period` flag to
-     * `false`.
-     *
-     * This endpoint is idempotent. If the subscription was not set to cancel in the future, removing the
-     * delayed cancellation has no effect and the call will be successful.
-     *
-     * @param int $subscriptionId The Chargify id of the subscription
-     *
-     * @return DelayedCancellationResponse Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function stopDelayedCancellation(int $subscriptionId): DelayedCancellationResponse
-    {
-        $_reqBuilder = $this->requestBuilder(
-            RequestMethod::DELETE,
-            '/subscriptions/{subscription_id}/delayed_cancel.json'
-        )->auth('global')->parameters(TemplateParam::init('subscription_id', $subscriptionId)->required());
-
-        $_resHandler = $this->responseHandler()
-            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
-            ->type(DelayedCancellationResponse::class);
+            ->throwErrorOn(
+                '422',
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
+            )
+            ->type(RenewalPreviewResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
     }

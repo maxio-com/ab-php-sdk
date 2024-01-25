@@ -15,14 +15,14 @@ use stdClass;
 class BankAccountResponse implements \JsonSerializable
 {
     /**
-     * @var BankAccount
+     * @var BankAccountPaymentProfile
      */
     private $paymentProfile;
 
     /**
-     * @param BankAccount $paymentProfile
+     * @param BankAccountPaymentProfile $paymentProfile
      */
-    public function __construct(BankAccount $paymentProfile)
+    public function __construct(BankAccountPaymentProfile $paymentProfile)
     {
         $this->paymentProfile = $paymentProfile;
     }
@@ -30,7 +30,7 @@ class BankAccountResponse implements \JsonSerializable
     /**
      * Returns Payment Profile.
      */
-    public function getPaymentProfile(): BankAccount
+    public function getPaymentProfile(): BankAccountPaymentProfile
     {
         return $this->paymentProfile;
     }
@@ -41,7 +41,7 @@ class BankAccountResponse implements \JsonSerializable
      * @required
      * @maps payment_profile
      */
-    public function setPaymentProfile(BankAccount $paymentProfile): void
+    public function setPaymentProfile(BankAccountPaymentProfile $paymentProfile): void
     {
         $this->paymentProfile = $paymentProfile;
     }

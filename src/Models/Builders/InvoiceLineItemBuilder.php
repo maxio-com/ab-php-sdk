@@ -132,7 +132,7 @@ class InvoiceLineItemBuilder
     /**
      * Sets period range start field.
      */
-    public function periodRangeStart(?string $value): self
+    public function periodRangeStart(?\DateTime $value): self
     {
         $this->instance->setPeriodRangeStart($value);
         return $this;
@@ -141,7 +141,7 @@ class InvoiceLineItemBuilder
     /**
      * Sets period range end field.
      */
-    public function periodRangeEnd(?string $value): self
+    public function periodRangeEnd(?\DateTime $value): self
     {
         $this->instance->setPeriodRangeEnd($value);
         return $this;

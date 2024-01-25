@@ -12,7 +12,7 @@
 | `uid` | `?string` | Optional | - | getUid(): ?string | setUid(?string uid): void |
 | `creditNoteNumber` | `?string` | Optional | - | getCreditNoteNumber(): ?string | setCreditNoteNumber(?string creditNoteNumber): void |
 | `creditNoteUid` | `?string` | Optional | - | getCreditNoteUid(): ?string | setCreditNoteUid(?string creditNoteUid): void |
-| `transactionTime` | `?string` | Optional | - | getTransactionTime(): ?string | setTransactionTime(?string transactionTime): void |
+| `transactionTime` | `?DateTime` | Optional | - | getTransactionTime(): ?\DateTime | setTransactionTime(?\DateTime transactionTime): void |
 | `memo` | `?string` | Optional | - | getMemo(): ?string | setMemo(?string memo): void |
 | `originalAmount` | `?string` | Optional | - | getOriginalAmount(): ?string | setOriginalAmount(?string originalAmount): void |
 | `appliedAmount` | `?string` | Optional | - | getAppliedAmount(): ?string | setAppliedAmount(?string appliedAmount): void |
@@ -24,7 +24,7 @@
   "uid": "uid6",
   "credit_note_number": "credit_note_number0",
   "credit_note_uid": "credit_note_uid0",
-  "transaction_time": "transaction_time8",
+  "transaction_time": "2016-03-13T12:52:32.123Z",
   "memo": "memo0"
 }
 ```

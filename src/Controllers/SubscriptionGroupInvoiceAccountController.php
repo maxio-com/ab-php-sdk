@@ -31,45 +31,6 @@ use CoreInterfaces\Core\Request\RequestMethod;
 class SubscriptionGroupInvoiceAccountController extends BaseController
 {
     /**
-     * Credit can be deducted for a subscription group identified by the group's `uid`. Credit will be
-     * deducted from the group in the amount specified in the request body.
-     *
-     * @param string $uid The uid of the subscription group
-     * @param DeductServiceCreditRequest|null $body
-     *
-     * @return ServiceCredit Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function deductSubscriptionGroupServiceCredits(
-        string $uid,
-        ?DeductServiceCreditRequest $body = null
-    ): ServiceCredit {
-        $_reqBuilder = $this->requestBuilder(
-            RequestMethod::POST,
-            '/subscription_groups/{uid}/service_credit_deductions.json'
-        )
-            ->auth('global')
-            ->parameters(
-                TemplateParam::init('uid', $uid)->required(),
-                HeaderParam::init('Content-Type', 'application/json'),
-                BodyParam::init($body)
-            );
-
-        $_resHandler = $this->responseHandler()
-            ->throwErrorOn(
-                '422',
-                ErrorType::initWithErrorTemplate(
-                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
-                    ErrorListResponseException::class
-                )
-            )
-            ->type(ServiceCredit::class);
-
-        return $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
      * This request will list a subscription group's prepayments.
      *
      * @param array $options Array with all options for search
@@ -140,6 +101,45 @@ class SubscriptionGroupInvoiceAccountController extends BaseController
                 )
             )
             ->type(SubscriptionGroupPrepaymentResponse::class);
+
+        return $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
+     * Credit can be deducted for a subscription group identified by the group's `uid`. Credit will be
+     * deducted from the group in the amount specified in the request body.
+     *
+     * @param string $uid The uid of the subscription group
+     * @param DeductServiceCreditRequest|null $body
+     *
+     * @return ServiceCredit Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function deductSubscriptionGroupServiceCredits(
+        string $uid,
+        ?DeductServiceCreditRequest $body = null
+    ): ServiceCredit {
+        $_reqBuilder = $this->requestBuilder(
+            RequestMethod::POST,
+            '/subscription_groups/{uid}/service_credit_deductions.json'
+        )
+            ->auth('global')
+            ->parameters(
+                TemplateParam::init('uid', $uid)->required(),
+                HeaderParam::init('Content-Type', 'application/json'),
+                BodyParam::init($body)
+            );
+
+        $_resHandler = $this->responseHandler()
+            ->throwErrorOn(
+                '422',
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
+            )
+            ->type(ServiceCredit::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
     }

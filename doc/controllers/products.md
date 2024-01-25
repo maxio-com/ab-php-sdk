@@ -10,117 +10,12 @@ $productsController = $client->getProductsController();
 
 ## Methods
 
-* [Create Product](../../doc/controllers/products.md#create-product)
 * [Archive Product](../../doc/controllers/products.md#archive-product)
 * [Read Product by Handle](../../doc/controllers/products.md#read-product-by-handle)
+* [List Products](../../doc/controllers/products.md#list-products)
 * [Read Product](../../doc/controllers/products.md#read-product)
 * [Update Product](../../doc/controllers/products.md#update-product)
-* [List Products](../../doc/controllers/products.md#list-products)
-
-
-# Create Product
-
-Use this method to create a product within your Chargify site.
-
-+ [Products Documentation](https://maxio-chargify.zendesk.com/hc/en-us/articles/5405561405709)
-+ [Changing a Subscription's Product](https://maxio-chargify.zendesk.com/hc/en-us/articles/5404225334669-Product-Changes-Migrations)
-
-```php
-function createProduct(int $productFamilyId, ?CreateOrUpdateProductRequest $body = null): ProductResponse
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `productFamilyId` | `int` | Template, Required | The Chargify id of the product family to which the product belongs |
-| `body` | [`?CreateOrUpdateProductRequest`](../../doc/models/create-or-update-product-request.md) | Body, Optional | - |
-
-## Response Type
-
-[`ProductResponse`](../../doc/models/product-response.md)
-
-## Example Usage
-
-```php
-$productFamilyId = 140;
-
-$body = CreateOrUpdateProductRequestBuilder::init(
-    CreateOrUpdateProductBuilder::init(
-        'Gold Plan',
-        'This is our gold plan.',
-        1000,
-        1,
-        IntervalUnit::MONTH
-    )
-        ->handle('gold')
-        ->accountingCode('123')
-        ->requireCreditCard(true)
-        ->autoCreateSignupPage(true)
-        ->taxCode('D0000000')
-        ->build()
-)->build();
-
-$result = $productsController->createProduct(
-    $productFamilyId,
-    $body
-);
-```
-
-## Example Response *(as JSON)*
-
-```json
-{
-  "product": {
-    "id": 4364984,
-    "name": "Gold Plan",
-    "handle": "gold",
-    "description": "This is our gold plan.",
-    "accounting_code": "123",
-    "request_credit_card": true,
-    "created_at": "2016-11-04T16:31:15-04:00",
-    "updated_at": "2016-11-04T16:31:15-04:00",
-    "price_in_cents": 1000,
-    "interval": 1,
-    "interval_unit": "month",
-    "expiration_interval_unit": null,
-    "initial_charge_in_cents": null,
-    "trial_price_in_cents": null,
-    "trial_interval": null,
-    "trial_interval_unit": null,
-    "archived_at": null,
-    "require_credit_card": true,
-    "return_params": null,
-    "taxable": false,
-    "update_return_url": null,
-    "initial_charge_after_trial": false,
-    "version_number": 1,
-    "update_return_params": null,
-    "product_family": {
-      "id": 527890,
-      "name": "Acme Projects",
-      "description": "",
-      "handle": "billing-plans",
-      "accounting_code": null
-    },
-    "public_signup_pages": [
-      {
-        "id": 301078,
-        "return_url": null,
-        "return_params": null,
-        "url": "https://general-goods.chargify.com/subscribe/ftgbpq7f5qpr/gold"
-      }
-    ],
-    "product_price_point_name": "Default"
-  }
-}
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
+* [Create Product](../../doc/controllers/products.md#create-product)
 
 
 # Archive Product
@@ -297,6 +192,109 @@ $result = $productsController->readProductByHandle($apiHandle);
 ```
 
 
+# List Products
+
+This method allows to retrieve a list of Products belonging to a Site.
+
+```php
+function listProducts(array $options): array
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `dateField` | [`?string(BasicDateField)`](../../doc/models/basic-date-field.md) | Query, Optional | The type of filter you would like to apply to your search.<br>Use in query: `date_field=created_at`. |
+| `endDate` | `?DateTime` | Query, Optional | The end date (format YYYY-MM-DD) with which to filter the date_field. Returns products with a timestamp up to and including 11:59:59PM in your site’s time zone on the date specified. |
+| `endDatetime` | `?DateTime` | Query, Optional | The end date and time (format YYYY-MM-DD HH:MM:SS) with which to filter the date_field. Returns products with a timestamp at or before exact time provided in query. You can specify timezone in query - otherwise your site''s time zone will be used. If provided, this parameter will be used instead of end_date. |
+| `startDate` | `?DateTime` | Query, Optional | The start date (format YYYY-MM-DD) with which to filter the date_field. Returns products with a timestamp at or after midnight (12:00:00 AM) in your site’s time zone on the date specified. |
+| `startDatetime` | `?DateTime` | Query, Optional | The start date and time (format YYYY-MM-DD HH:MM:SS) with which to filter the date_field. Returns products with a timestamp at or after exact time provided in query. You can specify timezone in query - otherwise your site''s time zone will be used. If provided, this parameter will be used instead of start_date. |
+| `page` | `?int` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`. |
+| `perPage` | `?int` | Query, Optional | This parameter indicates how many records to fetch in each request. Default value is 20. The maximum allowed values is 200; any per_page value over 200 will be changed to 200.<br>Use in query `per_page=200`. |
+| `includeArchived` | `?bool` | Query, Optional | Include archived products. Use in query: `include_archived=true`. |
+| `mInclude` | [`?string(ListProductsInclude)`](../../doc/models/list-products-include.md) | Query, Optional | Allows including additional data in the response. Use in query `include=prepaid_product_price_point`. |
+| `filterPrepaidProductPricePointProductPricePointId` | [`?string(IncludeNotNull)`](../../doc/models/include-not-null.md) | Query, Optional | Allows fetching products only if a prepaid product price point is present or not. To use this filter you also have to include the following param in the request `include=prepaid_product_price_point`. Use in query `filter[prepaid_product_price_point][product_price_point_id]=not_null`. |
+| `filterUseSiteExchangeRate` | `?bool` | Query, Optional | Allows fetching products with matching use_site_exchange_rate based on provided value (refers to default price point). Use in query `filter[use_site_exchange_rate]=true`. |
+
+## Response Type
+
+[`ProductResponse[]`](../../doc/models/product-response.md)
+
+## Example Usage
+
+```php
+$collect = Liquid error: Value cannot be null. (Parameter 'key')Liquid error: Value cannot be null. (Parameter 'key')[
+    'date_field' => BasicDateField::UPDATED_AT,
+    'page' => 2,
+    'per_page' => 50,
+    'include_archived' => true,
+    'include' => ListProductsInclude::PREPAID_PRODUCT_PRICE_POINT
+];
+
+$result = $productsController->listProducts($collect);
+```
+
+## Example Response *(as JSON)*
+
+```json
+[
+  {
+    "product": {
+      "id": 0,
+      "name": "string",
+      "handle": "string",
+      "description": "string",
+      "accounting_code": "string",
+      "request_credit_card": true,
+      "expiration_interval": 0,
+      "expiration_interval_unit": "month",
+      "created_at": "2023-11-23T10:28:34-05:00",
+      "updated_at": "2023-11-23T10:28:34-05:00",
+      "price_in_cents": 0,
+      "interval": 0,
+      "interval_unit": "month",
+      "initial_charge_in_cents": 0,
+      "trial_price_in_cents": 0,
+      "trial_interval": 0,
+      "trial_interval_unit": "month",
+      "archived_at": null,
+      "require_credit_card": true,
+      "return_params": "string",
+      "taxable": true,
+      "update_return_url": "string",
+      "initial_charge_after_trial": true,
+      "version_number": 0,
+      "update_return_params": "string",
+      "product_family": {
+        "id": 0,
+        "name": "string",
+        "handle": "string",
+        "accounting_code": null,
+        "description": "string",
+        "created_at": "string",
+        "updated_at": "string"
+      },
+      "public_signup_pages": [
+        {
+          "id": 0,
+          "return_url": "string",
+          "return_params": "string",
+          "url": "string"
+        }
+      ],
+      "product_price_point_name": "string",
+      "request_billing_address": true,
+      "require_billing_address": true,
+      "require_shipping_address": true,
+      "use_site_exchange_rate": true,
+      "tax_code": "string",
+      "default_product_price_point_id": 0
+    }
+  }
+]
+```
+
+
 # Read Product
 
 This endpoint allows you to read the current details of a product that you've created in Chargify.
@@ -458,105 +456,107 @@ $result = $productsController->updateProduct($productId);
 | 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
 
 
-# List Products
+# Create Product
 
-This method allows to retrieve a list of Products belonging to a Site.
+Use this method to create a product within your Chargify site.
+
++ [Products Documentation](https://maxio-chargify.zendesk.com/hc/en-us/articles/5405561405709)
++ [Changing a Subscription's Product](https://maxio-chargify.zendesk.com/hc/en-us/articles/5404225334669-Product-Changes-Migrations)
 
 ```php
-function listProducts(array $options): array
+function createProduct(int $productFamilyId, ?CreateOrUpdateProductRequest $body = null): ProductResponse
 ```
 
 ## Parameters
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `dateField` | [`?string(BasicDateField)`](../../doc/models/basic-date-field.md) | Query, Optional | The type of filter you would like to apply to your search.<br>Use in query: `date_field=created_at`. |
-| `endDate` | `?DateTime` | Query, Optional | The end date (format YYYY-MM-DD) with which to filter the date_field. Returns products with a timestamp up to and including 11:59:59PM in your site’s time zone on the date specified. |
-| `endDatetime` | `?DateTime` | Query, Optional | The end date and time (format YYYY-MM-DD HH:MM:SS) with which to filter the date_field. Returns products with a timestamp at or before exact time provided in query. You can specify timezone in query - otherwise your site''s time zone will be used. If provided, this parameter will be used instead of end_date. |
-| `startDate` | `?DateTime` | Query, Optional | The start date (format YYYY-MM-DD) with which to filter the date_field. Returns products with a timestamp at or after midnight (12:00:00 AM) in your site’s time zone on the date specified. |
-| `startDatetime` | `?DateTime` | Query, Optional | The start date and time (format YYYY-MM-DD HH:MM:SS) with which to filter the date_field. Returns products with a timestamp at or after exact time provided in query. You can specify timezone in query - otherwise your site''s time zone will be used. If provided, this parameter will be used instead of start_date. |
-| `page` | `?int` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`. |
-| `perPage` | `?int` | Query, Optional | This parameter indicates how many records to fetch in each request. Default value is 20. The maximum allowed values is 200; any per_page value over 200 will be changed to 200.<br>Use in query `per_page=200`. |
-| `includeArchived` | `?bool` | Query, Optional | Include archived products. Use in query: `include_archived=true`. |
-| `mInclude` | [`?string(ListProductsInclude)`](../../doc/models/list-products-include.md) | Query, Optional | Allows including additional data in the response. Use in query `include=prepaid_product_price_point`. |
-| `filterPrepaidProductPricePointProductPricePointId` | [`?string(IncludeNotNull)`](../../doc/models/include-not-null.md) | Query, Optional | Allows fetching products only if a prepaid product price point is present or not. To use this filter you also have to include the following param in the request `include=prepaid_product_price_point`. Use in query `filter[prepaid_product_price_point][product_price_point_id]=not_null`. |
-| `filterUseSiteExchangeRate` | `?bool` | Query, Optional | Allows fetching products with matching use_site_exchange_rate based on provided value (refers to default price point). Use in query `filter[use_site_exchange_rate]=true`. |
+| `productFamilyId` | `int` | Template, Required | The Chargify id of the product family to which the product belongs |
+| `body` | [`?CreateOrUpdateProductRequest`](../../doc/models/create-or-update-product-request.md) | Body, Optional | - |
 
 ## Response Type
 
-[`ProductResponse[]`](../../doc/models/product-response.md)
+[`ProductResponse`](../../doc/models/product-response.md)
 
 ## Example Usage
 
 ```php
-$collect = Liquid error: Value cannot be null. (Parameter 'key')Liquid error: Value cannot be null. (Parameter 'key')[
-    'date_field' => BasicDateField::UPDATED_AT,
-    'page' => 2,
-    'per_page' => 50,
-    'include_archived' => true,
-    'include' => ListProductsInclude::PREPAID_PRODUCT_PRICE_POINT
-];
+$productFamilyId = 140;
 
-$result = $productsController->listProducts($collect);
+$body = CreateOrUpdateProductRequestBuilder::init(
+    CreateOrUpdateProductBuilder::init(
+        'Gold Plan',
+        'This is our gold plan.',
+        1000,
+        1,
+        IntervalUnit::MONTH
+    )
+        ->handle('gold')
+        ->accountingCode('123')
+        ->requireCreditCard(true)
+        ->autoCreateSignupPage(true)
+        ->taxCode('D0000000')
+        ->build()
+)->build();
+
+$result = $productsController->createProduct(
+    $productFamilyId,
+    $body
+);
 ```
 
 ## Example Response *(as JSON)*
 
 ```json
-[
-  {
-    "product": {
-      "id": 0,
-      "name": "string",
-      "handle": "string",
-      "description": "string",
-      "accounting_code": "string",
-      "request_credit_card": true,
-      "expiration_interval": 0,
-      "expiration_interval_unit": "month",
-      "created_at": "2023-11-23T10:28:34-05:00",
-      "updated_at": "2023-11-23T10:28:34-05:00",
-      "price_in_cents": 0,
-      "interval": 0,
-      "interval_unit": "month",
-      "initial_charge_in_cents": 0,
-      "trial_price_in_cents": 0,
-      "trial_interval": 0,
-      "trial_interval_unit": "month",
-      "archived_at": null,
-      "require_credit_card": true,
-      "return_params": "string",
-      "taxable": true,
-      "update_return_url": "string",
-      "initial_charge_after_trial": true,
-      "version_number": 0,
-      "update_return_params": "string",
-      "product_family": {
-        "id": 0,
-        "name": "string",
-        "handle": "string",
-        "accounting_code": null,
-        "description": "string",
-        "created_at": "string",
-        "updated_at": "string"
-      },
-      "public_signup_pages": [
-        {
-          "id": 0,
-          "return_url": "string",
-          "return_params": "string",
-          "url": "string"
-        }
-      ],
-      "product_price_point_name": "string",
-      "request_billing_address": true,
-      "require_billing_address": true,
-      "require_shipping_address": true,
-      "use_site_exchange_rate": true,
-      "tax_code": "string",
-      "default_product_price_point_id": 0
-    }
+{
+  "product": {
+    "id": 4364984,
+    "name": "Gold Plan",
+    "handle": "gold",
+    "description": "This is our gold plan.",
+    "accounting_code": "123",
+    "request_credit_card": true,
+    "created_at": "2016-11-04T16:31:15-04:00",
+    "updated_at": "2016-11-04T16:31:15-04:00",
+    "price_in_cents": 1000,
+    "interval": 1,
+    "interval_unit": "month",
+    "expiration_interval_unit": null,
+    "initial_charge_in_cents": null,
+    "trial_price_in_cents": null,
+    "trial_interval": null,
+    "trial_interval_unit": null,
+    "archived_at": null,
+    "require_credit_card": true,
+    "return_params": null,
+    "taxable": false,
+    "update_return_url": null,
+    "initial_charge_after_trial": false,
+    "version_number": 1,
+    "update_return_params": null,
+    "product_family": {
+      "id": 527890,
+      "name": "Acme Projects",
+      "description": "",
+      "handle": "billing-plans",
+      "accounting_code": null
+    },
+    "public_signup_pages": [
+      {
+        "id": 301078,
+        "return_url": null,
+        "return_params": null,
+        "url": "https://general-goods.chargify.com/subscribe/ftgbpq7f5qpr/gold"
+      }
+    ],
+    "product_price_point_name": "Default"
   }
-]
+}
 ```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
 

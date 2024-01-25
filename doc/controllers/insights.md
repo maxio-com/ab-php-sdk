@@ -10,10 +10,100 @@ $insightsController = $client->getInsightsController();
 
 ## Methods
 
-* [Read Mrr](../../doc/controllers/insights.md#read-mrr)
 * [Read Site Stats](../../doc/controllers/insights.md#read-site-stats)
-* [Read Mrr Movements](../../doc/controllers/insights.md#read-mrr-movements)
 * [List Mrr Per Subscription](../../doc/controllers/insights.md#list-mrr-per-subscription)
+* [Read Mrr](../../doc/controllers/insights.md#read-mrr)
+* [Read Mrr Movements](../../doc/controllers/insights.md#read-mrr-movements)
+
+
+# Read Site Stats
+
+The Stats API is a very basic view of some Site-level stats. This API call only answers with JSON responses. An XML version is not provided.
+
+## Stats Documentation
+
+There currently is not a complimentary matching set of documentation that compliments this endpoint. However, each Site's dashboard will reflect the summary of information provided in the Stats reposnse.
+
+```
+https://subdomain.chargify.com/dashboard
+```
+
+```php
+function readSiteStats(): SiteSummary
+```
+
+## Response Type
+
+[`SiteSummary`](../../doc/models/site-summary.md)
+
+## Example Usage
+
+```php
+$result = $insightsController->readSiteStats();
+```
+
+## Example Response *(as JSON)*
+
+```json
+{
+  "seller_name": "Acme, Inc.",
+  "site_name": "Production",
+  "site_id": 12345,
+  "site_currency": "USD",
+  "stats": {
+    "total_subscriptions": 120,
+    "subscriptions_today": 4,
+    "total_revenue": "$45,978.81",
+    "revenue_today": "$1,405.12",
+    "revenue_this_month": "$10,000.00",
+    "revenue_this_year": "$27,935.24"
+  }
+}
+```
+
+
+# List Mrr Per Subscription
+
+**This endpoint is deprecated.**
+
+This endpoint returns your site's current MRR, including plan and usage breakouts split per subscription.
+
+```php
+function listMrrPerSubscription(array $options): SubscriptionMRRResponse
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `filterSubscriptionIds` | `?(int[])` | Query, Optional | Submit ids in order to limit results. Use in query: `filter[subscription_ids]=1,2,3`. |
+| `atTime` | `?string` | Query, Optional | Submit a timestamp in ISO8601 format to request MRR for a historic time. Use in query: `at_time=2022-01-10T10:00:00-05:00`. |
+| `page` | `?int` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`. |
+| `perPage` | `?int` | Query, Optional | This parameter indicates how many records to fetch in each request. Default value is 20. The maximum allowed values is 200; any per_page value over 200 will be changed to 200.<br>Use in query `per_page=200`. |
+| `direction` | [`?string(Direction)`](../../doc/models/direction.md) | Query, Optional | Controls the order in which results are returned. Records are ordered by subscription_id in ascending order by default. Use in query `direction=desc`. |
+
+## Response Type
+
+[`SubscriptionMRRResponse`](../../doc/models/subscription-mrr-response.md)
+
+## Example Usage
+
+```php
+$collect = Liquid error: Value cannot be null. (Parameter 'key')[
+    'at_time' => 'at_time=2022-01-10T10:00:00-05:00',
+    'page' => 2,
+    'per_page' => 50,
+    'direction' => Direction::DESC
+];
+
+$result = $insightsController->listMrrPerSubscription($collect);
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 400 | Bad Request | [`SubscriptionsMrrErrorResponseException`](../../doc/models/subscriptions-mrr-error-response-exception.md) |
 
 
 # Read Mrr
@@ -59,52 +149,6 @@ $result = $insightsController->readMrr();
       "usage_amount_in_cents": 2000,
       "usage_amount_formatted": "$20.00"
     }
-  }
-}
-```
-
-
-# Read Site Stats
-
-The Stats API is a very basic view of some Site-level stats. This API call only answers with JSON responses. An XML version is not provided.
-
-## Stats Documentation
-
-There currently is not a complimentary matching set of documentation that compliments this endpoint. However, each Site's dashboard will reflect the summary of information provided in the Stats reposnse.
-
-```
-https://subdomain.chargify.com/dashboard
-```
-
-```php
-function readSiteStats(): SiteSummary
-```
-
-## Response Type
-
-[`SiteSummary`](../../doc/models/site-summary.md)
-
-## Example Usage
-
-```php
-$result = $insightsController->readSiteStats();
-```
-
-## Example Response *(as JSON)*
-
-```json
-{
-  "seller_name": "Acme, Inc.",
-  "site_name": "Production",
-  "site_id": 12345,
-  "site_currency": "USD",
-  "stats": {
-    "total_subscriptions": 120,
-    "subscriptions_today": 4,
-    "total_revenue": "$45,978.81",
-    "revenue_today": "$1,405.12",
-    "revenue_this_month": "$10,000.00",
-    "revenue_this_year": "$27,935.24"
   }
 }
 ```
@@ -218,48 +262,4 @@ $result = $insightsController->readMrrMovements($collect);
   }
 }
 ```
-
-
-# List Mrr Per Subscription
-
-**This endpoint is deprecated.**
-
-This endpoint returns your site's current MRR, including plan and usage breakouts split per subscription.
-
-```php
-function listMrrPerSubscription(array $options): SubscriptionMRRResponse
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `filterSubscriptionIds` | `?(int[])` | Query, Optional | Submit ids in order to limit results. Use in query: `filter[subscription_ids]=1,2,3`. |
-| `atTime` | `?string` | Query, Optional | Submit a timestamp in ISO8601 format to request MRR for a historic time. Use in query: `at_time=2022-01-10T10:00:00-05:00`. |
-| `page` | `?int` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`. |
-| `perPage` | `?int` | Query, Optional | This parameter indicates how many records to fetch in each request. Default value is 20. The maximum allowed values is 200; any per_page value over 200 will be changed to 200.<br>Use in query `per_page=200`. |
-| `direction` | [`?string(Direction)`](../../doc/models/direction.md) | Query, Optional | Controls the order in which results are returned. Records are ordered by subscription_id in ascending order by default. Use in query `direction=desc`. |
-
-## Response Type
-
-[`SubscriptionMRRResponse`](../../doc/models/subscription-mrr-response.md)
-
-## Example Usage
-
-```php
-$collect = Liquid error: Value cannot be null. (Parameter 'key')[
-    'at_time' => 'at_time=2022-01-10T10:00:00-05:00',
-    'page' => 2,
-    'per_page' => 50,
-    'direction' => Direction::DESC
-];
-
-$result = $insightsController->listMrrPerSubscription($collect);
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 400 | Bad Request | [`SubscriptionsMrrErrorResponseException`](../../doc/models/subscriptions-mrr-error-response-exception.md) |
 

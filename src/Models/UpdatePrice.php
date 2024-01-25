@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class UpdatePrice implements \JsonSerializable
@@ -20,22 +21,22 @@ class UpdatePrice implements \JsonSerializable
     private $id;
 
     /**
-     * @var int|null
+     * @var int|string|null
      */
     private $endingQuantity;
 
     /**
-     * @var int|null
+     * @var float|string|null
      */
     private $unitPrice;
 
     /**
-     * @var string|null
+     * @var bool|null
      */
     private $destroy;
 
     /**
-     * @var int|null
+     * @var int|string|null
      */
     private $startingQuantity;
 
@@ -59,8 +60,10 @@ class UpdatePrice implements \JsonSerializable
 
     /**
      * Returns Ending Quantity.
+     *
+     * @return int|string|null
      */
-    public function getEndingQuantity(): ?int
+    public function getEndingQuantity()
     {
         return $this->endingQuantity;
     }
@@ -69,26 +72,36 @@ class UpdatePrice implements \JsonSerializable
      * Sets Ending Quantity.
      *
      * @maps ending_quantity
+     * @mapsBy anyOf(oneOf(int,string),null)
+     *
+     * @param int|string|null $endingQuantity
      */
-    public function setEndingQuantity(?int $endingQuantity): void
+    public function setEndingQuantity($endingQuantity): void
     {
         $this->endingQuantity = $endingQuantity;
     }
 
     /**
      * Returns Unit Price.
+     * The price can contain up to 8 decimal places. i.e. 1.00 or 0.0012 or 0.00000065
+     *
+     * @return float|string|null
      */
-    public function getUnitPrice(): ?int
+    public function getUnitPrice()
     {
         return $this->unitPrice;
     }
 
     /**
      * Sets Unit Price.
+     * The price can contain up to 8 decimal places. i.e. 1.00 or 0.0012 or 0.00000065
      *
      * @maps unit_price
+     * @mapsBy anyOf(oneOf(float,string),null)
+     *
+     * @param float|string|null $unitPrice
      */
-    public function setUnitPrice(?int $unitPrice): void
+    public function setUnitPrice($unitPrice): void
     {
         $this->unitPrice = $unitPrice;
     }
@@ -96,7 +109,7 @@ class UpdatePrice implements \JsonSerializable
     /**
      * Returns Destroy.
      */
-    public function getDestroy(): ?string
+    public function getDestroy(): ?bool
     {
         return $this->destroy;
     }
@@ -106,15 +119,17 @@ class UpdatePrice implements \JsonSerializable
      *
      * @maps _destroy
      */
-    public function setDestroy(?string $destroy): void
+    public function setDestroy(?bool $destroy): void
     {
         $this->destroy = $destroy;
     }
 
     /**
      * Returns Starting Quantity.
+     *
+     * @return int|string|null
      */
-    public function getStartingQuantity(): ?int
+    public function getStartingQuantity()
     {
         return $this->startingQuantity;
     }
@@ -123,8 +138,11 @@ class UpdatePrice implements \JsonSerializable
      * Sets Starting Quantity.
      *
      * @maps starting_quantity
+     * @mapsBy anyOf(oneOf(int,string),null)
+     *
+     * @param int|string|null $startingQuantity
      */
-    public function setStartingQuantity(?int $startingQuantity): void
+    public function setStartingQuantity($startingQuantity): void
     {
         $this->startingQuantity = $startingQuantity;
     }
@@ -145,16 +163,28 @@ class UpdatePrice implements \JsonSerializable
             $json['id']                = $this->id;
         }
         if (isset($this->endingQuantity)) {
-            $json['ending_quantity']   = $this->endingQuantity;
+            $json['ending_quantity']   =
+                ApiHelper::getJsonHelper()->verifyTypes(
+                    $this->endingQuantity,
+                    'anyOf(oneOf(int,string),null)'
+                );
         }
         if (isset($this->unitPrice)) {
-            $json['unit_price']        = $this->unitPrice;
+            $json['unit_price']        =
+                ApiHelper::getJsonHelper()->verifyTypes(
+                    $this->unitPrice,
+                    'anyOf(oneOf(float,string),null)'
+                );
         }
         if (isset($this->destroy)) {
             $json['_destroy']          = $this->destroy;
         }
         if (isset($this->startingQuantity)) {
-            $json['starting_quantity'] = $this->startingQuantity;
+            $json['starting_quantity'] =
+                ApiHelper::getJsonHelper()->verifyTypes(
+                    $this->startingQuantity,
+                    'anyOf(oneOf(int,string),null)'
+                );
         }
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;

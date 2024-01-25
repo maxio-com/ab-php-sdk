@@ -68,7 +68,7 @@ class InvoiceCreditBuilder
     /**
      * Sets transaction time field.
      */
-    public function transactionTime(?string $value): self
+    public function transactionTime(?\DateTime $value): self
     {
         $this->instance->setTransactionTime($value);
         return $this;

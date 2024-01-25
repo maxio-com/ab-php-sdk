@@ -28,153 +28,6 @@ use CoreInterfaces\Core\Request\RequestMethod;
 class CustomersController extends BaseController
 {
     /**
-     * This method allows to retrieve the Customer properties by Chargify-generated Customer ID.
-     *
-     * @param int $id The Chargify id of the customer
-     *
-     * @return CustomerResponse Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function readCustomer(int $id): CustomerResponse
-    {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/customers/{id}.json')
-            ->auth('global')
-            ->parameters(TemplateParam::init('id', $id)->required());
-
-        $_resHandler = $this->responseHandler()->type(CustomerResponse::class);
-
-        return $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
-     * This method allows to update the Customer.
-     *
-     * @param int $id The Chargify id of the customer
-     * @param UpdateCustomerRequest|null $body
-     *
-     * @return CustomerResponse Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function updateCustomer(int $id, ?UpdateCustomerRequest $body = null): CustomerResponse
-    {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::PUT, '/customers/{id}.json')
-            ->auth('global')
-            ->parameters(
-                TemplateParam::init('id', $id)->required(),
-                HeaderParam::init('Content-Type', 'application/json'),
-                BodyParam::init($body)
-            );
-
-        $_resHandler = $this->responseHandler()
-            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
-            ->throwErrorOn(
-                '422',
-                ErrorType::initWithErrorTemplate(
-                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
-                    CustomerErrorResponseException::class
-                )
-            )
-            ->type(CustomerResponse::class);
-
-        return $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
-     * Use this method to return the customer object if you have the unique **Reference ID (Your App)**
-     * value handy. It will return a single match.
-     *
-     * @param string $reference Customer reference
-     *
-     * @return CustomerResponse Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function readCustomerByReference(string $reference): CustomerResponse
-    {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/customers/lookup.json')
-            ->auth('global')
-            ->parameters(QueryParam::init('reference', $reference)->commaSeparated()->required());
-
-        $_resHandler = $this->responseHandler()->type(CustomerResponse::class);
-
-        return $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
-     * This method lists all subscriptions that belong to a customer.
-     *
-     * @param int $customerId The Chargify id of the customer
-     *
-     * @return SubscriptionResponse[] Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function listCustomerSubscriptions(int $customerId): array
-    {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/customers/{customer_id}/subscriptions.json')
-            ->auth('global')
-            ->parameters(TemplateParam::init('customer_id', $customerId)->required());
-
-        $_resHandler = $this->responseHandler()->type(SubscriptionResponse::class, 1);
-
-        return $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
-     * This request will by default list all customers associated with your Site.
-     *
-     * ## Find Customer
-     *
-     * Use the search feature with the `q` query parameter to retrieve an array of customers that matches
-     * the search query.
-     *
-     * Common use cases are:
-     *
-     * + Search by an email
-     * + Search by a Chargify ID
-     * + Search by an organization
-     * + Search by a reference value from your application
-     * + Search by a first or last name
-     *
-     * To retrieve a single, exact match by reference, please use the [lookup endpoint](https://developers.
-     * chargify.com/docs/api-docs/b710d8fbef104-read-customer-by-reference).
-     *
-     * @param array $options Array with all options for search
-     *
-     * @return CustomerResponse[] Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function listCustomers(array $options): array
-    {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/customers.json')
-            ->auth('global')
-            ->parameters(
-                QueryParam::init('direction', $options)
-                    ->commaSeparated()
-                    ->extract('direction')
-                    ->serializeBy([SortingDirection::class, 'checkValue']),
-                QueryParam::init('page', $options)->commaSeparated()->extract('page', 1),
-                QueryParam::init('per_page', $options)->commaSeparated()->extract('perPage', 50),
-                QueryParam::init('date_field', $options)
-                    ->commaSeparated()
-                    ->extract('dateField')
-                    ->serializeBy([BasicDateField::class, 'checkValue']),
-                QueryParam::init('start_date', $options)->commaSeparated()->extract('startDate'),
-                QueryParam::init('end_date', $options)->commaSeparated()->extract('endDate'),
-                QueryParam::init('start_datetime', $options)->commaSeparated()->extract('startDatetime'),
-                QueryParam::init('end_datetime', $options)->commaSeparated()->extract('endDatetime'),
-                QueryParam::init('q', $options)->commaSeparated()->extract('q')
-            );
-
-        $_resHandler = $this->responseHandler()->type(CustomerResponse::class, 1);
-
-        return $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
      * You may create a new Customer at any time, or you may create a Customer at the same time you create
      * a Subscription. The only validation restriction is that you may only create one customer for a given
      * reference value.
@@ -239,6 +92,81 @@ class CustomersController extends BaseController
     }
 
     /**
+     * This method allows to update the Customer.
+     *
+     * @param int $id The Chargify id of the customer
+     * @param UpdateCustomerRequest|null $body
+     *
+     * @return CustomerResponse Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function updateCustomer(int $id, ?UpdateCustomerRequest $body = null): CustomerResponse
+    {
+        $_reqBuilder = $this->requestBuilder(RequestMethod::PUT, '/customers/{id}.json')
+            ->auth('global')
+            ->parameters(
+                TemplateParam::init('id', $id)->required(),
+                HeaderParam::init('Content-Type', 'application/json'),
+                BodyParam::init($body)
+            );
+
+        $_resHandler = $this->responseHandler()
+            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
+            ->throwErrorOn(
+                '422',
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    CustomerErrorResponseException::class
+                )
+            )
+            ->type(CustomerResponse::class);
+
+        return $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
+     * Use this method to return the customer object if you have the unique **Reference ID (Your App)**
+     * value handy. It will return a single match.
+     *
+     * @param string $reference Customer reference
+     *
+     * @return CustomerResponse Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function readCustomerByReference(string $reference): CustomerResponse
+    {
+        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/customers/lookup.json')
+            ->auth('global')
+            ->parameters(QueryParam::init('reference', $reference)->commaSeparated()->required());
+
+        $_resHandler = $this->responseHandler()->type(CustomerResponse::class);
+
+        return $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
+     * This method allows to retrieve the Customer properties by Chargify-generated Customer ID.
+     *
+     * @param int $id The Chargify id of the customer
+     *
+     * @return CustomerResponse Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function readCustomer(int $id): CustomerResponse
+    {
+        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/customers/{id}.json')
+            ->auth('global')
+            ->parameters(TemplateParam::init('id', $id)->required());
+
+        $_resHandler = $this->responseHandler()->type(CustomerResponse::class);
+
+        return $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
      * This method allows you to delete the Customer.
      *
      * @param int $id The Chargify id of the customer
@@ -254,5 +182,77 @@ class CustomersController extends BaseController
             ->parameters(TemplateParam::init('id', $id)->required());
 
         $this->execute($_reqBuilder);
+    }
+
+    /**
+     * This request will by default list all customers associated with your Site.
+     *
+     * ## Find Customer
+     *
+     * Use the search feature with the `q` query parameter to retrieve an array of customers that matches
+     * the search query.
+     *
+     * Common use cases are:
+     *
+     * + Search by an email
+     * + Search by a Chargify ID
+     * + Search by an organization
+     * + Search by a reference value from your application
+     * + Search by a first or last name
+     *
+     * To retrieve a single, exact match by reference, please use the [lookup endpoint](https://developers.
+     * chargify.com/docs/api-docs/b710d8fbef104-read-customer-by-reference).
+     *
+     * @param array $options Array with all options for search
+     *
+     * @return CustomerResponse[] Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function listCustomers(array $options): array
+    {
+        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/customers.json')
+            ->auth('global')
+            ->parameters(
+                QueryParam::init('direction', $options)
+                    ->commaSeparated()
+                    ->extract('direction')
+                    ->serializeBy([SortingDirection::class, 'checkValue']),
+                QueryParam::init('page', $options)->commaSeparated()->extract('page', 1),
+                QueryParam::init('per_page', $options)->commaSeparated()->extract('perPage', 50),
+                QueryParam::init('date_field', $options)
+                    ->commaSeparated()
+                    ->extract('dateField')
+                    ->serializeBy([BasicDateField::class, 'checkValue']),
+                QueryParam::init('start_date', $options)->commaSeparated()->extract('startDate'),
+                QueryParam::init('end_date', $options)->commaSeparated()->extract('endDate'),
+                QueryParam::init('start_datetime', $options)->commaSeparated()->extract('startDatetime'),
+                QueryParam::init('end_datetime', $options)->commaSeparated()->extract('endDatetime'),
+                QueryParam::init('q', $options)->commaSeparated()->extract('q')
+            );
+
+        $_resHandler = $this->responseHandler()->type(CustomerResponse::class, 1);
+
+        return $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
+     * This method lists all subscriptions that belong to a customer.
+     *
+     * @param int $customerId The Chargify id of the customer
+     *
+     * @return SubscriptionResponse[] Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function listCustomerSubscriptions(int $customerId): array
+    {
+        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/customers/{customer_id}/subscriptions.json')
+            ->auth('global')
+            ->parameters(TemplateParam::init('customer_id', $customerId)->required());
+
+        $_resHandler = $this->responseHandler()->type(SubscriptionResponse::class, 1);
+
+        return $this->execute($_reqBuilder, $_resHandler);
     }
 }

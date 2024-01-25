@@ -32,7 +32,7 @@ class CreateOrUpdatePercentageCoupon implements \JsonSerializable
     private $description;
 
     /**
-     * @var float|string
+     * @var string|float
      */
     private $percentage;
 
@@ -79,7 +79,7 @@ class CreateOrUpdatePercentageCoupon implements \JsonSerializable
     /**
      * @param string $name
      * @param string $code
-     * @param float|string $percentage
+     * @param string|float $percentage
      */
     public function __construct(string $name, string $code, $percentage)
     {
@@ -153,7 +153,7 @@ class CreateOrUpdatePercentageCoupon implements \JsonSerializable
     /**
      * Returns Percentage.
      *
-     * @return float|string
+     * @return string|float
      */
     public function getPercentage()
     {
@@ -165,9 +165,9 @@ class CreateOrUpdatePercentageCoupon implements \JsonSerializable
      *
      * @required
      * @maps percentage
-     * @mapsBy oneOf(float,string)
+     * @mapsBy oneOf(string,float)
      *
-     * @param float|string $percentage
+     * @param string|float $percentage
      */
     public function setPercentage($percentage): void
     {
@@ -340,7 +340,7 @@ class CreateOrUpdatePercentageCoupon implements \JsonSerializable
         $json['percentage']                           =
             ApiHelper::getJsonHelper()->verifyTypes(
                 $this->percentage,
-                'oneOf(float,string)'
+                'oneOf(string,float)'
             );
         if (isset($this->allowNegativeBalance)) {
             $json['allow_negative_balance']           = $this->allowNegativeBalance;

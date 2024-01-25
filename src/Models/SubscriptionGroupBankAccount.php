@@ -52,7 +52,7 @@ class SubscriptionGroupBankAccount implements \JsonSerializable
     /**
      * @var string|null
      */
-    private $paymentType;
+    private $paymentType = PaymentType::CREDIT_CARD;
 
     /**
      * @var string|null
@@ -206,6 +206,7 @@ class SubscriptionGroupBankAccount implements \JsonSerializable
 
     /**
      * Returns Bank Account Type.
+     * Defaults to checking
      */
     public function getBankAccountType(): ?string
     {
@@ -214,6 +215,7 @@ class SubscriptionGroupBankAccount implements \JsonSerializable
 
     /**
      * Sets Bank Account Type.
+     * Defaults to checking
      *
      * @maps bank_account_type
      * @factory \AdvancedBillingLib\Models\BankAccountType::checkValue
@@ -225,6 +227,7 @@ class SubscriptionGroupBankAccount implements \JsonSerializable
 
     /**
      * Returns Bank Account Holder Type.
+     * Defaults to personal
      */
     public function getBankAccountHolderType(): ?string
     {
@@ -233,9 +236,10 @@ class SubscriptionGroupBankAccount implements \JsonSerializable
 
     /**
      * Sets Bank Account Holder Type.
+     * Defaults to personal
      *
      * @maps bank_account_holder_type
-     * @factory \AdvancedBillingLib\Models\HolderType::checkValue
+     * @factory \AdvancedBillingLib\Models\BankAccountHolderType::checkValue
      */
     public function setBankAccountHolderType(?string $bankAccountHolderType): void
     {
@@ -254,6 +258,7 @@ class SubscriptionGroupBankAccount implements \JsonSerializable
      * Sets Payment Type.
      *
      * @maps payment_type
+     * @factory \AdvancedBillingLib\Models\PaymentType::checkValue
      */
     public function setPaymentType(?string $paymentType): void
     {
@@ -438,10 +443,10 @@ class SubscriptionGroupBankAccount implements \JsonSerializable
             $json['bank_account_type']        = BankAccountType::checkValue($this->bankAccountType);
         }
         if (isset($this->bankAccountHolderType)) {
-            $json['bank_account_holder_type'] = HolderType::checkValue($this->bankAccountHolderType);
+            $json['bank_account_holder_type'] = BankAccountHolderType::checkValue($this->bankAccountHolderType);
         }
         if (isset($this->paymentType)) {
-            $json['payment_type']             = $this->paymentType;
+            $json['payment_type']             = PaymentType::checkValue($this->paymentType);
         }
         if (isset($this->billingAddress)) {
             $json['billing_address']          = $this->billingAddress;

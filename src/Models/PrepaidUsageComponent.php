@@ -16,7 +16,7 @@ use stdClass;
 class PrepaidUsageComponent implements \JsonSerializable
 {
     /**
-     * @var string|null
+     * @var string
      */
     private $name;
 
@@ -126,11 +126,19 @@ class PrepaidUsageComponent implements \JsonSerializable
     private $publicSignupPageIds;
 
     /**
+     * @param string $name
+     */
+    public function __construct(string $name)
+    {
+        $this->name = $name;
+    }
+
+    /**
      * Returns Name.
      * A name for this component that is suitable for showing customers and displaying on billing
      * statements, ie. "Minutes".
      */
-    public function getName(): ?string
+    public function getName(): string
     {
         return $this->name;
     }
@@ -140,9 +148,10 @@ class PrepaidUsageComponent implements \JsonSerializable
      * A name for this component that is suitable for showing customers and displaying on billing
      * statements, ie. "Minutes".
      *
+     * @required
      * @maps name
      */
-    public function setName(?string $name): void
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
@@ -650,9 +659,7 @@ class PrepaidUsageComponent implements \JsonSerializable
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
-        if (isset($this->name)) {
-            $json['name']                        = $this->name;
-        }
+        $json['name']                            = $this->name;
         if (isset($this->unitName)) {
             $json['unit_name']                   = $this->unitName;
         }

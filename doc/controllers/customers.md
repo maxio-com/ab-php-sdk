@@ -10,28 +10,51 @@ $customersController = $client->getCustomersController();
 
 ## Methods
 
-* [Read Customer](../../doc/controllers/customers.md#read-customer)
+* [Create Customer](../../doc/controllers/customers.md#create-customer)
 * [Update Customer](../../doc/controllers/customers.md#update-customer)
 * [Read Customer by Reference](../../doc/controllers/customers.md#read-customer-by-reference)
-* [List Customer Subscriptions](../../doc/controllers/customers.md#list-customer-subscriptions)
-* [List Customers](../../doc/controllers/customers.md#list-customers)
-* [Create Customer](../../doc/controllers/customers.md#create-customer)
+* [Read Customer](../../doc/controllers/customers.md#read-customer)
 * [Delete Customer](../../doc/controllers/customers.md#delete-customer)
+* [List Customers](../../doc/controllers/customers.md#list-customers)
+* [List Customer Subscriptions](../../doc/controllers/customers.md#list-customer-subscriptions)
 
 
-# Read Customer
+# Create Customer
 
-This method allows to retrieve the Customer properties by Chargify-generated Customer ID.
+You may create a new Customer at any time, or you may create a Customer at the same time you create a Subscription. The only validation restriction is that you may only create one customer for a given reference value.
+
+If provided, the `reference` value must be unique. It represents a unique identifier for the customer from your own app, i.e. the customer’s ID. This allows you to retrieve a given customer via a piece of shared information. Alternatively, you may choose to leave `reference` blank, and store Chargify’s unique ID for the customer, which is in the `id` attribute.
+
+Full documentation on how to locate, create and edit Customers in the Chargify UI can be located [here](https://chargify.zendesk.com/hc/en-us/articles/4407659914267).
+
+## Required Country Format
+
+Chargify requires that you use the ISO Standard Country codes when formatting country attribute of the customer.
+
+Countries should be formatted as 2 characters. For more information, please see the following wikipedia article on [ISO_3166-1.](http://en.wikipedia.org/wiki/ISO_3166-1#Current_codes)
+
+## Required State Format
+
+Chargify requires that you use the ISO Standard State codes when formatting state attribute of the customer.
+
++ US States (2 characters): [ISO_3166-2](https://en.wikipedia.org/wiki/ISO_3166-2:US)
+
++ States Outside the US (2-3 characters): To find the correct state codes outside of the US, please go to [ISO_3166-1](http://en.wikipedia.org/wiki/ISO_3166-1#Current_codes) and click on the link in the “ISO 3166-2 codes” column next to country you wish to populate.
+
+## Locale
+
+Chargify allows you to attribute a language/region to your customer to deliver invoices in any required language.
+For more: [Customer Locale](https://chargify.zendesk.com/hc/en-us/articles/4407870384283#customer-locale)
 
 ```php
-function readCustomer(int $id): CustomerResponse
+function createCustomer(?CreateCustomerRequest $body = null): CustomerResponse
 ```
 
 ## Parameters
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `id` | `int` | Template, Required | The Chargify id of the customer |
+| `body` | [`?CreateCustomerRequest`](../../doc/models/create-customer-request.md) | Body, Optional | - |
 
 ## Response Type
 
@@ -40,10 +63,69 @@ function readCustomer(int $id): CustomerResponse
 ## Example Usage
 
 ```php
-$id = 112;
+$body = CreateCustomerRequestBuilder::init(
+    CreateCustomerBuilder::init(
+        'Martha',
+        'Washington',
+        'martha@example.com'
+    )
+        ->ccEmails('george@example.com')
+        ->organization('ABC, Inc.')
+        ->reference('1234567890')
+        ->address('123 Main Street')
+        ->address2('Unit 10')
+        ->city('Anytown')
+        ->state('MA')
+        ->zip('02120')
+        ->country('US')
+        ->phone('555-555-1212')
+        ->locale('es-MX')
+        ->build()
+)->build();
 
-$result = $customersController->readCustomer($id);
+$result = $customersController->createCustomer($body);
 ```
+
+## Example Response *(as JSON)*
+
+```json
+{
+  "customer": {
+    "first_name": "Cathryn",
+    "last_name": "Parisian",
+    "email": "Stella.McLaughlin6@example.net",
+    "cc_emails": null,
+    "organization": "Greenholt - Oberbrunner",
+    "reference": null,
+    "id": 76,
+    "created_at": "2021-03-29T07:47:00-04:00",
+    "updated_at": "2021-03-29T07:47:00-04:00",
+    "address": "739 Stephon Bypass",
+    "address_2": "Apt. 386",
+    "city": "Sedrickchester",
+    "state": "KY",
+    "state_name": "Kentucky",
+    "zip": "46979-7719",
+    "country": "US",
+    "country_name": "United States",
+    "phone": "230-934-3685",
+    "verified": false,
+    "portal_customer_created_at": null,
+    "portal_invite_last_sent_at": null,
+    "portal_invite_last_accepted_at": null,
+    "tax_exempt": false,
+    "vat_number": null,
+    "parent_id": null,
+    "locale": "en-US"
+  }
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 422 | Unprocessable Entity (WebDAV) | [`CustomerErrorResponseException`](../../doc/models/customer-error-response-exception.md) |
 
 
 # Update Customer
@@ -150,30 +232,57 @@ $result = $customersController->readCustomerByReference($reference);
 ```
 
 
-# List Customer Subscriptions
+# Read Customer
 
-This method lists all subscriptions that belong to a customer.
+This method allows to retrieve the Customer properties by Chargify-generated Customer ID.
 
 ```php
-function listCustomerSubscriptions(int $customerId): array
+function readCustomer(int $id): CustomerResponse
 ```
 
 ## Parameters
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `customerId` | `int` | Template, Required | The Chargify id of the customer |
+| `id` | `int` | Template, Required | The Chargify id of the customer |
 
 ## Response Type
 
-[`SubscriptionResponse[]`](../../doc/models/subscription-response.md)
+[`CustomerResponse`](../../doc/models/customer-response.md)
 
 ## Example Usage
 
 ```php
-$customerId = 150;
+$id = 112;
 
-$result = $customersController->listCustomerSubscriptions($customerId);
+$result = $customersController->readCustomer($id);
+```
+
+
+# Delete Customer
+
+This method allows you to delete the Customer.
+
+```php
+function deleteCustomer(int $id): void
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `id` | `int` | Template, Required | The Chargify id of the customer |
+
+## Response Type
+
+`void`
+
+## Example Usage
+
+```php
+$id = 112;
+
+$customersController->deleteCustomer($id);
 ```
 
 
@@ -314,138 +423,29 @@ $result = $customersController->listCustomers($collect);
 ```
 
 
-# Create Customer
+# List Customer Subscriptions
 
-You may create a new Customer at any time, or you may create a Customer at the same time you create a Subscription. The only validation restriction is that you may only create one customer for a given reference value.
-
-If provided, the `reference` value must be unique. It represents a unique identifier for the customer from your own app, i.e. the customer’s ID. This allows you to retrieve a given customer via a piece of shared information. Alternatively, you may choose to leave `reference` blank, and store Chargify’s unique ID for the customer, which is in the `id` attribute.
-
-Full documentation on how to locate, create and edit Customers in the Chargify UI can be located [here](https://chargify.zendesk.com/hc/en-us/articles/4407659914267).
-
-## Required Country Format
-
-Chargify requires that you use the ISO Standard Country codes when formatting country attribute of the customer.
-
-Countries should be formatted as 2 characters. For more information, please see the following wikipedia article on [ISO_3166-1.](http://en.wikipedia.org/wiki/ISO_3166-1#Current_codes)
-
-## Required State Format
-
-Chargify requires that you use the ISO Standard State codes when formatting state attribute of the customer.
-
-+ US States (2 characters): [ISO_3166-2](https://en.wikipedia.org/wiki/ISO_3166-2:US)
-
-+ States Outside the US (2-3 characters): To find the correct state codes outside of the US, please go to [ISO_3166-1](http://en.wikipedia.org/wiki/ISO_3166-1#Current_codes) and click on the link in the “ISO 3166-2 codes” column next to country you wish to populate.
-
-## Locale
-
-Chargify allows you to attribute a language/region to your customer to deliver invoices in any required language.
-For more: [Customer Locale](https://chargify.zendesk.com/hc/en-us/articles/4407870384283#customer-locale)
+This method lists all subscriptions that belong to a customer.
 
 ```php
-function createCustomer(?CreateCustomerRequest $body = null): CustomerResponse
+function listCustomerSubscriptions(int $customerId): array
 ```
 
 ## Parameters
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `body` | [`?CreateCustomerRequest`](../../doc/models/create-customer-request.md) | Body, Optional | - |
+| `customerId` | `int` | Template, Required | The Chargify id of the customer |
 
 ## Response Type
 
-[`CustomerResponse`](../../doc/models/customer-response.md)
+[`SubscriptionResponse[]`](../../doc/models/subscription-response.md)
 
 ## Example Usage
 
 ```php
-$body = CreateCustomerRequestBuilder::init(
-    CreateCustomerBuilder::init(
-        'Martha',
-        'Washington',
-        'martha@example.com'
-    )
-        ->ccEmails('george@example.com')
-        ->organization('ABC, Inc.')
-        ->reference('1234567890')
-        ->address('123 Main Street')
-        ->address2('Unit 10')
-        ->city('Anytown')
-        ->state('MA')
-        ->zip('02120')
-        ->country('US')
-        ->phone('555-555-1212')
-        ->locale('es-MX')
-        ->build()
-)->build();
+$customerId = 150;
 
-$result = $customersController->createCustomer($body);
-```
-
-## Example Response *(as JSON)*
-
-```json
-{
-  "customer": {
-    "first_name": "Cathryn",
-    "last_name": "Parisian",
-    "email": "Stella.McLaughlin6@example.net",
-    "cc_emails": null,
-    "organization": "Greenholt - Oberbrunner",
-    "reference": null,
-    "id": 76,
-    "created_at": "2021-03-29T07:47:00-04:00",
-    "updated_at": "2021-03-29T07:47:00-04:00",
-    "address": "739 Stephon Bypass",
-    "address_2": "Apt. 386",
-    "city": "Sedrickchester",
-    "state": "KY",
-    "state_name": "Kentucky",
-    "zip": "46979-7719",
-    "country": "US",
-    "country_name": "United States",
-    "phone": "230-934-3685",
-    "verified": false,
-    "portal_customer_created_at": null,
-    "portal_invite_last_sent_at": null,
-    "portal_invite_last_accepted_at": null,
-    "tax_exempt": false,
-    "vat_number": null,
-    "parent_id": null,
-    "locale": "en-US"
-  }
-}
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 422 | Unprocessable Entity (WebDAV) | [`CustomerErrorResponseException`](../../doc/models/customer-error-response-exception.md) |
-
-
-# Delete Customer
-
-This method allows you to delete the Customer.
-
-```php
-function deleteCustomer(int $id): void
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `id` | `int` | Template, Required | The Chargify id of the customer |
-
-## Response Type
-
-`void`
-
-## Example Usage
-
-```php
-$id = 112;
-
-$customersController->deleteCustomer($id);
+$result = $customersController->listCustomerSubscriptions($customerId);
 ```
 

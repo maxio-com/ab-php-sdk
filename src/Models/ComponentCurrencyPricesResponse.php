@@ -12,15 +12,15 @@ namespace AdvancedBillingLib\Models;
 
 use stdClass;
 
-class ProductPricePointCurrencyPrice implements \JsonSerializable
+class ComponentCurrencyPricesResponse implements \JsonSerializable
 {
     /**
-     * @var CurrencyPrice[]
+     * @var ComponentCurrencyPrice[]
      */
     private $currencyPrices;
 
     /**
-     * @param CurrencyPrice[] $currencyPrices
+     * @param ComponentCurrencyPrice[] $currencyPrices
      */
     public function __construct(array $currencyPrices)
     {
@@ -30,7 +30,7 @@ class ProductPricePointCurrencyPrice implements \JsonSerializable
     /**
      * Returns Currency Prices.
      *
-     * @return CurrencyPrice[]
+     * @return ComponentCurrencyPrice[]
      */
     public function getCurrencyPrices(): array
     {
@@ -43,7 +43,7 @@ class ProductPricePointCurrencyPrice implements \JsonSerializable
      * @required
      * @maps currency_prices
      *
-     * @param CurrencyPrice[] $currencyPrices
+     * @param ComponentCurrencyPrice[] $currencyPrices
      */
     public function setCurrencyPrices(array $currencyPrices): void
     {

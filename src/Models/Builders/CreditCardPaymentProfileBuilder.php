@@ -120,6 +120,15 @@ class CreditCardPaymentProfileBuilder
     }
 
     /**
+     * Unsets vault token field.
+     */
+    public function unsetVaultToken(): self
+    {
+        $this->instance->unsetVaultToken();
+        return $this;
+    }
+
+    /**
      * Sets billing address field.
      */
     public function billingAddress(?string $value): self
@@ -260,6 +269,15 @@ class CreditCardPaymentProfileBuilder
     public function disabled(?bool $value): self
     {
         $this->instance->setDisabled($value);
+        return $this;
+    }
+
+    /**
+     * Sets chargify token field.
+     */
+    public function chargifyToken(?string $value): self
+    {
+        $this->instance->setChargifyToken($value);
         return $this;
     }
 

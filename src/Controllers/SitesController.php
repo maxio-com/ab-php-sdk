@@ -20,32 +20,24 @@ use CoreInterfaces\Core\Request\RequestMethod;
 class SitesController extends BaseController
 {
     /**
-     * This endpoint allows you to fetch some site data.
+     * This endpoint returns public keys used for Chargify.js.
      *
-     * Full documentation on Sites in the Chargify UI can be located [here](https://chargify.zendesk.
-     * com/hc/en-us/articles/4407870738587).
+     * @param array $options Array with all options for search
      *
-     * Specifically, the [Clearing Site Data](https://maxio-chargify.zendesk.com/hc/en-
-     * us/articles/5405428327309) section is extremely relevant to this endpoint documentation.
-     *
-     * #### Relationship invoicing enabled
-     * If site has RI enabled then you will see more settings like:
-     *
-     * "customer_hierarchy_enabled": true,
-     * "whopays_enabled": true,
-     * "whopays_default_payer": "self"
-     * You can read more about these settings here:
-     * [Who Pays & Customer Hierarchy](https://chargify.zendesk.com/hc/en-us/articles/4407746683291)
-     *
-     * @return SiteResponse Response from the API call
+     * @return ListPublicKeysResponse Response from the API call
      *
      * @throws ApiException Thrown if API call fails
      */
-    public function readSite(): SiteResponse
+    public function listChargifyJsPublicKeys(array $options): ListPublicKeysResponse
     {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/site.json')->auth('global');
+        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/chargify_js_keys.json')
+            ->auth('global')
+            ->parameters(
+                QueryParam::init('page', $options)->commaSeparated()->extract('page', 1),
+                QueryParam::init('per_page', $options)->commaSeparated()->extract('perPage', 20)
+            );
 
-        $_resHandler = $this->responseHandler()->type(SiteResponse::class);
+        $_resHandler = $this->responseHandler()->type(ListPublicKeysResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
     }
@@ -82,24 +74,32 @@ class SitesController extends BaseController
     }
 
     /**
-     * This endpoint returns public keys used for Chargify.js.
+     * This endpoint allows you to fetch some site data.
      *
-     * @param array $options Array with all options for search
+     * Full documentation on Sites in the Chargify UI can be located [here](https://chargify.zendesk.
+     * com/hc/en-us/articles/4407870738587).
      *
-     * @return ListPublicKeysResponse Response from the API call
+     * Specifically, the [Clearing Site Data](https://maxio-chargify.zendesk.com/hc/en-
+     * us/articles/5405428327309) section is extremely relevant to this endpoint documentation.
+     *
+     * #### Relationship invoicing enabled
+     * If site has RI enabled then you will see more settings like:
+     *
+     * "customer_hierarchy_enabled": true,
+     * "whopays_enabled": true,
+     * "whopays_default_payer": "self"
+     * You can read more about these settings here:
+     * [Who Pays & Customer Hierarchy](https://chargify.zendesk.com/hc/en-us/articles/4407746683291)
+     *
+     * @return SiteResponse Response from the API call
      *
      * @throws ApiException Thrown if API call fails
      */
-    public function listChargifyJsPublicKeys(array $options): ListPublicKeysResponse
+    public function readSite(): SiteResponse
     {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/chargify_js_keys.json')
-            ->auth('global')
-            ->parameters(
-                QueryParam::init('page', $options)->commaSeparated()->extract('page', 1),
-                QueryParam::init('per_page', $options)->commaSeparated()->extract('perPage', 20)
-            );
+        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/site.json')->auth('global');
 
-        $_resHandler = $this->responseHandler()->type(ListPublicKeysResponse::class);
+        $_resHandler = $this->responseHandler()->type(SiteResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
     }

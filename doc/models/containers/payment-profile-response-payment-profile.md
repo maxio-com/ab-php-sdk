@@ -1,5 +1,5 @@
 
-# Read Payment Profile Response Payment Profile
+# Payment Profile Response Payment Profile
 
 ## Data Type
 

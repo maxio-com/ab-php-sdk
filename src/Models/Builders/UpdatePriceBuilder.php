@@ -50,7 +50,7 @@ class UpdatePriceBuilder
     /**
      * Sets ending quantity field.
      */
-    public function endingQuantity(?int $value): self
+    public function endingQuantity($value): self
     {
         $this->instance->setEndingQuantity($value);
         return $this;
@@ -59,7 +59,7 @@ class UpdatePriceBuilder
     /**
      * Sets unit price field.
      */
-    public function unitPrice(?int $value): self
+    public function unitPrice($value): self
     {
         $this->instance->setUnitPrice($value);
         return $this;
@@ -68,7 +68,7 @@ class UpdatePriceBuilder
     /**
      * Sets destroy field.
      */
-    public function destroy(?string $value): self
+    public function destroy(?bool $value): self
     {
         $this->instance->setDestroy($value);
         return $this;
@@ -77,7 +77,7 @@ class UpdatePriceBuilder
     /**
      * Sets starting quantity field.
      */
-    public function startingQuantity(?int $value): self
+    public function startingQuantity($value): self
     {
         $this->instance->setStartingQuantity($value);
         return $this;

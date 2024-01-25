@@ -14,7 +14,10 @@ use Core\Utils\CoreHelper;
 use Exception;
 use stdClass;
 
-class HolderType
+/**
+ * Defaults to personal
+ */
+class BankAccountHolderType
 {
     public const PERSONAL = 'personal';
 
@@ -37,6 +40,6 @@ class HolderType
         if (CoreHelper::checkValueOrValuesInList($value, self::_ALL_VALUES)) {
             return $value;
         }
-        throw new Exception("$value is invalid for HolderType.");
+        throw new Exception("$value is invalid for BankAccountHolderType.");
     }
 }

@@ -10,35 +10,23 @@ $customFieldsController = $client->getCustomFieldsController();
 
 ## Methods
 
-* [List Metadata for Resource Type](../../doc/controllers/custom-fields.md#list-metadata-for-resource-type)
-* [Create Metafields](../../doc/controllers/custom-fields.md#create-metafields)
-* [List Metafields](../../doc/controllers/custom-fields.md#list-metafields)
 * [Update Metafield](../../doc/controllers/custom-fields.md#update-metafield)
+* [Update Metadata](../../doc/controllers/custom-fields.md#update-metadata)
+* [List Metafields](../../doc/controllers/custom-fields.md#list-metafields)
 * [Delete Metafield](../../doc/controllers/custom-fields.md#delete-metafield)
 * [List Metadata](../../doc/controllers/custom-fields.md#list-metadata)
-* [Delete Metadata](../../doc/controllers/custom-fields.md#delete-metadata)
+* [Create Metafields](../../doc/controllers/custom-fields.md#create-metafields)
 * [Create Metadata](../../doc/controllers/custom-fields.md#create-metadata)
-* [Update Metadata](../../doc/controllers/custom-fields.md#update-metadata)
+* [Delete Metadata](../../doc/controllers/custom-fields.md#delete-metadata)
+* [List Metadata for Resource Type](../../doc/controllers/custom-fields.md#list-metadata-for-resource-type)
 
 
-# List Metadata for Resource Type
+# Update Metafield
 
-This method will provide you information on usage of metadata across your selected resource (ie. subscriptions, customers)
-
-## Metadata Data
-
-This endpoint will also display the current stats of your metadata to use as a tool for pagination.
-
-### Metadata for multiple records
-
-`https://acme.chargify.com/subscriptions/metadata.json?resource_ids[]=1&resource_ids[]=2`
-
-## Read Metadata for a Site
-
-This endpoint will list the number of pages of metadata information that are contained within a site.
+Use the following method to update metafields for your Site. Metafields can be populated with metadata after the fact.
 
 ```php
-function listMetadataForResourceType(array $options): PaginatedMetadata
+function updateMetafield(string $resourceType, ?UpdateMetafieldsRequest $body = null): array
 ```
 
 ## Parameters
@@ -46,16 +34,174 @@ function listMetadataForResourceType(array $options): PaginatedMetadata
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `resourceType` | [`string(ResourceType)`](../../doc/models/resource-type.md) | Template, Required | the resource type to which the metafields belong |
+| `body` | [`?UpdateMetafieldsRequest`](../../doc/models/update-metafields-request.md) | Body, Optional | - |
+
+## Response Type
+
+[`Metafield[]`](../../doc/models/metafield.md)
+
+## Example Usage
+
+```php
+$resourceType = ResourceType::SUBSCRIPTIONS;
+
+$result = $customFieldsController->updateMetafield($resourceType);
+```
+
+
+# Update Metadata
+
+This method allows you to update the existing metadata associated with a subscription or customer.
+
+```php
+function updateMetadata(string $resourceType, string $resourceId, ?UpdateMetadataRequest $body = null): array
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `resourceType` | [`string(ResourceType)`](../../doc/models/resource-type.md) | Template, Required | the resource type to which the metafields belong |
+| `resourceId` | `string` | Template, Required | The Chargify id of the customer or the subscription for which the metadata applies |
+| `body` | [`?UpdateMetadataRequest`](../../doc/models/update-metadata-request.md) | Body, Optional | - |
+
+## Response Type
+
+[`Metadata[]`](../../doc/models/metadata.md)
+
+## Example Usage
+
+```php
+$resourceType = ResourceType::SUBSCRIPTIONS;
+
+$resourceId = 'resource_id4';
+
+$result = $customFieldsController->updateMetadata(
+    $resourceType,
+    $resourceId
+);
+```
+
+
+# List Metafields
+
+This endpoint lists metafields associated with a site. The metafield description and usage is contained in the response.
+
+```php
+function listMetafields(array $options): ListMetafieldsResponse
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `resourceType` | [`string(ResourceType)`](../../doc/models/resource-type.md) | Template, Required | the resource type to which the metafields belong |
+| `name` | `?string` | Query, Optional | filter by the name of the metafield |
 | `page` | `?int` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`. |
 | `perPage` | `?int` | Query, Optional | This parameter indicates how many records to fetch in each request. Default value is 20. The maximum allowed values is 200; any per_page value over 200 will be changed to 200.<br>Use in query `per_page=200`. |
-| `dateField` | [`?string(BasicDateField)`](../../doc/models/basic-date-field.md) | Query, Optional | The type of filter you would like to apply to your search. |
-| `startDate` | `?string` | Query, Optional | The start date (format YYYY-MM-DD) with which to filter the date_field. Returns metadata with a timestamp at or after midnight (12:00:00 AM) in your site’s time zone on the date specified. |
-| `endDate` | `?string` | Query, Optional | The end date (format YYYY-MM-DD) with which to filter the date_field. Returns metadata with a timestamp up to and including 11:59:59PM in your site’s time zone on the date specified. |
-| `startDatetime` | `?string` | Query, Optional | The start date and time (format YYYY-MM-DD HH:MM:SS) with which to filter the date_field. Returns metadata with a timestamp at or after exact time provided in query. You can specify timezone in query - otherwise your site's time zone will be used. If provided, this parameter will be used instead of start_date. |
-| `endDatetime` | `?string` | Query, Optional | The end date and time (format YYYY-MM-DD HH:MM:SS) with which to filter the date_field. Returns metadata with a timestamp at or before exact time provided in query. You can specify timezone in query - otherwise your site's time zone will be used. If provided, this parameter will be used instead of end_date. |
-| `withDeleted` | `?bool` | Query, Optional | Allow to fetch deleted metadata. |
-| `resourceIds` | `?(int[])` | Query, Optional | Allow to fetch metadata for multiple records based on provided ids. Use in query: `resource_ids[]=122&resource_ids[]=123&resource_ids[]=124`. |
 | `direction` | [`?string(SortingDirection)`](../../doc/models/sorting-direction.md) | Query, Optional | Controls the order in which results are returned.<br>Use in query `direction=asc`. |
+
+## Response Type
+
+[`ListMetafieldsResponse`](../../doc/models/list-metafields-response.md)
+
+## Example Usage
+
+```php
+$collect = [
+    'resource_type' => ResourceType::SUBSCRIPTIONS,
+    'page' => 2,
+    'per_page' => 50
+];
+
+$result = $customFieldsController->listMetafields($collect);
+```
+
+## Example Response *(as JSON)*
+
+```json
+{
+  "total_count": 0,
+  "current_page": 0,
+  "total_pages": 0,
+  "per_page": 0,
+  "metafields": [
+    {
+      "id": 0,
+      "name": "string",
+      "scope": {
+        "csv": "0",
+        "statements": "0",
+        "invoices": "0",
+        "portal": "0",
+        "public_show": "0",
+        "public_edit": "0"
+      },
+      "data_count": 0,
+      "input_type": "string",
+      "enum": null
+    }
+  ]
+}
+```
+
+
+# Delete Metafield
+
+Use the following method to delete a metafield. This will remove the metafield from the Site.
+
+Additionally, this will remove the metafield and associated metadata with all Subscriptions on the Site.
+
+```php
+function deleteMetafield(string $resourceType, ?string $name = null): void
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `resourceType` | [`string(ResourceType)`](../../doc/models/resource-type.md) | Template, Required | the resource type to which the metafields belong |
+| `name` | `?string` | Query, Optional | The name of the metafield to be deleted |
+
+## Response Type
+
+`void`
+
+## Example Usage
+
+```php
+$resourceType = ResourceType::SUBSCRIPTIONS;
+
+$customFieldsController->deleteMetafield($resourceType);
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 404 | Not Found | `ApiException` |
+
+
+# List Metadata
+
+This request will list all of the metadata belonging to a particular resource (ie. subscription, customer) that is specified.
+
+## Metadata Data
+
+This endpoint will also display the current stats of your metadata to use as a tool for pagination.
+
+```php
+function listMetadata(array $options): PaginatedMetadata
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `resourceType` | [`string(ResourceType)`](../../doc/models/resource-type.md) | Template, Required | the resource type to which the metafields belong |
+| `resourceId` | `string` | Template, Required | The Chargify id of the customer or the subscription for which the metadata applies |
+| `page` | `?int` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`. |
+| `perPage` | `?int` | Query, Optional | This parameter indicates how many records to fetch in each request. Default value is 20. The maximum allowed values is 200; any per_page value over 200 will be changed to 200.<br>Use in query `per_page=200`. |
 
 ## Response Type
 
@@ -64,14 +210,14 @@ function listMetadataForResourceType(array $options): PaginatedMetadata
 ## Example Usage
 
 ```php
-$collect = Liquid error: Value cannot be null. (Parameter 'key')[
+$collect = [
     'resource_type' => ResourceType::SUBSCRIPTIONS,
+    'resource_id' => 'resource_id4',
     'page' => 2,
-    'per_page' => 50,
-    'date_field' => BasicDateField::UPDATED_AT
+    'per_page' => 50
 ];
 
-$result = $customFieldsController->listMetadataForResourceType($collect);
+$result = $customFieldsController->listMetadata($collect);
 ```
 
 
@@ -187,240 +333,6 @@ $result = $customFieldsController->createMetafields(
 | 422 | Unprocessable Entity (WebDAV) | [`SingleErrorResponseException`](../../doc/models/single-error-response-exception.md) |
 
 
-# List Metafields
-
-This endpoint lists metafields associated with a site. The metafield description and usage is contained in the response.
-
-```php
-function listMetafields(array $options): ListMetafieldsResponse
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `resourceType` | [`string(ResourceType)`](../../doc/models/resource-type.md) | Template, Required | the resource type to which the metafields belong |
-| `name` | `?string` | Query, Optional | filter by the name of the metafield |
-| `page` | `?int` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`. |
-| `perPage` | `?int` | Query, Optional | This parameter indicates how many records to fetch in each request. Default value is 20. The maximum allowed values is 200; any per_page value over 200 will be changed to 200.<br>Use in query `per_page=200`. |
-| `direction` | [`?string(SortingDirection)`](../../doc/models/sorting-direction.md) | Query, Optional | Controls the order in which results are returned.<br>Use in query `direction=asc`. |
-
-## Response Type
-
-[`ListMetafieldsResponse`](../../doc/models/list-metafields-response.md)
-
-## Example Usage
-
-```php
-$collect = [
-    'resource_type' => ResourceType::SUBSCRIPTIONS,
-    'page' => 2,
-    'per_page' => 50
-];
-
-$result = $customFieldsController->listMetafields($collect);
-```
-
-## Example Response *(as JSON)*
-
-```json
-{
-  "total_count": 0,
-  "current_page": 0,
-  "total_pages": 0,
-  "per_page": 0,
-  "metafields": [
-    {
-      "id": 0,
-      "name": "string",
-      "scope": {
-        "csv": "0",
-        "statements": "0",
-        "invoices": "0",
-        "portal": "0",
-        "public_show": "0",
-        "public_edit": "0"
-      },
-      "data_count": 0,
-      "input_type": "string",
-      "enum": null
-    }
-  ]
-}
-```
-
-
-# Update Metafield
-
-Use the following method to update metafields for your Site. Metafields can be populated with metadata after the fact.
-
-```php
-function updateMetafield(string $resourceType, ?UpdateMetafieldsRequest $body = null): array
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `resourceType` | [`string(ResourceType)`](../../doc/models/resource-type.md) | Template, Required | the resource type to which the metafields belong |
-| `body` | [`?UpdateMetafieldsRequest`](../../doc/models/update-metafields-request.md) | Body, Optional | - |
-
-## Response Type
-
-[`Metafield[]`](../../doc/models/metafield.md)
-
-## Example Usage
-
-```php
-$resourceType = ResourceType::SUBSCRIPTIONS;
-
-$result = $customFieldsController->updateMetafield($resourceType);
-```
-
-
-# Delete Metafield
-
-Use the following method to delete a metafield. This will remove the metafield from the Site.
-
-Additionally, this will remove the metafield and associated metadata with all Subscriptions on the Site.
-
-```php
-function deleteMetafield(string $resourceType, ?string $name = null): void
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `resourceType` | [`string(ResourceType)`](../../doc/models/resource-type.md) | Template, Required | the resource type to which the metafields belong |
-| `name` | `?string` | Query, Optional | The name of the metafield to be deleted |
-
-## Response Type
-
-`void`
-
-## Example Usage
-
-```php
-$resourceType = ResourceType::SUBSCRIPTIONS;
-
-$customFieldsController->deleteMetafield($resourceType);
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 404 | Not Found | `ApiException` |
-
-
-# List Metadata
-
-This request will list all of the metadata belonging to a particular resource (ie. subscription, customer) that is specified.
-
-## Metadata Data
-
-This endpoint will also display the current stats of your metadata to use as a tool for pagination.
-
-```php
-function listMetadata(array $options): PaginatedMetadata
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `resourceType` | [`string(ResourceType)`](../../doc/models/resource-type.md) | Template, Required | the resource type to which the metafields belong |
-| `resourceId` | `string` | Template, Required | The Chargify id of the customer or the subscription for which the metadata applies |
-| `page` | `?int` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`. |
-| `perPage` | `?int` | Query, Optional | This parameter indicates how many records to fetch in each request. Default value is 20. The maximum allowed values is 200; any per_page value over 200 will be changed to 200.<br>Use in query `per_page=200`. |
-
-## Response Type
-
-[`PaginatedMetadata`](../../doc/models/paginated-metadata.md)
-
-## Example Usage
-
-```php
-$collect = [
-    'resource_type' => ResourceType::SUBSCRIPTIONS,
-    'resource_id' => 'resource_id4',
-    'page' => 2,
-    'per_page' => 50
-];
-
-$result = $customFieldsController->listMetadata($collect);
-```
-
-
-# Delete Metadata
-
-This method removes the metadata from the subscriber/customer cited.
-
-## Query String Usage
-
-For instance if you wanted to delete the metadata for customer 99 named weight you would request:
-
-```
-https://acme.chargify.com/customers/99/metadata.json?name=weight
-```
-
-If you want to delete multiple metadata fields for a customer 99 named: `weight` and `age` you wrould request:
-
-```
-https://acme.chargify.com/customers/99/metadata.json?names[]=weight&names[]=age
-```
-
-## Successful Response
-
-For a success, there will be a code `200` and the plain text response `true`.
-
-## Unsuccessful Response
-
-When a failed response is encountered, you will receive a `404` response and the plain text response of `true`.
-
-```php
-function deleteMetadata(
-    string $resourceType,
-    string $resourceId,
-    ?string $name = null,
-    ?array $names = null
-): void
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `resourceType` | [`string(ResourceType)`](../../doc/models/resource-type.md) | Template, Required | the resource type to which the metafields belong |
-| `resourceId` | `string` | Template, Required | The Chargify id of the customer or the subscription for which the metadata applies |
-| `name` | `?string` | Query, Optional | Name of field to be removed. |
-| `names` | `?(string[])` | Query, Optional | Names of fields to be removed. Use in query: `names[]=field1&names[]=my-field&names[]=another-field`. |
-
-## Response Type
-
-`void`
-
-## Example Usage
-
-```php
-$resourceType = ResourceType::SUBSCRIPTIONS;
-
-$resourceId = 'resource_id4';
-
-Liquid error: Value cannot be null. (Parameter 'key')Liquid error: Value cannot be null. (Parameter 'key')$customFieldsController->deleteMetadata(
-    $resourceType,
-    $resourceId
-);
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 404 | Not Found | `ApiException` |
-
-
 # Create Metadata
 
 ## Custom Fields: Metadata Intro
@@ -496,12 +408,39 @@ $result = $customFieldsController->createMetadata(
 | 422 | Unprocessable Entity (WebDAV) | [`SingleErrorResponseException`](../../doc/models/single-error-response-exception.md) |
 
 
-# Update Metadata
+# Delete Metadata
 
-This method allows you to update the existing metadata associated with a subscription or customer.
+This method removes the metadata from the subscriber/customer cited.
+
+## Query String Usage
+
+For instance if you wanted to delete the metadata for customer 99 named weight you would request:
+
+```
+https://acme.chargify.com/customers/99/metadata.json?name=weight
+```
+
+If you want to delete multiple metadata fields for a customer 99 named: `weight` and `age` you wrould request:
+
+```
+https://acme.chargify.com/customers/99/metadata.json?names[]=weight&names[]=age
+```
+
+## Successful Response
+
+For a success, there will be a code `200` and the plain text response `true`.
+
+## Unsuccessful Response
+
+When a failed response is encountered, you will receive a `404` response and the plain text response of `true`.
 
 ```php
-function updateMetadata(string $resourceType, string $resourceId, ?UpdateMetadataRequest $body = null): array
+function deleteMetadata(
+    string $resourceType,
+    string $resourceId,
+    ?string $name = null,
+    ?array $names = null
+): void
 ```
 
 ## Parameters
@@ -510,11 +449,12 @@ function updateMetadata(string $resourceType, string $resourceId, ?UpdateMetadat
 |  --- | --- | --- | --- |
 | `resourceType` | [`string(ResourceType)`](../../doc/models/resource-type.md) | Template, Required | the resource type to which the metafields belong |
 | `resourceId` | `string` | Template, Required | The Chargify id of the customer or the subscription for which the metadata applies |
-| `body` | [`?UpdateMetadataRequest`](../../doc/models/update-metadata-request.md) | Body, Optional | - |
+| `name` | `?string` | Query, Optional | Name of field to be removed. |
+| `names` | `?(string[])` | Query, Optional | Names of fields to be removed. Use in query: `names[]=field1&names[]=my-field&names[]=another-field`. |
 
 ## Response Type
 
-[`Metadata[]`](../../doc/models/metadata.md)
+`void`
 
 ## Example Usage
 
@@ -523,9 +463,69 @@ $resourceType = ResourceType::SUBSCRIPTIONS;
 
 $resourceId = 'resource_id4';
 
-$result = $customFieldsController->updateMetadata(
+Liquid error: Value cannot be null. (Parameter 'key')Liquid error: Value cannot be null. (Parameter 'key')$customFieldsController->deleteMetadata(
     $resourceType,
     $resourceId
 );
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 404 | Not Found | `ApiException` |
+
+
+# List Metadata for Resource Type
+
+This method will provide you information on usage of metadata across your selected resource (ie. subscriptions, customers)
+
+## Metadata Data
+
+This endpoint will also display the current stats of your metadata to use as a tool for pagination.
+
+### Metadata for multiple records
+
+`https://acme.chargify.com/subscriptions/metadata.json?resource_ids[]=1&resource_ids[]=2`
+
+## Read Metadata for a Site
+
+This endpoint will list the number of pages of metadata information that are contained within a site.
+
+```php
+function listMetadataForResourceType(array $options): PaginatedMetadata
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `resourceType` | [`string(ResourceType)`](../../doc/models/resource-type.md) | Template, Required | the resource type to which the metafields belong |
+| `page` | `?int` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`. |
+| `perPage` | `?int` | Query, Optional | This parameter indicates how many records to fetch in each request. Default value is 20. The maximum allowed values is 200; any per_page value over 200 will be changed to 200.<br>Use in query `per_page=200`. |
+| `dateField` | [`?string(BasicDateField)`](../../doc/models/basic-date-field.md) | Query, Optional | The type of filter you would like to apply to your search. |
+| `startDate` | `?string` | Query, Optional | The start date (format YYYY-MM-DD) with which to filter the date_field. Returns metadata with a timestamp at or after midnight (12:00:00 AM) in your site’s time zone on the date specified. |
+| `endDate` | `?string` | Query, Optional | The end date (format YYYY-MM-DD) with which to filter the date_field. Returns metadata with a timestamp up to and including 11:59:59PM in your site’s time zone on the date specified. |
+| `startDatetime` | `?string` | Query, Optional | The start date and time (format YYYY-MM-DD HH:MM:SS) with which to filter the date_field. Returns metadata with a timestamp at or after exact time provided in query. You can specify timezone in query - otherwise your site's time zone will be used. If provided, this parameter will be used instead of start_date. |
+| `endDatetime` | `?string` | Query, Optional | The end date and time (format YYYY-MM-DD HH:MM:SS) with which to filter the date_field. Returns metadata with a timestamp at or before exact time provided in query. You can specify timezone in query - otherwise your site's time zone will be used. If provided, this parameter will be used instead of end_date. |
+| `withDeleted` | `?bool` | Query, Optional | Allow to fetch deleted metadata. |
+| `resourceIds` | `?(int[])` | Query, Optional | Allow to fetch metadata for multiple records based on provided ids. Use in query: `resource_ids[]=122&resource_ids[]=123&resource_ids[]=124`. |
+| `direction` | [`?string(SortingDirection)`](../../doc/models/sorting-direction.md) | Query, Optional | Controls the order in which results are returned.<br>Use in query `direction=asc`. |
+
+## Response Type
+
+[`PaginatedMetadata`](../../doc/models/paginated-metadata.md)
+
+## Example Usage
+
+```php
+$collect = Liquid error: Value cannot be null. (Parameter 'key')[
+    'resource_type' => ResourceType::SUBSCRIPTIONS,
+    'page' => 2,
+    'per_page' => 50,
+    'date_field' => BasicDateField::UPDATED_AT
+];
+
+$result = $customFieldsController->listMetadataForResourceType($collect);
 ```
 

@@ -10,38 +10,11 @@ $offersController = $client->getOffersController();
 
 ## Methods
 
-* [Archive Offer](../../doc/controllers/offers.md#archive-offer)
 * [Read Offers](../../doc/controllers/offers.md#read-offers)
 * [Unarchive Offer](../../doc/controllers/offers.md#unarchive-offer)
+* [Archive Offer](../../doc/controllers/offers.md#archive-offer)
 * [Create Offer](../../doc/controllers/offers.md#create-offer)
 * [List Offers](../../doc/controllers/offers.md#list-offers)
-
-
-# Archive Offer
-
-Archive an existing offer. Please provide an `offer_id` in order to archive the correct item.
-
-```php
-function archiveOffer(int $offerId): void
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `offerId` | `int` | Template, Required | The Chargify id of the offer |
-
-## Response Type
-
-`void`
-
-## Example Usage
-
-```php
-$offerId = 130;
-
-$offersController->archiveOffer($offerId);
-```
 
 
 # Read Offers
@@ -95,6 +68,33 @@ function unarchiveOffer(int $offerId): void
 $offerId = 130;
 
 $offersController->unarchiveOffer($offerId);
+```
+
+
+# Archive Offer
+
+Archive an existing offer. Please provide an `offer_id` in order to archive the correct item.
+
+```php
+function archiveOffer(int $offerId): void
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `offerId` | `int` | Template, Required | The Chargify id of the offer |
+
+## Response Type
+
+`void`
+
+## Example Usage
+
+```php
+$offerId = 130;
+
+$offersController->archiveOffer($offerId);
 ```
 
 

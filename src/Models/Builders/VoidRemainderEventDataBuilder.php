@@ -11,32 +11,32 @@ declare(strict_types=1);
 namespace AdvancedBillingLib\Models\Builders;
 
 use AdvancedBillingLib\Models\CreditNote;
-use AdvancedBillingLib\Models\VoidInvoiceEventData1;
+use AdvancedBillingLib\Models\VoidRemainderEventData;
 use Core\Utils\CoreHelper;
 
 /**
- * Builder for model VoidInvoiceEventData1
+ * Builder for model VoidRemainderEventData
  *
- * @see VoidInvoiceEventData1
+ * @see VoidRemainderEventData
  */
-class VoidInvoiceEventData1Builder
+class VoidRemainderEventDataBuilder
 {
     /**
-     * @var VoidInvoiceEventData1
+     * @var VoidRemainderEventData
      */
     private $instance;
 
-    private function __construct(VoidInvoiceEventData1 $instance)
+    private function __construct(VoidRemainderEventData $instance)
     {
         $this->instance = $instance;
     }
 
     /**
-     * Initializes a new void invoice event data 1 Builder object.
+     * Initializes a new void remainder event data Builder object.
      */
     public static function init(): self
     {
-        return new self(new VoidInvoiceEventData1());
+        return new self(new VoidRemainderEventData());
     }
 
     /**
@@ -76,9 +76,9 @@ class VoidInvoiceEventData1Builder
     }
 
     /**
-     * Initializes a new void invoice event data 1 object.
+     * Initializes a new void remainder event data object.
      */
-    public function build(): VoidInvoiceEventData1
+    public function build(): VoidRemainderEventData
     {
         return CoreHelper::clone($this->instance);
     }

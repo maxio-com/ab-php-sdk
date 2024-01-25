@@ -12,7 +12,7 @@ namespace AdvancedBillingLib\Models;
 
 use stdClass;
 
-class AppliedCreditNote implements \JsonSerializable
+class AppliedCreditNoteData implements \JsonSerializable
 {
     /**
      * @var string|null

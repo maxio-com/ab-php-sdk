@@ -10,13 +10,13 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models\Builders;
 
+use AdvancedBillingLib\Models\BankAccountPaymentProfile;
+use AdvancedBillingLib\Models\CreditCardPaymentProfile;
 use AdvancedBillingLib\Models\Customer;
 use AdvancedBillingLib\Models\NestedSubscriptionGroup;
-use AdvancedBillingLib\Models\PaymentProfile;
 use AdvancedBillingLib\Models\PrepaidConfiguration;
 use AdvancedBillingLib\Models\Product;
 use AdvancedBillingLib\Models\Subscription;
-use AdvancedBillingLib\Models\SubscriptionBankAccount;
 use Core\Utils\CoreHelper;
 
 /**
@@ -389,7 +389,7 @@ class SubscriptionBuilder
     /**
      * Sets credit card field.
      */
-    public function creditCard(?PaymentProfile $value): self
+    public function creditCard(?CreditCardPaymentProfile $value): self
     {
         $this->instance->setCreditCard($value);
         return $this;
@@ -416,7 +416,7 @@ class SubscriptionBuilder
     /**
      * Sets bank account field.
      */
-    public function bankAccount(?SubscriptionBankAccount $value): self
+    public function bankAccount(?BankAccountPaymentProfile $value): self
     {
         $this->instance->setBankAccount($value);
         return $this;

@@ -63,6 +63,50 @@ class SalesCommissionsController extends BaseController
     }
 
     /**
+     * Endpoint returns subscriptions with associated sales reps
+     *
+     * ## Modified Authentication Process
+     *
+     * The Sales Commission API differs from other Chargify API endpoints. This resource is associated with
+     * the seller itself. Up to now all available resources were at the level of the site, therefore
+     * creating the API Key per site was a sufficient solution. To share resources at the seller level, a
+     * new authentication method was introduced, which is user authentication. Creating an API Key for a
+     * user is a required step to correctly use the Sales Commission API, more details [here](https:
+     * //developers.chargify.com/docs/developer-docs/ZG9jOjMyNzk5NTg0-2020-04-20-new-api-authentication).
+     *
+     * Access to the Sales Commission API endpoints is available to users with financial access, where the
+     * seller has the Advanced Analytics component enabled. For further information on getting access to
+     * Advanced Analytics please contact Chargify support.
+     *
+     * > Note: The request is at seller level, it means `<<subdomain>>` variable will be replaced by `app`
+     *
+     * @param array $options Array with all options for search
+     *
+     * @return SaleRepSettings[] Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function listSalesCommissionSettings(array $options): array
+    {
+        $_reqBuilder = $this->requestBuilder(
+            RequestMethod::GET,
+            '/sellers/{seller_id}/sales_commission_settings.json'
+        )
+            ->auth('global')
+            ->parameters(
+                TemplateParam::init('seller_id', $options)->extract('sellerId')->required(),
+                HeaderParam::init('Authorization', $options)->extract('authorization', 'Bearer <<apiKey>>'),
+                QueryParam::init('live_mode', $options)->commaSeparated()->extract('liveMode'),
+                QueryParam::init('page', $options)->commaSeparated()->extract('page', 1),
+                QueryParam::init('per_page', $options)->commaSeparated()->extract('perPage', 100)
+            );
+
+        $_resHandler = $this->responseHandler()->type(SaleRepSettings::class, 1);
+
+        return $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
      * Endpoint returns sales rep and attached subscriptions details.
      *
      * ## Modified Authentication Process
@@ -123,50 +167,6 @@ class SalesCommissionsController extends BaseController
             );
 
         $_resHandler = $this->responseHandler()->type(SaleRep::class);
-
-        return $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
-     * Endpoint returns subscriptions with associated sales reps
-     *
-     * ## Modified Authentication Process
-     *
-     * The Sales Commission API differs from other Chargify API endpoints. This resource is associated with
-     * the seller itself. Up to now all available resources were at the level of the site, therefore
-     * creating the API Key per site was a sufficient solution. To share resources at the seller level, a
-     * new authentication method was introduced, which is user authentication. Creating an API Key for a
-     * user is a required step to correctly use the Sales Commission API, more details [here](https:
-     * //developers.chargify.com/docs/developer-docs/ZG9jOjMyNzk5NTg0-2020-04-20-new-api-authentication).
-     *
-     * Access to the Sales Commission API endpoints is available to users with financial access, where the
-     * seller has the Advanced Analytics component enabled. For further information on getting access to
-     * Advanced Analytics please contact Chargify support.
-     *
-     * > Note: The request is at seller level, it means `<<subdomain>>` variable will be replaced by `app`
-     *
-     * @param array $options Array with all options for search
-     *
-     * @return SaleRepSettings[] Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function listSalesCommissionSettings(array $options): array
-    {
-        $_reqBuilder = $this->requestBuilder(
-            RequestMethod::GET,
-            '/sellers/{seller_id}/sales_commission_settings.json'
-        )
-            ->auth('global')
-            ->parameters(
-                TemplateParam::init('seller_id', $options)->extract('sellerId')->required(),
-                HeaderParam::init('Authorization', $options)->extract('authorization', 'Bearer <<apiKey>>'),
-                QueryParam::init('live_mode', $options)->commaSeparated()->extract('liveMode'),
-                QueryParam::init('page', $options)->commaSeparated()->extract('page', 1),
-                QueryParam::init('per_page', $options)->commaSeparated()->extract('perPage', 100)
-            );
-
-        $_resHandler = $this->responseHandler()->type(SaleRepSettings::class, 1);
 
         return $this->execute($_reqBuilder, $_resHandler);
     }
