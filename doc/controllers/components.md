@@ -10,7 +10,11 @@ $componentsController = $client->getComponentsController();
 
 ## Methods
 
-* [Create Component](../../doc/controllers/components.md#create-component)
+* [Create Metered Component](../../doc/controllers/components.md#create-metered-component)
+* [Create Quantity Based Component](../../doc/controllers/components.md#create-quantity-based-component)
+* [Create on Off Component](../../doc/controllers/components.md#create-on-off-component)
+* [Create Prepaid Usage Component](../../doc/controllers/components.md#create-prepaid-usage-component)
+* [Create Event Based Component](../../doc/controllers/components.md#create-event-based-component)
 * [Read Component by Handle](../../doc/controllers/components.md#read-component-by-handle)
 * [Read Component by Id](../../doc/controllers/components.md#read-component-by-id)
 * [Update Product Family Component](../../doc/controllers/components.md#update-product-family-component)
@@ -30,27 +34,18 @@ $componentsController = $client->getComponentsController();
 * [List All Component Price Points](../../doc/controllers/components.md#list-all-component-price-points)
 
 
-# Create Component
+# Create Metered Component
 
-This request will create a component definition under the specified product family. These component definitions determine what components are named, how they are measured, and how much they cost.
+This request will create a component definition of kind **metered_component** under the specified product family. Metered component can then be added and “allocated” for a subscription.
 
-Components can then be added and “allocated” for each subscription to a product in the product family. These component line-items affect how much a subscription will be charged, depending on the current allocations (i.e. 4 IP Addresses, or SSL “enabled”)
+Metered components are used to bill for any type of unit that resets to 0 at the end of the billing period (think daily Google Adwords clicks or monthly cell phone minutes). This is most commonly associated with usage-based billing and many other pricing schemes.
 
-This documentation covers both component definitions and component line-items. Please understand the difference.
-
-Please note that you may not edit components via API. To do so, please log into the application.
-
-### Component Documentation
+Note that this is different from recurring quantity-based components, which DO NOT reset to zero at the start of every billing period. If you want to bill for a quantity of something that does not change unless you change it, then you want quantity components, instead.
 
 For more information on components, please see our documentation [here](https://maxio-chargify.zendesk.com/hc/en-us/articles/5405020625677).
 
-For information on how to record component usage against a subscription, please see the following resources:
-
-+ [Proration and Component Allocations](https://maxio-chargify.zendesk.com/hc/en-us/articles/5405020625677#applying-proration-and-recording-components)
-+ [Recording component usage against a subscription](https://maxio-chargify.zendesk.com/hc/en-us/articles/5404606587917#recording-component-usage)
-
 ```php
-function createComponent(int $productFamilyId, string $componentKind, $body = null): ComponentResponse
+function createMeteredComponent(int $productFamilyId, ?CreateMeteredComponent $body = null): ComponentResponse
 ```
 
 ## Parameters
@@ -58,8 +53,7 @@ function createComponent(int $productFamilyId, string $componentKind, $body = nu
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `productFamilyId` | `int` | Template, Required | The Chargify id of the product family to which the component belongs |
-| `componentKind` | [`string(ComponentKindPath)`](../../doc/models/component-kind-path.md) | Template, Required | The component kind |
-| `body` | [CreateMeteredComponent](../../doc/models/create-metered-component.md)\|[CreateQuantityBasedComponent](../../doc/models/create-quantity-based-component.md)\|[CreateOnOffComponent](../../doc/models/create-on-off-component.md)\|[CreatePrepaidComponent](../../doc/models/create-prepaid-component.md)\|[CreateEBBComponent](../../doc/models/create-ebb-component.md)\|null | Body, Optional | This is a container for one-of cases. |
+| `body` | [`?CreateMeteredComponent`](../../doc/models/create-metered-component.md) | Body, Optional | - |
 
 ## Response Type
 
@@ -70,13 +64,11 @@ function createComponent(int $productFamilyId, string $componentKind, $body = nu
 ```php
 $productFamilyId = 140;
 
-$componentKind = ComponentKindPath::ON_OFF_COMPONENTS;
-
 $body = CreateMeteredComponentBuilder::init(
     MeteredComponentBuilder::init(
         'Text messages',
         'text message',
-        PricingScheme::STAIRSTEP
+        PricingScheme::PER_UNIT
     )
         ->taxable(false)
         ->prices(
@@ -89,9 +81,8 @@ $body = CreateMeteredComponentBuilder::init(
         )->build()
 )->build();
 
-$result = $componentsController->createComponent(
+$result = $componentsController->createMeteredComponent(
     $productFamilyId,
-    $componentKind,
     $body
 );
 ```
@@ -103,28 +94,45 @@ $result = $componentsController->createComponent(
   "component": {
     "id": 292609,
     "name": "Text messages",
-    "pricing_scheme": "stairstep",
-    "unit_name": "text message",
-    "unit_price": null,
+    "handle": "text-messages",
+    "pricing_scheme": "per_unit",
+    "unit_name": "unit",
+    "unit_price": "10.0",
     "product_family_id": 528484,
+    "product_family_name": "Cloud Compute Servers",
     "price_per_unit_in_cents": null,
     "kind": "metered_component",
     "archived": false,
     "taxable": false,
     "description": null,
-    "created_at": "2019-08-02T05:54:53-04:00",
+    "default_price_point_id": 2944263,
     "prices": [
       {
-        "id": 47,
-        "component_id": 292609,
+        "id": 55423,
+        "component_id": 30002,
         "starting_quantity": 1,
         "ending_quantity": null,
-        "unit_price": "1.0",
-        "price_point_id": 173,
-        "formatted_unit_price": "$1.00"
+        "unit_price": "10.0",
+        "price_point_id": 2944263,
+        "formatted_unit_price": "$10.00",
+        "segment_id": null
       }
     ],
-    "default_price_point_name": "Original"
+    "price_point_count": 1,
+    "price_points_url": "https://demo-3238403362.chargify.com/components/30002/price_points",
+    "default_price_point_name": "Original",
+    "tax_code": null,
+    "recurring": false,
+    "upgrade_charge": null,
+    "downgrade_credit": null,
+    "created_at": "2024-01-23T06:08:05-05:00",
+    "updated_at": "2024-01-23T06:08:05-05:00",
+    "archived_at": null,
+    "hide_date_range_on_invoice": false,
+    "allow_fractional_quantities": false,
+    "use_site_exchange_rate": true,
+    "item_category": null,
+    "accounting_code": null
   }
 }
 ```
@@ -133,6 +141,484 @@ $result = $componentsController->createComponent(
 
 | HTTP Status Code | Error Description | Exception Class |
 |  --- | --- | --- |
+| 404 | Not Found | `ApiException` |
+| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
+
+
+# Create Quantity Based Component
+
+This request will create a component definition of kind **quantity_based_component** under the specified product family. Quantity Based component can then be added and “allocated” for a subscription.
+
+When defining Quantity Based component, You can choose one of 2 types:
+
+#### Recurring
+
+Recurring quantity-based components are used to bill for the number of some unit (think monthly software user licenses or the number of pairs of socks in a box-a-month club). This is most commonly associated with billing for user licenses, number of users, number of employees, etc.
+
+#### One-time
+
+One-time quantity-based components are used to create ad hoc usage charges that do not recur. For example, at the time of signup, you might want to charge your customer a one-time fee for onboarding or other services.
+
+The allocated quantity for one-time quantity-based components immediately gets reset back to zero after the allocation is made.
+
+For more information on components, please see our documentation [here](https://maxio-chargify.zendesk.com/hc/en-us/articles/5405020625677).
+
+```php
+function createQuantityBasedComponent(
+    int $productFamilyId,
+    ?CreateQuantityBasedComponent $body = null
+): ComponentResponse
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `productFamilyId` | `int` | Template, Required | The Chargify id of the product family to which the component belongs |
+| `body` | [`?CreateQuantityBasedComponent`](../../doc/models/create-quantity-based-component.md) | Body, Optional | - |
+
+## Response Type
+
+[`ComponentResponse`](../../doc/models/component-response.md)
+
+## Example Usage
+
+```php
+$productFamilyId = 140;
+
+$body = CreateQuantityBasedComponentBuilder::init(
+    QuantityBasedComponentBuilder::init(
+        'Quantity Based Component',
+        'Component',
+        PricingScheme::PER_UNIT
+    )
+        ->description('Example of JSON per-unit component example')
+        ->taxable(true)
+        ->unitPrice(
+            '10'
+        )
+        ->displayOnHostedPage(true)
+        ->allowFractionalQuantities(true)
+        ->publicSignupPageIds(
+            [
+                323397
+            ]
+        )
+        ->build()
+)->build();
+
+$result = $componentsController->createQuantityBasedComponent(
+    $productFamilyId,
+    $body
+);
+```
+
+## Example Response *(as JSON)*
+
+```json
+{
+  "component": {
+    "id": 292609,
+    "name": "Text messages",
+    "handle": "text-messages",
+    "pricing_scheme": "per_unit",
+    "unit_name": "unit",
+    "unit_price": "10.0",
+    "product_family_id": 528484,
+    "product_family_name": "Cloud Compute Servers",
+    "price_per_unit_in_cents": null,
+    "kind": "quantity_based_component",
+    "archived": false,
+    "taxable": false,
+    "description": null,
+    "default_price_point_id": 2944263,
+    "prices": [
+      {
+        "id": 55423,
+        "component_id": 30002,
+        "starting_quantity": 1,
+        "ending_quantity": null,
+        "unit_price": "10.0",
+        "price_point_id": 2944263,
+        "formatted_unit_price": "$10.00",
+        "segment_id": null
+      }
+    ],
+    "price_point_count": 1,
+    "price_points_url": "https://demo-3238403362.chargify.com/components/30002/price_points",
+    "default_price_point_name": "Original",
+    "tax_code": null,
+    "recurring": false,
+    "upgrade_charge": null,
+    "downgrade_credit": null,
+    "created_at": "2024-01-23T06:08:05-05:00",
+    "updated_at": "2024-01-23T06:08:05-05:00",
+    "archived_at": null,
+    "hide_date_range_on_invoice": false,
+    "allow_fractional_quantities": false,
+    "use_site_exchange_rate": true,
+    "item_category": null,
+    "accounting_code": null
+  }
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 404 | Not Found | `ApiException` |
+| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
+
+
+# Create on Off Component
+
+This request will create a component definition of kind **on_off_component** under the specified product family. On/Off component can then be added and “allocated” for a subscription.
+
+On/off components are used for any flat fee, recurring add on (think $99/month for tech support or a flat add on shipping fee).
+
+For more information on components, please see our documentation [here](https://maxio-chargify.zendesk.com/hc/en-us/articles/5405020625677).
+
+```php
+function createOnOffComponent(int $productFamilyId, ?CreateOnOffComponent $body = null): ComponentResponse
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `productFamilyId` | `int` | Template, Required | The Chargify id of the product family to which the component belongs |
+| `body` | [`?CreateOnOffComponent`](../../doc/models/create-on-off-component.md) | Body, Optional | - |
+
+## Response Type
+
+[`ComponentResponse`](../../doc/models/component-response.md)
+
+## Example Usage
+
+```php
+$productFamilyId = 140;
+
+$body = CreateOnOffComponentBuilder::init(
+    OnOffComponentBuilder::init(
+        'Annual Support Services'
+    )
+        ->description('Prepay for support services')
+        ->taxable(true)
+        ->prices(
+            [
+                PriceBuilder::init(
+                    '0',
+                    '100.00'
+                )->build()
+            ]
+        )
+        ->displayOnHostedPage(true)
+        ->publicSignupPageIds(
+            [
+                320495
+            ]
+        )
+        ->build()
+)->build();
+
+$result = $componentsController->createOnOffComponent(
+    $productFamilyId,
+    $body
+);
+```
+
+## Example Response *(as JSON)*
+
+```json
+{
+  "component": {
+    "id": 292609,
+    "name": "Test On-Off Component 46124",
+    "handle": "test-on-off-component-4612422802",
+    "pricing_scheme": null,
+    "unit_name": "on/off",
+    "unit_price": "10.0",
+    "product_family_id": 528484,
+    "product_family_name": "Cloud Compute Servers",
+    "price_per_unit_in_cents": null,
+    "kind": "on_off_component",
+    "archived": false,
+    "taxable": false,
+    "description": null,
+    "default_price_point_id": 2944263,
+    "price_point_count": 1,
+    "price_points_url": "https://demo-3238403362.chargify.com/components/30002/price_points",
+    "default_price_point_name": "Original",
+    "tax_code": null,
+    "recurring": true,
+    "upgrade_charge": null,
+    "downgrade_credit": null,
+    "created_at": "2024-01-23T06:08:05-05:00",
+    "updated_at": "2024-01-23T06:08:05-05:00",
+    "archived_at": null,
+    "hide_date_range_on_invoice": false,
+    "allow_fractional_quantities": false,
+    "use_site_exchange_rate": true,
+    "item_category": null,
+    "accounting_code": null
+  }
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 404 | Not Found | `ApiException` |
+| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
+
+
+# Create Prepaid Usage Component
+
+This request will create a component definition of kind **prepaid_usage_component** under the specified product family. Prepaid component can then be added and “allocated” for a subscription.
+
+Prepaid components allow customers to pre-purchase units that can be used up over time on their subscription. In a sense, they are the mirror image of metered components; while metered components charge at the end of the period for the amount of units used, prepaid components are charged for at the time of purchase, and we subsequently keep track of the usage against the amount purchased.
+
+For more information on components, please see our documentation [here](https://maxio-chargify.zendesk.com/hc/en-us/articles/5405020625677).
+
+```php
+function createPrepaidUsageComponent(
+    int $productFamilyId,
+    ?CreatePrepaidComponent $body = null
+): ComponentResponse
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `productFamilyId` | `int` | Template, Required | The Chargify id of the product family to which the component belongs |
+| `body` | [`?CreatePrepaidComponent`](../../doc/models/create-prepaid-component.md) | Body, Optional | - |
+
+## Response Type
+
+[`ComponentResponse`](../../doc/models/component-response.md)
+
+## Example Usage
+
+```php
+$productFamilyId = 140;
+
+$body = CreatePrepaidComponentBuilder::init(
+    PrepaidUsageComponentBuilder::init(
+        'Minutes'
+    )
+        ->unitName('minutes')
+        ->pricingScheme(PricingScheme::PER_UNIT)
+        ->unitPrice(
+            2
+        )
+        ->overagePricing(
+            OveragePricingBuilder::init(
+                PricingScheme::STAIRSTEP
+            )
+                ->prices(
+                    [
+                        PriceBuilder::init(
+                            1,
+                            3
+                        )
+                            ->endingQuantity(
+                                100
+                            )
+                            ->build(),
+                        PriceBuilder::init(
+                            101,
+                            5
+                        )->build()
+                    ]
+                )->build()
+        )
+        ->rolloverPrepaidRemainder(true)
+        ->renewPrepaidAllocation(true)
+        ->expirationInterval(15)
+        ->expirationIntervalUnit(IntervalUnit::DAY)
+        ->build()
+)->build();
+
+$result = $componentsController->createPrepaidUsageComponent(
+    $productFamilyId,
+    $body
+);
+```
+
+## Example Response *(as JSON)*
+
+```json
+{
+  "component": {
+    "id": 292609,
+    "name": "Test Prepaid Component 98505",
+    "handle": "test-prepaid-component-9850584842",
+    "pricing_scheme": "per_unit",
+    "unit_name": "unit",
+    "unit_price": "10.0",
+    "product_family_id": 528484,
+    "product_family_name": "Test Product Family 27791",
+    "price_per_unit_in_cents": null,
+    "kind": "prepaid_usage_component",
+    "archived": false,
+    "taxable": false,
+    "description": "Description for: Test Prepaid Component 98505",
+    "default_price_point_id": 2944263,
+    "overage_prices": [
+      {
+        "id": 55964,
+        "component_id": 30427,
+        "starting_quantity": 1,
+        "ending_quantity": null,
+        "unit_price": "1.0",
+        "price_point_id": 2944756,
+        "formatted_unit_price": "$1.00",
+        "segment_id": null
+      }
+    ],
+    "prices": [
+      {
+        "id": 55963,
+        "component_id": 30427,
+        "starting_quantity": 1,
+        "ending_quantity": null,
+        "unit_price": "1.0",
+        "price_point_id": 2944756,
+        "formatted_unit_price": "$1.00",
+        "segment_id": null
+      }
+    ],
+    "price_point_count": 1,
+    "price_points_url": "https://demo-3238403362.chargify.com/components/30002/price_points",
+    "default_price_point_name": "Original",
+    "tax_code": null,
+    "recurring": true,
+    "upgrade_charge": null,
+    "downgrade_credit": null,
+    "created_at": "2024-01-23T06:08:05-05:00",
+    "updated_at": "2024-01-23T06:08:05-05:00",
+    "archived_at": null,
+    "hide_date_range_on_invoice": false,
+    "allow_fractional_quantities": false,
+    "use_site_exchange_rate": true,
+    "item_category": null,
+    "accounting_code": null
+  }
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 404 | Not Found | `ApiException` |
+| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
+
+
+# Create Event Based Component
+
+This request will create a component definition of kind **event_based_component** under the specified product family. Event-based component can then be added and “allocated” for a subscription.
+
+Event-based components are similar to other component types, in that you define the component parameters (such as name and taxability) and the pricing. A key difference for the event-based component is that it must be attached to a metric. This is because the metric provides the component with the actual quantity used in computing what and how much will be billed each period for each subscription.
+
+So, instead of reporting usage directly for each component (as you would with metered components), the usage is derived from analysis of your events.
+
+For more information on components, please see our documentation [here](https://maxio-chargify.zendesk.com/hc/en-us/articles/5405020625677).
+
+```php
+function createEventBasedComponent(int $productFamilyId, ?CreateEBBComponent $body = null): ComponentResponse
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `productFamilyId` | `int` | Template, Required | The Chargify id of the product family to which the component belongs |
+| `body` | [`?CreateEBBComponent`](../../doc/models/create-ebb-component.md) | Body, Optional | - |
+
+## Response Type
+
+[`ComponentResponse`](../../doc/models/component-response.md)
+
+## Example Usage
+
+```php
+$productFamilyId = 140;
+
+$body = CreateEBBComponentBuilder::init(
+    EBBComponentBuilder::init(
+        'Component Name',
+        'string',
+        PricingScheme::PER_UNIT,
+        123
+    )
+        ->description('string')
+        ->handle('some_handle')
+        ->taxable(true)
+        ->prices(
+            [
+                PriceBuilder::init(
+                    1,
+                    '0.49'
+                )->build()
+            ]
+        )->build()
+)->build();
+
+$result = $componentsController->createEventBasedComponent(
+    $productFamilyId,
+    $body
+);
+```
+
+## Example Response *(as JSON)*
+
+```json
+{
+  "component": {
+    "id": 1489581,
+    "name": "stripeCharges",
+    "handle": null,
+    "pricing_scheme": null,
+    "unit_name": "charge",
+    "unit_price": null,
+    "product_family_id": 1517093,
+    "product_family_name": "Billing Plans",
+    "price_per_unit_in_cents": null,
+    "kind": "event_based_component",
+    "archived": false,
+    "taxable": false,
+    "description": null,
+    "default_price_point_id": null,
+    "prices": [],
+    "price_point_count": 0,
+    "price_points_url": "https://staging.chargify.com/components/1489581/price_points",
+    "default_price_point_name": "Original",
+    "tax_code": null,
+    "recurring": false,
+    "upgrade_charge": null,
+    "downgrade_credit": null,
+    "created_at": "2021-10-12T07:33:24-05:00",
+    "updated_at": "2021-10-12T07:33:24-05:00",
+    "archived_at": null,
+    "hide_date_range_on_invoice": false,
+    "allow_fractional_quantities": false,
+    "use_site_exchange_rate": null,
+    "item_category": null,
+    "accounting_code": null,
+    "event_based_billing_metric_id": 1163
+  }
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 404 | Not Found | `ApiException` |
 | 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
 
 
@@ -392,7 +878,7 @@ $result = $componentsController->archiveComponent(
   "price_points_url": "dolor mollit consequat",
   "tax_code": "ea nisi",
   "recurring": false,
-  "created_at": "dolor qui deserunt tempor",
+  "created_at": "2016-11-08T16:22:26-05:00",
   "default_price_point_name": "cupidatat Lorem non aliqua",
   "product_family_name": "do elit",
   "hide_date_range_on_invoice": false
@@ -1142,16 +1628,24 @@ $body = UpdateComponentPricePointRequestBuilder::init()
                 [
                     UpdatePriceBuilder::init()
                         ->id(1)
-                        ->endingQuantity(100)
-                        ->unitPrice(5)
+                        ->endingQuantity(
+                            100
+                        )
+                        ->unitPrice(
+                            5
+                        )
                         ->build(),
                     UpdatePriceBuilder::init()
                         ->id(2)
-                        ->destroy('true')
+                        ->destroy(true)
                         ->build(),
                     UpdatePriceBuilder::init()
-                        ->unitPrice(4)
-                        ->startingQuantity(101)
+                        ->unitPrice(
+                            4
+                        )
+                        ->startingQuantity(
+                            101
+                        )
                         ->build()
                 ]
             )
@@ -1322,7 +1816,10 @@ When creating currency prices, they need to mirror the structure of your primary
 Note: Currency Prices are not able to be created for custom price points.
 
 ```php
-function createCurrencyPrices(int $pricePointId, ?CreateCurrencyPricesRequest $body = null): array
+function createCurrencyPrices(
+    int $pricePointId,
+    ?CreateCurrencyPricesRequest $body = null
+): ComponentCurrencyPricesResponse
 ```
 
 ## Parameters
@@ -1334,7 +1831,7 @@ function createCurrencyPrices(int $pricePointId, ?CreateCurrencyPricesRequest $b
 
 ## Response Type
 
-[`CurrencyPrice[]`](../../doc/models/currency-price.md)
+[`ComponentCurrencyPricesResponse`](../../doc/models/component-currency-prices-response.md)
 
 ## Example Usage
 
@@ -1362,6 +1859,29 @@ $result = $componentsController->createCurrencyPrices(
 );
 ```
 
+## Example Response *(as JSON)*
+
+```json
+{
+  "currency_prices": [
+    {
+      "id": 100,
+      "currency": "EUR",
+      "price": "123",
+      "formatted_price": "€123,00",
+      "price_id": 32669,
+      "price_point_id": 25554
+    }
+  ]
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 422 | Unprocessable Entity (WebDAV) | [`ErrorArrayMapResponseException`](../../doc/models/error-array-map-response-exception.md) |
+
 
 # Update Currency Prices
 
@@ -1370,7 +1890,10 @@ This endpoint allows you to update currency prices for a given currency that has
 Note: Currency Prices are not able to be updated for custom price points.
 
 ```php
-function updateCurrencyPrices(int $pricePointId, ?UpdateCurrencyPricesRequest $body = null): array
+function updateCurrencyPrices(
+    int $pricePointId,
+    ?UpdateCurrencyPricesRequest $body = null
+): ComponentCurrencyPricesResponse
 ```
 
 ## Parameters
@@ -1382,7 +1905,7 @@ function updateCurrencyPrices(int $pricePointId, ?UpdateCurrencyPricesRequest $b
 
 ## Response Type
 
-[`CurrencyPrice[]`](../../doc/models/currency-price.md)
+[`ComponentCurrencyPricesResponse`](../../doc/models/component-currency-prices-response.md)
 
 ## Example Usage
 
@@ -1407,6 +1930,29 @@ $result = $componentsController->updateCurrencyPrices(
     $body
 );
 ```
+
+## Example Response *(as JSON)*
+
+```json
+{
+  "currency_prices": [
+    {
+      "id": 100,
+      "currency": "EUR",
+      "price": "123",
+      "formatted_price": "€123,00",
+      "price_id": 32669,
+      "price_point_id": 25554
+    }
+  ]
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 422 | Unprocessable Entity (WebDAV) | [`ErrorArrayMapResponseException`](../../doc/models/error-array-map-response-exception.md) |
 
 
 # List All Component Price Points

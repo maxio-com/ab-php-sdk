@@ -34,54 +34,22 @@ class VoidInvoiceEventDataBuilder
     /**
      * Initializes a new void invoice event data Builder object.
      */
-    public static function init(): self
-    {
-        return new self(new VoidInvoiceEventData());
-    }
-
-    /**
-     * Sets credit note attributes field.
-     */
-    public function creditNoteAttributes(?CreditNote $value): self
-    {
-        $this->instance->setCreditNoteAttributes($value);
-        return $this;
-    }
-
-    /**
-     * Sets memo field.
-     */
-    public function memo(?string $value): self
-    {
-        $this->instance->setMemo($value);
-        return $this;
-    }
-
-    /**
-     * Sets applied amount field.
-     */
-    public function appliedAmount(?string $value): self
-    {
-        $this->instance->setAppliedAmount($value);
-        return $this;
-    }
-
-    /**
-     * Sets transaction time field.
-     */
-    public function transactionTime(?\DateTime $value): self
-    {
-        $this->instance->setTransactionTime($value);
-        return $this;
-    }
-
-    /**
-     * Sets is advance invoice field.
-     */
-    public function isAdvanceInvoice(?bool $value): self
-    {
-        $this->instance->setIsAdvanceInvoice($value);
-        return $this;
+    public static function init(
+        CreditNote $creditNoteAttributes,
+        string $memo,
+        string $appliedAmount,
+        \DateTime $transactionTime,
+        bool $isAdvanceInvoice
+    ): self {
+        return new self(
+            new VoidInvoiceEventData(
+                $creditNoteAttributes,
+                $memo,
+                $appliedAmount,
+                $transactionTime,
+                $isAdvanceInvoice
+            )
+        );
     }
 
     /**

@@ -15,19 +15,29 @@ use stdClass;
 class PaymentMethodPaypalType implements \JsonSerializable
 {
     /**
-     * @var string|null
+     * @var string
      */
     private $email;
 
     /**
-     * @var string|null
+     * @var string
      */
-    private $type = 'paypal_account';
+    private $type;
+
+    /**
+     * @param string $email
+     * @param string $type
+     */
+    public function __construct(string $email, string $type)
+    {
+        $this->email = $email;
+        $this->type = $type;
+    }
 
     /**
      * Returns Email.
      */
-    public function getEmail(): ?string
+    public function getEmail(): string
     {
         return $this->email;
     }
@@ -35,9 +45,10 @@ class PaymentMethodPaypalType implements \JsonSerializable
     /**
      * Sets Email.
      *
+     * @required
      * @maps email
      */
-    public function setEmail(?string $email): void
+    public function setEmail(string $email): void
     {
         $this->email = $email;
     }
@@ -45,7 +56,7 @@ class PaymentMethodPaypalType implements \JsonSerializable
     /**
      * Returns Type.
      */
-    public function getType(): ?string
+    public function getType(): string
     {
         return $this->type;
     }
@@ -53,9 +64,10 @@ class PaymentMethodPaypalType implements \JsonSerializable
     /**
      * Sets Type.
      *
+     * @required
      * @maps type
      */
-    public function setType(?string $type): void
+    public function setType(string $type): void
     {
         $this->type = $type;
     }
@@ -72,12 +84,8 @@ class PaymentMethodPaypalType implements \JsonSerializable
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
-        if (isset($this->email)) {
-            $json['email'] = $this->email;
-        }
-        if (isset($this->type)) {
-            $json['type']  = $this->type;
-        }
+        $json['email'] = $this->email;
+        $json['type']  = $this->type;
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

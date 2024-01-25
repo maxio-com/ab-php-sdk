@@ -14,6 +14,9 @@ use Core\Utils\CoreHelper;
 use Exception;
 use stdClass;
 
+/**
+ * Defaults to checking
+ */
 class BankAccountType
 {
     public const CHECKING = 'checking';

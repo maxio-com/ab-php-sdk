@@ -11,7 +11,7 @@
 |  --- | --- | --- | --- | --- | --- |
 | `id` | `?int` | Optional | - | getId(): ?int | setId(?int id): void |
 | `eventType` | [`?string(InvoiceEventType)`](../../doc/models/invoice-event-type.md) | Optional | Invoice Event Type | getEventType(): ?string | setEventType(?string eventType): void |
-| `eventData` | [ApplyCreditNoteEventData](../../doc/models/apply-credit-note-event-data.md)\|[ApplyDebitNoteEventData](../../doc/models/apply-debit-note-event-data.md)\|[ApplyPaymentEventData](../../doc/models/apply-payment-event-data.md)\|[ChangeInvoiceCollectionMethodEventData](../../doc/models/change-invoice-collection-method-event-data.md)\|[IssueInvoiceEventData](../../doc/models/issue-invoice-event-data.md)\|[RefundInvoice](../../doc/models/refund-invoice.md)EventData\|[RemovePaymentEventData](../../doc/models/remove-payment-event-data.md)\|[VoidInvoiceEventData](../../doc/models/void-invoice-event-data.md)\|[VoidInvoiceEventData](../../doc/models/void-invoice-event-data.md)1\|null | Optional | This is a container for any-of cases. | getEventData(): | setEventData( eventData): void |
+| `eventData` | [ApplyCreditNoteEventData](../../doc/models/apply-credit-note-event-data.md)\|[ApplyDebitNoteEventData](../../doc/models/apply-debit-note-event-data.md)\|[ApplyPaymentEventData](../../doc/models/apply-payment-event-data.md)\|[ChangeInvoiceCollectionMethodEventData](../../doc/models/change-invoice-collection-method-event-data.md)\|[IssueInvoiceEventData](../../doc/models/issue-invoice-event-data.md)\|[RefundInvoice](../../doc/models/refund-invoice.md)EventData\|[RemovePaymentEventData](../../doc/models/remove-payment-event-data.md)\|[VoidInvoiceEventData](../../doc/models/void-invoice-event-data.md)\|[VoidRemainderEventData](../../doc/models/void-remainder-event-data.md)\|null | Optional | This is a container for any-of cases. | getEventData(): | setEventData( eventData): void |
 | `timestamp` | `?string` | Optional | - | getTimestamp(): ?string | setTimestamp(?string timestamp): void |
 | `invoice` | [`?Invoice`](../../doc/models/invoice.md) | Optional | - | getInvoice(): ?Invoice | setInvoice(?Invoice invoice): void |
 
@@ -26,7 +26,21 @@
     "credit_note_number": "credit_note_number4",
     "credit_note_uid": "credit_note_uid4",
     "original_amount": "original_amount6",
-    "applied_amount": "applied_amount6"
+    "applied_amount": "applied_amount6",
+    "transaction_time": "2016-03-13T12:52:32.123Z",
+    "memo": "memo6",
+    "role": "role4",
+    "consolidated_invoice": false,
+    "applied_credit_notes": [
+      {
+        "uid": "uid4",
+        "number": "number8"
+      },
+      {
+        "uid": "uid4",
+        "number": "number8"
+      }
+    ]
   },
   "timestamp": "timestamp8",
   "invoice": {

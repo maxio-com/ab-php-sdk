@@ -33,36 +33,9 @@ class PaymentMethodBankAccountTypeBuilder
     /**
      * Initializes a new payment method bank account type Builder object.
      */
-    public static function init(): self
+    public static function init(string $maskedAccountNumber, string $maskedRoutingNumber, string $type): self
     {
-        return new self(new PaymentMethodBankAccountType());
-    }
-
-    /**
-     * Sets masked account number field.
-     */
-    public function maskedAccountNumber(?string $value): self
-    {
-        $this->instance->setMaskedAccountNumber($value);
-        return $this;
-    }
-
-    /**
-     * Sets masked routing number field.
-     */
-    public function maskedRoutingNumber(?string $value): self
-    {
-        $this->instance->setMaskedRoutingNumber($value);
-        return $this;
-    }
-
-    /**
-     * Sets type field.
-     */
-    public function type(?string $value): self
-    {
-        $this->instance->setType($value);
-        return $this;
+        return new self(new PaymentMethodBankAccountType($maskedAccountNumber, $maskedRoutingNumber, $type));
     }
 
     /**

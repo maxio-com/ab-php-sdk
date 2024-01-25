@@ -33,54 +33,16 @@ class ApplyCreditNoteEventDataBuilder
     /**
      * Initializes a new apply credit note event data Builder object.
      */
-    public static function init(): self
-    {
-        return new self(new ApplyCreditNoteEventData());
-    }
-
-    /**
-     * Sets uid field.
-     */
-    public function uid(?string $value): self
-    {
-        $this->instance->setUid($value);
-        return $this;
-    }
-
-    /**
-     * Sets credit note number field.
-     */
-    public function creditNoteNumber(?string $value): self
-    {
-        $this->instance->setCreditNoteNumber($value);
-        return $this;
-    }
-
-    /**
-     * Sets credit note uid field.
-     */
-    public function creditNoteUid(?string $value): self
-    {
-        $this->instance->setCreditNoteUid($value);
-        return $this;
-    }
-
-    /**
-     * Sets original amount field.
-     */
-    public function originalAmount(?string $value): self
-    {
-        $this->instance->setOriginalAmount($value);
-        return $this;
-    }
-
-    /**
-     * Sets applied amount field.
-     */
-    public function appliedAmount(?string $value): self
-    {
-        $this->instance->setAppliedAmount($value);
-        return $this;
+    public static function init(
+        string $uid,
+        string $creditNoteNumber,
+        string $creditNoteUid,
+        string $originalAmount,
+        string $appliedAmount
+    ): self {
+        return new self(
+            new ApplyCreditNoteEventData($uid, $creditNoteNumber, $creditNoteUid, $originalAmount, $appliedAmount)
+        );
     }
 
     /**

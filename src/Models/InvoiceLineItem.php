@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace AdvancedBillingLib\Models;
 
 use AdvancedBillingLib\ApiHelper;
+use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
 class InvoiceLineItem implements \JsonSerializable
@@ -66,12 +67,12 @@ class InvoiceLineItem implements \JsonSerializable
     private $tieredUnitPrice;
 
     /**
-     * @var string|null
+     * @var \DateTime|null
      */
     private $periodRangeStart;
 
     /**
-     * @var string|null
+     * @var \DateTime|null
      */
     private $periodRangeEnd;
 
@@ -386,7 +387,7 @@ class InvoiceLineItem implements \JsonSerializable
      * previous billing, and the end date will be the current billing date.
      * * For non-periodic charges, this date and the end date will match.
      */
-    public function getPeriodRangeStart(): ?string
+    public function getPeriodRangeStart(): ?\DateTime
     {
         return $this->periodRangeStart;
     }
@@ -402,8 +403,9 @@ class InvoiceLineItem implements \JsonSerializable
      * * For non-periodic charges, this date and the end date will match.
      *
      * @maps period_range_start
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromSimpleDate
      */
-    public function setPeriodRangeStart(?string $periodRangeStart): void
+    public function setPeriodRangeStart(?\DateTime $periodRangeStart): void
     {
         $this->periodRangeStart = $periodRangeStart;
     }
@@ -417,7 +419,7 @@ class InvoiceLineItem implements \JsonSerializable
      * current billing date.
      * * For non-periodic charges, this date and the start date will match.
      */
-    public function getPeriodRangeEnd(): ?string
+    public function getPeriodRangeEnd(): ?\DateTime
     {
         return $this->periodRangeEnd;
     }
@@ -432,8 +434,9 @@ class InvoiceLineItem implements \JsonSerializable
      * * For non-periodic charges, this date and the start date will match.
      *
      * @maps period_range_end
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromSimpleDate
      */
-    public function setPeriodRangeEnd(?string $periodRangeEnd): void
+    public function setPeriodRangeEnd(?\DateTime $periodRangeEnd): void
     {
         $this->periodRangeEnd = $periodRangeEnd;
     }
@@ -734,10 +737,10 @@ class InvoiceLineItem implements \JsonSerializable
             $json['tiered_unit_price']      = $this->tieredUnitPrice;
         }
         if (isset($this->periodRangeStart)) {
-            $json['period_range_start']     = $this->periodRangeStart;
+            $json['period_range_start']     = DateTimeHelper::toSimpleDate($this->periodRangeStart);
         }
         if (isset($this->periodRangeEnd)) {
-            $json['period_range_end']       = $this->periodRangeEnd;
+            $json['period_range_end']       = DateTimeHelper::toSimpleDate($this->periodRangeEnd);
         }
         if (isset($this->transactionId)) {
             $json['transaction_id']         = $this->transactionId;

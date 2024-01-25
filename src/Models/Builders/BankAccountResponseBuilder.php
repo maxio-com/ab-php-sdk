@@ -10,7 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models\Builders;
 
-use AdvancedBillingLib\Models\BankAccount;
+use AdvancedBillingLib\Models\BankAccountPaymentProfile;
 use AdvancedBillingLib\Models\BankAccountResponse;
 use Core\Utils\CoreHelper;
 
@@ -34,7 +34,7 @@ class BankAccountResponseBuilder
     /**
      * Initializes a new bank account response Builder object.
      */
-    public static function init(BankAccount $paymentProfile): self
+    public static function init(BankAccountPaymentProfile $paymentProfile): self
     {
         return new self(new BankAccountResponse($paymentProfile));
     }

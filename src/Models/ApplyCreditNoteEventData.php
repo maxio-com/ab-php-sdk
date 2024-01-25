@@ -19,27 +19,27 @@ use stdClass;
 class ApplyCreditNoteEventData implements \JsonSerializable
 {
     /**
-     * @var string|null
+     * @var string
      */
     private $uid;
 
     /**
-     * @var string|null
+     * @var string
      */
     private $creditNoteNumber;
 
     /**
-     * @var string|null
+     * @var string
      */
     private $creditNoteUid;
 
     /**
-     * @var string|null
+     * @var string
      */
     private $originalAmount;
 
     /**
-     * @var string|null
+     * @var string
      */
     private $appliedAmount;
 
@@ -64,16 +64,37 @@ class ApplyCreditNoteEventData implements \JsonSerializable
     private $consolidatedInvoice;
 
     /**
-     * @var AppliedCreditNote[]|null
+     * @var AppliedCreditNoteData[]|null
      */
     private $appliedCreditNotes;
+
+    /**
+     * @param string $uid
+     * @param string $creditNoteNumber
+     * @param string $creditNoteUid
+     * @param string $originalAmount
+     * @param string $appliedAmount
+     */
+    public function __construct(
+        string $uid,
+        string $creditNoteNumber,
+        string $creditNoteUid,
+        string $originalAmount,
+        string $appliedAmount
+    ) {
+        $this->uid = $uid;
+        $this->creditNoteNumber = $creditNoteNumber;
+        $this->creditNoteUid = $creditNoteUid;
+        $this->originalAmount = $originalAmount;
+        $this->appliedAmount = $appliedAmount;
+    }
 
     /**
      * Returns Uid.
      * Unique identifier for the credit note application. It is generated automatically by Chargify and has
      * the prefix "cdt_" followed by alphanumeric characters.
      */
-    public function getUid(): ?string
+    public function getUid(): string
     {
         return $this->uid;
     }
@@ -83,9 +104,10 @@ class ApplyCreditNoteEventData implements \JsonSerializable
      * Unique identifier for the credit note application. It is generated automatically by Chargify and has
      * the prefix "cdt_" followed by alphanumeric characters.
      *
+     * @required
      * @maps uid
      */
-    public function setUid(?string $uid): void
+    public function setUid(string $uid): void
     {
         $this->uid = $uid;
     }
@@ -94,7 +116,7 @@ class ApplyCreditNoteEventData implements \JsonSerializable
      * Returns Credit Note Number.
      * A unique, identifying string that appears on the credit note and in places it is referenced.
      */
-    public function getCreditNoteNumber(): ?string
+    public function getCreditNoteNumber(): string
     {
         return $this->creditNoteNumber;
     }
@@ -103,9 +125,10 @@ class ApplyCreditNoteEventData implements \JsonSerializable
      * Sets Credit Note Number.
      * A unique, identifying string that appears on the credit note and in places it is referenced.
      *
+     * @required
      * @maps credit_note_number
      */
-    public function setCreditNoteNumber(?string $creditNoteNumber): void
+    public function setCreditNoteNumber(string $creditNoteNumber): void
     {
         $this->creditNoteNumber = $creditNoteNumber;
     }
@@ -115,7 +138,7 @@ class ApplyCreditNoteEventData implements \JsonSerializable
      * Unique identifier for the credit note. It is generated automatically by Chargify and has the prefix
      * "cn_" followed by alphanumeric characters.
      */
-    public function getCreditNoteUid(): ?string
+    public function getCreditNoteUid(): string
     {
         return $this->creditNoteUid;
     }
@@ -125,9 +148,10 @@ class ApplyCreditNoteEventData implements \JsonSerializable
      * Unique identifier for the credit note. It is generated automatically by Chargify and has the prefix
      * "cn_" followed by alphanumeric characters.
      *
+     * @required
      * @maps credit_note_uid
      */
-    public function setCreditNoteUid(?string $creditNoteUid): void
+    public function setCreditNoteUid(string $creditNoteUid): void
     {
         $this->creditNoteUid = $creditNoteUid;
     }
@@ -136,7 +160,7 @@ class ApplyCreditNoteEventData implements \JsonSerializable
      * Returns Original Amount.
      * The full, original amount of the credit note.
      */
-    public function getOriginalAmount(): ?string
+    public function getOriginalAmount(): string
     {
         return $this->originalAmount;
     }
@@ -145,9 +169,10 @@ class ApplyCreditNoteEventData implements \JsonSerializable
      * Sets Original Amount.
      * The full, original amount of the credit note.
      *
+     * @required
      * @maps original_amount
      */
-    public function setOriginalAmount(?string $originalAmount): void
+    public function setOriginalAmount(string $originalAmount): void
     {
         $this->originalAmount = $originalAmount;
     }
@@ -156,7 +181,7 @@ class ApplyCreditNoteEventData implements \JsonSerializable
      * Returns Applied Amount.
      * The amount of the credit note applied to invoice.
      */
-    public function getAppliedAmount(): ?string
+    public function getAppliedAmount(): string
     {
         return $this->appliedAmount;
     }
@@ -165,9 +190,10 @@ class ApplyCreditNoteEventData implements \JsonSerializable
      * Sets Applied Amount.
      * The amount of the credit note applied to invoice.
      *
+     * @required
      * @maps applied_amount
      */
-    public function setAppliedAmount(?string $appliedAmount): void
+    public function setAppliedAmount(string $appliedAmount): void
     {
         $this->appliedAmount = $appliedAmount;
     }
@@ -257,7 +283,7 @@ class ApplyCreditNoteEventData implements \JsonSerializable
      * Returns Applied Credit Notes.
      * List of credit notes applied to children invoices (if consolidated invoice)
      *
-     * @return AppliedCreditNote[]|null
+     * @return AppliedCreditNoteData[]|null
      */
     public function getAppliedCreditNotes(): ?array
     {
@@ -270,7 +296,7 @@ class ApplyCreditNoteEventData implements \JsonSerializable
      *
      * @maps applied_credit_notes
      *
-     * @param AppliedCreditNote[]|null $appliedCreditNotes
+     * @param AppliedCreditNoteData[]|null $appliedCreditNotes
      */
     public function setAppliedCreditNotes(?array $appliedCreditNotes): void
     {
@@ -289,21 +315,11 @@ class ApplyCreditNoteEventData implements \JsonSerializable
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
-        if (isset($this->uid)) {
-            $json['uid']                  = $this->uid;
-        }
-        if (isset($this->creditNoteNumber)) {
-            $json['credit_note_number']   = $this->creditNoteNumber;
-        }
-        if (isset($this->creditNoteUid)) {
-            $json['credit_note_uid']      = $this->creditNoteUid;
-        }
-        if (isset($this->originalAmount)) {
-            $json['original_amount']      = $this->originalAmount;
-        }
-        if (isset($this->appliedAmount)) {
-            $json['applied_amount']       = $this->appliedAmount;
-        }
+        $json['uid']                      = $this->uid;
+        $json['credit_note_number']       = $this->creditNoteNumber;
+        $json['credit_note_uid']          = $this->creditNoteUid;
+        $json['original_amount']          = $this->originalAmount;
+        $json['applied_amount']           = $this->appliedAmount;
         if (isset($this->transactionTime)) {
             $json['transaction_time']     = DateTimeHelper::toRfc3339DateTime($this->transactionTime);
         }

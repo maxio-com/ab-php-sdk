@@ -15,29 +15,43 @@ use stdClass;
 class PaymentMethodExternalType implements \JsonSerializable
 {
     /**
-     * @var string|null
+     * @var string
      */
     private $details;
 
     /**
-     * @var string|null
+     * @var string
      */
     private $kind;
 
     /**
-     * @var string|null
+     * @var string
      */
     private $memo;
 
     /**
-     * @var string|null
+     * @var string
      */
-    private $type = 'external';
+    private $type;
+
+    /**
+     * @param string $details
+     * @param string $kind
+     * @param string $memo
+     * @param string $type
+     */
+    public function __construct(string $details, string $kind, string $memo, string $type)
+    {
+        $this->details = $details;
+        $this->kind = $kind;
+        $this->memo = $memo;
+        $this->type = $type;
+    }
 
     /**
      * Returns Details.
      */
-    public function getDetails(): ?string
+    public function getDetails(): string
     {
         return $this->details;
     }
@@ -45,9 +59,10 @@ class PaymentMethodExternalType implements \JsonSerializable
     /**
      * Sets Details.
      *
+     * @required
      * @maps details
      */
-    public function setDetails(?string $details): void
+    public function setDetails(string $details): void
     {
         $this->details = $details;
     }
@@ -55,7 +70,7 @@ class PaymentMethodExternalType implements \JsonSerializable
     /**
      * Returns Kind.
      */
-    public function getKind(): ?string
+    public function getKind(): string
     {
         return $this->kind;
     }
@@ -63,9 +78,10 @@ class PaymentMethodExternalType implements \JsonSerializable
     /**
      * Sets Kind.
      *
+     * @required
      * @maps kind
      */
-    public function setKind(?string $kind): void
+    public function setKind(string $kind): void
     {
         $this->kind = $kind;
     }
@@ -73,7 +89,7 @@ class PaymentMethodExternalType implements \JsonSerializable
     /**
      * Returns Memo.
      */
-    public function getMemo(): ?string
+    public function getMemo(): string
     {
         return $this->memo;
     }
@@ -81,9 +97,10 @@ class PaymentMethodExternalType implements \JsonSerializable
     /**
      * Sets Memo.
      *
+     * @required
      * @maps memo
      */
-    public function setMemo(?string $memo): void
+    public function setMemo(string $memo): void
     {
         $this->memo = $memo;
     }
@@ -91,7 +108,7 @@ class PaymentMethodExternalType implements \JsonSerializable
     /**
      * Returns Type.
      */
-    public function getType(): ?string
+    public function getType(): string
     {
         return $this->type;
     }
@@ -99,9 +116,10 @@ class PaymentMethodExternalType implements \JsonSerializable
     /**
      * Sets Type.
      *
+     * @required
      * @maps type
      */
-    public function setType(?string $type): void
+    public function setType(string $type): void
     {
         $this->type = $type;
     }
@@ -118,18 +136,10 @@ class PaymentMethodExternalType implements \JsonSerializable
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
-        if (isset($this->details)) {
-            $json['details'] = $this->details;
-        }
-        if (isset($this->kind)) {
-            $json['kind']    = $this->kind;
-        }
-        if (isset($this->memo)) {
-            $json['memo']    = $this->memo;
-        }
-        if (isset($this->type)) {
-            $json['type']    = $this->type;
-        }
+        $json['details'] = $this->details;
+        $json['kind']    = $this->kind;
+        $json['memo']    = $this->memo;
+        $json['type']    = $this->type;
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

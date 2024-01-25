@@ -210,6 +210,33 @@ class ComponentBuilder
     }
 
     /**
+     * Unsets default price point id field.
+     */
+    public function unsetDefaultPricePointId(): self
+    {
+        $this->instance->unsetDefaultPricePointId();
+        return $this;
+    }
+
+    /**
+     * Sets overage prices field.
+     */
+    public function overagePrices(?array $value): self
+    {
+        $this->instance->setOveragePrices($value);
+        return $this;
+    }
+
+    /**
+     * Unsets overage prices field.
+     */
+    public function unsetOveragePrices(): self
+    {
+        $this->instance->unsetOveragePrices();
+        return $this;
+    }
+
+    /**
      * Sets prices field.
      */
     public function prices(?array $value): self
@@ -320,7 +347,7 @@ class ComponentBuilder
     /**
      * Sets created at field.
      */
-    public function createdAt(?string $value): self
+    public function createdAt(?\DateTime $value): self
     {
         $this->instance->setCreatedAt($value);
         return $this;
@@ -329,7 +356,7 @@ class ComponentBuilder
     /**
      * Sets updated at field.
      */
-    public function updatedAt(?string $value): self
+    public function updatedAt(?\DateTime $value): self
     {
         $this->instance->setUpdatedAt($value);
         return $this;

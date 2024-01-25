@@ -34,18 +34,22 @@ class RefundInvoiceEventDataBuilder
     /**
      * Initializes a new refund invoice event data Builder object.
      */
-    public static function init(): self
-    {
-        return new self(new RefundInvoiceEventData());
-    }
-
-    /**
-     * Sets apply credit field.
-     */
-    public function applyCredit(?bool $value): self
-    {
-        $this->instance->setApplyCredit($value);
-        return $this;
+    public static function init(
+        bool $applyCredit,
+        CreditNote $creditNoteAttributes,
+        int $paymentId,
+        string $refundAmount,
+        int $refundId,
+        \DateTime $transactionTime
+    ): self {
+        return new self(new RefundInvoiceEventData(
+            $applyCredit,
+            $creditNoteAttributes,
+            $paymentId,
+            $refundAmount,
+            $refundId,
+            $transactionTime
+        ));
     }
 
     /**
@@ -54,15 +58,6 @@ class RefundInvoiceEventDataBuilder
     public function consolidationLevel(?string $value): self
     {
         $this->instance->setConsolidationLevel($value);
-        return $this;
-    }
-
-    /**
-     * Sets credit note attributes field.
-     */
-    public function creditNoteAttributes(?CreditNote $value): self
-    {
-        $this->instance->setCreditNoteAttributes($value);
         return $this;
     }
 
@@ -81,42 +76,6 @@ class RefundInvoiceEventDataBuilder
     public function originalAmount(?string $value): self
     {
         $this->instance->setOriginalAmount($value);
-        return $this;
-    }
-
-    /**
-     * Sets payment id field.
-     */
-    public function paymentId(?int $value): self
-    {
-        $this->instance->setPaymentId($value);
-        return $this;
-    }
-
-    /**
-     * Sets refund amount field.
-     */
-    public function refundAmount(?string $value): self
-    {
-        $this->instance->setRefundAmount($value);
-        return $this;
-    }
-
-    /**
-     * Sets refund id field.
-     */
-    public function refundId(?int $value): self
-    {
-        $this->instance->setRefundId($value);
-        return $this;
-    }
-
-    /**
-     * Sets transaction time field.
-     */
-    public function transactionTime(?\DateTime $value): self
-    {
-        $this->instance->setTransactionTime($value);
         return $this;
     }
 

@@ -19,34 +19,55 @@ use stdClass;
 class VoidInvoiceEventData implements \JsonSerializable
 {
     /**
-     * @var CreditNote|null
+     * @var CreditNote
      */
     private $creditNoteAttributes;
 
     /**
-     * @var string|null
+     * @var string
      */
     private $memo;
 
     /**
-     * @var string|null
+     * @var string
      */
     private $appliedAmount;
 
     /**
-     * @var \DateTime|null
+     * @var \DateTime
      */
     private $transactionTime;
 
     /**
-     * @var bool|null
+     * @var bool
      */
     private $isAdvanceInvoice;
 
     /**
+     * @param CreditNote $creditNoteAttributes
+     * @param string $memo
+     * @param string $appliedAmount
+     * @param \DateTime $transactionTime
+     * @param bool $isAdvanceInvoice
+     */
+    public function __construct(
+        CreditNote $creditNoteAttributes,
+        string $memo,
+        string $appliedAmount,
+        \DateTime $transactionTime,
+        bool $isAdvanceInvoice
+    ) {
+        $this->creditNoteAttributes = $creditNoteAttributes;
+        $this->memo = $memo;
+        $this->appliedAmount = $appliedAmount;
+        $this->transactionTime = $transactionTime;
+        $this->isAdvanceInvoice = $isAdvanceInvoice;
+    }
+
+    /**
      * Returns Credit Note Attributes.
      */
-    public function getCreditNoteAttributes(): ?CreditNote
+    public function getCreditNoteAttributes(): CreditNote
     {
         return $this->creditNoteAttributes;
     }
@@ -54,9 +75,10 @@ class VoidInvoiceEventData implements \JsonSerializable
     /**
      * Sets Credit Note Attributes.
      *
+     * @required
      * @maps credit_note_attributes
      */
-    public function setCreditNoteAttributes(?CreditNote $creditNoteAttributes): void
+    public function setCreditNoteAttributes(CreditNote $creditNoteAttributes): void
     {
         $this->creditNoteAttributes = $creditNoteAttributes;
     }
@@ -65,7 +87,7 @@ class VoidInvoiceEventData implements \JsonSerializable
      * Returns Memo.
      * The memo provided during invoice voiding.
      */
-    public function getMemo(): ?string
+    public function getMemo(): string
     {
         return $this->memo;
     }
@@ -74,9 +96,10 @@ class VoidInvoiceEventData implements \JsonSerializable
      * Sets Memo.
      * The memo provided during invoice voiding.
      *
+     * @required
      * @maps memo
      */
-    public function setMemo(?string $memo): void
+    public function setMemo(string $memo): void
     {
         $this->memo = $memo;
     }
@@ -85,7 +108,7 @@ class VoidInvoiceEventData implements \JsonSerializable
      * Returns Applied Amount.
      * The amount of the void.
      */
-    public function getAppliedAmount(): ?string
+    public function getAppliedAmount(): string
     {
         return $this->appliedAmount;
     }
@@ -94,9 +117,10 @@ class VoidInvoiceEventData implements \JsonSerializable
      * Sets Applied Amount.
      * The amount of the void.
      *
+     * @required
      * @maps applied_amount
      */
-    public function setAppliedAmount(?string $appliedAmount): void
+    public function setAppliedAmount(string $appliedAmount): void
     {
         $this->appliedAmount = $appliedAmount;
     }
@@ -105,7 +129,7 @@ class VoidInvoiceEventData implements \JsonSerializable
      * Returns Transaction Time.
      * The time the refund was applied, in ISO 8601 format, i.e. "2019-06-07T17:20:06Z"
      */
-    public function getTransactionTime(): ?\DateTime
+    public function getTransactionTime(): \DateTime
     {
         return $this->transactionTime;
     }
@@ -114,10 +138,11 @@ class VoidInvoiceEventData implements \JsonSerializable
      * Sets Transaction Time.
      * The time the refund was applied, in ISO 8601 format, i.e. "2019-06-07T17:20:06Z"
      *
+     * @required
      * @maps transaction_time
      * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setTransactionTime(?\DateTime $transactionTime): void
+    public function setTransactionTime(\DateTime $transactionTime): void
     {
         $this->transactionTime = $transactionTime;
     }
@@ -126,7 +151,7 @@ class VoidInvoiceEventData implements \JsonSerializable
      * Returns Is Advance Invoice.
      * If true, the invoice is an advance invoice.
      */
-    public function getIsAdvanceInvoice(): ?bool
+    public function getIsAdvanceInvoice(): bool
     {
         return $this->isAdvanceInvoice;
     }
@@ -135,9 +160,10 @@ class VoidInvoiceEventData implements \JsonSerializable
      * Sets Is Advance Invoice.
      * If true, the invoice is an advance invoice.
      *
+     * @required
      * @maps is_advance_invoice
      */
-    public function setIsAdvanceInvoice(?bool $isAdvanceInvoice): void
+    public function setIsAdvanceInvoice(bool $isAdvanceInvoice): void
     {
         $this->isAdvanceInvoice = $isAdvanceInvoice;
     }
@@ -154,21 +180,11 @@ class VoidInvoiceEventData implements \JsonSerializable
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
-        if (isset($this->creditNoteAttributes)) {
-            $json['credit_note_attributes'] = $this->creditNoteAttributes;
-        }
-        if (isset($this->memo)) {
-            $json['memo']                   = $this->memo;
-        }
-        if (isset($this->appliedAmount)) {
-            $json['applied_amount']         = $this->appliedAmount;
-        }
-        if (isset($this->transactionTime)) {
-            $json['transaction_time']       = DateTimeHelper::toRfc3339DateTime($this->transactionTime);
-        }
-        if (isset($this->isAdvanceInvoice)) {
-            $json['is_advance_invoice']     = $this->isAdvanceInvoice;
-        }
+        $json['credit_note_attributes'] = $this->creditNoteAttributes;
+        $json['memo']                   = $this->memo;
+        $json['applied_amount']         = $this->appliedAmount;
+        $json['transaction_time']       = DateTimeHelper::toRfc3339DateTime($this->transactionTime);
+        $json['is_advance_invoice']     = $this->isAdvanceInvoice;
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

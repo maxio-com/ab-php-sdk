@@ -102,11 +102,29 @@ class BankAccountPaymentProfileBuilder
     }
 
     /**
+     * Unsets billing address field.
+     */
+    public function unsetBillingAddress(): self
+    {
+        $this->instance->unsetBillingAddress();
+        return $this;
+    }
+
+    /**
      * Sets billing city field.
      */
     public function billingCity(?string $value): self
     {
         $this->instance->setBillingCity($value);
+        return $this;
+    }
+
+    /**
+     * Unsets billing city field.
+     */
+    public function unsetBillingCity(): self
+    {
+        $this->instance->unsetBillingCity();
         return $this;
     }
 
@@ -120,6 +138,15 @@ class BankAccountPaymentProfileBuilder
     }
 
     /**
+     * Unsets billing state field.
+     */
+    public function unsetBillingState(): self
+    {
+        $this->instance->unsetBillingState();
+        return $this;
+    }
+
+    /**
      * Sets billing zip field.
      */
     public function billingZip(?string $value): self
@@ -129,11 +156,29 @@ class BankAccountPaymentProfileBuilder
     }
 
     /**
+     * Unsets billing zip field.
+     */
+    public function unsetBillingZip(): self
+    {
+        $this->instance->unsetBillingZip();
+        return $this;
+    }
+
+    /**
      * Sets billing country field.
      */
     public function billingCountry(?string $value): self
     {
         $this->instance->setBillingCountry($value);
+        return $this;
+    }
+
+    /**
+     * Unsets billing country field.
+     */
+    public function unsetBillingCountry(): self
+    {
+        $this->instance->unsetBillingCountry();
         return $this;
     }
 
@@ -161,6 +206,15 @@ class BankAccountPaymentProfileBuilder
     public function billingAddress2(?string $value): self
     {
         $this->instance->setBillingAddress2($value);
+        return $this;
+    }
+
+    /**
+     * Unsets billing address 2 field.
+     */
+    public function unsetBillingAddress2(): self
+    {
+        $this->instance->unsetBillingAddress2();
         return $this;
     }
 

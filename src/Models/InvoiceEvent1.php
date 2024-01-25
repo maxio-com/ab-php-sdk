@@ -66,7 +66,7 @@ class InvoiceEvent1 implements \JsonSerializable
     private $consolidatedInvoice;
 
     /**
-     * @var AppliedCreditNote[]|null
+     * @var AppliedCreditNoteData[]|null
      */
     private $appliedCreditNotes;
 
@@ -349,7 +349,7 @@ class InvoiceEvent1 implements \JsonSerializable
      * Returns Applied Credit Notes.
      * List of credit notes applied to children invoices (if consolidated invoice)
      *
-     * @return AppliedCreditNote[]|null
+     * @return AppliedCreditNoteData[]|null
      */
     public function getAppliedCreditNotes(): ?array
     {
@@ -362,7 +362,7 @@ class InvoiceEvent1 implements \JsonSerializable
      *
      * @maps applied_credit_notes
      *
-     * @param AppliedCreditNote[]|null $appliedCreditNotes
+     * @param AppliedCreditNoteData[]|null $appliedCreditNotes
      */
     public function setAppliedCreditNotes(?array $appliedCreditNotes): void
     {
@@ -427,7 +427,7 @@ class InvoiceEvent1 implements \JsonSerializable
      * A nested data structure detailing the method of payment
      *
      * @maps payment_method
-     * @mapsBy anyOf(oneOf(PaymentMethodApplePayType,PaymentMethodBankAccountType,PaymentMethodCreditCardType,PaymentMethodExternalType,PaymentMethodPaypalType),null)
+     * @mapsBy anyOf(anyOf(PaymentMethodApplePayType,PaymentMethodBankAccountType,PaymentMethodCreditCardType,PaymentMethodExternalType,PaymentMethodPaypalType),null)
      *
      * @param PaymentMethodApplePayType|PaymentMethodBankAccountType|PaymentMethodCreditCardType|PaymentMethodExternalType|PaymentMethodPaypalType|null $paymentMethod
      */
@@ -815,7 +815,7 @@ class InvoiceEvent1 implements \JsonSerializable
             $json['payment_method']         =
                 ApiHelper::getJsonHelper()->verifyTypes(
                     $this->paymentMethod,
-                    'anyOf(oneOf(PaymentMethodApplePayType,PaymentMethodBankAccountType,PaymentMethod' .
+                    'anyOf(anyOf(PaymentMethodApplePayType,PaymentMethodBankAccountType,PaymentMethod' .
                     'CreditCardType,PaymentMethodExternalType,PaymentMethodPaypalType),null)'
                 );
         }

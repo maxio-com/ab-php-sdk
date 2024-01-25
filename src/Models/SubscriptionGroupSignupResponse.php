@@ -67,7 +67,7 @@ class SubscriptionGroupSignupResponse implements \JsonSerializable
     /**
      * @var string|null
      */
-    private $paymentCollectionMethod = PaymentCollectionMethod::AUTOMATIC;
+    private $paymentCollectionMethod = CollectionMethod::AUTOMATIC;
 
     /**
      * Returns Uid.
@@ -275,7 +275,7 @@ class SubscriptionGroupSignupResponse implements \JsonSerializable
      * options are - `remittance`, `automatic`, `prepaid`.
      *
      * @maps payment_collection_method
-     * @factory \AdvancedBillingLib\Models\PaymentCollectionMethod::checkValue
+     * @factory \AdvancedBillingLib\Models\CollectionMethod::checkValue
      */
     public function setPaymentCollectionMethod(?string $paymentCollectionMethod): void
     {
@@ -325,7 +325,7 @@ class SubscriptionGroupSignupResponse implements \JsonSerializable
             $json['subscriptions']             = $this->subscriptions;
         }
         if (isset($this->paymentCollectionMethod)) {
-            $json['payment_collection_method'] = PaymentCollectionMethod::checkValue($this->paymentCollectionMethod);
+            $json['payment_collection_method'] = CollectionMethod::checkValue($this->paymentCollectionMethod);
         }
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;

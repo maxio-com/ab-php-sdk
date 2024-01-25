@@ -339,10 +339,7 @@ class CreditNote implements \JsonSerializable
 
     /**
      * Returns Status.
-     * Current status of the credit note. Valid values:
-     *
-     * * open
-     * * applied
+     * Current status of the credit note.
      */
     public function getStatus(): ?string
     {
@@ -351,12 +348,10 @@ class CreditNote implements \JsonSerializable
 
     /**
      * Sets Status.
-     * Current status of the credit note. Valid values:
-     *
-     * * open
-     * * applied
+     * Current status of the credit note.
      *
      * @maps status
+     * @factory \AdvancedBillingLib\Models\CreditNoteStatus::checkValue
      */
     public function setStatus(?string $status): void
     {
@@ -796,7 +791,7 @@ class CreditNote implements \JsonSerializable
             $json['applied_date']     = $this->appliedDate;
         }
         if (isset($this->status)) {
-            $json['status']           = $this->status;
+            $json['status']           = CreditNoteStatus::checkValue($this->status);
         }
         if (isset($this->currency)) {
             $json['currency']         = $this->currency;

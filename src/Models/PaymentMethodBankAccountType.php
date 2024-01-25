@@ -15,24 +15,36 @@ use stdClass;
 class PaymentMethodBankAccountType implements \JsonSerializable
 {
     /**
-     * @var string|null
+     * @var string
      */
     private $maskedAccountNumber;
 
     /**
-     * @var string|null
+     * @var string
      */
     private $maskedRoutingNumber;
 
     /**
-     * @var string|null
+     * @var string
      */
-    private $type = 'bank_account';
+    private $type;
+
+    /**
+     * @param string $maskedAccountNumber
+     * @param string $maskedRoutingNumber
+     * @param string $type
+     */
+    public function __construct(string $maskedAccountNumber, string $maskedRoutingNumber, string $type)
+    {
+        $this->maskedAccountNumber = $maskedAccountNumber;
+        $this->maskedRoutingNumber = $maskedRoutingNumber;
+        $this->type = $type;
+    }
 
     /**
      * Returns Masked Account Number.
      */
-    public function getMaskedAccountNumber(): ?string
+    public function getMaskedAccountNumber(): string
     {
         return $this->maskedAccountNumber;
     }
@@ -40,9 +52,10 @@ class PaymentMethodBankAccountType implements \JsonSerializable
     /**
      * Sets Masked Account Number.
      *
+     * @required
      * @maps masked_account_number
      */
-    public function setMaskedAccountNumber(?string $maskedAccountNumber): void
+    public function setMaskedAccountNumber(string $maskedAccountNumber): void
     {
         $this->maskedAccountNumber = $maskedAccountNumber;
     }
@@ -50,7 +63,7 @@ class PaymentMethodBankAccountType implements \JsonSerializable
     /**
      * Returns Masked Routing Number.
      */
-    public function getMaskedRoutingNumber(): ?string
+    public function getMaskedRoutingNumber(): string
     {
         return $this->maskedRoutingNumber;
     }
@@ -58,9 +71,10 @@ class PaymentMethodBankAccountType implements \JsonSerializable
     /**
      * Sets Masked Routing Number.
      *
+     * @required
      * @maps masked_routing_number
      */
-    public function setMaskedRoutingNumber(?string $maskedRoutingNumber): void
+    public function setMaskedRoutingNumber(string $maskedRoutingNumber): void
     {
         $this->maskedRoutingNumber = $maskedRoutingNumber;
     }
@@ -68,7 +82,7 @@ class PaymentMethodBankAccountType implements \JsonSerializable
     /**
      * Returns Type.
      */
-    public function getType(): ?string
+    public function getType(): string
     {
         return $this->type;
     }
@@ -76,9 +90,10 @@ class PaymentMethodBankAccountType implements \JsonSerializable
     /**
      * Sets Type.
      *
+     * @required
      * @maps type
      */
-    public function setType(?string $type): void
+    public function setType(string $type): void
     {
         $this->type = $type;
     }
@@ -95,15 +110,9 @@ class PaymentMethodBankAccountType implements \JsonSerializable
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
-        if (isset($this->maskedAccountNumber)) {
-            $json['masked_account_number'] = $this->maskedAccountNumber;
-        }
-        if (isset($this->maskedRoutingNumber)) {
-            $json['masked_routing_number'] = $this->maskedRoutingNumber;
-        }
-        if (isset($this->type)) {
-            $json['type']                  = $this->type;
-        }
+        $json['masked_account_number'] = $this->maskedAccountNumber;
+        $json['masked_routing_number'] = $this->maskedRoutingNumber;
+        $json['type']                  = $this->type;
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

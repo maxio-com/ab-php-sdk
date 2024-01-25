@@ -34,18 +34,9 @@ class PrepaidUsageComponentBuilder
     /**
      * Initializes a new prepaid usage component Builder object.
      */
-    public static function init(): self
+    public static function init(string $name): self
     {
-        return new self(new PrepaidUsageComponent());
-    }
-
-    /**
-     * Sets name field.
-     */
-    public function name(?string $value): self
-    {
-        $this->instance->setName($value);
-        return $this;
+        return new self(new PrepaidUsageComponent($name));
     }
 
     /**

@@ -50,7 +50,7 @@ class CreateCurrencyPriceBuilder
     /**
      * Sets price field.
      */
-    public function price(?int $value): self
+    public function price(?float $value): self
     {
         $this->instance->setPrice($value);
         return $this;

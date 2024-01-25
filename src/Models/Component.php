@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace AdvancedBillingLib\Models;
 
 use AdvancedBillingLib\ApiHelper;
+use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
 class Component implements \JsonSerializable
@@ -81,9 +82,14 @@ class Component implements \JsonSerializable
     private $description = [];
 
     /**
-     * @var int|null
+     * @var array
      */
-    private $defaultPricePointId;
+    private $defaultPricePointId = [];
+
+    /**
+     * @var array
+     */
+    private $overagePrices = [];
 
     /**
      * @var array
@@ -126,12 +132,12 @@ class Component implements \JsonSerializable
     private $downgradeCredit = [];
 
     /**
-     * @var string|null
+     * @var \DateTime|null
      */
     private $createdAt;
 
     /**
-     * @var string|null
+     * @var \DateTime|null
      */
     private $updatedAt;
 
@@ -510,7 +516,10 @@ class Component implements \JsonSerializable
      */
     public function getDefaultPricePointId(): ?int
     {
-        return $this->defaultPricePointId;
+        if (count($this->defaultPricePointId) == 0) {
+            return null;
+        }
+        return $this->defaultPricePointId['value'];
     }
 
     /**
@@ -520,7 +529,54 @@ class Component implements \JsonSerializable
      */
     public function setDefaultPricePointId(?int $defaultPricePointId): void
     {
-        $this->defaultPricePointId = $defaultPricePointId;
+        $this->defaultPricePointId['value'] = $defaultPricePointId;
+    }
+
+    /**
+     * Unsets Default Price Point Id.
+     */
+    public function unsetDefaultPricePointId(): void
+    {
+        $this->defaultPricePointId = [];
+    }
+
+    /**
+     * Returns Overage Prices.
+     * An array of price brackets. If the component uses the ‘per_unit’ pricing scheme, this array will be
+     * empty.
+     *
+     * @return ComponentPrice[]|null
+     */
+    public function getOveragePrices(): ?array
+    {
+        if (count($this->overagePrices) == 0) {
+            return null;
+        }
+        return $this->overagePrices['value'];
+    }
+
+    /**
+     * Sets Overage Prices.
+     * An array of price brackets. If the component uses the ‘per_unit’ pricing scheme, this array will be
+     * empty.
+     *
+     * @maps overage_prices
+     *
+     * @param ComponentPrice[]|null $overagePrices
+     */
+    public function setOveragePrices(?array $overagePrices): void
+    {
+        $this->overagePrices['value'] = $overagePrices;
+    }
+
+    /**
+     * Unsets Overage Prices.
+     * An array of price brackets. If the component uses the ‘per_unit’ pricing scheme, this array will be
+     * empty.
+     */
+    public function unsetOveragePrices(): void
+    {
+        $this->overagePrices = [];
     }
 
     /**
@@ -755,7 +811,7 @@ class Component implements \JsonSerializable
      * Returns Created At.
      * Timestamp indicating when this component was created
      */
-    public function getCreatedAt(): ?string
+    public function getCreatedAt(): ?\DateTime
     {
         return $this->createdAt;
     }
@@ -765,8 +821,9 @@ class Component implements \JsonSerializable
      * Timestamp indicating when this component was created
      *
      * @maps created_at
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setCreatedAt(?string $createdAt): void
+    public function setCreatedAt(?\DateTime $createdAt): void
     {
         $this->createdAt = $createdAt;
     }
@@ -775,7 +832,7 @@ class Component implements \JsonSerializable
      * Returns Updated At.
      * Timestamp indicating when this component was updated
      */
-    public function getUpdatedAt(): ?string
+    public function getUpdatedAt(): ?\DateTime
     {
         return $this->updatedAt;
     }
@@ -785,8 +842,9 @@ class Component implements \JsonSerializable
      * Timestamp indicating when this component was updated
      *
      * @maps updated_at
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setUpdatedAt(?string $updatedAt): void
+    public function setUpdatedAt(?\DateTime $updatedAt): void
     {
         $this->updatedAt = $updatedAt;
     }
@@ -1084,8 +1142,11 @@ class Component implements \JsonSerializable
         if (!empty($this->description)) {
             $json['description']                   = $this->description['value'];
         }
-        if (isset($this->defaultPricePointId)) {
-            $json['default_price_point_id']        = $this->defaultPricePointId;
+        if (!empty($this->defaultPricePointId)) {
+            $json['default_price_point_id']        = $this->defaultPricePointId['value'];
+        }
+        if (!empty($this->overagePrices)) {
+            $json['overage_prices']                = $this->overagePrices['value'];
         }
         if (!empty($this->prices)) {
             $json['prices']                        = $this->prices['value'];
@@ -1112,10 +1173,10 @@ class Component implements \JsonSerializable
             $json['downgrade_credit']              = CreditType::checkValue($this->downgradeCredit['value']);
         }
         if (isset($this->createdAt)) {
-            $json['created_at']                    = $this->createdAt;
+            $json['created_at']                    = DateTimeHelper::toRfc3339DateTime($this->createdAt);
         }
         if (isset($this->updatedAt)) {
-            $json['updated_at']                    = $this->updatedAt;
+            $json['updated_at']                    = DateTimeHelper::toRfc3339DateTime($this->updatedAt);
         }
         if (!empty($this->archivedAt)) {
             $json['archived_at']                   = $this->archivedAt['value'];

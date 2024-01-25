@@ -20,7 +20,7 @@ class CreateCurrencyPrice implements \JsonSerializable
     private $currency;
 
     /**
-     * @var int|null
+     * @var float|null
      */
     private $price;
 
@@ -53,7 +53,7 @@ class CreateCurrencyPrice implements \JsonSerializable
      * Returns Price.
      * Price for the price level in this currency
      */
-    public function getPrice(): ?int
+    public function getPrice(): ?float
     {
         return $this->price;
     }
@@ -64,7 +64,7 @@ class CreateCurrencyPrice implements \JsonSerializable
      *
      * @maps price
      */
-    public function setPrice(?int $price): void
+    public function setPrice(?float $price): void
     {
         $this->price = $price;
     }

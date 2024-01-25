@@ -18,30 +18,48 @@ use stdClass;
 class ApplyDebitNoteEventData implements \JsonSerializable
 {
     /**
-     * @var string|null
+     * @var string
      */
     private $debitNoteNumber;
 
     /**
-     * @var string|null
+     * @var string
      */
     private $debitNoteUid;
 
     /**
-     * @var string|null
+     * @var string
      */
     private $originalAmount;
 
     /**
-     * @var string|null
+     * @var string
      */
     private $appliedAmount;
+
+    /**
+     * @param string $debitNoteNumber
+     * @param string $debitNoteUid
+     * @param string $originalAmount
+     * @param string $appliedAmount
+     */
+    public function __construct(
+        string $debitNoteNumber,
+        string $debitNoteUid,
+        string $originalAmount,
+        string $appliedAmount
+    ) {
+        $this->debitNoteNumber = $debitNoteNumber;
+        $this->debitNoteUid = $debitNoteUid;
+        $this->originalAmount = $originalAmount;
+        $this->appliedAmount = $appliedAmount;
+    }
 
     /**
      * Returns Debit Note Number.
      * A unique, identifying string that appears on the debit note and in places it is referenced.
      */
-    public function getDebitNoteNumber(): ?string
+    public function getDebitNoteNumber(): string
     {
         return $this->debitNoteNumber;
     }
@@ -50,9 +68,10 @@ class ApplyDebitNoteEventData implements \JsonSerializable
      * Sets Debit Note Number.
      * A unique, identifying string that appears on the debit note and in places it is referenced.
      *
+     * @required
      * @maps debit_note_number
      */
-    public function setDebitNoteNumber(?string $debitNoteNumber): void
+    public function setDebitNoteNumber(string $debitNoteNumber): void
     {
         $this->debitNoteNumber = $debitNoteNumber;
     }
@@ -62,7 +81,7 @@ class ApplyDebitNoteEventData implements \JsonSerializable
      * Unique identifier for the debit note. It is generated automatically by Chargify and has the prefix
      * "db_" followed by alphanumeric characters.
      */
-    public function getDebitNoteUid(): ?string
+    public function getDebitNoteUid(): string
     {
         return $this->debitNoteUid;
     }
@@ -72,9 +91,10 @@ class ApplyDebitNoteEventData implements \JsonSerializable
      * Unique identifier for the debit note. It is generated automatically by Chargify and has the prefix
      * "db_" followed by alphanumeric characters.
      *
+     * @required
      * @maps debit_note_uid
      */
-    public function setDebitNoteUid(?string $debitNoteUid): void
+    public function setDebitNoteUid(string $debitNoteUid): void
     {
         $this->debitNoteUid = $debitNoteUid;
     }
@@ -83,7 +103,7 @@ class ApplyDebitNoteEventData implements \JsonSerializable
      * Returns Original Amount.
      * The full, original amount of the debit note.
      */
-    public function getOriginalAmount(): ?string
+    public function getOriginalAmount(): string
     {
         return $this->originalAmount;
     }
@@ -92,9 +112,10 @@ class ApplyDebitNoteEventData implements \JsonSerializable
      * Sets Original Amount.
      * The full, original amount of the debit note.
      *
+     * @required
      * @maps original_amount
      */
-    public function setOriginalAmount(?string $originalAmount): void
+    public function setOriginalAmount(string $originalAmount): void
     {
         $this->originalAmount = $originalAmount;
     }
@@ -103,7 +124,7 @@ class ApplyDebitNoteEventData implements \JsonSerializable
      * Returns Applied Amount.
      * The amount of the debit note applied to invoice.
      */
-    public function getAppliedAmount(): ?string
+    public function getAppliedAmount(): string
     {
         return $this->appliedAmount;
     }
@@ -112,9 +133,10 @@ class ApplyDebitNoteEventData implements \JsonSerializable
      * Sets Applied Amount.
      * The amount of the debit note applied to invoice.
      *
+     * @required
      * @maps applied_amount
      */
-    public function setAppliedAmount(?string $appliedAmount): void
+    public function setAppliedAmount(string $appliedAmount): void
     {
         $this->appliedAmount = $appliedAmount;
     }
@@ -131,18 +153,10 @@ class ApplyDebitNoteEventData implements \JsonSerializable
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
-        if (isset($this->debitNoteNumber)) {
-            $json['debit_note_number'] = $this->debitNoteNumber;
-        }
-        if (isset($this->debitNoteUid)) {
-            $json['debit_note_uid']    = $this->debitNoteUid;
-        }
-        if (isset($this->originalAmount)) {
-            $json['original_amount']   = $this->originalAmount;
-        }
-        if (isset($this->appliedAmount)) {
-            $json['applied_amount']    = $this->appliedAmount;
-        }
+        $json['debit_note_number'] = $this->debitNoteNumber;
+        $json['debit_note_uid']    = $this->debitNoteUid;
+        $json['original_amount']   = $this->originalAmount;
+        $json['applied_amount']    = $this->appliedAmount;
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

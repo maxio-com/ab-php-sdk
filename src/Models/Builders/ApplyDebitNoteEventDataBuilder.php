@@ -33,45 +33,15 @@ class ApplyDebitNoteEventDataBuilder
     /**
      * Initializes a new apply debit note event data Builder object.
      */
-    public static function init(): self
-    {
-        return new self(new ApplyDebitNoteEventData());
-    }
-
-    /**
-     * Sets debit note number field.
-     */
-    public function debitNoteNumber(?string $value): self
-    {
-        $this->instance->setDebitNoteNumber($value);
-        return $this;
-    }
-
-    /**
-     * Sets debit note uid field.
-     */
-    public function debitNoteUid(?string $value): self
-    {
-        $this->instance->setDebitNoteUid($value);
-        return $this;
-    }
-
-    /**
-     * Sets original amount field.
-     */
-    public function originalAmount(?string $value): self
-    {
-        $this->instance->setOriginalAmount($value);
-        return $this;
-    }
-
-    /**
-     * Sets applied amount field.
-     */
-    public function appliedAmount(?string $value): self
-    {
-        $this->instance->setAppliedAmount($value);
-        return $this;
+    public static function init(
+        string $debitNoteNumber,
+        string $debitNoteUid,
+        string $originalAmount,
+        string $appliedAmount
+    ): self {
+        return new self(
+            new ApplyDebitNoteEventData($debitNoteNumber, $debitNoteUid, $originalAmount, $appliedAmount)
+        );
     }
 
     /**
