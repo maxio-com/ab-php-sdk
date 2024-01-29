@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Tests\TestFactory;
 
+use AdvancedBillingLib\Models\BankAccountPaymentProfile;
 use AdvancedBillingLib\Models\Builders\SubscriptionBuilder;
-use AdvancedBillingLib\Models\Component;
+use AdvancedBillingLib\Models\CreditCardPaymentProfile;
 use AdvancedBillingLib\Models\Customer;
-use AdvancedBillingLib\Models\PaymentProfile;
 use AdvancedBillingLib\Models\Product;
 use AdvancedBillingLib\Models\Subscription;
 use AdvancedBillingLib\Tests\TestData\SubscriptionTestData;
@@ -22,7 +22,7 @@ final class TestSubscriptionFactory
         DateTime $activatedAt,
         Customer $customer,
         Product $product,
-        PaymentProfile $paymentProfile,
+        CreditCardPaymentProfile|BankAccountPaymentProfile $paymentProfile,
         int $productPricePointId,
         ?int $nextProductPricePointId,
         int $signupPaymentId,
@@ -61,7 +61,7 @@ final class TestSubscriptionFactory
         DateTime $activatedAt,
         Customer $customer,
         Product $product,
-        PaymentProfile $paymentProfile,
+        CreditCardPaymentProfile|BankAccountPaymentProfile $paymentProfile,
         int $productPricePointId,
         int $signupPaymentId,
         DateTime $currentPeriodStartedAt,
@@ -89,7 +89,8 @@ final class TestSubscriptionFactory
             ->paymentCollectionMethod(SubscriptionTestData::PAYMENT_COLLECTION_METHOD)
             ->customer($customer)
             ->product($product)
-            ->creditCard($paymentProfile)
+            ->creditCard($paymentProfile instanceof CreditCardPaymentProfile ? $paymentProfile : null)
+            ->bankAccount($paymentProfile instanceof BankAccountPaymentProfile ? $paymentProfile : null)
             ->paymentType(SubscriptionTestData::PAYMENT_TYPE)
             ->couponCodes(SubscriptionTestData::EMPTY_COUPON_CODES)
             ->currentBillingAmountInCents(SubscriptionTestData::CURRENT_BILLING_AMOUNT_IN_CENTS)
@@ -137,7 +138,7 @@ final class TestSubscriptionFactory
         DateTime $activatedAt,
         Customer $customer,
         Product $product,
-        PaymentProfile $paymentProfile,
+        CreditCardPaymentProfile|BankAccountPaymentProfile $paymentProfile,
         int $productPricePointId,
         int $signupPaymentId,
         DateTime $currentPeriodStartedAt,

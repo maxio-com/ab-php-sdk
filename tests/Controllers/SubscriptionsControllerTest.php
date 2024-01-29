@@ -42,7 +42,7 @@ final class SubscriptionsControllerTest extends TestCase
             productFamilyId: $productFamily->getId()
         );
         $customer = $this->testData->loadCustomerWithPredefinedData();
-        $paymentProfile = $this->testData->loadPaymentProfile($customer->getId());
+        $creditCardPaymentProfile = $this->testData->loadCreditCardPaymentProfile($customer->getId());
 
         $response = $this->client
             ->getSubscriptionsController()
@@ -50,7 +50,7 @@ final class SubscriptionsControllerTest extends TestCase
                 $this->testData->getCreateSubscriptionRequest(
                     $customer->getId(),
                     $product->getId(),
-                    $paymentProfile->getId()
+                    $creditCardPaymentProfile->getId()
                 )
             );
         $subscription = $response->getSubscription();
@@ -63,7 +63,7 @@ final class SubscriptionsControllerTest extends TestCase
                 $subscription->getActivatedAt(),
                 $customer,
                 $product,
-                $paymentProfile,
+                $creditCardPaymentProfile,
                 $subscription->getProductPricePointId(),
                 $subscription->getNextProductPricePointId(),
                 $subscription->getSignupPaymentId(),
@@ -91,7 +91,7 @@ final class SubscriptionsControllerTest extends TestCase
             productFamilyId: $productFamily->getId()
         );
         $customer = $this->testData->loadCustomerWithPredefinedData();
-        $paymentProfile = $this->testData->loadPaymentProfile($customer->getId());
+        $creditCardPaymentProfile = $this->testData->loadCreditCardPaymentProfile($customer->getId());
         $component = $this->testData->loadComponent($productFamily->getId());
 
         $response = $this->client
@@ -100,7 +100,7 @@ final class SubscriptionsControllerTest extends TestCase
                 $this->testData->getCreateSubscriptionWithComponentsRequest(
                     $customer->getId(),
                     $product->getId(),
-                    $paymentProfile->getId(),
+                    $creditCardPaymentProfile->getId(),
                     [$this->testData->getCreateSubscriptionComponent($component)]
                 )
             );
@@ -111,7 +111,7 @@ final class SubscriptionsControllerTest extends TestCase
                 $subscription,
                 $customer,
                 $product,
-                $paymentProfile,
+                $creditCardPaymentProfile,
             ),
             $subscription
         );
@@ -133,7 +133,7 @@ final class SubscriptionsControllerTest extends TestCase
             productFamilyId: $productFamily->getId()
         );
         $customer = $this->testData->loadCustomerWithPredefinedData();
-        $paymentProfile = $this->testData->loadPaymentProfile($customer->getId());
+        $creditCardPaymentProfile = $this->testData->loadCreditCardPaymentProfile($customer->getId());
         $component = $this->testData->loadComponent($productFamily->getId());
         $couponOne = $this->testData->loadCoupon($productFamily->getId(), 'SubscriptionsControllerTest_Coupon_1');
         $couponTwo = $this->testData->loadCoupon($productFamily->getId(), 'SubscriptionsControllerTest_Coupon_2');
@@ -144,7 +144,7 @@ final class SubscriptionsControllerTest extends TestCase
                 $this->testData->getCreateSubscriptionWithComponentsAndCouponsRequest(
                     $customer->getId(),
                     $product->getId(),
-                    $paymentProfile->getId(),
+                    $creditCardPaymentProfile->getId(),
                     [$this->testData->getCreateSubscriptionComponent($component)],
                     [$couponOne, $couponTwo]
                 )
@@ -156,7 +156,7 @@ final class SubscriptionsControllerTest extends TestCase
             [$couponOne, $couponTwo]
         );
 
-        $this->cleaner->removeSubscriptionPaymentProfileById($subscription->getId(), $paymentProfile->getId());
+        $this->cleaner->removeSubscriptionPaymentProfileById($subscription->getId(), $creditCardPaymentProfile->getId());
         $this->cleaner->removeSubscriptionById($subscription->getId(), $customer->getId());
         $this->cleaner->removeCustomerById($customer->getId());
     }
@@ -173,7 +173,7 @@ final class SubscriptionsControllerTest extends TestCase
             productFamilyId: $productFamily->getId()
         );
         $customer = $this->testData->loadCustomerWithPredefinedData();
-        $paymentProfile = $this->testData->loadPaymentProfile($customer->getId());
+        $creditCardPaymentProfile = $this->testData->loadCreditCardPaymentProfile($customer->getId());
 
         $subscription = $this->client
             ->getSubscriptionsController()
@@ -181,7 +181,7 @@ final class SubscriptionsControllerTest extends TestCase
                 $this->testData->getCreateSubscriptionWithProratedBillingRequest(
                     $customer->getId(),
                     $product->getId(),
-                    $paymentProfile->getId(),
+                    $creditCardPaymentProfile->getId(),
                 )
             )
             ->getSubscription();
@@ -191,7 +191,7 @@ final class SubscriptionsControllerTest extends TestCase
             $this->testData->getSnapDay()
         );
 
-        $this->cleaner->removeSubscriptionPaymentProfileById($subscription->getId(), $paymentProfile->getId());
+        $this->cleaner->removeSubscriptionPaymentProfileById($subscription->getId(), $creditCardPaymentProfile->getId());
         $this->cleaner->removeSubscriptionById($subscription->getId(), $customer->getId());
         $this->cleaner->removeCustomerById($customer->getId());
     }
@@ -214,7 +214,7 @@ final class SubscriptionsControllerTest extends TestCase
             reference: 'sct_ref_1',
             vatNumber: 'sct_vat_1'
         );
-        $paymentProfile = $this->testData->loadPaymentProfile($customer->getId());
+        $creditCardPaymentProfile = $this->testData->loadCreditCardPaymentProfile($customer->getId());
         $unauthenticatedClient = $this->getUnauthenticatedClient();
 
         $this->assertions->assertSubscriptionCannotBeCreatedByUnauthorizedUser();
@@ -224,7 +224,7 @@ final class SubscriptionsControllerTest extends TestCase
                 $this->testData->getCreateSubscriptionWithProratedBillingRequest(
                     $customer->getId(),
                     $product->getId(),
-                    $paymentProfile->getId(),
+                    $creditCardPaymentProfile->getId(),
                 )
             )
             ->getSubscription();
@@ -248,7 +248,7 @@ final class SubscriptionsControllerTest extends TestCase
             reference: 'sct_ref_2',
             vatNumber: 'sct_vat_2'
         );
-        $paymentProfile = $this->testData->loadPaymentProfile($customer->getId());
+        $creditCardPaymentProfile = $this->testData->loadCreditCardPaymentProfile($customer->getId());
 
         try {
             $this->client
@@ -257,7 +257,7 @@ final class SubscriptionsControllerTest extends TestCase
                     $this->testData->getCreateSubscriptionWithProratedBillingRequest(
                         $this->testData->getNotExistingCustomerId(),
                         $product->getId(),
-                        $paymentProfile->getId(),
+                        $creditCardPaymentProfile->getId(),
                     )
                 )
                 ->getSubscription();
@@ -280,14 +280,14 @@ final class SubscriptionsControllerTest extends TestCase
             productFamilyId: $productFamily->getId()
         );
         $customer = $this->testData->loadCustomerWithPredefinedData();
-        $paymentProfile = $this->testData->loadPaymentProfile($customer->getId());
+        $creditCardPaymentProfile = $this->testData->loadCreditCardPaymentProfile($customer->getId());
         $subscription = $this->client
             ->getSubscriptionsController()
             ->createSubscription(
                 $this->testData->getCreateSubscriptionRequest(
                     $customer->getId(),
                     $product->getId(),
-                    $paymentProfile->getId()
+                    $creditCardPaymentProfile->getId()
                 )
             )
             ->getSubscription();
@@ -302,7 +302,7 @@ final class SubscriptionsControllerTest extends TestCase
                 $subscription->getActivatedAt(),
                 $customer,
                 $product,
-                $paymentProfile,
+                $creditCardPaymentProfile,
                 $subscription->getProductPricePointId(),
                 $subscription->getNextProductPricePointId(),
                 $subscription->getSignupPaymentId(),
@@ -313,7 +313,7 @@ final class SubscriptionsControllerTest extends TestCase
             $response->getSubscription()
         );
 
-        $this->cleaner->removeSubscriptionPaymentProfileById($subscription->getId(), $paymentProfile->getId());
+        $this->cleaner->removeSubscriptionPaymentProfileById($subscription->getId(), $creditCardPaymentProfile->getId());
         $this->cleaner->removeSubscriptionById($subscription->getId(), $customer->getId());
         $this->cleaner->removeCustomerById($customer->getId());
     }
@@ -330,7 +330,7 @@ final class SubscriptionsControllerTest extends TestCase
             productFamilyId: $productFamily->getId()
         );
         $customer = $this->testData->loadCustomerWithPredefinedData();
-        $paymentProfile = $this->testData->loadPaymentProfile($customer->getId());
+        $creditCardPaymentProfile = $this->testData->loadCreditCardPaymentProfile($customer->getId());
         $couponOne = $this->testData->loadCoupon($productFamily->getId(), 'SubscriptionsControllerTest_Coupon_3');
         $couponTwo = $this->testData->loadCoupon($productFamily->getId(), 'SubscriptionsControllerTest_Coupon_4');
         $subscription = $this->client
@@ -339,7 +339,7 @@ final class SubscriptionsControllerTest extends TestCase
                 $this->testData->createSubscriptionWithCouponsRequest(
                     $customer->getId(),
                     $product->getId(),
-                    $paymentProfile->getId(),
+                    $creditCardPaymentProfile->getId(),
                     [$couponOne, $couponTwo]
                 )
             )
@@ -352,7 +352,7 @@ final class SubscriptionsControllerTest extends TestCase
 
         $this->assertions->assertSubscriptionWithCouponsCreated($response);
 
-        $this->cleaner->removeSubscriptionPaymentProfileById($subscription->getId(), $paymentProfile->getId());
+        $this->cleaner->removeSubscriptionPaymentProfileById($subscription->getId(), $creditCardPaymentProfile->getId());
         $this->cleaner->removeSubscriptionById($subscription->getId(), $customer->getId());
         $this->cleaner->removeCustomerById($customer->getId());
     }
@@ -369,14 +369,14 @@ final class SubscriptionsControllerTest extends TestCase
             productFamilyId: $productFamily->getId()
         );
         $customer = $this->testData->loadCustomerWithPredefinedData();
-        $paymentProfile = $this->testData->loadPaymentProfile($customer->getId());
+        $creditCardPaymentProfile = $this->testData->loadCreditCardPaymentProfile($customer->getId());
         $subscription = $this->client
             ->getSubscriptionsController()
             ->createSubscription(
                 $this->testData->getCreateSubscriptionRequest(
                     $customer->getId(),
                     $product->getId(),
-                    $paymentProfile->getId()
+                    $creditCardPaymentProfile->getId()
                 )
             )
             ->getSubscription();
@@ -389,7 +389,7 @@ final class SubscriptionsControllerTest extends TestCase
         $this->assertions->assertSubscriptionFoundByMetadata($results, $subscription);
 
         $this->cleaner->removeMetadata(ResourceType::SUBSCRIPTIONS, $subscription->getId(), $metadata[0]->getName());
-        $this->cleaner->removeSubscriptionPaymentProfileById($subscription->getId(), $paymentProfile->getId());
+        $this->cleaner->removeSubscriptionPaymentProfileById($subscription->getId(), $creditCardPaymentProfile->getId());
         $this->cleaner->removeSubscriptionById($subscription->getId(), $customer->getId());
         $this->cleaner->removeCustomerById($customer->getId());
     }
@@ -406,14 +406,14 @@ final class SubscriptionsControllerTest extends TestCase
             productFamilyId: $productFamily->getId()
         );
         $customer = $this->testData->loadCustomerWithPredefinedData();
-        $paymentProfile = $this->testData->loadPaymentProfile($customer->getId());
+        $creditCardPaymentProfile = $this->testData->loadCreditCardPaymentProfile($customer->getId());
         $subscription = $this->client
             ->getSubscriptionsController()
             ->createSubscription(
                 $this->testData->getCreateSubscriptionRequest(
                     $customer->getId(),
                     $product->getId(),
-                    $paymentProfile->getId()
+                    $creditCardPaymentProfile->getId()
                 )
             )
             ->getSubscription();
@@ -425,7 +425,7 @@ final class SubscriptionsControllerTest extends TestCase
 
         $this->assertions->assertSubscriptionNotFoundByMetadata($results);
 
-        $this->cleaner->removeSubscriptionPaymentProfileById($subscription->getId(), $paymentProfile->getId());
+        $this->cleaner->removeSubscriptionPaymentProfileById($subscription->getId(), $creditCardPaymentProfile->getId());
         $this->cleaner->removeSubscriptionById($subscription->getId(), $customer->getId());
         $this->cleaner->removeCustomerById($customer->getId());
     }

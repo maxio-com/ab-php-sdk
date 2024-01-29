@@ -4,37 +4,76 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Tests\TestFactory;
 
-use AdvancedBillingLib\Models\Builders\PaymentProfileBuilder;
-use AdvancedBillingLib\Models\CreatedPaymentProfile;
-use AdvancedBillingLib\Models\PaymentProfile;
+use AdvancedBillingLib\Models\BankAccountPaymentProfile;
+use AdvancedBillingLib\Models\Builders\BankAccountPaymentProfileBuilder;
+use AdvancedBillingLib\Models\Builders\CreditCardPaymentProfileBuilder;
+use AdvancedBillingLib\Models\CreditCardPaymentProfile;
 use AdvancedBillingLib\Tests\TestData\PaymentProfileTestData;
 
 final class TestPaymentProfileFactory
 {
-    public function fromCreatedPaymentProfile(CreatedPaymentProfile $createdPaymentProfile): PaymentProfile
+    public function fromCreatedPaymentProfile(
+        CreditCardPaymentProfile|BankAccountPaymentProfile $createdPaymentProfile
+    ): CreditCardPaymentProfile|BankAccountPaymentProfile
     {
-        return PaymentProfileBuilder::init()
-            ->id($createdPaymentProfile->getId())
-            ->firstName($createdPaymentProfile->getFirstName())
-            ->lastName($createdPaymentProfile->getLastName())
-            ->maskedCardNumber($createdPaymentProfile->getMaskedCardNumber())
-            ->cardType($createdPaymentProfile->getCardType())
-            ->expirationMonth($createdPaymentProfile->getExpirationMonth())
-            ->expirationYear($createdPaymentProfile->getExpirationYear())
-            ->customerId($createdPaymentProfile->getCustomerId())
-            ->currentVault($createdPaymentProfile->getCurrentVault())
-            ->vaultToken($createdPaymentProfile->getVaultToken())
-            ->paymentType($createdPaymentProfile->getPaymentType())
+        return match ($createdPaymentProfile::class) {
+            CreditCardPaymentProfile::class => $this->fromCreditCardPaymentProfile($createdPaymentProfile),
+            BankAccountPaymentProfile::class => $this->fromBankAccountPaymentProfile($createdPaymentProfile),
+            default => null
+        };
+    }
+
+    private function fromCreditCardPaymentProfile(CreditCardPaymentProfile $paymentProfile): CreditCardPaymentProfile
+    {
+        return CreditCardPaymentProfileBuilder::init($paymentProfile->getMaskedCardNumber())
+            ->id($paymentProfile->getId())
+            ->firstName($paymentProfile->getFirstName())
+            ->lastName($paymentProfile->getLastName())
+            ->cardType($paymentProfile->getCardType())
+            ->expirationMonth($paymentProfile->getExpirationMonth())
+            ->expirationYear($paymentProfile->getExpirationYear())
+            ->customerId($paymentProfile->getCustomerId())
+            ->currentVault($paymentProfile->getCurrentVault())
+            ->vaultToken($paymentProfile->getVaultToken())
+            ->paymentType($paymentProfile->getPaymentType())
             ->disabled(PaymentProfileTestData::CARD_DISABLED)
-            ->billingAddress($createdPaymentProfile->getBillingAddress())
-            ->billingState($createdPaymentProfile->getBillingState())
-            ->billingZip($createdPaymentProfile->getBillingZip())
-            ->billingCountry($createdPaymentProfile->getBillingCountry())
-            ->customerVaultToken($createdPaymentProfile->getCustomerVaultToken())
-            ->billingAddress2($createdPaymentProfile->getBillingAddress2())
-            ->siteGatewaySettingId($createdPaymentProfile->getSiteGatewaySettingId())
-            ->gatewayHandle($createdPaymentProfile->getGatewayHandle())
-            ->billingCity($createdPaymentProfile->getBillingCity())
+            ->billingAddress($paymentProfile->getBillingAddress())
+            ->billingState($paymentProfile->getBillingState())
+            ->billingZip($paymentProfile->getBillingZip())
+            ->billingCountry($paymentProfile->getBillingCountry())
+            ->customerVaultToken($paymentProfile->getCustomerVaultToken())
+            ->billingAddress2($paymentProfile->getBillingAddress2())
+            ->siteGatewaySettingId($paymentProfile->getSiteGatewaySettingId())
+            ->gatewayHandle($paymentProfile->getGatewayHandle())
+            ->billingCity($paymentProfile->getBillingCity())
+            ->build();
+    }
+
+    private function fromBankAccountPaymentProfile(BankAccountPaymentProfile $paymentProfile): BankAccountPaymentProfile
+    {
+        return BankAccountPaymentProfileBuilder::init(
+            $paymentProfile->getMaskedBankRoutingNumber(),
+            $paymentProfile->getMaskedBankAccountNumber()
+        )
+            ->id($paymentProfile->getId())
+            ->bankAccountHolderType(PaymentProfileTestData::BANK_ACCOUNT_HOLDER_TYPE)
+            ->bankAccountType(PaymentProfileTestData::BANK_ACCOUNT_TYPE)
+            ->bankName($paymentProfile->getBankName())
+            ->billingAddress($paymentProfile->getBillingAddress())
+            ->billingAddress2($paymentProfile->getBillingAddress2())
+            ->billingCity($paymentProfile->getBillingCity())
+            ->billingState($paymentProfile->getBillingState())
+            ->billingZip($paymentProfile->getBillingZip())
+            ->billingCountry($paymentProfile->getBillingCountry())
+            ->currentVault(PaymentProfileTestData::BANK_ACCOUNT_VAULT)
+            ->customerId($paymentProfile->getCustomerId())
+            ->customerVaultToken($paymentProfile->getCustomerVaultToken())
+            ->firstName($paymentProfile->getFirstName())
+            ->lastName($paymentProfile->getLastName())
+            ->vaultToken($paymentProfile->getVaultToken())
+            ->siteGatewaySettingId($paymentProfile->getSiteGatewaySettingId())
+            ->gatewayHandle($paymentProfile->getGatewayHandle())
+            ->paymentType(PaymentProfileTestData::BANK_ACCOUNT_PAYMENT_TYPE)
             ->build();
     }
 }

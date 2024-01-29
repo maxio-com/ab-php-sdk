@@ -92,8 +92,8 @@ final class CustomersControllerTestData
             'customerscontrollertest-product-1',
             $productFamily->getId()
         );
-        $paymentProfile = $this->paymentProfileLoader->load($customerId);
+        $creditCardPaymentProfile = $this->paymentProfileLoader->loadCreditCard($customerId);
 
-        return $this->subscriptionsLoader->load($customerId, $product->getId(), $paymentProfile->getId());
+        return $this->subscriptionsLoader->load($customerId, $product->getId(), $creditCardPaymentProfile->getId());
     }
 }

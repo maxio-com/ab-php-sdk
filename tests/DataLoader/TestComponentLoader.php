@@ -6,7 +6,6 @@ namespace AdvancedBillingLib\Tests\DataLoader;
 
 use AdvancedBillingLib\AdvancedBillingClient;
 use AdvancedBillingLib\Models\Component;
-use AdvancedBillingLib\Tests\TestData\ComponentTestData;
 use AdvancedBillingLib\Tests\TestFactory\TestComponentRequestFactory;
 
 final class TestComponentLoader
@@ -27,9 +26,8 @@ final class TestComponentLoader
     {
         return $this->client
             ->getComponentsController()
-            ->createComponent(
+            ->createQuantityBasedComponent(
                 $productFamilyId,
-                ComponentTestData::QUANTITY_BASED_COMPONENT_KIND_PATH,
                 $this->componentRequestFactory->createCreateQuantityBasedComponent($name, $unitName, $pricingScheme)
             )
             ->getComponent();
@@ -44,9 +42,8 @@ final class TestComponentLoader
     {
         return $this->client
             ->getComponentsController()
-            ->createComponent(
+            ->createQuantityBasedComponent(
                 $productFamilyId,
-                ComponentTestData::QUANTITY_BASED_COMPONENT_KIND_PATH,
                 $this->componentRequestFactory->createCreateQuantityBasedComponent(
                     $name,
                     $unitName,
@@ -60,9 +57,8 @@ final class TestComponentLoader
     {
         return $this->client
             ->getComponentsController()
-            ->createComponent(
+            ->createOnOffComponent(
                 $productFamilyId,
-                ComponentTestData::ON_OFF_COMPONENT_KIND_PATH,
                 $this->componentRequestFactory->createCreateOnOffComponent($name)
             )
             ->getComponent();
@@ -75,9 +71,8 @@ final class TestComponentLoader
     {
         return $this->client
             ->getComponentsController()
-            ->createComponent(
+            ->createOnOffComponent(
                 $productFamilyId,
-                ComponentTestData::ON_OFF_COMPONENT_KIND_PATH,
                 $this->componentRequestFactory->createCreateOnOffComponentWithAllowedFractionalQuantitiesAndCustomPricePoint($name)
             )
             ->getComponent();

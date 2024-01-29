@@ -16,25 +16,39 @@ use AdvancedBillingLib\Tests\TestData\PaymentProfileTestData;
 
 final class TestPaymentProfileRequestFactory
 {
-    public function createCreatePaymentProfileRequest(int $customerId): CreatePaymentProfileRequest
+    public function createCreateCreditCardPaymentProfileRequest(int $customerId): CreatePaymentProfileRequest
     {
-        return CreatePaymentProfileRequestBuilder::init($this->createCreatePaymentProfile($customerId))
+        return CreatePaymentProfileRequestBuilder::init($this->createCreditCardPaymentProfile($customerId))
             ->build();
     }
 
-    private function createCreatePaymentProfile(int $customerId): CreatePaymentProfile
+    public function createCreateBankAccountPaymentProfileRequest(int $customerId): CreatePaymentProfileRequest
+    {
+        return CreatePaymentProfileRequestBuilder::init($this->createBankAccountPaymentProfile($customerId))
+            ->build();
+    }
+
+    private function createCreditCardPaymentProfile(int $customerId): CreatePaymentProfile
     {
         return CreatePaymentProfileBuilder::init()
             ->customerId($customerId)
+            ->paymentType(PaymentProfileTestData::CREDIT_CARD_PAYMENT_TYPE)
+            ->expirationMonth(PaymentProfileTestData::CARD_EXPIRATION_MONTH)
+            ->expirationYear(PaymentProfileTestData::CARD_EXPIRATION_YEAR)
+            ->fullNumber(PaymentProfileTestData::FULL_NUMBER)
+            ->build();
+    }
+
+    private function createBankAccountPaymentProfile(int $customerId): CreatePaymentProfile
+    {
+        return CreatePaymentProfileBuilder::init()
+            ->customerId($customerId)
+            ->paymentType(PaymentProfileTestData::BANK_ACCOUNT_PAYMENT_TYPE)
             ->bankName(PaymentProfileTestData::BANK_NAME)
             ->bankRoutingNumber(PaymentProfileTestData::BANK_ROUTING_NUMBER)
             ->bankAccountNumber(PaymentProfileTestData::BANK_ACCOUNT_NUMBER)
             ->bankAccountType(PaymentProfileTestData::BANK_ACCOUNT_TYPE)
             ->bankAccountHolderType(PaymentProfileTestData::BANK_ACCOUNT_HOLDER_TYPE)
-            ->paymentType(PaymentProfileTestData::PAYMENT_TYPE)
-            ->expirationMonth(PaymentProfileTestData::CARD_EXPIRATION_MONTH)
-            ->expirationYear(PaymentProfileTestData::CARD_EXPIRATION_YEAR)
-            ->fullNumber(PaymentProfileTestData::FULL_NUMBER)
             ->build();
     }
 

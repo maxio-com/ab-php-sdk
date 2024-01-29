@@ -4,12 +4,9 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Tests\Controllers;
 
-use AdvancedBillingLib\Models\BankAccount;
 use AdvancedBillingLib\Models\BankAccountPaymentProfile;
-use AdvancedBillingLib\Models\CreatedPaymentProfile;
 use AdvancedBillingLib\Models\CreditCardPaymentProfile;
-use AdvancedBillingLib\Models\ReadPaymentProfileResponse;
-use AdvancedBillingLib\Models\UpdatedPaymentProfile;
+use AdvancedBillingLib\Models\PaymentProfileResponse;
 use AdvancedBillingLib\Tests\TestData\PaymentProfileTestData;
 
 final class PaymentProfilesControllerTestAssertions
@@ -21,15 +18,15 @@ final class PaymentProfilesControllerTestAssertions
     }
 
     public function assertPaymentProfileCreated(
-        CreatedPaymentProfile $expectedPaymentProfile,
-        CreatedPaymentProfile $paymentProfile
+        CreditCardPaymentProfile|BankAccountPaymentProfile $expectedPaymentProfile,
+        CreditCardPaymentProfile|BankAccountPaymentProfile $paymentProfile
     ): void
     {
         $this->testCase::assertEquals($expectedPaymentProfile, $paymentProfile);
     }
 
     /**
-     * @param array<int, ReadPaymentProfileResponse> $paymentProfiles
+     * @param array<int, PaymentProfileResponse> $paymentProfiles
      */
     public function assertNoPaymentProfilesFound(array $paymentProfiles): void
     {
@@ -37,11 +34,11 @@ final class PaymentProfilesControllerTestAssertions
     }
 
     /**
-     * @param array<int, ReadPaymentProfileResponse> $paymentProfiles
+     * @param array<int, PaymentProfileResponse> $paymentProfiles
      */
     public function assertPaymentProfilesFound(
         array $paymentProfiles,
-        CreatedPaymentProfile $expectedPaymentProfile
+        CreditCardPaymentProfile|BankAccountPaymentProfile $expectedPaymentProfile
     ): void
     {
         $this->testCase::assertCount(self::EXPECTED_FOUND_PAYMENT_PROFILES_NUMBER, $paymentProfiles);
@@ -54,15 +51,15 @@ final class PaymentProfilesControllerTestAssertions
 
     public function assertPaymentProfileFound(
         CreditCardPaymentProfile|BankAccountPaymentProfile $foundPaymentProfile,
-        CreatedPaymentProfile $paymentProfile
+        CreditCardPaymentProfile|BankAccountPaymentProfile $paymentProfile
     ): void
     {
         $this->testCase::assertEquals($paymentProfile->getId(), $foundPaymentProfile->getId());
     }
 
     public function assertPaymentProfileUpdated(
-        UpdatedPaymentProfile $updatedPaymentProfile,
-        CreatedPaymentProfile $paymentProfile
+        CreditCardPaymentProfile|BankAccountPaymentProfile $updatedPaymentProfile,
+        CreditCardPaymentProfile|BankAccountPaymentProfile $paymentProfile
     ): void
     {
         $this->testCase::assertNotEquals($paymentProfile->getFirstName(), $updatedPaymentProfile->getFirstName());
@@ -72,10 +69,5 @@ final class PaymentProfilesControllerTestAssertions
             $updatedPaymentProfile->getFirstName()
         );
         $this->testCase::assertEquals(PaymentProfileTestData::UPDATED_LAST_NAME, $updatedPaymentProfile->getLastName());
-    }
-
-    public function assertPaymentProfileVerified(BankAccount $bankAccount): void
-    {
-        $this->testCase::assertTrue($bankAccount->getVerified());
     }
 }

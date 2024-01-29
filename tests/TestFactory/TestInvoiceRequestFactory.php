@@ -20,6 +20,7 @@ use AdvancedBillingLib\Models\InvoiceLineItem;
 use AdvancedBillingLib\Models\VoidInvoice;
 use AdvancedBillingLib\Models\VoidInvoiceRequest;
 use AdvancedBillingLib\Tests\TestData\InvoiceTestData;
+use AdvancedBillingLib\Utils\DateTimeHelper;
 use DateTime;
 use DateTimeInterface;
 
@@ -110,8 +111,12 @@ final class TestInvoiceRequestFactory
         $request = $this->createCreateInvoiceRequest();
         $lineItems = $request->getInvoice()->getLineItems();
         foreach ($lineItems as $lineItem) {
-            $lineItem->setPeriodRangeStart(InvoiceTestData::LINE_ITEM_PERIOD_RANGE_START);
-            $lineItem->setPeriodRangeEnd(InvoiceTestData::LINE_ITEM_INVALID_PERIOD_RANGE_END);
+            $lineItem->setPeriodRangeStart(
+                DateTimeHelper::fromRfc1123DateTime(InvoiceTestData::LINE_ITEM_PERIOD_RANGE_START)
+            );
+            $lineItem->setPeriodRangeEnd(
+                DateTimeHelper::fromRfc1123DateTime(InvoiceTestData::LINE_ITEM_INVALID_PERIOD_RANGE_END)
+            );
         }
 
         return $request;

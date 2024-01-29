@@ -26,6 +26,9 @@ final class CustomersControllerTestAssertions
         Customer $customer
     ): void
     {
+        // unsetting reference because of its random value
+        $expectedCustomer->unsetReference();
+        $customer->unsetReference();
         $this->testCase::assertEquals($expectedCustomer->jsonSerialize(), $customer->jsonSerialize());
     }
 
