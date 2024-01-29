@@ -11,10 +11,10 @@ Example schema for an `apply_debit_note` event
 
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
-| `debitNoteNumber` | `?string` | Optional | A unique, identifying string that appears on the debit note and in places it is referenced. | getDebitNoteNumber(): ?string | setDebitNoteNumber(?string debitNoteNumber): void |
-| `debitNoteUid` | `?string` | Optional | Unique identifier for the debit note. It is generated automatically by Chargify and has the prefix "db_" followed by alphanumeric characters. | getDebitNoteUid(): ?string | setDebitNoteUid(?string debitNoteUid): void |
-| `originalAmount` | `?string` | Optional | The full, original amount of the debit note. | getOriginalAmount(): ?string | setOriginalAmount(?string originalAmount): void |
-| `appliedAmount` | `?string` | Optional | The amount of the debit note applied to invoice. | getAppliedAmount(): ?string | setAppliedAmount(?string appliedAmount): void |
+| `debitNoteNumber` | `string` | Required | A unique, identifying string that appears on the debit note and in places it is referenced. | getDebitNoteNumber(): string | setDebitNoteNumber(string debitNoteNumber): void |
+| `debitNoteUid` | `string` | Required | Unique identifier for the debit note. It is generated automatically by Chargify and has the prefix "db_" followed by alphanumeric characters. | getDebitNoteUid(): string | setDebitNoteUid(string debitNoteUid): void |
+| `originalAmount` | `string` | Required | The full, original amount of the debit note. | getOriginalAmount(): string | setOriginalAmount(string originalAmount): void |
+| `appliedAmount` | `string` | Required | The amount of the debit note applied to invoice. | getAppliedAmount(): string | setAppliedAmount(string appliedAmount): void |
 
 ## Example (as JSON)
 

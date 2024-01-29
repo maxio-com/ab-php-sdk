@@ -32,7 +32,7 @@ class SubscriptionGroupSignup implements \JsonSerializable
     /**
      * @var string|null
      */
-    private $paymentCollectionMethod = PaymentCollectionMethod::AUTOMATIC;
+    private $paymentCollectionMethod = CollectionMethod::AUTOMATIC;
 
     /**
      * @var PayerAttributes|null
@@ -134,7 +134,7 @@ class SubscriptionGroupSignup implements \JsonSerializable
      * options are - `remittance`, `automatic`, `prepaid`.
      *
      * @maps payment_collection_method
-     * @factory \AdvancedBillingLib\Models\PaymentCollectionMethod::checkValue
+     * @factory \AdvancedBillingLib\Models\CollectionMethod::checkValue
      */
     public function setPaymentCollectionMethod(?string $paymentCollectionMethod): void
     {
@@ -240,7 +240,7 @@ class SubscriptionGroupSignup implements \JsonSerializable
             $json['payer_reference']           = $this->payerReference;
         }
         if (isset($this->paymentCollectionMethod)) {
-            $json['payment_collection_method'] = PaymentCollectionMethod::checkValue($this->paymentCollectionMethod);
+            $json['payment_collection_method'] = CollectionMethod::checkValue($this->paymentCollectionMethod);
         }
         if (isset($this->payerAttributes)) {
             $json['payer_attributes']          = $this->payerAttributes;

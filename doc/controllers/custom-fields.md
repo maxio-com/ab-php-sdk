@@ -188,7 +188,7 @@ $result = $customFieldsController->listMetafields($collect);
         "public_edit": "0"
       },
       "data_count": 0,
-      "input_type": "string",
+      "input_type": "text",
       "enum": null
     }
   ]
@@ -222,6 +222,12 @@ $resourceType = ResourceType::SUBSCRIPTIONS;
 
 $result = $customFieldsController->updateMetafield($resourceType);
 ```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 422 | Unprocessable Entity (WebDAV) | [`SingleErrorResponseException`](../../doc/models/single-error-response-exception.md) |
 
 
 # Delete Metafield
@@ -286,7 +292,7 @@ This method will create a metafield for the site on the fly if it does not alrea
 Please pay special attention to the resource you use when creating metadata.
 
 ```php
-function createMetadata(string $resourceType, string $resourceId, ?CreateMetadataRequest $body = null): array
+function createMetadata(string $resourceType, int $resourceId, ?CreateMetadataRequest $body = null): array
 ```
 
 ## Parameters
@@ -294,7 +300,7 @@ function createMetadata(string $resourceType, string $resourceId, ?CreateMetadat
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `resourceType` | [`string(ResourceType)`](../../doc/models/resource-type.md) | Template, Required | the resource type to which the metafields belong |
-| `resourceId` | `string` | Template, Required | The Chargify id of the customer or the subscription for which the metadata applies |
+| `resourceId` | `int` | Template, Required | The Chargify id of the customer or the subscription for which the metadata applies |
 | `body` | [`?CreateMetadataRequest`](../../doc/models/create-metadata-request.md) | Body, Optional | - |
 
 ## Response Type
@@ -306,7 +312,7 @@ function createMetadata(string $resourceType, string $resourceId, ?CreateMetadat
 ```php
 $resourceType = ResourceType::SUBSCRIPTIONS;
 
-$resourceId = 'resource_id4';
+$resourceId = 60;
 
 $body = CreateMetadataRequestBuilder::init(
     [
@@ -352,7 +358,7 @@ function listMetadata(array $options): PaginatedMetadata
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `resourceType` | [`string(ResourceType)`](../../doc/models/resource-type.md) | Template, Required | the resource type to which the metafields belong |
-| `resourceId` | `string` | Template, Required | The Chargify id of the customer or the subscription for which the metadata applies |
+| `resourceId` | `int` | Template, Required | The Chargify id of the customer or the subscription for which the metadata applies |
 | `page` | `?int` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`. |
 | `perPage` | `?int` | Query, Optional | This parameter indicates how many records to fetch in each request. Default value is 20. The maximum allowed values is 200; any per_page value over 200 will be changed to 200.<br>Use in query `per_page=200`. |
 
@@ -365,7 +371,7 @@ function listMetadata(array $options): PaginatedMetadata
 ```php
 $collect = [
     'resource_type' => ResourceType::SUBSCRIPTIONS,
-    'resource_id' => 'resource_id4',
+    'resource_id' => 60,
     'page' => 2,
     'per_page' => 50
 ];
@@ -379,7 +385,7 @@ $result = $customFieldsController->listMetadata($collect);
 This method allows you to update the existing metadata associated with a subscription or customer.
 
 ```php
-function updateMetadata(string $resourceType, string $resourceId, ?UpdateMetadataRequest $body = null): array
+function updateMetadata(string $resourceType, int $resourceId, ?UpdateMetadataRequest $body = null): array
 ```
 
 ## Parameters
@@ -387,7 +393,7 @@ function updateMetadata(string $resourceType, string $resourceId, ?UpdateMetadat
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `resourceType` | [`string(ResourceType)`](../../doc/models/resource-type.md) | Template, Required | the resource type to which the metafields belong |
-| `resourceId` | `string` | Template, Required | The Chargify id of the customer or the subscription for which the metadata applies |
+| `resourceId` | `int` | Template, Required | The Chargify id of the customer or the subscription for which the metadata applies |
 | `body` | [`?UpdateMetadataRequest`](../../doc/models/update-metadata-request.md) | Body, Optional | - |
 
 ## Response Type
@@ -399,7 +405,7 @@ function updateMetadata(string $resourceType, string $resourceId, ?UpdateMetadat
 ```php
 $resourceType = ResourceType::SUBSCRIPTIONS;
 
-$resourceId = 'resource_id4';
+$resourceId = 60;
 
 $result = $customFieldsController->updateMetadata(
     $resourceType,
@@ -435,12 +441,7 @@ For a success, there will be a code `200` and the plain text response `true`.
 When a failed response is encountered, you will receive a `404` response and the plain text response of `true`.
 
 ```php
-function deleteMetadata(
-    string $resourceType,
-    string $resourceId,
-    ?string $name = null,
-    ?array $names = null
-): void
+function deleteMetadata(string $resourceType, int $resourceId, ?string $name = null, ?array $names = null): void
 ```
 
 ## Parameters
@@ -448,7 +449,7 @@ function deleteMetadata(
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `resourceType` | [`string(ResourceType)`](../../doc/models/resource-type.md) | Template, Required | the resource type to which the metafields belong |
-| `resourceId` | `string` | Template, Required | The Chargify id of the customer or the subscription for which the metadata applies |
+| `resourceId` | `int` | Template, Required | The Chargify id of the customer or the subscription for which the metadata applies |
 | `name` | `?string` | Query, Optional | Name of field to be removed. |
 | `names` | `?(string[])` | Query, Optional | Names of fields to be removed. Use in query: `names[]=field1&names[]=my-field&names[]=another-field`. |
 
@@ -461,7 +462,7 @@ function deleteMetadata(
 ```php
 $resourceType = ResourceType::SUBSCRIPTIONS;
 
-$resourceId = 'resource_id4';
+$resourceId = 60;
 
 Liquid error: Value cannot be null. (Parameter 'key')Liquid error: Value cannot be null. (Parameter 'key')$customFieldsController->deleteMetadata(
     $resourceType,

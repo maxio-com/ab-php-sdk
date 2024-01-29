@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace AdvancedBillingLib\Models;
 
 use AdvancedBillingLib\ApiHelper;
+use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
 class ComponentPricePoint implements \JsonSerializable
@@ -56,17 +57,17 @@ class ComponentPricePoint implements \JsonSerializable
     private $archivedAt = [];
 
     /**
-     * @var string|null
+     * @var \DateTime|null
      */
     private $createdAt;
 
     /**
-     * @var string|null
+     * @var \DateTime|null
      */
     private $updatedAt;
 
     /**
-     * @var ComponentPricePointPrice[]|null
+     * @var ComponentPrice[]|null
      */
     private $prices;
 
@@ -247,7 +248,7 @@ class ComponentPricePoint implements \JsonSerializable
     /**
      * Returns Archived At.
      */
-    public function getArchivedAt(): ?string
+    public function getArchivedAt(): ?\DateTime
     {
         if (count($this->archivedAt) == 0) {
             return null;
@@ -259,8 +260,9 @@ class ComponentPricePoint implements \JsonSerializable
      * Sets Archived At.
      *
      * @maps archived_at
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setArchivedAt(?string $archivedAt): void
+    public function setArchivedAt(?\DateTime $archivedAt): void
     {
         $this->archivedAt['value'] = $archivedAt;
     }
@@ -276,7 +278,7 @@ class ComponentPricePoint implements \JsonSerializable
     /**
      * Returns Created At.
      */
-    public function getCreatedAt(): ?string
+    public function getCreatedAt(): ?\DateTime
     {
         return $this->createdAt;
     }
@@ -285,8 +287,9 @@ class ComponentPricePoint implements \JsonSerializable
      * Sets Created At.
      *
      * @maps created_at
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setCreatedAt(?string $createdAt): void
+    public function setCreatedAt(?\DateTime $createdAt): void
     {
         $this->createdAt = $createdAt;
     }
@@ -294,7 +297,7 @@ class ComponentPricePoint implements \JsonSerializable
     /**
      * Returns Updated At.
      */
-    public function getUpdatedAt(): ?string
+    public function getUpdatedAt(): ?\DateTime
     {
         return $this->updatedAt;
     }
@@ -303,8 +306,9 @@ class ComponentPricePoint implements \JsonSerializable
      * Sets Updated At.
      *
      * @maps updated_at
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setUpdatedAt(?string $updatedAt): void
+    public function setUpdatedAt(?\DateTime $updatedAt): void
     {
         $this->updatedAt = $updatedAt;
     }
@@ -312,7 +316,7 @@ class ComponentPricePoint implements \JsonSerializable
     /**
      * Returns Prices.
      *
-     * @return ComponentPricePointPrice[]|null
+     * @return ComponentPrice[]|null
      */
     public function getPrices(): ?array
     {
@@ -324,7 +328,7 @@ class ComponentPricePoint implements \JsonSerializable
      *
      * @maps prices
      *
-     * @param ComponentPricePointPrice[]|null $prices
+     * @param ComponentPrice[]|null $prices
      */
     public function setPrices(?array $prices): void
     {
@@ -530,13 +534,13 @@ class ComponentPricePoint implements \JsonSerializable
             $json['handle']                 = $this->handle;
         }
         if (!empty($this->archivedAt)) {
-            $json['archived_at']            = $this->archivedAt['value'];
+            $json['archived_at']            = DateTimeHelper::toRfc3339DateTime($this->archivedAt['value']);
         }
         if (isset($this->createdAt)) {
-            $json['created_at']             = $this->createdAt;
+            $json['created_at']             = DateTimeHelper::toRfc3339DateTime($this->createdAt);
         }
         if (isset($this->updatedAt)) {
-            $json['updated_at']             = $this->updatedAt;
+            $json['updated_at']             = DateTimeHelper::toRfc3339DateTime($this->updatedAt);
         }
         if (isset($this->prices)) {
             $json['prices']                 = $this->prices;

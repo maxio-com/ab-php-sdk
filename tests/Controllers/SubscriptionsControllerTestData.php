@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Tests\Controllers;
 
+use AdvancedBillingLib\Models\BankAccountPaymentProfile;
 use AdvancedBillingLib\Models\Builders\CreateSubscriptionComponentBuilder;
 use AdvancedBillingLib\Models\Component;
 use AdvancedBillingLib\Models\Coupon;
-use AdvancedBillingLib\Models\CreatedPaymentProfile;
 use AdvancedBillingLib\Models\CreateSubscriptionComponent;
 use AdvancedBillingLib\Models\CreateSubscriptionRequest;
+use AdvancedBillingLib\Models\CreditCardPaymentProfile;
 use AdvancedBillingLib\Models\Customer;
 use AdvancedBillingLib\Models\Metadata;
 use AdvancedBillingLib\Models\Product;
@@ -54,7 +55,7 @@ final class SubscriptionsControllerTestData
         DateTime $activatedAt,
         Customer $customer,
         Product $product,
-        CreatedPaymentProfile $paymentProfile,
+        CreditCardPaymentProfile|BankAccountPaymentProfile $paymentProfile,
         int $productPricePointId,
         ?int $nextProductPricePointId,
         int $signupPaymentId,
@@ -87,7 +88,7 @@ final class SubscriptionsControllerTestData
         DateTime $activatedAt,
         Customer $customer,
         Product $product,
-        CreatedPaymentProfile $paymentProfile,
+        CreditCardPaymentProfile|BankAccountPaymentProfile $paymentProfile,
         int $productPricePointId,
         ?int $nextProductPricePointId,
         int $signupPaymentId,
@@ -154,9 +155,9 @@ final class SubscriptionsControllerTestData
         );
     }
 
-    public function loadPaymentProfile(int $customerId): CreatedPaymentProfile
+    public function loadCreditCardPaymentProfile(int $customerId): CreditCardPaymentProfile
     {
-        return $this->paymentProfileLoader->load($customerId);
+        return $this->paymentProfileLoader->loadCreditCard($customerId);
     }
 
     public function loadComponent(int $productFamilyId): Component
@@ -200,7 +201,7 @@ final class SubscriptionsControllerTestData
         Subscription $subscription,
         Customer $customer,
         Product $product,
-        CreatedPaymentProfile $paymentProfile,
+        CreditCardPaymentProfile|BankAccountPaymentProfile $paymentProfile,
     ): Subscription
     {
         return $this->subscriptionFactory->createWithComponentPrice(

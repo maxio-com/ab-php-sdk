@@ -33,27 +33,9 @@ class ChangeInvoiceCollectionMethodEventDataBuilder
     /**
      * Initializes a new change invoice collection method event data Builder object.
      */
-    public static function init(): self
+    public static function init(string $fromCollectionMethod, string $toCollectionMethod): self
     {
-        return new self(new ChangeInvoiceCollectionMethodEventData());
-    }
-
-    /**
-     * Sets from collection method field.
-     */
-    public function fromCollectionMethod(?string $value): self
-    {
-        $this->instance->setFromCollectionMethod($value);
-        return $this;
-    }
-
-    /**
-     * Sets to collection method field.
-     */
-    public function toCollectionMethod(?string $value): self
-    {
-        $this->instance->setToCollectionMethod($value);
-        return $this;
+        return new self(new ChangeInvoiceCollectionMethodEventData($fromCollectionMethod, $toCollectionMethod));
     }
 
     /**

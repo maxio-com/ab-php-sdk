@@ -10,6 +10,7 @@ use AdvancedBillingLib\Models\Component;
 use AdvancedBillingLib\Models\Price;
 use AdvancedBillingLib\Models\ProductFamily;
 use AdvancedBillingLib\Tests\TestData\ComponentTestData;
+use DateTime;
 
 final class TestComponentFactory
 {
@@ -20,7 +21,7 @@ final class TestComponentFactory
         ProductFamily $productFamily,
         string $pricePointUrl,
         string $pricePointName,
-        string $createdAt,
+        DateTime $createdAt,
     ): Component
     {
         return ComponentBuilder::init()
@@ -66,7 +67,7 @@ final class TestComponentFactory
             ->componentId($componentId)
             ->startingQuantity(ComponentTestData::COMPONENT_PRICE_STARTING_QUANTITY)
             ->endingQuantity(ComponentTestData::COMPONENT_PRICE_ENDING_QUANTITY)
-            ->unitPrice((string) ComponentTestData::COMPONENT_UNIT_PRICE)
+            ->unitPrice(ComponentTestData::COMPONENT_UNIT_PRICE)
             ->pricePointId($pricePointId)
             ->formattedUnitPrice(ComponentTestData::FORMATTED_UNIT_PRICE)
             ->segmentId(ComponentTestData::COMPONENT_PRICE_SEGMENT_ID)
@@ -81,7 +82,7 @@ final class TestComponentFactory
         ProductFamily $productFamily,
         string $pricePointUrl,
         string $pricePointName,
-        string $createdAt
+        DateTime $createdAt
     ): Component
     {
         return ComponentBuilder::init()

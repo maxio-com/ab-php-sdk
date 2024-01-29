@@ -57,6 +57,6 @@ final class TestCleaner
     {
         $this->client
             ->getCustomFieldsController()
-            ->deleteMetadata($resourceType, (string) $resourceId, $metadataName);
+            ->deleteMetadata($resourceType, $resourceId, $metadataName);
     }
 }

@@ -18,29 +18,50 @@ use stdClass;
 class IssueInvoiceEventData implements \JsonSerializable
 {
     /**
-     * @var string|null
+     * @var string
      */
     private $consolidationLevel;
 
     /**
-     * @var string|null
+     * @var string
      */
     private $fromStatus;
 
     /**
-     * @var string|null
+     * @var string
      */
     private $toStatus;
 
     /**
-     * @var string|null
+     * @var string
      */
     private $dueAmount;
 
     /**
-     * @var string|null
+     * @var string
      */
     private $totalAmount;
+
+    /**
+     * @param string $consolidationLevel
+     * @param string $fromStatus
+     * @param string $toStatus
+     * @param string $dueAmount
+     * @param string $totalAmount
+     */
+    public function __construct(
+        string $consolidationLevel,
+        string $fromStatus,
+        string $toStatus,
+        string $dueAmount,
+        string $totalAmount
+    ) {
+        $this->consolidationLevel = $consolidationLevel;
+        $this->fromStatus = $fromStatus;
+        $this->toStatus = $toStatus;
+        $this->dueAmount = $dueAmount;
+        $this->totalAmount = $totalAmount;
+    }
 
     /**
      * Returns Consolidation Level.
@@ -57,7 +78,7 @@ class IssueInvoiceEventData implements \JsonSerializable
      * See also the [invoice consolidation documentation](https://chargify.zendesk.com/hc/en-
      * us/articles/4407746391835).
      */
-    public function getConsolidationLevel(): ?string
+    public function getConsolidationLevel(): string
     {
         return $this->consolidationLevel;
     }
@@ -77,10 +98,11 @@ class IssueInvoiceEventData implements \JsonSerializable
      * See also the [invoice consolidation documentation](https://chargify.zendesk.com/hc/en-
      * us/articles/4407746391835).
      *
+     * @required
      * @maps consolidation_level
      * @factory \AdvancedBillingLib\Models\InvoiceConsolidationLevel::checkValue
      */
-    public function setConsolidationLevel(?string $consolidationLevel): void
+    public function setConsolidationLevel(string $consolidationLevel): void
     {
         $this->consolidationLevel = $consolidationLevel;
     }
@@ -90,7 +112,7 @@ class IssueInvoiceEventData implements \JsonSerializable
      * The status of the invoice before event occurence. See [Invoice Statuses](https://chargify.zendesk.
      * com/hc/en-us/articles/4407737494171#line-item-breakdowns) for more.
      */
-    public function getFromStatus(): ?string
+    public function getFromStatus(): string
     {
         return $this->fromStatus;
     }
@@ -100,10 +122,11 @@ class IssueInvoiceEventData implements \JsonSerializable
      * The status of the invoice before event occurence. See [Invoice Statuses](https://chargify.zendesk.
      * com/hc/en-us/articles/4407737494171#line-item-breakdowns) for more.
      *
+     * @required
      * @maps from_status
      * @factory \AdvancedBillingLib\Models\InvoiceStatus::checkValue
      */
-    public function setFromStatus(?string $fromStatus): void
+    public function setFromStatus(string $fromStatus): void
     {
         $this->fromStatus = $fromStatus;
     }
@@ -113,7 +136,7 @@ class IssueInvoiceEventData implements \JsonSerializable
      * The status of the invoice after event occurence. See [Invoice Statuses](https://chargify.zendesk.
      * com/hc/en-us/articles/4407737494171#line-item-breakdowns) for more.
      */
-    public function getToStatus(): ?string
+    public function getToStatus(): string
     {
         return $this->toStatus;
     }
@@ -123,10 +146,11 @@ class IssueInvoiceEventData implements \JsonSerializable
      * The status of the invoice after event occurence. See [Invoice Statuses](https://chargify.zendesk.
      * com/hc/en-us/articles/4407737494171#line-item-breakdowns) for more.
      *
+     * @required
      * @maps to_status
      * @factory \AdvancedBillingLib\Models\InvoiceStatus::checkValue
      */
-    public function setToStatus(?string $toStatus): void
+    public function setToStatus(string $toStatus): void
     {
         $this->toStatus = $toStatus;
     }
@@ -135,7 +159,7 @@ class IssueInvoiceEventData implements \JsonSerializable
      * Returns Due Amount.
      * Amount due on the invoice, which is `total_amount - credit_amount - paid_amount`.
      */
-    public function getDueAmount(): ?string
+    public function getDueAmount(): string
     {
         return $this->dueAmount;
     }
@@ -144,9 +168,10 @@ class IssueInvoiceEventData implements \JsonSerializable
      * Sets Due Amount.
      * Amount due on the invoice, which is `total_amount - credit_amount - paid_amount`.
      *
+     * @required
      * @maps due_amount
      */
-    public function setDueAmount(?string $dueAmount): void
+    public function setDueAmount(string $dueAmount): void
     {
         $this->dueAmount = $dueAmount;
     }
@@ -155,7 +180,7 @@ class IssueInvoiceEventData implements \JsonSerializable
      * Returns Total Amount.
      * The invoice total, which is `subtotal_amount - discount_amount + tax_amount`.'
      */
-    public function getTotalAmount(): ?string
+    public function getTotalAmount(): string
     {
         return $this->totalAmount;
     }
@@ -164,9 +189,10 @@ class IssueInvoiceEventData implements \JsonSerializable
      * Sets Total Amount.
      * The invoice total, which is `subtotal_amount - discount_amount + tax_amount`.'
      *
+     * @required
      * @maps total_amount
      */
-    public function setTotalAmount(?string $totalAmount): void
+    public function setTotalAmount(string $totalAmount): void
     {
         $this->totalAmount = $totalAmount;
     }
@@ -183,21 +209,11 @@ class IssueInvoiceEventData implements \JsonSerializable
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
-        if (isset($this->consolidationLevel)) {
-            $json['consolidation_level'] = InvoiceConsolidationLevel::checkValue($this->consolidationLevel);
-        }
-        if (isset($this->fromStatus)) {
-            $json['from_status']         = InvoiceStatus::checkValue($this->fromStatus);
-        }
-        if (isset($this->toStatus)) {
-            $json['to_status']           = InvoiceStatus::checkValue($this->toStatus);
-        }
-        if (isset($this->dueAmount)) {
-            $json['due_amount']          = $this->dueAmount;
-        }
-        if (isset($this->totalAmount)) {
-            $json['total_amount']        = $this->totalAmount;
-        }
+        $json['consolidation_level'] = InvoiceConsolidationLevel::checkValue($this->consolidationLevel);
+        $json['from_status']         = InvoiceStatus::checkValue($this->fromStatus);
+        $json['to_status']           = InvoiceStatus::checkValue($this->toStatus);
+        $json['due_amount']          = $this->dueAmount;
+        $json['total_amount']        = $this->totalAmount;
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

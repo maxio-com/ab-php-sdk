@@ -20,27 +20,27 @@ use stdClass;
 class ApplyPaymentEventData implements \JsonSerializable
 {
     /**
-     * @var string|null
+     * @var string
      */
     private $memo;
 
     /**
-     * @var string|null
+     * @var string
      */
     private $originalAmount;
 
     /**
-     * @var string|null
+     * @var string
      */
     private $appliedAmount;
 
     /**
-     * @var \DateTime|null
+     * @var \DateTime
      */
     private $transactionTime;
 
     /**
-     * @var PaymentMethodApplePayType|PaymentMethodBankAccountType|PaymentMethodCreditCardType|PaymentMethodExternalType|PaymentMethodPaypalType|null
+     * @var PaymentMethodApplePayType|PaymentMethodBankAccountType|PaymentMethodCreditCardType|PaymentMethodExternalType|PaymentMethodPaypalType
      */
     private $paymentMethod;
 
@@ -50,10 +50,31 @@ class ApplyPaymentEventData implements \JsonSerializable
     private $transactionId;
 
     /**
+     * @param string $memo
+     * @param string $originalAmount
+     * @param string $appliedAmount
+     * @param \DateTime $transactionTime
+     * @param PaymentMethodApplePayType|PaymentMethodBankAccountType|PaymentMethodCreditCardType|PaymentMethodExternalType|PaymentMethodPaypalType $paymentMethod
+     */
+    public function __construct(
+        string $memo,
+        string $originalAmount,
+        string $appliedAmount,
+        \DateTime $transactionTime,
+        $paymentMethod
+    ) {
+        $this->memo = $memo;
+        $this->originalAmount = $originalAmount;
+        $this->appliedAmount = $appliedAmount;
+        $this->transactionTime = $transactionTime;
+        $this->paymentMethod = $paymentMethod;
+    }
+
+    /**
      * Returns Memo.
      * The payment memo
      */
-    public function getMemo(): ?string
+    public function getMemo(): string
     {
         return $this->memo;
     }
@@ -62,9 +83,10 @@ class ApplyPaymentEventData implements \JsonSerializable
      * Sets Memo.
      * The payment memo
      *
+     * @required
      * @maps memo
      */
-    public function setMemo(?string $memo): void
+    public function setMemo(string $memo): void
     {
         $this->memo = $memo;
     }
@@ -76,7 +98,7 @@ class ApplyPaymentEventData implements \JsonSerializable
      * `original_amount`. Example: A $100.99 payment, of which $40.11 is applied to this invoice, will have
      * an `original_amount` of `"100.99"`.
      */
-    public function getOriginalAmount(): ?string
+    public function getOriginalAmount(): string
     {
         return $this->originalAmount;
     }
@@ -88,9 +110,10 @@ class ApplyPaymentEventData implements \JsonSerializable
      * `original_amount`. Example: A $100.99 payment, of which $40.11 is applied to this invoice, will have
      * an `original_amount` of `"100.99"`.
      *
+     * @required
      * @maps original_amount
      */
-    public function setOriginalAmount(?string $originalAmount): void
+    public function setOriginalAmount(string $originalAmount): void
     {
         $this->originalAmount = $originalAmount;
     }
@@ -101,7 +124,7 @@ class ApplyPaymentEventData implements \JsonSerializable
      * invoices, which will result in a `applied_amount` less than the `original_amount`. Example: A $100.
      * 99 payment, of which $40.11 is applied to this invoice, will have an `applied_amount` of `"40.11"`.
      */
-    public function getAppliedAmount(): ?string
+    public function getAppliedAmount(): string
     {
         return $this->appliedAmount;
     }
@@ -112,9 +135,10 @@ class ApplyPaymentEventData implements \JsonSerializable
      * invoices, which will result in a `applied_amount` less than the `original_amount`. Example: A $100.
      * 99 payment, of which $40.11 is applied to this invoice, will have an `applied_amount` of `"40.11"`.
      *
+     * @required
      * @maps applied_amount
      */
-    public function setAppliedAmount(?string $appliedAmount): void
+    public function setAppliedAmount(string $appliedAmount): void
     {
         $this->appliedAmount = $appliedAmount;
     }
@@ -123,7 +147,7 @@ class ApplyPaymentEventData implements \JsonSerializable
      * Returns Transaction Time.
      * The time the payment was applied, in ISO 8601 format, i.e. "2019-06-07T17:20:06Z"
      */
-    public function getTransactionTime(): ?\DateTime
+    public function getTransactionTime(): \DateTime
     {
         return $this->transactionTime;
     }
@@ -132,10 +156,11 @@ class ApplyPaymentEventData implements \JsonSerializable
      * Sets Transaction Time.
      * The time the payment was applied, in ISO 8601 format, i.e. "2019-06-07T17:20:06Z"
      *
+     * @required
      * @maps transaction_time
      * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setTransactionTime(?\DateTime $transactionTime): void
+    public function setTransactionTime(\DateTime $transactionTime): void
     {
         $this->transactionTime = $transactionTime;
     }
@@ -144,7 +169,7 @@ class ApplyPaymentEventData implements \JsonSerializable
      * Returns Payment Method.
      * A nested data structure detailing the method of payment
      *
-     * @return PaymentMethodApplePayType|PaymentMethodBankAccountType|PaymentMethodCreditCardType|PaymentMethodExternalType|PaymentMethodPaypalType|null
+     * @return PaymentMethodApplePayType|PaymentMethodBankAccountType|PaymentMethodCreditCardType|PaymentMethodExternalType|PaymentMethodPaypalType
      */
     public function getPaymentMethod()
     {
@@ -155,10 +180,11 @@ class ApplyPaymentEventData implements \JsonSerializable
      * Sets Payment Method.
      * A nested data structure detailing the method of payment
      *
+     * @required
      * @maps payment_method
-     * @mapsBy anyOf(oneOf(PaymentMethodApplePayType,PaymentMethodBankAccountType,PaymentMethodCreditCardType,PaymentMethodExternalType,PaymentMethodPaypalType),null)
+     * @mapsBy anyOf(PaymentMethodApplePayType,PaymentMethodBankAccountType,PaymentMethodCreditCardType,PaymentMethodExternalType,PaymentMethodPaypalType)
      *
-     * @param PaymentMethodApplePayType|PaymentMethodBankAccountType|PaymentMethodCreditCardType|PaymentMethodExternalType|PaymentMethodPaypalType|null $paymentMethod
+     * @param PaymentMethodApplePayType|PaymentMethodBankAccountType|PaymentMethodCreditCardType|PaymentMethodExternalType|PaymentMethodPaypalType $paymentMethod
      */
     public function setPaymentMethod($paymentMethod): void
     {
@@ -197,28 +223,18 @@ class ApplyPaymentEventData implements \JsonSerializable
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
-        if (isset($this->memo)) {
-            $json['memo']             = $this->memo;
-        }
-        if (isset($this->originalAmount)) {
-            $json['original_amount']  = $this->originalAmount;
-        }
-        if (isset($this->appliedAmount)) {
-            $json['applied_amount']   = $this->appliedAmount;
-        }
-        if (isset($this->transactionTime)) {
-            $json['transaction_time'] = DateTimeHelper::toRfc3339DateTime($this->transactionTime);
-        }
-        if (isset($this->paymentMethod)) {
-            $json['payment_method']   =
-                ApiHelper::getJsonHelper()->verifyTypes(
-                    $this->paymentMethod,
-                    'anyOf(oneOf(PaymentMethodApplePayType,PaymentMethodBankAccountType,PaymentMethod' .
-                    'CreditCardType,PaymentMethodExternalType,PaymentMethodPaypalType),null)'
-                );
-        }
+        $json['memo']               = $this->memo;
+        $json['original_amount']    = $this->originalAmount;
+        $json['applied_amount']     = $this->appliedAmount;
+        $json['transaction_time']   = DateTimeHelper::toRfc3339DateTime($this->transactionTime);
+        $json['payment_method']     =
+            ApiHelper::getJsonHelper()->verifyTypes(
+                $this->paymentMethod,
+                'anyOf(PaymentMethodApplePayType,PaymentMethodBankAccountType,PaymentMethodCreditCard' .
+                'Type,PaymentMethodExternalType,PaymentMethodPaypalType)'
+            );
         if (isset($this->transactionId)) {
-            $json['transaction_id']   = $this->transactionId;
+            $json['transaction_id'] = $this->transactionId;
         }
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;

@@ -10,12 +10,13 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
 class InvoicePayment implements \JsonSerializable
 {
     /**
-     * @var string|null
+     * @var \DateTime|null
      */
     private $transactionTime;
 
@@ -67,7 +68,7 @@ class InvoicePayment implements \JsonSerializable
     /**
      * Returns Transaction Time.
      */
-    public function getTransactionTime(): ?string
+    public function getTransactionTime(): ?\DateTime
     {
         return $this->transactionTime;
     }
@@ -76,8 +77,9 @@ class InvoicePayment implements \JsonSerializable
      * Sets Transaction Time.
      *
      * @maps transaction_time
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setTransactionTime(?string $transactionTime): void
+    public function setTransactionTime(?\DateTime $transactionTime): void
     {
         $this->transactionTime = $transactionTime;
     }
@@ -282,7 +284,7 @@ class InvoicePayment implements \JsonSerializable
     {
         $json = [];
         if (isset($this->transactionTime)) {
-            $json['transaction_time']       = $this->transactionTime;
+            $json['transaction_time']       = DateTimeHelper::toRfc3339DateTime($this->transactionTime);
         }
         if (isset($this->memo)) {
             $json['memo']                   = $this->memo;

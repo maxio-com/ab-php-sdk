@@ -20,12 +20,12 @@ use stdClass;
 class RemovePaymentEventData implements \JsonSerializable
 {
     /**
-     * @var int|null
+     * @var int
      */
     private $transactionId;
 
     /**
-     * @var string|null
+     * @var string
      */
     private $memo;
 
@@ -35,30 +35,54 @@ class RemovePaymentEventData implements \JsonSerializable
     private $originalAmount;
 
     /**
-     * @var string|null
+     * @var string
      */
     private $appliedAmount;
 
     /**
-     * @var \DateTime|null
+     * @var \DateTime
      */
     private $transactionTime;
 
     /**
-     * @var PaymentMethodApplePayType|PaymentMethodBankAccountType|PaymentMethodCreditCardType|PaymentMethodExternalType|PaymentMethodPaypalType|null
+     * @var PaymentMethodApplePayType|PaymentMethodBankAccountType|PaymentMethodCreditCardType|PaymentMethodExternalType|PaymentMethodPaypalType
      */
     private $paymentMethod;
 
     /**
-     * @var bool|null
+     * @var bool
      */
     private $prepayment;
+
+    /**
+     * @param int $transactionId
+     * @param string $memo
+     * @param string $appliedAmount
+     * @param \DateTime $transactionTime
+     * @param PaymentMethodApplePayType|PaymentMethodBankAccountType|PaymentMethodCreditCardType|PaymentMethodExternalType|PaymentMethodPaypalType $paymentMethod
+     * @param bool $prepayment
+     */
+    public function __construct(
+        int $transactionId,
+        string $memo,
+        string $appliedAmount,
+        \DateTime $transactionTime,
+        $paymentMethod,
+        bool $prepayment
+    ) {
+        $this->transactionId = $transactionId;
+        $this->memo = $memo;
+        $this->appliedAmount = $appliedAmount;
+        $this->transactionTime = $transactionTime;
+        $this->paymentMethod = $paymentMethod;
+        $this->prepayment = $prepayment;
+    }
 
     /**
      * Returns Transaction Id.
      * Transaction ID of the original payment that was removed
      */
-    public function getTransactionId(): ?int
+    public function getTransactionId(): int
     {
         return $this->transactionId;
     }
@@ -67,9 +91,10 @@ class RemovePaymentEventData implements \JsonSerializable
      * Sets Transaction Id.
      * Transaction ID of the original payment that was removed
      *
+     * @required
      * @maps transaction_id
      */
-    public function setTransactionId(?int $transactionId): void
+    public function setTransactionId(int $transactionId): void
     {
         $this->transactionId = $transactionId;
     }
@@ -78,7 +103,7 @@ class RemovePaymentEventData implements \JsonSerializable
      * Returns Memo.
      * Memo of the original payment
      */
-    public function getMemo(): ?string
+    public function getMemo(): string
     {
         return $this->memo;
     }
@@ -87,9 +112,10 @@ class RemovePaymentEventData implements \JsonSerializable
      * Sets Memo.
      * Memo of the original payment
      *
+     * @required
      * @maps memo
      */
-    public function setMemo(?string $memo): void
+    public function setMemo(string $memo): void
     {
         $this->memo = $memo;
     }
@@ -118,7 +144,7 @@ class RemovePaymentEventData implements \JsonSerializable
      * Returns Applied Amount.
      * Applied amount of the original payment
      */
-    public function getAppliedAmount(): ?string
+    public function getAppliedAmount(): string
     {
         return $this->appliedAmount;
     }
@@ -127,9 +153,10 @@ class RemovePaymentEventData implements \JsonSerializable
      * Sets Applied Amount.
      * Applied amount of the original payment
      *
+     * @required
      * @maps applied_amount
      */
-    public function setAppliedAmount(?string $appliedAmount): void
+    public function setAppliedAmount(string $appliedAmount): void
     {
         $this->appliedAmount = $appliedAmount;
     }
@@ -138,7 +165,7 @@ class RemovePaymentEventData implements \JsonSerializable
      * Returns Transaction Time.
      * Transaction time of the original payment, in ISO 8601 format, i.e. "2019-06-07T17:20:06Z"
      */
-    public function getTransactionTime(): ?\DateTime
+    public function getTransactionTime(): \DateTime
     {
         return $this->transactionTime;
     }
@@ -147,10 +174,11 @@ class RemovePaymentEventData implements \JsonSerializable
      * Sets Transaction Time.
      * Transaction time of the original payment, in ISO 8601 format, i.e. "2019-06-07T17:20:06Z"
      *
+     * @required
      * @maps transaction_time
      * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setTransactionTime(?\DateTime $transactionTime): void
+    public function setTransactionTime(\DateTime $transactionTime): void
     {
         $this->transactionTime = $transactionTime;
     }
@@ -159,7 +187,7 @@ class RemovePaymentEventData implements \JsonSerializable
      * Returns Payment Method.
      * A nested data structure detailing the method of payment
      *
-     * @return PaymentMethodApplePayType|PaymentMethodBankAccountType|PaymentMethodCreditCardType|PaymentMethodExternalType|PaymentMethodPaypalType|null
+     * @return PaymentMethodApplePayType|PaymentMethodBankAccountType|PaymentMethodCreditCardType|PaymentMethodExternalType|PaymentMethodPaypalType
      */
     public function getPaymentMethod()
     {
@@ -170,10 +198,11 @@ class RemovePaymentEventData implements \JsonSerializable
      * Sets Payment Method.
      * A nested data structure detailing the method of payment
      *
+     * @required
      * @maps payment_method
-     * @mapsBy anyOf(oneOf(PaymentMethodApplePayType,PaymentMethodBankAccountType,PaymentMethodCreditCardType,PaymentMethodExternalType,PaymentMethodPaypalType),null)
+     * @mapsBy anyOf(PaymentMethodApplePayType,PaymentMethodBankAccountType,PaymentMethodCreditCardType,PaymentMethodExternalType,PaymentMethodPaypalType)
      *
-     * @param PaymentMethodApplePayType|PaymentMethodBankAccountType|PaymentMethodCreditCardType|PaymentMethodExternalType|PaymentMethodPaypalType|null $paymentMethod
+     * @param PaymentMethodApplePayType|PaymentMethodBankAccountType|PaymentMethodCreditCardType|PaymentMethodExternalType|PaymentMethodPaypalType $paymentMethod
      */
     public function setPaymentMethod($paymentMethod): void
     {
@@ -184,7 +213,7 @@ class RemovePaymentEventData implements \JsonSerializable
      * Returns Prepayment.
      * The flag that shows whether the original payment was a prepayment or not
      */
-    public function getPrepayment(): ?bool
+    public function getPrepayment(): bool
     {
         return $this->prepayment;
     }
@@ -193,9 +222,10 @@ class RemovePaymentEventData implements \JsonSerializable
      * Sets Prepayment.
      * The flag that shows whether the original payment was a prepayment or not
      *
+     * @required
      * @maps prepayment
      */
-    public function setPrepayment(?bool $prepayment): void
+    public function setPrepayment(bool $prepayment): void
     {
         $this->prepayment = $prepayment;
     }
@@ -212,32 +242,20 @@ class RemovePaymentEventData implements \JsonSerializable
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
-        if (isset($this->transactionId)) {
-            $json['transaction_id']   = $this->transactionId;
-        }
-        if (isset($this->memo)) {
-            $json['memo']             = $this->memo;
-        }
+        $json['transaction_id']      = $this->transactionId;
+        $json['memo']                = $this->memo;
         if (isset($this->originalAmount)) {
-            $json['original_amount']  = $this->originalAmount;
+            $json['original_amount'] = $this->originalAmount;
         }
-        if (isset($this->appliedAmount)) {
-            $json['applied_amount']   = $this->appliedAmount;
-        }
-        if (isset($this->transactionTime)) {
-            $json['transaction_time'] = DateTimeHelper::toRfc3339DateTime($this->transactionTime);
-        }
-        if (isset($this->paymentMethod)) {
-            $json['payment_method']   =
-                ApiHelper::getJsonHelper()->verifyTypes(
-                    $this->paymentMethod,
-                    'anyOf(oneOf(PaymentMethodApplePayType,PaymentMethodBankAccountType,PaymentMethod' .
-                    'CreditCardType,PaymentMethodExternalType,PaymentMethodPaypalType),null)'
-                );
-        }
-        if (isset($this->prepayment)) {
-            $json['prepayment']       = $this->prepayment;
-        }
+        $json['applied_amount']      = $this->appliedAmount;
+        $json['transaction_time']    = DateTimeHelper::toRfc3339DateTime($this->transactionTime);
+        $json['payment_method']      =
+            ApiHelper::getJsonHelper()->verifyTypes(
+                $this->paymentMethod,
+                'anyOf(PaymentMethodApplePayType,PaymentMethodBankAccountType,PaymentMethodCreditCard' .
+                'Type,PaymentMethodExternalType,PaymentMethodPaypalType)'
+            );
+        $json['prepayment']          = $this->prepayment;
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

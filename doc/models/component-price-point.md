@@ -16,10 +16,10 @@
 | `pricingScheme` | [`?string(PricingScheme)`](../../doc/models/pricing-scheme.md) | Optional | The identifier for the pricing scheme. See [Product Components](https://help.chargify.com/products/product-components.html) for an overview of pricing schemes. | getPricingScheme(): ?string | setPricingScheme(?string pricingScheme): void |
 | `componentId` | `?int` | Optional | - | getComponentId(): ?int | setComponentId(?int componentId): void |
 | `handle` | `?string` | Optional | - | getHandle(): ?string | setHandle(?string handle): void |
-| `archivedAt` | `?string` | Optional | - | getArchivedAt(): ?string | setArchivedAt(?string archivedAt): void |
-| `createdAt` | `?string` | Optional | - | getCreatedAt(): ?string | setCreatedAt(?string createdAt): void |
-| `updatedAt` | `?string` | Optional | - | getUpdatedAt(): ?string | setUpdatedAt(?string updatedAt): void |
-| `prices` | [`?(ComponentPricePointPrice[])`](../../doc/models/component-price-point-price.md) | Optional | - | getPrices(): ?array | setPrices(?array prices): void |
+| `archivedAt` | `?DateTime` | Optional | - | getArchivedAt(): ?\DateTime | setArchivedAt(?\DateTime archivedAt): void |
+| `createdAt` | `?DateTime` | Optional | - | getCreatedAt(): ?\DateTime | setCreatedAt(?\DateTime createdAt): void |
+| `updatedAt` | `?DateTime` | Optional | - | getUpdatedAt(): ?\DateTime | setUpdatedAt(?\DateTime updatedAt): void |
+| `prices` | [`?(ComponentPrice[])`](../../doc/models/component-price.md) | Optional | - | getPrices(): ?array | setPrices(?array prices): void |
 | `useSiteExchangeRate` | `?bool` | Optional | Whether to use the site level exchange rate or define your own prices for each currency if you have multiple currencies defined on the site.<br>**Default**: `true` | getUseSiteExchangeRate(): ?bool | setUseSiteExchangeRate(?bool useSiteExchangeRate): void |
 | `subscriptionId` | `?int` | Optional | (only used for Custom Pricing - ie. when the price point's type is `custom`) The id of the subscription that the custom price point is for. | getSubscriptionId(): ?int | setSubscriptionId(?int subscriptionId): void |
 | `taxIncluded` | `?bool` | Optional | - | getTaxIncluded(): ?bool | setTaxIncluded(?bool taxIncluded): void |

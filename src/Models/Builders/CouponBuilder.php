@@ -167,7 +167,7 @@ class CouponBuilder
     /**
      * Sets percentage field.
      */
-    public function percentage(?float $value): self
+    public function percentage(?string $value): self
     {
         $this->instance->setPercentage($value);
         return $this;

@@ -19,7 +19,7 @@ use stdClass;
 class RefundInvoiceEventData implements \JsonSerializable
 {
     /**
-     * @var bool|null
+     * @var bool
      */
     private $applyCredit;
 
@@ -29,7 +29,7 @@ class RefundInvoiceEventData implements \JsonSerializable
     private $consolidationLevel;
 
     /**
-     * @var CreditNote|null
+     * @var CreditNote
      */
     private $creditNoteAttributes;
 
@@ -44,30 +44,54 @@ class RefundInvoiceEventData implements \JsonSerializable
     private $originalAmount;
 
     /**
-     * @var int|null
+     * @var int
      */
     private $paymentId;
 
     /**
-     * @var string|null
+     * @var string
      */
     private $refundAmount;
 
     /**
-     * @var int|null
+     * @var int
      */
     private $refundId;
 
     /**
-     * @var \DateTime|null
+     * @var \DateTime
      */
     private $transactionTime;
+
+    /**
+     * @param bool $applyCredit
+     * @param CreditNote $creditNoteAttributes
+     * @param int $paymentId
+     * @param string $refundAmount
+     * @param int $refundId
+     * @param \DateTime $transactionTime
+     */
+    public function __construct(
+        bool $applyCredit,
+        CreditNote $creditNoteAttributes,
+        int $paymentId,
+        string $refundAmount,
+        int $refundId,
+        \DateTime $transactionTime
+    ) {
+        $this->applyCredit = $applyCredit;
+        $this->creditNoteAttributes = $creditNoteAttributes;
+        $this->paymentId = $paymentId;
+        $this->refundAmount = $refundAmount;
+        $this->refundId = $refundId;
+        $this->transactionTime = $transactionTime;
+    }
 
     /**
      * Returns Apply Credit.
      * If true, credit was created and applied it to the invoice.
      */
-    public function getApplyCredit(): ?bool
+    public function getApplyCredit(): bool
     {
         return $this->applyCredit;
     }
@@ -76,9 +100,10 @@ class RefundInvoiceEventData implements \JsonSerializable
      * Sets Apply Credit.
      * If true, credit was created and applied it to the invoice.
      *
+     * @required
      * @maps apply_credit
      */
-    public function setApplyCredit(?bool $applyCredit): void
+    public function setApplyCredit(bool $applyCredit): void
     {
         $this->applyCredit = $applyCredit;
     }
@@ -129,7 +154,7 @@ class RefundInvoiceEventData implements \JsonSerializable
     /**
      * Returns Credit Note Attributes.
      */
-    public function getCreditNoteAttributes(): ?CreditNote
+    public function getCreditNoteAttributes(): CreditNote
     {
         return $this->creditNoteAttributes;
     }
@@ -137,9 +162,10 @@ class RefundInvoiceEventData implements \JsonSerializable
     /**
      * Sets Credit Note Attributes.
      *
+     * @required
      * @maps credit_note_attributes
      */
-    public function setCreditNoteAttributes(?CreditNote $creditNoteAttributes): void
+    public function setCreditNoteAttributes(CreditNote $creditNoteAttributes): void
     {
         $this->creditNoteAttributes = $creditNoteAttributes;
     }
@@ -188,7 +214,7 @@ class RefundInvoiceEventData implements \JsonSerializable
      * Returns Payment Id.
      * The ID of the payment transaction to be refunded.
      */
-    public function getPaymentId(): ?int
+    public function getPaymentId(): int
     {
         return $this->paymentId;
     }
@@ -197,9 +223,10 @@ class RefundInvoiceEventData implements \JsonSerializable
      * Sets Payment Id.
      * The ID of the payment transaction to be refunded.
      *
+     * @required
      * @maps payment_id
      */
-    public function setPaymentId(?int $paymentId): void
+    public function setPaymentId(int $paymentId): void
     {
         $this->paymentId = $paymentId;
     }
@@ -208,7 +235,7 @@ class RefundInvoiceEventData implements \JsonSerializable
      * Returns Refund Amount.
      * The amount of the refund.
      */
-    public function getRefundAmount(): ?string
+    public function getRefundAmount(): string
     {
         return $this->refundAmount;
     }
@@ -217,9 +244,10 @@ class RefundInvoiceEventData implements \JsonSerializable
      * Sets Refund Amount.
      * The amount of the refund.
      *
+     * @required
      * @maps refund_amount
      */
-    public function setRefundAmount(?string $refundAmount): void
+    public function setRefundAmount(string $refundAmount): void
     {
         $this->refundAmount = $refundAmount;
     }
@@ -228,7 +256,7 @@ class RefundInvoiceEventData implements \JsonSerializable
      * Returns Refund Id.
      * The ID of the refund transaction.
      */
-    public function getRefundId(): ?int
+    public function getRefundId(): int
     {
         return $this->refundId;
     }
@@ -237,9 +265,10 @@ class RefundInvoiceEventData implements \JsonSerializable
      * Sets Refund Id.
      * The ID of the refund transaction.
      *
+     * @required
      * @maps refund_id
      */
-    public function setRefundId(?int $refundId): void
+    public function setRefundId(int $refundId): void
     {
         $this->refundId = $refundId;
     }
@@ -248,7 +277,7 @@ class RefundInvoiceEventData implements \JsonSerializable
      * Returns Transaction Time.
      * The time the refund was applied, in ISO 8601 format, i.e. "2019-06-07T17:20:06Z"
      */
-    public function getTransactionTime(): ?\DateTime
+    public function getTransactionTime(): \DateTime
     {
         return $this->transactionTime;
     }
@@ -257,10 +286,11 @@ class RefundInvoiceEventData implements \JsonSerializable
      * Sets Transaction Time.
      * The time the refund was applied, in ISO 8601 format, i.e. "2019-06-07T17:20:06Z"
      *
+     * @required
      * @maps transaction_time
      * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setTransactionTime(?\DateTime $transactionTime): void
+    public function setTransactionTime(\DateTime $transactionTime): void
     {
         $this->transactionTime = $transactionTime;
     }
@@ -277,33 +307,21 @@ class RefundInvoiceEventData implements \JsonSerializable
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
-        if (isset($this->applyCredit)) {
-            $json['apply_credit']           = $this->applyCredit;
-        }
+        $json['apply_credit']            = $this->applyCredit;
         if (isset($this->consolidationLevel)) {
-            $json['consolidation_level']    = InvoiceConsolidationLevel::checkValue($this->consolidationLevel);
+            $json['consolidation_level'] = InvoiceConsolidationLevel::checkValue($this->consolidationLevel);
         }
-        if (isset($this->creditNoteAttributes)) {
-            $json['credit_note_attributes'] = $this->creditNoteAttributes;
-        }
+        $json['credit_note_attributes']  = $this->creditNoteAttributes;
         if (isset($this->memo)) {
-            $json['memo']                   = $this->memo;
+            $json['memo']                = $this->memo;
         }
         if (isset($this->originalAmount)) {
-            $json['original_amount']        = $this->originalAmount;
+            $json['original_amount']     = $this->originalAmount;
         }
-        if (isset($this->paymentId)) {
-            $json['payment_id']             = $this->paymentId;
-        }
-        if (isset($this->refundAmount)) {
-            $json['refund_amount']          = $this->refundAmount;
-        }
-        if (isset($this->refundId)) {
-            $json['refund_id']              = $this->refundId;
-        }
-        if (isset($this->transactionTime)) {
-            $json['transaction_time']       = DateTimeHelper::toRfc3339DateTime($this->transactionTime);
-        }
+        $json['payment_id']              = $this->paymentId;
+        $json['refund_amount']           = $this->refundAmount;
+        $json['refund_id']               = $this->refundId;
+        $json['transaction_time']        = DateTimeHelper::toRfc3339DateTime($this->transactionTime);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

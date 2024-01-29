@@ -15,7 +15,7 @@ use AdvancedBillingLib\Exceptions\ErrorArrayMapResponseException;
 use AdvancedBillingLib\Exceptions\ErrorListResponseException;
 use AdvancedBillingLib\Models\BasicDateField;
 use AdvancedBillingLib\Models\Component;
-use AdvancedBillingLib\Models\ComponentKindPath;
+use AdvancedBillingLib\Models\ComponentCurrencyPricesResponse;
 use AdvancedBillingLib\Models\ComponentPricePointResponse;
 use AdvancedBillingLib\Models\ComponentPricePointsResponse;
 use AdvancedBillingLib\Models\ComponentResponse;
@@ -27,7 +27,6 @@ use AdvancedBillingLib\Models\CreateMeteredComponent;
 use AdvancedBillingLib\Models\CreateOnOffComponent;
 use AdvancedBillingLib\Models\CreatePrepaidComponent;
 use AdvancedBillingLib\Models\CreateQuantityBasedComponent;
-use AdvancedBillingLib\Models\CurrencyPrice;
 use AdvancedBillingLib\Models\IncludeNotNull;
 use AdvancedBillingLib\Models\ListComponentsPricePointsInclude;
 use AdvancedBillingLib\Models\ListComponentsPricePointsResponse;
@@ -47,59 +46,251 @@ use CoreInterfaces\Core\Request\RequestMethod;
 class ComponentsController extends BaseController
 {
     /**
-     * This request will create a component definition under the specified product family. These component
-     * definitions determine what components are named, how they are measured, and how much they cost.
+     * This request will create a component definition of kind **metered_component** under the specified
+     * product family. Metered component can then be added and “allocated” for a subscription.
      *
-     * Components can then be added and “allocated” for each subscription to a product in the product
-     * family. These component line-items affect how much a subscription will be charged, depending on the
-     * current allocations (i.e. 4 IP Addresses, or SSL “enabled”)
+     * Metered components are used to bill for any type of unit that resets to 0 at the end of the billing
+     * period (think daily Google Adwords clicks or monthly cell phone minutes). This is most commonly
+     * associated with usage-based billing and many other pricing schemes.
      *
-     * This documentation covers both component definitions and component line-items. Please understand the
-     * difference.
-     *
-     * Please note that you may not edit components via API. To do so, please log into the application.
-     *
-     * ### Component Documentation
+     * Note that this is different from recurring quantity-based components, which DO NOT reset to zero at
+     * the start of every billing period. If you want to bill for a quantity of something that does not
+     * change unless you change it, then you want quantity components, instead.
      *
      * For more information on components, please see our documentation [here](https://maxio-chargify.
      * zendesk.com/hc/en-us/articles/5405020625677).
      *
-     * For information on how to record component usage against a subscription, please see the following
-     * resources:
-     *
-     * + [Proration and Component Allocations](https://maxio-chargify.zendesk.com/hc/en-
-     * us/articles/5405020625677#applying-proration-and-recording-components)
-     * + [Recording component usage against a subscription](https://maxio-chargify.zendesk.com/hc/en-
-     * us/articles/5404606587917#recording-component-usage)
-     *
      * @param int $productFamilyId The Chargify id of the product family to which the component
      *        belongs
-     * @param string $componentKind The component kind
-     * @param CreateMeteredComponent|CreateQuantityBasedComponent|CreateOnOffComponent|CreatePrepaidComponent|CreateEBBComponent|null $body
+     * @param CreateMeteredComponent|null $body
      *
      * @return ComponentResponse Response from the API call
      *
      * @throws ApiException Thrown if API call fails
      */
-    public function createComponent(int $productFamilyId, string $componentKind, $body = null): ComponentResponse
-    {
+    public function createMeteredComponent(
+        int $productFamilyId,
+        ?CreateMeteredComponent $body = null
+    ): ComponentResponse {
         $_reqBuilder = $this->requestBuilder(
             RequestMethod::POST,
-            '/product_families/{product_family_id}/{component_kind}.json'
+            '/product_families/{product_family_id}/metered_components.json'
         )
             ->auth('global')
             ->parameters(
                 TemplateParam::init('product_family_id', $productFamilyId)->required(),
-                TemplateParam::init('component_kind', $componentKind)
-                    ->required()
-                    ->serializeBy([ComponentKindPath::class, 'checkValue']),
                 HeaderParam::init('Content-Type', 'application/json'),
                 BodyParam::init($body)
-                    ->strictType('anyOf(oneOf(CreateMeteredComponent,CreateQuantityBasedComponent,CreateOnOf' .
-                    'fComponent,CreatePrepaidComponent,CreateEBBComponent),null)')
             );
 
         $_resHandler = $this->responseHandler()
+            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
+            ->throwErrorOn(
+                '422',
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
+            )
+            ->type(ComponentResponse::class);
+
+        return $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
+     * This request will create a component definition of kind **quantity_based_component** under the
+     * specified product family. Quantity Based component can then be added and “allocated” for a
+     * subscription.
+     *
+     * When defining Quantity Based component, You can choose one of 2 types:
+     * #### Recurring
+     * Recurring quantity-based components are used to bill for the number of some unit (think monthly
+     * software user licenses or the number of pairs of socks in a box-a-month club). This is most commonly
+     * associated with billing for user licenses, number of users, number of employees, etc.
+     *
+     * #### One-time
+     * One-time quantity-based components are used to create ad hoc usage charges that do not recur. For
+     * example, at the time of signup, you might want to charge your customer a one-time fee for onboarding
+     * or other services.
+     *
+     * The allocated quantity for one-time quantity-based components immediately gets reset back to zero
+     * after the allocation is made.
+     *
+     * For more information on components, please see our documentation [here](https://maxio-chargify.
+     * zendesk.com/hc/en-us/articles/5405020625677).
+     *
+     * @param int $productFamilyId The Chargify id of the product family to which the component
+     *        belongs
+     * @param CreateQuantityBasedComponent|null $body
+     *
+     * @return ComponentResponse Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function createQuantityBasedComponent(
+        int $productFamilyId,
+        ?CreateQuantityBasedComponent $body = null
+    ): ComponentResponse {
+        $_reqBuilder = $this->requestBuilder(
+            RequestMethod::POST,
+            '/product_families/{product_family_id}/quantity_based_components.json'
+        )
+            ->auth('global')
+            ->parameters(
+                TemplateParam::init('product_family_id', $productFamilyId)->required(),
+                HeaderParam::init('Content-Type', 'application/json'),
+                BodyParam::init($body)
+            );
+
+        $_resHandler = $this->responseHandler()
+            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
+            ->throwErrorOn(
+                '422',
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
+            )
+            ->type(ComponentResponse::class);
+
+        return $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
+     * This request will create a component definition of kind **on_off_component** under the specified
+     * product family. On/Off component can then be added and “allocated” for a subscription.
+     *
+     * On/off components are used for any flat fee, recurring add on (think $99/month for tech support or a
+     * flat add on shipping fee).
+     *
+     * For more information on components, please see our documentation [here](https://maxio-chargify.
+     * zendesk.com/hc/en-us/articles/5405020625677).
+     *
+     * @param int $productFamilyId The Chargify id of the product family to which the component
+     *        belongs
+     * @param CreateOnOffComponent|null $body
+     *
+     * @return ComponentResponse Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function createOnOffComponent(int $productFamilyId, ?CreateOnOffComponent $body = null): ComponentResponse
+    {
+        $_reqBuilder = $this->requestBuilder(
+            RequestMethod::POST,
+            '/product_families/{product_family_id}/on_off_components.json'
+        )
+            ->auth('global')
+            ->parameters(
+                TemplateParam::init('product_family_id', $productFamilyId)->required(),
+                HeaderParam::init('Content-Type', 'application/json'),
+                BodyParam::init($body)
+            );
+
+        $_resHandler = $this->responseHandler()
+            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
+            ->throwErrorOn(
+                '422',
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
+            )
+            ->type(ComponentResponse::class);
+
+        return $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
+     * This request will create a component definition of kind **prepaid_usage_component** under the
+     * specified product family. Prepaid component can then be added and “allocated” for a subscription.
+     *
+     * Prepaid components allow customers to pre-purchase units that can be used up over time on their
+     * subscription. In a sense, they are the mirror image of metered components; while metered components
+     * charge at the end of the period for the amount of units used, prepaid components are charged for at
+     * the time of purchase, and we subsequently keep track of the usage against the amount purchased.
+     *
+     * For more information on components, please see our documentation [here](https://maxio-chargify.
+     * zendesk.com/hc/en-us/articles/5405020625677).
+     *
+     * @param int $productFamilyId The Chargify id of the product family to which the component
+     *        belongs
+     * @param CreatePrepaidComponent|null $body
+     *
+     * @return ComponentResponse Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function createPrepaidUsageComponent(
+        int $productFamilyId,
+        ?CreatePrepaidComponent $body = null
+    ): ComponentResponse {
+        $_reqBuilder = $this->requestBuilder(
+            RequestMethod::POST,
+            '/product_families/{product_family_id}/prepaid_usage_components.json'
+        )
+            ->auth('global')
+            ->parameters(
+                TemplateParam::init('product_family_id', $productFamilyId)->required(),
+                HeaderParam::init('Content-Type', 'application/json'),
+                BodyParam::init($body)
+            );
+
+        $_resHandler = $this->responseHandler()
+            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
+            ->throwErrorOn(
+                '422',
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
+            )
+            ->type(ComponentResponse::class);
+
+        return $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
+     * This request will create a component definition of kind **event_based_component** under the
+     * specified product family. Event-based component can then be added and “allocated” for a subscription.
+     *
+     * Event-based components are similar to other component types, in that you define the component
+     * parameters (such as name and taxability) and the pricing. A key difference for the event-based
+     * component is that it must be attached to a metric. This is because the metric provides the component
+     * with the actual quantity used in computing what and how much will be billed each period for each
+     * subscription.
+     *
+     * So, instead of reporting usage directly for each component (as you would with metered components),
+     * the usage is derived from analysis of your events.
+     *
+     * For more information on components, please see our documentation [here](https://maxio-chargify.
+     * zendesk.com/hc/en-us/articles/5405020625677).
+     *
+     * @param int $productFamilyId The Chargify id of the product family to which the component
+     *        belongs
+     * @param CreateEBBComponent|null $body
+     *
+     * @return ComponentResponse Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function createEventBasedComponent(
+        int $productFamilyId,
+        ?CreateEBBComponent $body = null
+    ): ComponentResponse {
+        $_reqBuilder = $this->requestBuilder(
+            RequestMethod::POST,
+            '/product_families/{product_family_id}/event_based_components.json'
+        )
+            ->auth('global')
+            ->parameters(
+                TemplateParam::init('product_family_id', $productFamilyId)->required(),
+                HeaderParam::init('Content-Type', 'application/json'),
+                BodyParam::init($body)
+            );
+
+        $_resHandler = $this->responseHandler()
+            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
             ->throwErrorOn(
                 '422',
                 ErrorType::initWithErrorTemplate(
@@ -530,7 +721,10 @@ class ComponentsController extends BaseController
         $_resHandler = $this->responseHandler()
             ->throwErrorOn(
                 '422',
-                ErrorType::init('Unprocessable Entity (WebDAV)', ErrorArrayMapResponseException::class)
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorArrayMapResponseException::class
+                )
             )
             ->type(ComponentPricePointResponse::class);
 
@@ -563,7 +757,10 @@ class ComponentsController extends BaseController
         $_resHandler = $this->responseHandler()
             ->throwErrorOn(
                 '422',
-                ErrorType::init('Unprocessable Entity (WebDAV)', ErrorListResponseException::class)
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
             )
             ->type(ComponentPricePointResponse::class);
 
@@ -610,12 +807,14 @@ class ComponentsController extends BaseController
      * @param int $pricePointId The Chargify id of the price point
      * @param CreateCurrencyPricesRequest|null $body
      *
-     * @return CurrencyPrice[] Response from the API call
+     * @return ComponentCurrencyPricesResponse Response from the API call
      *
      * @throws ApiException Thrown if API call fails
      */
-    public function createCurrencyPrices(int $pricePointId, ?CreateCurrencyPricesRequest $body = null): array
-    {
+    public function createCurrencyPrices(
+        int $pricePointId,
+        ?CreateCurrencyPricesRequest $body = null
+    ): ComponentCurrencyPricesResponse {
         $_reqBuilder = $this->requestBuilder(
             RequestMethod::POST,
             '/price_points/{price_point_id}/currency_prices.json'
@@ -627,7 +826,12 @@ class ComponentsController extends BaseController
                 BodyParam::init($body)
             );
 
-        $_resHandler = $this->responseHandler()->type(CurrencyPrice::class, 1);
+        $_resHandler = $this->responseHandler()
+            ->throwErrorOn(
+                '422',
+                ErrorType::init('Unprocessable Entity (WebDAV)', ErrorArrayMapResponseException::class)
+            )
+            ->type(ComponentCurrencyPricesResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
     }
@@ -641,12 +845,14 @@ class ComponentsController extends BaseController
      * @param int $pricePointId The Chargify id of the price point
      * @param UpdateCurrencyPricesRequest|null $body
      *
-     * @return CurrencyPrice[] Response from the API call
+     * @return ComponentCurrencyPricesResponse Response from the API call
      *
      * @throws ApiException Thrown if API call fails
      */
-    public function updateCurrencyPrices(int $pricePointId, ?UpdateCurrencyPricesRequest $body = null): array
-    {
+    public function updateCurrencyPrices(
+        int $pricePointId,
+        ?UpdateCurrencyPricesRequest $body = null
+    ): ComponentCurrencyPricesResponse {
         $_reqBuilder = $this->requestBuilder(
             RequestMethod::PUT,
             '/price_points/{price_point_id}/currency_prices.json'
@@ -658,7 +864,12 @@ class ComponentsController extends BaseController
                 BodyParam::init($body)
             );
 
-        $_resHandler = $this->responseHandler()->type(CurrencyPrice::class, 1);
+        $_resHandler = $this->responseHandler()
+            ->throwErrorOn(
+                '422',
+                ErrorType::init('Unprocessable Entity (WebDAV)', ErrorArrayMapResponseException::class)
+            )
+            ->type(ComponentCurrencyPricesResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
     }

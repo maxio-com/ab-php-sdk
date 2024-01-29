@@ -13,7 +13,7 @@ final class CouponTestData
     public const RECURRING = false;
     public const NAME = 'test coupon';
     public const CODE_ONE = 'TEST_CODE';
-    public const PERCENTAGE = '100';
+    public const PERCENTAGE = '100.0';
     public const STACKABLE = true;
     public const COMPOUNDING_STRATEGY = CompoundingStrategy::FULLPRICE;
     public const AMOUNT = null;

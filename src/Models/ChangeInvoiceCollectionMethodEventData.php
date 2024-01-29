@@ -18,20 +18,30 @@ use stdClass;
 class ChangeInvoiceCollectionMethodEventData implements \JsonSerializable
 {
     /**
-     * @var string|null
+     * @var string
      */
     private $fromCollectionMethod;
 
     /**
-     * @var string|null
+     * @var string
      */
     private $toCollectionMethod;
+
+    /**
+     * @param string $fromCollectionMethod
+     * @param string $toCollectionMethod
+     */
+    public function __construct(string $fromCollectionMethod, string $toCollectionMethod)
+    {
+        $this->fromCollectionMethod = $fromCollectionMethod;
+        $this->toCollectionMethod = $toCollectionMethod;
+    }
 
     /**
      * Returns From Collection Method.
      * The previous collection method of the invoice.
      */
-    public function getFromCollectionMethod(): ?string
+    public function getFromCollectionMethod(): string
     {
         return $this->fromCollectionMethod;
     }
@@ -40,9 +50,10 @@ class ChangeInvoiceCollectionMethodEventData implements \JsonSerializable
      * Sets From Collection Method.
      * The previous collection method of the invoice.
      *
+     * @required
      * @maps from_collection_method
      */
-    public function setFromCollectionMethod(?string $fromCollectionMethod): void
+    public function setFromCollectionMethod(string $fromCollectionMethod): void
     {
         $this->fromCollectionMethod = $fromCollectionMethod;
     }
@@ -51,7 +62,7 @@ class ChangeInvoiceCollectionMethodEventData implements \JsonSerializable
      * Returns To Collection Method.
      * The new collection method of the invoice.
      */
-    public function getToCollectionMethod(): ?string
+    public function getToCollectionMethod(): string
     {
         return $this->toCollectionMethod;
     }
@@ -60,9 +71,10 @@ class ChangeInvoiceCollectionMethodEventData implements \JsonSerializable
      * Sets To Collection Method.
      * The new collection method of the invoice.
      *
+     * @required
      * @maps to_collection_method
      */
-    public function setToCollectionMethod(?string $toCollectionMethod): void
+    public function setToCollectionMethod(string $toCollectionMethod): void
     {
         $this->toCollectionMethod = $toCollectionMethod;
     }
@@ -79,12 +91,8 @@ class ChangeInvoiceCollectionMethodEventData implements \JsonSerializable
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
-        if (isset($this->fromCollectionMethod)) {
-            $json['from_collection_method'] = $this->fromCollectionMethod;
-        }
-        if (isset($this->toCollectionMethod)) {
-            $json['to_collection_method']   = $this->toCollectionMethod;
-        }
+        $json['from_collection_method'] = $this->fromCollectionMethod;
+        $json['to_collection_method']   = $this->toCollectionMethod;
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

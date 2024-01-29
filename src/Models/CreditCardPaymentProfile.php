@@ -60,9 +60,9 @@ class CreditCardPaymentProfile implements \JsonSerializable
     private $currentVault;
 
     /**
-     * @var string|null
+     * @var array
      */
-    private $vaultToken;
+    private $vaultToken = [];
 
     /**
      * @var array
@@ -110,6 +110,11 @@ class CreditCardPaymentProfile implements \JsonSerializable
     private $disabled;
 
     /**
+     * @var string|null
+     */
+    private $chargifyToken;
+
+    /**
      * @var array
      */
     private $siteGatewaySettingId = [];
@@ -129,6 +134,9 @@ class CreditCardPaymentProfile implements \JsonSerializable
 
     /**
      * Returns Id.
+     * The Chargify-assigned ID of the stored card. This value can be used as an input to
+     * payment_profile_id when creating a subscription, in order to re-use a stored payment profile for the
+     * same customer.
      */
     public function getId(): ?int
     {
@@ -137,6 +145,9 @@ class CreditCardPaymentProfile implements \JsonSerializable
 
     /**
      * Sets Id.
+     * The Chargify-assigned ID of the stored card. This value can be used as an input to
+     * payment_profile_id when creating a subscription, in order to re-use a stored payment profile for the
+     * same customer.
      *
      * @maps id
      */
@@ -147,6 +158,7 @@ class CreditCardPaymentProfile implements \JsonSerializable
 
     /**
      * Returns First Name.
+     * The first name of the card holder.
      */
     public function getFirstName(): ?string
     {
@@ -155,6 +167,7 @@ class CreditCardPaymentProfile implements \JsonSerializable
 
     /**
      * Sets First Name.
+     * The first name of the card holder.
      *
      * @maps first_name
      */
@@ -165,6 +178,7 @@ class CreditCardPaymentProfile implements \JsonSerializable
 
     /**
      * Returns Last Name.
+     * The last name of the card holder.
      */
     public function getLastName(): ?string
     {
@@ -173,6 +187,7 @@ class CreditCardPaymentProfile implements \JsonSerializable
 
     /**
      * Sets Last Name.
+     * The last name of the card holder.
      *
      * @maps last_name
      */
@@ -183,6 +198,8 @@ class CreditCardPaymentProfile implements \JsonSerializable
 
     /**
      * Returns Masked Card Number.
+     * A string representation of the credit card number with all but the last 4 digits masked with X’s (i.
+     * e. ‘XXXX-XXXX-XXXX-1234’).
      */
     public function getMaskedCardNumber(): string
     {
@@ -191,6 +208,8 @@ class CreditCardPaymentProfile implements \JsonSerializable
 
     /**
      * Sets Masked Card Number.
+     * A string representation of the credit card number with all but the last 4 digits masked with X’s (i.
+     * e. ‘XXXX-XXXX-XXXX-1234’).
      *
      * @required
      * @maps masked_card_number
@@ -223,6 +242,7 @@ class CreditCardPaymentProfile implements \JsonSerializable
 
     /**
      * Returns Expiration Month.
+     * An integer representing the expiration month of the card(1 – 12).
      */
     public function getExpirationMonth(): ?int
     {
@@ -231,6 +251,7 @@ class CreditCardPaymentProfile implements \JsonSerializable
 
     /**
      * Sets Expiration Month.
+     * An integer representing the expiration month of the card(1 – 12).
      *
      * @maps expiration_month
      */
@@ -241,6 +262,7 @@ class CreditCardPaymentProfile implements \JsonSerializable
 
     /**
      * Returns Expiration Year.
+     * An integer representing the 4-digit expiration year of the card(i.e. ‘2012’).
      */
     public function getExpirationYear(): ?int
     {
@@ -249,6 +271,7 @@ class CreditCardPaymentProfile implements \JsonSerializable
 
     /**
      * Sets Expiration Year.
+     * An integer representing the 4-digit expiration year of the card(i.e. ‘2012’).
      *
      * @maps expiration_year
      */
@@ -259,6 +282,7 @@ class CreditCardPaymentProfile implements \JsonSerializable
 
     /**
      * Returns Customer Id.
+     * The Chargify-assigned id for the customer record to which the card belongs.
      */
     public function getCustomerId(): ?int
     {
@@ -267,6 +291,7 @@ class CreditCardPaymentProfile implements \JsonSerializable
 
     /**
      * Sets Customer Id.
+     * The Chargify-assigned id for the customer record to which the card belongs.
      *
      * @maps customer_id
      */
@@ -298,24 +323,39 @@ class CreditCardPaymentProfile implements \JsonSerializable
 
     /**
      * Returns Vault Token.
+     * The “token” provided by your vault storage for an already stored payment profile.
      */
     public function getVaultToken(): ?string
     {
-        return $this->vaultToken;
+        if (count($this->vaultToken) == 0) {
+            return null;
+        }
+        return $this->vaultToken['value'];
     }
 
     /**
      * Sets Vault Token.
+     * The “token” provided by your vault storage for an already stored payment profile.
      *
      * @maps vault_token
      */
     public function setVaultToken(?string $vaultToken): void
     {
-        $this->vaultToken = $vaultToken;
+        $this->vaultToken['value'] = $vaultToken;
+    }
+
+    /**
+     * Unsets Vault Token.
+     * The “token” provided by your vault storage for an already stored payment profile.
+     */
+    public function unsetVaultToken(): void
+    {
+        $this->vaultToken = [];
     }
 
     /**
      * Returns Billing Address.
+     * The current billing street address for the card.
      */
     public function getBillingAddress(): ?string
     {
@@ -327,6 +367,7 @@ class CreditCardPaymentProfile implements \JsonSerializable
 
     /**
      * Sets Billing Address.
+     * The current billing street address for the card.
      *
      * @maps billing_address
      */
@@ -337,6 +378,7 @@ class CreditCardPaymentProfile implements \JsonSerializable
 
     /**
      * Unsets Billing Address.
+     * The current billing street address for the card.
      */
     public function unsetBillingAddress(): void
     {
@@ -345,6 +387,7 @@ class CreditCardPaymentProfile implements \JsonSerializable
 
     /**
      * Returns Billing City.
+     * The current billing address city for the card.
      */
     public function getBillingCity(): ?string
     {
@@ -356,6 +399,7 @@ class CreditCardPaymentProfile implements \JsonSerializable
 
     /**
      * Sets Billing City.
+     * The current billing address city for the card.
      *
      * @maps billing_city
      */
@@ -366,6 +410,7 @@ class CreditCardPaymentProfile implements \JsonSerializable
 
     /**
      * Unsets Billing City.
+     * The current billing address city for the card.
      */
     public function unsetBillingCity(): void
     {
@@ -374,6 +419,7 @@ class CreditCardPaymentProfile implements \JsonSerializable
 
     /**
      * Returns Billing State.
+     * The current billing address state for the card.
      */
     public function getBillingState(): ?string
     {
@@ -385,6 +431,7 @@ class CreditCardPaymentProfile implements \JsonSerializable
 
     /**
      * Sets Billing State.
+     * The current billing address state for the card.
      *
      * @maps billing_state
      */
@@ -395,6 +442,7 @@ class CreditCardPaymentProfile implements \JsonSerializable
 
     /**
      * Unsets Billing State.
+     * The current billing address state for the card.
      */
     public function unsetBillingState(): void
     {
@@ -403,6 +451,7 @@ class CreditCardPaymentProfile implements \JsonSerializable
 
     /**
      * Returns Billing Zip.
+     * The current billing address zip code for the card.
      */
     public function getBillingZip(): ?string
     {
@@ -414,6 +463,7 @@ class CreditCardPaymentProfile implements \JsonSerializable
 
     /**
      * Sets Billing Zip.
+     * The current billing address zip code for the card.
      *
      * @maps billing_zip
      */
@@ -424,6 +474,7 @@ class CreditCardPaymentProfile implements \JsonSerializable
 
     /**
      * Unsets Billing Zip.
+     * The current billing address zip code for the card.
      */
     public function unsetBillingZip(): void
     {
@@ -432,6 +483,7 @@ class CreditCardPaymentProfile implements \JsonSerializable
 
     /**
      * Returns Billing Country.
+     * The current billing address country for the card.
      */
     public function getBillingCountry(): ?string
     {
@@ -443,6 +495,7 @@ class CreditCardPaymentProfile implements \JsonSerializable
 
     /**
      * Sets Billing Country.
+     * The current billing address country for the card.
      *
      * @maps billing_country
      */
@@ -453,6 +506,7 @@ class CreditCardPaymentProfile implements \JsonSerializable
 
     /**
      * Unsets Billing Country.
+     * The current billing address country for the card.
      */
     public function unsetBillingCountry(): void
     {
@@ -461,6 +515,8 @@ class CreditCardPaymentProfile implements \JsonSerializable
 
     /**
      * Returns Customer Vault Token.
+     * (only for Authorize.Net CIM storage): the customerProfileId for the owner of the
+     * customerPaymentProfileId provided as the vault_token.
      */
     public function getCustomerVaultToken(): ?string
     {
@@ -472,6 +528,8 @@ class CreditCardPaymentProfile implements \JsonSerializable
 
     /**
      * Sets Customer Vault Token.
+     * (only for Authorize.Net CIM storage): the customerProfileId for the owner of the
+     * customerPaymentProfileId provided as the vault_token.
      *
      * @maps customer_vault_token
      */
@@ -482,6 +540,8 @@ class CreditCardPaymentProfile implements \JsonSerializable
 
     /**
      * Unsets Customer Vault Token.
+     * (only for Authorize.Net CIM storage): the customerProfileId for the owner of the
+     * customerPaymentProfileId provided as the vault_token.
      */
     public function unsetCustomerVaultToken(): void
     {
@@ -490,6 +550,7 @@ class CreditCardPaymentProfile implements \JsonSerializable
 
     /**
      * Returns Billing Address 2.
+     * The current billing street address, second line, for the card.
      */
     public function getBillingAddress2(): ?string
     {
@@ -501,6 +562,7 @@ class CreditCardPaymentProfile implements \JsonSerializable
 
     /**
      * Sets Billing Address 2.
+     * The current billing street address, second line, for the card.
      *
      * @maps billing_address_2
      */
@@ -511,6 +573,7 @@ class CreditCardPaymentProfile implements \JsonSerializable
 
     /**
      * Unsets Billing Address 2.
+     * The current billing street address, second line, for the card.
      */
     public function unsetBillingAddress2(): void
     {
@@ -529,6 +592,7 @@ class CreditCardPaymentProfile implements \JsonSerializable
      * Sets Payment Type.
      *
      * @maps payment_type
+     * @factory \AdvancedBillingLib\Models\PaymentType::checkValue
      */
     public function setPaymentType(?string $paymentType): void
     {
@@ -551,6 +615,28 @@ class CreditCardPaymentProfile implements \JsonSerializable
     public function setDisabled(?bool $disabled): void
     {
         $this->disabled = $disabled;
+    }
+
+    /**
+     * Returns Chargify Token.
+     * Token received after sending billing information using chargify.js. This token will only be received
+     * if passed as a sole attribute of credit_card_attributes (i.e. tok_9g6hw85pnpt6knmskpwp4ttt)
+     */
+    public function getChargifyToken(): ?string
+    {
+        return $this->chargifyToken;
+    }
+
+    /**
+     * Sets Chargify Token.
+     * Token received after sending billing information using chargify.js. This token will only be received
+     * if passed as a sole attribute of credit_card_attributes (i.e. tok_9g6hw85pnpt6knmskpwp4ttt)
+     *
+     * @maps chargify_token
+     */
+    public function setChargifyToken(?string $chargifyToken): void
+    {
+        $this->chargifyToken = $chargifyToken;
     }
 
     /**
@@ -584,6 +670,7 @@ class CreditCardPaymentProfile implements \JsonSerializable
 
     /**
      * Returns Gateway Handle.
+     * An identifier of connected gateway.
      */
     public function getGatewayHandle(): ?string
     {
@@ -595,6 +682,7 @@ class CreditCardPaymentProfile implements \JsonSerializable
 
     /**
      * Sets Gateway Handle.
+     * An identifier of connected gateway.
      *
      * @maps gateway_handle
      */
@@ -605,6 +693,7 @@ class CreditCardPaymentProfile implements \JsonSerializable
 
     /**
      * Unsets Gateway Handle.
+     * An identifier of connected gateway.
      */
     public function unsetGatewayHandle(): void
     {
@@ -648,8 +737,8 @@ class CreditCardPaymentProfile implements \JsonSerializable
         if (isset($this->currentVault)) {
             $json['current_vault']           = CurrentVault::checkValue($this->currentVault);
         }
-        if (isset($this->vaultToken)) {
-            $json['vault_token']             = $this->vaultToken;
+        if (!empty($this->vaultToken)) {
+            $json['vault_token']             = $this->vaultToken['value'];
         }
         if (!empty($this->billingAddress)) {
             $json['billing_address']         = $this->billingAddress['value'];
@@ -673,10 +762,13 @@ class CreditCardPaymentProfile implements \JsonSerializable
             $json['billing_address_2']       = $this->billingAddress2['value'];
         }
         if (isset($this->paymentType)) {
-            $json['payment_type']            = $this->paymentType;
+            $json['payment_type']            = PaymentType::checkValue($this->paymentType);
         }
         if (isset($this->disabled)) {
             $json['disabled']                = $this->disabled;
+        }
+        if (isset($this->chargifyToken)) {
+            $json['chargify_token']          = $this->chargifyToken;
         }
         if (!empty($this->siteGatewaySettingId)) {
             $json['site_gateway_setting_id'] = $this->siteGatewaySettingId['value'];

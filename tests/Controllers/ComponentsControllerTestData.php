@@ -12,6 +12,7 @@ use AdvancedBillingLib\Tests\DataLoader\TestProductFamilyLoader;
 use AdvancedBillingLib\Tests\TestData\ComponentTestData;
 use AdvancedBillingLib\Tests\TestFactory\TestComponentFactory;
 use AdvancedBillingLib\Tests\TestFactory\TestComponentRequestFactory;
+use DateTime;
 
 final class ComponentsControllerTestData
 {
@@ -28,11 +29,6 @@ final class ComponentsControllerTestData
         return $this->productFamilyLoader->load($name);
     }
 
-    public function getQuantityBasedComponentKindPath(): string
-    {
-        return ComponentTestData::QUANTITY_BASED_COMPONENT_KIND_PATH;
-    }
-
     public function getQuantityBasedExpectedComponent(
         int $id,
         int $defaultPricePointId,
@@ -40,7 +36,7 @@ final class ComponentsControllerTestData
         ProductFamily $productFamily,
         string $pricePointUrl,
         string $pricePointName,
-        string $createdAt,
+        DateTime $createdAt,
     ): Component
     {
         return $this->componentFactory->createQuantityBasedComponent(
@@ -70,18 +66,13 @@ final class ComponentsControllerTestData
         );
     }
 
-    public function getOnOffComponentKindPath(): string
-    {
-        return ComponentTestData::ON_OFF_COMPONENT_KIND_PATH;
-    }
-
     public function getExpectedOnOffComponent(
         int $id,
         int $defaultPricePointId,
         ProductFamily $productFamily,
         string $pricePointsUrl,
         string $defaultPricePointName,
-        string $createdAt
+        DateTime $createdAt
     ): Component
     {
         return $this->componentFactory->createOnOffComponent(

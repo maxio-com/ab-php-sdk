@@ -26,7 +26,7 @@ class InvoiceEvent implements \JsonSerializable
     private $eventType;
 
     /**
-     * @var ApplyCreditNoteEventData|ApplyDebitNoteEventData|ApplyPaymentEventData|ChangeInvoiceCollectionMethodEventData|IssueInvoiceEventData|RefundInvoiceEventData|RemovePaymentEventData|VoidInvoiceEventData|VoidInvoiceEventData1|null
+     * @var ApplyCreditNoteEventData|ApplyDebitNoteEventData|ApplyPaymentEventData|ChangeInvoiceCollectionMethodEventData|IssueInvoiceEventData|RefundInvoiceEventData|RemovePaymentEventData|VoidInvoiceEventData|VoidRemainderEventData|null
      */
     private $eventData;
 
@@ -84,7 +84,7 @@ class InvoiceEvent implements \JsonSerializable
      * The event data is the data that, when combined with the command, results in the output invoice found
      * in the invoice field.
      *
-     * @return ApplyCreditNoteEventData|ApplyDebitNoteEventData|ApplyPaymentEventData|ChangeInvoiceCollectionMethodEventData|IssueInvoiceEventData|RefundInvoiceEventData|RemovePaymentEventData|VoidInvoiceEventData|VoidInvoiceEventData1|null
+     * @return ApplyCreditNoteEventData|ApplyDebitNoteEventData|ApplyPaymentEventData|ChangeInvoiceCollectionMethodEventData|IssueInvoiceEventData|RefundInvoiceEventData|RemovePaymentEventData|VoidInvoiceEventData|VoidRemainderEventData|null
      */
     public function getEventData()
     {
@@ -97,9 +97,9 @@ class InvoiceEvent implements \JsonSerializable
      * in the invoice field.
      *
      * @maps event_data
-     * @mapsBy anyOf(anyOf(ApplyCreditNoteEventData,ApplyDebitNoteEventData,ApplyPaymentEventData,ChangeInvoiceCollectionMethodEventData,IssueInvoiceEventData,RefundInvoiceEventData,RemovePaymentEventData,VoidInvoiceEventData,VoidInvoiceEventData1),null)
+     * @mapsBy anyOf(anyOf(ApplyCreditNoteEventData,ApplyDebitNoteEventData,ApplyPaymentEventData,ChangeInvoiceCollectionMethodEventData,IssueInvoiceEventData,RefundInvoiceEventData,RemovePaymentEventData,VoidInvoiceEventData,VoidRemainderEventData),null)
      *
-     * @param ApplyCreditNoteEventData|ApplyDebitNoteEventData|ApplyPaymentEventData|ChangeInvoiceCollectionMethodEventData|IssueInvoiceEventData|RefundInvoiceEventData|RemovePaymentEventData|VoidInvoiceEventData|VoidInvoiceEventData1|null $eventData
+     * @param ApplyCreditNoteEventData|ApplyDebitNoteEventData|ApplyPaymentEventData|ChangeInvoiceCollectionMethodEventData|IssueInvoiceEventData|RefundInvoiceEventData|RemovePaymentEventData|VoidInvoiceEventData|VoidRemainderEventData|null $eventData
      */
     public function setEventData($eventData): void
     {
@@ -166,7 +166,7 @@ class InvoiceEvent implements \JsonSerializable
                     $this->eventData,
                     'anyOf(anyOf(ApplyCreditNoteEventData,ApplyDebitNoteEventData,ApplyPaymentEventDa' .
                     'ta,ChangeInvoiceCollectionMethodEventData,IssueInvoiceEventData,RefundInvoiceEve' .
-                    'ntData,RemovePaymentEventData,VoidInvoiceEventData,VoidInvoiceEventData1),null)'
+                    'ntData,RemovePaymentEventData,VoidInvoiceEventData,VoidRemainderEventData),null)'
                 );
         }
         if (isset($this->timestamp)) {

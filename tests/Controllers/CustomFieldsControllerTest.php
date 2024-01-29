@@ -103,7 +103,7 @@ final class CustomFieldsControllerTest extends TestCase
             ->getCustomFieldsController()
             ->createMetadata(
                 $this->testData->getSubscriptionsResourceType(),
-                (string) $subscription->getId(),
+                $subscription->getId(),
                 $this->testData->getCreateMetadataRequest()
             );
 
@@ -129,7 +129,7 @@ final class CustomFieldsControllerTest extends TestCase
             ->getCustomFieldsController()
             ->createMetadata(
                 $this->testData->getCustomerResourceType(),
-                (string) $customer->getId(),
+                $customer->getId(),
                 $this->testData->getCreateMetadataRequest()
             );
 
@@ -157,7 +157,7 @@ final class CustomFieldsControllerTest extends TestCase
             ->getCustomFieldsController()
             ->createMetadata(
                 $this->testData->getSubscriptionsResourceType(),
-                (string) $subscription->getId(),
+                $subscription->getId(),
                 $this->testData->getCreateMetadataRequest()
             );
 

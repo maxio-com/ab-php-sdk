@@ -80,19 +80,14 @@ final class CustomFieldsControllerTestData
             $productHandle,
             $productFamily->getId()
         );
-        $paymentProfile = $this->paymentProfileLoader->load($customer->getId());
+        $creditCardPaymentProfile = $this->paymentProfileLoader->loadCreditCard($customer->getId());
 
-        return $this->subscriptionsLoader->load($customer->getId(), $product->getId(), $paymentProfile->getId());
+        return $this->subscriptionsLoader->load($customer->getId(), $product->getId(), $creditCardPaymentProfile->getId());
     }
 
     public function loadCustomer(): Customer
     {
         return $this->customerLoader->loadSimpleCustomerWithPredefinedData();
-    }
-
-    public function getMetadataValue(): string
-    {
-        return CustomFieldsTestData::METADATA_VALUE;
     }
 
     public function getCreateMetadataRequest(): CreateMetadataRequest

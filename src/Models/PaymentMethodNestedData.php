@@ -14,13 +14,16 @@ use stdClass;
 
 /**
  * A nested data structure detailing the method of payment
+ *
+ * @discriminator type
+ * @discriminatorType Payment Method Nested Data
  */
 class PaymentMethodNestedData implements \JsonSerializable
 {
     /**
      * @var string|null
      */
-    private $type = 'apple_pay';
+    private $type;
 
     /**
      * @var string|null
@@ -293,9 +296,7 @@ class PaymentMethodNestedData implements \JsonSerializable
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
-        if (isset($this->type)) {
-            $json['type']                  = $this->type;
-        }
+        $json['type']                      = $this->type ?? 'Payment Method Nested Data';
         if (isset($this->maskedAccountNumber)) {
             $json['masked_account_number'] = $this->maskedAccountNumber;
         }

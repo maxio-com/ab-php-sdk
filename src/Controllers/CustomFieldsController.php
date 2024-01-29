@@ -162,7 +162,15 @@ class CustomFieldsController extends BaseController
                 BodyParam::init($body)
             );
 
-        $_resHandler = $this->responseHandler()->type(Metafield::class, 1);
+        $_resHandler = $this->responseHandler()
+            ->throwErrorOn(
+                '422',
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    SingleErrorResponseException::class
+                )
+            )
+            ->type(Metafield::class, 1);
 
         return $this->execute($_reqBuilder, $_resHandler);
     }
@@ -232,7 +240,7 @@ class CustomFieldsController extends BaseController
      * Please pay special attention to the resource you use when creating metadata.
      *
      * @param string $resourceType the resource type to which the metafields belong
-     * @param string $resourceId The Chargify id of the customer or the subscription for which the
+     * @param int $resourceId The Chargify id of the customer or the subscription for which the
      *        metadata applies
      * @param CreateMetadataRequest|null $body
      *
@@ -240,11 +248,8 @@ class CustomFieldsController extends BaseController
      *
      * @throws ApiException Thrown if API call fails
      */
-    public function createMetadata(
-        string $resourceType,
-        string $resourceId,
-        ?CreateMetadataRequest $body = null
-    ): array {
+    public function createMetadata(string $resourceType, int $resourceId, ?CreateMetadataRequest $body = null): array
+    {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/{resource_type}/{resource_id}/metadata.json')
             ->auth('global')
             ->parameters(
@@ -259,7 +264,10 @@ class CustomFieldsController extends BaseController
         $_resHandler = $this->responseHandler()
             ->throwErrorOn(
                 '422',
-                ErrorType::init('Unprocessable Entity (WebDAV)', SingleErrorResponseException::class)
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    SingleErrorResponseException::class
+                )
             )
             ->type(Metadata::class, 1);
 
@@ -303,7 +311,7 @@ class CustomFieldsController extends BaseController
      * This method allows you to update the existing metadata associated with a subscription or customer.
      *
      * @param string $resourceType the resource type to which the metafields belong
-     * @param string $resourceId The Chargify id of the customer or the subscription for which the
+     * @param int $resourceId The Chargify id of the customer or the subscription for which the
      *        metadata applies
      * @param UpdateMetadataRequest|null $body
      *
@@ -311,11 +319,8 @@ class CustomFieldsController extends BaseController
      *
      * @throws ApiException Thrown if API call fails
      */
-    public function updateMetadata(
-        string $resourceType,
-        string $resourceId,
-        ?UpdateMetadataRequest $body = null
-    ): array {
+    public function updateMetadata(string $resourceType, int $resourceId, ?UpdateMetadataRequest $body = null): array
+    {
         $_reqBuilder = $this->requestBuilder(RequestMethod::PUT, '/{resource_type}/{resource_id}/metadata.json')
             ->auth('global')
             ->parameters(
@@ -359,7 +364,7 @@ class CustomFieldsController extends BaseController
      * of `true`.
      *
      * @param string $resourceType the resource type to which the metafields belong
-     * @param string $resourceId The Chargify id of the customer or the subscription for which the
+     * @param int $resourceId The Chargify id of the customer or the subscription for which the
      *        metadata applies
      * @param string|null $name Name of field to be removed.
      * @param string[]|null $names Names of fields to be removed. Use in query:
@@ -371,7 +376,7 @@ class CustomFieldsController extends BaseController
      */
     public function deleteMetadata(
         string $resourceType,
-        string $resourceId,
+        int $resourceId,
         ?string $name = null,
         ?array $names = null
     ): void {

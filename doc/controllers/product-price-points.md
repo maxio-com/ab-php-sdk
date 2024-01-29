@@ -646,7 +646,7 @@ Note: Currency Prices are not able to be created for custom product price points
 function createProductCurrencyPrices(
     int $productPricePointId,
     ?CreateProductCurrencyPricesRequest $body = null
-): ProductPricePointCurrencyPrice
+): CurrencyPricesResponse
 ```
 
 ## Parameters
@@ -658,7 +658,7 @@ function createProductCurrencyPrices(
 
 ## Response Type
 
-[`ProductPricePointCurrencyPrice`](../../doc/models/product-price-point-currency-price.md)
+[`CurrencyPricesResponse`](../../doc/models/currency-prices-response.md)
 
 ## Example Usage
 
@@ -697,9 +697,9 @@ $result = $productPricePointsController->createProductCurrencyPrices(
 {
   "currency_prices": [
     {
-      "id": 123,
+      "id": 100,
       "currency": "EUR",
-      "price": 100,
+      "price": 123,
       "formatted_price": "€123,00",
       "product_price_point_id": 32669,
       "role": "baseline"
@@ -727,7 +727,7 @@ Note: Currency Prices are not able to be updated for custom product price points
 function updateProductCurrencyPrices(
     int $productPricePointId,
     ?UpdateCurrencyPricesRequest $body = null
-): ProductPricePointCurrencyPrice
+): CurrencyPricesResponse
 ```
 
 ## Parameters
@@ -739,7 +739,7 @@ function updateProductCurrencyPrices(
 
 ## Response Type
 
-[`ProductPricePointCurrencyPrice`](../../doc/models/product-price-point-currency-price.md)
+[`CurrencyPricesResponse`](../../doc/models/currency-prices-response.md)
 
 ## Example Usage
 

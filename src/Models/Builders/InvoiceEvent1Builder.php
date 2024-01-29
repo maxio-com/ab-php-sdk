@@ -292,6 +292,15 @@ class InvoiceEvent1Builder
     }
 
     /**
+     * Sets reason field.
+     */
+    public function reason(?string $value): self
+    {
+        $this->instance->setReason($value);
+        return $this;
+    }
+
+    /**
      * Initializes a new invoice event 1 object.
      */
     public function build(): InvoiceEvent1

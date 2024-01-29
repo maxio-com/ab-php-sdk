@@ -68,7 +68,7 @@ $body = CreateOrUpdateCouponBuilder::init()
         CreateOrUpdatePercentageCouponBuilder::init(
             '15% off',
             '15OFF',
-            '15'
+            15
         )
             ->description('15% off for life')
             ->allowNegativeBalance(false)
@@ -167,7 +167,7 @@ $result = $couponsController->listCouponsForProductFamily($collect);
       "updated_at": "2016-10-21T17:06:11-04:00",
       "start_date": "2016-10-21T17:02:08-04:00",
       "end_date": null,
-      "percentage": 50,
+      "percentage": "50",
       "recurring": true,
       "duration_period_count": null,
       "duration_interval": 1,
@@ -193,7 +193,7 @@ $result = $couponsController->listCouponsForProductFamily($collect);
       "updated_at": "2016-10-21T17:06:11-04:00",
       "start_date": "2016-10-21T17:02:08-04:00",
       "end_date": null,
-      "percentage": 50,
+      "percentage": "50",
       "recurring": true,
       "duration_period_count": null,
       "duration_interval": 1,
@@ -219,7 +219,7 @@ $result = $couponsController->listCouponsForProductFamily($collect);
       "updated_at": "2016-10-21T17:06:11-04:00",
       "start_date": "2016-10-21T17:02:08-04:00",
       "end_date": null,
-      "percentage": 25,
+      "percentage": "25",
       "recurring": true,
       "duration_period_count": null,
       "duration_interval": 1,
@@ -326,7 +326,7 @@ $result = $couponsController->readCoupon(
     "updated_at": "2017-11-08T10:01:15-05:00",
     "start_date": "2017-11-08T10:01:15-05:00",
     "end_date": null,
-    "percentage": 33.3333,
+    "percentage": "33.3333",
     "duration_period_count": null,
     "duration_interval": null,
     "duration_interval_unit": null,
@@ -378,7 +378,7 @@ $body = CreateOrUpdateCouponBuilder::init()
         CreateOrUpdatePercentageCouponBuilder::init(
             '15% off',
             '15OFF',
-            '15'
+            15
         )
             ->description('15% off for life')
             ->allowNegativeBalance(false)
@@ -572,7 +572,7 @@ $result = $couponsController->listCoupons($collect);
       "product_family_name": "string",
       "start_date": "string",
       "end_date": "string",
-      "percentage": 0,
+      "percentage": "10",
       "recurring": true,
       "recurring_scheme": "do_not_recur",
       "duration_period_count": 0,

@@ -387,7 +387,7 @@ class Coupon implements \JsonSerializable
     /**
      * Returns Percentage.
      */
-    public function getPercentage(): ?float
+    public function getPercentage(): ?string
     {
         if (count($this->percentage) == 0) {
             return null;
@@ -400,7 +400,7 @@ class Coupon implements \JsonSerializable
      *
      * @maps percentage
      */
-    public function setPercentage(?float $percentage): void
+    public function setPercentage(?string $percentage): void
     {
         $this->percentage['value'] = $percentage;
     }

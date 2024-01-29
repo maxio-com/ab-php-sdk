@@ -15,7 +15,7 @@ use stdClass;
 class PaymentMethodCreditCardType implements \JsonSerializable
 {
     /**
-     * @var string|null
+     * @var string
      */
     private $cardBrand;
 
@@ -30,19 +30,31 @@ class PaymentMethodCreditCardType implements \JsonSerializable
     private $lastFour = [];
 
     /**
-     * @var string|null
+     * @var string
      */
     private $maskedCardNumber;
 
     /**
-     * @var string|null
+     * @var string
      */
-    private $type = 'credit_card';
+    private $type;
+
+    /**
+     * @param string $cardBrand
+     * @param string $maskedCardNumber
+     * @param string $type
+     */
+    public function __construct(string $cardBrand, string $maskedCardNumber, string $type)
+    {
+        $this->cardBrand = $cardBrand;
+        $this->maskedCardNumber = $maskedCardNumber;
+        $this->type = $type;
+    }
 
     /**
      * Returns Card Brand.
      */
-    public function getCardBrand(): ?string
+    public function getCardBrand(): string
     {
         return $this->cardBrand;
     }
@@ -50,9 +62,10 @@ class PaymentMethodCreditCardType implements \JsonSerializable
     /**
      * Sets Card Brand.
      *
+     * @required
      * @maps card_brand
      */
-    public function setCardBrand(?string $cardBrand): void
+    public function setCardBrand(string $cardBrand): void
     {
         $this->cardBrand = $cardBrand;
     }
@@ -107,7 +120,7 @@ class PaymentMethodCreditCardType implements \JsonSerializable
     /**
      * Returns Masked Card Number.
      */
-    public function getMaskedCardNumber(): ?string
+    public function getMaskedCardNumber(): string
     {
         return $this->maskedCardNumber;
     }
@@ -115,9 +128,10 @@ class PaymentMethodCreditCardType implements \JsonSerializable
     /**
      * Sets Masked Card Number.
      *
+     * @required
      * @maps masked_card_number
      */
-    public function setMaskedCardNumber(?string $maskedCardNumber): void
+    public function setMaskedCardNumber(string $maskedCardNumber): void
     {
         $this->maskedCardNumber = $maskedCardNumber;
     }
@@ -125,7 +139,7 @@ class PaymentMethodCreditCardType implements \JsonSerializable
     /**
      * Returns Type.
      */
-    public function getType(): ?string
+    public function getType(): string
     {
         return $this->type;
     }
@@ -133,9 +147,10 @@ class PaymentMethodCreditCardType implements \JsonSerializable
     /**
      * Sets Type.
      *
+     * @required
      * @maps type
      */
-    public function setType(?string $type): void
+    public function setType(string $type): void
     {
         $this->type = $type;
     }
@@ -152,21 +167,15 @@ class PaymentMethodCreditCardType implements \JsonSerializable
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
-        if (isset($this->cardBrand)) {
-            $json['card_brand']         = $this->cardBrand;
-        }
+        $json['card_brand']          = $this->cardBrand;
         if (isset($this->cardExpiration)) {
-            $json['card_expiration']    = $this->cardExpiration;
+            $json['card_expiration'] = $this->cardExpiration;
         }
         if (!empty($this->lastFour)) {
-            $json['last_four']          = $this->lastFour['value'];
+            $json['last_four']       = $this->lastFour['value'];
         }
-        if (isset($this->maskedCardNumber)) {
-            $json['masked_card_number'] = $this->maskedCardNumber;
-        }
-        if (isset($this->type)) {
-            $json['type']               = $this->type;
-        }
+        $json['masked_card_number']  = $this->maskedCardNumber;
+        $json['type']                = $this->type;
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

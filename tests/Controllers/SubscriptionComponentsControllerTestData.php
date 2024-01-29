@@ -66,12 +66,12 @@ final class SubscriptionComponentsControllerTestData
         array $components
     ): Subscription
     {
-        $paymentProfile = $this->paymentProfileLoader->load($customerId);
+        $creditCardPaymentProfile = $this->paymentProfileLoader->loadCreditCard($customerId);
 
         return $this->subscriptionsLoader->loadWithComponents(
             $customerId,
             $productId,
-            $paymentProfile->getId(),
+            $creditCardPaymentProfile->getId(),
             $components
         );
     }

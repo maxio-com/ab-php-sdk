@@ -47,7 +47,7 @@ class AllocateComponents implements \JsonSerializable
     /**
      * @var string|null
      */
-    private $paymentCollectionMethod = PaymentCollectionMethod1::AUTOMATIC;
+    private $paymentCollectionMethod;
 
     /**
      * @var bool|null
@@ -224,7 +224,7 @@ class AllocateComponents implements \JsonSerializable
      * subscription
      *
      * @maps payment_collection_method
-     * @factory \AdvancedBillingLib\Models\PaymentCollectionMethod1::checkValue
+     * @factory \AdvancedBillingLib\Models\CollectionMethod::checkValue
      */
     public function setPaymentCollectionMethod(?string $paymentCollectionMethod): void
     {
@@ -284,7 +284,7 @@ class AllocateComponents implements \JsonSerializable
             $json['downgrade_credit']           = CreditType::checkValue($this->downgradeCredit['value']);
         }
         if (isset($this->paymentCollectionMethod)) {
-            $json['payment_collection_method']  = PaymentCollectionMethod1::checkValue($this->paymentCollectionMethod);
+            $json['payment_collection_method']  = CollectionMethod::checkValue($this->paymentCollectionMethod);
         }
         if (isset($this->initiateDunning)) {
             $json['initiate_dunning']           = $this->initiateDunning;

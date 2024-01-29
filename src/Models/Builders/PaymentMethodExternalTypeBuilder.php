@@ -33,45 +33,9 @@ class PaymentMethodExternalTypeBuilder
     /**
      * Initializes a new payment method external type Builder object.
      */
-    public static function init(): self
+    public static function init(string $details, string $kind, string $memo, string $type): self
     {
-        return new self(new PaymentMethodExternalType());
-    }
-
-    /**
-     * Sets details field.
-     */
-    public function details(?string $value): self
-    {
-        $this->instance->setDetails($value);
-        return $this;
-    }
-
-    /**
-     * Sets kind field.
-     */
-    public function kind(?string $value): self
-    {
-        $this->instance->setKind($value);
-        return $this;
-    }
-
-    /**
-     * Sets memo field.
-     */
-    public function memo(?string $value): self
-    {
-        $this->instance->setMemo($value);
-        return $this;
-    }
-
-    /**
-     * Sets type field.
-     */
-    public function type(?string $value): self
-    {
-        $this->instance->setType($value);
-        return $this;
+        return new self(new PaymentMethodExternalType($details, $kind, $memo, $type));
     }
 
     /**

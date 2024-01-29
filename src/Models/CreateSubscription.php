@@ -54,7 +54,7 @@ class CreateSubscription implements \JsonSerializable
     /**
      * @var string|null
      */
-    private $paymentCollectionMethod = PaymentCollectionMethod::AUTOMATIC;
+    private $paymentCollectionMethod = CollectionMethod::AUTOMATIC;
 
     /**
      * @var string|null
@@ -431,7 +431,7 @@ class CreateSubscription implements \JsonSerializable
      * options are - `remittance`, `automatic`, `prepaid`.
      *
      * @maps payment_collection_method
-     * @factory \AdvancedBillingLib\Models\PaymentCollectionMethod::checkValue
+     * @factory \AdvancedBillingLib\Models\CollectionMethod::checkValue
      */
     public function setPaymentCollectionMethod(?string $paymentCollectionMethod): void
     {
@@ -1434,7 +1434,7 @@ class CreateSubscription implements \JsonSerializable
         }
         if (isset($this->paymentCollectionMethod)) {
             $json['payment_collection_method']             =
-                PaymentCollectionMethod::checkValue(
+                CollectionMethod::checkValue(
                     $this->paymentCollectionMethod
                 );
         }

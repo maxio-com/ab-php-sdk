@@ -272,7 +272,7 @@ You may wish to redirect customers to different pages depending on whether their
 8. Optionally, you can use the applied "msg" param in the `redirect_url` to determine whether it was successful or not
 
 ```php
-function createPaymentProfile(?CreatePaymentProfileRequest $body = null): CreatePaymentProfileResponse
+function createPaymentProfile(?CreatePaymentProfileRequest $body = null): PaymentProfileResponse
 ```
 
 ## Parameters
@@ -283,7 +283,7 @@ function createPaymentProfile(?CreatePaymentProfileRequest $body = null): Create
 
 ## Response Type
 
-[`CreatePaymentProfileResponse`](../../doc/models/create-payment-profile-response.md)
+[`PaymentProfileResponse`](../../doc/models/payment-profile-response.md)
 
 ## Example Usage
 
@@ -295,8 +295,8 @@ $body = CreatePaymentProfileRequestBuilder::init(
         ->bankName('Best Bank')
         ->bankRoutingNumber('021000089')
         ->bankAccountNumber('111111111111')
-        ->bankAccountType('checking')
-        ->bankAccountHolderType('business')
+        ->bankAccountType(BankAccountType::CHECKING)
+        ->bankAccountHolderType(BankAccountHolderType::BUSINESS)
         ->build()
 )->build();
 
@@ -311,6 +311,7 @@ $result = $paymentProfilesController->createPaymentProfile($body);
     "first_name": "Jessica",
     "last_name": "Test",
     "card_type": "visa",
+    "masked_card_number": "XXXX-XXXX-XXXX-1111",
     "expiration_month": 10,
     "expiration_year": 2018,
     "customer_id": 19195410,
@@ -357,7 +358,7 @@ function listPaymentProfiles(array $options): array
 
 ## Response Type
 
-[`ReadPaymentProfileResponse[]`](../../doc/models/read-payment-profile-response.md)
+[`PaymentProfileResponse[]`](../../doc/models/payment-profile-response.md)
 
 ## Example Usage
 
@@ -469,7 +470,7 @@ Example response for Bank Account:
 ```
 
 ```php
-function readPaymentProfile(int $paymentProfileId): ReadPaymentProfileResponse
+function readPaymentProfile(int $paymentProfileId): PaymentProfileResponse
 ```
 
 ## Parameters
@@ -480,7 +481,7 @@ function readPaymentProfile(int $paymentProfileId): ReadPaymentProfileResponse
 
 ## Response Type
 
-[`ReadPaymentProfileResponse`](../../doc/models/read-payment-profile-response.md)
+[`PaymentProfileResponse`](../../doc/models/payment-profile-response.md)
 
 ## Example Usage
 
@@ -567,7 +568,7 @@ The result will be that you have updated the billing information for the card, y
 function updatePaymentProfile(
     int $paymentProfileId,
     ?UpdatePaymentProfileRequest $body = null
-): UpdatePaymentProfileResponse
+): PaymentProfileResponse
 ```
 
 ## Parameters
@@ -579,7 +580,7 @@ function updatePaymentProfile(
 
 ## Response Type
 
-[`UpdatePaymentProfileResponse`](../../doc/models/update-payment-profile-response.md)
+[`PaymentProfileResponse`](../../doc/models/payment-profile-response.md)
 
 ## Example Usage
 
@@ -679,6 +680,7 @@ $paymentProfilesController->deleteUnusedPaymentProfile($paymentProfileId);
 
 | HTTP Status Code | Error Description | Exception Class |
 |  --- | --- | --- |
+| 404 | Not Found | `ApiException` |
 | 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
 
 
@@ -900,6 +902,7 @@ $result = $paymentProfilesController->updateSubscriptionDefaultPaymentProfile(
 
 | HTTP Status Code | Error Description | Exception Class |
 |  --- | --- | --- |
+| 404 | Not Found | `ApiException` |
 | 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
 
 

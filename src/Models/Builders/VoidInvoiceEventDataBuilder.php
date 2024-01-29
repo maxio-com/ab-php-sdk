@@ -34,9 +34,9 @@ class VoidInvoiceEventDataBuilder
     /**
      * Initializes a new void invoice event data Builder object.
      */
-    public static function init(): self
+    public static function init(bool $isAdvanceInvoice, string $reason): self
     {
-        return new self(new VoidInvoiceEventData());
+        return new self(new VoidInvoiceEventData($isAdvanceInvoice, $reason));
     }
 
     /**
@@ -72,15 +72,6 @@ class VoidInvoiceEventDataBuilder
     public function transactionTime(?\DateTime $value): self
     {
         $this->instance->setTransactionTime($value);
-        return $this;
-    }
-
-    /**
-     * Sets is advance invoice field.
-     */
-    public function isAdvanceInvoice(?bool $value): self
-    {
-        $this->instance->setIsAdvanceInvoice($value);
         return $this;
     }
 

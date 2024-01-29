@@ -32,7 +32,7 @@ class UpdateComponentPricePoint implements \JsonSerializable
     /**
      * @var bool|null
      */
-    private $useSiteExchangeRate = true;
+    private $useSiteExchangeRate;
 
     /**
      * @var bool|null

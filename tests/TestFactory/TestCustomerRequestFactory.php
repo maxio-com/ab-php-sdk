@@ -31,7 +31,7 @@ final class TestCustomerRequestFactory
         return CreateCustomerBuilder::init($firstName, $lastName, $email)
             ->ccEmails(CustomerTestData::CC_EMAILS)
             ->organization(CustomerTestData::ORGANIZATION)
-            ->reference(CustomerTestData::REFERENCE)
+            ->reference(CustomerTestData::REFERENCE . rand())
             ->address(CustomerTestData::ADDRESS)
             ->address2(CustomerTestData::ADDRESS_TWO)
             ->city(CustomerTestData::CITY)

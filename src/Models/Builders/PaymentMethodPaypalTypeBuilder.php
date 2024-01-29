@@ -33,27 +33,9 @@ class PaymentMethodPaypalTypeBuilder
     /**
      * Initializes a new payment method paypal type Builder object.
      */
-    public static function init(): self
+    public static function init(string $email, string $type): self
     {
-        return new self(new PaymentMethodPaypalType());
-    }
-
-    /**
-     * Sets email field.
-     */
-    public function email(?string $value): self
-    {
-        $this->instance->setEmail($value);
-        return $this;
-    }
-
-    /**
-     * Sets type field.
-     */
-    public function type(?string $value): self
-    {
-        $this->instance->setType($value);
-        return $this;
+        return new self(new PaymentMethodPaypalType($email, $type));
     }
 
     /**

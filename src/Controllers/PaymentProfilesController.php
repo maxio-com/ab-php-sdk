@@ -16,12 +16,9 @@ use AdvancedBillingLib\Exceptions\ErrorStringMapResponseException;
 use AdvancedBillingLib\Models\BankAccountResponse;
 use AdvancedBillingLib\Models\BankAccountVerificationRequest;
 use AdvancedBillingLib\Models\CreatePaymentProfileRequest;
-use AdvancedBillingLib\Models\CreatePaymentProfileResponse;
 use AdvancedBillingLib\Models\GetOneTimeTokenRequest;
 use AdvancedBillingLib\Models\PaymentProfileResponse;
-use AdvancedBillingLib\Models\ReadPaymentProfileResponse;
 use AdvancedBillingLib\Models\UpdatePaymentProfileRequest;
-use AdvancedBillingLib\Models\UpdatePaymentProfileResponse;
 use Core\Request\Parameters\BodyParam;
 use Core\Request\Parameters\HeaderParam;
 use Core\Request\Parameters\QueryParam;
@@ -346,11 +343,11 @@ class PaymentProfilesController extends BaseController
      *        current vault. If the customer, bank account, and mandate already exist in your
      *        vault, follow the Import example to link the payment profile into Chargify.
      *
-     * @return CreatePaymentProfileResponse Response from the API call
+     * @return PaymentProfileResponse Response from the API call
      *
      * @throws ApiException Thrown if API call fails
      */
-    public function createPaymentProfile(?CreatePaymentProfileRequest $body = null): CreatePaymentProfileResponse
+    public function createPaymentProfile(?CreatePaymentProfileRequest $body = null): PaymentProfileResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/payment_profiles.json')
             ->auth('global')
@@ -365,7 +362,7 @@ class PaymentProfilesController extends BaseController
                     ErrorListResponseException::class
                 )
             )
-            ->type(CreatePaymentProfileResponse::class);
+            ->type(PaymentProfileResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
     }
@@ -376,7 +373,7 @@ class PaymentProfilesController extends BaseController
      *
      * @param array $options Array with all options for search
      *
-     * @return ReadPaymentProfileResponse[] Response from the API call
+     * @return PaymentProfileResponse[] Response from the API call
      *
      * @throws ApiException Thrown if API call fails
      */
@@ -390,7 +387,7 @@ class PaymentProfilesController extends BaseController
                 QueryParam::init('customer_id', $options)->commaSeparated()->extract('customerId')
             );
 
-        $_resHandler = $this->responseHandler()->type(ReadPaymentProfileResponse::class, 1);
+        $_resHandler = $this->responseHandler()->type(PaymentProfileResponse::class, 1);
 
         return $this->execute($_reqBuilder, $_resHandler);
     }
@@ -435,11 +432,11 @@ class PaymentProfilesController extends BaseController
      *
      * @param int $paymentProfileId The Chargify id of the payment profile
      *
-     * @return ReadPaymentProfileResponse Response from the API call
+     * @return PaymentProfileResponse Response from the API call
      *
      * @throws ApiException Thrown if API call fails
      */
-    public function readPaymentProfile(int $paymentProfileId): ReadPaymentProfileResponse
+    public function readPaymentProfile(int $paymentProfileId): PaymentProfileResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/payment_profiles/{payment_profile_id}.json')
             ->auth('global')
@@ -447,7 +444,7 @@ class PaymentProfilesController extends BaseController
 
         $_resHandler = $this->responseHandler()
             ->throwErrorOn('404', ErrorType::init('Not Found'))
-            ->type(ReadPaymentProfileResponse::class);
+            ->type(PaymentProfileResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
     }
@@ -503,14 +500,14 @@ class PaymentProfilesController extends BaseController
      * @param int $paymentProfileId The Chargify id of the payment profile
      * @param UpdatePaymentProfileRequest|null $body
      *
-     * @return UpdatePaymentProfileResponse Response from the API call
+     * @return PaymentProfileResponse Response from the API call
      *
      * @throws ApiException Thrown if API call fails
      */
     public function updatePaymentProfile(
         int $paymentProfileId,
         ?UpdatePaymentProfileRequest $body = null
-    ): UpdatePaymentProfileResponse {
+    ): PaymentProfileResponse {
         $_reqBuilder = $this->requestBuilder(RequestMethod::PUT, '/payment_profiles/{payment_profile_id}.json')
             ->auth('global')
             ->parameters(
@@ -528,7 +525,7 @@ class PaymentProfilesController extends BaseController
                     ErrorStringMapResponseException::class
                 )
             )
-            ->type(UpdatePaymentProfileResponse::class);
+            ->type(PaymentProfileResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
     }
@@ -552,6 +549,7 @@ class PaymentProfilesController extends BaseController
             ->parameters(TemplateParam::init('payment_profile_id', $paymentProfileId)->required());
 
         $_resHandler = $this->responseHandler()
+            ->throwErrorOn('404', ErrorType::init('Not Found'))
             ->throwErrorOn(
                 '422',
                 ErrorType::initWithErrorTemplate(
@@ -694,6 +692,7 @@ class PaymentProfilesController extends BaseController
             );
 
         $_resHandler = $this->responseHandler()
+            ->throwErrorOn('404', ErrorType::init('Not Found'))
             ->throwErrorOn(
                 '422',
                 ErrorType::initWithErrorTemplate(

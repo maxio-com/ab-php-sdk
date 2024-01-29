@@ -119,7 +119,7 @@ final class CouponsControllerTest extends TestCase
         );
         $updatedName = 'updated coupon name 1';
         $updatedCode = 'UPDATED_COUPON_CODE_1';
-        $updatedPercentage = '25';
+        $updatedPercentage = '25.0';
 
         $response = $this->client
             ->getCouponsController()

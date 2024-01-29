@@ -11,7 +11,7 @@
 |  --- | --- | --- | --- | --- | --- |
 | `chargifyToken` | `?string` | Optional | Token received after sending billing informations using chargify.js. | getChargifyToken(): ?string | setChargifyToken(?string chargifyToken): void |
 | `id` | `?int` | Optional | - | getId(): ?int | setId(?int id): void |
-| `paymentType` | [`?string(PaymentType)`](../../doc/models/payment-type.md) | Optional | **Default**: `PaymentType::CREDIT_CARD` | getPaymentType(): ?string | setPaymentType(?string paymentType): void |
+| `paymentType` | [`?string(PaymentType)`](../../doc/models/payment-type.md) | Optional | - | getPaymentType(): ?string | setPaymentType(?string paymentType): void |
 | `firstName` | `?string` | Optional | First name on card or bank account. If omitted, the first_name from customer attributes will be used. | getFirstName(): ?string | setFirstName(?string firstName): void |
 | `lastName` | `?string` | Optional | Last name on card or bank account. If omitted, the last_name from customer attributes will be used. | getLastName(): ?string | setLastName(?string lastName): void |
 | `maskedCardNumber` | `?string` | Optional | - | getMaskedCardNumber(): ?string | setMaskedCardNumber(?string maskedCardNumber): void |
@@ -38,8 +38,8 @@
 | `bankRoutingNumber` | `?string` | Optional | (Required when creating with ACH. Optional when creating a subscription with GoCardless). The routing number of the bank. It becomes bank_code while passing via GoCardless API | getBankRoutingNumber(): ?string | setBankRoutingNumber(?string bankRoutingNumber): void |
 | `bankAccountNumber` | `?string` | Optional | (Required when creating with ACH, GoCardless, Stripe BECS Direct Debit and bank_iban is blank) The customerʼs bank account number | getBankAccountNumber(): ?string | setBankAccountNumber(?string bankAccountNumber): void |
 | `bankBranchCode` | `?string` | Optional | (Optional when creating with GoCardless, required with Stripe BECS Direct Debit) Branch code. Alternatively, an IBAN can be provided | getBankBranchCode(): ?string | setBankBranchCode(?string bankBranchCode): void |
-| `bankAccountType` | `?string` | Optional | - | getBankAccountType(): ?string | setBankAccountType(?string bankAccountType): void |
-| `bankAccountHolderType` | `?string` | Optional | - | getBankAccountHolderType(): ?string | setBankAccountHolderType(?string bankAccountHolderType): void |
+| `bankAccountType` | [`?string(BankAccountType)`](../../doc/models/bank-account-type.md) | Optional | Defaults to checking<br>**Default**: `BankAccountType::CHECKING` | getBankAccountType(): ?string | setBankAccountType(?string bankAccountType): void |
+| `bankAccountHolderType` | [`?string(BankAccountHolderType)`](../../doc/models/bank-account-holder-type.md) | Optional | Defaults to personal | getBankAccountHolderType(): ?string | setBankAccountHolderType(?string bankAccountHolderType): void |
 | `lastFour` | `?string` | Optional | (Optional) Used for creating subscription with payment profile imported using vault_token, for proper display in Advanced Billing UI | getLastFour(): ?string | setLastFour(?string lastFour): void |
 
 ## Example (as JSON)
@@ -47,9 +47,10 @@
 ```json
 {
   "chargify_token": "tok_9g6hw85pnpt6knmskpwp4ttt",
-  "payment_type": "credit_card",
   "full_number": "5424000000000015",
+  "bank_account_type": "checking",
   "id": 76,
+  "payment_type": "paypal_account",
   "first_name": "first_name8",
   "last_name": "last_name6"
 }

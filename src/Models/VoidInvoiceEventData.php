@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
@@ -39,9 +40,24 @@ class VoidInvoiceEventData implements \JsonSerializable
     private $transactionTime;
 
     /**
-     * @var bool|null
+     * @var bool
      */
     private $isAdvanceInvoice;
+
+    /**
+     * @var string
+     */
+    private $reason;
+
+    /**
+     * @param bool $isAdvanceInvoice
+     * @param string $reason
+     */
+    public function __construct(bool $isAdvanceInvoice, string $reason)
+    {
+        $this->isAdvanceInvoice = $isAdvanceInvoice;
+        $this->reason = $reason;
+    }
 
     /**
      * Returns Credit Note Attributes.
@@ -55,6 +71,7 @@ class VoidInvoiceEventData implements \JsonSerializable
      * Sets Credit Note Attributes.
      *
      * @maps credit_note_attributes
+     * @mapsBy anyOf(oneOf(CreditNote),null)
      */
     public function setCreditNoteAttributes(?CreditNote $creditNoteAttributes): void
     {
@@ -126,7 +143,7 @@ class VoidInvoiceEventData implements \JsonSerializable
      * Returns Is Advance Invoice.
      * If true, the invoice is an advance invoice.
      */
-    public function getIsAdvanceInvoice(): ?bool
+    public function getIsAdvanceInvoice(): bool
     {
         return $this->isAdvanceInvoice;
     }
@@ -135,11 +152,33 @@ class VoidInvoiceEventData implements \JsonSerializable
      * Sets Is Advance Invoice.
      * If true, the invoice is an advance invoice.
      *
+     * @required
      * @maps is_advance_invoice
      */
-    public function setIsAdvanceInvoice(?bool $isAdvanceInvoice): void
+    public function setIsAdvanceInvoice(bool $isAdvanceInvoice): void
     {
         $this->isAdvanceInvoice = $isAdvanceInvoice;
+    }
+
+    /**
+     * Returns Reason.
+     * The reason for the void.
+     */
+    public function getReason(): string
+    {
+        return $this->reason;
+    }
+
+    /**
+     * Sets Reason.
+     * The reason for the void.
+     *
+     * @required
+     * @maps reason
+     */
+    public function setReason(string $reason): void
+    {
+        $this->reason = $reason;
     }
 
     /**
@@ -154,21 +193,16 @@ class VoidInvoiceEventData implements \JsonSerializable
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
-        if (isset($this->creditNoteAttributes)) {
-            $json['credit_note_attributes'] = $this->creditNoteAttributes;
-        }
-        if (isset($this->memo)) {
-            $json['memo']                   = $this->memo;
-        }
-        if (isset($this->appliedAmount)) {
-            $json['applied_amount']         = $this->appliedAmount;
-        }
-        if (isset($this->transactionTime)) {
-            $json['transaction_time']       = DateTimeHelper::toRfc3339DateTime($this->transactionTime);
-        }
-        if (isset($this->isAdvanceInvoice)) {
-            $json['is_advance_invoice']     = $this->isAdvanceInvoice;
-        }
+        $json['credit_note_attributes'] =
+            ApiHelper::getJsonHelper()->verifyTypes(
+                $this->creditNoteAttributes,
+                'anyOf(oneOf(CreditNote),null)'
+            );
+        $json['memo']                   = $this->memo;
+        $json['applied_amount']         = $this->appliedAmount;
+        $json['transaction_time']       = DateTimeHelper::toRfc3339DateTime($this->transactionTime);
+        $json['is_advance_invoice']     = $this->isAdvanceInvoice;
+        $json['reason']                 = $this->reason;
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

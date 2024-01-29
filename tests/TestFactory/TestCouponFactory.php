@@ -32,7 +32,7 @@ final class TestCouponFactory
             ->updatedAt($updatedAt)
             ->startDate($startDate)
             ->endDate(CouponTestData::END_DATE)
-            ->percentage((float) CouponTestData::PERCENTAGE)
+            ->percentage(CouponTestData::PERCENTAGE)
             ->recurring(CouponTestData::RECURRING)
             ->recurringScheme(CouponTestData::RECURRING_SCHEME)
             ->durationPeriodCount(CouponTestData::DURATION_PERIOD_COUNT)

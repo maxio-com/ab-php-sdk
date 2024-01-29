@@ -33,27 +33,22 @@ class RemovePaymentEventDataBuilder
     /**
      * Initializes a new remove payment event data Builder object.
      */
-    public static function init(): self
-    {
-        return new self(new RemovePaymentEventData());
-    }
-
-    /**
-     * Sets transaction id field.
-     */
-    public function transactionId(?int $value): self
-    {
-        $this->instance->setTransactionId($value);
-        return $this;
-    }
-
-    /**
-     * Sets memo field.
-     */
-    public function memo(?string $value): self
-    {
-        $this->instance->setMemo($value);
-        return $this;
+    public static function init(
+        int $transactionId,
+        string $memo,
+        string $appliedAmount,
+        \DateTime $transactionTime,
+        $paymentMethod,
+        bool $prepayment
+    ): self {
+        return new self(new RemovePaymentEventData(
+            $transactionId,
+            $memo,
+            $appliedAmount,
+            $transactionTime,
+            $paymentMethod,
+            $prepayment
+        ));
     }
 
     /**
@@ -62,42 +57,6 @@ class RemovePaymentEventDataBuilder
     public function originalAmount(?string $value): self
     {
         $this->instance->setOriginalAmount($value);
-        return $this;
-    }
-
-    /**
-     * Sets applied amount field.
-     */
-    public function appliedAmount(?string $value): self
-    {
-        $this->instance->setAppliedAmount($value);
-        return $this;
-    }
-
-    /**
-     * Sets transaction time field.
-     */
-    public function transactionTime(?\DateTime $value): self
-    {
-        $this->instance->setTransactionTime($value);
-        return $this;
-    }
-
-    /**
-     * Sets payment method field.
-     */
-    public function paymentMethod($value): self
-    {
-        $this->instance->setPaymentMethod($value);
-        return $this;
-    }
-
-    /**
-     * Sets prepayment field.
-     */
-    public function prepayment(?bool $value): self
-    {
-        $this->instance->setPrepayment($value);
         return $this;
     }
 

@@ -1,0 +1,66 @@
+<?php
+
+declare(strict_types=1);
+
+/*
+ * AdvancedBilling
+ *
+ * This file was automatically generated for Maxio by APIMATIC v3.0 ( https://www.apimatic.io ).
+ */
+
+namespace AdvancedBillingLib\Models\Builders;
+
+use AdvancedBillingLib\Models\AppliedCreditNoteData;
+use Core\Utils\CoreHelper;
+
+/**
+ * Builder for model AppliedCreditNoteData
+ *
+ * @see AppliedCreditNoteData
+ */
+class AppliedCreditNoteDataBuilder
+{
+    /**
+     * @var AppliedCreditNoteData
+     */
+    private $instance;
+
+    private function __construct(AppliedCreditNoteData $instance)
+    {
+        $this->instance = $instance;
+    }
+
+    /**
+     * Initializes a new applied credit note data Builder object.
+     */
+    public static function init(): self
+    {
+        return new self(new AppliedCreditNoteData());
+    }
+
+    /**
+     * Sets uid field.
+     */
+    public function uid(?string $value): self
+    {
+        $this->instance->setUid($value);
+        return $this;
+    }
+
+    /**
+     * Sets number field.
+     */
+    public function number(?string $value): self
+    {
+        $this->instance->setNumber($value);
+        return $this;
+    }
+
+    /**
+     * Initializes a new applied credit note data object.
+     */
+    public function build(): AppliedCreditNoteData
+    {
+        return CoreHelper::clone($this->instance);
+    }
+}

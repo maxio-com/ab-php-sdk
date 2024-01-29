@@ -9,7 +9,7 @@
 
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
-| `transactionTime` | `?string` | Optional | - | getTransactionTime(): ?string | setTransactionTime(?string transactionTime): void |
+| `transactionTime` | `?DateTime` | Optional | - | getTransactionTime(): ?\DateTime | setTransactionTime(?\DateTime transactionTime): void |
 | `memo` | `?string` | Optional | - | getMemo(): ?string | setMemo(?string memo): void |
 | `originalAmount` | `?string` | Optional | - | getOriginalAmount(): ?string | setOriginalAmount(?string originalAmount): void |
 | `appliedAmount` | `?string` | Optional | - | getAppliedAmount(): ?string | setAppliedAmount(?string appliedAmount): void |
@@ -24,7 +24,7 @@
 
 ```json
 {
-  "transaction_time": "transaction_time4",
+  "transaction_time": "2016-03-13T12:52:32.123Z",
   "memo": "memo6",
   "original_amount": "original_amount6",
   "applied_amount": "applied_amount6",

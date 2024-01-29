@@ -19,11 +19,11 @@ use AdvancedBillingLib\Models\BulkCreateProductPricePointsRequest;
 use AdvancedBillingLib\Models\BulkCreateProductPricePointsResponse;
 use AdvancedBillingLib\Models\CreateProductCurrencyPricesRequest;
 use AdvancedBillingLib\Models\CreateProductPricePointRequest;
+use AdvancedBillingLib\Models\CurrencyPricesResponse;
 use AdvancedBillingLib\Models\IncludeNotNull;
 use AdvancedBillingLib\Models\ListProductPricePointsResponse;
 use AdvancedBillingLib\Models\ListProductsPricePointsInclude;
 use AdvancedBillingLib\Models\PricePointType;
-use AdvancedBillingLib\Models\ProductPricePointCurrencyPrice;
 use AdvancedBillingLib\Models\ProductPricePointResponse;
 use AdvancedBillingLib\Models\ProductResponse;
 use AdvancedBillingLib\Models\SortingDirection;
@@ -323,14 +323,14 @@ class ProductPricePointsController extends BaseController
      * @param int $productPricePointId The Chargify id of the product price point
      * @param CreateProductCurrencyPricesRequest|null $body
      *
-     * @return ProductPricePointCurrencyPrice Response from the API call
+     * @return CurrencyPricesResponse Response from the API call
      *
      * @throws ApiException Thrown if API call fails
      */
     public function createProductCurrencyPrices(
         int $productPricePointId,
         ?CreateProductCurrencyPricesRequest $body = null
-    ): ProductPricePointCurrencyPrice {
+    ): CurrencyPricesResponse {
         $_reqBuilder = $this->requestBuilder(
             RequestMethod::POST,
             '/product_price_points/{product_price_point_id}/currency_prices.json'
@@ -350,7 +350,7 @@ class ProductPricePointsController extends BaseController
                     ErrorArrayMapResponseException::class
                 )
             )
-            ->type(ProductPricePointCurrencyPrice::class);
+            ->type(CurrencyPricesResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
     }
@@ -368,14 +368,14 @@ class ProductPricePointsController extends BaseController
      * @param int $productPricePointId The Chargify id of the product price point
      * @param UpdateCurrencyPricesRequest|null $body
      *
-     * @return ProductPricePointCurrencyPrice Response from the API call
+     * @return CurrencyPricesResponse Response from the API call
      *
      * @throws ApiException Thrown if API call fails
      */
     public function updateProductCurrencyPrices(
         int $productPricePointId,
         ?UpdateCurrencyPricesRequest $body = null
-    ): ProductPricePointCurrencyPrice {
+    ): CurrencyPricesResponse {
         $_reqBuilder = $this->requestBuilder(
             RequestMethod::PUT,
             '/product_price_points/{product_price_point_id}/currency_prices.json'
@@ -395,7 +395,7 @@ class ProductPricePointsController extends BaseController
                     ErrorArrayMapResponseException::class
                 )
             )
-            ->type(ProductPricePointCurrencyPrice::class);
+            ->type(CurrencyPricesResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
     }

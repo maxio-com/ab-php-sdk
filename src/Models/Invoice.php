@@ -98,7 +98,7 @@ class Invoice implements \JsonSerializable
     /**
      * @var string|null
      */
-    private $collectionMethod;
+    private $collectionMethod = CollectionMethod::AUTOMATIC;
 
     /**
      * @var string|null
@@ -615,6 +615,7 @@ class Invoice implements \JsonSerializable
      * Sets Role.
      *
      * @maps role
+     * @factory \AdvancedBillingLib\Models\InvoiceRole::checkValue
      */
     public function setRole(?string $role): void
     {
@@ -652,9 +653,9 @@ class Invoice implements \JsonSerializable
 
     /**
      * Returns Collection Method.
-     * The collection method of the invoice, which is either "automatic" (tried and retried on an existing
-     * payment method by Chargify) or "remittance" (payment must be remitted by the customer or keyed in by
-     * the merchant).
+     * The type of payment collection to be used in the subscription. For legacy Statements Architecture
+     * valid options are - `invoice`, `automatic`. For current Relationship Invoicing Architecture valid
+     * options are - `remittance`, `automatic`, `prepaid`.
      */
     public function getCollectionMethod(): ?string
     {
@@ -663,11 +664,12 @@ class Invoice implements \JsonSerializable
 
     /**
      * Sets Collection Method.
-     * The collection method of the invoice, which is either "automatic" (tried and retried on an existing
-     * payment method by Chargify) or "remittance" (payment must be remitted by the customer or keyed in by
-     * the merchant).
+     * The type of payment collection to be used in the subscription. For legacy Statements Architecture
+     * valid options are - `invoice`, `automatic`. For current Relationship Invoicing Architecture valid
+     * options are - `remittance`, `automatic`, `prepaid`.
      *
      * @maps collection_method
+     * @factory \AdvancedBillingLib\Models\CollectionMethod::checkValue
      */
     public function setCollectionMethod(?string $collectionMethod): void
     {
@@ -1520,13 +1522,13 @@ class Invoice implements \JsonSerializable
             $json['status']                        = InvoiceStatus::checkValue($this->status);
         }
         if (isset($this->role)) {
-            $json['role']                          = $this->role;
+            $json['role']                          = InvoiceRole::checkValue($this->role);
         }
         if (!empty($this->parentInvoiceId)) {
             $json['parent_invoice_id']             = $this->parentInvoiceId['value'];
         }
         if (isset($this->collectionMethod)) {
-            $json['collection_method']             = $this->collectionMethod;
+            $json['collection_method']             = CollectionMethod::checkValue($this->collectionMethod);
         }
         if (isset($this->paymentInstructions)) {
             $json['payment_instructions']          = $this->paymentInstructions;

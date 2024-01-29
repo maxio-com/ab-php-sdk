@@ -33,18 +33,9 @@ class PaymentMethodCreditCardTypeBuilder
     /**
      * Initializes a new payment method credit card type Builder object.
      */
-    public static function init(): self
+    public static function init(string $cardBrand, string $maskedCardNumber, string $type): self
     {
-        return new self(new PaymentMethodCreditCardType());
-    }
-
-    /**
-     * Sets card brand field.
-     */
-    public function cardBrand(?string $value): self
-    {
-        $this->instance->setCardBrand($value);
-        return $this;
+        return new self(new PaymentMethodCreditCardType($cardBrand, $maskedCardNumber, $type));
     }
 
     /**
@@ -71,24 +62,6 @@ class PaymentMethodCreditCardTypeBuilder
     public function unsetLastFour(): self
     {
         $this->instance->unsetLastFour();
-        return $this;
-    }
-
-    /**
-     * Sets masked card number field.
-     */
-    public function maskedCardNumber(?string $value): self
-    {
-        $this->instance->setMaskedCardNumber($value);
-        return $this;
-    }
-
-    /**
-     * Sets type field.
-     */
-    public function type(?string $value): self
-    {
-        $this->instance->setType($value);
         return $this;
     }
 

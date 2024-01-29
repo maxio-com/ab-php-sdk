@@ -28,17 +28,17 @@ final class PaymentProfilesControllerTest extends TestCase
     {
         $customer = $this->testData->loadCustomer();
 
-        $paymentProfile = $this->client
+        $creditCardPaymentProfile = $this->client
             ->getPaymentProfilesController()
-            ->createPaymentProfile($this->testData->getCreatePaymentProfileRequest($customer->getId()))
+            ->createPaymentProfile($this->testData->getCreateCreditCardPaymentProfileRequest($customer->getId()))
             ->getPaymentProfile();
 
         $this->assertions->assertPaymentProfileCreated(
-            $this->testData->getExpectedPaymentProfile($paymentProfile->getId(), $customer->getId()),
-            $paymentProfile
+            $this->testData->getExpectedCreditCardPaymentProfile($creditCardPaymentProfile->getId(), $customer->getId()),
+            $creditCardPaymentProfile
         );
 
-        $this->cleaner->removeUnusedPaymentProfileById($paymentProfile->getId());
+        $this->cleaner->removeUnusedPaymentProfileById($creditCardPaymentProfile->getId());
         $this->cleaner->removeCustomerById($customer->getId());
     }
 
@@ -64,15 +64,15 @@ final class PaymentProfilesControllerTest extends TestCase
     public function test_ListPaymentProfiles_ShouldReturnListWithPaymentProfiles_WhenCustomerHasOneProfile(): void
     {
         $customer = $this->testData->loadCustomer();
-        $paymentProfile = $this->testData->loadPaymentProfile($customer->getId());
+        $creditCardPaymentProfile = $this->testData->loadCreditCardPaymentProfile($customer->getId());
 
         $paymentProfiles = $this->client
             ->getPaymentProfilesController()
             ->listPaymentProfiles($this->testData->getListRequestParams($customer->getId()));
 
-        $this->assertions->assertPaymentProfilesFound($paymentProfiles, $paymentProfile);
+        $this->assertions->assertPaymentProfilesFound($paymentProfiles, $creditCardPaymentProfile);
 
-        $this->cleaner->removeUnusedPaymentProfileById($paymentProfile->getId());
+        $this->cleaner->removeUnusedPaymentProfileById($creditCardPaymentProfile->getId());
         $this->cleaner->removeCustomerById($customer->getId());
     }
 
@@ -82,16 +82,16 @@ final class PaymentProfilesControllerTest extends TestCase
     public function test_ReadPaymentProfile_ShouldReturnPaymentProfile_WhenPaymentProfileExists(): void
     {
         $customer = $this->testData->loadCustomer();
-        $paymentProfile = $this->testData->loadPaymentProfile($customer->getId());
+        $creditCardPaymentProfile = $this->testData->loadCreditCardPaymentProfile($customer->getId());
 
         $foundPaymentProfile = $this->client
             ->getPaymentProfilesController()
-            ->readPaymentProfile($paymentProfile->getId())
+            ->readPaymentProfile($creditCardPaymentProfile->getId())
             ->getPaymentProfile();
 
-        $this->assertions->assertPaymentProfileFound($foundPaymentProfile, $paymentProfile);
+        $this->assertions->assertPaymentProfileFound($foundPaymentProfile, $creditCardPaymentProfile);
 
-        $this->cleaner->removeUnusedPaymentProfileById($paymentProfile->getId());
+        $this->cleaner->removeUnusedPaymentProfileById($creditCardPaymentProfile->getId());
         $this->cleaner->removeCustomerById($customer->getId());
     }
 
@@ -101,16 +101,16 @@ final class PaymentProfilesControllerTest extends TestCase
     public function test_UpdatePaymentProfile_ShouldUpdatePaymentProfile_WhenNewValuesAreCorrect(): void
     {
         $customer = $this->testData->loadCustomer();
-        $paymentProfile = $this->testData->loadPaymentProfile($customer->getId());
+        $creditCardPaymentProfile = $this->testData->loadCreditCardPaymentProfile($customer->getId());
 
         $foundPaymentProfile = $this->client
             ->getPaymentProfilesController()
-            ->updatePaymentProfile($paymentProfile->getId(), $this->testData->getUpdatePaymentProfileRequest())
+            ->updatePaymentProfile($creditCardPaymentProfile->getId(), $this->testData->getUpdatePaymentProfileRequest())
             ->getPaymentProfile();
 
-        $this->assertions->assertPaymentProfileUpdated($foundPaymentProfile, $paymentProfile);
+        $this->assertions->assertPaymentProfileUpdated($foundPaymentProfile, $creditCardPaymentProfile);
 
-        $this->cleaner->removeUnusedPaymentProfileById($paymentProfile->getId());
+        $this->cleaner->removeUnusedPaymentProfileById($creditCardPaymentProfile->getId());
         $this->cleaner->removeCustomerById($customer->getId());
     }
 
@@ -120,9 +120,9 @@ final class PaymentProfilesControllerTest extends TestCase
     public function test_DeleteUnusedPaymentProfile_ShouldRemoveProfile_WhenProfileWasCreated(): void
     {
         $customer = $this->testData->loadCustomer();
-        $paymentProfile = $this->testData->loadPaymentProfile($customer->getId());
+        $creditCardPaymentProfile = $this->testData->loadCreditCardPaymentProfile($customer->getId());
 
-        $this->client->getPaymentProfilesController()->deleteUnusedPaymentProfile($paymentProfile->getId());
+        $this->client->getPaymentProfilesController()->deleteUnusedPaymentProfile($creditCardPaymentProfile->getId());
 
         $this->assertions->assertNoPaymentProfilesFound(
             $this->client->getPaymentProfilesController()->listPaymentProfiles(
@@ -139,12 +139,12 @@ final class PaymentProfilesControllerTest extends TestCase
     public function test_DeleteSubscriptionPaymentProfile_ShouldDeleteProfile_WhenProfileBelongsToSubscription(): void
     {
         $customer = $this->testData->loadCustomer();
-        $paymentProfile = $this->testData->loadPaymentProfile($customer->getId());
-        $subscription = $this->testData->loadSubscription($customer->getId(), $paymentProfile->getId());
+        $creditCardPaymentProfile = $this->testData->loadCreditCardPaymentProfile($customer->getId());
+        $subscription = $this->testData->loadSubscription($customer->getId(), $creditCardPaymentProfile->getId());
 
         $this->client->getPaymentProfilesController()->deleteSubscriptionsPaymentProfile(
             $subscription->getId(),
-            $paymentProfile->getId()
+            $creditCardPaymentProfile->getId()
         );
 
         $this->assertions->assertNoPaymentProfilesFound(

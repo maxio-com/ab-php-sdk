@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Tests\Controllers;
 
-use AdvancedBillingLib\Models\Builders\CreatedPaymentProfileBuilder;
-use AdvancedBillingLib\Models\CreatedPaymentProfile;
+use AdvancedBillingLib\Models\Builders\CreditCardPaymentProfileBuilder;
 use AdvancedBillingLib\Models\CreatePaymentProfileRequest;
+use AdvancedBillingLib\Models\CreditCardPaymentProfile;
 use AdvancedBillingLib\Models\Customer;
 use AdvancedBillingLib\Models\Subscription;
 use AdvancedBillingLib\Models\UpdatePaymentProfileRequest;
@@ -37,27 +37,37 @@ final class PaymentProfilesControllerTestData
         return $this->customerLoader->loadSimpleCustomerWithPredefinedData();
     }
 
-    public function getCreatePaymentProfileRequest(int $customerId): CreatePaymentProfileRequest
+    public function getCreateCreditCardPaymentProfileRequest(int $customerId): CreatePaymentProfileRequest
     {
-        return $this->paymentProfileRequestFactory->createCreatePaymentProfileRequest($customerId);
+        return $this->paymentProfileRequestFactory->createCreateCreditCardPaymentProfileRequest($customerId);
     }
 
-    public function getExpectedPaymentProfile(int $paymentProfileId, int $customerId): CreatedPaymentProfile
+    public function getExpectedCreditCardPaymentProfile(
+        int $paymentProfileId,
+        int $customerId
+    ): CreditCardPaymentProfile
     {
-        return CreatedPaymentProfileBuilder::init()
+        return CreditCardPaymentProfileBuilder::init(PaymentProfileTestData::MASKED_CARD_NUMBER)
             ->id($paymentProfileId)
             ->firstName(CustomerTestData::FIRST_NAME)
             ->lastName(CustomerTestData::LAST_NAME)
-            ->maskedCardNumber(PaymentProfileTestData::MASKED_CARD_NUMBER)
             ->cardType(PaymentProfileTestData::CARD_TYPE)
             ->expirationMonth(PaymentProfileTestData::CARD_EXPIRATION_MONTH)
             ->expirationYear(PaymentProfileTestData::CARD_EXPIRATION_YEAR)
             ->customerId($customerId)
             ->currentVault(PaymentProfileTestData::CURRENT_VAULT)
-            ->customerVaultToken(PaymentProfileTestData::CUSTOMER_VAULT_TOKEN)
             ->vaultToken(PaymentProfileTestData::VAULT_TOKEN)
+            ->billingAddress(PaymentProfileTestData::BILLING_ADDRESS)
+            ->billingCity(PaymentProfileTestData::BILLING_CITY)
+            ->billingState(PaymentProfileTestData::BILLING_STATE)
+            ->billingZip(PaymentProfileTestData::BILLING_ZIP)
+            ->billingCountry(PaymentProfileTestData::BILLING_COUNTRY)
+            ->customerVaultToken(PaymentProfileTestData::CUSTOMER_VAULT_TOKEN)
             ->billingAddress2(PaymentProfileTestData::BILLING_ADDRESS_TWO)
-            ->paymentType(PaymentProfileTestData::PAYMENT_TYPE)
+            ->paymentType(PaymentProfileTestData::CREDIT_CARD_PAYMENT_TYPE)
+            ->disabled(PaymentProfileTestData::CARD_DISABLED)
+            ->siteGatewaySettingId(PaymentProfileTestData::SITE_GATEWAY_SETTING_ID)
+            ->gatewayHandle(PaymentProfileTestData::GATEWAY_HANDLE)
             ->build();
     }
 
@@ -69,9 +79,9 @@ final class PaymentProfilesControllerTestData
         return ['customer_id' => $customerId];
     }
 
-    public function loadPaymentProfile(int $customerId): CreatedPaymentProfile
+    public function loadCreditCardPaymentProfile(int $customerId): CreditCardPaymentProfile
     {
-        return $this->paymentProfileLoader->load($customerId);
+        return $this->paymentProfileLoader->loadCreditCard($customerId);
     }
 
     public function getUpdatePaymentProfileRequest(): UpdatePaymentProfileRequest

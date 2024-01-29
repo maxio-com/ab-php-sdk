@@ -20,10 +20,10 @@ The event data is the data that, when combined with the command, results in the 
 | `memo` | `?string` | Optional | The credit note memo. | getMemo(): ?string | setMemo(?string memo): void |
 | `role` | `?string` | Optional | The role of the credit note (e.g. 'general') | getRole(): ?string | setRole(?string role): void |
 | `consolidatedInvoice` | `?bool` | Optional | Shows whether it was applied to consolidated invoice or not | getConsolidatedInvoice(): ?bool | setConsolidatedInvoice(?bool consolidatedInvoice): void |
-| `appliedCreditNotes` | [`?(AppliedCreditNote[])`](../../doc/models/applied-credit-note.md) | Optional | List of credit notes applied to children invoices (if consolidated invoice) | getAppliedCreditNotes(): ?array | setAppliedCreditNotes(?array appliedCreditNotes): void |
+| `appliedCreditNotes` | [`?(AppliedCreditNoteData[])`](../../doc/models/applied-credit-note-data.md) | Optional | List of credit notes applied to children invoices (if consolidated invoice) | getAppliedCreditNotes(): ?array | setAppliedCreditNotes(?array appliedCreditNotes): void |
 | `debitNoteNumber` | `?string` | Optional | A unique, identifying string that appears on the debit note and in places it is referenced. | getDebitNoteNumber(): ?string | setDebitNoteNumber(?string debitNoteNumber): void |
 | `debitNoteUid` | `?string` | Optional | Unique identifier for the debit note. It is generated automatically by Chargify and has the prefix "db_" followed by alphanumeric characters. | getDebitNoteUid(): ?string | setDebitNoteUid(?string debitNoteUid): void |
-| `paymentMethod` | [PaymentMethodApplePayType](../../doc/models/payment-method-apple-pay-type.md)\|[PaymentMethodBankAccountType](../../doc/models/payment-method-bank-account-type.md)\|[PaymentMethodCreditCardType](../../doc/models/payment-method-credit-card-type.md)\|[PaymentMethodExternalType](../../doc/models/payment-method-external-type.md)\|[PaymentMethodPaypalType](../../doc/models/payment-method-paypal-type.md)\|null | Optional | This is a container for one-of cases. | getPaymentMethod(): | setPaymentMethod( paymentMethod): void |
+| `paymentMethod` | [PaymentMethodApplePayType](../../doc/models/payment-method-apple-pay-type.md)\|[PaymentMethodBankAccountType](../../doc/models/payment-method-bank-account-type.md)\|[PaymentMethodCreditCardType](../../doc/models/payment-method-credit-card-type.md)\|[PaymentMethodExternalType](../../doc/models/payment-method-external-type.md)\|[PaymentMethodPaypalType](../../doc/models/payment-method-paypal-type.md)\|null | Optional | This is a container for any-of cases. | getPaymentMethod(): | setPaymentMethod( paymentMethod): void |
 | `transactionId` | `?int` | Optional | The Chargify id of the original payment | getTransactionId(): ?int | setTransactionId(?int transactionId): void |
 | `fromCollectionMethod` | `?string` | Optional | The previous collection method of the invoice. | getFromCollectionMethod(): ?string | setFromCollectionMethod(?string fromCollectionMethod): void |
 | `toCollectionMethod` | `?string` | Optional | The new collection method of the invoice. | getToCollectionMethod(): ?string | setToCollectionMethod(?string toCollectionMethod): void |
@@ -39,6 +39,7 @@ The event data is the data that, when combined with the command, results in the 
 | `refundId` | `?int` | Optional | The ID of the refund transaction. | getRefundId(): ?int | setRefundId(?int refundId): void |
 | `prepayment` | `?bool` | Optional | The flag that shows whether the original payment was a prepayment or not | getPrepayment(): ?bool | setPrepayment(?bool prepayment): void |
 | `isAdvanceInvoice` | `?bool` | Optional | If true, the invoice is an advance invoice. | getIsAdvanceInvoice(): ?bool | setIsAdvanceInvoice(?bool isAdvanceInvoice): void |
+| `reason` | `?string` | Optional | The reason for the void. | getReason(): ?string | setReason(?string reason): void |
 
 ## Example (as JSON)
 

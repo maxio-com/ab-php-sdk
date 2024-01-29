@@ -27,7 +27,7 @@ final class TestMetadataLoader
             ->getCustomFieldsController()
             ->createMetadata(
                 ResourceType::SUBSCRIPTIONS,
-                (string) $subscriptionId,
+                $subscriptionId,
                 $this->customFieldsRequestFactory->createCreateMetadataRequest($name, $value)
             );
     }
