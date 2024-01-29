@@ -161,6 +161,11 @@ class InvoiceEvent1 implements \JsonSerializable
     private $isAdvanceInvoice;
 
     /**
+     * @var string|null
+     */
+    private $reason;
+
+    /**
      * Returns Uid.
      * Unique identifier for the credit note application. It is generated automatically by Chargify and has
      * the prefix "cdt_" followed by alphanumeric characters.
@@ -764,6 +769,26 @@ class InvoiceEvent1 implements \JsonSerializable
     }
 
     /**
+     * Returns Reason.
+     * The reason for the void.
+     */
+    public function getReason(): ?string
+    {
+        return $this->reason;
+    }
+
+    /**
+     * Sets Reason.
+     * The reason for the void.
+     *
+     * @maps reason
+     */
+    public function setReason(?string $reason): void
+    {
+        $this->reason = $reason;
+    }
+
+    /**
      * Encode this object to JSON
      *
      * @param bool $asArrayWhenEmpty Whether to serialize this model as an array whenever no fields
@@ -863,6 +888,9 @@ class InvoiceEvent1 implements \JsonSerializable
         }
         if (isset($this->isAdvanceInvoice)) {
             $json['is_advance_invoice']     = $this->isAdvanceInvoice;
+        }
+        if (isset($this->reason)) {
+            $json['reason']                 = $this->reason;
         }
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;

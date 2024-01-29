@@ -32,7 +32,7 @@ class UpdateMetafield implements \JsonSerializable
     /**
      * @var string|null
      */
-    private $inputType = MetafieldInput::TEXT;
+    private $inputType;
 
     /**
      * @var string[]|null
@@ -101,7 +101,8 @@ class UpdateMetafield implements \JsonSerializable
      * Returns Input Type.
      * Indicates how data should be added to the metafield. For example, a text type is just a string, so a
      * given metafield of this type can have any value attached. On the other hand, dropdown and radio have
-     * a set of allowed values that can be input, and appear differently on a Public Signup Page.
+     * a set of allowed values that can be input, and appear differently on a Public Signup Page. Defaults
+     * to 'text'
      */
     public function getInputType(): ?string
     {
@@ -112,7 +113,8 @@ class UpdateMetafield implements \JsonSerializable
      * Sets Input Type.
      * Indicates how data should be added to the metafield. For example, a text type is just a string, so a
      * given metafield of this type can have any value attached. On the other hand, dropdown and radio have
-     * a set of allowed values that can be input, and appear differently on a Public Signup Page.
+     * a set of allowed values that can be input, and appear differently on a Public Signup Page. Defaults
+     * to 'text'
      *
      * @maps input_type
      * @factory \AdvancedBillingLib\Models\MetafieldInput::checkValue

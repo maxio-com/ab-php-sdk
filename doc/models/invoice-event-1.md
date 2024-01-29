@@ -39,6 +39,7 @@ The event data is the data that, when combined with the command, results in the 
 | `refundId` | `?int` | Optional | The ID of the refund transaction. | getRefundId(): ?int | setRefundId(?int refundId): void |
 | `prepayment` | `?bool` | Optional | The flag that shows whether the original payment was a prepayment or not | getPrepayment(): ?bool | setPrepayment(?bool prepayment): void |
 | `isAdvanceInvoice` | `?bool` | Optional | If true, the invoice is an advance invoice. | getIsAdvanceInvoice(): ?bool | setIsAdvanceInvoice(?bool isAdvanceInvoice): void |
+| `reason` | `?string` | Optional | The reason for the void. | getReason(): ?string | setReason(?string reason): void |
 
 ## Example (as JSON)
 
