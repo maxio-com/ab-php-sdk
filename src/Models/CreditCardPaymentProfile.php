@@ -102,7 +102,7 @@ class CreditCardPaymentProfile implements \JsonSerializable
     /**
      * @var string|null
      */
-    private $paymentType = PaymentType::CREDIT_CARD;
+    private $paymentType;
 
     /**
      * @var bool|null

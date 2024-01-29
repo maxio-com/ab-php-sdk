@@ -52,7 +52,7 @@ class SubscriptionGroupBankAccount implements \JsonSerializable
     /**
      * @var string|null
      */
-    private $paymentType = PaymentType::CREDIT_CARD;
+    private $paymentType;
 
     /**
      * @var string|null

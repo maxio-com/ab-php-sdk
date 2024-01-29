@@ -27,7 +27,7 @@
 | `maskedBankAccountNumber` | `string` | Required | A string representation of the stored bank account number with all but the last 4 digits marked with X’s (i.e. ‘XXXXXXX1111’) | getMaskedBankAccountNumber(): string | setMaskedBankAccountNumber(string maskedBankAccountNumber): void |
 | `bankAccountType` | [`?string(BankAccountType)`](../../doc/models/bank-account-type.md) | Optional | Defaults to checking<br>**Default**: `BankAccountType::CHECKING` | getBankAccountType(): ?string | setBankAccountType(?string bankAccountType): void |
 | `bankAccountHolderType` | [`?string(BankAccountHolderType)`](../../doc/models/bank-account-holder-type.md) | Optional | Defaults to personal | getBankAccountHolderType(): ?string | setBankAccountHolderType(?string bankAccountHolderType): void |
-| `paymentType` | [`?string(PaymentType)`](../../doc/models/payment-type.md) | Optional | **Default**: `PaymentType::CREDIT_CARD` | getPaymentType(): ?string | setPaymentType(?string paymentType): void |
+| `paymentType` | [`?string(PaymentType)`](../../doc/models/payment-type.md) | Optional | - | getPaymentType(): ?string | setPaymentType(?string paymentType): void |
 | `verified` | `?bool` | Optional | denotes whether a bank account has been verified by providing the amounts of two small deposits made into the account<br>**Default**: `false` | getVerified(): ?bool | setVerified(?bool verified): void |
 | `siteGatewaySettingId` | `?int` | Optional | - | getSiteGatewaySettingId(): ?int | setSiteGatewaySettingId(?int siteGatewaySettingId): void |
 | `gatewayHandle` | `?string` | Optional | - | getGatewayHandle(): ?string | setGatewayHandle(?string gatewayHandle): void |
@@ -39,7 +39,6 @@
   "masked_bank_routing_number": "masked_bank_routing_number8",
   "masked_bank_account_number": "masked_bank_account_number8",
   "bank_account_type": "checking",
-  "payment_type": "credit_card",
   "verified": false,
   "id": 188,
   "first_name": "first_name6",

@@ -26,7 +26,7 @@
 | `billingCountry` | `?string` | Optional | The current billing address country for the card. | getBillingCountry(): ?string | setBillingCountry(?string billingCountry): void |
 | `customerVaultToken` | `?string` | Optional | (only for Authorize.Net CIM storage): the customerProfileId for the owner of the customerPaymentProfileId provided as the vault_token. | getCustomerVaultToken(): ?string | setCustomerVaultToken(?string customerVaultToken): void |
 | `billingAddress2` | `?string` | Optional | The current billing street address, second line, for the card. | getBillingAddress2(): ?string | setBillingAddress2(?string billingAddress2): void |
-| `paymentType` | [`?string(PaymentType)`](../../doc/models/payment-type.md) | Optional | **Default**: `PaymentType::CREDIT_CARD` | getPaymentType(): ?string | setPaymentType(?string paymentType): void |
+| `paymentType` | [`?string(PaymentType)`](../../doc/models/payment-type.md) | Optional | - | getPaymentType(): ?string | setPaymentType(?string paymentType): void |
 | `disabled` | `?bool` | Optional | - | getDisabled(): ?bool | setDisabled(?bool disabled): void |
 | `chargifyToken` | `?string` | Optional | Token received after sending billing information using chargify.js. This token will only be received if passed as a sole attribute of credit_card_attributes (i.e. tok_9g6hw85pnpt6knmskpwp4ttt) | getChargifyToken(): ?string | setChargifyToken(?string chargifyToken): void |
 | `siteGatewaySettingId` | `?int` | Optional | - | getSiteGatewaySettingId(): ?int | setSiteGatewaySettingId(?int siteGatewaySettingId): void |
