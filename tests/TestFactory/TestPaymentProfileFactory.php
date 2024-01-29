@@ -9,6 +9,7 @@ use AdvancedBillingLib\Models\Builders\BankAccountPaymentProfileBuilder;
 use AdvancedBillingLib\Models\Builders\CreditCardPaymentProfileBuilder;
 use AdvancedBillingLib\Models\CreditCardPaymentProfile;
 use AdvancedBillingLib\Tests\TestData\PaymentProfileTestData;
+use Exception;
 
 final class TestPaymentProfileFactory
 {
@@ -19,7 +20,7 @@ final class TestPaymentProfileFactory
         return match ($createdPaymentProfile::class) {
             CreditCardPaymentProfile::class => $this->fromCreditCardPaymentProfile($createdPaymentProfile),
             BankAccountPaymentProfile::class => $this->fromBankAccountPaymentProfile($createdPaymentProfile),
-            default => null
+            default => throw new Exception(sprintf('Provided incompatible type for: %s', $createdPaymentProfile->getId()))
         };
     }
 
