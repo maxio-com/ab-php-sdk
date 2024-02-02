@@ -77,9 +77,9 @@ final class CouponsControllerTest extends TestCase
     }
 
     /**
-     * @covers \AdvancedBillingLib\Controllers\CouponsController::findCoupon
+     * @covers \AdvancedBillingLib\Controllers\CouponsController::readCoupon
      */
-    public function test_FindCoupon_ShouldReturnCoupon_WhenCouponExists(): void
+    public function test_ReadCoupon_ShouldReturnCoupon_WhenCouponExists(): void
     {
         $coupon = $this->testData->loadCoupon(
             productFamilyName: 'CouponsControllerTest_ProductFamily_4',
@@ -88,7 +88,7 @@ final class CouponsControllerTest extends TestCase
 
         $foundCoupon = $this->client
             ->getCouponsController()
-            ->findCoupon($coupon->getProductFamilyId(), $coupon->getId())
+            ->readCoupon($coupon->getProductFamilyId(), $coupon->getId())
             ->getCoupon();
 
         $this->assertions->assertCouponFound($foundCoupon, $coupon);
@@ -97,14 +97,14 @@ final class CouponsControllerTest extends TestCase
     /**
      * @covers \AdvancedBillingLib\Controllers\CouponsController::findCoupon
      */
-    public function test_FindCoupon_ShouldThrowExceptionWith404StatusCode_WhenCouponDoesNotExists(): void
+    public function test_ReadCoupon_ShouldThrowExceptionWith404StatusCode_WhenCouponDoesNotExists(): void
     {
         $productFamily = $this->testData->loadProductFamily('CouponsControllerTest_ProductFamily_5');
 
         $this->assertions->assertCouponNotFound();
         $this->client
             ->getCouponsController()
-            ->findCoupon($productFamily->getId(), $this->testData->getNotExistingCouponId())
+            ->readCoupon($productFamily->getId(), $this->testData->getNotExistingCouponId())
             ->getCoupon();
     }
 
