@@ -150,7 +150,7 @@ class SubscriptionComponentsController extends BaseController
      *
      * @throws ApiException Thrown if API call fails
      */
-    public function updateSubscriptionComponentsPricePoints(
+    public function bulkUpdateSubscriptionComponentsPricePoints(
         int $subscriptionId,
         ?BulkComponentSPricePointAssignment $body = null
     ): BulkComponentSPricePointAssignment {
@@ -190,7 +190,7 @@ class SubscriptionComponentsController extends BaseController
      *
      * @throws ApiException Thrown if API call fails
      */
-    public function resetSubscriptionComponentsPricePoints(int $subscriptionId): SubscriptionResponse
+    public function bulkResetSubscriptionComponentsPricePoints(int $subscriptionId): SubscriptionResponse
     {
         $_reqBuilder = $this->requestBuilder(
             RequestMethod::POST,
@@ -493,7 +493,7 @@ class SubscriptionComponentsController extends BaseController
      *
      * @throws ApiException Thrown if API call fails
      */
-    public function updatePrepaidUsageAllocation(
+    public function updatePrepaidUsageAllocationExpirationDate(
         int $subscriptionId,
         int $componentId,
         int $allocationId,
@@ -889,7 +889,7 @@ class SubscriptionComponentsController extends BaseController
      *
      * @throws ApiException Thrown if API call fails
      */
-    public function recordEvents(
+    public function bulkRecordEvents(
         string $subdomain,
         string $apiHandle,
         ?string $storeUid = null,

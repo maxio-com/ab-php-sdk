@@ -103,7 +103,7 @@ class SubscriptionGroupStatusController extends BaseController
      *
      * @throws ApiException Thrown if API call fails
      */
-    public function stopDelayedCancellationForGroup(string $uid): void
+    public function cancelDelayedCancellationForGroup(string $uid): void
     {
         $_reqBuilder = $this->requestBuilder(
             RequestMethod::DELETE,

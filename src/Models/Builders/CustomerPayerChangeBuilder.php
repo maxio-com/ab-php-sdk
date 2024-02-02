@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace AdvancedBillingLib\Models\Builders;
 
 use AdvancedBillingLib\Models\CustomerPayerChange;
+use AdvancedBillingLib\Models\InvoicePayerChange;
 use Core\Utils\CoreHelper;
 
 /**
@@ -33,27 +34,9 @@ class CustomerPayerChangeBuilder
     /**
      * Initializes a new customer payer change Builder object.
      */
-    public static function init(): self
+    public static function init(InvoicePayerChange $before, InvoicePayerChange $after): self
     {
-        return new self(new CustomerPayerChange());
-    }
-
-    /**
-     * Sets before field.
-     */
-    public function before(?array $value): self
-    {
-        $this->instance->setBefore($value);
-        return $this;
-    }
-
-    /**
-     * Sets after field.
-     */
-    public function after(?array $value): self
-    {
-        $this->instance->setAfter($value);
-        return $this;
+        return new self(new CustomerPayerChange($before, $after));
     }
 
     /**

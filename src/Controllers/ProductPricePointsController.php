@@ -286,7 +286,7 @@ class ProductPricePointsController extends BaseController
      *
      * @throws ApiException Thrown if API call fails
      */
-    public function createProductPricePoints(
+    public function bulkCreateProductPricePoints(
         int $productId,
         ?BulkCreateProductPricePointsRequest $body = null
     ): BulkCreateProductPricePointsResponse {

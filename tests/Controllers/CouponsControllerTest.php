@@ -45,9 +45,9 @@ final class CouponsControllerTest extends TestCase
     }
 
     /**
-     * @covers \AdvancedBillingLib\Controllers\CouponsController::readCouponByCode
+     * @covers \AdvancedBillingLib\Controllers\CouponsController::findCoupon
      */
-    public function test_ReadCouponByCode_ShouldReturnCoupon_WhenCouponExists(): void
+    public function test_FindCoupon_ShouldReturnCoupon_WhenCouponExists(): void
     {
         $coupon = $this->testData->loadCoupon(
             productFamilyName: 'CouponsControllerTest_ProductFamily_2',
@@ -56,23 +56,23 @@ final class CouponsControllerTest extends TestCase
 
         $foundCoupon = $this->client
             ->getCouponsController()
-            ->readCouponByCode($coupon->getProductFamilyId(), $coupon->getCode())
+            ->findCoupon($coupon->getProductFamilyId(), $coupon->getCode())
             ->getCoupon();
 
         $this->assertions->assertCouponFound($foundCoupon, $coupon);
     }
 
     /**
-     * @covers \AdvancedBillingLib\Controllers\CouponsController::readCouponByCode
+     * @covers \AdvancedBillingLib\Controllers\CouponsController::findCoupon
      */
-    public function test_ReadCouponByCode_ShouldThrowExceptionWith404StatusCode_WhenCouponDoesNotExists(): void
+    public function test_FindCoupon_ShouldThrowExceptionWith404StatusCode_WhenCouponDoesNotExists(): void
     {
         $productFamily = $this->testData->loadProductFamily('CouponsControllerTest_ProductFamily_3');
 
         $this->assertions->assertCouponNotFound();
         $this->client
             ->getCouponsController()
-            ->readCouponByCode($productFamily->getId(), $this->testData->getNotExistingCouponCode())
+            ->findCoupon($productFamily->getId(), $this->testData->getNotExistingCouponCode())
             ->getCoupon();
     }
 
@@ -95,7 +95,7 @@ final class CouponsControllerTest extends TestCase
     }
 
     /**
-     * @covers \AdvancedBillingLib\Controllers\CouponsController::readCoupon
+     * @covers \AdvancedBillingLib\Controllers\CouponsController::findCoupon
      */
     public function test_ReadCoupon_ShouldThrowExceptionWith404StatusCode_WhenCouponDoesNotExists(): void
     {

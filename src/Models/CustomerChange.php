@@ -10,82 +10,119 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class CustomerChange implements \JsonSerializable
 {
     /**
-     * @var CustomerPayerChange|null
+     * @var array
      */
-    private $payer;
+    private $payer = [];
 
     /**
-     * @var CustomerShippingAddressChange|null
+     * @var array
      */
-    private $shippingAddress;
+    private $shippingAddress = [];
 
     /**
-     * @var CustomerBillingAddressChange|null
+     * @var array
      */
-    private $billingAddress;
+    private $billingAddress = [];
 
     /**
-     * @var CustomerCustomFieldsChange|null
+     * @var array
      */
-    private $customFields;
+    private $customFields = [];
 
     /**
      * Returns Payer.
      */
     public function getPayer(): ?CustomerPayerChange
     {
-        return $this->payer;
+        if (count($this->payer) == 0) {
+            return null;
+        }
+        return $this->payer['value'];
     }
 
     /**
      * Sets Payer.
      *
      * @maps payer
+     * @mapsBy anyOf(oneOf(CustomerPayerChange),null)
      */
     public function setPayer(?CustomerPayerChange $payer): void
     {
-        $this->payer = $payer;
+        $this->payer['value'] = $payer;
+    }
+
+    /**
+     * Unsets Payer.
+     */
+    public function unsetPayer(): void
+    {
+        $this->payer = [];
     }
 
     /**
      * Returns Shipping Address.
      */
-    public function getShippingAddress(): ?CustomerShippingAddressChange
+    public function getShippingAddress(): ?AddressChange
     {
-        return $this->shippingAddress;
+        if (count($this->shippingAddress) == 0) {
+            return null;
+        }
+        return $this->shippingAddress['value'];
     }
 
     /**
      * Sets Shipping Address.
      *
      * @maps shipping_address
+     * @mapsBy anyOf(oneOf(AddressChange),null)
      */
-    public function setShippingAddress(?CustomerShippingAddressChange $shippingAddress): void
+    public function setShippingAddress(?AddressChange $shippingAddress): void
     {
-        $this->shippingAddress = $shippingAddress;
+        $this->shippingAddress['value'] = $shippingAddress;
+    }
+
+    /**
+     * Unsets Shipping Address.
+     */
+    public function unsetShippingAddress(): void
+    {
+        $this->shippingAddress = [];
     }
 
     /**
      * Returns Billing Address.
      */
-    public function getBillingAddress(): ?CustomerBillingAddressChange
+    public function getBillingAddress(): ?AddressChange
     {
-        return $this->billingAddress;
+        if (count($this->billingAddress) == 0) {
+            return null;
+        }
+        return $this->billingAddress['value'];
     }
 
     /**
      * Sets Billing Address.
      *
      * @maps billing_address
+     * @mapsBy anyOf(oneOf(AddressChange),null)
      */
-    public function setBillingAddress(?CustomerBillingAddressChange $billingAddress): void
+    public function setBillingAddress(?AddressChange $billingAddress): void
     {
-        $this->billingAddress = $billingAddress;
+        $this->billingAddress['value'] = $billingAddress;
+    }
+
+    /**
+     * Unsets Billing Address.
+     */
+    public function unsetBillingAddress(): void
+    {
+        $this->billingAddress = [];
     }
 
     /**
@@ -93,17 +130,29 @@ class CustomerChange implements \JsonSerializable
      */
     public function getCustomFields(): ?CustomerCustomFieldsChange
     {
-        return $this->customFields;
+        if (count($this->customFields) == 0) {
+            return null;
+        }
+        return $this->customFields['value'];
     }
 
     /**
      * Sets Custom Fields.
      *
      * @maps custom_fields
+     * @mapsBy anyOf(oneOf(CustomerCustomFieldsChange),null)
      */
     public function setCustomFields(?CustomerCustomFieldsChange $customFields): void
     {
-        $this->customFields = $customFields;
+        $this->customFields['value'] = $customFields;
+    }
+
+    /**
+     * Unsets Custom Fields.
+     */
+    public function unsetCustomFields(): void
+    {
+        $this->customFields = [];
     }
 
     /**
@@ -118,17 +167,33 @@ class CustomerChange implements \JsonSerializable
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
-        if (isset($this->payer)) {
-            $json['payer']            = $this->payer;
+        if (!empty($this->payer)) {
+            $json['payer']            =
+                ApiHelper::getJsonHelper()->verifyTypes(
+                    $this->payer['value'],
+                    'anyOf(oneOf(CustomerPayerChange),null)'
+                );
         }
-        if (isset($this->shippingAddress)) {
-            $json['shipping_address'] = $this->shippingAddress;
+        if (!empty($this->shippingAddress)) {
+            $json['shipping_address'] =
+                ApiHelper::getJsonHelper()->verifyTypes(
+                    $this->shippingAddress['value'],
+                    'anyOf(oneOf(AddressChange),null)'
+                );
         }
-        if (isset($this->billingAddress)) {
-            $json['billing_address']  = $this->billingAddress;
+        if (!empty($this->billingAddress)) {
+            $json['billing_address']  =
+                ApiHelper::getJsonHelper()->verifyTypes(
+                    $this->billingAddress['value'],
+                    'anyOf(oneOf(AddressChange),null)'
+                );
         }
-        if (isset($this->customFields)) {
-            $json['custom_fields']    = $this->customFields;
+        if (!empty($this->customFields)) {
+            $json['custom_fields']    =
+                ApiHelper::getJsonHelper()->verifyTypes(
+                    $this->customFields['value'],
+                    'anyOf(oneOf(CustomerCustomFieldsChange),null)'
+                );
         }
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;

@@ -15,12 +15,12 @@ $subscriptionsController = $client->getSubscriptionsController();
 * [Update Subscription](../../doc/controllers/subscriptions.md#update-subscription)
 * [Read Subscription](../../doc/controllers/subscriptions.md#read-subscription)
 * [Override Subscription](../../doc/controllers/subscriptions.md#override-subscription)
-* [Read Subscription by Reference](../../doc/controllers/subscriptions.md#read-subscription-by-reference)
+* [Find Subscription](../../doc/controllers/subscriptions.md#find-subscription)
 * [Purge Subscription](../../doc/controllers/subscriptions.md#purge-subscription)
-* [Create Prepaid Subscription](../../doc/controllers/subscriptions.md#create-prepaid-subscription)
+* [Update Prepaid Subscription Configuration](../../doc/controllers/subscriptions.md#update-prepaid-subscription-configuration)
 * [Preview Subscription](../../doc/controllers/subscriptions.md#preview-subscription)
-* [Apply Coupon to Subscription](../../doc/controllers/subscriptions.md#apply-coupon-to-subscription)
-* [Delete Coupon From Subscription](../../doc/controllers/subscriptions.md#delete-coupon-from-subscription)
+* [Apply Coupons to Subscription](../../doc/controllers/subscriptions.md#apply-coupons-to-subscription)
+* [Remove Coupon From Subscription](../../doc/controllers/subscriptions.md#remove-coupon-from-subscription)
 * [Activate Subscription](../../doc/controllers/subscriptions.md#activate-subscription)
 
 
@@ -1337,12 +1337,12 @@ $subscriptionsController->overrideSubscription(
 | 422 | Unprocessable Entity (WebDAV) | [`SingleErrorResponseException`](../../doc/models/single-error-response-exception.md) |
 
 
-# Read Subscription by Reference
+# Find Subscription
 
 Use this endpoint to find a subscription by its reference.
 
 ```php
-function readSubscriptionByReference(?string $reference = null): SubscriptionResponse
+function findSubscription(?string $reference = null): SubscriptionResponse
 ```
 
 ## Parameters
@@ -1358,7 +1358,7 @@ function readSubscriptionByReference(?string $reference = null): SubscriptionRes
 ## Example Usage
 
 ```php
-$result = $subscriptionsController->readSubscriptionByReference();
+$result = $subscriptionsController->findSubscription();
 ```
 
 
@@ -1404,12 +1404,12 @@ Liquid error: Value cannot be null. (Parameter 'key')Liquid error: Value cannot 
 ```
 
 
-# Create Prepaid Subscription
+# Update Prepaid Subscription Configuration
 
 Use this endpoint to update a subscription's prepaid configuration.
 
 ```php
-function createPrepaidSubscription(
+function updatePrepaidSubscriptionConfiguration(
     int $subscriptionId,
     ?UpsertPrepaidConfigurationRequest $body = null
 ): PrepaidConfigurationResponse
@@ -1440,7 +1440,7 @@ $body = UpsertPrepaidConfigurationRequestBuilder::init(
         ->build()
 )->build();
 
-$result = $subscriptionsController->createPrepaidSubscription(
+$result = $subscriptionsController->updatePrepaidSubscriptionConfiguration(
     $subscriptionId,
     $body
 );
@@ -1636,7 +1636,7 @@ $result = $subscriptionsController->previewSubscription($body);
 ```
 
 
-# Apply Coupon to Subscription
+# Apply Coupons to Subscription
 
 An existing subscription can accommodate multiple discounts/coupon codes. This is only applicable if each coupon is stackable. For more information on stackable coupons, we recommend reviewing our [coupon documentation.](https://chargify.zendesk.com/hc/en-us/articles/4407755909531#stackable-coupons)
 
@@ -1647,7 +1647,7 @@ Passing in a coupon code as a query parameter will add the code to the subscript
 For this reason, using this query parameter on this endpoint has been deprecated in favor of using the request body parameters as described below. When passing in request body parameters, the list of coupon codes will simply be added to any existing list of codes on the subscription.
 
 ```php
-function applyCouponToSubscription(
+function applyCouponsToSubscription(
     int $subscriptionId,
     ?string $code = null,
     ?AddCouponsRequest $body = null
@@ -1680,7 +1680,7 @@ $body = AddCouponsRequestBuilder::init()
     )
     ->build();
 
-$result = $subscriptionsController->applyCouponToSubscription(
+$result = $subscriptionsController->applyCouponsToSubscription(
     $subscriptionId,
     null,
     $body
@@ -1844,14 +1844,14 @@ $result = $subscriptionsController->applyCouponToSubscription(
 | 422 | Unprocessable Entity (WebDAV) | [`SubscriptionAddCouponErrorException`](../../doc/models/subscription-add-coupon-error-exception.md) |
 
 
-# Delete Coupon From Subscription
+# Remove Coupon From Subscription
 
 Use this endpoint to remove a coupon from an existing subscription.
 
 For more information on the expected behaviour of removing a coupon from a subscription, please see our documentation [here.](https://chargify.zendesk.com/hc/en-us/articles/4407896488987#removing-a-coupon)
 
 ```php
-function deleteCouponFromSubscription(int $subscriptionId, ?string $couponCode = null): string
+function removeCouponFromSubscription(int $subscriptionId, ?string $couponCode = null): string
 ```
 
 ## Parameters
@@ -1870,7 +1870,7 @@ function deleteCouponFromSubscription(int $subscriptionId, ?string $couponCode =
 ```php
 $subscriptionId = 222;
 
-$result = $subscriptionsController->deleteCouponFromSubscription($subscriptionId);
+$result = $subscriptionsController->removeCouponFromSubscription($subscriptionId);
 ```
 
 ## Example Response

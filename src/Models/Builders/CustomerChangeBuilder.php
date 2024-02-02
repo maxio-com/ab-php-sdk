@@ -10,11 +10,10 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models\Builders;
 
-use AdvancedBillingLib\Models\CustomerBillingAddressChange;
+use AdvancedBillingLib\Models\AddressChange;
 use AdvancedBillingLib\Models\CustomerChange;
 use AdvancedBillingLib\Models\CustomerCustomFieldsChange;
 use AdvancedBillingLib\Models\CustomerPayerChange;
-use AdvancedBillingLib\Models\CustomerShippingAddressChange;
 use Core\Utils\CoreHelper;
 
 /**
@@ -52,20 +51,47 @@ class CustomerChangeBuilder
     }
 
     /**
+     * Unsets payer field.
+     */
+    public function unsetPayer(): self
+    {
+        $this->instance->unsetPayer();
+        return $this;
+    }
+
+    /**
      * Sets shipping address field.
      */
-    public function shippingAddress(?CustomerShippingAddressChange $value): self
+    public function shippingAddress(?AddressChange $value): self
     {
         $this->instance->setShippingAddress($value);
         return $this;
     }
 
     /**
+     * Unsets shipping address field.
+     */
+    public function unsetShippingAddress(): self
+    {
+        $this->instance->unsetShippingAddress();
+        return $this;
+    }
+
+    /**
      * Sets billing address field.
      */
-    public function billingAddress(?CustomerBillingAddressChange $value): self
+    public function billingAddress(?AddressChange $value): self
     {
         $this->instance->setBillingAddress($value);
+        return $this;
+    }
+
+    /**
+     * Unsets billing address field.
+     */
+    public function unsetBillingAddress(): self
+    {
+        $this->instance->unsetBillingAddress();
         return $this;
     }
 
@@ -75,6 +101,15 @@ class CustomerChangeBuilder
     public function customFields(?CustomerCustomFieldsChange $value): self
     {
         $this->instance->setCustomFields($value);
+        return $this;
+    }
+
+    /**
+     * Unsets custom fields field.
+     */
+    public function unsetCustomFields(): self
+    {
+        $this->instance->unsetCustomFields();
         return $this;
     }
 

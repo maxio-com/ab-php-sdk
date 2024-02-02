@@ -39,6 +39,24 @@ class InvoiceCustomFieldBuilder
     }
 
     /**
+     * Sets owner id field.
+     */
+    public function ownerId(?int $value): self
+    {
+        $this->instance->setOwnerId($value);
+        return $this;
+    }
+
+    /**
+     * Sets owner type field.
+     */
+    public function ownerType(?string $value): self
+    {
+        $this->instance->setOwnerType($value);
+        return $this;
+    }
+
+    /**
      * Sets name field.
      */
     public function name(?string $value): self
@@ -57,20 +75,11 @@ class InvoiceCustomFieldBuilder
     }
 
     /**
-     * Sets owner id field.
+     * Sets metadatum id field.
      */
-    public function ownerId(?int $value): self
+    public function metadatumId(?int $value): self
     {
-        $this->instance->setOwnerId($value);
-        return $this;
-    }
-
-    /**
-     * Sets owner type field.
-     */
-    public function ownerType(?string $value): self
-    {
-        $this->instance->setOwnerType($value);
+        $this->instance->setMetadatumId($value);
         return $this;
     }
 

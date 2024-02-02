@@ -45,7 +45,7 @@ class RemovePaymentEventData implements \JsonSerializable
     private $transactionTime;
 
     /**
-     * @var PaymentMethodApplePayType|PaymentMethodBankAccountType|PaymentMethodCreditCardType|PaymentMethodExternalType|PaymentMethodPaypalType
+     * @var PaymentMethodApplePay|PaymentMethodBankAccount|PaymentMethodCreditCard|PaymentMethodExternal|PaymentMethodPaypal
      */
     private $paymentMethod;
 
@@ -59,7 +59,7 @@ class RemovePaymentEventData implements \JsonSerializable
      * @param string $memo
      * @param string $appliedAmount
      * @param \DateTime $transactionTime
-     * @param PaymentMethodApplePayType|PaymentMethodBankAccountType|PaymentMethodCreditCardType|PaymentMethodExternalType|PaymentMethodPaypalType $paymentMethod
+     * @param PaymentMethodApplePay|PaymentMethodBankAccount|PaymentMethodCreditCard|PaymentMethodExternal|PaymentMethodPaypal $paymentMethod
      * @param bool $prepayment
      */
     public function __construct(
@@ -187,7 +187,7 @@ class RemovePaymentEventData implements \JsonSerializable
      * Returns Payment Method.
      * A nested data structure detailing the method of payment
      *
-     * @return PaymentMethodApplePayType|PaymentMethodBankAccountType|PaymentMethodCreditCardType|PaymentMethodExternalType|PaymentMethodPaypalType
+     * @return PaymentMethodApplePay|PaymentMethodBankAccount|PaymentMethodCreditCard|PaymentMethodExternal|PaymentMethodPaypal
      */
     public function getPaymentMethod()
     {
@@ -200,9 +200,9 @@ class RemovePaymentEventData implements \JsonSerializable
      *
      * @required
      * @maps payment_method
-     * @mapsBy anyOf(PaymentMethodApplePayType,PaymentMethodBankAccountType,PaymentMethodCreditCardType,PaymentMethodExternalType,PaymentMethodPaypalType)
+     * @mapsBy anyOf{type}(PaymentMethodApplePay{applePay},PaymentMethodBankAccount{bankAccount},PaymentMethodCreditCard{creditCard},PaymentMethodExternal{external},PaymentMethodPaypal{paypalAccount})
      *
-     * @param PaymentMethodApplePayType|PaymentMethodBankAccountType|PaymentMethodCreditCardType|PaymentMethodExternalType|PaymentMethodPaypalType $paymentMethod
+     * @param PaymentMethodApplePay|PaymentMethodBankAccount|PaymentMethodCreditCard|PaymentMethodExternal|PaymentMethodPaypal $paymentMethod
      */
     public function setPaymentMethod($paymentMethod): void
     {
@@ -252,8 +252,9 @@ class RemovePaymentEventData implements \JsonSerializable
         $json['payment_method']      =
             ApiHelper::getJsonHelper()->verifyTypes(
                 $this->paymentMethod,
-                'anyOf(PaymentMethodApplePayType,PaymentMethodBankAccountType,PaymentMethodCreditCard' .
-                'Type,PaymentMethodExternalType,PaymentMethodPaypalType)'
+                'anyOf{type}(PaymentMethodApplePay{applePay},PaymentMethodBankAccount{bankAccount},Pa' .
+                'ymentMethodCreditCard{creditCard},PaymentMethodExternal{external},PaymentMethodPaypa' .
+                'l{paypalAccount})'
             );
         $json['prepayment']          = $this->prepayment;
 

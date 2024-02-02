@@ -117,7 +117,7 @@ class SubscriptionGroupInvoiceAccountController extends BaseController
      *
      * @throws ApiException Thrown if API call fails
      */
-    public function issueSubscriptionGroupServiceCredits(
+    public function issueSubscriptionGroupServiceCredit(
         string $uid,
         ?IssueServiceCreditRequest $body = null
     ): ServiceCreditResponse {
@@ -156,7 +156,7 @@ class SubscriptionGroupInvoiceAccountController extends BaseController
      *
      * @throws ApiException Thrown if API call fails
      */
-    public function deductSubscriptionGroupServiceCredits(
+    public function deductSubscriptionGroupServiceCredit(
         string $uid,
         ?DeductServiceCreditRequest $body = null
     ): ServiceCredit {

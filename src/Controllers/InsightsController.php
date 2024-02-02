@@ -120,7 +120,7 @@ class InsightsController extends BaseController
      *
      * @throws ApiException Thrown if API call fails
      */
-    public function readMrrMovements(array $options): ListMRRResponse
+    public function listMrrMovements(array $options): ListMRRResponse
     {
         trigger_error('Method ' . __METHOD__ . ' is deprecated.', E_USER_DEPRECATED);
 

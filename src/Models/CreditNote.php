@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
 class CreditNote implements \JsonSerializable
@@ -45,12 +46,12 @@ class CreditNote implements \JsonSerializable
     private $sequenceNumber;
 
     /**
-     * @var string|null
+     * @var \DateTime|null
      */
     private $issueDate;
 
     /**
-     * @var string|null
+     * @var \DateTime|null
      */
     private $appliedDate;
 
@@ -286,7 +287,7 @@ class CreditNote implements \JsonSerializable
      *
      * The format is `"YYYY-MM-DD"`.
      */
-    public function getIssueDate(): ?string
+    public function getIssueDate(): ?\DateTime
     {
         return $this->issueDate;
     }
@@ -299,8 +300,9 @@ class CreditNote implements \JsonSerializable
      * The format is `"YYYY-MM-DD"`.
      *
      * @maps issue_date
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromSimpleDate
      */
-    public function setIssueDate(?string $issueDate): void
+    public function setIssueDate(?\DateTime $issueDate): void
     {
         $this->issueDate = $issueDate;
     }
@@ -315,7 +317,7 @@ class CreditNote implements \JsonSerializable
      *
      * The format is `"YYYY-MM-DD"`.
      */
-    public function getAppliedDate(): ?string
+    public function getAppliedDate(): ?\DateTime
     {
         return $this->appliedDate;
     }
@@ -331,8 +333,9 @@ class CreditNote implements \JsonSerializable
      * The format is `"YYYY-MM-DD"`.
      *
      * @maps applied_date
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromSimpleDate
      */
-    public function setAppliedDate(?string $appliedDate): void
+    public function setAppliedDate(?\DateTime $appliedDate): void
     {
         $this->appliedDate = $appliedDate;
     }
@@ -785,10 +788,10 @@ class CreditNote implements \JsonSerializable
             $json['sequence_number']  = $this->sequenceNumber;
         }
         if (isset($this->issueDate)) {
-            $json['issue_date']       = $this->issueDate;
+            $json['issue_date']       = DateTimeHelper::toSimpleDate($this->issueDate);
         }
         if (isset($this->appliedDate)) {
-            $json['applied_date']     = $this->appliedDate;
+            $json['applied_date']     = DateTimeHelper::toSimpleDate($this->appliedDate);
         }
         if (isset($this->status)) {
             $json['status']           = CreditNoteStatus::checkValue($this->status);

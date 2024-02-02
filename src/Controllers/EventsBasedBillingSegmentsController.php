@@ -239,7 +239,7 @@ class EventsBasedBillingSegmentsController extends BaseController
      *
      * @throws ApiException Thrown if API call fails
      */
-    public function createSegments(
+    public function bulkCreateSegments(
         string $componentId,
         string $pricePointId,
         ?BulkCreateSegments $body = null
@@ -289,7 +289,7 @@ class EventsBasedBillingSegmentsController extends BaseController
      *
      * @throws ApiException Thrown if API call fails
      */
-    public function updateSegments(
+    public function bulkUpdateSegments(
         string $componentId,
         string $pricePointId,
         ?BulkUpdateSegments $body = null

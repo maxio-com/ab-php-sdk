@@ -9,7 +9,7 @@
 
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
-| `pricePoints` | array<[CreateComponentPricePoint](../../doc/models/create-component-price-point.md)\|Create[PrepaidUsage](../../doc/models/prepaid-usage.md)ComponentPricePoint> | Required | This is Array of a container for any-of cases. | getPricePoints(): array | setPricePoints(array pricePoints): void |
+| `pricePoints` | array<[CreateComponentPricePoint](../../doc/models/create-component-price-point.md)\|[CreatePrepaidUsageComponentPricePoint](../../doc/models/create-prepaid-usage-component-price-point.md)> | Required | This is Array of a container for any-of cases. | getPricePoints(): array | setPricePoints(array pricePoints): void |
 
 ## Example (as JSON)
 

@@ -43,7 +43,7 @@
 | `taxes` | [`?(ProformaInvoiceTax[])`](../../doc/models/proforma-invoice-tax.md) | Optional | - | getTaxes(): ?array | setTaxes(?array taxes): void |
 | `credits` | [`?(ProformaInvoiceCredit[])`](../../doc/models/proforma-invoice-credit.md) | Optional | - | getCredits(): ?array | setCredits(?array credits): void |
 | `payments` | [`?(ProformaInvoicePayment[])`](../../doc/models/proforma-invoice-payment.md) | Optional | - | getPayments(): ?array | setPayments(?array payments): void |
-| `customFields` | [`?(ProformaCustomField[])`](../../doc/models/proforma-custom-field.md) | Optional | - | getCustomFields(): ?array | setCustomFields(?array customFields): void |
+| `customFields` | [`?(InvoiceCustomField[])`](../../doc/models/invoice-custom-field.md) | Optional | - | getCustomFields(): ?array | setCustomFields(?array customFields): void |
 | `publicUrl` | `?string` | Optional | - | getPublicUrl(): ?string | setPublicUrl(?string publicUrl): void |
 
 ## Example (as JSON)

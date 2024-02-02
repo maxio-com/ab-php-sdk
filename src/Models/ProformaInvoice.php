@@ -185,7 +185,7 @@ class ProformaInvoice implements \JsonSerializable
     private $payments;
 
     /**
-     * @var ProformaCustomField[]|null
+     * @var InvoiceCustomField[]|null
      */
     private $customFields;
 
@@ -833,7 +833,7 @@ class ProformaInvoice implements \JsonSerializable
     /**
      * Returns Custom Fields.
      *
-     * @return ProformaCustomField[]|null
+     * @return InvoiceCustomField[]|null
      */
     public function getCustomFields(): ?array
     {
@@ -845,7 +845,7 @@ class ProformaInvoice implements \JsonSerializable
      *
      * @maps custom_fields
      *
-     * @param ProformaCustomField[]|null $customFields
+     * @param InvoiceCustomField[]|null $customFields
      */
     public function setCustomFields(?array $customFields): void
     {

@@ -313,7 +313,7 @@ class ComponentsController extends BaseController
      *
      * @throws ApiException Thrown if API call fails
      */
-    public function readComponentByHandle(string $handle): ComponentResponse
+    public function findComponent(string $handle): ComponentResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/components/lookup.json')
             ->auth('global')
@@ -339,7 +339,7 @@ class ComponentsController extends BaseController
      *
      * @throws ApiException Thrown if API call fails
      */
-    public function readComponentById(int $productFamilyId, string $componentId): ComponentResponse
+    public function readComponent(int $productFamilyId, string $componentId): ComponentResponse
     {
         $_reqBuilder = $this->requestBuilder(
             RequestMethod::GET,
@@ -528,7 +528,7 @@ class ComponentsController extends BaseController
      *
      * @throws ApiException Thrown if API call fails
      */
-    public function updateDefaultPricePointForComponent(int $componentId, int $pricePointId): ComponentResponse
+    public function promoteComponentPricePointToDefault(int $componentId, int $pricePointId): ComponentResponse
     {
         $_reqBuilder = $this->requestBuilder(
             RequestMethod::PUT,
@@ -662,7 +662,7 @@ class ComponentsController extends BaseController
      *
      * @throws ApiException Thrown if API call fails
      */
-    public function createComponentPricePoints(
+    public function bulkCreateComponentPricePoints(
         string $componentId,
         ?CreateComponentPricePointsRequest $body = null
     ): ComponentPricePointsResponse {

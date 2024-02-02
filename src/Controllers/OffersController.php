@@ -102,7 +102,7 @@ class OffersController extends BaseController
      *
      * @throws ApiException Thrown if API call fails
      */
-    public function readOffers(int $offerId): OfferResponse
+    public function readOffer(int $offerId): OfferResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/offers/{offer_id}.json')
             ->auth('global')

@@ -18,8 +18,8 @@ $paymentProfilesController = $client->getPaymentProfilesController();
 * [Delete Subscriptions Payment Profile](../../doc/controllers/payment-profiles.md#delete-subscriptions-payment-profile)
 * [Verify Bank Account](../../doc/controllers/payment-profiles.md#verify-bank-account)
 * [Delete Subscription Group Payment Profile](../../doc/controllers/payment-profiles.md#delete-subscription-group-payment-profile)
-* [Update Subscription Default Payment Profile](../../doc/controllers/payment-profiles.md#update-subscription-default-payment-profile)
-* [Update Subscription Group Default Payment Profile](../../doc/controllers/payment-profiles.md#update-subscription-group-default-payment-profile)
+* [Change Subscription Default Payment Profile](../../doc/controllers/payment-profiles.md#change-subscription-default-payment-profile)
+* [Change Subscription Group Default Payment Profile](../../doc/controllers/payment-profiles.md#change-subscription-group-default-payment-profile)
 * [Read One Time Token](../../doc/controllers/payment-profiles.md#read-one-time-token)
 * [Send Request Update Payment Email](../../doc/controllers/payment-profiles.md#send-request-update-payment-email)
 
@@ -832,14 +832,14 @@ $paymentProfilesController->deleteSubscriptionGroupPaymentProfile(
 ```
 
 
-# Update Subscription Default Payment Profile
+# Change Subscription Default Payment Profile
 
 This will change the default payment profile on the subscription to the existing payment profile with the id specified.
 
 You must elect to change the existing payment profile to a new payment profile ID in order to receive a satisfactory response from this endpoint.
 
 ```php
-function updateSubscriptionDefaultPaymentProfile(
+function changeSubscriptionDefaultPaymentProfile(
     int $subscriptionId,
     int $paymentProfileId
 ): PaymentProfileResponse
@@ -863,7 +863,7 @@ $subscriptionId = 222;
 
 $paymentProfileId = 198;
 
-$result = $paymentProfilesController->updateSubscriptionDefaultPaymentProfile(
+$result = $paymentProfilesController->changeSubscriptionDefaultPaymentProfile(
     $subscriptionId,
     $paymentProfileId
 );
@@ -906,7 +906,7 @@ $result = $paymentProfilesController->updateSubscriptionDefaultPaymentProfile(
 | 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
 
 
-# Update Subscription Group Default Payment Profile
+# Change Subscription Group Default Payment Profile
 
 This will change the default payment profile on the subscription group to the existing payment profile with the id specified.
 
@@ -915,7 +915,7 @@ You must elect to change the existing payment profile to a new payment profile I
 The new payment profile must belong to the subscription group's customer, otherwise you will receive an error.
 
 ```php
-function updateSubscriptionGroupDefaultPaymentProfile(
+function changeSubscriptionGroupDefaultPaymentProfile(
     string $uid,
     int $paymentProfileId
 ): PaymentProfileResponse
@@ -939,7 +939,7 @@ $uid = 'uid0';
 
 $paymentProfileId = 198;
 
-$result = $paymentProfilesController->updateSubscriptionGroupDefaultPaymentProfile(
+$result = $paymentProfilesController->changeSubscriptionGroupDefaultPaymentProfile(
     $uid,
     $paymentProfileId
 );

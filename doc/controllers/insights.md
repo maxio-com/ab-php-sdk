@@ -12,7 +12,7 @@ $insightsController = $client->getInsightsController();
 
 * [Read Site Stats](../../doc/controllers/insights.md#read-site-stats)
 * [Read Mrr](../../doc/controllers/insights.md#read-mrr)
-* [Read Mrr Movements](../../doc/controllers/insights.md#read-mrr-movements)
+* [List Mrr Movements](../../doc/controllers/insights.md#list-mrr-movements)
 * [List Mrr Per Subscription](../../doc/controllers/insights.md#list-mrr-per-subscription)
 
 
@@ -110,7 +110,7 @@ $result = $insightsController->readMrr();
 ```
 
 
-# Read Mrr Movements
+# List Mrr Movements
 
 **This endpoint is deprecated.**
 
@@ -140,7 +140,7 @@ Usage includes revenue from:
 * Prepaid Usage Components
 
 ```php
-function readMrrMovements(array $options): ListMRRResponse
+function listMrrMovements(array $options): ListMRRResponse
 ```
 
 ## Parameters
@@ -164,7 +164,7 @@ $collect = [
     'per_page' => 20
 ];
 
-$result = $insightsController->readMrrMovements($collect);
+$result = $insightsController->listMrrMovements($collect);
 ```
 
 ## Example Response *(as JSON)*
