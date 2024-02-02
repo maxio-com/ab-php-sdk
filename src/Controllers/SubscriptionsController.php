@@ -1143,7 +1143,7 @@ class SubscriptionsController extends BaseController
      *
      * @throws ApiException Thrown if API call fails
      */
-    public function readSubscriptionByReference(?string $reference = null): SubscriptionResponse
+    public function findSubscription(?string $reference = null): SubscriptionResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/subscriptions/lookup.json')
             ->auth('global')
@@ -1203,7 +1203,7 @@ class SubscriptionsController extends BaseController
      *
      * @throws ApiException Thrown if API call fails
      */
-    public function createPrepaidSubscription(
+    public function updatePrepaidSubscriptionConfiguration(
         int $subscriptionId,
         ?UpsertPrepaidConfigurationRequest $body = null
     ): PrepaidConfigurationResponse {
@@ -1305,7 +1305,7 @@ class SubscriptionsController extends BaseController
      *
      * @throws ApiException Thrown if API call fails
      */
-    public function applyCouponToSubscription(
+    public function applyCouponsToSubscription(
         int $subscriptionId,
         ?string $code = null,
         ?AddCouponsRequest $body = null
@@ -1349,7 +1349,7 @@ class SubscriptionsController extends BaseController
      *
      * @throws ApiException Thrown if API call fails
      */
-    public function deleteCouponFromSubscription(int $subscriptionId, ?string $couponCode = null): string
+    public function removeCouponFromSubscription(int $subscriptionId, ?string $couponCode = null): string
     {
         $_reqBuilder = $this->requestBuilder(
             RequestMethod::DELETE,

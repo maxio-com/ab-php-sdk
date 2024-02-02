@@ -33,27 +33,9 @@ class CustomerCustomFieldsChangeBuilder
     /**
      * Initializes a new customer custom fields change Builder object.
      */
-    public static function init(): self
+    public static function init(array $before, array $after): self
     {
-        return new self(new CustomerCustomFieldsChange());
-    }
-
-    /**
-     * Sets before field.
-     */
-    public function before(?array $value): self
-    {
-        $this->instance->setBefore($value);
-        return $this;
-    }
-
-    /**
-     * Sets after field.
-     */
-    public function after(?array $value): self
-    {
-        $this->instance->setAfter($value);
-        return $this;
+        return new self(new CustomerCustomFieldsChange($before, $after));
     }
 
     /**

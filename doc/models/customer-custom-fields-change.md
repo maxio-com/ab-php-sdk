@@ -9,8 +9,8 @@
 
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
-| `before` | [`?(ProformaCustomField[])`](../../doc/models/proforma-custom-field.md) | Optional | - | getBefore(): ?array | setBefore(?array before): void |
-| `after` | [`?(ProformaCustomField[])`](../../doc/models/proforma-custom-field.md) | Optional | - | getAfter(): ?array | setAfter(?array after): void |
+| `before` | [`InvoiceCustomField[]`](../../doc/models/invoice-custom-field.md) | Required | - | getBefore(): array | setBefore(array before): void |
+| `after` | [`InvoiceCustomField[]`](../../doc/models/invoice-custom-field.md) | Required | - | getAfter(): array | setAfter(array after): void |
 
 ## Example (as JSON)
 
@@ -19,7 +19,7 @@
   "before": [
     {
       "owner_id": 26,
-      "owner_type": "owner_type2",
+      "owner_type": "Customer",
       "name": "name0",
       "value": "value2",
       "metadatum_id": 26
@@ -28,14 +28,7 @@
   "after": [
     {
       "owner_id": 130,
-      "owner_type": "owner_type4",
-      "name": "name2",
-      "value": "value4",
-      "metadatum_id": 130
-    },
-    {
-      "owner_id": 130,
-      "owner_type": "owner_type4",
+      "owner_type": "Customer",
       "name": "name2",
       "value": "value4",
       "metadatum_id": 130

@@ -48,6 +48,15 @@ class MetadataBuilder
     }
 
     /**
+     * Unsets id field.
+     */
+    public function unsetId(): self
+    {
+        $this->instance->unsetId();
+        return $this;
+    }
+
+    /**
      * Sets value field.
      */
     public function value(?string $value): self
@@ -57,11 +66,29 @@ class MetadataBuilder
     }
 
     /**
+     * Unsets value field.
+     */
+    public function unsetValue(): self
+    {
+        $this->instance->unsetValue();
+        return $this;
+    }
+
+    /**
      * Sets resource id field.
      */
     public function resourceId(?int $value): self
     {
         $this->instance->setResourceId($value);
+        return $this;
+    }
+
+    /**
+     * Unsets resource id field.
+     */
+    public function unsetResourceId(): self
+    {
+        $this->instance->unsetResourceId();
         return $this;
     }
 
@@ -98,6 +125,15 @@ class MetadataBuilder
     public function metafieldId(?int $value): self
     {
         $this->instance->setMetafieldId($value);
+        return $this;
+    }
+
+    /**
+     * Unsets metafield id field.
+     */
+    public function unsetMetafieldId(): self
+    {
+        $this->instance->unsetMetafieldId();
         return $this;
     }
 

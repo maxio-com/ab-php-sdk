@@ -15,19 +15,19 @@ use stdClass;
 class Metadata implements \JsonSerializable
 {
     /**
-     * @var int|null
+     * @var array
      */
-    private $id;
+    private $id = [];
 
     /**
-     * @var string|null
+     * @var array
      */
-    private $value;
+    private $value = [];
 
     /**
-     * @var int|null
+     * @var array
      */
-    private $resourceId;
+    private $resourceId = [];
 
     /**
      * @var string|null
@@ -40,16 +40,19 @@ class Metadata implements \JsonSerializable
     private $deletedAt = [];
 
     /**
-     * @var int|null
+     * @var array
      */
-    private $metafieldId;
+    private $metafieldId = [];
 
     /**
      * Returns Id.
      */
     public function getId(): ?int
     {
-        return $this->id;
+        if (count($this->id) == 0) {
+            return null;
+        }
+        return $this->id['value'];
     }
 
     /**
@@ -59,7 +62,15 @@ class Metadata implements \JsonSerializable
      */
     public function setId(?int $id): void
     {
-        $this->id = $id;
+        $this->id['value'] = $id;
+    }
+
+    /**
+     * Unsets Id.
+     */
+    public function unsetId(): void
+    {
+        $this->id = [];
     }
 
     /**
@@ -67,7 +78,10 @@ class Metadata implements \JsonSerializable
      */
     public function getValue(): ?string
     {
-        return $this->value;
+        if (count($this->value) == 0) {
+            return null;
+        }
+        return $this->value['value'];
     }
 
     /**
@@ -77,7 +91,15 @@ class Metadata implements \JsonSerializable
      */
     public function setValue(?string $value): void
     {
-        $this->value = $value;
+        $this->value['value'] = $value;
+    }
+
+    /**
+     * Unsets Value.
+     */
+    public function unsetValue(): void
+    {
+        $this->value = [];
     }
 
     /**
@@ -85,7 +107,10 @@ class Metadata implements \JsonSerializable
      */
     public function getResourceId(): ?int
     {
-        return $this->resourceId;
+        if (count($this->resourceId) == 0) {
+            return null;
+        }
+        return $this->resourceId['value'];
     }
 
     /**
@@ -95,7 +120,15 @@ class Metadata implements \JsonSerializable
      */
     public function setResourceId(?int $resourceId): void
     {
-        $this->resourceId = $resourceId;
+        $this->resourceId['value'] = $resourceId;
+    }
+
+    /**
+     * Unsets Resource Id.
+     */
+    public function unsetResourceId(): void
+    {
+        $this->resourceId = [];
     }
 
     /**
@@ -150,7 +183,10 @@ class Metadata implements \JsonSerializable
      */
     public function getMetafieldId(): ?int
     {
-        return $this->metafieldId;
+        if (count($this->metafieldId) == 0) {
+            return null;
+        }
+        return $this->metafieldId['value'];
     }
 
     /**
@@ -160,7 +196,15 @@ class Metadata implements \JsonSerializable
      */
     public function setMetafieldId(?int $metafieldId): void
     {
-        $this->metafieldId = $metafieldId;
+        $this->metafieldId['value'] = $metafieldId;
+    }
+
+    /**
+     * Unsets Metafield Id.
+     */
+    public function unsetMetafieldId(): void
+    {
+        $this->metafieldId = [];
     }
 
     /**
@@ -175,14 +219,14 @@ class Metadata implements \JsonSerializable
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
-        if (isset($this->id)) {
-            $json['id']           = $this->id;
+        if (!empty($this->id)) {
+            $json['id']           = $this->id['value'];
         }
-        if (isset($this->value)) {
-            $json['value']        = $this->value;
+        if (!empty($this->value)) {
+            $json['value']        = $this->value['value'];
         }
-        if (isset($this->resourceId)) {
-            $json['resource_id']  = $this->resourceId;
+        if (!empty($this->resourceId)) {
+            $json['resource_id']  = $this->resourceId['value'];
         }
         if (isset($this->name)) {
             $json['name']         = $this->name;
@@ -190,8 +234,8 @@ class Metadata implements \JsonSerializable
         if (!empty($this->deletedAt)) {
             $json['deleted_at']   = $this->deletedAt['value'];
         }
-        if (isset($this->metafieldId)) {
-            $json['metafield_id'] = $this->metafieldId;
+        if (!empty($this->metafieldId)) {
+            $json['metafield_id'] = $this->metafieldId['value'];
         }
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;

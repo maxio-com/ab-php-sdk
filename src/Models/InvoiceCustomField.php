@@ -15,6 +15,16 @@ use stdClass;
 class InvoiceCustomField implements \JsonSerializable
 {
     /**
+     * @var int|null
+     */
+    private $ownerId;
+
+    /**
+     * @var string|null
+     */
+    private $ownerType;
+
+    /**
      * @var string|null
      */
     private $name;
@@ -27,12 +37,44 @@ class InvoiceCustomField implements \JsonSerializable
     /**
      * @var int|null
      */
-    private $ownerId;
+    private $metadatumId;
 
     /**
-     * @var string|null
+     * Returns Owner Id.
      */
-    private $ownerType;
+    public function getOwnerId(): ?int
+    {
+        return $this->ownerId;
+    }
+
+    /**
+     * Sets Owner Id.
+     *
+     * @maps owner_id
+     */
+    public function setOwnerId(?int $ownerId): void
+    {
+        $this->ownerId = $ownerId;
+    }
+
+    /**
+     * Returns Owner Type.
+     */
+    public function getOwnerType(): ?string
+    {
+        return $this->ownerType;
+    }
+
+    /**
+     * Sets Owner Type.
+     *
+     * @maps owner_type
+     * @factory \AdvancedBillingLib\Models\CustomFieldOwner::checkValue
+     */
+    public function setOwnerType(?string $ownerType): void
+    {
+        $this->ownerType = $ownerType;
+    }
 
     /**
      * Returns Name.
@@ -71,39 +113,21 @@ class InvoiceCustomField implements \JsonSerializable
     }
 
     /**
-     * Returns Owner Id.
+     * Returns Metadatum Id.
      */
-    public function getOwnerId(): ?int
+    public function getMetadatumId(): ?int
     {
-        return $this->ownerId;
+        return $this->metadatumId;
     }
 
     /**
-     * Sets Owner Id.
+     * Sets Metadatum Id.
      *
-     * @maps owner_id
+     * @maps metadatum_id
      */
-    public function setOwnerId(?int $ownerId): void
+    public function setMetadatumId(?int $metadatumId): void
     {
-        $this->ownerId = $ownerId;
-    }
-
-    /**
-     * Returns Owner Type.
-     */
-    public function getOwnerType(): ?string
-    {
-        return $this->ownerType;
-    }
-
-    /**
-     * Sets Owner Type.
-     *
-     * @maps owner_type
-     */
-    public function setOwnerType(?string $ownerType): void
-    {
-        $this->ownerType = $ownerType;
+        $this->metadatumId = $metadatumId;
     }
 
     /**
@@ -118,17 +142,20 @@ class InvoiceCustomField implements \JsonSerializable
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
-        if (isset($this->name)) {
-            $json['name']       = $this->name;
-        }
-        if (isset($this->value)) {
-            $json['value']      = $this->value;
-        }
         if (isset($this->ownerId)) {
-            $json['owner_id']   = $this->ownerId;
+            $json['owner_id']     = $this->ownerId;
         }
         if (isset($this->ownerType)) {
-            $json['owner_type'] = $this->ownerType;
+            $json['owner_type']   = CustomFieldOwner::checkValue($this->ownerType);
+        }
+        if (isset($this->name)) {
+            $json['name']         = $this->name;
+        }
+        if (isset($this->value)) {
+            $json['value']        = $this->value;
+        }
+        if (isset($this->metadatumId)) {
+            $json['metadatum_id'] = $this->metadatumId;
         }
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;

@@ -14,8 +14,8 @@ $eventsBasedBillingSegmentsController = $client->getEventsBasedBillingSegmentsCo
 * [List Segments for Price Point](../../doc/controllers/events-based-billing-segments.md#list-segments-for-price-point)
 * [Update Segment](../../doc/controllers/events-based-billing-segments.md#update-segment)
 * [Delete Segment](../../doc/controllers/events-based-billing-segments.md#delete-segment)
-* [Create Segments](../../doc/controllers/events-based-billing-segments.md#create-segments)
-* [Update Segments](../../doc/controllers/events-based-billing-segments.md#update-segments)
+* [Bulk Create Segments](../../doc/controllers/events-based-billing-segments.md#bulk-create-segments)
+* [Bulk Update Segments](../../doc/controllers/events-based-billing-segments.md#bulk-update-segments)
 
 
 # Create Segment
@@ -242,7 +242,7 @@ $eventsBasedBillingSegmentsController->deleteSegment(
 | 422 | Unprocessable Entity (WebDAV) | `ApiException` |
 
 
-# Create Segments
+# Bulk Create Segments
 
 This endpoint allows you to create multiple segments in one request. The array of segments can contain up to `2000` records.
 
@@ -251,7 +251,7 @@ If any of the records contain an error the whole request would fail and none of 
 You may specify component and/or price point by using either the numeric ID or the `handle:gold` syntax.
 
 ```php
-function createSegments(
+function bulkCreateSegments(
     string $componentId,
     string $pricePointId,
     ?BulkCreateSegments $body = null
@@ -277,7 +277,7 @@ $componentId = 'component_id8';
 
 $pricePointId = 'price_point_id8';
 
-$result = $eventsBasedBillingSegmentsController->createSegments(
+$result = $eventsBasedBillingSegmentsController->bulkCreateSegments(
     $componentId,
     $pricePointId
 );
@@ -291,7 +291,7 @@ $result = $eventsBasedBillingSegmentsController->createSegments(
 | 422 | Unprocessable Entity (WebDAV) | [`EventBasedBillingSegmentException`](../../doc/models/event-based-billing-segment-exception.md) |
 
 
-# Update Segments
+# Bulk Update Segments
 
 This endpoint allows you to update multiple segments in one request. The array of segments can contain up to `1000` records.
 
@@ -300,7 +300,7 @@ If any of the records contain an error the whole request would fail and none of 
 You may specify component and/or price point by using either the numeric ID or the `handle:gold` syntax.
 
 ```php
-function updateSegments(
+function bulkUpdateSegments(
     string $componentId,
     string $pricePointId,
     ?BulkUpdateSegments $body = null
@@ -326,7 +326,7 @@ $componentId = 'component_id8';
 
 $pricePointId = 'price_point_id8';
 
-$result = $eventsBasedBillingSegmentsController->updateSegments(
+$result = $eventsBasedBillingSegmentsController->bulkUpdateSegments(
     $componentId,
     $pricePointId
 );

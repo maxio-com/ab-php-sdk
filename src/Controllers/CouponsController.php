@@ -160,7 +160,7 @@ class CouponsController extends BaseController
      *
      * @throws ApiException Thrown if API call fails
      */
-    public function readCouponByCode(?int $productFamilyId = null, ?string $code = null): CouponResponse
+    public function findCoupon(?int $productFamilyId = null, ?string $code = null): CouponResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/coupons/find.json')
             ->auth('global')
@@ -451,7 +451,7 @@ class CouponsController extends BaseController
      *
      * @throws ApiException Thrown if API call fails
      */
-    public function updateCouponCurrencyPrices(
+    public function createOrUpdateCouponCurrencyPrices(
         int $couponId,
         ?CouponCurrencyRequest $body = null
     ): CouponCurrencyResponse {

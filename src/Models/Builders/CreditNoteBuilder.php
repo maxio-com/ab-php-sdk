@@ -98,7 +98,7 @@ class CreditNoteBuilder
     /**
      * Sets issue date field.
      */
-    public function issueDate(?string $value): self
+    public function issueDate(?\DateTime $value): self
     {
         $this->instance->setIssueDate($value);
         return $this;
@@ -107,7 +107,7 @@ class CreditNoteBuilder
     /**
      * Sets applied date field.
      */
-    public function appliedDate(?string $value): self
+    public function appliedDate(?\DateTime $value): self
     {
         $this->instance->setAppliedDate($value);
         return $this;

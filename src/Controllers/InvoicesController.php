@@ -339,7 +339,7 @@ class InvoicesController extends BaseController
      *
      * @throws ApiException Thrown if API call fails
      */
-    public function recordExternalPaymentForInvoices(
+    public function recordPaymentForMultipleInvoices(
         ?CreateMultiInvoicePaymentRequest $body = null
     ): MultiInvoicePaymentResponse {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/invoices/payments.json')
@@ -549,7 +549,7 @@ class InvoicesController extends BaseController
      *
      * @throws ApiException Thrown if API call fails
      */
-    public function listInvoiceSegments(array $options): ConsolidatedInvoice
+    public function listConsolidatedInvoiceSegments(array $options): ConsolidatedInvoice
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/invoices/{invoice_uid}/segments.json')
             ->auth('global')

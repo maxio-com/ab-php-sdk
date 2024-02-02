@@ -676,7 +676,7 @@ class PaymentProfilesController extends BaseController
      *
      * @throws ApiException Thrown if API call fails
      */
-    public function updateSubscriptionDefaultPaymentProfile(
+    public function changeSubscriptionDefaultPaymentProfile(
         int $subscriptionId,
         int $paymentProfileId
     ): PaymentProfileResponse {
@@ -722,7 +722,7 @@ class PaymentProfilesController extends BaseController
      *
      * @throws ApiException Thrown if API call fails
      */
-    public function updateSubscriptionGroupDefaultPaymentProfile(
+    public function changeSubscriptionGroupDefaultPaymentProfile(
         string $uid,
         int $paymentProfileId
     ): PaymentProfileResponse {

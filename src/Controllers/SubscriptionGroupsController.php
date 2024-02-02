@@ -231,7 +231,7 @@ class SubscriptionGroupsController extends BaseController
      *
      * @throws ApiException Thrown if API call fails
      */
-    public function readSubscriptionGroupBySubscriptionId(string $subscriptionId): FullSubscriptionGroupResponse
+    public function findSubscriptionGroup(string $subscriptionId): FullSubscriptionGroupResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/subscription_groups/lookup.json')
             ->auth('global')
@@ -280,7 +280,7 @@ class SubscriptionGroupsController extends BaseController
      *
      * @throws ApiException Thrown if API call fails
      */
-    public function createSubscriptionGroupHierarchy(
+    public function addSubscriptionToGroup(
         int $subscriptionId,
         ?AddSubscriptionToAGroup $body = null
     ): SubscriptionGroupResponse {

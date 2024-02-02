@@ -40,7 +40,7 @@ class ApplyPaymentEventData implements \JsonSerializable
     private $transactionTime;
 
     /**
-     * @var PaymentMethodApplePayType|PaymentMethodBankAccountType|PaymentMethodCreditCardType|PaymentMethodExternalType|PaymentMethodPaypalType
+     * @var PaymentMethodApplePay|PaymentMethodBankAccount|PaymentMethodCreditCard|PaymentMethodExternal|PaymentMethodPaypal
      */
     private $paymentMethod;
 
@@ -50,11 +50,31 @@ class ApplyPaymentEventData implements \JsonSerializable
     private $transactionId;
 
     /**
+     * @var array
+     */
+    private $parentInvoiceNumber = [];
+
+    /**
+     * @var array
+     */
+    private $remainingPrepaymentAmount = [];
+
+    /**
+     * @var bool|null
+     */
+    private $prepayment;
+
+    /**
+     * @var bool|null
+     */
+    private $external;
+
+    /**
      * @param string $memo
      * @param string $originalAmount
      * @param string $appliedAmount
      * @param \DateTime $transactionTime
-     * @param PaymentMethodApplePayType|PaymentMethodBankAccountType|PaymentMethodCreditCardType|PaymentMethodExternalType|PaymentMethodPaypalType $paymentMethod
+     * @param PaymentMethodApplePay|PaymentMethodBankAccount|PaymentMethodCreditCard|PaymentMethodExternal|PaymentMethodPaypal $paymentMethod
      */
     public function __construct(
         string $memo,
@@ -169,7 +189,7 @@ class ApplyPaymentEventData implements \JsonSerializable
      * Returns Payment Method.
      * A nested data structure detailing the method of payment
      *
-     * @return PaymentMethodApplePayType|PaymentMethodBankAccountType|PaymentMethodCreditCardType|PaymentMethodExternalType|PaymentMethodPaypalType
+     * @return PaymentMethodApplePay|PaymentMethodBankAccount|PaymentMethodCreditCard|PaymentMethodExternal|PaymentMethodPaypal
      */
     public function getPaymentMethod()
     {
@@ -182,9 +202,9 @@ class ApplyPaymentEventData implements \JsonSerializable
      *
      * @required
      * @maps payment_method
-     * @mapsBy anyOf(PaymentMethodApplePayType,PaymentMethodBankAccountType,PaymentMethodCreditCardType,PaymentMethodExternalType,PaymentMethodPaypalType)
+     * @mapsBy anyOf{type}(PaymentMethodApplePay{applePay},PaymentMethodBankAccount{bankAccount},PaymentMethodCreditCard{creditCard},PaymentMethodExternal{external},PaymentMethodPaypal{paypalAccount})
      *
-     * @param PaymentMethodApplePayType|PaymentMethodBankAccountType|PaymentMethodCreditCardType|PaymentMethodExternalType|PaymentMethodPaypalType $paymentMethod
+     * @param PaymentMethodApplePay|PaymentMethodBankAccount|PaymentMethodCreditCard|PaymentMethodExternal|PaymentMethodPaypal $paymentMethod
      */
     public function setPaymentMethod($paymentMethod): void
     {
@@ -212,6 +232,100 @@ class ApplyPaymentEventData implements \JsonSerializable
     }
 
     /**
+     * Returns Parent Invoice Number.
+     */
+    public function getParentInvoiceNumber(): ?int
+    {
+        if (count($this->parentInvoiceNumber) == 0) {
+            return null;
+        }
+        return $this->parentInvoiceNumber['value'];
+    }
+
+    /**
+     * Sets Parent Invoice Number.
+     *
+     * @maps parent_invoice_number
+     */
+    public function setParentInvoiceNumber(?int $parentInvoiceNumber): void
+    {
+        $this->parentInvoiceNumber['value'] = $parentInvoiceNumber;
+    }
+
+    /**
+     * Unsets Parent Invoice Number.
+     */
+    public function unsetParentInvoiceNumber(): void
+    {
+        $this->parentInvoiceNumber = [];
+    }
+
+    /**
+     * Returns Remaining Prepayment Amount.
+     */
+    public function getRemainingPrepaymentAmount(): ?string
+    {
+        if (count($this->remainingPrepaymentAmount) == 0) {
+            return null;
+        }
+        return $this->remainingPrepaymentAmount['value'];
+    }
+
+    /**
+     * Sets Remaining Prepayment Amount.
+     *
+     * @maps remaining_prepayment_amount
+     */
+    public function setRemainingPrepaymentAmount(?string $remainingPrepaymentAmount): void
+    {
+        $this->remainingPrepaymentAmount['value'] = $remainingPrepaymentAmount;
+    }
+
+    /**
+     * Unsets Remaining Prepayment Amount.
+     */
+    public function unsetRemainingPrepaymentAmount(): void
+    {
+        $this->remainingPrepaymentAmount = [];
+    }
+
+    /**
+     * Returns Prepayment.
+     */
+    public function getPrepayment(): ?bool
+    {
+        return $this->prepayment;
+    }
+
+    /**
+     * Sets Prepayment.
+     *
+     * @maps prepayment
+     */
+    public function setPrepayment(?bool $prepayment): void
+    {
+        $this->prepayment = $prepayment;
+    }
+
+    /**
+     * Returns External.
+     */
+    public function getExternal(): ?bool
+    {
+        return $this->external;
+    }
+
+    /**
+     * Sets External.
+     *
+     * @maps external
+     */
+    public function setExternal(?bool $external): void
+    {
+        $this->external = $external;
+    }
+
+    /**
      * Encode this object to JSON
      *
      * @param bool $asArrayWhenEmpty Whether to serialize this model as an array whenever no fields
@@ -223,18 +337,31 @@ class ApplyPaymentEventData implements \JsonSerializable
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
-        $json['memo']               = $this->memo;
-        $json['original_amount']    = $this->originalAmount;
-        $json['applied_amount']     = $this->appliedAmount;
-        $json['transaction_time']   = DateTimeHelper::toRfc3339DateTime($this->transactionTime);
-        $json['payment_method']     =
+        $json['memo']                            = $this->memo;
+        $json['original_amount']                 = $this->originalAmount;
+        $json['applied_amount']                  = $this->appliedAmount;
+        $json['transaction_time']                = DateTimeHelper::toRfc3339DateTime($this->transactionTime);
+        $json['payment_method']                  =
             ApiHelper::getJsonHelper()->verifyTypes(
                 $this->paymentMethod,
-                'anyOf(PaymentMethodApplePayType,PaymentMethodBankAccountType,PaymentMethodCreditCard' .
-                'Type,PaymentMethodExternalType,PaymentMethodPaypalType)'
+                'anyOf{type}(PaymentMethodApplePay{applePay},PaymentMethodBankAccount{bankAccount},Pa' .
+                'ymentMethodCreditCard{creditCard},PaymentMethodExternal{external},PaymentMethodPaypa' .
+                'l{paypalAccount})'
             );
         if (isset($this->transactionId)) {
-            $json['transaction_id'] = $this->transactionId;
+            $json['transaction_id']              = $this->transactionId;
+        }
+        if (!empty($this->parentInvoiceNumber)) {
+            $json['parent_invoice_number']       = $this->parentInvoiceNumber['value'];
+        }
+        if (!empty($this->remainingPrepaymentAmount)) {
+            $json['remaining_prepayment_amount'] = $this->remainingPrepaymentAmount['value'];
+        }
+        if (isset($this->prepayment)) {
+            $json['prepayment']                  = $this->prepayment;
+        }
+        if (isset($this->external)) {
+            $json['external']                    = $this->external;
         }
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;

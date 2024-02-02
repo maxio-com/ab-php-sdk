@@ -19,6 +19,19 @@ use Core\Utils\JsonHelper;
 class ApiHelper
 {
     /**
+     * A map of all discriminator substitutions where keys contain substituted
+     * discriminators in templates while values are actual discriminator values.
+     *
+     * @var array
+     */
+    private const DISCRIMINATOR_SUBSTITUTIONS = [
+        'applePay' => 'apple_pay',
+        'bankAccount' => 'bank_account',
+        'creditCard' => 'credit_card',
+        'paypalAccount' => 'paypal_account'
+    ];
+
+    /**
      * @var JsonHelper
      */
     private static $jsonHelper;
@@ -26,7 +39,12 @@ class ApiHelper
     public static function getJsonHelper(): JsonHelper
     {
         if (self::$jsonHelper == null) {
-            self::$jsonHelper = new JsonHelper([], [], null, 'AdvancedBillingLib\\Models');
+            self::$jsonHelper = new JsonHelper(
+                [],
+                self::DISCRIMINATOR_SUBSTITUTIONS,
+                null,
+                'AdvancedBillingLib\\Models'
+            );
         }
         return self::$jsonHelper;
     }

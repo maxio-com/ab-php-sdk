@@ -23,6 +23,7 @@ use AdvancedBillingLib\Models\ResourceType;
 use AdvancedBillingLib\Models\SortingDirection;
 use AdvancedBillingLib\Models\UpdateMetadataRequest;
 use AdvancedBillingLib\Models\UpdateMetafieldsRequest;
+use AdvancedBillingLib\Utils\DateTimeHelper;
 use Core\Request\Parameters\BodyParam;
 use Core\Request\Parameters\HeaderParam;
 use Core\Request\Parameters\QueryParam;
@@ -332,7 +333,15 @@ class CustomFieldsController extends BaseController
                 BodyParam::init($body)
             );
 
-        $_resHandler = $this->responseHandler()->type(Metadata::class, 1);
+        $_resHandler = $this->responseHandler()
+            ->throwErrorOn(
+                '422',
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    SingleErrorResponseException::class
+                )
+            )
+            ->type(Metadata::class, 1);
 
         return $this->execute($_reqBuilder, $_resHandler);
     }
@@ -434,10 +443,22 @@ class CustomFieldsController extends BaseController
                     ->commaSeparated()
                     ->extract('dateField')
                     ->serializeBy([BasicDateField::class, 'checkValue']),
-                QueryParam::init('start_date', $options)->commaSeparated()->extract('startDate'),
-                QueryParam::init('end_date', $options)->commaSeparated()->extract('endDate'),
-                QueryParam::init('start_datetime', $options)->commaSeparated()->extract('startDatetime'),
-                QueryParam::init('end_datetime', $options)->commaSeparated()->extract('endDatetime'),
+                QueryParam::init('start_date', $options)
+                    ->commaSeparated()
+                    ->extract('startDate')
+                    ->serializeBy([DateTimeHelper::class, 'toSimpleDate']),
+                QueryParam::init('end_date', $options)
+                    ->commaSeparated()
+                    ->extract('endDate')
+                    ->serializeBy([DateTimeHelper::class, 'toSimpleDate']),
+                QueryParam::init('start_datetime', $options)
+                    ->commaSeparated()
+                    ->extract('startDatetime')
+                    ->serializeBy([DateTimeHelper::class, 'toRfc3339DateTime']),
+                QueryParam::init('end_datetime', $options)
+                    ->commaSeparated()
+                    ->extract('endDatetime')
+                    ->serializeBy([DateTimeHelper::class, 'toRfc3339DateTime']),
                 QueryParam::init('with_deleted', $options)->commaSeparated()->extract('withDeleted'),
                 QueryParam::init('resource_ids[]', $options)->commaSeparated()->extract('resourceIds'),
                 QueryParam::init('direction', $options)

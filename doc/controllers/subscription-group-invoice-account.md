@@ -12,8 +12,8 @@ $subscriptionGroupInvoiceAccountController = $client->getSubscriptionGroupInvoic
 
 * [Create Subscription Group Prepayment](../../doc/controllers/subscription-group-invoice-account.md#create-subscription-group-prepayment)
 * [List Prepayments for Subscription Group](../../doc/controllers/subscription-group-invoice-account.md#list-prepayments-for-subscription-group)
-* [Issue Subscription Group Service Credits](../../doc/controllers/subscription-group-invoice-account.md#issue-subscription-group-service-credits)
-* [Deduct Subscription Group Service Credits](../../doc/controllers/subscription-group-invoice-account.md#deduct-subscription-group-service-credits)
+* [Issue Subscription Group Service Credit](../../doc/controllers/subscription-group-invoice-account.md#issue-subscription-group-service-credit)
+* [Deduct Subscription Group Service Credit](../../doc/controllers/subscription-group-invoice-account.md#deduct-subscription-group-service-credit)
 
 
 # Create Subscription Group Prepayment
@@ -129,12 +129,12 @@ $result = $subscriptionGroupInvoiceAccountController->listPrepaymentsForSubscrip
 | 404 | Not Found | `ApiException` |
 
 
-# Issue Subscription Group Service Credits
+# Issue Subscription Group Service Credit
 
 Credit can be issued for a subscription group identified by the group's `uid`. Credit will be added to the group in the amount specified in the request body. The credit will be applied to group member invoices as they are generated.
 
 ```php
-function issueSubscriptionGroupServiceCredits(
+function issueSubscriptionGroupServiceCredit(
     string $uid,
     ?IssueServiceCreditRequest $body = null
 ): ServiceCreditResponse
@@ -163,7 +163,7 @@ $body = IssueServiceCreditRequestBuilder::init(
     )->build()
 )->build();
 
-$result = $subscriptionGroupInvoiceAccountController->issueSubscriptionGroupServiceCredits(
+$result = $subscriptionGroupInvoiceAccountController->issueSubscriptionGroupServiceCredit(
     $uid,
     $body
 );
@@ -190,12 +190,12 @@ $result = $subscriptionGroupInvoiceAccountController->issueSubscriptionGroupServ
 | 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
 
 
-# Deduct Subscription Group Service Credits
+# Deduct Subscription Group Service Credit
 
 Credit can be deducted for a subscription group identified by the group's `uid`. Credit will be deducted from the group in the amount specified in the request body.
 
 ```php
-function deductSubscriptionGroupServiceCredits(
+function deductSubscriptionGroupServiceCredit(
     string $uid,
     ?DeductServiceCreditRequest $body = null
 ): ServiceCredit
@@ -224,7 +224,7 @@ $body = DeductServiceCreditRequestBuilder::init(
     )->build()
 )->build();
 
-$result = $subscriptionGroupInvoiceAccountController->deductSubscriptionGroupServiceCredits(
+$result = $subscriptionGroupInvoiceAccountController->deductSubscriptionGroupServiceCredit(
     $uid,
     $body
 );

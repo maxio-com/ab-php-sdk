@@ -15,21 +15,31 @@ use stdClass;
 class CustomerCustomFieldsChange implements \JsonSerializable
 {
     /**
-     * @var ProformaCustomField[]|null
+     * @var InvoiceCustomField[]
      */
     private $before;
 
     /**
-     * @var ProformaCustomField[]|null
+     * @var InvoiceCustomField[]
      */
     private $after;
 
     /**
+     * @param InvoiceCustomField[] $before
+     * @param InvoiceCustomField[] $after
+     */
+    public function __construct(array $before, array $after)
+    {
+        $this->before = $before;
+        $this->after = $after;
+    }
+
+    /**
      * Returns Before.
      *
-     * @return ProformaCustomField[]|null
+     * @return InvoiceCustomField[]
      */
-    public function getBefore(): ?array
+    public function getBefore(): array
     {
         return $this->before;
     }
@@ -37,11 +47,12 @@ class CustomerCustomFieldsChange implements \JsonSerializable
     /**
      * Sets Before.
      *
+     * @required
      * @maps before
      *
-     * @param ProformaCustomField[]|null $before
+     * @param InvoiceCustomField[] $before
      */
-    public function setBefore(?array $before): void
+    public function setBefore(array $before): void
     {
         $this->before = $before;
     }
@@ -49,9 +60,9 @@ class CustomerCustomFieldsChange implements \JsonSerializable
     /**
      * Returns After.
      *
-     * @return ProformaCustomField[]|null
+     * @return InvoiceCustomField[]
      */
-    public function getAfter(): ?array
+    public function getAfter(): array
     {
         return $this->after;
     }
@@ -59,11 +70,12 @@ class CustomerCustomFieldsChange implements \JsonSerializable
     /**
      * Sets After.
      *
+     * @required
      * @maps after
      *
-     * @param ProformaCustomField[]|null $after
+     * @param InvoiceCustomField[] $after
      */
-    public function setAfter(?array $after): void
+    public function setAfter(array $after): void
     {
         $this->after = $after;
     }
@@ -80,12 +92,8 @@ class CustomerCustomFieldsChange implements \JsonSerializable
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
-        if (isset($this->before)) {
-            $json['before'] = $this->before;
-        }
-        if (isset($this->after)) {
-            $json['after']  = $this->after;
-        }
+        $json['before'] = $this->before;
+        $json['after']  = $this->after;
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

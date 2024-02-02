@@ -1,0 +1,92 @@
+<?php
+
+declare(strict_types=1);
+
+/*
+ * AdvancedBilling
+ *
+ * This file was automatically generated for Maxio by APIMATIC v3.0 ( https://www.apimatic.io ).
+ */
+
+namespace AdvancedBillingLib\Models;
+
+use stdClass;
+
+class AddressChange implements \JsonSerializable
+{
+    /**
+     * @var InvoiceAddress
+     */
+    private $before;
+
+    /**
+     * @var InvoiceAddress
+     */
+    private $after;
+
+    /**
+     * @param InvoiceAddress $before
+     * @param InvoiceAddress $after
+     */
+    public function __construct(InvoiceAddress $before, InvoiceAddress $after)
+    {
+        $this->before = $before;
+        $this->after = $after;
+    }
+
+    /**
+     * Returns Before.
+     */
+    public function getBefore(): InvoiceAddress
+    {
+        return $this->before;
+    }
+
+    /**
+     * Sets Before.
+     *
+     * @required
+     * @maps before
+     */
+    public function setBefore(InvoiceAddress $before): void
+    {
+        $this->before = $before;
+    }
+
+    /**
+     * Returns After.
+     */
+    public function getAfter(): InvoiceAddress
+    {
+        return $this->after;
+    }
+
+    /**
+     * Sets After.
+     *
+     * @required
+     * @maps after
+     */
+    public function setAfter(InvoiceAddress $after): void
+    {
+        $this->after = $after;
+    }
+
+    /**
+     * Encode this object to JSON
+     *
+     * @param bool $asArrayWhenEmpty Whether to serialize this model as an array whenever no fields
+     *        are set. (default: false)
+     *
+     * @return array|stdClass
+     */
+    #[\ReturnTypeWillChange] // @phan-suppress-current-line PhanUndeclaredClassAttribute for (php < 8.1)
+    public function jsonSerialize(bool $asArrayWhenEmpty = false)
+    {
+        $json = [];
+        $json['before'] = $this->before;
+        $json['after']  = $this->after;
+
+        return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
+    }
+}

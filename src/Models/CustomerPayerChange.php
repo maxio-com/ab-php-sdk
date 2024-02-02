@@ -15,19 +15,29 @@ use stdClass;
 class CustomerPayerChange implements \JsonSerializable
 {
     /**
-     * @var array|null
+     * @var InvoicePayerChange
      */
     private $before;
 
     /**
-     * @var array|null
+     * @var InvoicePayerChange
      */
     private $after;
 
     /**
+     * @param InvoicePayerChange $before
+     * @param InvoicePayerChange $after
+     */
+    public function __construct(InvoicePayerChange $before, InvoicePayerChange $after)
+    {
+        $this->before = $before;
+        $this->after = $after;
+    }
+
+    /**
      * Returns Before.
      */
-    public function getBefore(): ?array
+    public function getBefore(): InvoicePayerChange
     {
         return $this->before;
     }
@@ -35,9 +45,10 @@ class CustomerPayerChange implements \JsonSerializable
     /**
      * Sets Before.
      *
+     * @required
      * @maps before
      */
-    public function setBefore(?array $before): void
+    public function setBefore(InvoicePayerChange $before): void
     {
         $this->before = $before;
     }
@@ -45,7 +56,7 @@ class CustomerPayerChange implements \JsonSerializable
     /**
      * Returns After.
      */
-    public function getAfter(): ?array
+    public function getAfter(): InvoicePayerChange
     {
         return $this->after;
     }
@@ -53,9 +64,10 @@ class CustomerPayerChange implements \JsonSerializable
     /**
      * Sets After.
      *
+     * @required
      * @maps after
      */
-    public function setAfter(?array $after): void
+    public function setAfter(InvoicePayerChange $after): void
     {
         $this->after = $after;
     }
@@ -72,12 +84,8 @@ class CustomerPayerChange implements \JsonSerializable
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
-        if (isset($this->before)) {
-            $json['before'] = $this->before;
-        }
-        if (isset($this->after)) {
-            $json['after']  = $this->after;
-        }
+        $json['before'] = $this->before;
+        $json['after']  = $this->after;
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

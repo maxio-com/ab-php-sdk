@@ -480,7 +480,7 @@ class SubscriptionStatusController extends BaseController
      *
      * @throws ApiException Thrown if API call fails
      */
-    public function stopDelayedCancellation(int $subscriptionId): DelayedCancellationResponse
+    public function cancelDelayedCancellation(int $subscriptionId): DelayedCancellationResponse
     {
         $_reqBuilder = $this->requestBuilder(
             RequestMethod::DELETE,
