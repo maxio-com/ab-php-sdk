@@ -33,7 +33,7 @@ class UpdateSubscription implements \JsonSerializable
     /**
      * @var bool|null
      */
-    private $productChangeDelayed = false;
+    private $productChangeDelayed;
 
     /**
      * @var string|null
@@ -93,7 +93,7 @@ class UpdateSubscription implements \JsonSerializable
     /**
      * @var array
      */
-    private $dunningCommunicationDelayEnabled = ['value' => false];
+    private $dunningCommunicationDelayEnabled = [];
 
     /**
      * @var array
