@@ -74,7 +74,7 @@ class ComponentPricePoint implements \JsonSerializable
     /**
      * @var bool|null
      */
-    private $useSiteExchangeRate = true;
+    private $useSiteExchangeRate;
 
     /**
      * @var int|null
@@ -338,7 +338,7 @@ class ComponentPricePoint implements \JsonSerializable
     /**
      * Returns Use Site Exchange Rate.
      * Whether to use the site level exchange rate or define your own prices for each currency if you have
-     * multiple currencies defined on the site.
+     * multiple currencies defined on the site. Defaults to true during creation.
      */
     public function getUseSiteExchangeRate(): ?bool
     {
@@ -348,7 +348,7 @@ class ComponentPricePoint implements \JsonSerializable
     /**
      * Sets Use Site Exchange Rate.
      * Whether to use the site level exchange rate or define your own prices for each currency if you have
-     * multiple currencies defined on the site.
+     * multiple currencies defined on the site. Defaults to true during creation.
      *
      * @maps use_site_exchange_rate
      */

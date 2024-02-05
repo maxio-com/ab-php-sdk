@@ -37,7 +37,7 @@ class BankAccountAttributes implements \JsonSerializable
     /**
      * @var string|null
      */
-    private $bankAccountType = BankAccountType::CHECKING;
+    private $bankAccountType;
 
     /**
      * @var string|null

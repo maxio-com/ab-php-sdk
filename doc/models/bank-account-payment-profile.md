@@ -25,7 +25,7 @@
 | `bankName` | `?string` | Optional | The bank where the account resides | getBankName(): ?string | setBankName(?string bankName): void |
 | `maskedBankRoutingNumber` | `string` | Required | A string representation of the stored bank routing number with all but the last 4 digits marked with X’s (i.e. ‘XXXXXXX1111’). payment_type will be bank_account | getMaskedBankRoutingNumber(): string | setMaskedBankRoutingNumber(string maskedBankRoutingNumber): void |
 | `maskedBankAccountNumber` | `string` | Required | A string representation of the stored bank account number with all but the last 4 digits marked with X’s (i.e. ‘XXXXXXX1111’) | getMaskedBankAccountNumber(): string | setMaskedBankAccountNumber(string maskedBankAccountNumber): void |
-| `bankAccountType` | [`?string(BankAccountType)`](../../doc/models/bank-account-type.md) | Optional | Defaults to checking<br>**Default**: `BankAccountType::CHECKING` | getBankAccountType(): ?string | setBankAccountType(?string bankAccountType): void |
+| `bankAccountType` | [`?string(BankAccountType)`](../../doc/models/bank-account-type.md) | Optional | Defaults to checking | getBankAccountType(): ?string | setBankAccountType(?string bankAccountType): void |
 | `bankAccountHolderType` | [`?string(BankAccountHolderType)`](../../doc/models/bank-account-holder-type.md) | Optional | Defaults to personal | getBankAccountHolderType(): ?string | setBankAccountHolderType(?string bankAccountHolderType): void |
 | `paymentType` | [`?string(PaymentType)`](../../doc/models/payment-type.md) | Optional | - | getPaymentType(): ?string | setPaymentType(?string paymentType): void |
 | `verified` | `?bool` | Optional | denotes whether a bank account has been verified by providing the amounts of two small deposits made into the account<br>**Default**: `false` | getVerified(): ?bool | setVerified(?bool verified): void |
@@ -38,7 +38,6 @@
 {
   "masked_bank_routing_number": "masked_bank_routing_number8",
   "masked_bank_account_number": "masked_bank_account_number8",
-  "bank_account_type": "checking",
   "verified": false,
   "id": 188,
   "first_name": "first_name6",

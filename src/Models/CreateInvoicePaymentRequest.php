@@ -22,7 +22,7 @@ class CreateInvoicePaymentRequest implements \JsonSerializable
     /**
      * @var string|null
      */
-    private $type = InvoicePaymentType::EXTERNAL;
+    private $type;
 
     /**
      * @param CreateInvoicePayment $payment
@@ -53,7 +53,7 @@ class CreateInvoicePaymentRequest implements \JsonSerializable
 
     /**
      * Returns Type.
-     * The type of payment to be applied to an Invoice.
+     * The type of payment to be applied to an Invoice. Defaults to external.
      */
     public function getType(): ?string
     {
@@ -62,7 +62,7 @@ class CreateInvoicePaymentRequest implements \JsonSerializable
 
     /**
      * Sets Type.
-     * The type of payment to be applied to an Invoice.
+     * The type of payment to be applied to an Invoice. Defaults to external.
      *
      * @maps type
      * @factory \AdvancedBillingLib\Models\InvoicePaymentType::checkValue

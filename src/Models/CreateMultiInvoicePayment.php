@@ -28,7 +28,7 @@ class CreateMultiInvoicePayment implements \JsonSerializable
     /**
      * @var string|null
      */
-    private $method = InvoicePaymentMethodType::OTHER;
+    private $method;
 
     /**
      * @var string|float
@@ -97,7 +97,7 @@ class CreateMultiInvoicePayment implements \JsonSerializable
 
     /**
      * Returns Method.
-     * The type of payment method used.
+     * The type of payment method used. Defaults to other.
      */
     public function getMethod(): ?string
     {
@@ -106,7 +106,7 @@ class CreateMultiInvoicePayment implements \JsonSerializable
 
     /**
      * Sets Method.
-     * The type of payment method used.
+     * The type of payment method used. Defaults to other.
      *
      * @maps method
      * @factory \AdvancedBillingLib\Models\InvoicePaymentMethodType::checkValue

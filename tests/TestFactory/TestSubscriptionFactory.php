@@ -128,6 +128,7 @@ final class TestSubscriptionFactory
             ->locale(SubscriptionTestData::LOCALE)
             ->scheduledCancellationAt(SubscriptionTestData::SCHEDULED_CANCELLATION_AT)
             ->prepaymentBalanceInCents(SubscriptionTestData::PREPAYMENT_BALANCE_IN_CENTS)
+            ->dunningCommunicationDelayEnabled(SubscriptionTestData::DUNNING_COMMUNICATION_DELAY_ENABLED)
             ->build();
     }
 

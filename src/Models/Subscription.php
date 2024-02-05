@@ -279,7 +279,7 @@ class Subscription implements \JsonSerializable
     /**
      * @var bool|null
      */
-    private $dunningCommunicationDelayEnabled = false;
+    private $dunningCommunicationDelayEnabled;
 
     /**
      * @var array

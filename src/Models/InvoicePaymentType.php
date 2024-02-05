@@ -15,7 +15,7 @@ use Exception;
 use stdClass;
 
 /**
- * The type of payment to be applied to an Invoice.
+ * The type of payment to be applied to an Invoice. Defaults to external.
  */
 class InvoicePaymentType
 {
