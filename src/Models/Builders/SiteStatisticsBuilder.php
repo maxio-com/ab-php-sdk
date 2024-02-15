@@ -104,7 +104,7 @@ class SiteStatisticsBuilder
     /**
      * Sets total active subscriptions field.
      */
-    public function totalActiveSubscriptions(?float $value): self
+    public function totalActiveSubscriptions(?int $value): self
     {
         $this->instance->setTotalActiveSubscriptions($value);
         return $this;
@@ -113,7 +113,7 @@ class SiteStatisticsBuilder
     /**
      * Sets total past due subscriptions field.
      */
-    public function totalPastDueSubscriptions(?float $value): self
+    public function totalPastDueSubscriptions(?int $value): self
     {
         $this->instance->setTotalPastDueSubscriptions($value);
         return $this;
@@ -122,7 +122,7 @@ class SiteStatisticsBuilder
     /**
      * Sets total unpaid subscriptions field.
      */
-    public function totalUnpaidSubscriptions(?float $value): self
+    public function totalUnpaidSubscriptions(?int $value): self
     {
         $this->instance->setTotalUnpaidSubscriptions($value);
         return $this;
@@ -131,7 +131,7 @@ class SiteStatisticsBuilder
     /**
      * Sets total dunning subscriptions field.
      */
-    public function totalDunningSubscriptions(?float $value): self
+    public function totalDunningSubscriptions(?int $value): self
     {
         $this->instance->setTotalDunningSubscriptions($value);
         return $this;

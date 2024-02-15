@@ -1,17 +1,17 @@
 
-# Update Endpoint Request
+# Create or Update Endpoint Request
 
 Used to Create or Update Endpoint
 
 ## Structure
 
-`UpdateEndpointRequest`
+`CreateOrUpdateEndpointRequest`
 
 ## Fields
 
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
-| `endpoint` | [`UpdateEndpoint`](../../doc/models/update-endpoint.md) | Required | Used to Create or Update Endpoint | getEndpoint(): UpdateEndpoint | setEndpoint(UpdateEndpoint endpoint): void |
+| `endpoint` | [`CreateOrUpdateEndpoint`](../../doc/models/create-or-update-endpoint.md) | Required | Used to Create or Update Endpoint | getEndpoint(): CreateOrUpdateEndpoint | setEndpoint(CreateOrUpdateEndpoint endpoint): void |
 
 ## Example (as JSON)
 

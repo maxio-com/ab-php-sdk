@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
 class ProformaInvoicePreview implements \JsonSerializable
@@ -35,22 +36,22 @@ class ProformaInvoicePreview implements \JsonSerializable
     private $subscriptionId;
 
     /**
-     * @var string|null
+     * @var array
      */
-    private $number;
+    private $number = [];
 
     /**
-     * @var int|null
+     * @var array
      */
-    private $sequenceNumber;
+    private $sequenceNumber = [];
 
     /**
-     * @var string|null
+     * @var \DateTime|null
      */
     private $createdAt;
 
     /**
-     * @var string|null
+     * @var \DateTime|null
      */
     private $deliveryDate;
 
@@ -190,9 +191,9 @@ class ProformaInvoicePreview implements \JsonSerializable
     private $customFields;
 
     /**
-     * @var string|null
+     * @var array
      */
-    private $publicUrl;
+    private $publicUrl = [];
 
     /**
      * Returns Uid.
@@ -271,7 +272,10 @@ class ProformaInvoicePreview implements \JsonSerializable
      */
     public function getNumber(): ?string
     {
-        return $this->number;
+        if (count($this->number) == 0) {
+            return null;
+        }
+        return $this->number['value'];
     }
 
     /**
@@ -281,7 +285,15 @@ class ProformaInvoicePreview implements \JsonSerializable
      */
     public function setNumber(?string $number): void
     {
-        $this->number = $number;
+        $this->number['value'] = $number;
+    }
+
+    /**
+     * Unsets Number.
+     */
+    public function unsetNumber(): void
+    {
+        $this->number = [];
     }
 
     /**
@@ -289,7 +301,10 @@ class ProformaInvoicePreview implements \JsonSerializable
      */
     public function getSequenceNumber(): ?int
     {
-        return $this->sequenceNumber;
+        if (count($this->sequenceNumber) == 0) {
+            return null;
+        }
+        return $this->sequenceNumber['value'];
     }
 
     /**
@@ -299,13 +314,21 @@ class ProformaInvoicePreview implements \JsonSerializable
      */
     public function setSequenceNumber(?int $sequenceNumber): void
     {
-        $this->sequenceNumber = $sequenceNumber;
+        $this->sequenceNumber['value'] = $sequenceNumber;
+    }
+
+    /**
+     * Unsets Sequence Number.
+     */
+    public function unsetSequenceNumber(): void
+    {
+        $this->sequenceNumber = [];
     }
 
     /**
      * Returns Created At.
      */
-    public function getCreatedAt(): ?string
+    public function getCreatedAt(): ?\DateTime
     {
         return $this->createdAt;
     }
@@ -314,8 +337,9 @@ class ProformaInvoicePreview implements \JsonSerializable
      * Sets Created At.
      *
      * @maps created_at
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setCreatedAt(?string $createdAt): void
+    public function setCreatedAt(?\DateTime $createdAt): void
     {
         $this->createdAt = $createdAt;
     }
@@ -323,7 +347,7 @@ class ProformaInvoicePreview implements \JsonSerializable
     /**
      * Returns Delivery Date.
      */
-    public function getDeliveryDate(): ?string
+    public function getDeliveryDate(): ?\DateTime
     {
         return $this->deliveryDate;
     }
@@ -332,8 +356,9 @@ class ProformaInvoicePreview implements \JsonSerializable
      * Sets Delivery Date.
      *
      * @maps delivery_date
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromSimpleDate
      */
-    public function setDeliveryDate(?string $deliveryDate): void
+    public function setDeliveryDate(?\DateTime $deliveryDate): void
     {
         $this->deliveryDate = $deliveryDate;
     }
@@ -857,7 +882,10 @@ class ProformaInvoicePreview implements \JsonSerializable
      */
     public function getPublicUrl(): ?string
     {
-        return $this->publicUrl;
+        if (count($this->publicUrl) == 0) {
+            return null;
+        }
+        return $this->publicUrl['value'];
     }
 
     /**
@@ -867,7 +895,15 @@ class ProformaInvoicePreview implements \JsonSerializable
      */
     public function setPublicUrl(?string $publicUrl): void
     {
-        $this->publicUrl = $publicUrl;
+        $this->publicUrl['value'] = $publicUrl;
+    }
+
+    /**
+     * Unsets Public Url.
+     */
+    public function unsetPublicUrl(): void
+    {
+        $this->publicUrl = [];
     }
 
     /**
@@ -894,17 +930,17 @@ class ProformaInvoicePreview implements \JsonSerializable
         if (isset($this->subscriptionId)) {
             $json['subscription_id']      = $this->subscriptionId;
         }
-        if (isset($this->number)) {
-            $json['number']               = $this->number;
+        if (!empty($this->number)) {
+            $json['number']               = $this->number['value'];
         }
-        if (isset($this->sequenceNumber)) {
-            $json['sequence_number']      = $this->sequenceNumber;
+        if (!empty($this->sequenceNumber)) {
+            $json['sequence_number']      = $this->sequenceNumber['value'];
         }
         if (isset($this->createdAt)) {
-            $json['created_at']           = $this->createdAt;
+            $json['created_at']           = DateTimeHelper::toRfc3339DateTime($this->createdAt);
         }
         if (isset($this->deliveryDate)) {
-            $json['delivery_date']        = $this->deliveryDate;
+            $json['delivery_date']        = DateTimeHelper::toSimpleDate($this->deliveryDate);
         }
         if (isset($this->status)) {
             $json['status']               = $this->status;
@@ -987,8 +1023,8 @@ class ProformaInvoicePreview implements \JsonSerializable
         if (isset($this->customFields)) {
             $json['custom_fields']        = $this->customFields;
         }
-        if (isset($this->publicUrl)) {
-            $json['public_url']           = $this->publicUrl;
+        if (!empty($this->publicUrl)) {
+            $json['public_url']           = $this->publicUrl['value'];
         }
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;

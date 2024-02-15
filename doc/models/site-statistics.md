@@ -16,10 +16,10 @@
 | `revenueThisMonth` | `?string` | Optional | - | getRevenueThisMonth(): ?string | setRevenueThisMonth(?string revenueThisMonth): void |
 | `revenueThisYear` | `?string` | Optional | - | getRevenueThisYear(): ?string | setRevenueThisYear(?string revenueThisYear): void |
 | `totalCanceledSubscriptions` | `?int` | Optional | - | getTotalCanceledSubscriptions(): ?int | setTotalCanceledSubscriptions(?int totalCanceledSubscriptions): void |
-| `totalActiveSubscriptions` | `?float` | Optional | - | getTotalActiveSubscriptions(): ?float | setTotalActiveSubscriptions(?float totalActiveSubscriptions): void |
-| `totalPastDueSubscriptions` | `?float` | Optional | - | getTotalPastDueSubscriptions(): ?float | setTotalPastDueSubscriptions(?float totalPastDueSubscriptions): void |
-| `totalUnpaidSubscriptions` | `?float` | Optional | - | getTotalUnpaidSubscriptions(): ?float | setTotalUnpaidSubscriptions(?float totalUnpaidSubscriptions): void |
-| `totalDunningSubscriptions` | `?float` | Optional | - | getTotalDunningSubscriptions(): ?float | setTotalDunningSubscriptions(?float totalDunningSubscriptions): void |
+| `totalActiveSubscriptions` | `?int` | Optional | - | getTotalActiveSubscriptions(): ?int | setTotalActiveSubscriptions(?int totalActiveSubscriptions): void |
+| `totalPastDueSubscriptions` | `?int` | Optional | - | getTotalPastDueSubscriptions(): ?int | setTotalPastDueSubscriptions(?int totalPastDueSubscriptions): void |
+| `totalUnpaidSubscriptions` | `?int` | Optional | - | getTotalUnpaidSubscriptions(): ?int | setTotalUnpaidSubscriptions(?int totalUnpaidSubscriptions): void |
+| `totalDunningSubscriptions` | `?int` | Optional | - | getTotalDunningSubscriptions(): ?int | setTotalDunningSubscriptions(?int totalDunningSubscriptions): void |
 
 ## Example (as JSON)
 

@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
 class CreditAccountBalanceChanged implements \JsonSerializable
@@ -35,7 +36,7 @@ class CreditAccountBalanceChanged implements \JsonSerializable
     private $currencyCode;
 
     /**
-     * @var string
+     * @var \DateTime
      */
     private $atTime;
 
@@ -44,14 +45,14 @@ class CreditAccountBalanceChanged implements \JsonSerializable
      * @param int $serviceCreditAccountBalanceInCents
      * @param int $serviceCreditBalanceChangeInCents
      * @param string $currencyCode
-     * @param string $atTime
+     * @param \DateTime $atTime
      */
     public function __construct(
         string $reason,
         int $serviceCreditAccountBalanceInCents,
         int $serviceCreditBalanceChangeInCents,
         string $currencyCode,
-        string $atTime
+        \DateTime $atTime
     ) {
         $this->reason = $reason;
         $this->serviceCreditAccountBalanceInCents = $serviceCreditAccountBalanceInCents;
@@ -139,7 +140,7 @@ class CreditAccountBalanceChanged implements \JsonSerializable
     /**
      * Returns At Time.
      */
-    public function getAtTime(): string
+    public function getAtTime(): \DateTime
     {
         return $this->atTime;
     }
@@ -149,8 +150,9 @@ class CreditAccountBalanceChanged implements \JsonSerializable
      *
      * @required
      * @maps at_time
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setAtTime(string $atTime): void
+    public function setAtTime(\DateTime $atTime): void
     {
         $this->atTime = $atTime;
     }
@@ -171,7 +173,7 @@ class CreditAccountBalanceChanged implements \JsonSerializable
         $json['service_credit_account_balance_in_cents'] = $this->serviceCreditAccountBalanceInCents;
         $json['service_credit_balance_change_in_cents']  = $this->serviceCreditBalanceChangeInCents;
         $json['currency_code']                           = $this->currencyCode;
-        $json['at_time']                                 = $this->atTime;
+        $json['at_time']                                 = DateTimeHelper::toRfc3339DateTime($this->atTime);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

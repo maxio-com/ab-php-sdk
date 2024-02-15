@@ -12,9 +12,9 @@
 | `uid` | `string` | Required | - | getUid(): string | setUid(string uid): void |
 | `number` | `string` | Required | - | getNumber(): string | setNumber(string number): void |
 | `role` | `string` | Required | - | getRole(): string | setRole(string role): void |
-| `dueDate` | `string` | Required | - | getDueDate(): string | setDueDate(string dueDate): void |
-| `issueDate` | `string` | Required | - | getIssueDate(): string | setIssueDate(string issueDate): void |
-| `paidDate` | `string` | Required | - | getPaidDate(): string | setPaidDate(string paidDate): void |
+| `dueDate` | `DateTime` | Required | - | getDueDate(): \DateTime | setDueDate(\DateTime dueDate): void |
+| `issueDate` | `DateTime` | Required | - | getIssueDate(): \DateTime | setIssueDate(\DateTime issueDate): void |
+| `paidDate` | `DateTime` | Required | - | getPaidDate(): \DateTime | setPaidDate(\DateTime paidDate): void |
 | `dueAmount` | `string` | Required | - | getDueAmount(): string | setDueAmount(string dueAmount): void |
 | `paidAmount` | `string` | Required | - | getPaidAmount(): string | setPaidAmount(string paidAmount): void |
 | `taxAmount` | `string` | Required | - | getTaxAmount(): string | setTaxAmount(string taxAmount): void |
@@ -32,9 +32,9 @@
   "uid": "uid4",
   "number": "number8",
   "role": "role2",
-  "due_date": "due_date2",
-  "issue_date": "issue_date0",
-  "paid_date": "paid_date6",
+  "due_date": "2016-03-13",
+  "issue_date": "2016-03-13",
+  "paid_date": "2016-03-13",
   "due_amount": "due_amount6",
   "paid_amount": "paid_amount4",
   "tax_amount": "tax_amount2",

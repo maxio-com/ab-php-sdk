@@ -10,17 +10,18 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
 class AllocationPreview implements \JsonSerializable
 {
     /**
-     * @var string|null
+     * @var \DateTime|null
      */
     private $startDate;
 
     /**
-     * @var string|null
+     * @var \DateTime|null
      */
     private $endDate;
 
@@ -82,7 +83,7 @@ class AllocationPreview implements \JsonSerializable
     /**
      * Returns Start Date.
      */
-    public function getStartDate(): ?string
+    public function getStartDate(): ?\DateTime
     {
         return $this->startDate;
     }
@@ -91,8 +92,9 @@ class AllocationPreview implements \JsonSerializable
      * Sets Start Date.
      *
      * @maps start_date
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setStartDate(?string $startDate): void
+    public function setStartDate(?\DateTime $startDate): void
     {
         $this->startDate = $startDate;
     }
@@ -100,7 +102,7 @@ class AllocationPreview implements \JsonSerializable
     /**
      * Returns End Date.
      */
-    public function getEndDate(): ?string
+    public function getEndDate(): ?\DateTime
     {
         return $this->endDate;
     }
@@ -109,8 +111,9 @@ class AllocationPreview implements \JsonSerializable
      * Sets End Date.
      *
      * @maps end_date
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setEndDate(?string $endDate): void
+    public function setEndDate(?\DateTime $endDate): void
     {
         $this->endDate = $endDate;
     }
@@ -337,10 +340,10 @@ class AllocationPreview implements \JsonSerializable
     {
         $json = [];
         if (isset($this->startDate)) {
-            $json['start_date']                = $this->startDate;
+            $json['start_date']                = DateTimeHelper::toRfc3339DateTime($this->startDate);
         }
         if (isset($this->endDate)) {
-            $json['end_date']                  = $this->endDate;
+            $json['end_date']                  = DateTimeHelper::toRfc3339DateTime($this->endDate);
         }
         if (isset($this->subtotalInCents)) {
             $json['subtotal_in_cents']         = $this->subtotalInCents;

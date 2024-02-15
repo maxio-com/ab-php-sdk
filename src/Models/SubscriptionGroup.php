@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
 class SubscriptionGroup implements \JsonSerializable
@@ -35,7 +36,7 @@ class SubscriptionGroup implements \JsonSerializable
     private $subscriptionIds;
 
     /**
-     * @var string|null
+     * @var \DateTime|null
      */
     private $createdAt;
 
@@ -118,7 +119,7 @@ class SubscriptionGroup implements \JsonSerializable
     /**
      * Returns Created At.
      */
-    public function getCreatedAt(): ?string
+    public function getCreatedAt(): ?\DateTime
     {
         return $this->createdAt;
     }
@@ -127,8 +128,9 @@ class SubscriptionGroup implements \JsonSerializable
      * Sets Created At.
      *
      * @maps created_at
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setCreatedAt(?string $createdAt): void
+    public function setCreatedAt(?\DateTime $createdAt): void
     {
         $this->createdAt = $createdAt;
     }
@@ -158,7 +160,7 @@ class SubscriptionGroup implements \JsonSerializable
             $json['subscription_ids']          = $this->subscriptionIds;
         }
         if (isset($this->createdAt)) {
-            $json['created_at']                = $this->createdAt;
+            $json['created_at']                = DateTimeHelper::toRfc3339DateTime($this->createdAt);
         }
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;

@@ -48,7 +48,7 @@ class ProductsController extends BaseController
             RequestMethod::POST,
             '/product_families/{product_family_id}/products.json'
         )
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('product_family_id', $productFamilyId)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -80,7 +80,7 @@ class ProductsController extends BaseController
     public function readProduct(int $productId): ProductResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/products/{product_id}.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(TemplateParam::init('product_id', $productId)->required());
 
         $_resHandler = $this->responseHandler()->type(ProductResponse::class);
@@ -112,7 +112,7 @@ class ProductsController extends BaseController
     public function updateProduct(int $productId, ?CreateOrUpdateProductRequest $body = null): ProductResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::PUT, '/products/{product_id}.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('product_id', $productId)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -148,7 +148,7 @@ class ProductsController extends BaseController
     public function archiveProduct(int $productId): ProductResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::DELETE, '/products/{product_id}.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(TemplateParam::init('product_id', $productId)->required());
 
         $_resHandler = $this->responseHandler()
@@ -176,7 +176,7 @@ class ProductsController extends BaseController
     public function readProductByHandle(string $apiHandle): ProductResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/products/handle/{api_handle}.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(TemplateParam::init('api_handle', $apiHandle)->required());
 
         $_resHandler = $this->responseHandler()->type(ProductResponse::class);
@@ -196,7 +196,7 @@ class ProductsController extends BaseController
     public function listProducts(array $options): array
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/products.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 QueryParam::init('date_field', $options)
                     ->commaSeparated()

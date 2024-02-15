@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
 class PortalManagementLink implements \JsonSerializable
@@ -25,17 +26,17 @@ class PortalManagementLink implements \JsonSerializable
     private $fetchCount;
 
     /**
-     * @var string|null
+     * @var \DateTime|null
      */
     private $createdAt;
 
     /**
-     * @var string|null
+     * @var \DateTime|null
      */
     private $newLinkAvailableAt;
 
     /**
-     * @var string|null
+     * @var \DateTime|null
      */
     private $expiresAt;
 
@@ -83,7 +84,7 @@ class PortalManagementLink implements \JsonSerializable
     /**
      * Returns Created At.
      */
-    public function getCreatedAt(): ?string
+    public function getCreatedAt(): ?\DateTime
     {
         return $this->createdAt;
     }
@@ -92,8 +93,9 @@ class PortalManagementLink implements \JsonSerializable
      * Sets Created At.
      *
      * @maps created_at
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setCreatedAt(?string $createdAt): void
+    public function setCreatedAt(?\DateTime $createdAt): void
     {
         $this->createdAt = $createdAt;
     }
@@ -101,7 +103,7 @@ class PortalManagementLink implements \JsonSerializable
     /**
      * Returns New Link Available At.
      */
-    public function getNewLinkAvailableAt(): ?string
+    public function getNewLinkAvailableAt(): ?\DateTime
     {
         return $this->newLinkAvailableAt;
     }
@@ -110,8 +112,9 @@ class PortalManagementLink implements \JsonSerializable
      * Sets New Link Available At.
      *
      * @maps new_link_available_at
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setNewLinkAvailableAt(?string $newLinkAvailableAt): void
+    public function setNewLinkAvailableAt(?\DateTime $newLinkAvailableAt): void
     {
         $this->newLinkAvailableAt = $newLinkAvailableAt;
     }
@@ -119,7 +122,7 @@ class PortalManagementLink implements \JsonSerializable
     /**
      * Returns Expires At.
      */
-    public function getExpiresAt(): ?string
+    public function getExpiresAt(): ?\DateTime
     {
         return $this->expiresAt;
     }
@@ -128,8 +131,9 @@ class PortalManagementLink implements \JsonSerializable
      * Sets Expires At.
      *
      * @maps expires_at
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setExpiresAt(?string $expiresAt): void
+    public function setExpiresAt(?\DateTime $expiresAt): void
     {
         $this->expiresAt = $expiresAt;
     }
@@ -137,7 +141,7 @@ class PortalManagementLink implements \JsonSerializable
     /**
      * Returns Last Invite Sent At.
      */
-    public function getLastInviteSentAt(): ?string
+    public function getLastInviteSentAt(): ?\DateTime
     {
         if (count($this->lastInviteSentAt) == 0) {
             return null;
@@ -149,8 +153,9 @@ class PortalManagementLink implements \JsonSerializable
      * Sets Last Invite Sent At.
      *
      * @maps last_invite_sent_at
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setLastInviteSentAt(?string $lastInviteSentAt): void
+    public function setLastInviteSentAt(?\DateTime $lastInviteSentAt): void
     {
         $this->lastInviteSentAt['value'] = $lastInviteSentAt;
     }
@@ -182,16 +187,16 @@ class PortalManagementLink implements \JsonSerializable
             $json['fetch_count']           = $this->fetchCount;
         }
         if (isset($this->createdAt)) {
-            $json['created_at']            = $this->createdAt;
+            $json['created_at']            = DateTimeHelper::toRfc3339DateTime($this->createdAt);
         }
         if (isset($this->newLinkAvailableAt)) {
-            $json['new_link_available_at'] = $this->newLinkAvailableAt;
+            $json['new_link_available_at'] = DateTimeHelper::toRfc3339DateTime($this->newLinkAvailableAt);
         }
         if (isset($this->expiresAt)) {
-            $json['expires_at']            = $this->expiresAt;
+            $json['expires_at']            = DateTimeHelper::toRfc3339DateTime($this->expiresAt);
         }
         if (!empty($this->lastInviteSentAt)) {
-            $json['last_invite_sent_at']   = $this->lastInviteSentAt['value'];
+            $json['last_invite_sent_at']   = DateTimeHelper::toRfc3339DateTime($this->lastInviteSentAt['value']);
         }
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;

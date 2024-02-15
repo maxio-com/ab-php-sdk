@@ -350,7 +350,7 @@ class PaymentProfilesController extends BaseController
     public function createPaymentProfile(?CreatePaymentProfileRequest $body = null): PaymentProfileResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/payment_profiles.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(HeaderParam::init('Content-Type', 'application/json'), BodyParam::init($body));
 
         $_resHandler = $this->responseHandler()
@@ -380,7 +380,7 @@ class PaymentProfilesController extends BaseController
     public function listPaymentProfiles(array $options): array
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/payment_profiles.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 QueryParam::init('page', $options)->commaSeparated()->extract('page', 1),
                 QueryParam::init('per_page', $options)->commaSeparated()->extract('perPage', 20),
@@ -439,7 +439,7 @@ class PaymentProfilesController extends BaseController
     public function readPaymentProfile(int $paymentProfileId): PaymentProfileResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/payment_profiles/{payment_profile_id}.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(TemplateParam::init('payment_profile_id', $paymentProfileId)->required());
 
         $_resHandler = $this->responseHandler()
@@ -509,7 +509,7 @@ class PaymentProfilesController extends BaseController
         ?UpdatePaymentProfileRequest $body = null
     ): PaymentProfileResponse {
         $_reqBuilder = $this->requestBuilder(RequestMethod::PUT, '/payment_profiles/{payment_profile_id}.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('payment_profile_id', $paymentProfileId)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -545,7 +545,7 @@ class PaymentProfilesController extends BaseController
     public function deleteUnusedPaymentProfile(int $paymentProfileId): void
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::DELETE, '/payment_profiles/{payment_profile_id}.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(TemplateParam::init('payment_profile_id', $paymentProfileId)->required());
 
         $_resHandler = $this->responseHandler()
@@ -585,7 +585,7 @@ class PaymentProfilesController extends BaseController
             RequestMethod::DELETE,
             '/subscriptions/{subscription_id}/payment_profiles/{payment_profile_id}.json'
         )
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 TemplateParam::init('payment_profile_id', $paymentProfileId)->required()
@@ -613,7 +613,7 @@ class PaymentProfilesController extends BaseController
             RequestMethod::PUT,
             '/bank_accounts/{bank_account_id}/verification.json'
         )
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('bank_account_id', $bankAccountId)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -653,7 +653,7 @@ class PaymentProfilesController extends BaseController
             RequestMethod::DELETE,
             '/subscription_groups/{uid}/payment_profiles/{payment_profile_id}.json'
         )
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('uid', $uid)->required(),
                 TemplateParam::init('payment_profile_id', $paymentProfileId)->required()
@@ -685,7 +685,7 @@ class PaymentProfilesController extends BaseController
             '/subscriptions/{subscription_id}/payment_profiles/{payment_profile_id}/change_paym' .
             'ent_profile.json'
         )
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 TemplateParam::init('payment_profile_id', $paymentProfileId)->required()
@@ -730,7 +730,7 @@ class PaymentProfilesController extends BaseController
             RequestMethod::POST,
             '/subscription_groups/{uid}/payment_profiles/{payment_profile_id}/change_payment_profile.json'
         )
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('uid', $uid)->required(),
                 TemplateParam::init('payment_profile_id', $paymentProfileId)->required()
@@ -768,7 +768,7 @@ class PaymentProfilesController extends BaseController
     public function readOneTimeToken(string $chargifyToken): GetOneTimeTokenRequest
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/one_time_tokens/{chargify_token}.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(TemplateParam::init('chargify_token', $chargifyToken)->required());
 
         $_resHandler = $this->responseHandler()
@@ -811,7 +811,7 @@ class PaymentProfilesController extends BaseController
         $_reqBuilder = $this->requestBuilder(
             RequestMethod::POST,
             '/subscriptions/{subscription_id}/request_payment_profiles_update.json'
-        )->auth('global')->parameters(TemplateParam::init('subscription_id', $subscriptionId)->required());
+        )->auth('BasicAuth')->parameters(TemplateParam::init('subscription_id', $subscriptionId)->required());
 
         $_resHandler = $this->responseHandler()
             ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))

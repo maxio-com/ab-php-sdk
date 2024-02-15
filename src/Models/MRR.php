@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
 class MRR implements \JsonSerializable
@@ -40,7 +41,7 @@ class MRR implements \JsonSerializable
     private $breakouts;
 
     /**
-     * @var string|null
+     * @var \DateTime|null
      */
     private $atTime;
 
@@ -138,7 +139,7 @@ class MRR implements \JsonSerializable
      * Returns At Time.
      * ISO8601 timestamp
      */
-    public function getAtTime(): ?string
+    public function getAtTime(): ?\DateTime
     {
         return $this->atTime;
     }
@@ -148,8 +149,9 @@ class MRR implements \JsonSerializable
      * ISO8601 timestamp
      *
      * @maps at_time
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setAtTime(?string $atTime): void
+    public function setAtTime(?\DateTime $atTime): void
     {
         $this->atTime = $atTime;
     }
@@ -182,7 +184,7 @@ class MRR implements \JsonSerializable
             $json['breakouts']        = $this->breakouts;
         }
         if (isset($this->atTime)) {
-            $json['at_time']          = $this->atTime;
+            $json['at_time']          = DateTimeHelper::toRfc3339DateTime($this->atTime);
         }
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;

@@ -9,8 +9,8 @@
 
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
-| `startDate` | `?string` | Optional | - | getStartDate(): ?string | setStartDate(?string startDate): void |
-| `endDate` | `?string` | Optional | - | getEndDate(): ?string | setEndDate(?string endDate): void |
+| `startDate` | `?DateTime` | Optional | - | getStartDate(): ?\DateTime | setStartDate(?\DateTime startDate): void |
+| `endDate` | `?DateTime` | Optional | - | getEndDate(): ?\DateTime | setEndDate(?\DateTime endDate): void |
 | `subtotalInCents` | `?int` | Optional | - | getSubtotalInCents(): ?int | setSubtotalInCents(?int subtotalInCents): void |
 | `totalTaxInCents` | `?int` | Optional | - | getTotalTaxInCents(): ?int | setTotalTaxInCents(?int totalTaxInCents): void |
 | `totalDiscountInCents` | `?int` | Optional | - | getTotalDiscountInCents(): ?int | setTotalDiscountInCents(?int totalDiscountInCents): void |
@@ -27,8 +27,8 @@
 
 ```json
 {
-  "start_date": "start_date2",
-  "end_date": "end_date8",
+  "start_date": "2016-03-13T12:52:32.123Z",
+  "end_date": "2016-03-13T12:52:32.123Z",
   "subtotal_in_cents": 4,
   "total_tax_in_cents": 128,
   "total_discount_in_cents": 122

@@ -11,10 +11,10 @@
 |  --- | --- | --- | --- | --- | --- |
 | `url` | `?string` | Optional | - | getUrl(): ?string | setUrl(?string url): void |
 | `fetchCount` | `?int` | Optional | - | getFetchCount(): ?int | setFetchCount(?int fetchCount): void |
-| `createdAt` | `?string` | Optional | - | getCreatedAt(): ?string | setCreatedAt(?string createdAt): void |
-| `newLinkAvailableAt` | `?string` | Optional | - | getNewLinkAvailableAt(): ?string | setNewLinkAvailableAt(?string newLinkAvailableAt): void |
-| `expiresAt` | `?string` | Optional | - | getExpiresAt(): ?string | setExpiresAt(?string expiresAt): void |
-| `lastInviteSentAt` | `?string` | Optional | - | getLastInviteSentAt(): ?string | setLastInviteSentAt(?string lastInviteSentAt): void |
+| `createdAt` | `?DateTime` | Optional | - | getCreatedAt(): ?\DateTime | setCreatedAt(?\DateTime createdAt): void |
+| `newLinkAvailableAt` | `?DateTime` | Optional | - | getNewLinkAvailableAt(): ?\DateTime | setNewLinkAvailableAt(?\DateTime newLinkAvailableAt): void |
+| `expiresAt` | `?DateTime` | Optional | - | getExpiresAt(): ?\DateTime | setExpiresAt(?\DateTime expiresAt): void |
+| `lastInviteSentAt` | `?DateTime` | Optional | - | getLastInviteSentAt(): ?\DateTime | setLastInviteSentAt(?\DateTime lastInviteSentAt): void |
 
 ## Example (as JSON)
 
@@ -22,9 +22,9 @@
 {
   "url": "url0",
   "fetch_count": 222,
-  "created_at": "created_at6",
-  "new_link_available_at": "new_link_available_at0",
-  "expires_at": "expires_at0"
+  "created_at": "2016-03-13T12:52:32.123Z",
+  "new_link_available_at": "2016-03-13T12:52:32.123Z",
+  "expires_at": "2016-03-13T12:52:32.123Z"
 }
 ```
 

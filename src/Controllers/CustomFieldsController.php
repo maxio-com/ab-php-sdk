@@ -85,7 +85,7 @@ class CustomFieldsController extends BaseController
     public function createMetafields(string $resourceType, ?CreateMetafieldsRequest $body = null): array
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/{resource_type}/metafields.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('resource_type', $resourceType)
                     ->required()
@@ -120,7 +120,7 @@ class CustomFieldsController extends BaseController
     public function listMetafields(array $options): ListMetafieldsResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/{resource_type}/metafields.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('resource_type', $options)
                     ->extract('resourceType')
@@ -154,7 +154,7 @@ class CustomFieldsController extends BaseController
     public function updateMetafield(string $resourceType, ?UpdateMetafieldsRequest $body = null): array
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::PUT, '/{resource_type}/metafields.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('resource_type', $resourceType)
                     ->required()
@@ -192,7 +192,7 @@ class CustomFieldsController extends BaseController
     public function deleteMetafield(string $resourceType, ?string $name = null): void
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::DELETE, '/{resource_type}/metafields.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('resource_type', $resourceType)
                     ->required()
@@ -252,7 +252,7 @@ class CustomFieldsController extends BaseController
     public function createMetadata(string $resourceType, int $resourceId, ?CreateMetadataRequest $body = null): array
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/{resource_type}/{resource_id}/metadata.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('resource_type', $resourceType)
                     ->required()
@@ -292,7 +292,7 @@ class CustomFieldsController extends BaseController
     public function listMetadata(array $options): PaginatedMetadata
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/{resource_type}/{resource_id}/metadata.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('resource_type', $options)
                     ->extract('resourceType')
@@ -323,7 +323,7 @@ class CustomFieldsController extends BaseController
     public function updateMetadata(string $resourceType, int $resourceId, ?UpdateMetadataRequest $body = null): array
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::PUT, '/{resource_type}/{resource_id}/metadata.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('resource_type', $resourceType)
                     ->required()
@@ -390,7 +390,7 @@ class CustomFieldsController extends BaseController
         ?array $names = null
     ): void {
         $_reqBuilder = $this->requestBuilder(RequestMethod::DELETE, '/{resource_type}/{resource_id}/metadata.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('resource_type', $resourceType)
                     ->required()
@@ -431,7 +431,7 @@ class CustomFieldsController extends BaseController
     public function listMetadataForResourceType(array $options): PaginatedMetadata
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/{resource_type}/metadata.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('resource_type', $options)
                     ->extract('resourceType')

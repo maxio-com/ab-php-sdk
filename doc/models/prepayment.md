@@ -18,7 +18,7 @@
 | `external` | `bool` | Required | - | getExternal(): bool | setExternal(bool external): void |
 | `memo` | `string` | Required | **Constraints**: *Minimum Length*: `1` | getMemo(): string | setMemo(string memo): void |
 | `paymentType` | [`?string(PrepaymentMethod)`](../../doc/models/prepayment-method.md) | Optional | The payment type of the prepayment. | getPaymentType(): ?string | setPaymentType(?string paymentType): void |
-| `createdAt` | `string` | Required | **Constraints**: *Minimum Length*: `1` | getCreatedAt(): string | setCreatedAt(string createdAt): void |
+| `createdAt` | `DateTime` | Required | - | getCreatedAt(): \DateTime | setCreatedAt(\DateTime createdAt): void |
 
 ## Example (as JSON)
 
@@ -33,7 +33,7 @@
   "external": false,
   "memo": "memo8",
   "payment_type": "cash",
-  "created_at": "created_at8"
+  "created_at": "2016-03-13T12:52:32.123Z"
 }
 ```
 

@@ -45,6 +45,16 @@ class InvoiceRefund implements \JsonSerializable
     private $gatewayTransactionId = [];
 
     /**
+     * @var string|null
+     */
+    private $gatewayUsed;
+
+    /**
+     * @var array
+     */
+    private $gatewayHandle = [];
+
+    /**
      * Returns Transaction Id.
      */
     public function getTransactionId(): ?int
@@ -167,6 +177,53 @@ class InvoiceRefund implements \JsonSerializable
     }
 
     /**
+     * Returns Gateway Used.
+     */
+    public function getGatewayUsed(): ?string
+    {
+        return $this->gatewayUsed;
+    }
+
+    /**
+     * Sets Gateway Used.
+     *
+     * @maps gateway_used
+     */
+    public function setGatewayUsed(?string $gatewayUsed): void
+    {
+        $this->gatewayUsed = $gatewayUsed;
+    }
+
+    /**
+     * Returns Gateway Handle.
+     */
+    public function getGatewayHandle(): ?string
+    {
+        if (count($this->gatewayHandle) == 0) {
+            return null;
+        }
+        return $this->gatewayHandle['value'];
+    }
+
+    /**
+     * Sets Gateway Handle.
+     *
+     * @maps gateway_handle
+     */
+    public function setGatewayHandle(?string $gatewayHandle): void
+    {
+        $this->gatewayHandle['value'] = $gatewayHandle;
+    }
+
+    /**
+     * Unsets Gateway Handle.
+     */
+    public function unsetGatewayHandle(): void
+    {
+        $this->gatewayHandle = [];
+    }
+
+    /**
      * Encode this object to JSON
      *
      * @param bool $asArrayWhenEmpty Whether to serialize this model as an array whenever no fields
@@ -195,6 +252,12 @@ class InvoiceRefund implements \JsonSerializable
         }
         if (!empty($this->gatewayTransactionId)) {
             $json['gateway_transaction_id'] = $this->gatewayTransactionId['value'];
+        }
+        if (isset($this->gatewayUsed)) {
+            $json['gateway_used']           = $this->gatewayUsed;
+        }
+        if (!empty($this->gatewayHandle)) {
+            $json['gateway_handle']         = $this->gatewayHandle['value'];
         }
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;

@@ -17,8 +17,8 @@
 | `amountInCents` | `?int` | Optional | - | getAmountInCents(): ?int | setAmountInCents(?int amountInCents): void |
 | `productFamilyId` | `?int` | Optional | - | getProductFamilyId(): ?int | setProductFamilyId(?int productFamilyId): void |
 | `productFamilyName` | `?string` | Optional | - | getProductFamilyName(): ?string | setProductFamilyName(?string productFamilyName): void |
-| `startDate` | `?string` | Optional | - | getStartDate(): ?string | setStartDate(?string startDate): void |
-| `endDate` | `?string` | Optional | - | getEndDate(): ?string | setEndDate(?string endDate): void |
+| `startDate` | `?DateTime` | Optional | - | getStartDate(): ?\DateTime | setStartDate(?\DateTime startDate): void |
+| `endDate` | `?DateTime` | Optional | - | getEndDate(): ?\DateTime | setEndDate(?\DateTime endDate): void |
 | `percentage` | `?string` | Optional | - | getPercentage(): ?string | setPercentage(?string percentage): void |
 | `recurring` | `?bool` | Optional | - | getRecurring(): ?bool | setRecurring(?bool recurring): void |
 | `recurringScheme` | [`?string(RecurringScheme)`](../../doc/models/recurring-scheme.md) | Optional | - | getRecurringScheme(): ?string | setRecurringScheme(?string recurringScheme): void |
@@ -27,13 +27,13 @@
 | `durationIntervalUnit` | `?string` | Optional | - | getDurationIntervalUnit(): ?string | setDurationIntervalUnit(?string durationIntervalUnit): void |
 | `durationIntervalSpan` | `?string` | Optional | - | getDurationIntervalSpan(): ?string | setDurationIntervalSpan(?string durationIntervalSpan): void |
 | `allowNegativeBalance` | `?bool` | Optional | - | getAllowNegativeBalance(): ?bool | setAllowNegativeBalance(?bool allowNegativeBalance): void |
-| `archivedAt` | `?string` | Optional | - | getArchivedAt(): ?string | setArchivedAt(?string archivedAt): void |
+| `archivedAt` | `?DateTime` | Optional | - | getArchivedAt(): ?\DateTime | setArchivedAt(?\DateTime archivedAt): void |
 | `conversionLimit` | `?string` | Optional | - | getConversionLimit(): ?string | setConversionLimit(?string conversionLimit): void |
 | `stackable` | `?bool` | Optional | - | getStackable(): ?bool | setStackable(?bool stackable): void |
 | `compoundingStrategy` | string([CompoundingStrategy](../../doc/models/compounding-strategy.md))\|null | Optional | This is a container for any-of cases. | getCompoundingStrategy(): ?string | setCompoundingStrategy(?string compoundingStrategy): void |
 | `useSiteExchangeRate` | `?bool` | Optional | - | getUseSiteExchangeRate(): ?bool | setUseSiteExchangeRate(?bool useSiteExchangeRate): void |
-| `createdAt` | `?string` | Optional | - | getCreatedAt(): ?string | setCreatedAt(?string createdAt): void |
-| `updatedAt` | `?string` | Optional | - | getUpdatedAt(): ?string | setUpdatedAt(?string updatedAt): void |
+| `createdAt` | `?DateTime` | Optional | - | getCreatedAt(): ?\DateTime | setCreatedAt(?\DateTime createdAt): void |
+| `updatedAt` | `?DateTime` | Optional | - | getUpdatedAt(): ?\DateTime | setUpdatedAt(?\DateTime updatedAt): void |
 | `discountType` | [`?string(DiscountType)`](../../doc/models/discount-type.md) | Optional | - | getDiscountType(): ?string | setDiscountType(?string discountType): void |
 | `excludeMidPeriodAllocations` | `?bool` | Optional | - | getExcludeMidPeriodAllocations(): ?bool | setExcludeMidPeriodAllocations(?bool excludeMidPeriodAllocations): void |
 | `applyOnCancelAtEndOfPeriod` | `?bool` | Optional | - | getApplyOnCancelAtEndOfPeriod(): ?bool | setApplyOnCancelAtEndOfPeriod(?bool applyOnCancelAtEndOfPeriod): void |

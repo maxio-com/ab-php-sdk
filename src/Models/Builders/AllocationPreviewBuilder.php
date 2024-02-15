@@ -41,7 +41,7 @@ class AllocationPreviewBuilder
     /**
      * Sets start date field.
      */
-    public function startDate(?string $value): self
+    public function startDate(?\DateTime $value): self
     {
         $this->instance->setStartDate($value);
         return $this;
@@ -50,7 +50,7 @@ class AllocationPreviewBuilder
     /**
      * Sets end date field.
      */
-    public function endDate(?string $value): self
+    public function endDate(?\DateTime $value): self
     {
         $this->instance->setEndDate($value);
         return $this;

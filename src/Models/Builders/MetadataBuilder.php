@@ -104,7 +104,7 @@ class MetadataBuilder
     /**
      * Sets deleted at field.
      */
-    public function deletedAt(?string $value): self
+    public function deletedAt(?\DateTime $value): self
     {
         $this->instance->setDeletedAt($value);
         return $this;

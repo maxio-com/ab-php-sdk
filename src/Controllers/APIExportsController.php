@@ -42,7 +42,7 @@ class APIExportsController extends BaseController
             RequestMethod::GET,
             '/api_exports/proforma_invoices/{batch_id}/rows.json'
         )
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('batch_id', $options)->extract('batchId')->required(),
                 QueryParam::init('per_page', $options)->commaSeparated()->extract('perPage', 100),
@@ -71,7 +71,7 @@ class APIExportsController extends BaseController
     public function listExportedInvoices(array $options): array
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/api_exports/invoices/{batch_id}/rows.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('batch_id', $options)->extract('batchId')->required(),
                 QueryParam::init('per_page', $options)->commaSeparated()->extract('perPage', 100),
@@ -101,7 +101,7 @@ class APIExportsController extends BaseController
     public function listExportedSubscriptions(array $options): array
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/api_exports/subscriptions/{batch_id}/rows.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('batch_id', $options)->extract('batchId')->required(),
                 QueryParam::init('per_page', $options)->commaSeparated()->extract('perPage', 100),
@@ -127,7 +127,7 @@ class APIExportsController extends BaseController
     public function exportProformaInvoices(): BatchJobResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/api_exports/proforma_invoices.json')
-            ->auth('global');
+            ->auth('BasicAuth');
 
         $_resHandler = $this->responseHandler()
             ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
@@ -152,7 +152,7 @@ class APIExportsController extends BaseController
      */
     public function exportInvoices(): BatchJobResponse
     {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/api_exports/invoices.json')->auth('global');
+        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/api_exports/invoices.json')->auth('BasicAuth');
 
         $_resHandler = $this->responseHandler()
             ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
@@ -177,7 +177,8 @@ class APIExportsController extends BaseController
      */
     public function exportSubscriptions(): BatchJobResponse
     {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/api_exports/subscriptions.json')->auth('global');
+        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/api_exports/subscriptions.json')
+            ->auth('BasicAuth');
 
         $_resHandler = $this->responseHandler()
             ->throwErrorOn(
@@ -204,7 +205,7 @@ class APIExportsController extends BaseController
     public function readProformaInvoicesExport(string $batchId): BatchJobResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/api_exports/proforma_invoices/{batch_id}.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(TemplateParam::init('batch_id', $batchId)->required());
 
         $_resHandler = $this->responseHandler()
@@ -226,7 +227,7 @@ class APIExportsController extends BaseController
     public function readInvoicesExport(string $batchId): BatchJobResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/api_exports/invoices/{batch_id}.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(TemplateParam::init('batch_id', $batchId)->required());
 
         $_resHandler = $this->responseHandler()
@@ -248,7 +249,7 @@ class APIExportsController extends BaseController
     public function readSubscriptionsExport(string $batchId): BatchJobResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/api_exports/subscriptions/{batch_id}.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(TemplateParam::init('batch_id', $batchId)->required());
 
         $_resHandler = $this->responseHandler()

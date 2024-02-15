@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
 class Prepayment implements \JsonSerializable
@@ -60,7 +61,7 @@ class Prepayment implements \JsonSerializable
     private $paymentType;
 
     /**
-     * @var string
+     * @var \DateTime
      */
     private $createdAt;
 
@@ -71,7 +72,7 @@ class Prepayment implements \JsonSerializable
      * @param int $remainingAmountInCents
      * @param bool $external
      * @param string $memo
-     * @param string $createdAt
+     * @param \DateTime $createdAt
      */
     public function __construct(
         int $id,
@@ -80,7 +81,7 @@ class Prepayment implements \JsonSerializable
         int $remainingAmountInCents,
         bool $external,
         string $memo,
-        string $createdAt
+        \DateTime $createdAt
     ) {
         $this->id = $id;
         $this->subscriptionId = $subscriptionId;
@@ -265,7 +266,7 @@ class Prepayment implements \JsonSerializable
     /**
      * Returns Created At.
      */
-    public function getCreatedAt(): string
+    public function getCreatedAt(): \DateTime
     {
         return $this->createdAt;
     }
@@ -275,8 +276,9 @@ class Prepayment implements \JsonSerializable
      *
      * @required
      * @maps created_at
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setCreatedAt(string $createdAt): void
+    public function setCreatedAt(\DateTime $createdAt): void
     {
         $this->createdAt = $createdAt;
     }
@@ -308,7 +310,7 @@ class Prepayment implements \JsonSerializable
         if (isset($this->paymentType)) {
             $json['payment_type']             = PrepaymentMethod::checkValue($this->paymentType);
         }
-        $json['created_at']                   = $this->createdAt;
+        $json['created_at']                   = DateTimeHelper::toRfc3339DateTime($this->createdAt);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

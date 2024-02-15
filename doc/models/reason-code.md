@@ -14,8 +14,8 @@
 | `code` | `?string` | Optional | - | getCode(): ?string | setCode(?string code): void |
 | `description` | `?string` | Optional | - | getDescription(): ?string | setDescription(?string description): void |
 | `position` | `?int` | Optional | - | getPosition(): ?int | setPosition(?int position): void |
-| `createdAt` | `?string` | Optional | - | getCreatedAt(): ?string | setCreatedAt(?string createdAt): void |
-| `updatedAt` | `?string` | Optional | - | getUpdatedAt(): ?string | setUpdatedAt(?string updatedAt): void |
+| `createdAt` | `?DateTime` | Optional | - | getCreatedAt(): ?\DateTime | setCreatedAt(?\DateTime createdAt): void |
+| `updatedAt` | `?DateTime` | Optional | - | getUpdatedAt(): ?\DateTime | setUpdatedAt(?\DateTime updatedAt): void |
 
 ## Example (as JSON)
 

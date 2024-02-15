@@ -50,22 +50,22 @@ class SiteStatistics implements \JsonSerializable
     private $totalCanceledSubscriptions;
 
     /**
-     * @var float|null
+     * @var int|null
      */
     private $totalActiveSubscriptions;
 
     /**
-     * @var float|null
+     * @var int|null
      */
     private $totalPastDueSubscriptions;
 
     /**
-     * @var float|null
+     * @var int|null
      */
     private $totalUnpaidSubscriptions;
 
     /**
-     * @var float|null
+     * @var int|null
      */
     private $totalDunningSubscriptions;
 
@@ -198,7 +198,7 @@ class SiteStatistics implements \JsonSerializable
     /**
      * Returns Total Active Subscriptions.
      */
-    public function getTotalActiveSubscriptions(): ?float
+    public function getTotalActiveSubscriptions(): ?int
     {
         return $this->totalActiveSubscriptions;
     }
@@ -208,7 +208,7 @@ class SiteStatistics implements \JsonSerializable
      *
      * @maps total_active_subscriptions
      */
-    public function setTotalActiveSubscriptions(?float $totalActiveSubscriptions): void
+    public function setTotalActiveSubscriptions(?int $totalActiveSubscriptions): void
     {
         $this->totalActiveSubscriptions = $totalActiveSubscriptions;
     }
@@ -216,7 +216,7 @@ class SiteStatistics implements \JsonSerializable
     /**
      * Returns Total Past Due Subscriptions.
      */
-    public function getTotalPastDueSubscriptions(): ?float
+    public function getTotalPastDueSubscriptions(): ?int
     {
         return $this->totalPastDueSubscriptions;
     }
@@ -226,7 +226,7 @@ class SiteStatistics implements \JsonSerializable
      *
      * @maps total_past_due_subscriptions
      */
-    public function setTotalPastDueSubscriptions(?float $totalPastDueSubscriptions): void
+    public function setTotalPastDueSubscriptions(?int $totalPastDueSubscriptions): void
     {
         $this->totalPastDueSubscriptions = $totalPastDueSubscriptions;
     }
@@ -234,7 +234,7 @@ class SiteStatistics implements \JsonSerializable
     /**
      * Returns Total Unpaid Subscriptions.
      */
-    public function getTotalUnpaidSubscriptions(): ?float
+    public function getTotalUnpaidSubscriptions(): ?int
     {
         return $this->totalUnpaidSubscriptions;
     }
@@ -244,7 +244,7 @@ class SiteStatistics implements \JsonSerializable
      *
      * @maps total_unpaid_subscriptions
      */
-    public function setTotalUnpaidSubscriptions(?float $totalUnpaidSubscriptions): void
+    public function setTotalUnpaidSubscriptions(?int $totalUnpaidSubscriptions): void
     {
         $this->totalUnpaidSubscriptions = $totalUnpaidSubscriptions;
     }
@@ -252,7 +252,7 @@ class SiteStatistics implements \JsonSerializable
     /**
      * Returns Total Dunning Subscriptions.
      */
-    public function getTotalDunningSubscriptions(): ?float
+    public function getTotalDunningSubscriptions(): ?int
     {
         return $this->totalDunningSubscriptions;
     }
@@ -262,7 +262,7 @@ class SiteStatistics implements \JsonSerializable
      *
      * @maps total_dunning_subscriptions
      */
-    public function setTotalDunningSubscriptions(?float $totalDunningSubscriptions): void
+    public function setTotalDunningSubscriptions(?int $totalDunningSubscriptions): void
     {
         $this->totalDunningSubscriptions = $totalDunningSubscriptions;
     }

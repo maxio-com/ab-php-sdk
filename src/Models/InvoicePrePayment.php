@@ -15,17 +15,17 @@ use stdClass;
 class InvoicePrePayment implements \JsonSerializable
 {
     /**
-     * @var string|null
+     * @var int|null
      */
     private $subscriptionId;
 
     /**
-     * @var string|null
+     * @var int|null
      */
     private $amountInCents;
 
     /**
-     * @var string|null
+     * @var int|null
      */
     private $endingBalanceInCents;
 
@@ -33,7 +33,7 @@ class InvoicePrePayment implements \JsonSerializable
      * Returns Subscription Id.
      * The subscription id for the prepayment account
      */
-    public function getSubscriptionId(): ?string
+    public function getSubscriptionId(): ?int
     {
         return $this->subscriptionId;
     }
@@ -44,7 +44,7 @@ class InvoicePrePayment implements \JsonSerializable
      *
      * @maps subscription_id
      */
-    public function setSubscriptionId(?string $subscriptionId): void
+    public function setSubscriptionId(?int $subscriptionId): void
     {
         $this->subscriptionId = $subscriptionId;
     }
@@ -53,7 +53,7 @@ class InvoicePrePayment implements \JsonSerializable
      * Returns Amount in Cents.
      * The amount in cents of the prepayment that was created as a result of this payment.
      */
-    public function getAmountInCents(): ?string
+    public function getAmountInCents(): ?int
     {
         return $this->amountInCents;
     }
@@ -64,7 +64,7 @@ class InvoicePrePayment implements \JsonSerializable
      *
      * @maps amount_in_cents
      */
-    public function setAmountInCents(?string $amountInCents): void
+    public function setAmountInCents(?int $amountInCents): void
     {
         $this->amountInCents = $amountInCents;
     }
@@ -73,7 +73,7 @@ class InvoicePrePayment implements \JsonSerializable
      * Returns Ending Balance in Cents.
      * The total balance of the prepayment account for this subscription including any prior prepayments
      */
-    public function getEndingBalanceInCents(): ?string
+    public function getEndingBalanceInCents(): ?int
     {
         return $this->endingBalanceInCents;
     }
@@ -84,7 +84,7 @@ class InvoicePrePayment implements \JsonSerializable
      *
      * @maps ending_balance_in_cents
      */
-    public function setEndingBalanceInCents(?string $endingBalanceInCents): void
+    public function setEndingBalanceInCents(?int $endingBalanceInCents): void
     {
         $this->endingBalanceInCents = $endingBalanceInCents;
     }

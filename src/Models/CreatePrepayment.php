@@ -129,7 +129,7 @@ class CreatePrepayment implements \JsonSerializable
      *
      * @required
      * @maps method
-     * @factory \AdvancedBillingLib\Models\PrepaymentMethod::checkValue
+     * @factory \AdvancedBillingLib\Models\CreatePrepaymentMethod::checkValue
      */
     public function setMethod(string $method): void
     {
@@ -169,7 +169,7 @@ class CreatePrepayment implements \JsonSerializable
         $json['amount']                 = $this->amount;
         $json['details']                = $this->details;
         $json['memo']                   = $this->memo;
-        $json['method']                 = PrepaymentMethod::checkValue($this->method);
+        $json['method']                 = CreatePrepaymentMethod::checkValue($this->method);
         if (isset($this->paymentProfileId)) {
             $json['payment_profile_id'] = $this->paymentProfileId;
         }

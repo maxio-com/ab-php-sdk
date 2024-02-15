@@ -11,32 +11,32 @@ declare(strict_types=1);
 namespace AdvancedBillingLib\Models\Builders;
 
 use AdvancedBillingLib\Models\InvoicePrePayment;
-use AdvancedBillingLib\Models\PaymentResponse;
+use AdvancedBillingLib\Models\RecordPaymentResponse;
 use Core\Utils\CoreHelper;
 
 /**
- * Builder for model PaymentResponse
+ * Builder for model RecordPaymentResponse
  *
- * @see PaymentResponse
+ * @see RecordPaymentResponse
  */
-class PaymentResponseBuilder
+class RecordPaymentResponseBuilder
 {
     /**
-     * @var PaymentResponse
+     * @var RecordPaymentResponse
      */
     private $instance;
 
-    private function __construct(PaymentResponse $instance)
+    private function __construct(RecordPaymentResponse $instance)
     {
         $this->instance = $instance;
     }
 
     /**
-     * Initializes a new payment response Builder object.
+     * Initializes a new record payment response Builder object.
      */
     public static function init(): self
     {
-        return new self(new PaymentResponse());
+        return new self(new RecordPaymentResponse());
     }
 
     /**
@@ -58,9 +58,18 @@ class PaymentResponseBuilder
     }
 
     /**
-     * Initializes a new payment response object.
+     * Unsets prepayment field.
      */
-    public function build(): PaymentResponse
+    public function unsetPrepayment(): self
+    {
+        $this->instance->unsetPrepayment();
+        return $this;
+    }
+
+    /**
+     * Initializes a new record payment response object.
+     */
+    public function build(): RecordPaymentResponse
     {
         return CoreHelper::clone($this->instance);
     }

@@ -16,8 +16,8 @@
 | `details` | `?string` | Optional | - | getDetails(): ?string | setDetails(?string details): void |
 | `external` | `?bool` | Optional | - | getExternal(): ?bool | setExternal(?bool external): void |
 | `memo` | `?string` | Optional | - | getMemo(): ?string | setMemo(?string memo): void |
-| `paymentType` | [`?string(PrepaymentMethod)`](../../doc/models/prepayment-method.md) | Optional | :- When the `method` specified is `"credit_card_on_file"`, the prepayment amount will be collected using the default credit card payment profile and applied to the prepayment account balance. This is especially useful for manual replenishment of prepaid subscriptions. | getPaymentType(): ?string | setPaymentType(?string paymentType): void |
-| `createdAt` | `?string` | Optional | - | getCreatedAt(): ?string | setCreatedAt(?string createdAt): void |
+| `paymentType` | [`?string(PrepaymentMethod)`](../../doc/models/prepayment-method.md) | Optional | - | getPaymentType(): ?string | setPaymentType(?string paymentType): void |
+| `createdAt` | `?DateTime` | Optional | - | getCreatedAt(): ?\DateTime | setCreatedAt(?\DateTime createdAt): void |
 
 ## Example (as JSON)
 

@@ -50,7 +50,7 @@ class SubscriptionComponentSubscriptionBuilder
     /**
      * Sets updated at field.
      */
-    public function updatedAt(?string $value): self
+    public function updatedAt(?\DateTime $value): self
     {
         $this->instance->setUpdatedAt($value);
         return $this;

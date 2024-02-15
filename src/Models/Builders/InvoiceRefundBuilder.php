@@ -102,6 +102,33 @@ class InvoiceRefundBuilder
     }
 
     /**
+     * Sets gateway used field.
+     */
+    public function gatewayUsed(?string $value): self
+    {
+        $this->instance->setGatewayUsed($value);
+        return $this;
+    }
+
+    /**
+     * Sets gateway handle field.
+     */
+    public function gatewayHandle(?string $value): self
+    {
+        $this->instance->setGatewayHandle($value);
+        return $this;
+    }
+
+    /**
+     * Unsets gateway handle field.
+     */
+    public function unsetGatewayHandle(): self
+    {
+        $this->instance->unsetGatewayHandle();
+        return $this;
+    }
+
+    /**
      * Initializes a new invoice refund object.
      */
     public function build(): InvoiceRefund

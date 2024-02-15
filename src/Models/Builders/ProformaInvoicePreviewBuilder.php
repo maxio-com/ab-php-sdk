@@ -87,6 +87,15 @@ class ProformaInvoicePreviewBuilder
     }
 
     /**
+     * Unsets number field.
+     */
+    public function unsetNumber(): self
+    {
+        $this->instance->unsetNumber();
+        return $this;
+    }
+
+    /**
      * Sets sequence number field.
      */
     public function sequenceNumber(?int $value): self
@@ -96,9 +105,18 @@ class ProformaInvoicePreviewBuilder
     }
 
     /**
+     * Unsets sequence number field.
+     */
+    public function unsetSequenceNumber(): self
+    {
+        $this->instance->unsetSequenceNumber();
+        return $this;
+    }
+
+    /**
      * Sets created at field.
      */
-    public function createdAt(?string $value): self
+    public function createdAt(?\DateTime $value): self
     {
         $this->instance->setCreatedAt($value);
         return $this;
@@ -107,7 +125,7 @@ class ProformaInvoicePreviewBuilder
     /**
      * Sets delivery date field.
      */
-    public function deliveryDate(?string $value): self
+    public function deliveryDate(?\DateTime $value): self
     {
         $this->instance->setDeliveryDate($value);
         return $this;
@@ -362,6 +380,15 @@ class ProformaInvoicePreviewBuilder
     public function publicUrl(?string $value): self
     {
         $this->instance->setPublicUrl($value);
+        return $this;
+    }
+
+    /**
+     * Unsets public url field.
+     */
+    public function unsetPublicUrl(): self
+    {
+        $this->instance->unsetPublicUrl();
         return $this;
     }
 

@@ -71,6 +71,60 @@ class CreateOrUpdateProductBuilder
     }
 
     /**
+     * Sets trial price in cents field.
+     */
+    public function trialPriceInCents(?int $value): self
+    {
+        $this->instance->setTrialPriceInCents($value);
+        return $this;
+    }
+
+    /**
+     * Sets trial interval field.
+     */
+    public function trialInterval(?int $value): self
+    {
+        $this->instance->setTrialInterval($value);
+        return $this;
+    }
+
+    /**
+     * Sets trial interval unit field.
+     */
+    public function trialIntervalUnit(?string $value): self
+    {
+        $this->instance->setTrialIntervalUnit($value);
+        return $this;
+    }
+
+    /**
+     * Sets trial type field.
+     */
+    public function trialType(?string $value): self
+    {
+        $this->instance->setTrialType($value);
+        return $this;
+    }
+
+    /**
+     * Sets expiration interval field.
+     */
+    public function expirationInterval(?int $value): self
+    {
+        $this->instance->setExpirationInterval($value);
+        return $this;
+    }
+
+    /**
+     * Sets expiration interval unit field.
+     */
+    public function expirationIntervalUnit(?string $value): self
+    {
+        $this->instance->setExpirationIntervalUnit($value);
+        return $this;
+    }
+
+    /**
      * Sets auto create signup page field.
      */
     public function autoCreateSignupPage(?bool $value): self

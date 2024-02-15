@@ -163,7 +163,7 @@ $result = $subscriptionComponentsController->listSubscriptionComponents($collect
       "created_at": "2022-02-22T14:07:00-05:00",
       "updated_at": "2022-02-22T14:07:00-05:00",
       "component_handle": "string",
-      "archived_at": "string"
+      "archived_at": null
     }
   }
 ]
@@ -331,8 +331,8 @@ $result = $subscriptionComponentsController->bulkResetSubscriptionComponentsPric
       "last_name": "esse",
       "organization": null,
       "email": "ex eiusmod",
-      "created_at": "ad occaecat cillum",
-      "updated_at": "ut aute proident est",
+      "created_at": "2021-05-05T16:00:21-04:00",
+      "updated_at": "2021-05-05T16:00:21-04:00",
       "reference": "laboris ea cupidatat",
       "address": null,
       "address_2": null,
@@ -342,8 +342,8 @@ $result = $subscriptionComponentsController->bulkResetSubscriptionComponentsPric
       "country": null,
       "phone": null,
       "portal_invite_last_sent_at": null,
-      "portal_invite_last_accepted_at": "reprehenderit labore voluptate",
-      "portal_customer_created_at": "nisi aute reprehenderit Excepteur Duis",
+      "portal_invite_last_accepted_at": "2021-05-05T20:00:21-04:00",
+      "portal_customer_created_at": "2021-05-05T16:00:21-04:00",
       "cc_emails": "eiusmod sunt",
       "tax_exempt": true
     },
@@ -932,7 +932,7 @@ $allocationId = 24;
 $body = UpdateAllocationExpirationDateBuilder::init()
     ->allocation(
         AllocationExpirationDateBuilder::init()
-            ->expiresAt('05/07/2021')
+            ->expiresAt(DateTimeHelper::fromRfc3339DateTime('2021-05-05T16:00:00'))
             ->build()
     )
     ->build();
@@ -1345,7 +1345,7 @@ $apiHandle = 'api_handle6';
 $body = EBBEventBuilder::init()
     ->chargify(
         ChargifyEBBBuilder::init()
-            ->timestamp('2020-02-27T17:45:50-05:00')
+            ->timestamp(DateTimeHelper::fromRfc3339DateTime('2020-02-27T17:45:50-05:00'))
             ->subscriptionId(1)
             ->build()
     )
@@ -1401,7 +1401,7 @@ $body = [
     EBBEventBuilder::init()
         ->chargify(
             ChargifyEBBBuilder::init()
-                ->timestamp('2020-02-27T17:45:50-05:00')
+                ->timestamp(DateTimeHelper::fromRfc3339DateTime('2020-02-27T17:45:50-05:00'))
                 ->subscriptionId(1)
                 ->build()
         )
@@ -1446,10 +1446,10 @@ function listSubscriptionComponentsForSite(array $options): ListSubscriptionComp
 | `filterCurrencies` | `?(string[])` | Query, Optional | Allows fetching components allocation with matching currency based on provided values. Use in query `filter[currencies]=USD,EUR`. |
 | `filterSubscriptionStates` | [`?(string(SubscriptionStateFilter)[])`](../../doc/models/subscription-state-filter.md) | Query, Optional | Allows fetching components allocations that belong to the subscription with matching states based on provided values. To use this filter you also have to include the following param in the request `include=subscription`. Use in query `filter[subscription][states]=active,canceled&include=subscription`. |
 | `filterSubscriptionDateField` | [`?string(SubscriptionListDateField)`](../../doc/models/subscription-list-date-field.md) | Query, Optional | The type of filter you'd like to apply to your search. To use this filter you also have to include the following param in the request `include=subscription`. |
-| `filterSubscriptionStartDate` | `?string` | Query, Optional | The start date (format YYYY-MM-DD) with which to filter the date_field. Returns components that belong to the subscription with a timestamp at or after midnight (12:00:00 AM) in your site’s time zone on the date specified. To use this filter you also have to include the following param in the request `include=subscription`. |
-| `filterSubscriptionStartDatetime` | `?string` | Query, Optional | The start date and time (format YYYY-MM-DD HH:MM:SS) with which to filter the date_field. Returns components that belong to the subscription with a timestamp at or after exact time provided in query. You can specify timezone in query - otherwise your site''s time zone will be used. If provided, this parameter will be used instead of start_date. To use this filter you also have to include the following param in the request `include=subscription`. |
-| `filterSubscriptionEndDate` | `?string` | Query, Optional | The end date (format YYYY-MM-DD) with which to filter the date_field. Returns components that belong to the subscription with a timestamp up to and including 11:59:59PM in your site’s time zone on the date specified. To use this filter you also have to include the following param in the request `include=subscription`. |
-| `filterSubscriptionEndDatetime` | `?string` | Query, Optional | The end date and time (format YYYY-MM-DD HH:MM:SS) with which to filter the date_field. Returns components that belong to the subscription with a timestamp at or before exact time provided in query. You can specify timezone in query - otherwise your site''s time zone will be used. If provided, this parameter will be used instead of end_date. To use this filter you also have to include the following param in the request `include=subscription`. |
+| `filterSubscriptionStartDate` | `?DateTime` | Query, Optional | The start date (format YYYY-MM-DD) with which to filter the date_field. Returns components that belong to the subscription with a timestamp at or after midnight (12:00:00 AM) in your site’s time zone on the date specified. To use this filter you also have to include the following param in the request `include=subscription`. |
+| `filterSubscriptionStartDatetime` | `?DateTime` | Query, Optional | The start date and time (format YYYY-MM-DD HH:MM:SS) with which to filter the date_field. Returns components that belong to the subscription with a timestamp at or after exact time provided in query. You can specify timezone in query - otherwise your site''s time zone will be used. If provided, this parameter will be used instead of start_date. To use this filter you also have to include the following param in the request `include=subscription`. |
+| `filterSubscriptionEndDate` | `?DateTime` | Query, Optional | The end date (format YYYY-MM-DD) with which to filter the date_field. Returns components that belong to the subscription with a timestamp up to and including 11:59:59PM in your site’s time zone on the date specified. To use this filter you also have to include the following param in the request `include=subscription`. |
+| `filterSubscriptionEndDatetime` | `?DateTime` | Query, Optional | The end date and time (format YYYY-MM-DD HH:MM:SS) with which to filter the date_field. Returns components that belong to the subscription with a timestamp at or before exact time provided in query. You can specify timezone in query - otherwise your site''s time zone will be used. If provided, this parameter will be used instead of end_date. To use this filter you also have to include the following param in the request `include=subscription`. |
 
 ## Response Type
 

@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
 class ListSubscriptionGroupsItem implements \JsonSerializable
@@ -45,7 +46,7 @@ class ListSubscriptionGroupsItem implements \JsonSerializable
     private $primarySubscriptionId;
 
     /**
-     * @var string|null
+     * @var \DateTime|null
      */
     private $nextAssessmentAt;
 
@@ -179,7 +180,7 @@ class ListSubscriptionGroupsItem implements \JsonSerializable
     /**
      * Returns Next Assessment At.
      */
-    public function getNextAssessmentAt(): ?string
+    public function getNextAssessmentAt(): ?\DateTime
     {
         return $this->nextAssessmentAt;
     }
@@ -188,8 +189,9 @@ class ListSubscriptionGroupsItem implements \JsonSerializable
      * Sets Next Assessment At.
      *
      * @maps next_assessment_at
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setNextAssessmentAt(?string $nextAssessmentAt): void
+    public function setNextAssessmentAt(?\DateTime $nextAssessmentAt): void
     {
         $this->nextAssessmentAt = $nextAssessmentAt;
     }
@@ -279,7 +281,7 @@ class ListSubscriptionGroupsItem implements \JsonSerializable
             $json['primary_subscription_id'] = $this->primarySubscriptionId;
         }
         if (isset($this->nextAssessmentAt)) {
-            $json['next_assessment_at']      = $this->nextAssessmentAt;
+            $json['next_assessment_at']      = DateTimeHelper::toRfc3339DateTime($this->nextAssessmentAt);
         }
         if (isset($this->state)) {
             $json['state']                   = $this->state;

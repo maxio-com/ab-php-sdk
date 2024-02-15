@@ -9,13 +9,13 @@
 
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
-| `expiresAt` | `?string` | Optional | - | getExpiresAt(): ?string | setExpiresAt(?string expiresAt): void |
+| `expiresAt` | `?DateTime` | Optional | - | getExpiresAt(): ?\DateTime | setExpiresAt(?\DateTime expiresAt): void |
 
 ## Example (as JSON)
 
 ```json
 {
-  "expires_at": "expires_at0"
+  "expires_at": "2016-03-13T12:52:32.123Z"
 }
 ```
 

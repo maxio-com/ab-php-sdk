@@ -397,7 +397,7 @@ class Product implements \JsonSerializable
 
     /**
      * Returns Expiration Interval Unit.
-     * A string representing the trial interval unit for this product, either month or day
+     * A string representing the expiration interval unit for this product, either month or day
      */
     public function getExpirationIntervalUnit(): ?string
     {
@@ -409,7 +409,7 @@ class Product implements \JsonSerializable
 
     /**
      * Sets Expiration Interval Unit.
-     * A string representing the trial interval unit for this product, either month or day
+     * A string representing the expiration interval unit for this product, either month or day
      *
      * @maps expiration_interval_unit
      * @mapsBy anyOf(oneOf(ExtendedIntervalUnit),null)
@@ -422,7 +422,7 @@ class Product implements \JsonSerializable
 
     /**
      * Unsets Expiration Interval Unit.
-     * A string representing the trial interval unit for this product, either month or day
+     * A string representing the expiration interval unit for this product, either month or day
      */
     public function unsetExpirationIntervalUnit(): void
     {

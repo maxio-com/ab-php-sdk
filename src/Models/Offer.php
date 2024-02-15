@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
 class Offer implements \JsonSerializable
@@ -60,12 +61,12 @@ class Offer implements \JsonSerializable
     private $description = [];
 
     /**
-     * @var string|null
+     * @var \DateTime|null
      */
     private $createdAt;
 
     /**
-     * @var string|null
+     * @var \DateTime|null
      */
     private $updatedAt;
 
@@ -285,7 +286,7 @@ class Offer implements \JsonSerializable
     /**
      * Returns Created At.
      */
-    public function getCreatedAt(): ?string
+    public function getCreatedAt(): ?\DateTime
     {
         return $this->createdAt;
     }
@@ -294,8 +295,9 @@ class Offer implements \JsonSerializable
      * Sets Created At.
      *
      * @maps created_at
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setCreatedAt(?string $createdAt): void
+    public function setCreatedAt(?\DateTime $createdAt): void
     {
         $this->createdAt = $createdAt;
     }
@@ -303,7 +305,7 @@ class Offer implements \JsonSerializable
     /**
      * Returns Updated At.
      */
-    public function getUpdatedAt(): ?string
+    public function getUpdatedAt(): ?\DateTime
     {
         return $this->updatedAt;
     }
@@ -312,8 +314,9 @@ class Offer implements \JsonSerializable
      * Sets Updated At.
      *
      * @maps updated_at
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setUpdatedAt(?string $updatedAt): void
+    public function setUpdatedAt(?\DateTime $updatedAt): void
     {
         $this->updatedAt = $updatedAt;
     }
@@ -321,7 +324,7 @@ class Offer implements \JsonSerializable
     /**
      * Returns Archived At.
      */
-    public function getArchivedAt(): ?string
+    public function getArchivedAt(): ?\DateTime
     {
         if (count($this->archivedAt) == 0) {
             return null;
@@ -333,8 +336,9 @@ class Offer implements \JsonSerializable
      * Sets Archived At.
      *
      * @maps archived_at
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setArchivedAt(?string $archivedAt): void
+    public function setArchivedAt(?\DateTime $archivedAt): void
     {
         $this->archivedAt['value'] = $archivedAt;
     }
@@ -525,13 +529,13 @@ class Offer implements \JsonSerializable
             $json['description']              = $this->description['value'];
         }
         if (isset($this->createdAt)) {
-            $json['created_at']               = $this->createdAt;
+            $json['created_at']               = DateTimeHelper::toRfc3339DateTime($this->createdAt);
         }
         if (isset($this->updatedAt)) {
-            $json['updated_at']               = $this->updatedAt;
+            $json['updated_at']               = DateTimeHelper::toRfc3339DateTime($this->updatedAt);
         }
         if (!empty($this->archivedAt)) {
-            $json['archived_at']              = $this->archivedAt['value'];
+            $json['archived_at']              = DateTimeHelper::toRfc3339DateTime($this->archivedAt['value']);
         }
         if (isset($this->offerItems)) {
             $json['offer_items']              = $this->offerItems;

@@ -365,7 +365,7 @@ class ComponentBuilder
     /**
      * Sets archived at field.
      */
-    public function archivedAt(?string $value): self
+    public function archivedAt(?\DateTime $value): self
     {
         $this->instance->setArchivedAt($value);
         return $this;
