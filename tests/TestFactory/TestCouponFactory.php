@@ -7,6 +7,7 @@ namespace AdvancedBillingLib\Tests\TestFactory;
 use AdvancedBillingLib\Models\Builders\CouponBuilder;
 use AdvancedBillingLib\Models\Coupon;
 use AdvancedBillingLib\Tests\TestData\CouponTestData;
+use DateTime;
 
 final class TestCouponFactory
 {

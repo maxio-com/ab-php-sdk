@@ -32,8 +32,8 @@ final class ProductsControllerTestData
         DateTime $createdAt,
         DateTime $updatedAt,
         int $productFamilyId,
-        string $productFamilyCreatedAt,
-        string $productFamilyUpdatedAt,
+        DateTime $productFamilyCreatedAt,
+        DateTime $productFamilyUpdatedAt,
         int $defaultProductPricePointId,
         int $productPricePointId,
         string $productPricePointHandle

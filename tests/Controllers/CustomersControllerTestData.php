@@ -18,6 +18,7 @@ use AdvancedBillingLib\Tests\TestData\CustomerTestData;
 use AdvancedBillingLib\Tests\TestFactory\TestCustomerFactory;
 use AdvancedBillingLib\Tests\TestFactory\TestCustomerRequestFactory;
 use AdvancedBillingLib\Tests\TestFactory\TestCustomerResponseFactory;
+use DateTime;
 
 final class CustomersControllerTestData
 {

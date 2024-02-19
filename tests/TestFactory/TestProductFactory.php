@@ -24,8 +24,8 @@ final class TestProductFactory
         int $productFamilyId,
         string $productFamilyName,
         string $productFamilyHandle,
-        string $productFamilyCreatedAt,
-        string $productFamilyUpdatedAt,
+        DateTime $productFamilyCreatedAt,
+        DateTime $productFamilyUpdatedAt,
         int $defaultProductPricePointId,
         int $productPricePointId,
         string $productPricePointHandle

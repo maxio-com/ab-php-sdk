@@ -7,6 +7,7 @@ namespace AdvancedBillingLib\Tests\TestFactory;
 use AdvancedBillingLib\Models\Builders\CustomerBuilder;
 use AdvancedBillingLib\Models\Customer;
 use AdvancedBillingLib\Tests\TestData\CustomerTestData;
+use DateTime;
 
 final class TestCustomerFactory
 {
