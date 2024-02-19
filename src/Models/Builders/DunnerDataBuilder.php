@@ -37,9 +37,9 @@ class DunnerDataBuilder
         string $state,
         int $subscriptionId,
         int $revenueAtRiskInCents,
-        string $createdAt,
+        \DateTime $createdAt,
         int $attempts,
-        string $lastAttemptedAt
+        \DateTime $lastAttemptedAt
     ): self {
         return new self(
             new DunnerData($state, $subscriptionId, $revenueAtRiskInCents, $createdAt, $attempts, $lastAttemptedAt)

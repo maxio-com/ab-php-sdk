@@ -15,7 +15,7 @@ use stdClass;
 /**
  * Used to Create or Update Endpoint
  */
-class UpdateEndpoint implements \JsonSerializable
+class CreateOrUpdateEndpoint implements \JsonSerializable
 {
     /**
      * @var string

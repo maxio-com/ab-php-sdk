@@ -12,12 +12,12 @@ namespace AdvancedBillingLib\Models;
 
 use stdClass;
 
-class Payment implements \JsonSerializable
+class PaidInvoice implements \JsonSerializable
 {
     /**
      * @var string|null
      */
-    private $invoiceUid;
+    private $invoiceId;
 
     /**
      * @var string|null
@@ -35,23 +35,23 @@ class Payment implements \JsonSerializable
     private $paidAmount;
 
     /**
-     * Returns Invoice Uid.
+     * Returns Invoice Id.
      * The uid of the paid invoice
      */
-    public function getInvoiceUid(): ?string
+    public function getInvoiceId(): ?string
     {
-        return $this->invoiceUid;
+        return $this->invoiceId;
     }
 
     /**
-     * Sets Invoice Uid.
+     * Sets Invoice Id.
      * The uid of the paid invoice
      *
-     * @maps invoice_uid
+     * @maps invoice_id
      */
-    public function setInvoiceUid(?string $invoiceUid): void
+    public function setInvoiceId(?string $invoiceId): void
     {
-        $this->invoiceUid = $invoiceUid;
+        $this->invoiceId = $invoiceId;
     }
 
     /**
@@ -129,8 +129,8 @@ class Payment implements \JsonSerializable
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
-        if (isset($this->invoiceUid)) {
-            $json['invoice_uid'] = $this->invoiceUid;
+        if (isset($this->invoiceId)) {
+            $json['invoice_id']  = $this->invoiceId;
         }
         if (isset($this->status)) {
             $json['status']      = InvoiceStatus::checkValue($this->status);

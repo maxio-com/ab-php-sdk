@@ -36,6 +36,11 @@ class CreateInvoicePayment implements \JsonSerializable
     private $details;
 
     /**
+     * @var int|null
+     */
+    private $paymentProfileId;
+
+    /**
      * Returns Amount.
      * A string of the dollar amount to be refunded (eg. "10.50" => $10.50)
      *
@@ -122,6 +127,26 @@ class CreateInvoicePayment implements \JsonSerializable
     }
 
     /**
+     * Returns Payment Profile Id.
+     * The ID of the payment profile to be used for the payment.
+     */
+    public function getPaymentProfileId(): ?int
+    {
+        return $this->paymentProfileId;
+    }
+
+    /**
+     * Sets Payment Profile Id.
+     * The ID of the payment profile to be used for the payment.
+     *
+     * @maps payment_profile_id
+     */
+    public function setPaymentProfileId(?int $paymentProfileId): void
+    {
+        $this->paymentProfileId = $paymentProfileId;
+    }
+
+    /**
      * Encode this object to JSON
      *
      * @param bool $asArrayWhenEmpty Whether to serialize this model as an array whenever no fields
@@ -134,20 +159,23 @@ class CreateInvoicePayment implements \JsonSerializable
     {
         $json = [];
         if (isset($this->amount)) {
-            $json['amount']  =
+            $json['amount']             =
                 ApiHelper::getJsonHelper()->verifyTypes(
                     $this->amount,
                     'anyOf(oneOf(string,float),null)'
                 );
         }
         if (isset($this->memo)) {
-            $json['memo']    = $this->memo;
+            $json['memo']               = $this->memo;
         }
         if (isset($this->method)) {
-            $json['method']  = InvoicePaymentMethodType::checkValue($this->method);
+            $json['method']             = InvoicePaymentMethodType::checkValue($this->method);
         }
         if (isset($this->details)) {
-            $json['details'] = $this->details;
+            $json['details']            = $this->details;
+        }
+        if (isset($this->paymentProfileId)) {
+            $json['payment_profile_id'] = $this->paymentProfileId;
         }
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;

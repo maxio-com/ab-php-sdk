@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
 /**
@@ -23,7 +24,7 @@ class SubscriptionComponentSubscription implements \JsonSerializable
     private $state;
 
     /**
-     * @var string|null
+     * @var \DateTime|null
      */
     private $updatedAt;
 
@@ -153,7 +154,7 @@ class SubscriptionComponentSubscription implements \JsonSerializable
     /**
      * Returns Updated At.
      */
-    public function getUpdatedAt(): ?string
+    public function getUpdatedAt(): ?\DateTime
     {
         return $this->updatedAt;
     }
@@ -162,8 +163,9 @@ class SubscriptionComponentSubscription implements \JsonSerializable
      * Sets Updated At.
      *
      * @maps updated_at
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setUpdatedAt(?string $updatedAt): void
+    public function setUpdatedAt(?\DateTime $updatedAt): void
     {
         $this->updatedAt = $updatedAt;
     }
@@ -184,7 +186,7 @@ class SubscriptionComponentSubscription implements \JsonSerializable
             $json['state']      = SubscriptionState::checkValue($this->state);
         }
         if (isset($this->updatedAt)) {
-            $json['updated_at'] = $this->updatedAt;
+            $json['updated_at'] = DateTimeHelper::toRfc3339DateTime($this->updatedAt);
         }
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;

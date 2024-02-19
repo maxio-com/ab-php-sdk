@@ -10,24 +10,25 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
-class PaymentResponse implements \JsonSerializable
+class RecordPaymentResponse implements \JsonSerializable
 {
     /**
-     * @var Payment[]|null
+     * @var PaidInvoice[]|null
      */
     private $paidInvoices;
 
     /**
-     * @var InvoicePrePayment|null
+     * @var array
      */
-    private $prepayment;
+    private $prepayment = [];
 
     /**
      * Returns Paid Invoices.
      *
-     * @return Payment[]|null
+     * @return PaidInvoice[]|null
      */
     public function getPaidInvoices(): ?array
     {
@@ -39,7 +40,7 @@ class PaymentResponse implements \JsonSerializable
      *
      * @maps paid_invoices
      *
-     * @param Payment[]|null $paidInvoices
+     * @param PaidInvoice[]|null $paidInvoices
      */
     public function setPaidInvoices(?array $paidInvoices): void
     {
@@ -51,17 +52,29 @@ class PaymentResponse implements \JsonSerializable
      */
     public function getPrepayment(): ?InvoicePrePayment
     {
-        return $this->prepayment;
+        if (count($this->prepayment) == 0) {
+            return null;
+        }
+        return $this->prepayment['value'];
     }
 
     /**
      * Sets Prepayment.
      *
      * @maps prepayment
+     * @mapsBy anyOf(oneOf(InvoicePrePayment),null)
      */
     public function setPrepayment(?InvoicePrePayment $prepayment): void
     {
-        $this->prepayment = $prepayment;
+        $this->prepayment['value'] = $prepayment;
+    }
+
+    /**
+     * Unsets Prepayment.
+     */
+    public function unsetPrepayment(): void
+    {
+        $this->prepayment = [];
     }
 
     /**
@@ -79,8 +92,12 @@ class PaymentResponse implements \JsonSerializable
         if (isset($this->paidInvoices)) {
             $json['paid_invoices'] = $this->paidInvoices;
         }
-        if (isset($this->prepayment)) {
-            $json['prepayment']    = $this->prepayment;
+        if (!empty($this->prepayment)) {
+            $json['prepayment']    =
+                ApiHelper::getJsonHelper()->verifyTypes(
+                    $this->prepayment['value'],
+                    'anyOf(oneOf(InvoicePrePayment),null)'
+                );
         }
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;

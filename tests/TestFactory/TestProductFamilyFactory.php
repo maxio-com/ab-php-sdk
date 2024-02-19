@@ -7,13 +7,14 @@ namespace AdvancedBillingLib\Tests\TestFactory;
 use AdvancedBillingLib\Models\Builders\ProductFamilyBuilder;
 use AdvancedBillingLib\Models\ProductFamily;
 use AdvancedBillingLib\Tests\TestData\ProductFamilyTestData;
+use DateTime;
 
 final class TestProductFamilyFactory
 {
     public function create(
         int $id,
-        string $createdAt,
-        string $updatedAt,
+        DateTime $createdAt,
+        DateTime $updatedAt,
         string $name,
         string $handle
     ): ProductFamily

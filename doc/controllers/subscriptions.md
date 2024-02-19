@@ -975,7 +975,7 @@ $body = UpdateSubscriptionRequestBuilder::init(
                 ->expirationYear('2030')
                 ->build()
         )
-        ->nextBillingAt('2010-08-06T15:34:00Z')
+        ->nextBillingAt(DateTimeHelper::fromRfc3339DateTime('2010-08-06T15:34:00Z'))
         ->build()
 )->build();
 

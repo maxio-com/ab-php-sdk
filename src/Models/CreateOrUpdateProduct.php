@@ -55,6 +55,36 @@ class CreateOrUpdateProduct implements \JsonSerializable
     private $intervalUnit;
 
     /**
+     * @var int|null
+     */
+    private $trialPriceInCents;
+
+    /**
+     * @var int|null
+     */
+    private $trialInterval;
+
+    /**
+     * @var string|null
+     */
+    private $trialIntervalUnit;
+
+    /**
+     * @var string|null
+     */
+    private $trialType;
+
+    /**
+     * @var int|null
+     */
+    private $expirationInterval;
+
+    /**
+     * @var string|null
+     */
+    private $expirationIntervalUnit;
+
+    /**
      * @var bool|null
      */
     private $autoCreateSignupPage;
@@ -256,6 +286,130 @@ class CreateOrUpdateProduct implements \JsonSerializable
     }
 
     /**
+     * Returns Trial Price in Cents.
+     * The product trial price, in integer cents
+     */
+    public function getTrialPriceInCents(): ?int
+    {
+        return $this->trialPriceInCents;
+    }
+
+    /**
+     * Sets Trial Price in Cents.
+     * The product trial price, in integer cents
+     *
+     * @maps trial_price_in_cents
+     */
+    public function setTrialPriceInCents(?int $trialPriceInCents): void
+    {
+        $this->trialPriceInCents = $trialPriceInCents;
+    }
+
+    /**
+     * Returns Trial Interval.
+     * The numerical trial interval. i.e. an interval of ‘30’ coupled with a trial_interval_unit of day
+     * would mean this product trial would last 30 days.
+     */
+    public function getTrialInterval(): ?int
+    {
+        return $this->trialInterval;
+    }
+
+    /**
+     * Sets Trial Interval.
+     * The numerical trial interval. i.e. an interval of ‘30’ coupled with a trial_interval_unit of day
+     * would mean this product trial would last 30 days.
+     *
+     * @maps trial_interval
+     */
+    public function setTrialInterval(?int $trialInterval): void
+    {
+        $this->trialInterval = $trialInterval;
+    }
+
+    /**
+     * Returns Trial Interval Unit.
+     * A string representing the trial interval unit for this product, either month or day
+     */
+    public function getTrialIntervalUnit(): ?string
+    {
+        return $this->trialIntervalUnit;
+    }
+
+    /**
+     * Sets Trial Interval Unit.
+     * A string representing the trial interval unit for this product, either month or day
+     *
+     * @maps trial_interval_unit
+     * @factory \AdvancedBillingLib\Models\IntervalUnit::checkValue
+     */
+    public function setTrialIntervalUnit(?string $trialIntervalUnit): void
+    {
+        $this->trialIntervalUnit = $trialIntervalUnit;
+    }
+
+    /**
+     * Returns Trial Type.
+     */
+    public function getTrialType(): ?string
+    {
+        return $this->trialType;
+    }
+
+    /**
+     * Sets Trial Type.
+     *
+     * @maps trial_type
+     */
+    public function setTrialType(?string $trialType): void
+    {
+        $this->trialType = $trialType;
+    }
+
+    /**
+     * Returns Expiration Interval.
+     * The numerical expiration interval. i.e. an expiration_interval of ‘30’ coupled with an
+     * expiration_interval_unit of day would mean this product would expire after 30 days.
+     */
+    public function getExpirationInterval(): ?int
+    {
+        return $this->expirationInterval;
+    }
+
+    /**
+     * Sets Expiration Interval.
+     * The numerical expiration interval. i.e. an expiration_interval of ‘30’ coupled with an
+     * expiration_interval_unit of day would mean this product would expire after 30 days.
+     *
+     * @maps expiration_interval
+     */
+    public function setExpirationInterval(?int $expirationInterval): void
+    {
+        $this->expirationInterval = $expirationInterval;
+    }
+
+    /**
+     * Returns Expiration Interval Unit.
+     * A string representing the expiration interval unit for this product, either month or day
+     */
+    public function getExpirationIntervalUnit(): ?string
+    {
+        return $this->expirationIntervalUnit;
+    }
+
+    /**
+     * Sets Expiration Interval Unit.
+     * A string representing the expiration interval unit for this product, either month or day
+     *
+     * @maps expiration_interval_unit
+     * @factory \AdvancedBillingLib\Models\IntervalUnit::checkValue
+     */
+    public function setExpirationIntervalUnit(?string $expirationIntervalUnit): void
+    {
+        $this->expirationIntervalUnit = $expirationIntervalUnit;
+    }
+
+    /**
      * Returns Auto Create Signup Page.
      */
     public function getAutoCreateSignupPage(): ?bool
@@ -307,25 +461,43 @@ class CreateOrUpdateProduct implements \JsonSerializable
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
-        $json['name']                        = $this->name;
+        $json['name']                         = $this->name;
         if (isset($this->handle)) {
-            $json['handle']                  = $this->handle;
+            $json['handle']                   = $this->handle;
         }
-        $json['description']                 = $this->description;
+        $json['description']                  = $this->description;
         if (isset($this->accountingCode)) {
-            $json['accounting_code']         = $this->accountingCode;
+            $json['accounting_code']          = $this->accountingCode;
         }
         if (isset($this->requireCreditCard)) {
-            $json['require_credit_card']     = $this->requireCreditCard;
+            $json['require_credit_card']      = $this->requireCreditCard;
         }
-        $json['price_in_cents']              = $this->priceInCents;
-        $json['interval']                    = $this->interval;
-        $json['interval_unit']               = IntervalUnit::checkValue($this->intervalUnit);
+        $json['price_in_cents']               = $this->priceInCents;
+        $json['interval']                     = $this->interval;
+        $json['interval_unit']                = IntervalUnit::checkValue($this->intervalUnit);
+        if (isset($this->trialPriceInCents)) {
+            $json['trial_price_in_cents']     = $this->trialPriceInCents;
+        }
+        if (isset($this->trialInterval)) {
+            $json['trial_interval']           = $this->trialInterval;
+        }
+        if (isset($this->trialIntervalUnit)) {
+            $json['trial_interval_unit']      = IntervalUnit::checkValue($this->trialIntervalUnit);
+        }
+        if (isset($this->trialType)) {
+            $json['trial_type']               = $this->trialType;
+        }
+        if (isset($this->expirationInterval)) {
+            $json['expiration_interval']      = $this->expirationInterval;
+        }
+        if (isset($this->expirationIntervalUnit)) {
+            $json['expiration_interval_unit'] = IntervalUnit::checkValue($this->expirationIntervalUnit);
+        }
         if (isset($this->autoCreateSignupPage)) {
-            $json['auto_create_signup_page'] = $this->autoCreateSignupPage;
+            $json['auto_create_signup_page']  = $this->autoCreateSignupPage;
         }
         if (isset($this->taxCode)) {
-            $json['tax_code']                = $this->taxCode;
+            $json['tax_code']                 = $this->taxCode;
         }
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;

@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace AdvancedBillingLib\Models;
 
 use AdvancedBillingLib\ApiHelper;
+use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
 class Event implements \JsonSerializable
@@ -41,7 +42,7 @@ class Event implements \JsonSerializable
     private $customerId;
 
     /**
-     * @var string
+     * @var \DateTime
      */
     private $createdAt;
 
@@ -55,9 +56,9 @@ class Event implements \JsonSerializable
      * @param string $key
      * @param string $message
      * @param int $customerId
-     * @param string $createdAt
+     * @param \DateTime $createdAt
      */
-    public function __construct(int $id, string $key, string $message, int $customerId, string $createdAt)
+    public function __construct(int $id, string $key, string $message, int $customerId, \DateTime $createdAt)
     {
         $this->id = $id;
         $this->key = $key;
@@ -163,7 +164,7 @@ class Event implements \JsonSerializable
     /**
      * Returns Created At.
      */
-    public function getCreatedAt(): string
+    public function getCreatedAt(): \DateTime
     {
         return $this->createdAt;
     }
@@ -173,8 +174,9 @@ class Event implements \JsonSerializable
      *
      * @required
      * @maps created_at
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setCreatedAt(string $createdAt): void
+    public function setCreatedAt(\DateTime $createdAt): void
     {
         $this->createdAt = $createdAt;
     }
@@ -219,7 +221,7 @@ class Event implements \JsonSerializable
         $json['message']             = $this->message;
         $json['subscription_id']     = $this->subscriptionId;
         $json['customer_id']         = $this->customerId;
-        $json['created_at']          = $this->createdAt;
+        $json['created_at']          = DateTimeHelper::toRfc3339DateTime($this->createdAt);
         $json['event_specific_data'] =
             ApiHelper::getJsonHelper()->verifyTypes(
                 $this->eventSpecificData,

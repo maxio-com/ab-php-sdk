@@ -227,7 +227,7 @@ class CreateSubscription implements \JsonSerializable
     private $importMrr;
 
     /**
-     * @var string|null
+     * @var \DateTime|null
      */
     private $canceledAt;
 
@@ -1234,7 +1234,7 @@ class CreateSubscription implements \JsonSerializable
     /**
      * Returns Canceled At.
      */
-    public function getCanceledAt(): ?string
+    public function getCanceledAt(): ?\DateTime
     {
         return $this->canceledAt;
     }
@@ -1243,8 +1243,9 @@ class CreateSubscription implements \JsonSerializable
      * Sets Canceled At.
      *
      * @maps canceled_at
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setCanceledAt(?string $canceledAt): void
+    public function setCanceledAt(?\DateTime $canceledAt): void
     {
         $this->canceledAt = $canceledAt;
     }
@@ -1549,7 +1550,7 @@ class CreateSubscription implements \JsonSerializable
             $json['import_mrr']                            = $this->importMrr;
         }
         if (isset($this->canceledAt)) {
-            $json['canceled_at']                           = $this->canceledAt;
+            $json['canceled_at']                           = DateTimeHelper::toRfc3339DateTime($this->canceledAt);
         }
         if (isset($this->activatedAt)) {
             $json['activated_at']                          = DateTimeHelper::toRfc3339DateTime($this->activatedAt);

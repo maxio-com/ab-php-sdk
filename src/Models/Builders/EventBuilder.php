@@ -33,7 +33,7 @@ class EventBuilder
     /**
      * Initializes a new event Builder object.
      */
-    public static function init(int $id, string $key, string $message, int $customerId, string $createdAt): self
+    public static function init(int $id, string $key, string $message, int $customerId, \DateTime $createdAt): self
     {
         return new self(new Event($id, $key, $message, $customerId, $createdAt));
     }

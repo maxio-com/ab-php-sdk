@@ -41,7 +41,7 @@ class InvoicePrePaymentBuilder
     /**
      * Sets subscription id field.
      */
-    public function subscriptionId(?string $value): self
+    public function subscriptionId(?int $value): self
     {
         $this->instance->setSubscriptionId($value);
         return $this;
@@ -50,7 +50,7 @@ class InvoicePrePaymentBuilder
     /**
      * Sets amount in cents field.
      */
-    public function amountInCents(?string $value): self
+    public function amountInCents(?int $value): self
     {
         $this->instance->setAmountInCents($value);
         return $this;
@@ -59,7 +59,7 @@ class InvoicePrePaymentBuilder
     /**
      * Sets ending balance in cents field.
      */
-    public function endingBalanceInCents(?string $value): self
+    public function endingBalanceInCents(?int $value): self
     {
         $this->instance->setEndingBalanceInCents($value);
         return $this;

@@ -41,7 +41,7 @@ class ChargifyEBBBuilder
     /**
      * Sets timestamp field.
      */
-    public function timestamp(?string $value): self
+    public function timestamp(?\DateTime $value): self
     {
         $this->instance->setTimestamp($value);
         return $this;
@@ -59,7 +59,7 @@ class ChargifyEBBBuilder
     /**
      * Sets created at field.
      */
-    public function createdAt(?string $value): self
+    public function createdAt(?\DateTime $value): self
     {
         $this->instance->setCreatedAt($value);
         return $this;

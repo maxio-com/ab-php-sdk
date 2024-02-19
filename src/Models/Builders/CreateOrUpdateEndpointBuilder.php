@@ -10,38 +10,38 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models\Builders;
 
-use AdvancedBillingLib\Models\UpdateEndpoint;
+use AdvancedBillingLib\Models\CreateOrUpdateEndpoint;
 use Core\Utils\CoreHelper;
 
 /**
- * Builder for model UpdateEndpoint
+ * Builder for model CreateOrUpdateEndpoint
  *
- * @see UpdateEndpoint
+ * @see CreateOrUpdateEndpoint
  */
-class UpdateEndpointBuilder
+class CreateOrUpdateEndpointBuilder
 {
     /**
-     * @var UpdateEndpoint
+     * @var CreateOrUpdateEndpoint
      */
     private $instance;
 
-    private function __construct(UpdateEndpoint $instance)
+    private function __construct(CreateOrUpdateEndpoint $instance)
     {
         $this->instance = $instance;
     }
 
     /**
-     * Initializes a new update endpoint Builder object.
+     * Initializes a new create or update endpoint Builder object.
      */
     public static function init(string $url, array $webhookSubscriptions): self
     {
-        return new self(new UpdateEndpoint($url, $webhookSubscriptions));
+        return new self(new CreateOrUpdateEndpoint($url, $webhookSubscriptions));
     }
 
     /**
-     * Initializes a new update endpoint object.
+     * Initializes a new create or update endpoint object.
      */
-    public function build(): UpdateEndpoint
+    public function build(): CreateOrUpdateEndpoint
     {
         return CoreHelper::clone($this->instance);
     }

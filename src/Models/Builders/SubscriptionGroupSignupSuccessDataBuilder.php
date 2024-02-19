@@ -40,7 +40,7 @@ class SubscriptionGroupSignupSuccessDataBuilder
         int $paymentProfileId,
         array $subscriptionIds,
         int $primarySubscriptionId,
-        string $nextAssessmentAt,
+        \DateTime $nextAssessmentAt,
         string $state,
         bool $cancelAtEndOfPeriod
     ): self {

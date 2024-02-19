@@ -16,7 +16,7 @@
 | `nextProductId` | `?string` | Optional | Set to an empty string to cancel a delayed product change. | getNextProductId(): ?string | setNextProductId(?string nextProductId): void |
 | `nextProductPricePointId` | `?string` | Optional | - | getNextProductPricePointId(): ?string | setNextProductPricePointId(?string nextProductPricePointId): void |
 | `snapDay` | string([SnapDay](../../doc/models/snap-day.md))\|int\|null | Optional | This is a container for one-of cases. | getSnapDay(): | setSnapDay( snapDay): void |
-| `nextBillingAt` | `?string` | Optional | - | getNextBillingAt(): ?string | setNextBillingAt(?string nextBillingAt): void |
+| `nextBillingAt` | `?DateTime` | Optional | - | getNextBillingAt(): ?\DateTime | setNextBillingAt(?\DateTime nextBillingAt): void |
 | `paymentCollectionMethod` | `?string` | Optional | - | getPaymentCollectionMethod(): ?string | setPaymentCollectionMethod(?string paymentCollectionMethod): void |
 | `receivesInvoiceEmails` | `?bool` | Optional | - | getReceivesInvoiceEmails(): ?bool | setReceivesInvoiceEmails(?bool receivesInvoiceEmails): void |
 | `netTerms` | string\|int\|null | Optional | This is a container for one-of cases. | getNetTerms(): | setNetTerms( netTerms): void |

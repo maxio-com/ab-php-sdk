@@ -38,7 +38,7 @@ class CreditAccountBalanceChangedBuilder
         int $serviceCreditAccountBalanceInCents,
         int $serviceCreditBalanceChangeInCents,
         string $currencyCode,
-        string $atTime
+        \DateTime $atTime
     ): self {
         return new self(new CreditAccountBalanceChanged(
             $reason,

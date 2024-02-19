@@ -54,7 +54,7 @@ class EventsBasedBillingSegmentsController extends BaseController
             RequestMethod::POST,
             '/components/{component_id}/price_points/{price_point_id}/segments.json'
         )
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('component_id', $componentId)->required(),
                 TemplateParam::init('price_point_id', $pricePointId)->required(),
@@ -98,7 +98,7 @@ class EventsBasedBillingSegmentsController extends BaseController
             RequestMethod::GET,
             '/components/{component_id}/price_points/{price_point_id}/segments.json'
         )
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('component_id', $options)->extract('componentId')->required(),
                 TemplateParam::init('price_point_id', $options)->extract('pricePointId')->required(),
@@ -158,7 +158,7 @@ class EventsBasedBillingSegmentsController extends BaseController
             RequestMethod::PUT,
             '/components/{component_id}/price_points/{price_point_id}/segments/{id}.json'
         )
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('component_id', $componentId)->required(),
                 TemplateParam::init('price_point_id', $pricePointId)->required(),
@@ -201,7 +201,7 @@ class EventsBasedBillingSegmentsController extends BaseController
             RequestMethod::DELETE,
             '/components/{component_id}/price_points/{price_point_id}/segments/{id}.json'
         )
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('component_id', $componentId)->required(),
                 TemplateParam::init('price_point_id', $pricePointId)->required(),
@@ -248,7 +248,7 @@ class EventsBasedBillingSegmentsController extends BaseController
             RequestMethod::POST,
             '/components/{component_id}/price_points/{price_point_id}/segments/bulk.json'
         )
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('component_id', $componentId)->required(),
                 TemplateParam::init('price_point_id', $pricePointId)->required(),
@@ -298,7 +298,7 @@ class EventsBasedBillingSegmentsController extends BaseController
             RequestMethod::PUT,
             '/components/{component_id}/price_points/{price_point_id}/segments/bulk.json'
         )
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('component_id', $componentId)->required(),
                 TemplateParam::init('price_point_id', $pricePointId)->required(),

@@ -43,7 +43,7 @@ class SitesController extends BaseController
      */
     public function readSite(): SiteResponse
     {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/site.json')->auth('global');
+        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/site.json')->auth('BasicAuth');
 
         $_resHandler = $this->responseHandler()->type(SiteResponse::class);
 
@@ -73,7 +73,7 @@ class SitesController extends BaseController
     public function clearSite(?string $cleanupScope = CleanupScope::ALL): void
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/sites/clear_data.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(QueryParam::init('cleanup_scope', $cleanupScope)
                 ->commaSeparated()
                 ->serializeBy([CleanupScope::class, 'checkValue']));
@@ -93,7 +93,7 @@ class SitesController extends BaseController
     public function listChargifyJsPublicKeys(array $options): ListPublicKeysResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/chargify_js_keys.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 QueryParam::init('page', $options)->commaSeparated()->extract('page', 1),
                 QueryParam::init('per_page', $options)->commaSeparated()->extract('perPage', 20)

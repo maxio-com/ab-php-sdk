@@ -853,7 +853,7 @@ class Component implements \JsonSerializable
      * Returns Archived At.
      * Timestamp indicating when this component was archived
      */
-    public function getArchivedAt(): ?string
+    public function getArchivedAt(): ?\DateTime
     {
         if (count($this->archivedAt) == 0) {
             return null;
@@ -866,8 +866,9 @@ class Component implements \JsonSerializable
      * Timestamp indicating when this component was archived
      *
      * @maps archived_at
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setArchivedAt(?string $archivedAt): void
+    public function setArchivedAt(?\DateTime $archivedAt): void
     {
         $this->archivedAt['value'] = $archivedAt;
     }
@@ -1179,7 +1180,7 @@ class Component implements \JsonSerializable
             $json['updated_at']                    = DateTimeHelper::toRfc3339DateTime($this->updatedAt);
         }
         if (!empty($this->archivedAt)) {
-            $json['archived_at']                   = $this->archivedAt['value'];
+            $json['archived_at']                   = DateTimeHelper::toRfc3339DateTime($this->archivedAt['value']);
         }
         if (isset($this->hideDateRangeOnInvoice)) {
             $json['hide_date_range_on_invoice']    = $this->hideDateRangeOnInvoice;

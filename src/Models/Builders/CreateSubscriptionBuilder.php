@@ -428,7 +428,7 @@ class CreateSubscriptionBuilder
     /**
      * Sets canceled at field.
      */
-    public function canceledAt(?string $value): self
+    public function canceledAt(?\DateTime $value): self
     {
         $this->instance->setCanceledAt($value);
         return $this;

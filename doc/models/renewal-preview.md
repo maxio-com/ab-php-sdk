@@ -9,7 +9,7 @@
 
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
-| `nextAssessmentAt` | `?string` | Optional | The timestamp for the subscription’s next renewal | getNextAssessmentAt(): ?string | setNextAssessmentAt(?string nextAssessmentAt): void |
+| `nextAssessmentAt` | `?DateTime` | Optional | The timestamp for the subscription’s next renewal | getNextAssessmentAt(): ?\DateTime | setNextAssessmentAt(?\DateTime nextAssessmentAt): void |
 | `subtotalInCents` | `?int` | Optional | An integer representing the amount of the total pre-tax, pre-discount charges that will be assessed at the next renewal | getSubtotalInCents(): ?int | setSubtotalInCents(?int subtotalInCents): void |
 | `totalTaxInCents` | `?int` | Optional | An integer representing the total tax charges that will be assessed at the next renewal | getTotalTaxInCents(): ?int | setTotalTaxInCents(?int totalTaxInCents): void |
 | `totalDiscountInCents` | `?int` | Optional | An integer representing the amount of the coupon discounts that will be applied to the next renewal | getTotalDiscountInCents(): ?int | setTotalDiscountInCents(?int totalDiscountInCents): void |
@@ -23,7 +23,7 @@
 
 ```json
 {
-  "next_assessment_at": "next_assessment_at0",
+  "next_assessment_at": "2016-03-13T12:52:32.123Z",
   "subtotal_in_cents": 160,
   "total_tax_in_cents": 28,
   "total_discount_in_cents": 34,

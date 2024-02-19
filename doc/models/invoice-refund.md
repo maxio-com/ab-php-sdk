@@ -15,6 +15,8 @@
 | `originalAmount` | `?string` | Optional | - | getOriginalAmount(): ?string | setOriginalAmount(?string originalAmount): void |
 | `appliedAmount` | `?string` | Optional | - | getAppliedAmount(): ?string | setAppliedAmount(?string appliedAmount): void |
 | `gatewayTransactionId` | `?string` | Optional | The transaction ID for the refund as returned from the payment gateway | getGatewayTransactionId(): ?string | setGatewayTransactionId(?string gatewayTransactionId): void |
+| `gatewayUsed` | `?string` | Optional | - | getGatewayUsed(): ?string | setGatewayUsed(?string gatewayUsed): void |
+| `gatewayHandle` | `?string` | Optional | - | getGatewayHandle(): ?string | setGatewayHandle(?string gatewayHandle): void |
 
 ## Example (as JSON)
 

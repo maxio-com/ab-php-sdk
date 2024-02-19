@@ -19,12 +19,14 @@
 | `taxAmount` | `?string` | Optional | The approximate tax of just this line.<br><br>The value is approximated in cases where rounding errors make it difficult to apportion exactly a total tax among many lines. Several lines may have been summed prior to applying the tax rate to arrive at `tax_amount` for the invoice - backing that out to the tax on a single line may introduce rounding or precision errors. | getTaxAmount(): ?string | setTaxAmount(?string taxAmount): void |
 | `totalAmount` | `?string` | Optional | The non-canonical total amount for the line.<br><br>`subtotal_amount` is the canonical amount for a line. The invoice `total_amount` is derived from the sum of the line `subtotal_amount`s and discounts or taxes applied thereafter.  Therefore, due to rounding or precision errors, the sum of line `total_amount`s may not equal the invoice `total_amount`. | getTotalAmount(): ?string | setTotalAmount(?string totalAmount): void |
 | `tieredUnitPrice` | `?bool` | Optional | When `true`, indicates that the actual pricing scheme for the line was tiered, so the `unit_price` shown is the blended average for all units. | getTieredUnitPrice(): ?bool | setTieredUnitPrice(?bool tieredUnitPrice): void |
-| `periodRangeStart` | `?string` | Optional | Start date for the period credited by this line. The format is `"YYYY-MM-DD"`. | getPeriodRangeStart(): ?string | setPeriodRangeStart(?string periodRangeStart): void |
-| `periodRangeEnd` | `?string` | Optional | End date for the period credited by this line. The format is `"YYYY-MM-DD"`. | getPeriodRangeEnd(): ?string | setPeriodRangeEnd(?string periodRangeEnd): void |
+| `periodRangeStart` | `?DateTime` | Optional | Start date for the period credited by this line. The format is `"YYYY-MM-DD"`. | getPeriodRangeStart(): ?\DateTime | setPeriodRangeStart(?\DateTime periodRangeStart): void |
+| `periodRangeEnd` | `?DateTime` | Optional | End date for the period credited by this line. The format is `"YYYY-MM-DD"`. | getPeriodRangeEnd(): ?\DateTime | setPeriodRangeEnd(?\DateTime periodRangeEnd): void |
 | `productId` | `?int` | Optional | The ID of the product being credited.<br><br>This may be set even for component credits, so true product-only (non-component) credits will also have a nil `component_id`. | getProductId(): ?int | setProductId(?int productId): void |
 | `productVersion` | `?int` | Optional | The version of the product being credited. | getProductVersion(): ?int | setProductVersion(?int productVersion): void |
 | `componentId` | `?int` | Optional | The ID of the component being credited. Will be `nil` for non-component credits. | getComponentId(): ?int | setComponentId(?int componentId): void |
 | `pricePointId` | `?int` | Optional | The price point ID of the component being credited. Will be `nil` for non-component credits. | getPricePointId(): ?int | setPricePointId(?int pricePointId): void |
+| `billingScheduleItemId` | `?int` | Optional | - | getBillingScheduleItemId(): ?int | setBillingScheduleItemId(?int billingScheduleItemId): void |
+| `customItem` | `?bool` | Optional | - | getCustomItem(): ?bool | setCustomItem(?bool customItem): void |
 
 ## Example (as JSON)
 

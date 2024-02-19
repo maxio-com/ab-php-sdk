@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace AdvancedBillingLib\Models;
 
 use AdvancedBillingLib\ApiHelper;
+use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
 class UpdateSubscription implements \JsonSerializable
@@ -51,7 +52,7 @@ class UpdateSubscription implements \JsonSerializable
     private $snapDay;
 
     /**
-     * @var string|null
+     * @var \DateTime|null
      */
     private $nextBillingAt;
 
@@ -243,7 +244,7 @@ class UpdateSubscription implements \JsonSerializable
     /**
      * Returns Next Billing At.
      */
-    public function getNextBillingAt(): ?string
+    public function getNextBillingAt(): ?\DateTime
     {
         return $this->nextBillingAt;
     }
@@ -252,8 +253,9 @@ class UpdateSubscription implements \JsonSerializable
      * Sets Next Billing At.
      *
      * @maps next_billing_at
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setNextBillingAt(?string $nextBillingAt): void
+    public function setNextBillingAt(?\DateTime $nextBillingAt): void
     {
         $this->nextBillingAt = $nextBillingAt;
     }
@@ -510,7 +512,7 @@ class UpdateSubscription implements \JsonSerializable
                 );
         }
         if (isset($this->nextBillingAt)) {
-            $json['next_billing_at']                       = $this->nextBillingAt;
+            $json['next_billing_at']                       = DateTimeHelper::toRfc3339DateTime($this->nextBillingAt);
         }
         if (isset($this->paymentCollectionMethod)) {
             $json['payment_collection_method']             = $this->paymentCollectionMethod;

@@ -12,8 +12,8 @@
 | `uid` | `string` | Required | - | getUid(): string | setUid(string uid): void |
 | `number` | `string` | Required | - | getNumber(): string | setNumber(string number): void |
 | `role` | `string` | Required | - | getRole(): string | setRole(string role): void |
-| `deliveryDate` | `string` | Required | - | getDeliveryDate(): string | setDeliveryDate(string deliveryDate): void |
-| `createdAt` | `string` | Required | - | getCreatedAt(): string | setCreatedAt(string createdAt): void |
+| `deliveryDate` | `DateTime` | Required | - | getDeliveryDate(): \DateTime | setDeliveryDate(\DateTime deliveryDate): void |
+| `createdAt` | `DateTime` | Required | - | getCreatedAt(): \DateTime | setCreatedAt(\DateTime createdAt): void |
 | `dueAmount` | `string` | Required | - | getDueAmount(): string | setDueAmount(string dueAmount): void |
 | `paidAmount` | `string` | Required | - | getPaidAmount(): string | setPaidAmount(string paidAmount): void |
 | `taxAmount` | `string` | Required | - | getTaxAmount(): string | setTaxAmount(string taxAmount): void |
@@ -28,8 +28,8 @@
   "uid": "uid0",
   "number": "number2",
   "role": "role6",
-  "delivery_date": "delivery_date0",
-  "created_at": "created_at8",
+  "delivery_date": "2016-03-13",
+  "created_at": "2016-03-13T12:52:32.123Z",
   "due_amount": "due_amount2",
   "paid_amount": "paid_amount8",
   "tax_amount": "tax_amount6",

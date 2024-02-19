@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
 class CreatedPrepayment implements \JsonSerializable
@@ -35,7 +36,7 @@ class CreatedPrepayment implements \JsonSerializable
     private $memo;
 
     /**
-     * @var string|null
+     * @var \DateTime|null
      */
     private $createdAt;
 
@@ -124,7 +125,7 @@ class CreatedPrepayment implements \JsonSerializable
     /**
      * Returns Created At.
      */
-    public function getCreatedAt(): ?string
+    public function getCreatedAt(): ?\DateTime
     {
         return $this->createdAt;
     }
@@ -133,8 +134,9 @@ class CreatedPrepayment implements \JsonSerializable
      * Sets Created At.
      *
      * @maps created_at
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setCreatedAt(?string $createdAt): void
+    public function setCreatedAt(?\DateTime $createdAt): void
     {
         $this->createdAt = $createdAt;
     }
@@ -200,7 +202,7 @@ class CreatedPrepayment implements \JsonSerializable
             $json['memo']                      = $this->memo;
         }
         if (isset($this->createdAt)) {
-            $json['created_at']                = $this->createdAt;
+            $json['created_at']                = DateTimeHelper::toRfc3339DateTime($this->createdAt);
         }
         if (isset($this->startingBalanceInCents)) {
             $json['starting_balance_in_cents'] = $this->startingBalanceInCents;

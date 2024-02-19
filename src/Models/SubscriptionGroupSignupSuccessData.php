@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
 class SubscriptionGroupSignupSuccessData implements \JsonSerializable
@@ -45,7 +46,7 @@ class SubscriptionGroupSignupSuccessData implements \JsonSerializable
     private $primarySubscriptionId;
 
     /**
-     * @var string
+     * @var \DateTime
      */
     private $nextAssessmentAt;
 
@@ -66,7 +67,7 @@ class SubscriptionGroupSignupSuccessData implements \JsonSerializable
      * @param int $paymentProfileId
      * @param int[] $subscriptionIds
      * @param int $primarySubscriptionId
-     * @param string $nextAssessmentAt
+     * @param \DateTime $nextAssessmentAt
      * @param string $state
      * @param bool $cancelAtEndOfPeriod
      */
@@ -77,7 +78,7 @@ class SubscriptionGroupSignupSuccessData implements \JsonSerializable
         int $paymentProfileId,
         array $subscriptionIds,
         int $primarySubscriptionId,
-        string $nextAssessmentAt,
+        \DateTime $nextAssessmentAt,
         string $state,
         bool $cancelAtEndOfPeriod
     ) {
@@ -213,7 +214,7 @@ class SubscriptionGroupSignupSuccessData implements \JsonSerializable
     /**
      * Returns Next Assessment At.
      */
-    public function getNextAssessmentAt(): string
+    public function getNextAssessmentAt(): \DateTime
     {
         return $this->nextAssessmentAt;
     }
@@ -223,8 +224,9 @@ class SubscriptionGroupSignupSuccessData implements \JsonSerializable
      *
      * @required
      * @maps next_assessment_at
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setNextAssessmentAt(string $nextAssessmentAt): void
+    public function setNextAssessmentAt(\DateTime $nextAssessmentAt): void
     {
         $this->nextAssessmentAt = $nextAssessmentAt;
     }
@@ -285,7 +287,7 @@ class SubscriptionGroupSignupSuccessData implements \JsonSerializable
         $json['payment_profile_id']      = $this->paymentProfileId;
         $json['subscription_ids']        = $this->subscriptionIds;
         $json['primary_subscription_id'] = $this->primarySubscriptionId;
-        $json['next_assessment_at']      = $this->nextAssessmentAt;
+        $json['next_assessment_at']      = DateTimeHelper::toRfc3339DateTime($this->nextAssessmentAt);
         $json['state']                   = $this->state;
         $json['cancel_at_end_of_period'] = $this->cancelAtEndOfPeriod;
 

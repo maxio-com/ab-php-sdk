@@ -18,6 +18,7 @@ use AdvancedBillingLib\Tests\TestData\CustomerTestData;
 use AdvancedBillingLib\Tests\TestFactory\TestCustomerFactory;
 use AdvancedBillingLib\Tests\TestFactory\TestCustomerRequestFactory;
 use AdvancedBillingLib\Tests\TestFactory\TestCustomerResponseFactory;
+use DateTime;
 
 final class CustomersControllerTestData
 {
@@ -34,7 +35,7 @@ final class CustomersControllerTestData
     {
     }
 
-    public function getExpectedCustomer(int $id, string $createdAt, string $updatedAt): Customer
+    public function getExpectedCustomer(int $id, DateTime $createdAt, DateTime $updatedAt): Customer
     {
         return $this->customerFactory->create($id, $createdAt, $updatedAt);
     }

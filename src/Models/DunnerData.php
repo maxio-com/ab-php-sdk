@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
 class DunnerData implements \JsonSerializable
@@ -30,7 +31,7 @@ class DunnerData implements \JsonSerializable
     private $revenueAtRiskInCents;
 
     /**
-     * @var string
+     * @var \DateTime
      */
     private $createdAt;
 
@@ -40,7 +41,7 @@ class DunnerData implements \JsonSerializable
     private $attempts;
 
     /**
-     * @var string
+     * @var \DateTime
      */
     private $lastAttemptedAt;
 
@@ -48,17 +49,17 @@ class DunnerData implements \JsonSerializable
      * @param string $state
      * @param int $subscriptionId
      * @param int $revenueAtRiskInCents
-     * @param string $createdAt
+     * @param \DateTime $createdAt
      * @param int $attempts
-     * @param string $lastAttemptedAt
+     * @param \DateTime $lastAttemptedAt
      */
     public function __construct(
         string $state,
         int $subscriptionId,
         int $revenueAtRiskInCents,
-        string $createdAt,
+        \DateTime $createdAt,
         int $attempts,
-        string $lastAttemptedAt
+        \DateTime $lastAttemptedAt
     ) {
         $this->state = $state;
         $this->subscriptionId = $subscriptionId;
@@ -128,7 +129,7 @@ class DunnerData implements \JsonSerializable
     /**
      * Returns Created At.
      */
-    public function getCreatedAt(): string
+    public function getCreatedAt(): \DateTime
     {
         return $this->createdAt;
     }
@@ -138,8 +139,9 @@ class DunnerData implements \JsonSerializable
      *
      * @required
      * @maps created_at
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setCreatedAt(string $createdAt): void
+    public function setCreatedAt(\DateTime $createdAt): void
     {
         $this->createdAt = $createdAt;
     }
@@ -166,7 +168,7 @@ class DunnerData implements \JsonSerializable
     /**
      * Returns Last Attempted At.
      */
-    public function getLastAttemptedAt(): string
+    public function getLastAttemptedAt(): \DateTime
     {
         return $this->lastAttemptedAt;
     }
@@ -176,8 +178,9 @@ class DunnerData implements \JsonSerializable
      *
      * @required
      * @maps last_attempted_at
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setLastAttemptedAt(string $lastAttemptedAt): void
+    public function setLastAttemptedAt(\DateTime $lastAttemptedAt): void
     {
         $this->lastAttemptedAt = $lastAttemptedAt;
     }
@@ -197,9 +200,9 @@ class DunnerData implements \JsonSerializable
         $json['state']                    = $this->state;
         $json['subscription_id']          = $this->subscriptionId;
         $json['revenue_at_risk_in_cents'] = $this->revenueAtRiskInCents;
-        $json['created_at']               = $this->createdAt;
+        $json['created_at']               = DateTimeHelper::toRfc3339DateTime($this->createdAt);
         $json['attempts']                 = $this->attempts;
-        $json['last_attempted_at']        = $this->lastAttemptedAt;
+        $json['last_attempted_at']        = DateTimeHelper::toRfc3339DateTime($this->lastAttemptedAt);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
 class Customer implements \JsonSerializable
@@ -50,12 +51,12 @@ class Customer implements \JsonSerializable
     private $id;
 
     /**
-     * @var string|null
+     * @var \DateTime|null
      */
     private $createdAt;
 
     /**
-     * @var string|null
+     * @var \DateTime|null
      */
     private $updatedAt;
 
@@ -332,7 +333,7 @@ class Customer implements \JsonSerializable
      * Returns Created At.
      * The timestamp in which the customer object was created in Chargify
      */
-    public function getCreatedAt(): ?string
+    public function getCreatedAt(): ?\DateTime
     {
         return $this->createdAt;
     }
@@ -342,8 +343,9 @@ class Customer implements \JsonSerializable
      * The timestamp in which the customer object was created in Chargify
      *
      * @maps created_at
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setCreatedAt(?string $createdAt): void
+    public function setCreatedAt(?\DateTime $createdAt): void
     {
         $this->createdAt = $createdAt;
     }
@@ -352,7 +354,7 @@ class Customer implements \JsonSerializable
      * Returns Updated At.
      * The timestamp in which the customer object was last edited
      */
-    public function getUpdatedAt(): ?string
+    public function getUpdatedAt(): ?\DateTime
     {
         return $this->updatedAt;
     }
@@ -362,8 +364,9 @@ class Customer implements \JsonSerializable
      * The timestamp in which the customer object was last edited
      *
      * @maps updated_at
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setUpdatedAt(?string $updatedAt): void
+    public function setUpdatedAt(?\DateTime $updatedAt): void
     {
         $this->updatedAt = $updatedAt;
     }
@@ -692,7 +695,7 @@ class Customer implements \JsonSerializable
      * Returns Portal Customer Created At.
      * The timestamp of when the Billing Portal entry was created at for the customer
      */
-    public function getPortalCustomerCreatedAt(): ?string
+    public function getPortalCustomerCreatedAt(): ?\DateTime
     {
         if (count($this->portalCustomerCreatedAt) == 0) {
             return null;
@@ -705,8 +708,9 @@ class Customer implements \JsonSerializable
      * The timestamp of when the Billing Portal entry was created at for the customer
      *
      * @maps portal_customer_created_at
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setPortalCustomerCreatedAt(?string $portalCustomerCreatedAt): void
+    public function setPortalCustomerCreatedAt(?\DateTime $portalCustomerCreatedAt): void
     {
         $this->portalCustomerCreatedAt['value'] = $portalCustomerCreatedAt;
     }
@@ -724,7 +728,7 @@ class Customer implements \JsonSerializable
      * Returns Portal Invite Last Sent At.
      * The timestamp of when the Billing Portal invite was last sent at
      */
-    public function getPortalInviteLastSentAt(): ?string
+    public function getPortalInviteLastSentAt(): ?\DateTime
     {
         if (count($this->portalInviteLastSentAt) == 0) {
             return null;
@@ -737,8 +741,9 @@ class Customer implements \JsonSerializable
      * The timestamp of when the Billing Portal invite was last sent at
      *
      * @maps portal_invite_last_sent_at
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setPortalInviteLastSentAt(?string $portalInviteLastSentAt): void
+    public function setPortalInviteLastSentAt(?\DateTime $portalInviteLastSentAt): void
     {
         $this->portalInviteLastSentAt['value'] = $portalInviteLastSentAt;
     }
@@ -756,7 +761,7 @@ class Customer implements \JsonSerializable
      * Returns Portal Invite Last Accepted At.
      * The timestamp of when the Billing Portal invite was last accepted
      */
-    public function getPortalInviteLastAcceptedAt(): ?string
+    public function getPortalInviteLastAcceptedAt(): ?\DateTime
     {
         if (count($this->portalInviteLastAcceptedAt) == 0) {
             return null;
@@ -769,8 +774,9 @@ class Customer implements \JsonSerializable
      * The timestamp of when the Billing Portal invite was last accepted
      *
      * @maps portal_invite_last_accepted_at
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setPortalInviteLastAcceptedAt(?string $portalInviteLastAcceptedAt): void
+    public function setPortalInviteLastAcceptedAt(?\DateTime $portalInviteLastAcceptedAt): void
     {
         $this->portalInviteLastAcceptedAt['value'] = $portalInviteLastAcceptedAt;
     }
@@ -974,10 +980,10 @@ class Customer implements \JsonSerializable
             $json['id']                             = $this->id;
         }
         if (isset($this->createdAt)) {
-            $json['created_at']                     = $this->createdAt;
+            $json['created_at']                     = DateTimeHelper::toRfc3339DateTime($this->createdAt);
         }
         if (isset($this->updatedAt)) {
-            $json['updated_at']                     = $this->updatedAt;
+            $json['updated_at']                     = DateTimeHelper::toRfc3339DateTime($this->updatedAt);
         }
         if (!empty($this->address)) {
             $json['address']                        = $this->address['value'];
@@ -1010,13 +1016,22 @@ class Customer implements \JsonSerializable
             $json['verified']                       = $this->verified['value'];
         }
         if (!empty($this->portalCustomerCreatedAt)) {
-            $json['portal_customer_created_at']     = $this->portalCustomerCreatedAt['value'];
+            $json['portal_customer_created_at']     =
+                DateTimeHelper::toRfc3339DateTime(
+                    $this->portalCustomerCreatedAt['value']
+                );
         }
         if (!empty($this->portalInviteLastSentAt)) {
-            $json['portal_invite_last_sent_at']     = $this->portalInviteLastSentAt['value'];
+            $json['portal_invite_last_sent_at']     =
+                DateTimeHelper::toRfc3339DateTime(
+                    $this->portalInviteLastSentAt['value']
+                );
         }
         if (!empty($this->portalInviteLastAcceptedAt)) {
-            $json['portal_invite_last_accepted_at'] = $this->portalInviteLastAcceptedAt['value'];
+            $json['portal_invite_last_accepted_at'] =
+                DateTimeHelper::toRfc3339DateTime(
+                    $this->portalInviteLastAcceptedAt['value']
+                );
         }
         if (isset($this->taxExempt)) {
             $json['tax_exempt']                     = $this->taxExempt;

@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib;
 
+use AdvancedBillingLib\Authentication\BasicAuthCredentialsBuilder;
 use Core\Types\Sdk\CoreCallback;
 use Core\Utils\CoreHelper;
 
@@ -119,15 +120,9 @@ class AdvancedBillingClientBuilder
         return $this;
     }
 
-    public function basicAuthUserName(string $basicAuthUserName): self
+    public function basicAuthCredentials(BasicAuthCredentialsBuilder $basicAuth): self
     {
-        $this->config['basicAuthUserName'] = $basicAuthUserName;
-        return $this;
-    }
-
-    public function basicAuthPassword(string $basicAuthPassword): self
-    {
-        $this->config['basicAuthPassword'] = $basicAuthPassword;
+        $this->config = array_merge($this->config, $basicAuth->getConfiguration());
         return $this;
     }
 

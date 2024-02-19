@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
 class Metadata implements \JsonSerializable
@@ -152,7 +153,7 @@ class Metadata implements \JsonSerializable
     /**
      * Returns Deleted At.
      */
-    public function getDeletedAt(): ?string
+    public function getDeletedAt(): ?\DateTime
     {
         if (count($this->deletedAt) == 0) {
             return null;
@@ -164,8 +165,9 @@ class Metadata implements \JsonSerializable
      * Sets Deleted At.
      *
      * @maps deleted_at
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setDeletedAt(?string $deletedAt): void
+    public function setDeletedAt(?\DateTime $deletedAt): void
     {
         $this->deletedAt['value'] = $deletedAt;
     }
@@ -232,7 +234,7 @@ class Metadata implements \JsonSerializable
             $json['name']         = $this->name;
         }
         if (!empty($this->deletedAt)) {
-            $json['deleted_at']   = $this->deletedAt['value'];
+            $json['deleted_at']   = DateTimeHelper::toRfc3339DateTime($this->deletedAt['value']);
         }
         if (!empty($this->metafieldId)) {
             $json['metafield_id'] = $this->metafieldId['value'];

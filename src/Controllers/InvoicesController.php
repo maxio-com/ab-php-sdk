@@ -31,8 +31,8 @@ use AdvancedBillingLib\Models\ListCreditNotesResponse;
 use AdvancedBillingLib\Models\ListInvoiceEventsResponse;
 use AdvancedBillingLib\Models\ListInvoicesResponse;
 use AdvancedBillingLib\Models\MultiInvoicePaymentResponse;
-use AdvancedBillingLib\Models\PaymentResponse;
 use AdvancedBillingLib\Models\RecordPaymentRequest;
+use AdvancedBillingLib\Models\RecordPaymentResponse;
 use AdvancedBillingLib\Models\RefundInvoiceRequest;
 use AdvancedBillingLib\Models\SendInvoiceRequest;
 use AdvancedBillingLib\Models\VoidInvoiceRequest;
@@ -66,7 +66,7 @@ class InvoicesController extends BaseController
     public function refundInvoice(string $uid, ?RefundInvoiceRequest $body = null): Invoice
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/invoices/{uid}/refunds.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('uid', $uid)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -100,7 +100,7 @@ class InvoicesController extends BaseController
     public function listInvoices(array $options): ListInvoicesResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/invoices.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 QueryParam::init('start_date', $options)->commaSeparated()->extract('startDate'),
                 QueryParam::init('end_date', $options)->commaSeparated()->extract('endDate'),
@@ -158,7 +158,7 @@ class InvoicesController extends BaseController
     public function readInvoice(string $uid): Invoice
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/invoices/{uid}.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(TemplateParam::init('uid', $uid)->required());
 
         $_resHandler = $this->responseHandler()->type(Invoice::class);
@@ -203,7 +203,7 @@ class InvoicesController extends BaseController
     public function listInvoiceEvents(array $options): ListInvoiceEventsResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/invoices/events.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 QueryParam::init('since_date', $options)->commaSeparated()->extract('sinceDate'),
                 QueryParam::init('since_id', $options)->commaSeparated()->extract('sinceId'),
@@ -291,14 +291,22 @@ class InvoicesController extends BaseController
     public function recordPaymentForInvoice(string $uid, ?CreateInvoicePaymentRequest $body = null): Invoice
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/invoices/{uid}/payments.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('uid', $uid)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
                 BodyParam::init($body)
             );
 
-        $_resHandler = $this->responseHandler()->type(Invoice::class);
+        $_resHandler = $this->responseHandler()
+            ->throwErrorOn(
+                '422',
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
+            )
+            ->type(Invoice::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
     }
@@ -343,7 +351,7 @@ class InvoicesController extends BaseController
         ?CreateMultiInvoicePaymentRequest $body = null
     ): MultiInvoicePaymentResponse {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/invoices/payments.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(HeaderParam::init('Content-Type', 'application/json'), BodyParam::init($body));
 
         $_resHandler = $this->responseHandler()
@@ -375,7 +383,7 @@ class InvoicesController extends BaseController
     public function listCreditNotes(array $options): ListCreditNotesResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/credit_notes.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 QueryParam::init('subscription_id', $options)->commaSeparated()->extract('subscriptionId'),
                 QueryParam::init('page', $options)->commaSeparated()->extract('page', 1),
@@ -404,7 +412,7 @@ class InvoicesController extends BaseController
     public function readCreditNote(string $uid): CreditNote
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/credit_notes/{uid}.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(TemplateParam::init('uid', $uid)->required());
 
         $_resHandler = $this->responseHandler()->type(CreditNote::class);
@@ -426,16 +434,16 @@ class InvoicesController extends BaseController
      * @param int $subscriptionId The Chargify id of the subscription
      * @param RecordPaymentRequest|null $body
      *
-     * @return PaymentResponse Response from the API call
+     * @return RecordPaymentResponse Response from the API call
      *
      * @throws ApiException Thrown if API call fails
      */
     public function recordPaymentForSubscription(
         int $subscriptionId,
         ?RecordPaymentRequest $body = null
-    ): PaymentResponse {
+    ): RecordPaymentResponse {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/subscriptions/{subscription_id}/payments.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -450,7 +458,7 @@ class InvoicesController extends BaseController
                     ErrorListResponseException::class
                 )
             )
-            ->type(PaymentResponse::class);
+            ->type(RecordPaymentResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
     }
@@ -486,7 +494,7 @@ class InvoicesController extends BaseController
     public function reopenInvoice(string $uid): Invoice
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/invoices/{uid}/reopen.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(TemplateParam::init('uid', $uid)->required());
 
         $_resHandler = $this->responseHandler()
@@ -518,7 +526,7 @@ class InvoicesController extends BaseController
     public function voidInvoice(string $uid, ?VoidInvoiceRequest $body = null): Invoice
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/invoices/{uid}/void.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('uid', $uid)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -552,7 +560,7 @@ class InvoicesController extends BaseController
     public function listConsolidatedInvoiceSegments(array $options): ConsolidatedInvoice
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/invoices/{invoice_uid}/segments.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('invoice_uid', $options)->extract('invoiceUid')->required(),
                 QueryParam::init('page', $options)->commaSeparated()->extract('page', 1),
@@ -759,7 +767,7 @@ class InvoicesController extends BaseController
     public function createInvoice(int $subscriptionId, ?CreateInvoiceRequest $body = null): InvoiceResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/subscriptions/{subscription_id}/invoices.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -805,7 +813,7 @@ class InvoicesController extends BaseController
     public function sendInvoice(string $uid, ?SendInvoiceRequest $body = null): void
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/invoices/{uid}/deliveries.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('uid', $uid)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -844,7 +852,7 @@ class InvoicesController extends BaseController
         $_reqBuilder = $this->requestBuilder(
             RequestMethod::POST,
             '/invoices/{uid}/customer_information/preview.json'
-        )->auth('global')->parameters(TemplateParam::init('uid', $uid)->required());
+        )->auth('BasicAuth')->parameters(TemplateParam::init('uid', $uid)->required());
 
         $_resHandler = $this->responseHandler()
             ->throwErrorOn(
@@ -884,7 +892,7 @@ class InvoicesController extends BaseController
     public function updateCustomerInformation(string $uid): Invoice
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::PUT, '/invoices/{uid}/customer_information.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(TemplateParam::init('uid', $uid)->required());
 
         $_resHandler = $this->responseHandler()
@@ -944,7 +952,7 @@ class InvoicesController extends BaseController
     public function issueInvoice(string $uid, ?IssueInvoiceRequest $body = null): Invoice
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/invoices/{uid}/issue.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('uid', $uid)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),

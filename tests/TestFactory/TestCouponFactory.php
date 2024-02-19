@@ -7,6 +7,7 @@ namespace AdvancedBillingLib\Tests\TestFactory;
 use AdvancedBillingLib\Models\Builders\CouponBuilder;
 use AdvancedBillingLib\Models\Coupon;
 use AdvancedBillingLib\Tests\TestData\CouponTestData;
+use DateTime;
 
 final class TestCouponFactory
 {
@@ -14,9 +15,9 @@ final class TestCouponFactory
         int $id,
         int $productFamilyId,
         string $productFamilyName,
-        string $createdAt,
-        string $updatedAt,
-        string $startDate
+        DateTime $createdAt,
+        DateTime $updatedAt,
+        DateTime $startDate
     ): Coupon
     {
         return CouponBuilder::init()

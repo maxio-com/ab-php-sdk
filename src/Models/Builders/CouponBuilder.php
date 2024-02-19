@@ -140,7 +140,7 @@ class CouponBuilder
     /**
      * Sets start date field.
      */
-    public function startDate(?string $value): self
+    public function startDate(?\DateTime $value): self
     {
         $this->instance->setStartDate($value);
         return $this;
@@ -149,7 +149,7 @@ class CouponBuilder
     /**
      * Sets end date field.
      */
-    public function endDate(?string $value): self
+    public function endDate(?\DateTime $value): self
     {
         $this->instance->setEndDate($value);
         return $this;
@@ -284,7 +284,7 @@ class CouponBuilder
     /**
      * Sets archived at field.
      */
-    public function archivedAt(?string $value): self
+    public function archivedAt(?\DateTime $value): self
     {
         $this->instance->setArchivedAt($value);
         return $this;
@@ -347,7 +347,7 @@ class CouponBuilder
     /**
      * Sets created at field.
      */
-    public function createdAt(?string $value): self
+    public function createdAt(?\DateTime $value): self
     {
         $this->instance->setCreatedAt($value);
         return $this;
@@ -356,7 +356,7 @@ class CouponBuilder
     /**
      * Sets updated at field.
      */
-    public function updatedAt(?string $value): self
+    public function updatedAt(?\DateTime $value): self
     {
         $this->instance->setUpdatedAt($value);
         return $this;

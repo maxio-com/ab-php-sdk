@@ -67,7 +67,7 @@ class CouponsController extends BaseController
             RequestMethod::POST,
             '/product_families/{product_family_id}/coupons.json'
         )
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('product_family_id', $productFamilyId)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -106,7 +106,7 @@ class CouponsController extends BaseController
             RequestMethod::GET,
             '/product_families/{product_family_id}/coupons.json'
         )
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('product_family_id', $options)->extract('productFamilyId')->required(),
                 QueryParam::init('page', $options)->commaSeparated()->extract('page', 1),
@@ -163,7 +163,7 @@ class CouponsController extends BaseController
     public function findCoupon(?int $productFamilyId = null, ?string $code = null): CouponResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/coupons/find.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 QueryParam::init('product_family_id', $productFamilyId)->commaSeparated(),
                 QueryParam::init('code', $code)->commaSeparated()
@@ -200,7 +200,7 @@ class CouponsController extends BaseController
             RequestMethod::GET,
             '/product_families/{product_family_id}/coupons/{coupon_id}.json'
         )
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('product_family_id', $productFamilyId)->required(),
                 TemplateParam::init('coupon_id', $couponId)->required()
@@ -237,7 +237,7 @@ class CouponsController extends BaseController
             RequestMethod::PUT,
             '/product_families/{product_family_id}/coupons/{coupon_id}.json'
         )
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('product_family_id', $productFamilyId)->required(),
                 TemplateParam::init('coupon_id', $couponId)->required(),
@@ -269,7 +269,7 @@ class CouponsController extends BaseController
             RequestMethod::DELETE,
             '/product_families/{product_family_id}/coupons/{coupon_id}.json'
         )
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('product_family_id', $productFamilyId)->required(),
                 TemplateParam::init('coupon_id', $couponId)->required()
@@ -296,7 +296,7 @@ class CouponsController extends BaseController
     public function listCoupons(array $options): array
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/coupons.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 QueryParam::init('page', $options)->commaSeparated()->extract('page', 1),
                 QueryParam::init('per_page', $options)->commaSeparated()->extract('perPage', 30),
@@ -369,7 +369,7 @@ class CouponsController extends BaseController
             RequestMethod::GET,
             '/product_families/{product_family_id}/coupons/{coupon_id}/usage.json'
         )
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('product_family_id', $productFamilyId)->required(),
                 TemplateParam::init('coupon_id', $couponId)->required()
@@ -423,7 +423,7 @@ class CouponsController extends BaseController
     public function validateCoupon(string $code, ?int $productFamilyId = null): CouponResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/coupons/validate.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 QueryParam::init('code', $code)->commaSeparated()->required(),
                 QueryParam::init('product_family_id', $productFamilyId)->commaSeparated()
@@ -456,7 +456,7 @@ class CouponsController extends BaseController
         ?CouponCurrencyRequest $body = null
     ): CouponCurrencyResponse {
         $_reqBuilder = $this->requestBuilder(RequestMethod::PUT, '/coupons/{coupon_id}/currency_prices.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('coupon_id', $couponId)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -528,7 +528,7 @@ class CouponsController extends BaseController
     public function createCouponSubcodes(int $couponId, ?CouponSubcodes $body = null): CouponSubcodesResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/coupons/{coupon_id}/codes.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('coupon_id', $couponId)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -552,7 +552,7 @@ class CouponsController extends BaseController
     public function listCouponSubcodes(array $options): CouponSubcodes
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/coupons/{coupon_id}/codes.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('coupon_id', $options)->extract('couponId')->required(),
                 QueryParam::init('page', $options)->commaSeparated()->extract('page', 1),
@@ -589,7 +589,7 @@ class CouponsController extends BaseController
     public function updateCouponSubcodes(int $couponId, ?CouponSubcodes $body = null): CouponSubcodesResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::PUT, '/coupons/{coupon_id}/codes.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('coupon_id', $couponId)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -638,7 +638,7 @@ class CouponsController extends BaseController
     public function deleteCouponSubcode(int $couponId, string $subcode): void
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::DELETE, '/coupons/{coupon_id}/codes/{subcode}.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('coupon_id', $couponId)->required(),
                 TemplateParam::init('subcode', $subcode)->required()

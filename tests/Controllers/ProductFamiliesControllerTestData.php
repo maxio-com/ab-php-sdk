@@ -8,6 +8,7 @@ use AdvancedBillingLib\Models\CreateProductFamilyRequest;
 use AdvancedBillingLib\Models\ProductFamily;
 use AdvancedBillingLib\Tests\TestFactory\TestProductFamilyFactory;
 use AdvancedBillingLib\Tests\TestFactory\TestProductFamilyRequestFactory;
+use DateTime;
 
 final class ProductFamiliesControllerTestData
 {
@@ -25,8 +26,8 @@ final class ProductFamiliesControllerTestData
 
     public function createExpectedProductFamilyOne(
         int $id,
-        string $createdAt,
-        string $updatedAt,
+        DateTime $createdAt,
+        DateTime $updatedAt,
     ): ProductFamily
     {
         return $this->productFamilyFactory->create(

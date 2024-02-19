@@ -131,7 +131,7 @@ class CustomerBuilder
     /**
      * Sets created at field.
      */
-    public function createdAt(?string $value): self
+    public function createdAt(?\DateTime $value): self
     {
         $this->instance->setCreatedAt($value);
         return $this;
@@ -140,7 +140,7 @@ class CustomerBuilder
     /**
      * Sets updated at field.
      */
-    public function updatedAt(?string $value): self
+    public function updatedAt(?\DateTime $value): self
     {
         $this->instance->setUpdatedAt($value);
         return $this;
@@ -329,7 +329,7 @@ class CustomerBuilder
     /**
      * Sets portal customer created at field.
      */
-    public function portalCustomerCreatedAt(?string $value): self
+    public function portalCustomerCreatedAt(?\DateTime $value): self
     {
         $this->instance->setPortalCustomerCreatedAt($value);
         return $this;
@@ -347,7 +347,7 @@ class CustomerBuilder
     /**
      * Sets portal invite last sent at field.
      */
-    public function portalInviteLastSentAt(?string $value): self
+    public function portalInviteLastSentAt(?\DateTime $value): self
     {
         $this->instance->setPortalInviteLastSentAt($value);
         return $this;
@@ -365,7 +365,7 @@ class CustomerBuilder
     /**
      * Sets portal invite last accepted at field.
      */
-    public function portalInviteLastAcceptedAt(?string $value): self
+    public function portalInviteLastAcceptedAt(?\DateTime $value): self
     {
         $this->instance->setPortalInviteLastAcceptedAt($value);
         return $this;

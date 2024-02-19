@@ -52,7 +52,7 @@ class OffersController extends BaseController
     public function createOffer(?CreateOfferRequest $body = null): OfferResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/offers.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(HeaderParam::init('Content-Type', 'application/json'), BodyParam::init($body));
 
         $_resHandler = $this->responseHandler()
@@ -80,7 +80,7 @@ class OffersController extends BaseController
     public function listOffers(array $options): ListOffersResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/offers.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 QueryParam::init('page', $options)->commaSeparated()->extract('page', 1),
                 QueryParam::init('per_page', $options)->commaSeparated()->extract('perPage', 20),
@@ -105,7 +105,7 @@ class OffersController extends BaseController
     public function readOffer(int $offerId): OfferResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/offers/{offer_id}.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(TemplateParam::init('offer_id', $offerId)->required());
 
         $_resHandler = $this->responseHandler()->type(OfferResponse::class);
@@ -125,7 +125,7 @@ class OffersController extends BaseController
     public function archiveOffer(int $offerId): void
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::PUT, '/offers/{offer_id}/archive.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(TemplateParam::init('offer_id', $offerId)->required());
 
         $this->execute($_reqBuilder);
@@ -144,7 +144,7 @@ class OffersController extends BaseController
     public function unarchiveOffer(int $offerId): void
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::PUT, '/offers/{offer_id}/unarchive.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(TemplateParam::init('offer_id', $offerId)->required());
 
         $this->execute($_reqBuilder);

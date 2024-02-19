@@ -15,8 +15,8 @@
 | `subscriptionId` | `?int` | Optional | - | getSubscriptionId(): ?int | setSubscriptionId(?int subscriptionId): void |
 | `number` | `?string` | Optional | - | getNumber(): ?string | setNumber(?string number): void |
 | `sequenceNumber` | `?int` | Optional | - | getSequenceNumber(): ?int | setSequenceNumber(?int sequenceNumber): void |
-| `createdAt` | `?string` | Optional | **Constraints**: *Minimum Length*: `1` | getCreatedAt(): ?string | setCreatedAt(?string createdAt): void |
-| `deliveryDate` | `?string` | Optional | **Constraints**: *Minimum Length*: `1` | getDeliveryDate(): ?string | setDeliveryDate(?string deliveryDate): void |
+| `createdAt` | `?DateTime` | Optional | - | getCreatedAt(): ?\DateTime | setCreatedAt(?\DateTime createdAt): void |
+| `deliveryDate` | `?DateTime` | Optional | - | getDeliveryDate(): ?\DateTime | setDeliveryDate(?\DateTime deliveryDate): void |
 | `status` | `?string` | Optional | **Constraints**: *Minimum Length*: `1` | getStatus(): ?string | setStatus(?string status): void |
 | `collectionMethod` | `?string` | Optional | **Constraints**: *Minimum Length*: `1` | getCollectionMethod(): ?string | setCollectionMethod(?string collectionMethod): void |
 | `paymentInstructions` | `?string` | Optional | **Constraints**: *Minimum Length*: `1` | getPaymentInstructions(): ?string | setPaymentInstructions(?string paymentInstructions): void |

@@ -40,7 +40,7 @@ class PrepaymentBuilder
         int $remainingAmountInCents,
         bool $external,
         string $memo,
-        string $createdAt
+        \DateTime $createdAt
     ): self {
         return new self(
             new Prepayment(

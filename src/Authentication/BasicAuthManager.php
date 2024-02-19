@@ -8,10 +8,11 @@ declare(strict_types=1);
  * This file was automatically generated for Maxio by APIMATIC v3.0 ( https://www.apimatic.io ).
  */
 
-namespace AdvancedBillingLib;
+namespace AdvancedBillingLib\Authentication;
 
 use Core\Authentication\CoreAuth;
 use Core\Request\Parameters\HeaderParam;
+use AdvancedBillingLib\BasicAuthCredentials;
 
 /**
  * Utility class for authorization and token management.

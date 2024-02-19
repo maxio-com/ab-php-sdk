@@ -524,7 +524,7 @@ class SubscriptionComponent implements \JsonSerializable
     /**
      * Returns Archived At.
      */
-    public function getArchivedAt(): ?string
+    public function getArchivedAt(): ?\DateTime
     {
         if (count($this->archivedAt) == 0) {
             return null;
@@ -536,8 +536,9 @@ class SubscriptionComponent implements \JsonSerializable
      * Sets Archived At.
      *
      * @maps archived_at
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setArchivedAt(?string $archivedAt): void
+    public function setArchivedAt(?\DateTime $archivedAt): void
     {
         $this->archivedAt['value'] = $archivedAt;
     }
@@ -961,7 +962,7 @@ class SubscriptionComponent implements \JsonSerializable
             $json['downgrade_credit']            = CreditType::checkValue($this->downgradeCredit['value']);
         }
         if (!empty($this->archivedAt)) {
-            $json['archived_at']                 = $this->archivedAt['value'];
+            $json['archived_at']                 = DateTimeHelper::toRfc3339DateTime($this->archivedAt['value']);
         }
         if (!empty($this->pricePointId)) {
             $json['price_point_id']              = $this->pricePointId['value'];

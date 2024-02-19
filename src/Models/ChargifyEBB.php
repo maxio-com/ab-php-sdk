@@ -10,12 +10,13 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
 class ChargifyEBB implements \JsonSerializable
 {
     /**
-     * @var string|null
+     * @var \DateTime|null
      */
     private $timestamp;
 
@@ -25,7 +26,7 @@ class ChargifyEBB implements \JsonSerializable
     private $id;
 
     /**
-     * @var string|null
+     * @var \DateTime|null
      */
     private $createdAt;
 
@@ -50,7 +51,7 @@ class ChargifyEBB implements \JsonSerializable
      * does not include it, Chargify will add `chargify.timestamp` to the event payload and set the value
      * to `now`.
      */
-    public function getTimestamp(): ?string
+    public function getTimestamp(): ?\DateTime
     {
         return $this->timestamp;
     }
@@ -62,8 +63,9 @@ class ChargifyEBB implements \JsonSerializable
      * to `now`.
      *
      * @maps timestamp
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setTimestamp(?string $timestamp): void
+    public function setTimestamp(?\DateTime $timestamp): void
     {
         $this->timestamp = $timestamp;
     }
@@ -96,7 +98,7 @@ class ChargifyEBB implements \JsonSerializable
      * field is reserved. If `chargify.created_at` is present in the request payload, it will be
      * overwritten.
      */
-    public function getCreatedAt(): ?string
+    public function getCreatedAt(): ?\DateTime
     {
         return $this->createdAt;
     }
@@ -108,8 +110,9 @@ class ChargifyEBB implements \JsonSerializable
      * overwritten.
      *
      * @maps created_at
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setCreatedAt(?string $createdAt): void
+    public function setCreatedAt(?\DateTime $createdAt): void
     {
         $this->createdAt = $createdAt;
     }
@@ -197,13 +200,13 @@ class ChargifyEBB implements \JsonSerializable
     {
         $json = [];
         if (isset($this->timestamp)) {
-            $json['timestamp']              = $this->timestamp;
+            $json['timestamp']              = DateTimeHelper::toRfc3339DateTime($this->timestamp);
         }
         if (isset($this->id)) {
             $json['id']                     = $this->id;
         }
         if (isset($this->createdAt)) {
-            $json['created_at']             = $this->createdAt;
+            $json['created_at']             = DateTimeHelper::toRfc3339DateTime($this->createdAt);
         }
         if (isset($this->uniquenessToken)) {
             $json['uniqueness_token']       = $this->uniquenessToken;

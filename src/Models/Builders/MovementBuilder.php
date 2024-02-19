@@ -42,7 +42,7 @@ class MovementBuilder
     /**
      * Sets timestamp field.
      */
-    public function timestamp(?string $value): self
+    public function timestamp(?\DateTime $value): self
     {
         $this->instance->setTimestamp($value);
         return $this;

@@ -50,7 +50,7 @@ class BatchJobBuilder
     /**
      * Sets finished at field.
      */
-    public function finishedAt(?string $value): self
+    public function finishedAt(?\DateTime $value): self
     {
         $this->instance->setFinishedAt($value);
         return $this;
@@ -86,7 +86,7 @@ class BatchJobBuilder
     /**
      * Sets created at field.
      */
-    public function createdAt(?string $value): self
+    public function createdAt(?\DateTime $value): self
     {
         $this->instance->setCreatedAt($value);
         return $this;
