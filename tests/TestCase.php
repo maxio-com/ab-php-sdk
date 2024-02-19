@@ -6,6 +6,7 @@ namespace AdvancedBillingLib\Tests;
 
 use AdvancedBillingLib\AdvancedBillingClient;
 use AdvancedBillingLib\AdvancedBillingClientBuilder;
+use AdvancedBillingLib\Authentication\BasicAuthCredentialsBuilder;
 use PHPUnit\Framework\TestCase as PhpUnitTestCase;
 
 class TestCase extends PhpUnitTestCase
@@ -28,8 +29,12 @@ class TestCase extends PhpUnitTestCase
     private function createClient(TestConfiguration $configuration): AdvancedBillingClient
     {
         return AdvancedBillingClientBuilder::init()
-            ->basicAuthUserName($configuration->getBasicAuthUserName())
-            ->basicAuthPassword($configuration->getBasicAuthPassword())
+            ->basicAuthCredentials(
+                BasicAuthCredentialsBuilder::init(
+                    $configuration->getBasicAuthUserName(),
+                    $configuration->getBasicAuthPassword()
+                )
+            )
             ->environment($configuration->getEnvironment())
             ->subdomain($configuration->getSubDomain())
             ->domain($configuration->getDomain())
@@ -39,8 +44,12 @@ class TestCase extends PhpUnitTestCase
     protected function getUnauthenticatedClient(): AdvancedBillingClient
     {
         return $this->client->toBuilder()
-            ->basicAuthUserName(self::INVALID_AUTH_USER_NAME)
-            ->basicAuthPassword(self::INVALID_AUTH_PASSWORD)
+            ->basicAuthCredentials(
+                BasicAuthCredentialsBuilder::init(
+                    self::INVALID_AUTH_USER_NAME,
+                    self::INVALID_AUTH_PASSWORD
+                )
+            )
             ->build();
     }
 }
