@@ -537,8 +537,8 @@ $result = $productsController->listProducts($collect);
         "handle": "string",
         "accounting_code": null,
         "description": "string",
-        "created_at": "string",
-        "updated_at": "string"
+        "created_at": "2021-05-05T16:00:21-04:00",
+        "updated_at": "2021-05-05T16:00:21-04:00"
       },
       "public_signup_pages": [
         {

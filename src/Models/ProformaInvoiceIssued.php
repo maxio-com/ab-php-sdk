@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
 class ProformaInvoiceIssued implements \JsonSerializable
@@ -30,12 +31,12 @@ class ProformaInvoiceIssued implements \JsonSerializable
     private $role;
 
     /**
-     * @var string
+     * @var \DateTime
      */
     private $deliveryDate;
 
     /**
-     * @var string
+     * @var \DateTime
      */
     private $createdAt;
 
@@ -73,8 +74,8 @@ class ProformaInvoiceIssued implements \JsonSerializable
      * @param string $uid
      * @param string $number
      * @param string $role
-     * @param string $deliveryDate
-     * @param string $createdAt
+     * @param \DateTime $deliveryDate
+     * @param \DateTime $createdAt
      * @param string $dueAmount
      * @param string $paidAmount
      * @param string $taxAmount
@@ -86,8 +87,8 @@ class ProformaInvoiceIssued implements \JsonSerializable
         string $uid,
         string $number,
         string $role,
-        string $deliveryDate,
-        string $createdAt,
+        \DateTime $deliveryDate,
+        \DateTime $createdAt,
         string $dueAmount,
         string $paidAmount,
         string $taxAmount,
@@ -168,7 +169,7 @@ class ProformaInvoiceIssued implements \JsonSerializable
     /**
      * Returns Delivery Date.
      */
-    public function getDeliveryDate(): string
+    public function getDeliveryDate(): \DateTime
     {
         return $this->deliveryDate;
     }
@@ -178,8 +179,9 @@ class ProformaInvoiceIssued implements \JsonSerializable
      *
      * @required
      * @maps delivery_date
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromSimpleDate
      */
-    public function setDeliveryDate(string $deliveryDate): void
+    public function setDeliveryDate(\DateTime $deliveryDate): void
     {
         $this->deliveryDate = $deliveryDate;
     }
@@ -187,7 +189,7 @@ class ProformaInvoiceIssued implements \JsonSerializable
     /**
      * Returns Created At.
      */
-    public function getCreatedAt(): string
+    public function getCreatedAt(): \DateTime
     {
         return $this->createdAt;
     }
@@ -197,8 +199,9 @@ class ProformaInvoiceIssued implements \JsonSerializable
      *
      * @required
      * @maps created_at
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setCreatedAt(string $createdAt): void
+    public function setCreatedAt(\DateTime $createdAt): void
     {
         $this->createdAt = $createdAt;
     }
@@ -336,8 +339,8 @@ class ProformaInvoiceIssued implements \JsonSerializable
         $json['uid']           = $this->uid;
         $json['number']        = $this->number;
         $json['role']          = $this->role;
-        $json['delivery_date'] = $this->deliveryDate;
-        $json['created_at']    = $this->createdAt;
+        $json['delivery_date'] = DateTimeHelper::toSimpleDate($this->deliveryDate);
+        $json['created_at']    = DateTimeHelper::toRfc3339DateTime($this->createdAt);
         $json['due_amount']    = $this->dueAmount;
         $json['paid_amount']   = $this->paidAmount;
         $json['tax_amount']    = $this->taxAmount;

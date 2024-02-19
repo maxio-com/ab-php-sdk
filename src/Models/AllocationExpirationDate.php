@@ -10,19 +10,20 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
 class AllocationExpirationDate implements \JsonSerializable
 {
     /**
-     * @var string|null
+     * @var \DateTime|null
      */
     private $expiresAt;
 
     /**
      * Returns Expires At.
      */
-    public function getExpiresAt(): ?string
+    public function getExpiresAt(): ?\DateTime
     {
         return $this->expiresAt;
     }
@@ -31,8 +32,9 @@ class AllocationExpirationDate implements \JsonSerializable
      * Sets Expires At.
      *
      * @maps expires_at
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setExpiresAt(?string $expiresAt): void
+    public function setExpiresAt(?\DateTime $expiresAt): void
     {
         $this->expiresAt = $expiresAt;
     }
@@ -50,7 +52,7 @@ class AllocationExpirationDate implements \JsonSerializable
     {
         $json = [];
         if (isset($this->expiresAt)) {
-            $json['expires_at'] = $this->expiresAt;
+            $json['expires_at'] = DateTimeHelper::toRfc3339DateTime($this->expiresAt);
         }
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;

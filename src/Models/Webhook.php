@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
 class Webhook implements \JsonSerializable
@@ -25,7 +26,7 @@ class Webhook implements \JsonSerializable
     private $id;
 
     /**
-     * @var string|null
+     * @var \DateTime|null
      */
     private $createdAt;
 
@@ -35,7 +36,7 @@ class Webhook implements \JsonSerializable
     private $lastError;
 
     /**
-     * @var string|null
+     * @var \DateTime|null
      */
     private $lastErrorAt;
 
@@ -45,7 +46,7 @@ class Webhook implements \JsonSerializable
     private $acceptedAt = [];
 
     /**
-     * @var string|null
+     * @var \DateTime|null
      */
     private $lastSentAt;
 
@@ -120,7 +121,7 @@ class Webhook implements \JsonSerializable
      * Returns Created At.
      * Timestamp indicating when the webhook was created
      */
-    public function getCreatedAt(): ?string
+    public function getCreatedAt(): ?\DateTime
     {
         return $this->createdAt;
     }
@@ -130,8 +131,9 @@ class Webhook implements \JsonSerializable
      * Timestamp indicating when the webhook was created
      *
      * @maps created_at
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setCreatedAt(?string $createdAt): void
+    public function setCreatedAt(?\DateTime $createdAt): void
     {
         $this->createdAt = $createdAt;
     }
@@ -163,7 +165,7 @@ class Webhook implements \JsonSerializable
      * Timestamp indicating when the last non-acceptance occurred. If a webhook is later resent and
      * accepted, this field will be cleared.
      */
-    public function getLastErrorAt(): ?string
+    public function getLastErrorAt(): ?\DateTime
     {
         return $this->lastErrorAt;
     }
@@ -174,8 +176,9 @@ class Webhook implements \JsonSerializable
      * accepted, this field will be cleared.
      *
      * @maps last_error_at
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setLastErrorAt(?string $lastErrorAt): void
+    public function setLastErrorAt(?\DateTime $lastErrorAt): void
     {
         $this->lastErrorAt = $lastErrorAt;
     }
@@ -185,7 +188,7 @@ class Webhook implements \JsonSerializable
      * Timestamp indicating when the webhook was accepted by the merchant endpoint. When a webhook is
      * explicitly replayed by the merchant, this value will be cleared until it is accepted again.
      */
-    public function getAcceptedAt(): ?string
+    public function getAcceptedAt(): ?\DateTime
     {
         if (count($this->acceptedAt) == 0) {
             return null;
@@ -199,8 +202,9 @@ class Webhook implements \JsonSerializable
      * explicitly replayed by the merchant, this value will be cleared until it is accepted again.
      *
      * @maps accepted_at
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setAcceptedAt(?string $acceptedAt): void
+    public function setAcceptedAt(?\DateTime $acceptedAt): void
     {
         $this->acceptedAt['value'] = $acceptedAt;
     }
@@ -219,7 +223,7 @@ class Webhook implements \JsonSerializable
      * Returns Last Sent At.
      * Timestamp indicating when the most recent attempt was made to send the webhook
      */
-    public function getLastSentAt(): ?string
+    public function getLastSentAt(): ?\DateTime
     {
         return $this->lastSentAt;
     }
@@ -229,8 +233,9 @@ class Webhook implements \JsonSerializable
      * Timestamp indicating when the most recent attempt was made to send the webhook
      *
      * @maps last_sent_at
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setLastSentAt(?string $lastSentAt): void
+    public function setLastSentAt(?\DateTime $lastSentAt): void
     {
         $this->lastSentAt = $lastSentAt;
     }
@@ -358,19 +363,19 @@ class Webhook implements \JsonSerializable
             $json['id']                     = $this->id;
         }
         if (isset($this->createdAt)) {
-            $json['created_at']             = $this->createdAt;
+            $json['created_at']             = DateTimeHelper::toRfc3339DateTime($this->createdAt);
         }
         if (isset($this->lastError)) {
             $json['last_error']             = $this->lastError;
         }
         if (isset($this->lastErrorAt)) {
-            $json['last_error_at']          = $this->lastErrorAt;
+            $json['last_error_at']          = DateTimeHelper::toRfc3339DateTime($this->lastErrorAt);
         }
         if (!empty($this->acceptedAt)) {
-            $json['accepted_at']            = $this->acceptedAt['value'];
+            $json['accepted_at']            = DateTimeHelper::toRfc3339DateTime($this->acceptedAt['value']);
         }
         if (isset($this->lastSentAt)) {
-            $json['last_sent_at']           = $this->lastSentAt;
+            $json['last_sent_at']           = DateTimeHelper::toRfc3339DateTime($this->lastSentAt);
         }
         if (isset($this->lastSentUrl)) {
             $json['last_sent_url']          = $this->lastSentUrl;

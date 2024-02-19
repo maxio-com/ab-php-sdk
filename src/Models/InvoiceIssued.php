@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
 class InvoiceIssued implements \JsonSerializable
@@ -30,17 +31,17 @@ class InvoiceIssued implements \JsonSerializable
     private $role;
 
     /**
-     * @var string
+     * @var \DateTime
      */
     private $dueDate;
 
     /**
-     * @var string
+     * @var \DateTime
      */
     private $issueDate;
 
     /**
-     * @var string
+     * @var \DateTime
      */
     private $paidDate;
 
@@ -93,9 +94,9 @@ class InvoiceIssued implements \JsonSerializable
      * @param string $uid
      * @param string $number
      * @param string $role
-     * @param string $dueDate
-     * @param string $issueDate
-     * @param string $paidDate
+     * @param \DateTime $dueDate
+     * @param \DateTime $issueDate
+     * @param \DateTime $paidDate
      * @param string $dueAmount
      * @param string $paidAmount
      * @param string $taxAmount
@@ -110,9 +111,9 @@ class InvoiceIssued implements \JsonSerializable
         string $uid,
         string $number,
         string $role,
-        string $dueDate,
-        string $issueDate,
-        string $paidDate,
+        \DateTime $dueDate,
+        \DateTime $issueDate,
+        \DateTime $paidDate,
         string $dueAmount,
         string $paidAmount,
         string $taxAmount,
@@ -200,7 +201,7 @@ class InvoiceIssued implements \JsonSerializable
     /**
      * Returns Due Date.
      */
-    public function getDueDate(): string
+    public function getDueDate(): \DateTime
     {
         return $this->dueDate;
     }
@@ -210,8 +211,9 @@ class InvoiceIssued implements \JsonSerializable
      *
      * @required
      * @maps due_date
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromSimpleDate
      */
-    public function setDueDate(string $dueDate): void
+    public function setDueDate(\DateTime $dueDate): void
     {
         $this->dueDate = $dueDate;
     }
@@ -219,7 +221,7 @@ class InvoiceIssued implements \JsonSerializable
     /**
      * Returns Issue Date.
      */
-    public function getIssueDate(): string
+    public function getIssueDate(): \DateTime
     {
         return $this->issueDate;
     }
@@ -229,8 +231,9 @@ class InvoiceIssued implements \JsonSerializable
      *
      * @required
      * @maps issue_date
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromSimpleDate
      */
-    public function setIssueDate(string $issueDate): void
+    public function setIssueDate(\DateTime $issueDate): void
     {
         $this->issueDate = $issueDate;
     }
@@ -238,7 +241,7 @@ class InvoiceIssued implements \JsonSerializable
     /**
      * Returns Paid Date.
      */
-    public function getPaidDate(): string
+    public function getPaidDate(): \DateTime
     {
         return $this->paidDate;
     }
@@ -248,8 +251,9 @@ class InvoiceIssued implements \JsonSerializable
      *
      * @required
      * @maps paid_date
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromSimpleDate
      */
-    public function setPaidDate(string $paidDate): void
+    public function setPaidDate(\DateTime $paidDate): void
     {
         $this->paidDate = $paidDate;
     }
@@ -444,9 +448,9 @@ class InvoiceIssued implements \JsonSerializable
         $json['uid']                 = $this->uid;
         $json['number']              = $this->number;
         $json['role']                = $this->role;
-        $json['due_date']            = $this->dueDate;
-        $json['issue_date']          = $this->issueDate;
-        $json['paid_date']           = $this->paidDate;
+        $json['due_date']            = DateTimeHelper::toSimpleDate($this->dueDate);
+        $json['issue_date']          = DateTimeHelper::toSimpleDate($this->issueDate);
+        $json['paid_date']           = DateTimeHelper::toSimpleDate($this->paidDate);
         $json['due_amount']          = $this->dueAmount;
         $json['paid_amount']         = $this->paidAmount;
         $json['tax_amount']          = $this->taxAmount;

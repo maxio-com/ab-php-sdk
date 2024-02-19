@@ -106,7 +106,7 @@ class UpdateSubscriptionBuilder
     /**
      * Sets next billing at field.
      */
-    public function nextBillingAt(?string $value): self
+    public function nextBillingAt(?\DateTime $value): self
     {
         $this->instance->setNextBillingAt($value);
         return $this;

@@ -104,14 +104,14 @@ Use this endpoint to read the details of an existing proforma invoice.
 Proforma invoices are only available on Relationship Invoicing sites.
 
 ```php
-function readProformaInvoice(int $proformaInvoiceUid): ProformaInvoice
+function readProformaInvoice(string $proformaInvoiceUid): ProformaInvoice
 ```
 
 ## Parameters
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `proformaInvoiceUid` | `int` | Template, Required | The uid of the proforma invoice |
+| `proformaInvoiceUid` | `string` | Template, Required | The uid of the proforma invoice |
 
 ## Response Type
 
@@ -120,7 +120,7 @@ function readProformaInvoice(int $proformaInvoiceUid): ProformaInvoice
 ## Example Usage
 
 ```php
-$proformaInvoiceUid = 242;
+$proformaInvoiceUid = 'proforma_invoice_uid4';
 
 $result = $proformaInvoicesController->readProformaInvoice($proformaInvoiceUid);
 ```
@@ -176,7 +176,7 @@ $result = $proformaInvoicesController->createProformaInvoice($subscriptionId);
 By default, proforma invoices returned on the index will only include totals, not detailed breakdowns for `line_items`, `discounts`, `taxes`, `credits`, `payments`, or `custom_fields`. To include breakdowns, pass the specific field as a key in the query with a value set to `true`.
 
 ```php
-function listProformaInvoices(array $options): array
+function listProformaInvoices(array $options): ListProformaInvoicesResponse
 ```
 
 ## Parameters
@@ -199,7 +199,7 @@ function listProformaInvoices(array $options): array
 
 ## Response Type
 
-[`ProformaInvoice[]`](../../doc/models/proforma-invoice.md)
+[`ListProformaInvoicesResponse`](../../doc/models/list-proforma-invoices-response.md)
 
 ## Example Usage
 

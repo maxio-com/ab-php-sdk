@@ -80,7 +80,7 @@ $body = CreatePrepaymentRequestBuilder::init(
         100,
         'John Doe signup for $100',
         'Signup for $100',
-        PrepaymentMethod::CHECK
+        CreatePrepaymentMethod::CHECK
     )->build()
 )->build();
 

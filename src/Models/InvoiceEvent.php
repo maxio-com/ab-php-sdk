@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace AdvancedBillingLib\Models;
 
 use AdvancedBillingLib\ApiHelper;
+use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
 class InvoiceEvent implements \JsonSerializable
@@ -31,7 +32,7 @@ class InvoiceEvent implements \JsonSerializable
     private $eventData;
 
     /**
-     * @var string|null
+     * @var \DateTime|null
      */
     private $timestamp;
 
@@ -109,7 +110,7 @@ class InvoiceEvent implements \JsonSerializable
     /**
      * Returns Timestamp.
      */
-    public function getTimestamp(): ?string
+    public function getTimestamp(): ?\DateTime
     {
         return $this->timestamp;
     }
@@ -118,8 +119,9 @@ class InvoiceEvent implements \JsonSerializable
      * Sets Timestamp.
      *
      * @maps timestamp
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setTimestamp(?string $timestamp): void
+    public function setTimestamp(?\DateTime $timestamp): void
     {
         $this->timestamp = $timestamp;
     }
@@ -170,7 +172,7 @@ class InvoiceEvent implements \JsonSerializable
                 );
         }
         if (isset($this->timestamp)) {
-            $json['timestamp']  = $this->timestamp;
+            $json['timestamp']  = DateTimeHelper::toRfc3339DateTime($this->timestamp);
         }
         if (isset($this->invoice)) {
             $json['invoice']    = $this->invoice;

@@ -123,7 +123,7 @@ class SubscriptionMigrationPreviewOptionsBuilder
     /**
      * Sets proration date field.
      */
-    public function prorationDate(?string $value): self
+    public function prorationDate(?\DateTime $value): self
     {
         $this->instance->setProrationDate($value);
         return $this;

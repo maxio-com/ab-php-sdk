@@ -62,7 +62,7 @@ class SubscriptionComponentsController extends BaseController
             RequestMethod::GET,
             '/subscriptions/{subscription_id}/components/{component_id}.json'
         )
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 TemplateParam::init('component_id', $componentId)->required()
@@ -95,7 +95,7 @@ class SubscriptionComponentsController extends BaseController
             RequestMethod::GET,
             '/subscriptions/{subscription_id}/components.json'
         )
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('subscription_id', $options)->extract('subscriptionId')->required(),
                 QueryParam::init('date_field', $options)
@@ -158,7 +158,7 @@ class SubscriptionComponentsController extends BaseController
             RequestMethod::POST,
             '/subscriptions/{subscription_id}/price_points.json'
         )
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -195,7 +195,7 @@ class SubscriptionComponentsController extends BaseController
         $_reqBuilder = $this->requestBuilder(
             RequestMethod::POST,
             '/subscriptions/{subscription_id}/price_points/reset.json'
-        )->auth('global')->parameters(TemplateParam::init('subscription_id', $subscriptionId)->required());
+        )->auth('BasicAuth')->parameters(TemplateParam::init('subscription_id', $subscriptionId)->required());
 
         $_resHandler = $this->responseHandler()->type(SubscriptionResponse::class);
 
@@ -288,7 +288,7 @@ class SubscriptionComponentsController extends BaseController
             RequestMethod::POST,
             '/subscriptions/{subscription_id}/components/{component_id}/allocations.json'
         )
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 TemplateParam::init('component_id', $componentId)->required(),
@@ -352,7 +352,7 @@ class SubscriptionComponentsController extends BaseController
             RequestMethod::GET,
             '/subscriptions/{subscription_id}/components/{component_id}/allocations.json'
         )
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 TemplateParam::init('component_id', $componentId)->required(),
@@ -396,7 +396,7 @@ class SubscriptionComponentsController extends BaseController
             RequestMethod::POST,
             '/subscriptions/{subscription_id}/allocations.json'
         )
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -446,7 +446,7 @@ class SubscriptionComponentsController extends BaseController
             RequestMethod::POST,
             '/subscriptions/{subscription_id}/allocations/preview.json'
         )
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -503,7 +503,7 @@ class SubscriptionComponentsController extends BaseController
             RequestMethod::PUT,
             '/subscriptions/{subscription_id}/components/{component_id}/allocations/{allocation_id}.json'
         )
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 TemplateParam::init('component_id', $componentId)->required(),
@@ -561,7 +561,7 @@ class SubscriptionComponentsController extends BaseController
             RequestMethod::DELETE,
             '/subscriptions/{subscription_id}/components/{component_id}/allocations/{allocation_id}.json'
         )
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 TemplateParam::init('component_id', $componentId)->required(),
@@ -673,7 +673,7 @@ class SubscriptionComponentsController extends BaseController
             RequestMethod::POST,
             '/subscriptions/{subscription_id}/components/{component_id}/usages.json'
         )
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 TemplateParam::init('component_id', $componentId)->required()->strictType('oneOf(int,string)'),
@@ -728,7 +728,7 @@ class SubscriptionComponentsController extends BaseController
             RequestMethod::GET,
             '/subscriptions/{subscription_id}/components/{component_id}/usages.json'
         )
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('subscription_id', $options)->extract('subscriptionId')->required(),
                 TemplateParam::init('component_id', $options)
@@ -781,7 +781,7 @@ class SubscriptionComponentsController extends BaseController
             RequestMethod::POST,
             '/event_based_billing/subscriptions/{subscription_id}/components/{component_id}/activate.json'
         )
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 TemplateParam::init('component_id', $componentId)->required()
@@ -807,7 +807,7 @@ class SubscriptionComponentsController extends BaseController
             RequestMethod::POST,
             '/event_based_billing/subscriptions/{subscription_id}/components/{component_id}/deactivate.json'
         )
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 TemplateParam::init('component_id', $componentId)->required()
@@ -858,7 +858,7 @@ class SubscriptionComponentsController extends BaseController
         ?EBBEvent $body = null
     ): void {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/{subdomain}/events/{api_handle}.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('subdomain', $subdomain)->required(),
                 TemplateParam::init('api_handle', $apiHandle)->required(),
@@ -896,7 +896,7 @@ class SubscriptionComponentsController extends BaseController
         ?array $body = null
     ): void {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/{subdomain}/events/{api_handle}/bulk.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('subdomain', $subdomain)->required(),
                 TemplateParam::init('api_handle', $apiHandle)->required(),
@@ -920,7 +920,7 @@ class SubscriptionComponentsController extends BaseController
     public function listSubscriptionComponentsForSite(array $options): ListSubscriptionComponentsResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/subscriptions_components.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 QueryParam::init('page', $options)->commaSeparated()->extract('page', 1),
                 QueryParam::init('per_page', $options)->commaSeparated()->extract('perPage', 20),
@@ -964,16 +964,20 @@ class SubscriptionComponentsController extends BaseController
                     ->serializeBy([SubscriptionListDateField::class, 'checkValue']),
                 QueryParam::init('filter[subscription][start_date]', $options)
                     ->commaSeparated()
-                    ->extract('filterSubscriptionStartDate'),
+                    ->extract('filterSubscriptionStartDate')
+                    ->serializeBy([DateTimeHelper::class, 'toSimpleDate']),
                 QueryParam::init('filter[subscription][start_datetime]', $options)
                     ->commaSeparated()
-                    ->extract('filterSubscriptionStartDatetime'),
+                    ->extract('filterSubscriptionStartDatetime')
+                    ->serializeBy([DateTimeHelper::class, 'toRfc3339DateTime']),
                 QueryParam::init('filter[subscription][end_date]', $options)
                     ->commaSeparated()
-                    ->extract('filterSubscriptionEndDate'),
+                    ->extract('filterSubscriptionEndDate')
+                    ->serializeBy([DateTimeHelper::class, 'toSimpleDate']),
                 QueryParam::init('filter[subscription][end_datetime]', $options)
                     ->commaSeparated()
                     ->extract('filterSubscriptionEndDatetime')
+                    ->serializeBy([DateTimeHelper::class, 'toRfc3339DateTime'])
             );
 
         $_resHandler = $this->responseHandler()->type(ListSubscriptionComponentsResponse::class);

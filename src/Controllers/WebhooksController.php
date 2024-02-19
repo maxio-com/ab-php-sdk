@@ -12,13 +12,13 @@ namespace AdvancedBillingLib\Controllers;
 
 use AdvancedBillingLib\Exceptions\ApiException;
 use AdvancedBillingLib\Exceptions\ErrorListResponseException;
+use AdvancedBillingLib\Models\CreateOrUpdateEndpointRequest;
 use AdvancedBillingLib\Models\EnableWebhooksRequest;
 use AdvancedBillingLib\Models\EnableWebhooksResponse;
 use AdvancedBillingLib\Models\Endpoint;
 use AdvancedBillingLib\Models\EndpointResponse;
 use AdvancedBillingLib\Models\ReplayWebhooksRequest;
 use AdvancedBillingLib\Models\ReplayWebhooksResponse;
-use AdvancedBillingLib\Models\UpdateEndpointRequest;
 use AdvancedBillingLib\Models\WebhookOrder;
 use AdvancedBillingLib\Models\WebhookResponse;
 use AdvancedBillingLib\Models\WebhookStatus;
@@ -65,7 +65,7 @@ class WebhooksController extends BaseController
     public function listWebhooks(array $options): array
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/webhooks.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 QueryParam::init('status', $options)
                     ->commaSeparated()
@@ -99,7 +99,7 @@ class WebhooksController extends BaseController
     public function enableWebhooks(?EnableWebhooksRequest $body = null): EnableWebhooksResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::PUT, '/webhooks/settings.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(HeaderParam::init('Content-Type', 'application/json'), BodyParam::init($body));
 
         $_resHandler = $this->responseHandler()->type(EnableWebhooksResponse::class);
@@ -122,7 +122,7 @@ class WebhooksController extends BaseController
     public function replayWebhooks(?ReplayWebhooksRequest $body = null): ReplayWebhooksResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/webhooks/replay.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(HeaderParam::init('Content-Type', 'application/json'), BodyParam::init($body));
 
         $_resHandler = $this->responseHandler()->type(ReplayWebhooksResponse::class);
@@ -138,16 +138,16 @@ class WebhooksController extends BaseController
      * [Event keys](https://maxio-chargify.zendesk.com/hc/en-us/articles/5405357509645-Webhooks-
      * Reference#example-payloads)
      *
-     * @param UpdateEndpointRequest|null $body
+     * @param CreateOrUpdateEndpointRequest|null $body
      *
      * @return EndpointResponse Response from the API call
      *
      * @throws ApiException Thrown if API call fails
      */
-    public function createEndpoint(?UpdateEndpointRequest $body = null): EndpointResponse
+    public function createEndpoint(?CreateOrUpdateEndpointRequest $body = null): EndpointResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/endpoints.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(HeaderParam::init('Content-Type', 'application/json'), BodyParam::init($body));
 
         $_resHandler = $this->responseHandler()
@@ -172,7 +172,7 @@ class WebhooksController extends BaseController
      */
     public function listEndpoints(): array
     {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/endpoints.json')->auth('global');
+        $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/endpoints.json')->auth('BasicAuth');
 
         $_resHandler = $this->responseHandler()->type(Endpoint::class, 1);
 
@@ -194,16 +194,16 @@ class WebhooksController extends BaseController
      * specific event key.
      *
      * @param int $endpointId The Chargify id for the endpoint that should be updated
-     * @param UpdateEndpointRequest|null $body
+     * @param CreateOrUpdateEndpointRequest|null $body
      *
      * @return EndpointResponse Response from the API call
      *
      * @throws ApiException Thrown if API call fails
      */
-    public function updateEndpoint(int $endpointId, ?UpdateEndpointRequest $body = null): EndpointResponse
+    public function updateEndpoint(int $endpointId, ?CreateOrUpdateEndpointRequest $body = null): EndpointResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::PUT, '/endpoints/{endpoint_id}.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('endpoint_id', $endpointId)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),

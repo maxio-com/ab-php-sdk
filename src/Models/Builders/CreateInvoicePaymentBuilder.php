@@ -75,6 +75,15 @@ class CreateInvoicePaymentBuilder
     }
 
     /**
+     * Sets payment profile id field.
+     */
+    public function paymentProfileId(?int $value): self
+    {
+        $this->instance->setPaymentProfileId($value);
+        return $this;
+    }
+
+    /**
      * Initializes a new create invoice payment object.
      */
     public function build(): CreateInvoicePayment

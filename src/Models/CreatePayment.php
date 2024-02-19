@@ -107,6 +107,7 @@ class CreatePayment implements \JsonSerializable
 
     /**
      * Returns Payment Method.
+     * The type of payment method used. Defaults to other.
      */
     public function getPaymentMethod(): string
     {
@@ -115,9 +116,11 @@ class CreatePayment implements \JsonSerializable
 
     /**
      * Sets Payment Method.
+     * The type of payment method used. Defaults to other.
      *
      * @required
      * @maps payment_method
+     * @factory \AdvancedBillingLib\Models\InvoicePaymentMethodType::checkValue
      */
     public function setPaymentMethod(string $paymentMethod): void
     {
@@ -139,7 +142,7 @@ class CreatePayment implements \JsonSerializable
         $json['amount']          = $this->amount;
         $json['memo']            = $this->memo;
         $json['payment_details'] = $this->paymentDetails;
-        $json['payment_method']  = $this->paymentMethod;
+        $json['payment_method']  = InvoicePaymentMethodType::checkValue($this->paymentMethod);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

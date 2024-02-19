@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib;
 
+use AdvancedBillingLib\Authentication\BasicAuthCredentialsBuilder;
 use CoreInterfaces\Http\HttpConfigurations;
 
 /**
@@ -35,7 +36,12 @@ interface ConfigurationInterface extends HttpConfigurations
     /**
      * Get the credentials to use with BasicAuth
      */
-    public function getBasicAuthCredentials(): ?BasicAuthCredentials;
+    public function getBasicAuthCredentials(): BasicAuthCredentials;
+
+    /**
+     * Get the credentials builder instance to update credentials for BasicAuth
+     */
+    public function getBasicAuthCredentialsBuilder(): ?BasicAuthCredentialsBuilder;
 
     /**
      * Get the base uri for a given server in the current environment.

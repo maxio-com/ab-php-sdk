@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
 class BatchJob implements \JsonSerializable
@@ -60,7 +61,7 @@ class BatchJob implements \JsonSerializable
     /**
      * Returns Finished At.
      */
-    public function getFinishedAt(): ?string
+    public function getFinishedAt(): ?\DateTime
     {
         if (count($this->finishedAt) == 0) {
             return null;
@@ -72,8 +73,9 @@ class BatchJob implements \JsonSerializable
      * Sets Finished At.
      *
      * @maps finished_at
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setFinishedAt(?string $finishedAt): void
+    public function setFinishedAt(?\DateTime $finishedAt): void
     {
         $this->finishedAt['value'] = $finishedAt;
     }
@@ -118,7 +120,7 @@ class BatchJob implements \JsonSerializable
     /**
      * Returns Created At.
      */
-    public function getCreatedAt(): ?string
+    public function getCreatedAt(): ?\DateTime
     {
         if (count($this->createdAt) == 0) {
             return null;
@@ -130,8 +132,9 @@ class BatchJob implements \JsonSerializable
      * Sets Created At.
      *
      * @maps created_at
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setCreatedAt(?string $createdAt): void
+    public function setCreatedAt(?\DateTime $createdAt): void
     {
         $this->createdAt['value'] = $createdAt;
     }
@@ -178,13 +181,13 @@ class BatchJob implements \JsonSerializable
             $json['id']          = $this->id;
         }
         if (!empty($this->finishedAt)) {
-            $json['finished_at'] = $this->finishedAt['value'];
+            $json['finished_at'] = DateTimeHelper::toRfc3339DateTime($this->finishedAt['value']);
         }
         if (!empty($this->rowCount)) {
             $json['row_count']   = $this->rowCount['value'];
         }
         if (!empty($this->createdAt)) {
-            $json['created_at']  = $this->createdAt['value'];
+            $json['created_at']  = DateTimeHelper::toRfc3339DateTime($this->createdAt['value']);
         }
         if (isset($this->completed)) {
             $json['completed']   = $this->completed;

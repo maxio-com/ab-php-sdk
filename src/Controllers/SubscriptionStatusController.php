@@ -50,7 +50,7 @@ class SubscriptionStatusController extends BaseController
     public function retrySubscription(int $subscriptionId): SubscriptionResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::PUT, '/subscriptions/{subscription_id}/retry.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(TemplateParam::init('subscription_id', $subscriptionId)->required());
 
         $_resHandler = $this->responseHandler()
@@ -80,7 +80,7 @@ class SubscriptionStatusController extends BaseController
     public function cancelSubscription(int $subscriptionId, ?CancellationRequest $body = null): SubscriptionResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::DELETE, '/subscriptions/{subscription_id}.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -118,7 +118,7 @@ class SubscriptionStatusController extends BaseController
         ?string $calendarBillingResumptionCharge = ResumptionCharge::PRORATED
     ): SubscriptionResponse {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/subscriptions/{subscription_id}/resume.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 QueryParam::init('calendar_billing[\'resumption_charge\']', $calendarBillingResumptionCharge)
@@ -156,7 +156,7 @@ class SubscriptionStatusController extends BaseController
     public function pauseSubscription(int $subscriptionId, ?PauseRequest $body = null): SubscriptionResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/subscriptions/{subscription_id}/hold.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -200,7 +200,7 @@ class SubscriptionStatusController extends BaseController
         ?PauseRequest $body = null
     ): SubscriptionResponse {
         $_reqBuilder = $this->requestBuilder(RequestMethod::PUT, '/subscriptions/{subscription_id}/hold.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -407,7 +407,7 @@ class SubscriptionStatusController extends BaseController
             RequestMethod::PUT,
             '/subscriptions/{subscription_id}/reactivate.json'
         )
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -452,7 +452,7 @@ class SubscriptionStatusController extends BaseController
             RequestMethod::POST,
             '/subscriptions/{subscription_id}/delayed_cancel.json'
         )
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -485,7 +485,7 @@ class SubscriptionStatusController extends BaseController
         $_reqBuilder = $this->requestBuilder(
             RequestMethod::DELETE,
             '/subscriptions/{subscription_id}/delayed_cancel.json'
-        )->auth('global')->parameters(TemplateParam::init('subscription_id', $subscriptionId)->required());
+        )->auth('BasicAuth')->parameters(TemplateParam::init('subscription_id', $subscriptionId)->required());
 
         $_resHandler = $this->responseHandler()
             ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
@@ -509,7 +509,7 @@ class SubscriptionStatusController extends BaseController
         $_reqBuilder = $this->requestBuilder(
             RequestMethod::POST,
             '/subscriptions/{subscription_id}/cancel_dunning.json'
-        )->auth('global')->parameters(TemplateParam::init('subscription_id', $subscriptionId)->required());
+        )->auth('BasicAuth')->parameters(TemplateParam::init('subscription_id', $subscriptionId)->required());
 
         $_resHandler = $this->responseHandler()->type(SubscriptionResponse::class);
 
@@ -564,7 +564,7 @@ class SubscriptionStatusController extends BaseController
             RequestMethod::POST,
             '/subscriptions/{subscription_id}/renewals/preview.json'
         )
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),

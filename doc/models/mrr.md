@@ -14,7 +14,7 @@
 | `currency` | `?string` | Optional | - | getCurrency(): ?string | setCurrency(?string currency): void |
 | `currencySymbol` | `?string` | Optional | - | getCurrencySymbol(): ?string | setCurrencySymbol(?string currencySymbol): void |
 | `breakouts` | [`?Breakouts`](../../doc/models/breakouts.md) | Optional | - | getBreakouts(): ?Breakouts | setBreakouts(?Breakouts breakouts): void |
-| `atTime` | `?string` | Optional | ISO8601 timestamp | getAtTime(): ?string | setAtTime(?string atTime): void |
+| `atTime` | `?DateTime` | Optional | ISO8601 timestamp | getAtTime(): ?\DateTime | setAtTime(?\DateTime atTime): void |
 
 ## Example (as JSON)
 

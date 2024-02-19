@@ -10,12 +10,13 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
 class Movement implements \JsonSerializable
 {
     /**
-     * @var string|null
+     * @var \DateTime|null
      */
     private $timestamp;
 
@@ -62,7 +63,7 @@ class Movement implements \JsonSerializable
     /**
      * Returns Timestamp.
      */
-    public function getTimestamp(): ?string
+    public function getTimestamp(): ?\DateTime
     {
         return $this->timestamp;
     }
@@ -71,8 +72,9 @@ class Movement implements \JsonSerializable
      * Sets Timestamp.
      *
      * @maps timestamp
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setTimestamp(?string $timestamp): void
+    public function setTimestamp(?\DateTime $timestamp): void
     {
         $this->timestamp = $timestamp;
     }
@@ -238,7 +240,7 @@ class Movement implements \JsonSerializable
     {
         $json = [];
         if (isset($this->timestamp)) {
-            $json['timestamp']        = $this->timestamp;
+            $json['timestamp']        = DateTimeHelper::toRfc3339DateTime($this->timestamp);
         }
         if (isset($this->amountInCents)) {
             $json['amount_in_cents']  = $this->amountInCents;

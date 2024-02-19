@@ -59,7 +59,7 @@ class PortalManagementLinkBuilder
     /**
      * Sets created at field.
      */
-    public function createdAt(?string $value): self
+    public function createdAt(?\DateTime $value): self
     {
         $this->instance->setCreatedAt($value);
         return $this;
@@ -68,7 +68,7 @@ class PortalManagementLinkBuilder
     /**
      * Sets new link available at field.
      */
-    public function newLinkAvailableAt(?string $value): self
+    public function newLinkAvailableAt(?\DateTime $value): self
     {
         $this->instance->setNewLinkAvailableAt($value);
         return $this;
@@ -77,7 +77,7 @@ class PortalManagementLinkBuilder
     /**
      * Sets expires at field.
      */
-    public function expiresAt(?string $value): self
+    public function expiresAt(?\DateTime $value): self
     {
         $this->instance->setExpiresAt($value);
         return $this;
@@ -86,7 +86,7 @@ class PortalManagementLinkBuilder
     /**
      * Sets last invite sent at field.
      */
-    public function lastInviteSentAt(?string $value): self
+    public function lastInviteSentAt(?\DateTime $value): self
     {
         $this->instance->setLastInviteSentAt($value);
         return $this;

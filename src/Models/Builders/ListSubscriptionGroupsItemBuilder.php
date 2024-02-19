@@ -96,7 +96,7 @@ class ListSubscriptionGroupsItemBuilder
     /**
      * Sets next assessment at field.
      */
-    public function nextAssessmentAt(?string $value): self
+    public function nextAssessmentAt(?\DateTime $value): self
     {
         $this->instance->setNextAssessmentAt($value);
         return $this;

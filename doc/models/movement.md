@@ -9,7 +9,7 @@
 
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
-| `timestamp` | `?string` | Optional | - | getTimestamp(): ?string | setTimestamp(?string timestamp): void |
+| `timestamp` | `?DateTime` | Optional | - | getTimestamp(): ?\DateTime | setTimestamp(?\DateTime timestamp): void |
 | `amountInCents` | `?int` | Optional | - | getAmountInCents(): ?int | setAmountInCents(?int amountInCents): void |
 | `amountFormatted` | `?string` | Optional | - | getAmountFormatted(): ?string | setAmountFormatted(?string amountFormatted): void |
 | `description` | `?string` | Optional | - | getDescription(): ?string | setDescription(?string description): void |
@@ -23,7 +23,7 @@
 
 ```json
 {
-  "timestamp": "timestamp0",
+  "timestamp": "2016-03-13T12:52:32.123Z",
   "amount_in_cents": 174,
   "amount_formatted": "amount_formatted4",
   "description": "description2",

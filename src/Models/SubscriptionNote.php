@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
 class SubscriptionNote implements \JsonSerializable
@@ -30,12 +31,12 @@ class SubscriptionNote implements \JsonSerializable
     private $subscriptionId;
 
     /**
-     * @var string|null
+     * @var \DateTime|null
      */
     private $createdAt;
 
     /**
-     * @var string|null
+     * @var \DateTime|null
      */
     private $updatedAt;
 
@@ -101,7 +102,7 @@ class SubscriptionNote implements \JsonSerializable
     /**
      * Returns Created At.
      */
-    public function getCreatedAt(): ?string
+    public function getCreatedAt(): ?\DateTime
     {
         return $this->createdAt;
     }
@@ -110,8 +111,9 @@ class SubscriptionNote implements \JsonSerializable
      * Sets Created At.
      *
      * @maps created_at
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setCreatedAt(?string $createdAt): void
+    public function setCreatedAt(?\DateTime $createdAt): void
     {
         $this->createdAt = $createdAt;
     }
@@ -119,7 +121,7 @@ class SubscriptionNote implements \JsonSerializable
     /**
      * Returns Updated At.
      */
-    public function getUpdatedAt(): ?string
+    public function getUpdatedAt(): ?\DateTime
     {
         return $this->updatedAt;
     }
@@ -128,8 +130,9 @@ class SubscriptionNote implements \JsonSerializable
      * Sets Updated At.
      *
      * @maps updated_at
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setUpdatedAt(?string $updatedAt): void
+    public function setUpdatedAt(?\DateTime $updatedAt): void
     {
         $this->updatedAt = $updatedAt;
     }
@@ -174,10 +177,10 @@ class SubscriptionNote implements \JsonSerializable
             $json['subscription_id'] = $this->subscriptionId;
         }
         if (isset($this->createdAt)) {
-            $json['created_at']      = $this->createdAt;
+            $json['created_at']      = DateTimeHelper::toRfc3339DateTime($this->createdAt);
         }
         if (isset($this->updatedAt)) {
-            $json['updated_at']      = $this->updatedAt;
+            $json['updated_at']      = DateTimeHelper::toRfc3339DateTime($this->updatedAt);
         }
         if (isset($this->sticky)) {
             $json['sticky']          = $this->sticky;

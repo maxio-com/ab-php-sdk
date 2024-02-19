@@ -131,7 +131,7 @@ class CreditNoteLineItemBuilder
     /**
      * Sets period range start field.
      */
-    public function periodRangeStart(?string $value): self
+    public function periodRangeStart(?\DateTime $value): self
     {
         $this->instance->setPeriodRangeStart($value);
         return $this;
@@ -140,7 +140,7 @@ class CreditNoteLineItemBuilder
     /**
      * Sets period range end field.
      */
-    public function periodRangeEnd(?string $value): self
+    public function periodRangeEnd(?\DateTime $value): self
     {
         $this->instance->setPeriodRangeEnd($value);
         return $this;
@@ -197,6 +197,33 @@ class CreditNoteLineItemBuilder
     public function unsetPricePointId(): self
     {
         $this->instance->unsetPricePointId();
+        return $this;
+    }
+
+    /**
+     * Sets billing schedule item id field.
+     */
+    public function billingScheduleItemId(?int $value): self
+    {
+        $this->instance->setBillingScheduleItemId($value);
+        return $this;
+    }
+
+    /**
+     * Unsets billing schedule item id field.
+     */
+    public function unsetBillingScheduleItemId(): self
+    {
+        $this->instance->unsetBillingScheduleItemId();
+        return $this;
+    }
+
+    /**
+     * Sets custom item field.
+     */
+    public function customItem(?bool $value): self
+    {
+        $this->instance->setCustomItem($value);
         return $this;
     }
 

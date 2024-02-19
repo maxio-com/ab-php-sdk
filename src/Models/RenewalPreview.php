@@ -10,12 +10,13 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
 class RenewalPreview implements \JsonSerializable
 {
     /**
-     * @var string|null
+     * @var \DateTime|null
      */
     private $nextAssessmentAt;
 
@@ -63,7 +64,7 @@ class RenewalPreview implements \JsonSerializable
      * Returns Next Assessment At.
      * The timestamp for the subscription’s next renewal
      */
-    public function getNextAssessmentAt(): ?string
+    public function getNextAssessmentAt(): ?\DateTime
     {
         return $this->nextAssessmentAt;
     }
@@ -73,8 +74,9 @@ class RenewalPreview implements \JsonSerializable
      * The timestamp for the subscription’s next renewal
      *
      * @maps next_assessment_at
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setNextAssessmentAt(?string $nextAssessmentAt): void
+    public function setNextAssessmentAt(?\DateTime $nextAssessmentAt): void
     {
         $this->nextAssessmentAt = $nextAssessmentAt;
     }
@@ -266,7 +268,7 @@ class RenewalPreview implements \JsonSerializable
     {
         $json = [];
         if (isset($this->nextAssessmentAt)) {
-            $json['next_assessment_at']        = $this->nextAssessmentAt;
+            $json['next_assessment_at']        = DateTimeHelper::toRfc3339DateTime($this->nextAssessmentAt);
         }
         if (isset($this->subtotalInCents)) {
             $json['subtotal_in_cents']         = $this->subtotalInCents;

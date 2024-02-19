@@ -10,40 +10,40 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models\Builders;
 
-use AdvancedBillingLib\Models\Payment;
+use AdvancedBillingLib\Models\PaidInvoice;
 use Core\Utils\CoreHelper;
 
 /**
- * Builder for model Payment
+ * Builder for model PaidInvoice
  *
- * @see Payment
+ * @see PaidInvoice
  */
-class PaymentBuilder
+class PaidInvoiceBuilder
 {
     /**
-     * @var Payment
+     * @var PaidInvoice
      */
     private $instance;
 
-    private function __construct(Payment $instance)
+    private function __construct(PaidInvoice $instance)
     {
         $this->instance = $instance;
     }
 
     /**
-     * Initializes a new payment Builder object.
+     * Initializes a new paid invoice Builder object.
      */
     public static function init(): self
     {
-        return new self(new Payment());
+        return new self(new PaidInvoice());
     }
 
     /**
-     * Sets invoice uid field.
+     * Sets invoice id field.
      */
-    public function invoiceUid(?string $value): self
+    public function invoiceId(?string $value): self
     {
-        $this->instance->setInvoiceUid($value);
+        $this->instance->setInvoiceId($value);
         return $this;
     }
 
@@ -75,9 +75,9 @@ class PaymentBuilder
     }
 
     /**
-     * Initializes a new payment object.
+     * Initializes a new paid invoice object.
      */
-    public function build(): Payment
+    public function build(): PaidInvoice
     {
         return CoreHelper::clone($this->instance);
     }

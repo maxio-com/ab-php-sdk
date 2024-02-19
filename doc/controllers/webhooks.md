@@ -193,14 +193,14 @@ You can check available events here.
 [Event keys](https://maxio-chargify.zendesk.com/hc/en-us/articles/5405357509645-Webhooks-Reference#example-payloads)
 
 ```php
-function createEndpoint(?UpdateEndpointRequest $body = null): EndpointResponse
+function createEndpoint(?CreateOrUpdateEndpointRequest $body = null): EndpointResponse
 ```
 
 ## Parameters
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `body` | [`?UpdateEndpointRequest`](../../doc/models/update-endpoint-request.md) | Body, Optional | Used to Create or Update Endpoint |
+| `body` | [`?CreateOrUpdateEndpointRequest`](../../doc/models/create-or-update-endpoint-request.md) | Body, Optional | Used to Create or Update Endpoint |
 
 ## Response Type
 
@@ -209,8 +209,8 @@ function createEndpoint(?UpdateEndpointRequest $body = null): EndpointResponse
 ## Example Usage
 
 ```php
-$body = UpdateEndpointRequestBuilder::init(
-    UpdateEndpointBuilder::init(
+$body = CreateOrUpdateEndpointRequestBuilder::init(
+    CreateOrUpdateEndpointBuilder::init(
         'https://your.site/webhooks',
         [
             WebhookSubscription::PAYMENT_SUCCESS,
@@ -306,7 +306,7 @@ Sending an PUT request for existing endpoint with empty list of `webhook_subscri
 If you want unsubscribe from specific event, just send a list of `webhook_subscriptions` without the specific event key.
 
 ```php
-function updateEndpoint(int $endpointId, ?UpdateEndpointRequest $body = null): EndpointResponse
+function updateEndpoint(int $endpointId, ?CreateOrUpdateEndpointRequest $body = null): EndpointResponse
 ```
 
 ## Parameters
@@ -314,7 +314,7 @@ function updateEndpoint(int $endpointId, ?UpdateEndpointRequest $body = null): E
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `endpointId` | `int` | Template, Required | The Chargify id for the endpoint that should be updated |
-| `body` | [`?UpdateEndpointRequest`](../../doc/models/update-endpoint-request.md) | Body, Optional | Used to Create or Update Endpoint |
+| `body` | [`?CreateOrUpdateEndpointRequest`](../../doc/models/create-or-update-endpoint-request.md) | Body, Optional | Used to Create or Update Endpoint |
 
 ## Response Type
 
@@ -325,8 +325,8 @@ function updateEndpoint(int $endpointId, ?UpdateEndpointRequest $body = null): E
 ```php
 $endpointId = 42;
 
-$body = UpdateEndpointRequestBuilder::init(
-    UpdateEndpointBuilder::init(
+$body = CreateOrUpdateEndpointRequestBuilder::init(
+    CreateOrUpdateEndpointBuilder::init(
         'https://yout.site/webhooks/1/json.',
         [
             WebhookSubscription::PAYMENT_FAILURE,

@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
 class CreditNoteLineItem implements \JsonSerializable
@@ -65,12 +66,12 @@ class CreditNoteLineItem implements \JsonSerializable
     private $tieredUnitPrice;
 
     /**
-     * @var string|null
+     * @var \DateTime|null
      */
     private $periodRangeStart;
 
     /**
-     * @var string|null
+     * @var \DateTime|null
      */
     private $periodRangeEnd;
 
@@ -93,6 +94,16 @@ class CreditNoteLineItem implements \JsonSerializable
      * @var array
      */
     private $pricePointId = [];
+
+    /**
+     * @var array
+     */
+    private $billingScheduleItemId = [];
+
+    /**
+     * @var bool|null
+     */
+    private $customItem;
 
     /**
      * Returns Uid.
@@ -354,7 +365,7 @@ class CreditNoteLineItem implements \JsonSerializable
      * Returns Period Range Start.
      * Start date for the period credited by this line. The format is `"YYYY-MM-DD"`.
      */
-    public function getPeriodRangeStart(): ?string
+    public function getPeriodRangeStart(): ?\DateTime
     {
         return $this->periodRangeStart;
     }
@@ -364,8 +375,9 @@ class CreditNoteLineItem implements \JsonSerializable
      * Start date for the period credited by this line. The format is `"YYYY-MM-DD"`.
      *
      * @maps period_range_start
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromSimpleDate
      */
-    public function setPeriodRangeStart(?string $periodRangeStart): void
+    public function setPeriodRangeStart(?\DateTime $periodRangeStart): void
     {
         $this->periodRangeStart = $periodRangeStart;
     }
@@ -374,7 +386,7 @@ class CreditNoteLineItem implements \JsonSerializable
      * Returns Period Range End.
      * End date for the period credited by this line. The format is `"YYYY-MM-DD"`.
      */
-    public function getPeriodRangeEnd(): ?string
+    public function getPeriodRangeEnd(): ?\DateTime
     {
         return $this->periodRangeEnd;
     }
@@ -384,8 +396,9 @@ class CreditNoteLineItem implements \JsonSerializable
      * End date for the period credited by this line. The format is `"YYYY-MM-DD"`.
      *
      * @maps period_range_end
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromSimpleDate
      */
-    public function setPeriodRangeEnd(?string $periodRangeEnd): void
+    public function setPeriodRangeEnd(?\DateTime $periodRangeEnd): void
     {
         $this->periodRangeEnd = $periodRangeEnd;
     }
@@ -501,6 +514,53 @@ class CreditNoteLineItem implements \JsonSerializable
     }
 
     /**
+     * Returns Billing Schedule Item Id.
+     */
+    public function getBillingScheduleItemId(): ?int
+    {
+        if (count($this->billingScheduleItemId) == 0) {
+            return null;
+        }
+        return $this->billingScheduleItemId['value'];
+    }
+
+    /**
+     * Sets Billing Schedule Item Id.
+     *
+     * @maps billing_schedule_item_id
+     */
+    public function setBillingScheduleItemId(?int $billingScheduleItemId): void
+    {
+        $this->billingScheduleItemId['value'] = $billingScheduleItemId;
+    }
+
+    /**
+     * Unsets Billing Schedule Item Id.
+     */
+    public function unsetBillingScheduleItemId(): void
+    {
+        $this->billingScheduleItemId = [];
+    }
+
+    /**
+     * Returns Custom Item.
+     */
+    public function getCustomItem(): ?bool
+    {
+        return $this->customItem;
+    }
+
+    /**
+     * Sets Custom Item.
+     *
+     * @maps custom_item
+     */
+    public function setCustomItem(?bool $customItem): void
+    {
+        $this->customItem = $customItem;
+    }
+
+    /**
      * Encode this object to JSON
      *
      * @param bool $asArrayWhenEmpty Whether to serialize this model as an array whenever no fields
@@ -513,52 +573,58 @@ class CreditNoteLineItem implements \JsonSerializable
     {
         $json = [];
         if (isset($this->uid)) {
-            $json['uid']                = $this->uid;
+            $json['uid']                      = $this->uid;
         }
         if (isset($this->title)) {
-            $json['title']              = $this->title;
+            $json['title']                    = $this->title;
         }
         if (isset($this->description)) {
-            $json['description']        = $this->description;
+            $json['description']              = $this->description;
         }
         if (isset($this->quantity)) {
-            $json['quantity']           = $this->quantity;
+            $json['quantity']                 = $this->quantity;
         }
         if (isset($this->unitPrice)) {
-            $json['unit_price']         = $this->unitPrice;
+            $json['unit_price']               = $this->unitPrice;
         }
         if (isset($this->subtotalAmount)) {
-            $json['subtotal_amount']    = $this->subtotalAmount;
+            $json['subtotal_amount']          = $this->subtotalAmount;
         }
         if (isset($this->discountAmount)) {
-            $json['discount_amount']    = $this->discountAmount;
+            $json['discount_amount']          = $this->discountAmount;
         }
         if (isset($this->taxAmount)) {
-            $json['tax_amount']         = $this->taxAmount;
+            $json['tax_amount']               = $this->taxAmount;
         }
         if (isset($this->totalAmount)) {
-            $json['total_amount']       = $this->totalAmount;
+            $json['total_amount']             = $this->totalAmount;
         }
         if (isset($this->tieredUnitPrice)) {
-            $json['tiered_unit_price']  = $this->tieredUnitPrice;
+            $json['tiered_unit_price']        = $this->tieredUnitPrice;
         }
         if (isset($this->periodRangeStart)) {
-            $json['period_range_start'] = $this->periodRangeStart;
+            $json['period_range_start']       = DateTimeHelper::toSimpleDate($this->periodRangeStart);
         }
         if (isset($this->periodRangeEnd)) {
-            $json['period_range_end']   = $this->periodRangeEnd;
+            $json['period_range_end']         = DateTimeHelper::toSimpleDate($this->periodRangeEnd);
         }
         if (isset($this->productId)) {
-            $json['product_id']         = $this->productId;
+            $json['product_id']               = $this->productId;
         }
         if (isset($this->productVersion)) {
-            $json['product_version']    = $this->productVersion;
+            $json['product_version']          = $this->productVersion;
         }
         if (!empty($this->componentId)) {
-            $json['component_id']       = $this->componentId['value'];
+            $json['component_id']             = $this->componentId['value'];
         }
         if (!empty($this->pricePointId)) {
-            $json['price_point_id']     = $this->pricePointId['value'];
+            $json['price_point_id']           = $this->pricePointId['value'];
+        }
+        if (!empty($this->billingScheduleItemId)) {
+            $json['billing_schedule_item_id'] = $this->billingScheduleItemId['value'];
+        }
+        if (isset($this->customItem)) {
+            $json['custom_item']              = $this->customItem;
         }
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;

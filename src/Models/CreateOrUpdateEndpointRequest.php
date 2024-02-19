@@ -15,17 +15,17 @@ use stdClass;
 /**
  * Used to Create or Update Endpoint
  */
-class UpdateEndpointRequest implements \JsonSerializable
+class CreateOrUpdateEndpointRequest implements \JsonSerializable
 {
     /**
-     * @var UpdateEndpoint
+     * @var CreateOrUpdateEndpoint
      */
     private $endpoint;
 
     /**
-     * @param UpdateEndpoint $endpoint
+     * @param CreateOrUpdateEndpoint $endpoint
      */
-    public function __construct(UpdateEndpoint $endpoint)
+    public function __construct(CreateOrUpdateEndpoint $endpoint)
     {
         $this->endpoint = $endpoint;
     }
@@ -34,7 +34,7 @@ class UpdateEndpointRequest implements \JsonSerializable
      * Returns Endpoint.
      * Used to Create or Update Endpoint
      */
-    public function getEndpoint(): UpdateEndpoint
+    public function getEndpoint(): CreateOrUpdateEndpoint
     {
         return $this->endpoint;
     }
@@ -46,7 +46,7 @@ class UpdateEndpointRequest implements \JsonSerializable
      * @required
      * @maps endpoint
      */
-    public function setEndpoint(UpdateEndpoint $endpoint): void
+    public function setEndpoint(CreateOrUpdateEndpoint $endpoint): void
     {
         $this->endpoint = $endpoint;
     }

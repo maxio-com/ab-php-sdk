@@ -14,11 +14,6 @@ use Core\Utils\CoreHelper;
 use Exception;
 use stdClass;
 
-/**
- * :- When the `method` specified is `"credit_card_on_file"`, the prepayment amount will be collected
- * using the default credit card payment profile and applied to the prepayment account balance. This is
- * especially useful for manual replenishment of prepaid subscriptions.
- */
 class PrepaymentMethod
 {
     public const CHECK = 'check';
@@ -31,19 +26,20 @@ class PrepaymentMethod
 
     public const PAYPAL_ACCOUNT = 'paypal_account';
 
-    public const CREDIT_CARD_ON_FILE = 'credit_card_on_file';
+    public const CREDIT_CARD = 'credit_card';
 
     public const OTHER = 'other';
 
-    private const _ALL_VALUES = [
-        self::CHECK,
-        self::CASH,
-        self::MONEY_ORDER,
-        self::ACH,
-        self::PAYPAL_ACCOUNT,
-        self::CREDIT_CARD_ON_FILE,
-        self::OTHER
-    ];
+    private const _ALL_VALUES =
+        [
+            self::CHECK,
+            self::CASH,
+            self::MONEY_ORDER,
+            self::ACH,
+            self::PAYPAL_ACCOUNT,
+            self::CREDIT_CARD,
+            self::OTHER
+        ];
 
     /**
      * Ensures that all the given values are present in this Enum.

@@ -227,8 +227,8 @@ class CreateProductPricePoint implements \JsonSerializable
 
     /**
      * Returns Trial Interval.
-     * The numerical trial interval. i.e. an interval of ‘30’ coupled with an trial_interval_unit of day
-     * would mean this product price point would renew every 30 days
+     * The numerical trial interval. i.e. an interval of ‘30’ coupled with a trial_interval_unit of day
+     * would mean this product price point trial would last 30 days.
      */
     public function getTrialInterval(): ?int
     {
@@ -237,8 +237,8 @@ class CreateProductPricePoint implements \JsonSerializable
 
     /**
      * Sets Trial Interval.
-     * The numerical trial interval. i.e. an interval of ‘30’ coupled with an trial_interval_unit of day
-     * would mean this product price point would renew every 30 days
+     * The numerical trial interval. i.e. an interval of ‘30’ coupled with a trial_interval_unit of day
+     * would mean this product price point trial would last 30 days.
      *
      * @maps trial_interval
      */
@@ -327,7 +327,7 @@ class CreateProductPricePoint implements \JsonSerializable
     /**
      * Returns Expiration Interval.
      * The numerical expiration interval. i.e. an expiration_interval of ‘30’ coupled with an
-     * expiration_interval_unit of day would mean this product price point would expire every 30 days
+     * expiration_interval_unit of day would mean this product price point would expire after 30 days.
      */
     public function getExpirationInterval(): ?int
     {
@@ -337,7 +337,7 @@ class CreateProductPricePoint implements \JsonSerializable
     /**
      * Sets Expiration Interval.
      * The numerical expiration interval. i.e. an expiration_interval of ‘30’ coupled with an
-     * expiration_interval_unit of day would mean this product price point would expire every 30 days
+     * expiration_interval_unit of day would mean this product price point would expire after 30 days.
      *
      * @maps expiration_interval
      */

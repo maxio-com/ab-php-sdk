@@ -1089,6 +1089,12 @@ $result = $invoicesController->recordPaymentForInvoice(
 );
 ```
 
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 422 | Unprocessable Entity | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
+
 
 # Record Payment for Multiple Invoices
 
@@ -1616,7 +1622,9 @@ $result = $invoicesController->readCreditNote($uid);
       "product_id": 85,
       "product_version": 1,
       "component_id": 81,
-      "price_point_id": 165
+      "price_point_id": 165,
+      "billing_schedule_item_id": null,
+      "custom_item": false
     },
     {
       "uid": "cnli_8kjttvjcjx8b4",
@@ -1634,7 +1642,9 @@ $result = $invoicesController->readCreditNote($uid);
       "product_id": 85,
       "product_version": 1,
       "component_id": null,
-      "price_point_id": null
+      "price_point_id": null,
+      "billing_schedule_item_id": null,
+      "custom_item": false
     },
     {
       "uid": "cnli_8kjttvjknzhx7",
@@ -1652,7 +1662,9 @@ $result = $invoicesController->readCreditNote($uid);
       "product_id": 85,
       "product_version": 1,
       "component_id": 78,
-      "price_point_id": null
+      "price_point_id": null,
+      "billing_schedule_item_id": null,
+      "custom_item": false
     },
     {
       "uid": "cnli_8kjttvjnmh25w",
@@ -1670,7 +1682,9 @@ $result = $invoicesController->readCreditNote($uid);
       "product_id": 85,
       "product_version": 1,
       "component_id": 79,
-      "price_point_id": null
+      "price_point_id": null,
+      "billing_schedule_item_id": null,
+      "custom_item": false
     },
     {
       "uid": "cnli_8kjttvjqn86kc",
@@ -1688,7 +1702,9 @@ $result = $invoicesController->readCreditNote($uid);
       "product_id": 85,
       "product_version": 1,
       "component_id": 80,
-      "price_point_id": null
+      "price_point_id": null,
+      "billing_schedule_item_id": null,
+      "custom_item": false
     },
     {
       "uid": "cnli_8kjttvjtxxbdd",
@@ -1706,7 +1722,9 @@ $result = $invoicesController->readCreditNote($uid);
       "product_id": 85,
       "product_version": 1,
       "component_id": 81,
-      "price_point_id": 165
+      "price_point_id": 165,
+      "billing_schedule_item_id": null,
+      "custom_item": false
     }
   ],
   "discounts": [
@@ -1830,7 +1848,10 @@ Excess payment will result in the creation of a prepayment on the Invoice Accoun
 Only ungrouped or primary subscriptions may be paid using the "bulk" payment request.
 
 ```php
-function recordPaymentForSubscription(int $subscriptionId, ?RecordPaymentRequest $body = null): PaymentResponse
+function recordPaymentForSubscription(
+    int $subscriptionId,
+    ?RecordPaymentRequest $body = null
+): RecordPaymentResponse
 ```
 
 ## Parameters
@@ -1842,7 +1863,7 @@ function recordPaymentForSubscription(int $subscriptionId, ?RecordPaymentRequest
 
 ## Response Type
 
-[`PaymentResponse`](../../doc/models/payment-response.md)
+[`RecordPaymentResponse`](../../doc/models/record-payment-response.md)
 
 ## Example Usage
 
@@ -1854,7 +1875,7 @@ $body = RecordPaymentRequestBuilder::init(
         '10.0',
         'to pay the bills',
         'check number 8675309',
-        'check'
+        InvoicePaymentMethodType::CHECK
     )->build()
 )->build();
 
@@ -1870,23 +1891,19 @@ $result = $invoicesController->recordPaymentForSubscription(
 {
   "paid_invoices": [
     {
-      "invoice_uid": "xyz_012345678",
+      "invoice_id": "inv_bchyhr6z5grby",
       "status": "paid",
       "due_amount": "0.0",
       "paid_amount": "50.0"
     },
     {
-      "invoice_uid": "xyz_012345678",
+      "invoice_id": "inv_bchyhrgvyb6vm",
       "status": "paid",
       "due_amount": "0.0",
       "paid_amount": "50.0"
     }
   ],
-  "prepayment": {
-    "subscription_id": "123456",
-    "amount_in_cents": "5000",
-    "ending_balance_in_cents": "5000"
-  }
+  "prepayment": null
 }
 ```
 

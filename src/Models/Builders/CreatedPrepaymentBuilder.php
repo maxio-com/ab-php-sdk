@@ -77,7 +77,7 @@ class CreatedPrepaymentBuilder
     /**
      * Sets created at field.
      */
-    public function createdAt(?string $value): self
+    public function createdAt(?\DateTime $value): self
     {
         $this->instance->setCreatedAt($value);
         return $this;

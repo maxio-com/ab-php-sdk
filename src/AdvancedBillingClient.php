@@ -10,6 +10,8 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib;
 
+use AdvancedBillingLib\Authentication\BasicAuthCredentialsBuilder;
+use AdvancedBillingLib\Authentication\BasicAuthManager;
 use AdvancedBillingLib\Controllers\AdvanceInvoiceController;
 use AdvancedBillingLib\Controllers\APIExportsController;
 use AdvancedBillingLib\Controllers\BillingPortalController;
@@ -136,11 +138,11 @@ class AdvancedBillingClient implements ConfigurationInterface
             ->converter(new CompatibilityConverter())
             ->jsonHelper(ApiHelper::getJsonHelper())
             ->apiCallback($this->config['httpCallback'] ?? null)
-            ->userAgent('AB SDK PHP:1.0.0 on OS {os-info}')
+            ->userAgent('AB SDK PHP:1.0.1 on OS {os-info}')
             ->globalConfig($this->getGlobalConfiguration())
             ->globalErrors($this->getGlobalErrors())
             ->serverUrls(self::ENVIRONMENT_MAP[$this->getEnvironment()], Server::DEFAULT_)
-            ->authManagers(['global' => $this->basicAuthManager])
+            ->authManagers(['BasicAuth' => $this->basicAuthManager])
             ->build();
     }
 
@@ -151,7 +153,7 @@ class AdvancedBillingClient implements ConfigurationInterface
      */
     public function toBuilder(): AdvancedBillingClientBuilder
     {
-        return AdvancedBillingClientBuilder::init()
+        $builder = AdvancedBillingClientBuilder::init()
             ->timeout($this->getTimeout())
             ->enableRetries($this->shouldEnableRetries())
             ->numberOfRetries($this->getNumberOfRetries())
@@ -164,9 +166,13 @@ class AdvancedBillingClient implements ConfigurationInterface
             ->environment($this->getEnvironment())
             ->subdomain($this->getSubdomain())
             ->domain($this->getDomain())
-            ->basicAuthUserName($this->basicAuthManager->getBasicAuthUserName())
-            ->basicAuthPassword($this->basicAuthManager->getBasicAuthPassword())
             ->httpCallback($this->config['httpCallback'] ?? null);
+
+        $basicAuth = $this->getBasicAuthCredentialsBuilder();
+        if ($basicAuth != null) {
+            $builder->basicAuthCredentials($basicAuth);
+        }
+        return $builder;
     }
 
     public function getTimeout(): int
@@ -229,9 +235,23 @@ class AdvancedBillingClient implements ConfigurationInterface
         return $this->config['domain'] ?? ConfigurationDefaults::DOMAIN;
     }
 
-    public function getBasicAuthCredentials(): ?BasicAuthCredentials
+    public function getBasicAuthCredentials(): BasicAuthCredentials
     {
         return $this->basicAuthManager;
+    }
+
+    public function getBasicAuthCredentialsBuilder(): ?BasicAuthCredentialsBuilder
+    {
+        if (
+            empty($this->basicAuthManager->getBasicAuthUserName()) &&
+            empty($this->basicAuthManager->getBasicAuthPassword())
+        ) {
+            return null;
+        }
+        return BasicAuthCredentialsBuilder::init(
+            $this->basicAuthManager->getBasicAuthUserName(),
+            $this->basicAuthManager->getBasicAuthPassword()
+        );
     }
 
     /**

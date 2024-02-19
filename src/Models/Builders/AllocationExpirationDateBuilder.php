@@ -41,7 +41,7 @@ class AllocationExpirationDateBuilder
     /**
      * Sets expires at field.
      */
-    public function expiresAt(?string $value): self
+    public function expiresAt(?\DateTime $value): self
     {
         $this->instance->setExpiresAt($value);
         return $this;

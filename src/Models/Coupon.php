@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace AdvancedBillingLib\Models;
 
 use AdvancedBillingLib\ApiHelper;
+use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
 class Coupon implements \JsonSerializable
@@ -56,7 +57,7 @@ class Coupon implements \JsonSerializable
     private $productFamilyName = [];
 
     /**
-     * @var string|null
+     * @var \DateTime|null
      */
     private $startDate;
 
@@ -131,12 +132,12 @@ class Coupon implements \JsonSerializable
     private $useSiteExchangeRate;
 
     /**
-     * @var string|null
+     * @var \DateTime|null
      */
     private $createdAt;
 
     /**
-     * @var string|null
+     * @var \DateTime|null
      */
     private $updatedAt;
 
@@ -340,7 +341,7 @@ class Coupon implements \JsonSerializable
     /**
      * Returns Start Date.
      */
-    public function getStartDate(): ?string
+    public function getStartDate(): ?\DateTime
     {
         return $this->startDate;
     }
@@ -349,8 +350,9 @@ class Coupon implements \JsonSerializable
      * Sets Start Date.
      *
      * @maps start_date
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setStartDate(?string $startDate): void
+    public function setStartDate(?\DateTime $startDate): void
     {
         $this->startDate = $startDate;
     }
@@ -358,7 +360,7 @@ class Coupon implements \JsonSerializable
     /**
      * Returns End Date.
      */
-    public function getEndDate(): ?string
+    public function getEndDate(): ?\DateTime
     {
         if (count($this->endDate) == 0) {
             return null;
@@ -370,8 +372,9 @@ class Coupon implements \JsonSerializable
      * Sets End Date.
      *
      * @maps end_date
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setEndDate(?string $endDate): void
+    public function setEndDate(?\DateTime $endDate): void
     {
         $this->endDate['value'] = $endDate;
     }
@@ -587,7 +590,7 @@ class Coupon implements \JsonSerializable
     /**
      * Returns Archived At.
      */
-    public function getArchivedAt(): ?string
+    public function getArchivedAt(): ?\DateTime
     {
         if (count($this->archivedAt) == 0) {
             return null;
@@ -599,8 +602,9 @@ class Coupon implements \JsonSerializable
      * Sets Archived At.
      *
      * @maps archived_at
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setArchivedAt(?string $archivedAt): void
+    public function setArchivedAt(?\DateTime $archivedAt): void
     {
         $this->archivedAt['value'] = $archivedAt;
     }
@@ -701,7 +705,7 @@ class Coupon implements \JsonSerializable
     /**
      * Returns Created At.
      */
-    public function getCreatedAt(): ?string
+    public function getCreatedAt(): ?\DateTime
     {
         return $this->createdAt;
     }
@@ -710,8 +714,9 @@ class Coupon implements \JsonSerializable
      * Sets Created At.
      *
      * @maps created_at
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setCreatedAt(?string $createdAt): void
+    public function setCreatedAt(?\DateTime $createdAt): void
     {
         $this->createdAt = $createdAt;
     }
@@ -719,7 +724,7 @@ class Coupon implements \JsonSerializable
     /**
      * Returns Updated At.
      */
-    public function getUpdatedAt(): ?string
+    public function getUpdatedAt(): ?\DateTime
     {
         return $this->updatedAt;
     }
@@ -728,8 +733,9 @@ class Coupon implements \JsonSerializable
      * Sets Updated At.
      *
      * @maps updated_at
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setUpdatedAt(?string $updatedAt): void
+    public function setUpdatedAt(?\DateTime $updatedAt): void
     {
         $this->updatedAt = $updatedAt;
     }
@@ -848,10 +854,10 @@ class Coupon implements \JsonSerializable
             $json['product_family_name']              = $this->productFamilyName['value'];
         }
         if (isset($this->startDate)) {
-            $json['start_date']                       = $this->startDate;
+            $json['start_date']                       = DateTimeHelper::toRfc3339DateTime($this->startDate);
         }
         if (!empty($this->endDate)) {
-            $json['end_date']                         = $this->endDate['value'];
+            $json['end_date']                         = DateTimeHelper::toRfc3339DateTime($this->endDate['value']);
         }
         if (!empty($this->percentage)) {
             $json['percentage']                       = $this->percentage['value'];
@@ -878,7 +884,7 @@ class Coupon implements \JsonSerializable
             $json['allow_negative_balance']           = $this->allowNegativeBalance;
         }
         if (!empty($this->archivedAt)) {
-            $json['archived_at']                      = $this->archivedAt['value'];
+            $json['archived_at']                      = DateTimeHelper::toRfc3339DateTime($this->archivedAt['value']);
         }
         if (!empty($this->conversionLimit)) {
             $json['conversion_limit']                 = $this->conversionLimit['value'];
@@ -900,10 +906,10 @@ class Coupon implements \JsonSerializable
             $json['use_site_exchange_rate']           = $this->useSiteExchangeRate;
         }
         if (isset($this->createdAt)) {
-            $json['created_at']                       = $this->createdAt;
+            $json['created_at']                       = DateTimeHelper::toRfc3339DateTime($this->createdAt);
         }
         if (isset($this->updatedAt)) {
-            $json['updated_at']                       = $this->updatedAt;
+            $json['updated_at']                       = DateTimeHelper::toRfc3339DateTime($this->updatedAt);
         }
         if (isset($this->discountType)) {
             $json['discount_type']                    = DiscountType::checkValue($this->discountType);

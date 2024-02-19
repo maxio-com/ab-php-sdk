@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
 class ListSubcriptionGroupPrepaymentItem implements \JsonSerializable
@@ -55,7 +56,7 @@ class ListSubcriptionGroupPrepaymentItem implements \JsonSerializable
     private $paymentType;
 
     /**
-     * @var string|null
+     * @var \DateTime|null
      */
     private $createdAt;
 
@@ -187,9 +188,6 @@ class ListSubcriptionGroupPrepaymentItem implements \JsonSerializable
 
     /**
      * Returns Payment Type.
-     * :- When the `method` specified is `"credit_card_on_file"`, the prepayment amount will be collected
-     * using the default credit card payment profile and applied to the prepayment account balance. This is
-     * especially useful for manual replenishment of prepaid subscriptions.
      */
     public function getPaymentType(): ?string
     {
@@ -198,9 +196,6 @@ class ListSubcriptionGroupPrepaymentItem implements \JsonSerializable
 
     /**
      * Sets Payment Type.
-     * :- When the `method` specified is `"credit_card_on_file"`, the prepayment amount will be collected
-     * using the default credit card payment profile and applied to the prepayment account balance. This is
-     * especially useful for manual replenishment of prepaid subscriptions.
      *
      * @maps payment_type
      * @factory \AdvancedBillingLib\Models\PrepaymentMethod::checkValue
@@ -213,7 +208,7 @@ class ListSubcriptionGroupPrepaymentItem implements \JsonSerializable
     /**
      * Returns Created At.
      */
-    public function getCreatedAt(): ?string
+    public function getCreatedAt(): ?\DateTime
     {
         return $this->createdAt;
     }
@@ -222,8 +217,9 @@ class ListSubcriptionGroupPrepaymentItem implements \JsonSerializable
      * Sets Created At.
      *
      * @maps created_at
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setCreatedAt(?string $createdAt): void
+    public function setCreatedAt(?\DateTime $createdAt): void
     {
         $this->createdAt = $createdAt;
     }
@@ -265,7 +261,7 @@ class ListSubcriptionGroupPrepaymentItem implements \JsonSerializable
             $json['payment_type']              = PrepaymentMethod::checkValue($this->paymentType);
         }
         if (isset($this->createdAt)) {
-            $json['created_at']                = $this->createdAt;
+            $json['created_at']                = DateTimeHelper::toRfc3339DateTime($this->createdAt);
         }
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;

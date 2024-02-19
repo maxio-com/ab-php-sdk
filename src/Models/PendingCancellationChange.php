@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
 class PendingCancellationChange implements \JsonSerializable
@@ -20,15 +21,15 @@ class PendingCancellationChange implements \JsonSerializable
     private $cancellationState;
 
     /**
-     * @var string
+     * @var \DateTime
      */
     private $cancelsAt;
 
     /**
      * @param string $cancellationState
-     * @param string $cancelsAt
+     * @param \DateTime $cancelsAt
      */
-    public function __construct(string $cancellationState, string $cancelsAt)
+    public function __construct(string $cancellationState, \DateTime $cancelsAt)
     {
         $this->cancellationState = $cancellationState;
         $this->cancelsAt = $cancelsAt;
@@ -56,7 +57,7 @@ class PendingCancellationChange implements \JsonSerializable
     /**
      * Returns Cancels At.
      */
-    public function getCancelsAt(): string
+    public function getCancelsAt(): \DateTime
     {
         return $this->cancelsAt;
     }
@@ -66,8 +67,9 @@ class PendingCancellationChange implements \JsonSerializable
      *
      * @required
      * @maps cancels_at
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setCancelsAt(string $cancelsAt): void
+    public function setCancelsAt(\DateTime $cancelsAt): void
     {
         $this->cancelsAt = $cancelsAt;
     }
@@ -85,7 +87,7 @@ class PendingCancellationChange implements \JsonSerializable
     {
         $json = [];
         $json['cancellation_state'] = $this->cancellationState;
-        $json['cancels_at']         = $this->cancelsAt;
+        $json['cancels_at']         = DateTimeHelper::toRfc3339DateTime($this->cancelsAt);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

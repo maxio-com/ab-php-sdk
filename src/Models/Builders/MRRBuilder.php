@@ -87,7 +87,7 @@ class MRRBuilder
     /**
      * Sets at time field.
      */
-    public function atTime(?string $value): self
+    public function atTime(?\DateTime $value): self
     {
         $this->instance->setAtTime($value);
         return $this;

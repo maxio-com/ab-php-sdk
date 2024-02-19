@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
 class SubscriptionMigrationPreviewOptions implements \JsonSerializable
@@ -60,7 +61,7 @@ class SubscriptionMigrationPreviewOptions implements \JsonSerializable
     private $proration;
 
     /**
-     * @var string|null
+     * @var \DateTime|null
      */
     private $prorationDate;
 
@@ -268,7 +269,7 @@ class SubscriptionMigrationPreviewOptions implements \JsonSerializable
      * Returns Proration Date.
      * The date that the proration is calculated from for the preview
      */
-    public function getProrationDate(): ?string
+    public function getProrationDate(): ?\DateTime
     {
         return $this->prorationDate;
     }
@@ -278,8 +279,9 @@ class SubscriptionMigrationPreviewOptions implements \JsonSerializable
      * The date that the proration is calculated from for the preview
      *
      * @maps proration_date
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
      */
-    public function setProrationDate(?string $prorationDate): void
+    public function setProrationDate(?\DateTime $prorationDate): void
     {
         $this->prorationDate = $prorationDate;
     }
@@ -324,7 +326,7 @@ class SubscriptionMigrationPreviewOptions implements \JsonSerializable
             $json['proration']                  = $this->proration;
         }
         if (isset($this->prorationDate)) {
-            $json['proration_date']             = $this->prorationDate;
+            $json['proration_date']             = DateTimeHelper::toRfc3339DateTime($this->prorationDate);
         }
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;

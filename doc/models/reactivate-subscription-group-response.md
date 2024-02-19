@@ -15,7 +15,7 @@
 | `paymentProfileId` | `?int` | Optional | - | getPaymentProfileId(): ?int | setPaymentProfileId(?int paymentProfileId): void |
 | `subscriptionIds` | `?(int[])` | Optional | - | getSubscriptionIds(): ?array | setSubscriptionIds(?array subscriptionIds): void |
 | `primarySubscriptionId` | `?int` | Optional | - | getPrimarySubscriptionId(): ?int | setPrimarySubscriptionId(?int primarySubscriptionId): void |
-| `nextAssessmentAt` | `?string` | Optional | - | getNextAssessmentAt(): ?string | setNextAssessmentAt(?string nextAssessmentAt): void |
+| `nextAssessmentAt` | `?DateTime` | Optional | - | getNextAssessmentAt(): ?\DateTime | setNextAssessmentAt(?\DateTime nextAssessmentAt): void |
 | `state` | `?string` | Optional | - | getState(): ?string | setState(?string state): void |
 | `cancelAtEndOfPeriod` | `?bool` | Optional | - | getCancelAtEndOfPeriod(): ?bool | setCancelAtEndOfPeriod(?bool cancelAtEndOfPeriod): void |
 

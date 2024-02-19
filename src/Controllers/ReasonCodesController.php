@@ -55,7 +55,7 @@ class ReasonCodesController extends BaseController
     public function createReasonCode(?CreateReasonCodeRequest $body = null): ReasonCodeResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/reason_codes.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(HeaderParam::init('Content-Type', 'application/json'), BodyParam::init($body));
 
         $_resHandler = $this->responseHandler()
@@ -84,7 +84,7 @@ class ReasonCodesController extends BaseController
     public function listReasonCodes(array $options): array
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/reason_codes.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 QueryParam::init('page', $options)->commaSeparated()->extract('page', 1),
                 QueryParam::init('per_page', $options)->commaSeparated()->extract('perPage', 20)
@@ -108,7 +108,7 @@ class ReasonCodesController extends BaseController
     public function readReasonCode(int $reasonCodeId): ReasonCodeResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/reason_codes/{reason_code_id}.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(TemplateParam::init('reason_code_id', $reasonCodeId)->required());
 
         $_resHandler = $this->responseHandler()
@@ -131,7 +131,7 @@ class ReasonCodesController extends BaseController
     public function updateReasonCode(int $reasonCodeId, ?UpdateReasonCodeRequest $body = null): ReasonCodeResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::PUT, '/reason_codes/{reason_code_id}.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('reason_code_id', $reasonCodeId)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
@@ -158,7 +158,7 @@ class ReasonCodesController extends BaseController
     public function deleteReasonCode(int $reasonCodeId): ReasonCodesJsonResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::DELETE, '/reason_codes/{reason_code_id}.json')
-            ->auth('global')
+            ->auth('BasicAuth')
             ->parameters(TemplateParam::init('reason_code_id', $reasonCodeId)->required());
 
         $_resHandler = $this->responseHandler()

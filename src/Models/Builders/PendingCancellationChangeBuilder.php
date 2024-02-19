@@ -33,7 +33,7 @@ class PendingCancellationChangeBuilder
     /**
      * Initializes a new pending cancellation change Builder object.
      */
-    public static function init(string $cancellationState, string $cancelsAt): self
+    public static function init(string $cancellationState, \DateTime $cancelsAt): self
     {
         return new self(new PendingCancellationChange($cancellationState, $cancelsAt));
     }

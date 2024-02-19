@@ -18,9 +18,9 @@
 | `name` | `?string` | Optional | - | getName(): ?string | setName(?string name): void |
 | `handle` | `?string` | Optional | - | getHandle(): ?string | setHandle(?string handle): void |
 | `description` | `?string` | Optional | - | getDescription(): ?string | setDescription(?string description): void |
-| `createdAt` | `?string` | Optional | - | getCreatedAt(): ?string | setCreatedAt(?string createdAt): void |
-| `updatedAt` | `?string` | Optional | - | getUpdatedAt(): ?string | setUpdatedAt(?string updatedAt): void |
-| `archivedAt` | `?string` | Optional | - | getArchivedAt(): ?string | setArchivedAt(?string archivedAt): void |
+| `createdAt` | `?DateTime` | Optional | - | getCreatedAt(): ?\DateTime | setCreatedAt(?\DateTime createdAt): void |
+| `updatedAt` | `?DateTime` | Optional | - | getUpdatedAt(): ?\DateTime | setUpdatedAt(?\DateTime updatedAt): void |
+| `archivedAt` | `?DateTime` | Optional | - | getArchivedAt(): ?\DateTime | setArchivedAt(?\DateTime archivedAt): void |
 | `offerItems` | [`?(OfferItem[])`](../../doc/models/offer-item.md) | Optional | - | getOfferItems(): ?array | setOfferItems(?array offerItems): void |
 | `offerDiscounts` | [`?(OfferDiscount[])`](../../doc/models/offer-discount.md) | Optional | - | getOfferDiscounts(): ?array | setOfferDiscounts(?array offerDiscounts): void |
 | `productFamilyName` | `?string` | Optional | - | getProductFamilyName(): ?string | setProductFamilyName(?string productFamilyName): void |

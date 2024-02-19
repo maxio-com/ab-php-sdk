@@ -59,7 +59,7 @@ class WebhookBuilder
     /**
      * Sets created at field.
      */
-    public function createdAt(?string $value): self
+    public function createdAt(?\DateTime $value): self
     {
         $this->instance->setCreatedAt($value);
         return $this;
@@ -77,7 +77,7 @@ class WebhookBuilder
     /**
      * Sets last error at field.
      */
-    public function lastErrorAt(?string $value): self
+    public function lastErrorAt(?\DateTime $value): self
     {
         $this->instance->setLastErrorAt($value);
         return $this;
@@ -86,7 +86,7 @@ class WebhookBuilder
     /**
      * Sets accepted at field.
      */
-    public function acceptedAt(?string $value): self
+    public function acceptedAt(?\DateTime $value): self
     {
         $this->instance->setAcceptedAt($value);
         return $this;
@@ -104,7 +104,7 @@ class WebhookBuilder
     /**
      * Sets last sent at field.
      */
-    public function lastSentAt(?string $value): self
+    public function lastSentAt(?\DateTime $value): self
     {
         $this->instance->setLastSentAt($value);
         return $this;
