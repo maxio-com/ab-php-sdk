@@ -37,9 +37,9 @@ final class CouponsControllerTestData
         int $id,
         int $productFamilyId,
         string $productFamilyName,
-        string $createdAt,
-        string $updatedAt,
-        string $startDate
+        DateTime $createdAt,
+        DateTime $updatedAt,
+        DateTime $startDate
     ): Coupon
     {
         return $this->couponFactory->create(

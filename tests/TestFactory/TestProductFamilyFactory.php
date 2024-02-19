@@ -12,8 +12,8 @@ final class TestProductFamilyFactory
 {
     public function create(
         int $id,
-        string $createdAt,
-        string $updatedAt,
+        DateTime $createdAt,
+        DateTime $updatedAt,
         string $name,
         string $handle
     ): ProductFamily

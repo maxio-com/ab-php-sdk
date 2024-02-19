@@ -25,8 +25,8 @@ final class ProductFamiliesControllerTestData
 
     public function createExpectedProductFamilyOne(
         int $id,
-        string $createdAt,
-        string $updatedAt,
+        DateTime $createdAt,
+        DateTime $updatedAt,
     ): ProductFamily
     {
         return $this->productFamilyFactory->create(

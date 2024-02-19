@@ -14,9 +14,9 @@ final class TestCouponFactory
         int $id,
         int $productFamilyId,
         string $productFamilyName,
-        string $createdAt,
-        string $updatedAt,
-        string $startDate
+        DateTime $createdAt,
+        DateTime $updatedAt,
+        DateTime $startDate
     ): Coupon
     {
         return CouponBuilder::init()

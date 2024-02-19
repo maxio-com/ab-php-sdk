@@ -10,7 +10,7 @@ use AdvancedBillingLib\Tests\TestData\CustomerTestData;
 
 final class TestCustomerFactory
 {
-    public function create(int $id, string $createdAt, string $updatedAt): Customer
+    public function create(int $id, DateTime $createdAt, DateTime $updatedAt): Customer
     {
         return CustomerBuilder::init()
             ->id($id)

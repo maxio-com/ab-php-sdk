@@ -34,7 +34,7 @@ final class CustomersControllerTestData
     {
     }
 
-    public function getExpectedCustomer(int $id, string $createdAt, string $updatedAt): Customer
+    public function getExpectedCustomer(int $id, DateTime $createdAt, DateTime $updatedAt): Customer
     {
         return $this->customerFactory->create($id, $createdAt, $updatedAt);
     }
