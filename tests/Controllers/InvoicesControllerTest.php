@@ -125,6 +125,7 @@ final class InvoicesControllerTest extends TestCase
             ->getInvoicesController()
             ->createInvoice($subscription->getId(), $this->testData->getCreateInvoiceRequest())
             ->getInvoice();
+        sleep(2); # Wait until API register events.
 
         $response = $this->client
             ->getInvoicesController()
