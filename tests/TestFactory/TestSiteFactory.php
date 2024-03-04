@@ -36,6 +36,7 @@ final class TestSiteFactory
             ->organizationAddress($this->createDefaultOrganizationAddress())
             ->taxConfiguration($this->createDefaultTaxConfiguration())
             ->netTerms($this->createDefaultNetTerms())
+            ->additionalProperty("brighton_v1_enabled", false)
             ->test(TestSiteData::TEST)
             ->build();
     }
