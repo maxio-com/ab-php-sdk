@@ -48,6 +48,7 @@ final class TestCouponFactory
             ->discountType(CouponTestData::DISCOUNT_TYPE)
             ->excludeMidPeriodAllocations(CouponTestData::EXCLUDE_MID_PERIOD_ALLOCATIONS)
             ->applyOnCancelAtEndOfPeriod(CouponTestData::APPLY_ON_CANCEL_AT_END_OF_PERIOD)
+            ->applyOnSubscriptionExpiration(CouponTestData::APPLY_ON_SUBSCRIPTION_EXPIRATION)
             ->couponRestrictions(CouponTestData::RESTRICTIONS)
             ->build();
     }

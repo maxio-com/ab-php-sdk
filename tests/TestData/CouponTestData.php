@@ -22,6 +22,7 @@ final class CouponTestData
     public const RECURRING_SCHEME = RecurringScheme::DO_NOT_RECUR;
     public const RESTRICTIONS = [];
     public const APPLY_ON_CANCEL_AT_END_OF_PERIOD = false;
+    public const APPLY_ON_SUBSCRIPTION_EXPIRATION = true;
     public const EXCLUDE_MID_PERIOD_ALLOCATIONS = false;
     public const DISCOUNT_TYPE = 'percent';
     public const CONVERSION_LIMIT = null;
