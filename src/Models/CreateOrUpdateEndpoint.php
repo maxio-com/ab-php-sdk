@@ -80,6 +80,19 @@ class CreateOrUpdateEndpoint implements \JsonSerializable
         $this->webhookSubscriptions = $webhookSubscriptions;
     }
 
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
+    }
+
     /**
      * Encode this object to JSON
      *
@@ -94,6 +107,7 @@ class CreateOrUpdateEndpoint implements \JsonSerializable
         $json = [];
         $json['url']                   = $this->url;
         $json['webhook_subscriptions'] = WebhookSubscription::checkValue($this->webhookSubscriptions);
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

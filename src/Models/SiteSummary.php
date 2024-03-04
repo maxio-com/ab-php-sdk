@@ -129,6 +129,19 @@ class SiteSummary implements \JsonSerializable
         $this->stats = $stats;
     }
 
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
+    }
+
     /**
      * Encode this object to JSON
      *
@@ -156,6 +169,7 @@ class SiteSummary implements \JsonSerializable
         if (isset($this->stats)) {
             $json['stats']         = $this->stats;
         }
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

@@ -60,6 +60,19 @@ class ActivateSubscriptionRequest implements \JsonSerializable
         $this->revertOnFailure = [];
     }
 
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
+    }
+
     /**
      * Encode this object to JSON
      *
@@ -75,6 +88,7 @@ class ActivateSubscriptionRequest implements \JsonSerializable
         if (!empty($this->revertOnFailure)) {
             $json['revert_on_failure'] = $this->revertOnFailure['value'];
         }
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

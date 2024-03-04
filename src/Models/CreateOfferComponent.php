@@ -60,6 +60,19 @@ class CreateOfferComponent implements \JsonSerializable
         $this->startingQuantity = $startingQuantity;
     }
 
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
+    }
+
     /**
      * Encode this object to JSON
      *
@@ -78,6 +91,7 @@ class CreateOfferComponent implements \JsonSerializable
         if (isset($this->startingQuantity)) {
             $json['starting_quantity'] = $this->startingQuantity;
         }
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

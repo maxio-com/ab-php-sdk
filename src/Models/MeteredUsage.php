@@ -182,6 +182,19 @@ class MeteredUsage implements \JsonSerializable
         $this->memo = $memo;
     }
 
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
+    }
+
     /**
      * Encode this object to JSON
      *
@@ -200,6 +213,7 @@ class MeteredUsage implements \JsonSerializable
         $json['component_id']          = $this->componentId;
         $json['component_handle']      = $this->componentHandle;
         $json['memo']                  = $this->memo;
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

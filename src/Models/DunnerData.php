@@ -185,6 +185,19 @@ class DunnerData implements \JsonSerializable
         $this->lastAttemptedAt = $lastAttemptedAt;
     }
 
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
+    }
+
     /**
      * Encode this object to JSON
      *
@@ -203,6 +216,7 @@ class DunnerData implements \JsonSerializable
         $json['created_at']               = DateTimeHelper::toRfc3339DateTime($this->createdAt);
         $json['attempts']                 = $this->attempts;
         $json['last_attempted_at']        = DateTimeHelper::toRfc3339DateTime($this->lastAttemptedAt);
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

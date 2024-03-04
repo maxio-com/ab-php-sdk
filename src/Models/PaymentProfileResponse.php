@@ -52,6 +52,19 @@ class PaymentProfileResponse implements \JsonSerializable
         $this->paymentProfile = $paymentProfile;
     }
 
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
+    }
+
     /**
      * Encode this object to JSON
      *
@@ -69,6 +82,7 @@ class PaymentProfileResponse implements \JsonSerializable
                 $this->paymentProfile,
                 'oneOf(BankAccountPaymentProfile,CreditCardPaymentProfile)'
             );
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

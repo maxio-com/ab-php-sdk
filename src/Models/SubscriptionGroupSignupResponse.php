@@ -284,6 +284,19 @@ class SubscriptionGroupSignupResponse implements \JsonSerializable
         $this->paymentCollectionMethod = $paymentCollectionMethod;
     }
 
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
+    }
+
     /**
      * Encode this object to JSON
      *
@@ -329,6 +342,7 @@ class SubscriptionGroupSignupResponse implements \JsonSerializable
         if (isset($this->paymentCollectionMethod)) {
             $json['payment_collection_method'] = CollectionMethod::checkValue($this->paymentCollectionMethod);
         }
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

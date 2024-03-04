@@ -7,7 +7,7 @@ The following parameters are configurable for the API Client:
 |  --- | --- | --- |
 | `subdomain` | `string` | The subdomain for your Chargify site.<br>*Default*: `'subdomain'` |
 | `domain` | `string` | The Chargify server domain.<br>*Default*: `'chargify.com'` |
-| `environment` | Environment | The API environment. <br> **Default: `Environment.PRODUCTION`** |
+| `environment` | `Environment` | The API environment. <br> **Default: `Environment.PRODUCTION`** |
 | `timeout` | `int` | Timeout for API calls in seconds.<br>*Default*: `30` |
 | `enableRetries` | `bool` | Whether to enable retries and backoff feature.<br>*Default*: `false` |
 | `numberOfRetries` | `int` | The number of retries to make.<br>*Default*: `0` |

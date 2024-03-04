@@ -37,6 +37,7 @@
 | `discountType` | [`?string(DiscountType)`](../../doc/models/discount-type.md) | Optional | - | getDiscountType(): ?string | setDiscountType(?string discountType): void |
 | `excludeMidPeriodAllocations` | `?bool` | Optional | - | getExcludeMidPeriodAllocations(): ?bool | setExcludeMidPeriodAllocations(?bool excludeMidPeriodAllocations): void |
 | `applyOnCancelAtEndOfPeriod` | `?bool` | Optional | - | getApplyOnCancelAtEndOfPeriod(): ?bool | setApplyOnCancelAtEndOfPeriod(?bool applyOnCancelAtEndOfPeriod): void |
+| `applyOnSubscriptionExpiration` | `?bool` | Optional | - | getApplyOnSubscriptionExpiration(): ?bool | setApplyOnSubscriptionExpiration(?bool applyOnSubscriptionExpiration): void |
 | `couponRestrictions` | [`?(CouponRestriction[])`](../../doc/models/coupon-restriction.md) | Optional | - | getCouponRestrictions(): ?array | setCouponRestrictions(?array couponRestrictions): void |
 
 ## Example (as JSON)

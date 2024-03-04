@@ -208,6 +208,19 @@ class SubscriptionIncludedCoupon implements \JsonSerializable
         $this->percentage = [];
     }
 
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
+    }
+
     /**
      * Encode this object to JSON
      *
@@ -241,6 +254,7 @@ class SubscriptionIncludedCoupon implements \JsonSerializable
         if (!empty($this->percentage)) {
             $json['percentage']      = $this->percentage['value'];
         }
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

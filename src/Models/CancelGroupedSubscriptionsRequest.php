@@ -37,6 +37,19 @@ class CancelGroupedSubscriptionsRequest implements \JsonSerializable
         $this->chargeUnbilledUsage = $chargeUnbilledUsage;
     }
 
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
+    }
+
     /**
      * Encode this object to JSON
      *
@@ -52,6 +65,7 @@ class CancelGroupedSubscriptionsRequest implements \JsonSerializable
         if (isset($this->chargeUnbilledUsage)) {
             $json['charge_unbilled_usage'] = $this->chargeUnbilledUsage;
         }
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

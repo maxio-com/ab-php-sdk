@@ -67,7 +67,7 @@ Only proforma invoices with a `consolidation_level` of parent are returned.
 By default, proforma invoices returned on the index will only include totals, not detailed breakdowns for `line_items`, `discounts`, `taxes`, `credits`, `payments`, `custom_fields`. To include breakdowns, pass the specific field as a key in the query with a value set to true.
 
 ```php
-function listSubscriptionGroupProformaInvoices(string $uid): ProformaInvoice
+function listSubscriptionGroupProformaInvoices(array $options): ListProformaInvoicesResponse
 ```
 
 ## Parameters
@@ -75,17 +75,31 @@ function listSubscriptionGroupProformaInvoices(string $uid): ProformaInvoice
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `uid` | `string` | Template, Required | The uid of the subscription group |
+| `lineItems` | `?bool` | Query, Optional | Include line items data |
+| `discounts` | `?bool` | Query, Optional | Include discounts data |
+| `taxes` | `?bool` | Query, Optional | Include taxes data |
+| `credits` | `?bool` | Query, Optional | Include credits data |
+| `payments` | `?bool` | Query, Optional | Include payments data |
+| `customFields` | `?bool` | Query, Optional | Include custom fields data |
 
 ## Response Type
 
-[`ProformaInvoice`](../../doc/models/proforma-invoice.md)
+[`ListProformaInvoicesResponse`](../../doc/models/list-proforma-invoices-response.md)
 
 ## Example Usage
 
 ```php
-$uid = 'uid0';
+$collect = [
+    'uid' => 'uid0',
+    'line_items' => false,
+    'discounts' => false,
+    'taxes' => false,
+    'credits' => false,
+    'payments' => false,
+    'custom_fields' => false
+];
 
-$result = $proformaInvoicesController->listSubscriptionGroupProformaInvoices($uid);
+$result = $proformaInvoicesController->listSubscriptionGroupProformaInvoices($collect);
 ```
 
 ## Errors
@@ -186,7 +200,7 @@ function listProformaInvoices(array $options): ListProformaInvoicesResponse
 | `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
 | `startDate` | `?string` | Query, Optional | The beginning date range for the invoice's Due Date, in the YYYY-MM-DD format. |
 | `endDate` | `?string` | Query, Optional | The ending date range for the invoice's Due Date, in the YYYY-MM-DD format. |
-| `status` | [`?string(InvoiceStatus)`](../../doc/models/invoice-status.md) | Query, Optional | The current status of the invoice.  Allowed Values: draft, open, paid, pending, voided |
+| `status` | [`?string(ProformaInvoiceStatus)`](../../doc/models/proforma-invoice-status.md) | Query, Optional | The current status of the invoice.  Allowed Values: draft, open, paid, pending, voided |
 | `page` | `?int` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`. |
 | `perPage` | `?int` | Query, Optional | This parameter indicates how many records to fetch in each request. Default value is 20. The maximum allowed values is 200; any per_page value over 200 will be changed to 200.<br>Use in query `per_page=200`. |
 | `direction` | [`?string(Direction)`](../../doc/models/direction.md) | Query, Optional | The sort direction of the returned invoices. |
@@ -275,7 +289,7 @@ If all the data returned in the preview is as expected, you may then create a st
 Alternatively, if you have some proforma invoices already, you may make a preview call to determine whether any billing information for the subscription's upcoming renewal has changed.
 
 ```php
-function previewProformaInvoice(int $subscriptionId): ProformaInvoicePreview
+function previewProformaInvoice(int $subscriptionId): ProformaInvoice
 ```
 
 ## Parameters
@@ -286,7 +300,7 @@ function previewProformaInvoice(int $subscriptionId): ProformaInvoicePreview
 
 ## Response Type
 
-[`ProformaInvoicePreview`](../../doc/models/proforma-invoice-preview.md)
+[`ProformaInvoice`](../../doc/models/proforma-invoice.md)
 
 ## Example Usage
 
@@ -367,7 +381,7 @@ A product and customer first name, last name, and email are the minimum requirem
 
 ```php
 function previewSignupProformaInvoice(
-    ?string $includeNextProformaInvoice = null,
+    ?string $mInclude = null,
     ?CreateSubscriptionRequest $body = null
 ): SignupProformaPreviewResponse
 ```
@@ -376,7 +390,7 @@ function previewSignupProformaInvoice(
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `includeNextProformaInvoice` | `?string` | Query, Optional | Choose to include a proforma invoice preview for the first renewal |
+| `mInclude` | [`?string(CreateSignupProformaPreviewInclude)`](../../doc/models/create-signup-proforma-preview-include.md) | Query, Optional | Choose to include a proforma invoice preview for the first renewal. Use in query `include=next_proforma_invoice`. |
 | `body` | [`?CreateSubscriptionRequest`](../../doc/models/create-subscription-request.md) | Body, Optional | - |
 
 ## Response Type

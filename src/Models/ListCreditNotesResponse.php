@@ -50,6 +50,19 @@ class ListCreditNotesResponse implements \JsonSerializable
         $this->creditNotes = $creditNotes;
     }
 
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
+    }
+
     /**
      * Encode this object to JSON
      *
@@ -63,6 +76,7 @@ class ListCreditNotesResponse implements \JsonSerializable
     {
         $json = [];
         $json['credit_notes'] = $this->creditNotes;
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

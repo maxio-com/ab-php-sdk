@@ -105,6 +105,19 @@ class CreateOrUpdateCoupon implements \JsonSerializable
         $this->restrictedComponents = $restrictedComponents;
     }
 
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
+    }
+
     /**
      * Encode this object to JSON
      *
@@ -130,6 +143,7 @@ class CreateOrUpdateCoupon implements \JsonSerializable
         if (isset($this->restrictedComponents)) {
             $json['restricted_components'] = $this->restrictedComponents;
         }
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

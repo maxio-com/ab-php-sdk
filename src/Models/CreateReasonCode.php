@@ -101,6 +101,19 @@ class CreateReasonCode implements \JsonSerializable
         $this->position = $position;
     }
 
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
+    }
+
     /**
      * Encode this object to JSON
      *
@@ -118,6 +131,7 @@ class CreateReasonCode implements \JsonSerializable
         if (isset($this->position)) {
             $json['position'] = $this->position;
         }
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

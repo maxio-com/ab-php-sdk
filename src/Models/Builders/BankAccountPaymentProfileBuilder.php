@@ -273,6 +273,15 @@ class BankAccountPaymentProfileBuilder
     }
 
     /**
+     * Unsets site gateway setting id field.
+     */
+    public function unsetSiteGatewaySettingId(): self
+    {
+        $this->instance->unsetSiteGatewaySettingId();
+        return $this;
+    }
+
+    /**
      * Sets gateway handle field.
      */
     public function gatewayHandle(?string $value): self
@@ -287,6 +296,18 @@ class BankAccountPaymentProfileBuilder
     public function unsetGatewayHandle(): self
     {
         $this->instance->unsetGatewayHandle();
+        return $this;
+    }
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function additionalProperty(string $name, $value): self
+    {
+        $this->instance->addAdditionalProperty($name, $value);
         return $this;
     }
 

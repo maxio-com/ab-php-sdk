@@ -72,6 +72,19 @@ class PaymentCollectionMethodChanged implements \JsonSerializable
         $this->currentValue = $currentValue;
     }
 
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
+    }
+
     /**
      * Encode this object to JSON
      *
@@ -86,6 +99,7 @@ class PaymentCollectionMethodChanged implements \JsonSerializable
         $json = [];
         $json['previous_value'] = $this->previousValue;
         $json['current_value']  = $this->currentValue;
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

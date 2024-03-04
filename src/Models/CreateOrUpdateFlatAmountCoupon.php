@@ -76,6 +76,11 @@ class CreateOrUpdateFlatAmountCoupon implements \JsonSerializable
     private $applyOnCancelAtEndOfPeriod;
 
     /**
+     * @var bool|null
+     */
+    private $applyOnSubscriptionExpiration;
+
+    /**
      * @param string $name
      * @param string $code
      * @param int $amountInCents
@@ -315,6 +320,37 @@ class CreateOrUpdateFlatAmountCoupon implements \JsonSerializable
     }
 
     /**
+     * Returns Apply on Subscription Expiration.
+     */
+    public function getApplyOnSubscriptionExpiration(): ?bool
+    {
+        return $this->applyOnSubscriptionExpiration;
+    }
+
+    /**
+     * Sets Apply on Subscription Expiration.
+     *
+     * @maps apply_on_subscription_expiration
+     */
+    public function setApplyOnSubscriptionExpiration(?bool $applyOnSubscriptionExpiration): void
+    {
+        $this->applyOnSubscriptionExpiration = $applyOnSubscriptionExpiration;
+    }
+
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
+    }
+
+    /**
      * Encode this object to JSON
      *
      * @param bool $asArrayWhenEmpty Whether to serialize this model as an array whenever no fields
@@ -356,6 +392,10 @@ class CreateOrUpdateFlatAmountCoupon implements \JsonSerializable
         if (isset($this->applyOnCancelAtEndOfPeriod)) {
             $json['apply_on_cancel_at_end_of_period'] = $this->applyOnCancelAtEndOfPeriod;
         }
+        if (isset($this->applyOnSubscriptionExpiration)) {
+            $json['apply_on_subscription_expiration'] = $this->applyOnSubscriptionExpiration;
+        }
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

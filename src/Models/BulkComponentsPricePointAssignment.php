@@ -12,17 +12,17 @@ namespace AdvancedBillingLib\Models;
 
 use stdClass;
 
-class BulkComponentSPricePointAssignment implements \JsonSerializable
+class BulkComponentsPricePointAssignment implements \JsonSerializable
 {
     /**
-     * @var ComponentSPricePointAssignment[]|null
+     * @var ComponentPricePointAssignment[]|null
      */
     private $components;
 
     /**
      * Returns Components.
      *
-     * @return ComponentSPricePointAssignment[]|null
+     * @return ComponentPricePointAssignment[]|null
      */
     public function getComponents(): ?array
     {
@@ -34,11 +34,24 @@ class BulkComponentSPricePointAssignment implements \JsonSerializable
      *
      * @maps components
      *
-     * @param ComponentSPricePointAssignment[]|null $components
+     * @param ComponentPricePointAssignment[]|null $components
      */
     public function setComponents(?array $components): void
     {
         $this->components = $components;
+    }
+
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
     }
 
     /**
@@ -56,6 +69,7 @@ class BulkComponentSPricePointAssignment implements \JsonSerializable
         if (isset($this->components)) {
             $json['components'] = $this->components;
         }
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

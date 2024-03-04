@@ -392,6 +392,19 @@ class SubscriptionCustomPrice implements \JsonSerializable
         $this->taxIncluded = $taxIncluded;
     }
 
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
+    }
+
     /**
      * Encode this object to JSON
      *
@@ -461,6 +474,7 @@ class SubscriptionCustomPrice implements \JsonSerializable
         if (isset($this->taxIncluded)) {
             $json['tax_included']               = $this->taxIncluded;
         }
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

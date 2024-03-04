@@ -344,6 +344,19 @@ class Webhook implements \JsonSerializable
         $this->signatureHmacSha256 = $signatureHmacSha256;
     }
 
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
+    }
+
     /**
      * Encode this object to JSON
      *
@@ -392,6 +405,7 @@ class Webhook implements \JsonSerializable
         if (isset($this->signatureHmacSha256)) {
             $json['signature_hmac_sha_256'] = $this->signatureHmacSha256;
         }
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

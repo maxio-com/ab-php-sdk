@@ -946,6 +946,19 @@ class Customer implements \JsonSerializable
         $this->defaultSubscriptionGroupUid = [];
     }
 
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
+    }
+
     /**
      * Encode this object to JSON
      *
@@ -1048,6 +1061,7 @@ class Customer implements \JsonSerializable
         if (!empty($this->defaultSubscriptionGroupUid)) {
             $json['default_subscription_group_uid'] = $this->defaultSubscriptionGroupUid['value'];
         }
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

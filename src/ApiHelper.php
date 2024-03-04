@@ -42,7 +42,7 @@ class ApiHelper
             self::$jsonHelper = new JsonHelper(
                 [],
                 self::DISCRIMINATOR_SUBSTITUTIONS,
-                null,
+                'addAdditionalProperty',
                 'AdvancedBillingLib\\Models'
             );
         }

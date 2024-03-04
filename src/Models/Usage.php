@@ -229,6 +229,19 @@ class Usage implements \JsonSerializable
         $this->subscriptionId = $subscriptionId;
     }
 
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
+    }
+
     /**
      * Encode this object to JSON
      *
@@ -272,6 +285,7 @@ class Usage implements \JsonSerializable
         if (isset($this->subscriptionId)) {
             $json['subscription_id']  = $this->subscriptionId;
         }
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

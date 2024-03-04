@@ -122,6 +122,11 @@ class InvoiceLineItem implements \JsonSerializable
     private $customItem;
 
     /**
+     * @var string|null
+     */
+    private $kind;
+
+    /**
      * Returns Uid.
      * Unique identifier for the line item.  Useful when cross-referencing the line against individual
      * discounts in the `discounts` or `taxes` lists.
@@ -695,6 +700,37 @@ class InvoiceLineItem implements \JsonSerializable
     }
 
     /**
+     * Returns Kind.
+     */
+    public function getKind(): ?string
+    {
+        return $this->kind;
+    }
+
+    /**
+     * Sets Kind.
+     *
+     * @maps kind
+     */
+    public function setKind(?string $kind): void
+    {
+        $this->kind = $kind;
+    }
+
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
+    }
+
+    /**
      * Encode this object to JSON
      *
      * @param bool $asArrayWhenEmpty Whether to serialize this model as an array whenever no fields
@@ -773,6 +809,10 @@ class InvoiceLineItem implements \JsonSerializable
         if (isset($this->customItem)) {
             $json['custom_item']            = $this->customItem;
         }
+        if (isset($this->kind)) {
+            $json['kind']                   = $this->kind;
+        }
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

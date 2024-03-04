@@ -187,6 +187,19 @@ class ChargifyEBB implements \JsonSerializable
         $this->subscriptionReference = $subscriptionReference;
     }
 
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
+    }
+
     /**
      * Encode this object to JSON
      *
@@ -217,6 +230,7 @@ class ChargifyEBB implements \JsonSerializable
         if (isset($this->subscriptionReference)) {
             $json['subscription_reference'] = $this->subscriptionReference;
         }
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

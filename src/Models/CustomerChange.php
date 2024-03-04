@@ -155,6 +155,19 @@ class CustomerChange implements \JsonSerializable
         $this->customFields = [];
     }
 
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
+    }
+
     /**
      * Encode this object to JSON
      *
@@ -195,6 +208,7 @@ class CustomerChange implements \JsonSerializable
                     'anyOf(oneOf(CustomerCustomFieldsChange),null)'
                 );
         }
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

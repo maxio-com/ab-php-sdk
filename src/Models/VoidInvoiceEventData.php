@@ -181,6 +181,19 @@ class VoidInvoiceEventData implements \JsonSerializable
         $this->reason = $reason;
     }
 
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
+    }
+
     /**
      * Encode this object to JSON
      *
@@ -203,6 +216,7 @@ class VoidInvoiceEventData implements \JsonSerializable
         $json['transaction_time']       = DateTimeHelper::toRfc3339DateTime($this->transactionTime);
         $json['is_advance_invoice']     = $this->isAdvanceInvoice;
         $json['reason']                 = $this->reason;
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

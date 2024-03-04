@@ -1,5 +1,5 @@
 
-# Component S Price Point Assignment Price Point
+# Component Price Point Assignment Price Point
 
 ## Data Type
 

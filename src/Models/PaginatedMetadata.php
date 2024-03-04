@@ -133,6 +133,19 @@ class PaginatedMetadata implements \JsonSerializable
         $this->metadata = $metadata;
     }
 
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
+    }
+
     /**
      * Encode this object to JSON
      *
@@ -160,6 +173,7 @@ class PaginatedMetadata implements \JsonSerializable
         if (isset($this->metadata)) {
             $json['metadata']     = $this->metadata;
         }
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

@@ -283,6 +283,27 @@ class InvoiceLineItemBuilder
     }
 
     /**
+     * Sets kind field.
+     */
+    public function kind(?string $value): self
+    {
+        $this->instance->setKind($value);
+        return $this;
+    }
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function additionalProperty(string $name, $value): self
+    {
+        $this->instance->addAdditionalProperty($name, $value);
+        return $this;
+    }
+
+    /**
      * Initializes a new invoice line item object.
      */
     public function build(): InvoiceLineItem

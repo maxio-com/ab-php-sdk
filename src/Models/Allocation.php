@@ -127,6 +127,21 @@ class Allocation implements \JsonSerializable
     private $payment = [];
 
     /**
+     * @var \DateTime|null
+     */
+    private $expiresAt;
+
+    /**
+     * @var int|null
+     */
+    private $usedQuantity;
+
+    /**
+     * @var int|null
+     */
+    private $chargeId;
+
+    /**
      * Returns Allocation Id.
      * The allocation unique id
      */
@@ -667,6 +682,74 @@ class Allocation implements \JsonSerializable
     }
 
     /**
+     * Returns Expires At.
+     */
+    public function getExpiresAt(): ?\DateTime
+    {
+        return $this->expiresAt;
+    }
+
+    /**
+     * Sets Expires At.
+     *
+     * @maps expires_at
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
+     */
+    public function setExpiresAt(?\DateTime $expiresAt): void
+    {
+        $this->expiresAt = $expiresAt;
+    }
+
+    /**
+     * Returns Used Quantity.
+     */
+    public function getUsedQuantity(): ?int
+    {
+        return $this->usedQuantity;
+    }
+
+    /**
+     * Sets Used Quantity.
+     *
+     * @maps used_quantity
+     */
+    public function setUsedQuantity(?int $usedQuantity): void
+    {
+        $this->usedQuantity = $usedQuantity;
+    }
+
+    /**
+     * Returns Charge Id.
+     */
+    public function getChargeId(): ?int
+    {
+        return $this->chargeId;
+    }
+
+    /**
+     * Sets Charge Id.
+     *
+     * @maps charge_id
+     */
+    public function setChargeId(?int $chargeId): void
+    {
+        $this->chargeId = $chargeId;
+    }
+
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
+    }
+
+    /**
      * Encode this object to JSON
      *
      * @param bool $asArrayWhenEmpty Whether to serialize this model as an array whenever no fields
@@ -756,6 +839,16 @@ class Allocation implements \JsonSerializable
                     'anyOf(oneOf(PaymentForAllocation),null)'
                 );
         }
+        if (isset($this->expiresAt)) {
+            $json['expires_at']                 = DateTimeHelper::toRfc3339DateTime($this->expiresAt);
+        }
+        if (isset($this->usedQuantity)) {
+            $json['used_quantity']              = $this->usedQuantity;
+        }
+        if (isset($this->chargeId)) {
+            $json['charge_id']                  = $this->chargeId;
+        }
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

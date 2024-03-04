@@ -39,11 +39,29 @@ class ProformaInvoiceDiscountBuilder
     }
 
     /**
+     * Sets uid field.
+     */
+    public function uid(?string $value): self
+    {
+        $this->instance->setUid($value);
+        return $this;
+    }
+
+    /**
      * Sets title field.
      */
     public function title(?string $value): self
     {
         $this->instance->setTitle($value);
+        return $this;
+    }
+
+    /**
+     * Sets code field.
+     */
+    public function code(?string $value): self
+    {
+        $this->instance->setCode($value);
         return $this;
     }
 
@@ -89,6 +107,18 @@ class ProformaInvoiceDiscountBuilder
     public function lineItemBreakouts(?array $value): self
     {
         $this->instance->setLineItemBreakouts($value);
+        return $this;
+    }
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function additionalProperty(string $name, $value): self
+    {
+        $this->instance->addAdditionalProperty($name, $value);
         return $this;
     }
 

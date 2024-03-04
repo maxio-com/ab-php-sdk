@@ -12,7 +12,7 @@
 | `uid` | `?string` | Optional | - | getUid(): ?string | setUid(?string uid): void |
 | `title` | `?string` | Optional | - | getTitle(): ?string | setTitle(?string title): void |
 | `description` | `?string` | Optional | - | getDescription(): ?string | setDescription(?string description): void |
-| `sourceType` | `?string` | Optional | - | getSourceType(): ?string | setSourceType(?string sourceType): void |
+| `sourceType` | [`?string(ProformaInvoiceTaxSourceType)`](../../doc/models/proforma-invoice-tax-source-type.md) | Optional | - | getSourceType(): ?string | setSourceType(?string sourceType): void |
 | `sourceId` | `?int` | Optional | - | getSourceId(): ?int | setSourceId(?int sourceId): void |
 | `percentage` | `?string` | Optional | - | getPercentage(): ?string | setPercentage(?string percentage): void |
 | `taxableAmount` | `?string` | Optional | - | getTaxableAmount(): ?string | setTaxableAmount(?string taxableAmount): void |
@@ -28,7 +28,7 @@
   "uid": "uid8",
   "title": "title6",
   "description": "description2",
-  "source_type": "source_type8",
+  "source_type": "Tax",
   "source_id": 164
 }
 ```

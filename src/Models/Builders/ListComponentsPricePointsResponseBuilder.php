@@ -39,6 +39,18 @@ class ListComponentsPricePointsResponseBuilder
     }
 
     /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function additionalProperty(string $name, $value): self
+    {
+        $this->instance->addAdditionalProperty($name, $value);
+        return $this;
+    }
+
+    /**
      * Initializes a new list components price points response object.
      */
     public function build(): ListComponentsPricePointsResponse

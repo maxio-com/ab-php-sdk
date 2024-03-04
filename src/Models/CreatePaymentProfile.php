@@ -886,6 +886,19 @@ class CreatePaymentProfile implements \JsonSerializable
         $this->lastFour = $lastFour;
     }
 
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
+    }
+
     /**
      * Encode this object to JSON
      *
@@ -1002,6 +1015,7 @@ class CreatePaymentProfile implements \JsonSerializable
         if (isset($this->lastFour)) {
             $json['last_four']                = $this->lastFour;
         }
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

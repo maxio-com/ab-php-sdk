@@ -78,6 +78,19 @@ class IssueServiceCredit implements \JsonSerializable
         $this->memo = $memo;
     }
 
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
+    }
+
     /**
      * Encode this object to JSON
      *
@@ -92,6 +105,7 @@ class IssueServiceCredit implements \JsonSerializable
         $json = [];
         $json['amount'] = ApiHelper::getJsonHelper()->verifyTypes($this->amount, 'oneOf(float,string)');
         $json['memo']   = $this->memo;
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

@@ -391,6 +391,19 @@ class CreateProductPricePoint implements \JsonSerializable
         $this->useSiteExchangeRate = $useSiteExchangeRate;
     }
 
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
+    }
+
     /**
      * Encode this object to JSON
      *
@@ -437,6 +450,7 @@ class CreateProductPricePoint implements \JsonSerializable
         if (isset($this->useSiteExchangeRate)) {
             $json['use_site_exchange_rate']     = $this->useSiteExchangeRate;
         }
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

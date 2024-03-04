@@ -157,6 +157,19 @@ class CreditAccountBalanceChanged implements \JsonSerializable
         $this->atTime = $atTime;
     }
 
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
+    }
+
     /**
      * Encode this object to JSON
      *
@@ -174,6 +187,7 @@ class CreditAccountBalanceChanged implements \JsonSerializable
         $json['service_credit_balance_change_in_cents']  = $this->serviceCreditBalanceChangeInCents;
         $json['currency_code']                           = $this->currencyCode;
         $json['at_time']                                 = DateTimeHelper::toRfc3339DateTime($this->atTime);
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

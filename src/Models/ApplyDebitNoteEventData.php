@@ -141,6 +141,19 @@ class ApplyDebitNoteEventData implements \JsonSerializable
         $this->appliedAmount = $appliedAmount;
     }
 
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
+    }
+
     /**
      * Encode this object to JSON
      *
@@ -157,6 +170,7 @@ class ApplyDebitNoteEventData implements \JsonSerializable
         $json['debit_note_uid']    = $this->debitNoteUid;
         $json['original_amount']   = $this->originalAmount;
         $json['applied_amount']    = $this->appliedAmount;
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

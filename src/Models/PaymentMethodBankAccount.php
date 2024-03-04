@@ -99,6 +99,19 @@ class PaymentMethodBankAccount implements \JsonSerializable
         $this->type = $type;
     }
 
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
+    }
+
     /**
      * Encode this object to JSON
      *
@@ -114,6 +127,7 @@ class PaymentMethodBankAccount implements \JsonSerializable
         $json['masked_account_number'] = $this->maskedAccountNumber;
         $json['masked_routing_number'] = $this->maskedRoutingNumber;
         $json['type']                  = InvoiceEventPaymentMethod::checkValue($this->type);
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

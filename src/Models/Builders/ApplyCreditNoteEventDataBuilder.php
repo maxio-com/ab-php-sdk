@@ -91,6 +91,18 @@ class ApplyCreditNoteEventDataBuilder
     }
 
     /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function additionalProperty(string $name, $value): self
+    {
+        $this->instance->addAdditionalProperty($name, $value);
+        return $this;
+    }
+
+    /**
      * Initializes a new apply credit note event data object.
      */
     public function build(): ApplyCreditNoteEventData

@@ -26,14 +26,14 @@ class ProformaInvoice implements \JsonSerializable
     private $siteId;
 
     /**
-     * @var int|null
+     * @var array
      */
-    private $customerId;
+    private $customerId = [];
 
     /**
-     * @var int|null
+     * @var array
      */
-    private $subscriptionId;
+    private $subscriptionId = [];
 
     /**
      * @var array
@@ -63,7 +63,7 @@ class ProformaInvoice implements \JsonSerializable
     /**
      * @var string|null
      */
-    private $collectionMethod;
+    private $collectionMethod = CollectionMethod::AUTOMATIC;
 
     /**
      * @var string|null
@@ -236,7 +236,10 @@ class ProformaInvoice implements \JsonSerializable
      */
     public function getCustomerId(): ?int
     {
-        return $this->customerId;
+        if (count($this->customerId) == 0) {
+            return null;
+        }
+        return $this->customerId['value'];
     }
 
     /**
@@ -246,7 +249,15 @@ class ProformaInvoice implements \JsonSerializable
      */
     public function setCustomerId(?int $customerId): void
     {
-        $this->customerId = $customerId;
+        $this->customerId['value'] = $customerId;
+    }
+
+    /**
+     * Unsets Customer Id.
+     */
+    public function unsetCustomerId(): void
+    {
+        $this->customerId = [];
     }
 
     /**
@@ -254,7 +265,10 @@ class ProformaInvoice implements \JsonSerializable
      */
     public function getSubscriptionId(): ?int
     {
-        return $this->subscriptionId;
+        if (count($this->subscriptionId) == 0) {
+            return null;
+        }
+        return $this->subscriptionId['value'];
     }
 
     /**
@@ -264,7 +278,15 @@ class ProformaInvoice implements \JsonSerializable
      */
     public function setSubscriptionId(?int $subscriptionId): void
     {
-        $this->subscriptionId = $subscriptionId;
+        $this->subscriptionId['value'] = $subscriptionId;
+    }
+
+    /**
+     * Unsets Subscription Id.
+     */
+    public function unsetSubscriptionId(): void
+    {
+        $this->subscriptionId = [];
     }
 
     /**
@@ -375,6 +397,7 @@ class ProformaInvoice implements \JsonSerializable
      * Sets Status.
      *
      * @maps status
+     * @factory \AdvancedBillingLib\Models\ProformaInvoiceStatus::checkValue
      */
     public function setStatus(?string $status): void
     {
@@ -383,6 +406,9 @@ class ProformaInvoice implements \JsonSerializable
 
     /**
      * Returns Collection Method.
+     * The type of payment collection to be used in the subscription. For legacy Statements Architecture
+     * valid options are - `invoice`, `automatic`. For current Relationship Invoicing Architecture valid
+     * options are - `remittance`, `automatic`, `prepaid`.
      */
     public function getCollectionMethod(): ?string
     {
@@ -391,8 +417,12 @@ class ProformaInvoice implements \JsonSerializable
 
     /**
      * Sets Collection Method.
+     * The type of payment collection to be used in the subscription. For legacy Statements Architecture
+     * valid options are - `invoice`, `automatic`. For current Relationship Invoicing Architecture valid
+     * options are - `remittance`, `automatic`, `prepaid`.
      *
      * @maps collection_method
+     * @factory \AdvancedBillingLib\Models\CollectionMethod::checkValue
      */
     public function setCollectionMethod(?string $collectionMethod): void
     {
@@ -437,6 +467,18 @@ class ProformaInvoice implements \JsonSerializable
 
     /**
      * Returns Consolidation Level.
+     * Consolidation level of the invoice, which is applicable to invoice consolidation.  It will hold one
+     * of the following values:
+     *
+     * * "none": A normal invoice with no consolidation.
+     * * "child": An invoice segment which has been combined into a consolidated invoice.
+     * * "parent": A consolidated invoice, whose contents are composed of invoice segments.
+     *
+     * "Parent" invoices do not have lines of their own, but they have subtotals and totals which aggregate
+     * the member invoice segments.
+     *
+     * See also the [invoice consolidation documentation](https://chargify.zendesk.com/hc/en-
+     * us/articles/4407746391835).
      */
     public function getConsolidationLevel(): ?string
     {
@@ -445,8 +487,21 @@ class ProformaInvoice implements \JsonSerializable
 
     /**
      * Sets Consolidation Level.
+     * Consolidation level of the invoice, which is applicable to invoice consolidation.  It will hold one
+     * of the following values:
+     *
+     * * "none": A normal invoice with no consolidation.
+     * * "child": An invoice segment which has been combined into a consolidated invoice.
+     * * "parent": A consolidated invoice, whose contents are composed of invoice segments.
+     *
+     * "Parent" invoices do not have lines of their own, but they have subtotals and totals which aggregate
+     * the member invoice segments.
+     *
+     * See also the [invoice consolidation documentation](https://chargify.zendesk.com/hc/en-
+     * us/articles/4407746391835).
      *
      * @maps consolidation_level
+     * @factory \AdvancedBillingLib\Models\InvoiceConsolidationLevel::checkValue
      */
     public function setConsolidationLevel(?string $consolidationLevel): void
     {
@@ -491,6 +546,7 @@ class ProformaInvoice implements \JsonSerializable
 
     /**
      * Returns Role.
+     * 'proforma' value is deprecated in favor of proforma_adhoc and proforma_automatic
      */
     public function getRole(): ?string
     {
@@ -499,8 +555,10 @@ class ProformaInvoice implements \JsonSerializable
 
     /**
      * Sets Role.
+     * 'proforma' value is deprecated in favor of proforma_adhoc and proforma_automatic
      *
      * @maps role
+     * @factory \AdvancedBillingLib\Models\ProformaInvoiceRole::checkValue
      */
     public function setRole(?string $role): void
     {
@@ -906,6 +964,19 @@ class ProformaInvoice implements \JsonSerializable
         $this->publicUrl = [];
     }
 
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
+    }
+
     /**
      * Encode this object to JSON
      *
@@ -924,11 +995,11 @@ class ProformaInvoice implements \JsonSerializable
         if (isset($this->siteId)) {
             $json['site_id']              = $this->siteId;
         }
-        if (isset($this->customerId)) {
-            $json['customer_id']          = $this->customerId;
+        if (!empty($this->customerId)) {
+            $json['customer_id']          = $this->customerId['value'];
         }
-        if (isset($this->subscriptionId)) {
-            $json['subscription_id']      = $this->subscriptionId;
+        if (!empty($this->subscriptionId)) {
+            $json['subscription_id']      = $this->subscriptionId['value'];
         }
         if (!empty($this->number)) {
             $json['number']               = $this->number['value'];
@@ -943,10 +1014,10 @@ class ProformaInvoice implements \JsonSerializable
             $json['delivery_date']        = DateTimeHelper::toSimpleDate($this->deliveryDate);
         }
         if (isset($this->status)) {
-            $json['status']               = $this->status;
+            $json['status']               = ProformaInvoiceStatus::checkValue($this->status);
         }
         if (isset($this->collectionMethod)) {
-            $json['collection_method']    = $this->collectionMethod;
+            $json['collection_method']    = CollectionMethod::checkValue($this->collectionMethod);
         }
         if (isset($this->paymentInstructions)) {
             $json['payment_instructions'] = $this->paymentInstructions;
@@ -955,7 +1026,7 @@ class ProformaInvoice implements \JsonSerializable
             $json['currency']             = $this->currency;
         }
         if (isset($this->consolidationLevel)) {
-            $json['consolidation_level']  = $this->consolidationLevel;
+            $json['consolidation_level']  = InvoiceConsolidationLevel::checkValue($this->consolidationLevel);
         }
         if (isset($this->productName)) {
             $json['product_name']         = $this->productName;
@@ -964,7 +1035,7 @@ class ProformaInvoice implements \JsonSerializable
             $json['product_family_name']  = $this->productFamilyName;
         }
         if (isset($this->role)) {
-            $json['role']                 = $this->role;
+            $json['role']                 = ProformaInvoiceRole::checkValue($this->role);
         }
         if (isset($this->seller)) {
             $json['seller']               = $this->seller;
@@ -1026,6 +1097,7 @@ class ProformaInvoice implements \JsonSerializable
         if (!empty($this->publicUrl)) {
             $json['public_url']           = $this->publicUrl['value'];
         }
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

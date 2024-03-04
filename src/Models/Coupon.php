@@ -157,6 +157,11 @@ class Coupon implements \JsonSerializable
     private $applyOnCancelAtEndOfPeriod;
 
     /**
+     * @var bool|null
+     */
+    private $applyOnSubscriptionExpiration;
+
+    /**
      * @var CouponRestriction[]|null
      */
     private $couponRestrictions;
@@ -796,6 +801,24 @@ class Coupon implements \JsonSerializable
     }
 
     /**
+     * Returns Apply on Subscription Expiration.
+     */
+    public function getApplyOnSubscriptionExpiration(): ?bool
+    {
+        return $this->applyOnSubscriptionExpiration;
+    }
+
+    /**
+     * Sets Apply on Subscription Expiration.
+     *
+     * @maps apply_on_subscription_expiration
+     */
+    public function setApplyOnSubscriptionExpiration(?bool $applyOnSubscriptionExpiration): void
+    {
+        $this->applyOnSubscriptionExpiration = $applyOnSubscriptionExpiration;
+    }
+
+    /**
      * Returns Coupon Restrictions.
      *
      * @return CouponRestriction[]|null
@@ -815,6 +838,19 @@ class Coupon implements \JsonSerializable
     public function setCouponRestrictions(?array $couponRestrictions): void
     {
         $this->couponRestrictions = $couponRestrictions;
+    }
+
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
     }
 
     /**
@@ -920,9 +956,13 @@ class Coupon implements \JsonSerializable
         if (isset($this->applyOnCancelAtEndOfPeriod)) {
             $json['apply_on_cancel_at_end_of_period'] = $this->applyOnCancelAtEndOfPeriod;
         }
+        if (isset($this->applyOnSubscriptionExpiration)) {
+            $json['apply_on_subscription_expiration'] = $this->applyOnSubscriptionExpiration;
+        }
         if (isset($this->couponRestrictions)) {
             $json['coupon_restrictions']              = $this->couponRestrictions;
         }
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

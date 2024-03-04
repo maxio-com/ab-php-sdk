@@ -271,6 +271,19 @@ class InvoicePayment implements \JsonSerializable
         $this->gatewayTransactionId = [];
     }
 
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
+    }
+
     /**
      * Encode this object to JSON
      *
@@ -313,6 +326,7 @@ class InvoicePayment implements \JsonSerializable
         if (!empty($this->gatewayTransactionId)) {
             $json['gateway_transaction_id'] = $this->gatewayTransactionId['value'];
         }
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

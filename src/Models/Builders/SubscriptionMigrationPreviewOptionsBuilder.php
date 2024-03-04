@@ -130,6 +130,18 @@ class SubscriptionMigrationPreviewOptionsBuilder
     }
 
     /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function additionalProperty(string $name, $value): self
+    {
+        $this->instance->addAdditionalProperty($name, $value);
+        return $this;
+    }
+
+    /**
      * Initializes a new subscription migration preview options object.
      */
     public function build(): SubscriptionMigrationPreviewOptions

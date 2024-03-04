@@ -15,9 +15,9 @@ use stdClass;
 class Customer1 implements \JsonSerializable
 {
     /**
-     * @var int|null
+     * @var array
      */
-    private $chargifyId;
+    private $chargifyId = [];
 
     /**
      * @var string|null
@@ -54,7 +54,10 @@ class Customer1 implements \JsonSerializable
      */
     public function getChargifyId(): ?int
     {
-        return $this->chargifyId;
+        if (count($this->chargifyId) == 0) {
+            return null;
+        }
+        return $this->chargifyId['value'];
     }
 
     /**
@@ -64,7 +67,15 @@ class Customer1 implements \JsonSerializable
      */
     public function setChargifyId(?int $chargifyId): void
     {
-        $this->chargifyId = $chargifyId;
+        $this->chargifyId['value'] = $chargifyId;
+    }
+
+    /**
+     * Unsets Chargify Id.
+     */
+    public function unsetChargifyId(): void
+    {
+        $this->chargifyId = [];
     }
 
     /**
@@ -208,6 +219,19 @@ class Customer1 implements \JsonSerializable
         $this->reference = [];
     }
 
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
+    }
+
     /**
      * Encode this object to JSON
      *
@@ -220,8 +244,8 @@ class Customer1 implements \JsonSerializable
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
-        if (isset($this->chargifyId)) {
-            $json['chargify_id']  = $this->chargifyId;
+        if (!empty($this->chargifyId)) {
+            $json['chargify_id']  = $this->chargifyId['value'];
         }
         if (isset($this->firstName)) {
             $json['first_name']   = $this->firstName;
@@ -241,6 +265,7 @@ class Customer1 implements \JsonSerializable
         if (!empty($this->reference)) {
             $json['reference']    = $this->reference['value'];
         }
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

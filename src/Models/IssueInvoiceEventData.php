@@ -197,6 +197,19 @@ class IssueInvoiceEventData implements \JsonSerializable
         $this->totalAmount = $totalAmount;
     }
 
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
+    }
+
     /**
      * Encode this object to JSON
      *
@@ -214,6 +227,7 @@ class IssueInvoiceEventData implements \JsonSerializable
         $json['to_status']           = InvoiceStatus::checkValue($this->toStatus);
         $json['due_amount']          = $this->dueAmount;
         $json['total_amount']        = $this->totalAmount;
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

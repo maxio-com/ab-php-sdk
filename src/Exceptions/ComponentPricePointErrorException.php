@@ -38,4 +38,17 @@ class ComponentPricePointErrorException extends ApiException
     {
         $this->errors = $errors;
     }
+
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
+    }
 }

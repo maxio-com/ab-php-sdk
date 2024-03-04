@@ -175,6 +175,19 @@ class SaleRepSettings implements \JsonSerializable
         $this->salesRepName = $salesRepName;
     }
 
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
+    }
+
     /**
      * Encode this object to JSON
      *
@@ -208,6 +221,7 @@ class SaleRepSettings implements \JsonSerializable
         if (isset($this->salesRepName)) {
             $json['sales_rep_name']   = $this->salesRepName;
         }
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

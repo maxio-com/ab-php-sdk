@@ -164,6 +164,19 @@ class SubscriptionGroupSignupError implements \JsonSerializable
         $this->payerId = $payerId;
     }
 
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
+    }
+
     /**
      * Encode this object to JSON
      *
@@ -194,6 +207,7 @@ class SubscriptionGroupSignupError implements \JsonSerializable
         if (isset($this->payerId)) {
             $json['payer_id']           = $this->payerId;
         }
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }
