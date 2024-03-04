@@ -157,6 +157,11 @@ class Coupon implements \JsonSerializable
     private $applyOnCancelAtEndOfPeriod;
 
     /**
+     * @var bool|null
+     */
+    private $applyOnSubscriptionExpiration;
+
+    /**
      * @var CouponRestriction[]|null
      */
     private $couponRestrictions;
@@ -796,6 +801,24 @@ class Coupon implements \JsonSerializable
     }
 
     /**
+     * Returns Apply on Subscription Expiration.
+     */
+    public function getApplyOnSubscriptionExpiration(): ?bool
+    {
+        return $this->applyOnSubscriptionExpiration;
+    }
+
+    /**
+     * Sets Apply on Subscription Expiration.
+     *
+     * @maps apply_on_subscription_expiration
+     */
+    public function setApplyOnSubscriptionExpiration(?bool $applyOnSubscriptionExpiration): void
+    {
+        $this->applyOnSubscriptionExpiration = $applyOnSubscriptionExpiration;
+    }
+
+    /**
      * Returns Coupon Restrictions.
      *
      * @return CouponRestriction[]|null
@@ -932,6 +955,9 @@ class Coupon implements \JsonSerializable
         }
         if (isset($this->applyOnCancelAtEndOfPeriod)) {
             $json['apply_on_cancel_at_end_of_period'] = $this->applyOnCancelAtEndOfPeriod;
+        }
+        if (isset($this->applyOnSubscriptionExpiration)) {
+            $json['apply_on_subscription_expiration'] = $this->applyOnSubscriptionExpiration;
         }
         if (isset($this->couponRestrictions)) {
             $json['coupon_restrictions']              = $this->couponRestrictions;

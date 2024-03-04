@@ -390,6 +390,15 @@ class CouponBuilder
     }
 
     /**
+     * Sets apply on subscription expiration field.
+     */
+    public function applyOnSubscriptionExpiration(?bool $value): self
+    {
+        $this->instance->setApplyOnSubscriptionExpiration($value);
+        return $this;
+    }
+
+    /**
      * Sets coupon restrictions field.
      */
     public function couponRestrictions(?array $value): self
