@@ -14,12 +14,12 @@ use AdvancedBillingLib\Exceptions\ApiException;
 use AdvancedBillingLib\Exceptions\ErrorArrayMapResponseException;
 use AdvancedBillingLib\Exceptions\ErrorListResponseException;
 use AdvancedBillingLib\Exceptions\ProformaBadRequestErrorResponseException;
+use AdvancedBillingLib\Models\CreateSignupProformaPreviewInclude;
 use AdvancedBillingLib\Models\CreateSubscriptionRequest;
 use AdvancedBillingLib\Models\Direction;
-use AdvancedBillingLib\Models\InvoiceStatus;
 use AdvancedBillingLib\Models\ListProformaInvoicesResponse;
 use AdvancedBillingLib\Models\ProformaInvoice;
-use AdvancedBillingLib\Models\ProformaInvoicePreview;
+use AdvancedBillingLib\Models\ProformaInvoiceStatus;
 use AdvancedBillingLib\Models\SignupProformaPreviewResponse;
 use AdvancedBillingLib\Models\VoidInvoiceRequest;
 use Core\Request\Parameters\BodyParam;
@@ -78,22 +78,32 @@ class ProformaInvoicesController extends BaseController
      * include breakdowns, pass the specific field as a key in the query with a value set to true.
      *
      *
-     * @param string $uid The uid of the subscription group
+     * @param array $options Array with all options for search
      *
-     * @return ProformaInvoice Response from the API call
+     * @return ListProformaInvoicesResponse Response from the API call
      *
      * @throws ApiException Thrown if API call fails
      */
-    public function listSubscriptionGroupProformaInvoices(string $uid): ProformaInvoice
+    public function listSubscriptionGroupProformaInvoices(array $options): ListProformaInvoicesResponse
     {
         $_reqBuilder = $this->requestBuilder(
             RequestMethod::GET,
             '/subscription_groups/{uid}/proforma_invoices.json'
-        )->auth('BasicAuth')->parameters(TemplateParam::init('uid', $uid)->required());
+        )
+            ->auth('BasicAuth')
+            ->parameters(
+                TemplateParam::init('uid', $options)->extract('uid')->required(),
+                QueryParam::init('line_items', $options)->commaSeparated()->extract('lineItems', false),
+                QueryParam::init('discounts', $options)->commaSeparated()->extract('discounts', false),
+                QueryParam::init('taxes', $options)->commaSeparated()->extract('taxes', false),
+                QueryParam::init('credits', $options)->commaSeparated()->extract('credits', false),
+                QueryParam::init('payments', $options)->commaSeparated()->extract('payments', false),
+                QueryParam::init('custom_fields', $options)->commaSeparated()->extract('customFields', false)
+            );
 
         $_resHandler = $this->responseHandler()
             ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
-            ->type(ProformaInvoice::class);
+            ->type(ListProformaInvoicesResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
     }
@@ -187,7 +197,7 @@ class ProformaInvoicesController extends BaseController
                 QueryParam::init('status', $options)
                     ->commaSeparated()
                     ->extract('status')
-                    ->serializeBy([InvoiceStatus::class, 'checkValue']),
+                    ->serializeBy([ProformaInvoiceStatus::class, 'checkValue']),
                 QueryParam::init('page', $options)->commaSeparated()->extract('page', 1),
                 QueryParam::init('per_page', $options)->commaSeparated()->extract('perPage', 20),
                 QueryParam::init('direction', $options)
@@ -274,11 +284,11 @@ class ProformaInvoicesController extends BaseController
      *
      * @param int $subscriptionId The Chargify id of the subscription
      *
-     * @return ProformaInvoicePreview Response from the API call
+     * @return ProformaInvoice Response from the API call
      *
      * @throws ApiException Thrown if API call fails
      */
-    public function previewProformaInvoice(int $subscriptionId): ProformaInvoicePreview
+    public function previewProformaInvoice(int $subscriptionId): ProformaInvoice
     {
         $_reqBuilder = $this->requestBuilder(
             RequestMethod::POST,
@@ -294,7 +304,7 @@ class ProformaInvoicesController extends BaseController
                     ErrorListResponseException::class
                 )
             )
-            ->type(ProformaInvoicePreview::class);
+            ->type(ProformaInvoice::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
     }
@@ -360,8 +370,8 @@ class ProformaInvoicesController extends BaseController
      *
      * A product and customer first name, last name, and email are the minimum requirements.
      *
-     * @param string|null $includeNextProformaInvoice Choose to include a proforma invoice preview
-     *        for the first renewal
+     * @param string|null $mInclude Choose to include a proforma invoice preview for the first
+     *        renewal. Use in query `include=next_proforma_invoice`.
      * @param CreateSubscriptionRequest|null $body
      *
      * @return SignupProformaPreviewResponse Response from the API call
@@ -369,14 +379,16 @@ class ProformaInvoicesController extends BaseController
      * @throws ApiException Thrown if API call fails
      */
     public function previewSignupProformaInvoice(
-        ?string $includeNextProformaInvoice = null,
+        ?string $mInclude = null,
         ?CreateSubscriptionRequest $body = null
     ): SignupProformaPreviewResponse {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/subscriptions/proforma_invoices/preview.json')
             ->auth('BasicAuth')
             ->parameters(
                 HeaderParam::init('Content-Type', 'application/json'),
-                QueryParam::init('include=next_proforma_invoice', $includeNextProformaInvoice)->commaSeparated(),
+                QueryParam::init('include', $mInclude)
+                    ->commaSeparated()
+                    ->serializeBy([CreateSignupProformaPreviewInclude::class, 'checkValue']),
                 BodyParam::init($body)
             );
 

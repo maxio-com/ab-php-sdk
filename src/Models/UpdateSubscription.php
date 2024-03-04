@@ -471,6 +471,19 @@ class UpdateSubscription implements \JsonSerializable
         $this->dunningCommunicationDelayTimeZone = [];
     }
 
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
+    }
+
     /**
      * Encode this object to JSON
      *
@@ -545,6 +558,7 @@ class UpdateSubscription implements \JsonSerializable
         if (!empty($this->dunningCommunicationDelayTimeZone)) {
             $json['dunning_communication_delay_time_zone'] = $this->dunningCommunicationDelayTimeZone['value'];
         }
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

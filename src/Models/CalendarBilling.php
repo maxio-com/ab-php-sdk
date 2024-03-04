@@ -72,6 +72,19 @@ class CalendarBilling implements \JsonSerializable
         $this->calendarBillingFirstCharge = $calendarBillingFirstCharge;
     }
 
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
+    }
+
     /**
      * Encode this object to JSON
      *
@@ -94,6 +107,7 @@ class CalendarBilling implements \JsonSerializable
         if (isset($this->calendarBillingFirstCharge)) {
             $json['calendar_billing_first_charge'] = FirstChargeType::checkValue($this->calendarBillingFirstCharge);
         }
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

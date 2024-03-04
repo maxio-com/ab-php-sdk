@@ -133,6 +133,19 @@ class ListSaleRepItem implements \JsonSerializable
         $this->testMode = $testMode;
     }
 
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
+    }
+
     /**
      * Encode this object to JSON
      *
@@ -160,6 +173,7 @@ class ListSaleRepItem implements \JsonSerializable
         if (isset($this->testMode)) {
             $json['test_mode']           = $this->testMode;
         }
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

@@ -50,6 +50,19 @@ class BillingSchedule implements \JsonSerializable
         $this->initialBillingAt = $initialBillingAt;
     }
 
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
+    }
+
     /**
      * Encode this object to JSON
      *
@@ -65,6 +78,7 @@ class BillingSchedule implements \JsonSerializable
         if (isset($this->initialBillingAt)) {
             $json['initial_billing_at'] = DateTimeHelper::toSimpleDate($this->initialBillingAt);
         }
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

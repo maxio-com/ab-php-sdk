@@ -41,6 +41,19 @@ class BaseRefundError implements \JsonSerializable
         $this->base = $base;
     }
 
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
+    }
+
     /**
      * Encode this object to JSON
      *
@@ -56,6 +69,7 @@ class BaseRefundError implements \JsonSerializable
         if (isset($this->base)) {
             $json['base'] = $this->base;
         }
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

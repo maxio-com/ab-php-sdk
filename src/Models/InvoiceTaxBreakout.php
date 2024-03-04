@@ -30,6 +30,11 @@ class InvoiceTaxBreakout implements \JsonSerializable
     private $taxAmount;
 
     /**
+     * @var string|null
+     */
+    private $taxExemptAmount;
+
+    /**
      * Returns Uid.
      */
     public function getUid(): ?string
@@ -84,6 +89,37 @@ class InvoiceTaxBreakout implements \JsonSerializable
     }
 
     /**
+     * Returns Tax Exempt Amount.
+     */
+    public function getTaxExemptAmount(): ?string
+    {
+        return $this->taxExemptAmount;
+    }
+
+    /**
+     * Sets Tax Exempt Amount.
+     *
+     * @maps tax_exempt_amount
+     */
+    public function setTaxExemptAmount(?string $taxExemptAmount): void
+    {
+        $this->taxExemptAmount = $taxExemptAmount;
+    }
+
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
+    }
+
+    /**
      * Encode this object to JSON
      *
      * @param bool $asArrayWhenEmpty Whether to serialize this model as an array whenever no fields
@@ -96,14 +132,18 @@ class InvoiceTaxBreakout implements \JsonSerializable
     {
         $json = [];
         if (isset($this->uid)) {
-            $json['uid']            = $this->uid;
+            $json['uid']               = $this->uid;
         }
         if (isset($this->taxableAmount)) {
-            $json['taxable_amount'] = $this->taxableAmount;
+            $json['taxable_amount']    = $this->taxableAmount;
         }
         if (isset($this->taxAmount)) {
-            $json['tax_amount']     = $this->taxAmount;
+            $json['tax_amount']        = $this->taxAmount;
         }
+        if (isset($this->taxExemptAmount)) {
+            $json['tax_exempt_amount'] = $this->taxExemptAmount;
+        }
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

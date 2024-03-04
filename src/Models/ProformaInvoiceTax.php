@@ -45,7 +45,7 @@ class ProformaInvoiceTax implements \JsonSerializable
     private $taxAmount;
 
     /**
-     * @var ProformaInvoiceTaxBreakout[]|null
+     * @var InvoiceTaxBreakout[]|null
      */
     private $lineItemBreakouts;
 
@@ -97,6 +97,7 @@ class ProformaInvoiceTax implements \JsonSerializable
      * Sets Source Type.
      *
      * @maps source_type
+     * @factory \AdvancedBillingLib\Models\ProformaInvoiceTaxSourceType::checkValue
      */
     public function setSourceType(?string $sourceType): void
     {
@@ -160,7 +161,7 @@ class ProformaInvoiceTax implements \JsonSerializable
     /**
      * Returns Line Item Breakouts.
      *
-     * @return ProformaInvoiceTaxBreakout[]|null
+     * @return InvoiceTaxBreakout[]|null
      */
     public function getLineItemBreakouts(): ?array
     {
@@ -172,11 +173,24 @@ class ProformaInvoiceTax implements \JsonSerializable
      *
      * @maps line_item_breakouts
      *
-     * @param ProformaInvoiceTaxBreakout[]|null $lineItemBreakouts
+     * @param InvoiceTaxBreakout[]|null $lineItemBreakouts
      */
     public function setLineItemBreakouts(?array $lineItemBreakouts): void
     {
         $this->lineItemBreakouts = $lineItemBreakouts;
+    }
+
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
     }
 
     /**
@@ -198,7 +212,7 @@ class ProformaInvoiceTax implements \JsonSerializable
             $json['title']               = $this->title;
         }
         if (isset($this->sourceType)) {
-            $json['source_type']         = $this->sourceType;
+            $json['source_type']         = ProformaInvoiceTaxSourceType::checkValue($this->sourceType);
         }
         if (isset($this->percentage)) {
             $json['percentage']          = $this->percentage;
@@ -212,6 +226,7 @@ class ProformaInvoiceTax implements \JsonSerializable
         if (isset($this->lineItemBreakouts)) {
             $json['line_item_breakouts'] = $this->lineItemBreakouts;
         }
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

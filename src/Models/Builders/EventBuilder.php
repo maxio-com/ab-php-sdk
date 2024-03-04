@@ -33,9 +33,9 @@ class EventBuilder
     /**
      * Initializes a new event Builder object.
      */
-    public static function init(int $id, string $key, string $message, int $customerId, \DateTime $createdAt): self
+    public static function init(int $id, string $key, string $message, \DateTime $createdAt): self
     {
-        return new self(new Event($id, $key, $message, $customerId, $createdAt));
+        return new self(new Event($id, $key, $message, $createdAt));
     }
 
     /**
@@ -48,11 +48,32 @@ class EventBuilder
     }
 
     /**
+     * Sets customer id field.
+     */
+    public function customerId(?int $value): self
+    {
+        $this->instance->setCustomerId($value);
+        return $this;
+    }
+
+    /**
      * Sets event specific data field.
      */
     public function eventSpecificData($value): self
     {
         $this->instance->setEventSpecificData($value);
+        return $this;
+    }
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function additionalProperty(string $name, $value): self
+    {
+        $this->instance->addAdditionalProperty($name, $value);
         return $this;
     }
 

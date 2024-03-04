@@ -13,7 +13,7 @@ namespace AdvancedBillingLib\Models;
 use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
-class ComponentSPricePointAssignment implements \JsonSerializable
+class ComponentPricePointAssignment implements \JsonSerializable
 {
     /**
      * @var int|null
@@ -66,6 +66,19 @@ class ComponentSPricePointAssignment implements \JsonSerializable
         $this->pricePoint = $pricePoint;
     }
 
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
+    }
+
     /**
      * Encode this object to JSON
      *
@@ -88,6 +101,7 @@ class ComponentSPricePointAssignment implements \JsonSerializable
                     'anyOf(oneOf(string,int),null)'
                 );
         }
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

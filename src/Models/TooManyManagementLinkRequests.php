@@ -74,6 +74,19 @@ class TooManyManagementLinkRequests implements \JsonSerializable
         $this->newLinkAvailableAt = $newLinkAvailableAt;
     }
 
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
+    }
+
     /**
      * Encode this object to JSON
      *
@@ -88,6 +101,7 @@ class TooManyManagementLinkRequests implements \JsonSerializable
         $json = [];
         $json['error']                 = $this->error;
         $json['new_link_available_at'] = DateTimeHelper::toRfc3339DateTime($this->newLinkAvailableAt);
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

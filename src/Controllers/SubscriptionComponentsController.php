@@ -18,7 +18,7 @@ use AdvancedBillingLib\Exceptions\SubscriptionComponentAllocationErrorException;
 use AdvancedBillingLib\Models\AllocateComponents;
 use AdvancedBillingLib\Models\AllocationPreviewResponse;
 use AdvancedBillingLib\Models\AllocationResponse;
-use AdvancedBillingLib\Models\BulkComponentSPricePointAssignment;
+use AdvancedBillingLib\Models\BulkComponentsPricePointAssignment;
 use AdvancedBillingLib\Models\CreateAllocationRequest;
 use AdvancedBillingLib\Models\CreateUsageRequest;
 use AdvancedBillingLib\Models\CreditSchemeRequest;
@@ -144,16 +144,16 @@ class SubscriptionComponentsController extends BaseController
      * point.
      *
      * @param int $subscriptionId The Chargify id of the subscription
-     * @param BulkComponentSPricePointAssignment|null $body
+     * @param BulkComponentsPricePointAssignment|null $body
      *
-     * @return BulkComponentSPricePointAssignment Response from the API call
+     * @return BulkComponentsPricePointAssignment Response from the API call
      *
      * @throws ApiException Thrown if API call fails
      */
     public function bulkUpdateSubscriptionComponentsPricePoints(
         int $subscriptionId,
-        ?BulkComponentSPricePointAssignment $body = null
-    ): BulkComponentSPricePointAssignment {
+        ?BulkComponentsPricePointAssignment $body = null
+    ): BulkComponentsPricePointAssignment {
         $_reqBuilder = $this->requestBuilder(
             RequestMethod::POST,
             '/subscriptions/{subscription_id}/price_points.json'
@@ -173,7 +173,7 @@ class SubscriptionComponentsController extends BaseController
                     ComponentPricePointErrorException::class
                 )
             )
-            ->type(BulkComponentSPricePointAssignment::class);
+            ->type(BulkComponentsPricePointAssignment::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
     }
@@ -513,6 +513,7 @@ class SubscriptionComponentsController extends BaseController
             );
 
         $_resHandler = $this->responseHandler()
+            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
             ->throwErrorOn(
                 '422',
                 ErrorType::initWithErrorTemplate(
@@ -571,6 +572,7 @@ class SubscriptionComponentsController extends BaseController
             );
 
         $_resHandler = $this->responseHandler()
+            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
             ->throwErrorOn(
                 '422',
                 ErrorType::initWithErrorTemplate(

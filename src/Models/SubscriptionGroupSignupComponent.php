@@ -156,6 +156,19 @@ class SubscriptionGroupSignupComponent implements \JsonSerializable
         $this->customPrice = $customPrice;
     }
 
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
+    }
+
     /**
      * Encode this object to JSON
      *
@@ -199,6 +212,7 @@ class SubscriptionGroupSignupComponent implements \JsonSerializable
         if (isset($this->customPrice)) {
             $json['custom_price']       = $this->customPrice;
         }
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

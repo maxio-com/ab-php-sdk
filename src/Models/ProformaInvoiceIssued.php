@@ -324,6 +324,19 @@ class ProformaInvoiceIssued implements \JsonSerializable
         $this->lineItems = $lineItems;
     }
 
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
+    }
+
     /**
      * Encode this object to JSON
      *
@@ -347,6 +360,7 @@ class ProformaInvoiceIssued implements \JsonSerializable
         $json['total_amount']  = $this->totalAmount;
         $json['product_name']  = $this->productName;
         $json['line_items']    = $this->lineItems;
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

@@ -50,6 +50,19 @@ class AutoResume implements \JsonSerializable
         $this->automaticallyResumeAt = [];
     }
 
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
+    }
+
     /**
      * Encode this object to JSON
      *
@@ -65,6 +78,7 @@ class AutoResume implements \JsonSerializable
         if (!empty($this->automaticallyResumeAt)) {
             $json['automatically_resume_at'] = DateTimeHelper::toRfc3339DateTime($this->automaticallyResumeAt['value']);
         }
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

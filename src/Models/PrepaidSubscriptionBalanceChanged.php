@@ -128,6 +128,19 @@ class PrepaidSubscriptionBalanceChanged implements \JsonSerializable
         $this->currentUsageAmountInCents = $currentUsageAmountInCents;
     }
 
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
+    }
+
     /**
      * Encode this object to JSON
      *
@@ -144,6 +157,7 @@ class PrepaidSubscriptionBalanceChanged implements \JsonSerializable
         $json['current_account_balance_in_cents']    = $this->currentAccountBalanceInCents;
         $json['prepayment_account_balance_in_cents'] = $this->prepaymentAccountBalanceInCents;
         $json['current_usage_amount_in_cents']       = $this->currentUsageAmountInCents;
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

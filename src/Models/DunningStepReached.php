@@ -98,6 +98,19 @@ class DunningStepReached implements \JsonSerializable
         $this->nextStep = $nextStep;
     }
 
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
+    }
+
     /**
      * Encode this object to JSON
      *
@@ -113,6 +126,7 @@ class DunningStepReached implements \JsonSerializable
         $json['dunner']       = $this->dunner;
         $json['current_step'] = $this->currentStep;
         $json['next_step']    = $this->nextStep;
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

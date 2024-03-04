@@ -201,6 +201,19 @@ class CustomFieldValueChange implements \JsonSerializable
         $this->resourceId = $resourceId;
     }
 
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
+    }
+
     /**
      * Encode this object to JSON
      *
@@ -220,6 +233,7 @@ class CustomFieldValueChange implements \JsonSerializable
         $json['new_value']      = $this->newValue;
         $json['resource_type']  = $this->resourceType;
         $json['resource_id']    = $this->resourceId;
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

@@ -525,6 +525,19 @@ class AllocationPreviewItem implements \JsonSerializable
         $this->componentHandle = [];
     }
 
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
+    }
+
     /**
      * Encode this object to JSON
      *
@@ -599,6 +612,7 @@ class AllocationPreviewItem implements \JsonSerializable
         if (!empty($this->componentHandle)) {
             $json['component_handle']           = $this->componentHandle['value'];
         }
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

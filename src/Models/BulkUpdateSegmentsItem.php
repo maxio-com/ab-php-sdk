@@ -109,6 +109,19 @@ class BulkUpdateSegmentsItem implements \JsonSerializable
         $this->prices = $prices;
     }
 
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
+    }
+
     /**
      * Encode this object to JSON
      *
@@ -124,6 +137,7 @@ class BulkUpdateSegmentsItem implements \JsonSerializable
         $json['id']             = $this->id;
         $json['pricing_scheme'] = PricingScheme::checkValue($this->pricingScheme);
         $json['prices']         = $this->prices;
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

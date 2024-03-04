@@ -115,9 +115,9 @@ class BankAccountPaymentProfile implements \JsonSerializable
     private $verified = false;
 
     /**
-     * @var int|null
+     * @var array
      */
-    private $siteGatewaySettingId;
+    private $siteGatewaySettingId = [];
 
     /**
      * @var array
@@ -640,7 +640,10 @@ class BankAccountPaymentProfile implements \JsonSerializable
      */
     public function getSiteGatewaySettingId(): ?int
     {
-        return $this->siteGatewaySettingId;
+        if (count($this->siteGatewaySettingId) == 0) {
+            return null;
+        }
+        return $this->siteGatewaySettingId['value'];
     }
 
     /**
@@ -650,7 +653,15 @@ class BankAccountPaymentProfile implements \JsonSerializable
      */
     public function setSiteGatewaySettingId(?int $siteGatewaySettingId): void
     {
-        $this->siteGatewaySettingId = $siteGatewaySettingId;
+        $this->siteGatewaySettingId['value'] = $siteGatewaySettingId;
+    }
+
+    /**
+     * Unsets Site Gateway Setting Id.
+     */
+    public function unsetSiteGatewaySettingId(): void
+    {
+        $this->siteGatewaySettingId = [];
     }
 
     /**
@@ -680,6 +691,19 @@ class BankAccountPaymentProfile implements \JsonSerializable
     public function unsetGatewayHandle(): void
     {
         $this->gatewayHandle = [];
+    }
+
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
     }
 
     /**
@@ -750,12 +774,13 @@ class BankAccountPaymentProfile implements \JsonSerializable
         if (isset($this->verified)) {
             $json['verified']                 = $this->verified;
         }
-        if (isset($this->siteGatewaySettingId)) {
-            $json['site_gateway_setting_id']  = $this->siteGatewaySettingId;
+        if (!empty($this->siteGatewaySettingId)) {
+            $json['site_gateway_setting_id']  = $this->siteGatewaySettingId['value'];
         }
         if (!empty($this->gatewayHandle)) {
             $json['gateway_handle']           = $this->gatewayHandle['value'];
         }
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

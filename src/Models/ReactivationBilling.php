@@ -49,6 +49,19 @@ class ReactivationBilling implements \JsonSerializable
         $this->reactivationCharge = $reactivationCharge;
     }
 
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
+    }
+
     /**
      * Encode this object to JSON
      *
@@ -64,6 +77,7 @@ class ReactivationBilling implements \JsonSerializable
         if (isset($this->reactivationCharge)) {
             $json['reactivation_charge'] = ReactivationCharge::checkValue($this->reactivationCharge);
         }
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

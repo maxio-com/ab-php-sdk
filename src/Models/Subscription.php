@@ -2101,6 +2101,19 @@ class Subscription implements \JsonSerializable
         $this->selfServicePageToken = $selfServicePageToken;
     }
 
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
+    }
+
     /**
      * Encode this object to JSON
      *
@@ -2339,6 +2352,7 @@ class Subscription implements \JsonSerializable
         if (isset($this->selfServicePageToken)) {
             $json['self_service_page_token']               = $this->selfServicePageToken;
         }
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

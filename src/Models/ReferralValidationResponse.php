@@ -37,6 +37,19 @@ class ReferralValidationResponse implements \JsonSerializable
         $this->referralCode = $referralCode;
     }
 
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
+    }
+
     /**
      * Encode this object to JSON
      *
@@ -52,6 +65,7 @@ class ReferralValidationResponse implements \JsonSerializable
         if (isset($this->referralCode)) {
             $json['referral_code'] = $this->referralCode;
         }
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

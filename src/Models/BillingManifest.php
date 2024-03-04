@@ -228,6 +228,19 @@ class BillingManifest implements \JsonSerializable
         $this->existingBalanceInCents = $existingBalanceInCents;
     }
 
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
+    }
+
     /**
      * Encode this object to JSON
      *
@@ -267,6 +280,7 @@ class BillingManifest implements \JsonSerializable
         if (isset($this->existingBalanceInCents)) {
             $json['existing_balance_in_cents'] = $this->existingBalanceInCents;
         }
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

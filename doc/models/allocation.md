@@ -31,6 +31,9 @@
 | `upgradeCharge` | [`?string(CreditType)`](../../doc/models/credit-type.md) | Optional | The type of credit to be created when upgrading/downgrading. Defaults to the component and then site setting if one is not provided.<br>Available values: `full`, `prorated`, `none`. | getUpgradeCharge(): ?string | setUpgradeCharge(?string upgradeCharge): void |
 | `downgradeCredit` | [`?string(CreditType)`](../../doc/models/credit-type.md) | Optional | The type of credit to be created when upgrading/downgrading. Defaults to the component and then site setting if one is not provided.<br>Available values: `full`, `prorated`, `none`. | getDowngradeCredit(): ?string | setDowngradeCredit(?string downgradeCredit): void |
 | `payment` | [PaymentForAllocation](../../doc/models/payment-for-allocation.md)\|null | Optional | This is a container for one-of cases. | getPayment(): ?PaymentForAllocation | setPayment(?PaymentForAllocation payment): void |
+| `expiresAt` | `?DateTime` | Optional | - | getExpiresAt(): ?\DateTime | setExpiresAt(?\DateTime expiresAt): void |
+| `usedQuantity` | `?int` | Optional | - | getUsedQuantity(): ?int | setUsedQuantity(?int usedQuantity): void |
+| `chargeId` | `?int` | Optional | - | getChargeId(): ?int | setChargeId(?int chargeId): void |
 
 ## Example (as JSON)
 

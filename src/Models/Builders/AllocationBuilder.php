@@ -283,6 +283,45 @@ class AllocationBuilder
     }
 
     /**
+     * Sets expires at field.
+     */
+    public function expiresAt(?\DateTime $value): self
+    {
+        $this->instance->setExpiresAt($value);
+        return $this;
+    }
+
+    /**
+     * Sets used quantity field.
+     */
+    public function usedQuantity(?int $value): self
+    {
+        $this->instance->setUsedQuantity($value);
+        return $this;
+    }
+
+    /**
+     * Sets charge id field.
+     */
+    public function chargeId(?int $value): self
+    {
+        $this->instance->setChargeId($value);
+        return $this;
+    }
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function additionalProperty(string $name, $value): self
+    {
+        $this->instance->addAdditionalProperty($name, $value);
+        return $this;
+    }
+
+    /**
      * Initializes a new allocation object.
      */
     public function build(): Allocation

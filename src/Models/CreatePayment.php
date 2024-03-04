@@ -127,6 +127,19 @@ class CreatePayment implements \JsonSerializable
         $this->paymentMethod = $paymentMethod;
     }
 
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
+    }
+
     /**
      * Encode this object to JSON
      *
@@ -143,6 +156,7 @@ class CreatePayment implements \JsonSerializable
         $json['memo']            = $this->memo;
         $json['payment_details'] = $this->paymentDetails;
         $json['payment_method']  = InvoicePaymentMethodType::checkValue($this->paymentMethod);
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

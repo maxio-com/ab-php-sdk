@@ -560,6 +560,19 @@ class CreditNoteLineItem implements \JsonSerializable
         $this->customItem = $customItem;
     }
 
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
+    }
+
     /**
      * Encode this object to JSON
      *
@@ -626,6 +639,7 @@ class CreditNoteLineItem implements \JsonSerializable
         if (isset($this->customItem)) {
             $json['custom_item']              = $this->customItem;
         }
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

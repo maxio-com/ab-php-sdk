@@ -75,6 +75,19 @@ class UpdateSubscriptionNote implements \JsonSerializable
         $this->sticky = $sticky;
     }
 
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
+    }
+
     /**
      * Encode this object to JSON
      *
@@ -89,6 +102,7 @@ class UpdateSubscriptionNote implements \JsonSerializable
         $json = [];
         $json['body']   = $this->body;
         $json['sticky'] = $this->sticky;
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

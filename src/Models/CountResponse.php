@@ -37,6 +37,19 @@ class CountResponse implements \JsonSerializable
         $this->count = $count;
     }
 
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
+    }
+
     /**
      * Encode this object to JSON
      *
@@ -52,6 +65,7 @@ class CountResponse implements \JsonSerializable
         if (isset($this->count)) {
             $json['count'] = $this->count;
         }
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

@@ -72,6 +72,19 @@ class SubscriptionProductChange implements \JsonSerializable
         $this->newProductId = $newProductId;
     }
 
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
+    }
+
     /**
      * Encode this object to JSON
      *
@@ -86,6 +99,7 @@ class SubscriptionProductChange implements \JsonSerializable
         $json = [];
         $json['previous_product_id'] = $this->previousProductId;
         $json['new_product_id']      = $this->newProductId;
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

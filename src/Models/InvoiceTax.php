@@ -146,6 +146,7 @@ class InvoiceTax implements \JsonSerializable
      * Sets Source Type.
      *
      * @maps source_type
+     * @factory \AdvancedBillingLib\Models\ProformaInvoiceTaxSourceType::checkValue
      */
     public function setSourceType(?string $sourceType): void
     {
@@ -286,6 +287,19 @@ class InvoiceTax implements \JsonSerializable
         $this->taxComponentBreakouts = $taxComponentBreakouts;
     }
 
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
+    }
+
     /**
      * Encode this object to JSON
      *
@@ -308,7 +322,7 @@ class InvoiceTax implements \JsonSerializable
             $json['description']             = $this->description['value'];
         }
         if (isset($this->sourceType)) {
-            $json['source_type']             = $this->sourceType;
+            $json['source_type']             = ProformaInvoiceTaxSourceType::checkValue($this->sourceType);
         }
         if (isset($this->sourceId)) {
             $json['source_id']               = $this->sourceId;
@@ -331,6 +345,7 @@ class InvoiceTax implements \JsonSerializable
         if (isset($this->taxComponentBreakouts)) {
             $json['tax_component_breakouts'] = $this->taxComponentBreakouts;
         }
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

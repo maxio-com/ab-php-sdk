@@ -10,32 +10,32 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models\Builders;
 
-use AdvancedBillingLib\Models\BulkComponentSPricePointAssignment;
+use AdvancedBillingLib\Models\BulkComponentsPricePointAssignment;
 use Core\Utils\CoreHelper;
 
 /**
- * Builder for model BulkComponentSPricePointAssignment
+ * Builder for model BulkComponentsPricePointAssignment
  *
- * @see BulkComponentSPricePointAssignment
+ * @see BulkComponentsPricePointAssignment
  */
-class BulkComponentSPricePointAssignmentBuilder
+class BulkComponentsPricePointAssignmentBuilder
 {
     /**
-     * @var BulkComponentSPricePointAssignment
+     * @var BulkComponentsPricePointAssignment
      */
     private $instance;
 
-    private function __construct(BulkComponentSPricePointAssignment $instance)
+    private function __construct(BulkComponentsPricePointAssignment $instance)
     {
         $this->instance = $instance;
     }
 
     /**
-     * Initializes a new bulk component sprice point assignment Builder object.
+     * Initializes a new bulk components price point assignment Builder object.
      */
     public static function init(): self
     {
-        return new self(new BulkComponentSPricePointAssignment());
+        return new self(new BulkComponentsPricePointAssignment());
     }
 
     /**
@@ -48,9 +48,21 @@ class BulkComponentSPricePointAssignmentBuilder
     }
 
     /**
-     * Initializes a new bulk component sprice point assignment object.
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
      */
-    public function build(): BulkComponentSPricePointAssignment
+    public function additionalProperty(string $name, $value): self
+    {
+        $this->instance->addAdditionalProperty($name, $value);
+        return $this;
+    }
+
+    /**
+     * Initializes a new bulk components price point assignment object.
+     */
+    public function build(): BulkComponentsPricePointAssignment
     {
         return CoreHelper::clone($this->instance);
     }

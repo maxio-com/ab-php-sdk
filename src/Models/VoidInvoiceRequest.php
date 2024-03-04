@@ -46,6 +46,19 @@ class VoidInvoiceRequest implements \JsonSerializable
         $this->void = $void;
     }
 
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
+    }
+
     /**
      * Encode this object to JSON
      *
@@ -59,6 +72,7 @@ class VoidInvoiceRequest implements \JsonSerializable
     {
         $json = [];
         $json['void'] = $this->void;
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

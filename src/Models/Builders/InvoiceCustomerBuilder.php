@@ -48,6 +48,15 @@ class InvoiceCustomerBuilder
     }
 
     /**
+     * Unsets chargify id field.
+     */
+    public function unsetChargifyId(): self
+    {
+        $this->instance->unsetChargifyId();
+        return $this;
+    }
+
+    /**
      * Sets first name field.
      */
     public function firstName(?string $value): self
@@ -125,6 +134,18 @@ class InvoiceCustomerBuilder
     public function unsetReference(): self
     {
         $this->instance->unsetReference();
+        return $this;
+    }
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function additionalProperty(string $name, $value): self
+    {
+        $this->instance->addAdditionalProperty($name, $value);
         return $this;
     }
 

@@ -168,6 +168,19 @@ class PortalManagementLink implements \JsonSerializable
         $this->lastInviteSentAt = [];
     }
 
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
+    }
+
     /**
      * Encode this object to JSON
      *
@@ -198,6 +211,7 @@ class PortalManagementLink implements \JsonSerializable
         if (!empty($this->lastInviteSentAt)) {
             $json['last_invite_sent_at']   = DateTimeHelper::toRfc3339DateTime($this->lastInviteSentAt['value']);
         }
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

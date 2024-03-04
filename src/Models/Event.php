@@ -37,7 +37,7 @@ class Event implements \JsonSerializable
     private $subscriptionId;
 
     /**
-     * @var int
+     * @var int|null
      */
     private $customerId;
 
@@ -55,15 +55,13 @@ class Event implements \JsonSerializable
      * @param int $id
      * @param string $key
      * @param string $message
-     * @param int $customerId
      * @param \DateTime $createdAt
      */
-    public function __construct(int $id, string $key, string $message, int $customerId, \DateTime $createdAt)
+    public function __construct(int $id, string $key, string $message, \DateTime $createdAt)
     {
         $this->id = $id;
         $this->key = $key;
         $this->message = $message;
-        $this->customerId = $customerId;
         $this->createdAt = $createdAt;
     }
 
@@ -145,7 +143,7 @@ class Event implements \JsonSerializable
     /**
      * Returns Customer Id.
      */
-    public function getCustomerId(): int
+    public function getCustomerId(): ?int
     {
         return $this->customerId;
     }
@@ -153,10 +151,9 @@ class Event implements \JsonSerializable
     /**
      * Sets Customer Id.
      *
-     * @required
      * @maps customer_id
      */
-    public function setCustomerId(int $customerId): void
+    public function setCustomerId(?int $customerId): void
     {
         $this->customerId = $customerId;
     }
@@ -204,6 +201,19 @@ class Event implements \JsonSerializable
         $this->eventSpecificData = $eventSpecificData;
     }
 
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
+    }
+
     /**
      * Encode this object to JSON
      *
@@ -232,6 +242,7 @@ class Event implements \JsonSerializable
                 'untBalanceChanged,PrepaymentAccountBalanceChanged,PaymentCollectionMethodChanged,Ite' .
                 'mPricePointChanged,CustomFieldValueChange),null)'
             );
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

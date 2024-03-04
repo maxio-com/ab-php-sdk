@@ -98,6 +98,19 @@ class RefundSuccess implements \JsonSerializable
         $this->productId = $productId;
     }
 
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
+    }
+
     /**
      * Encode this object to JSON
      *
@@ -113,6 +126,7 @@ class RefundSuccess implements \JsonSerializable
         $json['refund_id']              = $this->refundId;
         $json['gateway_transaction_id'] = $this->gatewayTransactionId;
         $json['product_id']             = $this->productId;
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

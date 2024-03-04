@@ -169,6 +169,7 @@ class InvoiceDiscount implements \JsonSerializable
      * Sets Source Type.
      *
      * @maps source_type
+     * @factory \AdvancedBillingLib\Models\InvoiceDiscountSourceType::checkValue
      */
     public function setSourceType(?string $sourceType): void
     {
@@ -205,6 +206,7 @@ class InvoiceDiscount implements \JsonSerializable
      * Sets Discount Type.
      *
      * @maps discount_type
+     * @factory \AdvancedBillingLib\Models\InvoiceDiscountType::checkValue
      */
     public function setDiscountType(?string $discountType): void
     {
@@ -305,6 +307,19 @@ class InvoiceDiscount implements \JsonSerializable
         $this->lineItemBreakouts = $lineItemBreakouts;
     }
 
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
+    }
+
     /**
      * Encode this object to JSON
      *
@@ -330,13 +345,13 @@ class InvoiceDiscount implements \JsonSerializable
             $json['code']                = $this->code;
         }
         if (isset($this->sourceType)) {
-            $json['source_type']         = $this->sourceType;
+            $json['source_type']         = InvoiceDiscountSourceType::checkValue($this->sourceType);
         }
         if (isset($this->sourceId)) {
             $json['source_id']           = $this->sourceId;
         }
         if (isset($this->discountType)) {
-            $json['discount_type']       = $this->discountType;
+            $json['discount_type']       = InvoiceDiscountType::checkValue($this->discountType);
         }
         if (isset($this->percentage)) {
             $json['percentage']          = $this->percentage;
@@ -353,6 +368,7 @@ class InvoiceDiscount implements \JsonSerializable
         if (isset($this->lineItemBreakouts)) {
             $json['line_item_breakouts'] = $this->lineItemBreakouts;
         }
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

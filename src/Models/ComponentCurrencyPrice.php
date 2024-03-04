@@ -152,6 +152,19 @@ class ComponentCurrencyPrice implements \JsonSerializable
         $this->pricePointId = $pricePointId;
     }
 
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
+    }
+
     /**
      * Encode this object to JSON
      *
@@ -182,6 +195,7 @@ class ComponentCurrencyPrice implements \JsonSerializable
         if (isset($this->pricePointId)) {
             $json['price_point_id']  = $this->pricePointId;
         }
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

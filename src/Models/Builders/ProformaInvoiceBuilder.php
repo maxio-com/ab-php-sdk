@@ -69,11 +69,29 @@ class ProformaInvoiceBuilder
     }
 
     /**
+     * Unsets customer id field.
+     */
+    public function unsetCustomerId(): self
+    {
+        $this->instance->unsetCustomerId();
+        return $this;
+    }
+
+    /**
      * Sets subscription id field.
      */
     public function subscriptionId(?int $value): self
     {
         $this->instance->setSubscriptionId($value);
+        return $this;
+    }
+
+    /**
+     * Unsets subscription id field.
+     */
+    public function unsetSubscriptionId(): self
+    {
+        $this->instance->unsetSubscriptionId();
         return $this;
     }
 
@@ -389,6 +407,18 @@ class ProformaInvoiceBuilder
     public function unsetPublicUrl(): self
     {
         $this->instance->unsetPublicUrl();
+        return $this;
+    }
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function additionalProperty(string $name, $value): self
+    {
+        $this->instance->addAdditionalProperty($name, $value);
         return $this;
     }
 

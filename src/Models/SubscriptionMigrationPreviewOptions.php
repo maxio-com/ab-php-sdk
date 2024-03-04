@@ -286,6 +286,19 @@ class SubscriptionMigrationPreviewOptions implements \JsonSerializable
         $this->prorationDate = $prorationDate;
     }
 
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
+    }
+
     /**
      * Encode this object to JSON
      *
@@ -328,6 +341,7 @@ class SubscriptionMigrationPreviewOptions implements \JsonSerializable
         if (isset($this->prorationDate)) {
             $json['proration_date']             = DateTimeHelper::toRfc3339DateTime($this->prorationDate);
         }
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

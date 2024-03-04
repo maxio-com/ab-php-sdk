@@ -155,6 +155,19 @@ class CurrencyPrice implements \JsonSerializable
         $this->role = $role;
     }
 
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
+    }
+
     /**
      * Encode this object to JSON
      *
@@ -185,6 +198,7 @@ class CurrencyPrice implements \JsonSerializable
         if (isset($this->role)) {
             $json['role']                   = CurrencyPriceRole::checkValue($this->role);
         }
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

@@ -117,6 +117,19 @@ class PaidInvoice implements \JsonSerializable
         $this->paidAmount = $paidAmount;
     }
 
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
+    }
+
     /**
      * Encode this object to JSON
      *
@@ -141,6 +154,7 @@ class PaidInvoice implements \JsonSerializable
         if (isset($this->paidAmount)) {
             $json['paid_amount'] = $this->paidAmount;
         }
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

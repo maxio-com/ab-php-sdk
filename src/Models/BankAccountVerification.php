@@ -60,6 +60,19 @@ class BankAccountVerification implements \JsonSerializable
         $this->deposit2InCents = $deposit2InCents;
     }
 
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
+    }
+
     /**
      * Encode this object to JSON
      *
@@ -78,6 +91,7 @@ class BankAccountVerification implements \JsonSerializable
         if (isset($this->deposit2InCents)) {
             $json['deposit_2_in_cents'] = $this->deposit2InCents;
         }
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

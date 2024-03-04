@@ -17,7 +17,17 @@ class ProformaInvoiceDiscount implements \JsonSerializable
     /**
      * @var string|null
      */
+    private $uid;
+
+    /**
+     * @var string|null
+     */
     private $title;
+
+    /**
+     * @var string|null
+     */
+    private $code;
 
     /**
      * @var string|null
@@ -40,9 +50,27 @@ class ProformaInvoiceDiscount implements \JsonSerializable
     private $discountAmount;
 
     /**
-     * @var ProformaInvoiceDiscountBreakout[]|null
+     * @var InvoiceDiscountBreakout[]|null
      */
     private $lineItemBreakouts;
+
+    /**
+     * Returns Uid.
+     */
+    public function getUid(): ?string
+    {
+        return $this->uid;
+    }
+
+    /**
+     * Sets Uid.
+     *
+     * @maps uid
+     */
+    public function setUid(?string $uid): void
+    {
+        $this->uid = $uid;
+    }
 
     /**
      * Returns Title.
@@ -63,6 +91,24 @@ class ProformaInvoiceDiscount implements \JsonSerializable
     }
 
     /**
+     * Returns Code.
+     */
+    public function getCode(): ?string
+    {
+        return $this->code;
+    }
+
+    /**
+     * Sets Code.
+     *
+     * @maps code
+     */
+    public function setCode(?string $code): void
+    {
+        $this->code = $code;
+    }
+
+    /**
      * Returns Source Type.
      */
     public function getSourceType(): ?string
@@ -74,6 +120,7 @@ class ProformaInvoiceDiscount implements \JsonSerializable
      * Sets Source Type.
      *
      * @maps source_type
+     * @factory \AdvancedBillingLib\Models\ProformaInvoiceDiscountSourceType::checkValue
      */
     public function setSourceType(?string $sourceType): void
     {
@@ -92,6 +139,7 @@ class ProformaInvoiceDiscount implements \JsonSerializable
      * Sets Discount Type.
      *
      * @maps discount_type
+     * @factory \AdvancedBillingLib\Models\InvoiceDiscountType::checkValue
      */
     public function setDiscountType(?string $discountType): void
     {
@@ -137,7 +185,7 @@ class ProformaInvoiceDiscount implements \JsonSerializable
     /**
      * Returns Line Item Breakouts.
      *
-     * @return ProformaInvoiceDiscountBreakout[]|null
+     * @return InvoiceDiscountBreakout[]|null
      */
     public function getLineItemBreakouts(): ?array
     {
@@ -149,11 +197,24 @@ class ProformaInvoiceDiscount implements \JsonSerializable
      *
      * @maps line_item_breakouts
      *
-     * @param ProformaInvoiceDiscountBreakout[]|null $lineItemBreakouts
+     * @param InvoiceDiscountBreakout[]|null $lineItemBreakouts
      */
     public function setLineItemBreakouts(?array $lineItemBreakouts): void
     {
         $this->lineItemBreakouts = $lineItemBreakouts;
+    }
+
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
     }
 
     /**
@@ -168,14 +229,20 @@ class ProformaInvoiceDiscount implements \JsonSerializable
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
+        if (isset($this->uid)) {
+            $json['uid']                 = $this->uid;
+        }
         if (isset($this->title)) {
             $json['title']               = $this->title;
         }
+        if (isset($this->code)) {
+            $json['code']                = $this->code;
+        }
         if (isset($this->sourceType)) {
-            $json['source_type']         = $this->sourceType;
+            $json['source_type']         = ProformaInvoiceDiscountSourceType::checkValue($this->sourceType);
         }
         if (isset($this->discountType)) {
-            $json['discount_type']       = $this->discountType;
+            $json['discount_type']       = InvoiceDiscountType::checkValue($this->discountType);
         }
         if (isset($this->eligibleAmount)) {
             $json['eligible_amount']     = $this->eligibleAmount;
@@ -186,6 +253,7 @@ class ProformaInvoiceDiscount implements \JsonSerializable
         if (isset($this->lineItemBreakouts)) {
             $json['line_item_breakouts'] = $this->lineItemBreakouts;
         }
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

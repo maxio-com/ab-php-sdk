@@ -1163,6 +1163,19 @@ class Product implements \JsonSerializable
         $this->productPricePointHandle = [];
     }
 
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
+    }
+
     /**
      * Encode this object to JSON
      *
@@ -1300,6 +1313,7 @@ class Product implements \JsonSerializable
         if (!empty($this->productPricePointHandle)) {
             $json['product_price_point_handle']     = $this->productPricePointHandle['value'];
         }
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

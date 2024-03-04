@@ -110,6 +110,19 @@ class ListInvoiceEventsResponse implements \JsonSerializable
         $this->totalPages = $totalPages;
     }
 
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
+    }
+
     /**
      * Encode this object to JSON
      *
@@ -134,6 +147,7 @@ class ListInvoiceEventsResponse implements \JsonSerializable
         if (isset($this->totalPages)) {
             $json['total_pages'] = $this->totalPages;
         }
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

@@ -60,6 +60,19 @@ class ListSubscriptionGroupsMeta implements \JsonSerializable
         $this->totalCount = $totalCount;
     }
 
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
+    }
+
     /**
      * Encode this object to JSON
      *
@@ -78,6 +91,7 @@ class ListSubscriptionGroupsMeta implements \JsonSerializable
         if (isset($this->totalCount)) {
             $json['total_count']  = $this->totalCount;
         }
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

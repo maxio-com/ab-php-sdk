@@ -373,6 +373,19 @@ class UpdatePaymentProfile implements \JsonSerializable
         $this->billingAddress2 = [];
     }
 
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
+    }
+
     /**
      * Encode this object to JSON
      *
@@ -424,6 +437,7 @@ class UpdatePaymentProfile implements \JsonSerializable
         if (!empty($this->billingAddress2)) {
             $json['billing_address_2'] = $this->billingAddress2['value'];
         }
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

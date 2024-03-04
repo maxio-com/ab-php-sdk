@@ -95,6 +95,19 @@ class CouponSubcodesResponse implements \JsonSerializable
         $this->invalidCodes = $invalidCodes;
     }
 
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
+    }
+
     /**
      * Encode this object to JSON
      *
@@ -116,6 +129,7 @@ class CouponSubcodesResponse implements \JsonSerializable
         if (isset($this->invalidCodes)) {
             $json['invalid_codes']   = $this->invalidCodes;
         }
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }

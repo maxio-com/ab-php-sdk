@@ -79,6 +79,19 @@ class ChangeInvoiceCollectionMethodEventData implements \JsonSerializable
         $this->toCollectionMethod = $toCollectionMethod;
     }
 
+    private $additionalProperties = [];
+
+    /**
+     * Add an additional property to this model.
+     *
+     * @param string $name Name of property
+     * @param mixed $value Value of property
+     */
+    public function addAdditionalProperty(string $name, $value)
+    {
+        $this->additionalProperties[$name] = $value;
+    }
+
     /**
      * Encode this object to JSON
      *
@@ -93,6 +106,7 @@ class ChangeInvoiceCollectionMethodEventData implements \JsonSerializable
         $json = [];
         $json['from_collection_method'] = $this->fromCollectionMethod;
         $json['to_collection_method']   = $this->toCollectionMethod;
+        $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;
     }
