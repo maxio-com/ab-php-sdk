@@ -120,6 +120,15 @@ class CreateOrUpdateFlatAmountCouponBuilder
     }
 
     /**
+     * Sets apply on subscription expiration field.
+     */
+    public function applyOnSubscriptionExpiration(?bool $value): self
+    {
+        $this->instance->setApplyOnSubscriptionExpiration($value);
+        return $this;
+    }
+
+    /**
      * Add an additional property to this model.
      *
      * @param string $name Name of property
