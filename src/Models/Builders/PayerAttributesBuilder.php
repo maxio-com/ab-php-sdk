@@ -176,7 +176,7 @@ class PayerAttributesBuilder
     /**
      * Sets tax exempt field.
      */
-    public function taxExempt(?string $value): self
+    public function taxExempt(?bool $value): self
     {
         $this->instance->setTaxExempt($value);
         return $this;

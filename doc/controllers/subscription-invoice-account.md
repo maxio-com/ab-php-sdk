@@ -106,6 +106,12 @@ $result = $subscriptionInvoiceAccountController->createPrepayment(
 }
 ```
 
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 422 | Unprocessable Entity (WebDAV) | `ApiException` |
+
 
 # List Prepayments
 

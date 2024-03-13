@@ -10,41 +10,32 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models\Builders;
 
-use AdvancedBillingLib\Models\CreateSubscriptionGroup;
+use AdvancedBillingLib\Models\SubscriptionGroupMembersArrayError;
 use Core\Utils\CoreHelper;
 
 /**
- * Builder for model CreateSubscriptionGroup
+ * Builder for model SubscriptionGroupMembersArrayError
  *
- * @see CreateSubscriptionGroup
+ * @see SubscriptionGroupMembersArrayError
  */
-class CreateSubscriptionGroupBuilder
+class SubscriptionGroupMembersArrayErrorBuilder
 {
     /**
-     * @var CreateSubscriptionGroup
+     * @var SubscriptionGroupMembersArrayError
      */
     private $instance;
 
-    private function __construct(CreateSubscriptionGroup $instance)
+    private function __construct(SubscriptionGroupMembersArrayError $instance)
     {
         $this->instance = $instance;
     }
 
     /**
-     * Initializes a new create subscription group Builder object.
+     * Initializes a new subscription group members array error Builder object.
      */
-    public static function init(int $subscriptionId): self
+    public static function init(array $members): self
     {
-        return new self(new CreateSubscriptionGroup($subscriptionId));
-    }
-
-    /**
-     * Sets member ids field.
-     */
-    public function memberIds(?array $value): self
-    {
-        $this->instance->setMemberIds($value);
-        return $this;
+        return new self(new SubscriptionGroupMembersArrayError($members));
     }
 
     /**
@@ -60,9 +51,9 @@ class CreateSubscriptionGroupBuilder
     }
 
     /**
-     * Initializes a new create subscription group object.
+     * Initializes a new subscription group members array error object.
      */
-    public function build(): CreateSubscriptionGroup
+    public function build(): SubscriptionGroupMembersArrayError
     {
         return CoreHelper::clone($this->instance);
     }

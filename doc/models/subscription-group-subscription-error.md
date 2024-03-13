@@ -15,6 +15,10 @@ Object which contains subscription errors.
 | `productPricePointId` | `?(string[])` | Optional | - | getProductPricePointId(): ?array | setProductPricePointId(?array productPricePointId): void |
 | `paymentProfile` | `?(string[])` | Optional | - | getPaymentProfile(): ?array | setPaymentProfile(?array paymentProfile): void |
 | `paymentProfileChargifyToken` | `?(string[])` | Optional | - | getPaymentProfileChargifyToken(): ?array | setPaymentProfileChargifyToken(?array paymentProfileChargifyToken): void |
+| `base` | `?(string[])` | Optional | - | getBase(): ?array | setBase(?array base): void |
+| `paymentProfileExpirationMonth` | `?(string[])` | Optional | - | getPaymentProfileExpirationMonth(): ?array | setPaymentProfileExpirationMonth(?array paymentProfileExpirationMonth): void |
+| `paymentProfileExpirationYear` | `?(string[])` | Optional | - | getPaymentProfileExpirationYear(): ?array | setPaymentProfileExpirationYear(?array paymentProfileExpirationYear): void |
+| `paymentProfileFullNumber` | `?(string[])` | Optional | - | getPaymentProfileFullNumber(): ?array | setPaymentProfileFullNumber(?array paymentProfileFullNumber): void |
 
 ## Example (as JSON)
 
@@ -35,6 +39,11 @@ Object which contains subscription errors.
   "payment_profile.chargify_token": [
     "payment_profile.chargify_token8",
     "payment_profile.chargify_token9"
+  ],
+  "base": [
+    "base7",
+    "base8",
+    "base9"
   ]
 }
 ```

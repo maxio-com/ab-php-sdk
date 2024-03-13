@@ -90,7 +90,7 @@ class PayerAttributes implements \JsonSerializable
     private $vatNumber;
 
     /**
-     * @var string|null
+     * @var bool|null
      */
     private $taxExempt;
 
@@ -377,7 +377,7 @@ class PayerAttributes implements \JsonSerializable
     /**
      * Returns Tax Exempt.
      */
-    public function getTaxExempt(): ?string
+    public function getTaxExempt(): ?bool
     {
         return $this->taxExempt;
     }
@@ -387,7 +387,7 @@ class PayerAttributes implements \JsonSerializable
      *
      * @maps tax_exempt
      */
-    public function setTaxExempt(?string $taxExempt): void
+    public function setTaxExempt(?bool $taxExempt): void
     {
         $this->taxExempt = $taxExempt;
     }

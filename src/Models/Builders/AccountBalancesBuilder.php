@@ -49,6 +49,15 @@ class AccountBalancesBuilder
     }
 
     /**
+     * Sets pending invoices field.
+     */
+    public function pendingInvoices(?AccountBalance $value): self
+    {
+        $this->instance->setPendingInvoices($value);
+        return $this;
+    }
+
+    /**
      * Sets pending discounts field.
      */
     public function pendingDiscounts(?AccountBalance $value): self

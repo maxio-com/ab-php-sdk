@@ -66,6 +66,11 @@ class ListSubscriptionGroupsItem implements \JsonSerializable
     private $accountBalances;
 
     /**
+     * @var string|null
+     */
+    private $groupType;
+
+    /**
      * Returns Uid.
      */
     public function getUid(): ?string
@@ -250,6 +255,25 @@ class ListSubscriptionGroupsItem implements \JsonSerializable
         $this->accountBalances = $accountBalances;
     }
 
+    /**
+     * Returns Group Type.
+     */
+    public function getGroupType(): ?string
+    {
+        return $this->groupType;
+    }
+
+    /**
+     * Sets Group Type.
+     *
+     * @maps group_type
+     * @factory \AdvancedBillingLib\Models\GroupType::checkValue
+     */
+    public function setGroupType(?string $groupType): void
+    {
+        $this->groupType = $groupType;
+    }
+
     private $additionalProperties = [];
 
     /**
@@ -304,6 +328,9 @@ class ListSubscriptionGroupsItem implements \JsonSerializable
         }
         if (isset($this->accountBalances)) {
             $json['account_balances']        = $this->accountBalances;
+        }
+        if (isset($this->groupType)) {
+            $json['group_type']              = GroupType::checkValue($this->groupType);
         }
         $json = array_merge($json, $this->additionalProperties);
 

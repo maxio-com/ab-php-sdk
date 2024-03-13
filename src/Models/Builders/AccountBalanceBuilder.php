@@ -48,6 +48,42 @@ class AccountBalanceBuilder
     }
 
     /**
+     * Sets automatic balance in cents field.
+     */
+    public function automaticBalanceInCents(?int $value): self
+    {
+        $this->instance->setAutomaticBalanceInCents($value);
+        return $this;
+    }
+
+    /**
+     * Unsets automatic balance in cents field.
+     */
+    public function unsetAutomaticBalanceInCents(): self
+    {
+        $this->instance->unsetAutomaticBalanceInCents();
+        return $this;
+    }
+
+    /**
+     * Sets remittance balance in cents field.
+     */
+    public function remittanceBalanceInCents(?int $value): self
+    {
+        $this->instance->setRemittanceBalanceInCents($value);
+        return $this;
+    }
+
+    /**
+     * Unsets remittance balance in cents field.
+     */
+    public function unsetRemittanceBalanceInCents(): self
+    {
+        $this->instance->unsetRemittanceBalanceInCents();
+        return $this;
+    }
+
+    /**
      * Add an additional property to this model.
      *
      * @param string $name Name of property

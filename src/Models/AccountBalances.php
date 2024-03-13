@@ -22,6 +22,11 @@ class AccountBalances implements \JsonSerializable
     /**
      * @var AccountBalance|null
      */
+    private $pendingInvoices;
+
+    /**
+     * @var AccountBalance|null
+     */
     private $pendingDiscounts;
 
     /**
@@ -52,6 +57,26 @@ class AccountBalances implements \JsonSerializable
     public function setOpenInvoices(?AccountBalance $openInvoices): void
     {
         $this->openInvoices = $openInvoices;
+    }
+
+    /**
+     * Returns Pending Invoices.
+     * The balance, in cents, of the sum of the subscription's  pending, payable invoices.
+     */
+    public function getPendingInvoices(): ?AccountBalance
+    {
+        return $this->pendingInvoices;
+    }
+
+    /**
+     * Sets Pending Invoices.
+     * The balance, in cents, of the sum of the subscription's  pending, payable invoices.
+     *
+     * @maps pending_invoices
+     */
+    public function setPendingInvoices(?AccountBalance $pendingInvoices): void
+    {
+        $this->pendingInvoices = $pendingInvoices;
     }
 
     /**
@@ -141,6 +166,9 @@ class AccountBalances implements \JsonSerializable
         $json = [];
         if (isset($this->openInvoices)) {
             $json['open_invoices']     = $this->openInvoices;
+        }
+        if (isset($this->pendingInvoices)) {
+            $json['pending_invoices']  = $this->pendingInvoices;
         }
         if (isset($this->pendingDiscounts)) {
             $json['pending_discounts'] = $this->pendingDiscounts;
