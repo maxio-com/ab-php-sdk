@@ -75,6 +75,42 @@ class SubscriptionGroupSubscriptionErrorBuilder
     }
 
     /**
+     * Sets base field.
+     */
+    public function base(?array $value): self
+    {
+        $this->instance->setBase($value);
+        return $this;
+    }
+
+    /**
+     * Sets payment profile expiration month field.
+     */
+    public function paymentProfileExpirationMonth(?array $value): self
+    {
+        $this->instance->setPaymentProfileExpirationMonth($value);
+        return $this;
+    }
+
+    /**
+     * Sets payment profile expiration year field.
+     */
+    public function paymentProfileExpirationYear(?array $value): self
+    {
+        $this->instance->setPaymentProfileExpirationYear($value);
+        return $this;
+    }
+
+    /**
+     * Sets payment profile full number field.
+     */
+    public function paymentProfileFullNumber(?array $value): self
+    {
+        $this->instance->setPaymentProfileFullNumber($value);
+        return $this;
+    }
+
+    /**
      * Add an additional property to this model.
      *
      * @param string $name Name of property

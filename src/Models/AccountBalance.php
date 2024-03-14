@@ -20,6 +20,16 @@ class AccountBalance implements \JsonSerializable
     private $balanceInCents;
 
     /**
+     * @var array
+     */
+    private $automaticBalanceInCents = [];
+
+    /**
+     * @var array
+     */
+    private $remittanceBalanceInCents = [];
+
+    /**
      * Returns Balance in Cents.
      * The balance in cents.
      */
@@ -37,6 +47,70 @@ class AccountBalance implements \JsonSerializable
     public function setBalanceInCents(?int $balanceInCents): void
     {
         $this->balanceInCents = $balanceInCents;
+    }
+
+    /**
+     * Returns Automatic Balance in Cents.
+     * The automatic balance in cents.
+     */
+    public function getAutomaticBalanceInCents(): ?int
+    {
+        if (count($this->automaticBalanceInCents) == 0) {
+            return null;
+        }
+        return $this->automaticBalanceInCents['value'];
+    }
+
+    /**
+     * Sets Automatic Balance in Cents.
+     * The automatic balance in cents.
+     *
+     * @maps automatic_balance_in_cents
+     */
+    public function setAutomaticBalanceInCents(?int $automaticBalanceInCents): void
+    {
+        $this->automaticBalanceInCents['value'] = $automaticBalanceInCents;
+    }
+
+    /**
+     * Unsets Automatic Balance in Cents.
+     * The automatic balance in cents.
+     */
+    public function unsetAutomaticBalanceInCents(): void
+    {
+        $this->automaticBalanceInCents = [];
+    }
+
+    /**
+     * Returns Remittance Balance in Cents.
+     * The remittance balance in cents.
+     */
+    public function getRemittanceBalanceInCents(): ?int
+    {
+        if (count($this->remittanceBalanceInCents) == 0) {
+            return null;
+        }
+        return $this->remittanceBalanceInCents['value'];
+    }
+
+    /**
+     * Sets Remittance Balance in Cents.
+     * The remittance balance in cents.
+     *
+     * @maps remittance_balance_in_cents
+     */
+    public function setRemittanceBalanceInCents(?int $remittanceBalanceInCents): void
+    {
+        $this->remittanceBalanceInCents['value'] = $remittanceBalanceInCents;
+    }
+
+    /**
+     * Unsets Remittance Balance in Cents.
+     * The remittance balance in cents.
+     */
+    public function unsetRemittanceBalanceInCents(): void
+    {
+        $this->remittanceBalanceInCents = [];
     }
 
     private $additionalProperties = [];
@@ -65,7 +139,13 @@ class AccountBalance implements \JsonSerializable
     {
         $json = [];
         if (isset($this->balanceInCents)) {
-            $json['balance_in_cents'] = $this->balanceInCents;
+            $json['balance_in_cents']            = $this->balanceInCents;
+        }
+        if (!empty($this->automaticBalanceInCents)) {
+            $json['automatic_balance_in_cents']  = $this->automaticBalanceInCents['value'];
+        }
+        if (!empty($this->remittanceBalanceInCents)) {
+            $json['remittance_balance_in_cents'] = $this->remittanceBalanceInCents['value'];
         }
         $json = array_merge($json, $this->additionalProperties);
 

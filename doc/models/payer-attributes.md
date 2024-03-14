@@ -24,7 +24,7 @@
 | `phone` | `?string` | Optional | - | getPhone(): ?string | setPhone(?string phone): void |
 | `locale` | `?string` | Optional | - | getLocale(): ?string | setLocale(?string locale): void |
 | `vatNumber` | `?string` | Optional | - | getVatNumber(): ?string | setVatNumber(?string vatNumber): void |
-| `taxExempt` | `?string` | Optional | - | getTaxExempt(): ?string | setTaxExempt(?string taxExempt): void |
+| `taxExempt` | `?bool` | Optional | - | getTaxExempt(): ?bool | setTaxExempt(?bool taxExempt): void |
 | `taxExemptReason` | `?string` | Optional | - | getTaxExemptReason(): ?string | setTaxExemptReason(?string taxExemptReason): void |
 | `metafields` | `?array<string,string>` | Optional | (Optional) A set of key/value pairs representing custom fields and their values. Metafields will be created “on-the-fly” in your site for a given key, if they have not been created yet. | getMetafields(): ?array | setMetafields(?array metafields): void |
 

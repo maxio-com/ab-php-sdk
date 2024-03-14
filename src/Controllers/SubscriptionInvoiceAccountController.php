@@ -91,7 +91,14 @@ class SubscriptionInvoiceAccountController extends BaseController
                 BodyParam::init($body)
             );
 
-        $_resHandler = $this->responseHandler()->type(CreatePrepaymentResponse::class);
+        $_resHandler = $this->responseHandler()
+            ->throwErrorOn(
+                '422',
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.'
+                )
+            )
+            ->type(CreatePrepaymentResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
     }

@@ -12,7 +12,7 @@ namespace AdvancedBillingLib\Controllers;
 
 use AdvancedBillingLib\Exceptions\ApiException;
 use AdvancedBillingLib\Exceptions\ErrorListResponseException;
-use AdvancedBillingLib\Exceptions\SingleStringErrorResponseException;
+use AdvancedBillingLib\Exceptions\SubscriptionGroupCreateErrorResponseException;
 use AdvancedBillingLib\Exceptions\SubscriptionGroupSignupErrorResponseException;
 use AdvancedBillingLib\Exceptions\SubscriptionGroupUpdateErrorResponseException;
 use AdvancedBillingLib\Models\AddSubscriptionToAGroup;
@@ -20,9 +20,11 @@ use AdvancedBillingLib\Models\CreateSubscriptionGroupRequest;
 use AdvancedBillingLib\Models\DeleteSubscriptionGroupResponse;
 use AdvancedBillingLib\Models\FullSubscriptionGroupResponse;
 use AdvancedBillingLib\Models\ListSubscriptionGroupsResponse;
+use AdvancedBillingLib\Models\SubscriptionGroupInclude;
 use AdvancedBillingLib\Models\SubscriptionGroupResponse;
 use AdvancedBillingLib\Models\SubscriptionGroupSignupRequest;
 use AdvancedBillingLib\Models\SubscriptionGroupSignupResponse;
+use AdvancedBillingLib\Models\SubscriptionGroupsListInclude;
 use AdvancedBillingLib\Models\UpdateSubscriptionGroupRequest;
 use Core\Request\Parameters\BodyParam;
 use Core\Request\Parameters\HeaderParam;
@@ -95,7 +97,7 @@ class SubscriptionGroupsController extends BaseController
                 '422',
                 ErrorType::initWithErrorTemplate(
                     'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
-                    SingleStringErrorResponseException::class
+                    SubscriptionGroupCreateErrorResponseException::class
                 )
             )
             ->type(SubscriptionGroupResponse::class);
@@ -125,7 +127,10 @@ class SubscriptionGroupsController extends BaseController
             ->parameters(
                 QueryParam::init('page', $options)->commaSeparated()->extract('page', 1),
                 QueryParam::init('per_page', $options)->commaSeparated()->extract('perPage', 20),
-                QueryParam::init('include', $options)->commaSeparated()->extract('mInclude')
+                QueryParam::init('include[]', $options)
+                    ->commaSeparated()
+                    ->extract('mInclude')
+                    ->serializeBy([SubscriptionGroupsListInclude::class, 'checkValue'])
             );
 
         $_resHandler = $this->responseHandler()->type(ListSubscriptionGroupsResponse::class);
@@ -142,16 +147,23 @@ class SubscriptionGroupsController extends BaseController
      * desired, the `include[]=current_billing_amount_in_cents` parameter must be provided with the request.
      *
      * @param string $uid The uid of the subscription group
+     * @param string[]|null $mInclude Allows including additional data in the response. Use in
+     *        query: `include[]=current_billing_amount_in_cents`.
      *
      * @return FullSubscriptionGroupResponse Response from the API call
      *
      * @throws ApiException Thrown if API call fails
      */
-    public function readSubscriptionGroup(string $uid): FullSubscriptionGroupResponse
+    public function readSubscriptionGroup(string $uid, ?array $mInclude = null): FullSubscriptionGroupResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/subscription_groups/{uid}.json')
             ->auth('BasicAuth')
-            ->parameters(TemplateParam::init('uid', $uid)->required());
+            ->parameters(
+                TemplateParam::init('uid', $uid)->required(),
+                QueryParam::init('include[]', $mInclude)
+                    ->commaSeparated()
+                    ->serializeBy([SubscriptionGroupInclude::class, 'checkValue'])
+            );
 
         $_resHandler = $this->responseHandler()->type(FullSubscriptionGroupResponse::class);
 

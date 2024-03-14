@@ -28,7 +28,7 @@ class SubscriptionGroup implements \JsonSerializable
     /**
      * @var string|null
      */
-    private $paymentCollectionMethod;
+    private $paymentCollectionMethod = CollectionMethod::AUTOMATIC;
 
     /**
      * @var int[]|null
@@ -78,6 +78,9 @@ class SubscriptionGroup implements \JsonSerializable
 
     /**
      * Returns Payment Collection Method.
+     * The type of payment collection to be used in the subscription. For legacy Statements Architecture
+     * valid options are - `invoice`, `automatic`. For current Relationship Invoicing Architecture valid
+     * options are - `remittance`, `automatic`, `prepaid`.
      */
     public function getPaymentCollectionMethod(): ?string
     {
@@ -86,8 +89,12 @@ class SubscriptionGroup implements \JsonSerializable
 
     /**
      * Sets Payment Collection Method.
+     * The type of payment collection to be used in the subscription. For legacy Statements Architecture
+     * valid options are - `invoice`, `automatic`. For current Relationship Invoicing Architecture valid
+     * options are - `remittance`, `automatic`, `prepaid`.
      *
      * @maps payment_collection_method
+     * @factory \AdvancedBillingLib\Models\CollectionMethod::checkValue
      */
     public function setPaymentCollectionMethod(?string $paymentCollectionMethod): void
     {
@@ -167,7 +174,7 @@ class SubscriptionGroup implements \JsonSerializable
             $json['payment_profile']           = $this->paymentProfile;
         }
         if (isset($this->paymentCollectionMethod)) {
-            $json['payment_collection_method'] = $this->paymentCollectionMethod;
+            $json['payment_collection_method'] = CollectionMethod::checkValue($this->paymentCollectionMethod);
         }
         if (isset($this->subscriptionIds)) {
             $json['subscription_ids']          = $this->subscriptionIds;

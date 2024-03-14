@@ -19,6 +19,7 @@
 | `state` | `?string` | Optional | - | getState(): ?string | setState(?string state): void |
 | `cancelAtEndOfPeriod` | `?bool` | Optional | - | getCancelAtEndOfPeriod(): ?bool | setCancelAtEndOfPeriod(?bool cancelAtEndOfPeriod): void |
 | `accountBalances` | [`?SubscriptionGroupBalances`](../../doc/models/subscription-group-balances.md) | Optional | - | getAccountBalances(): ?SubscriptionGroupBalances | setAccountBalances(?SubscriptionGroupBalances accountBalances): void |
+| `groupType` | [`?string(GroupType)`](../../doc/models/group-type.md) | Optional | - | getGroupType(): ?string | setGroupType(?string groupType): void |
 
 ## Example (as JSON)
 

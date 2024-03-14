@@ -146,7 +146,7 @@ $result = $subscriptionGroupsController->createSubscriptionGroup($body);
 
 | HTTP Status Code | Error Description | Exception Class |
 |  --- | --- | --- |
-| 422 | Unprocessable Entity (WebDAV) | [`SingleStringErrorResponseException`](../../doc/models/single-string-error-response-exception.md) |
+| 422 | Unprocessable Entity (WebDAV) | [`SubscriptionGroupCreateErrorResponseException`](../../doc/models/subscription-group-create-error-response-exception.md) |
 
 
 # List Subscription Groups
@@ -167,7 +167,7 @@ function listSubscriptionGroups(array $options): ListSubscriptionGroupsResponse
 |  --- | --- | --- | --- |
 | `page` | `?int` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`. |
 | `perPage` | `?int` | Query, Optional | This parameter indicates how many records to fetch in each request. Default value is 20. The maximum allowed values is 200; any per_page value over 200 will be changed to 200.<br>Use in query `per_page=200`. |
-| `mInclude` | `?string` | Query, Optional | A list of additional information to include in the response. The following values are supported:<br><br>- `account_balances`: Account balance information for the subscription groups. Use in query: `include[]=account_balances` |
+| `mInclude` | [`?(string(SubscriptionGroupsListInclude)[])`](../../doc/models/subscription-groups-list-include.md) | Query, Optional | A list of additional information to include in the response. The following values are supported:<br><br>- `account_balances`: Account balance information for the subscription groups. Use in query: `include[]=account_balances` |
 
 ## Response Type
 
@@ -176,7 +176,7 @@ function listSubscriptionGroups(array $options): ListSubscriptionGroupsResponse
 ## Example Usage
 
 ```php
-$collect = [
+$collect = Liquid error: Value cannot be null. (Parameter 'key')[
     'page' => 2,
     'per_page' => 50
 ];
@@ -232,7 +232,7 @@ Use this endpoint to find subscription group details.
 Current billing amount for the subscription group is not returned by default. If this information is desired, the `include[]=current_billing_amount_in_cents` parameter must be provided with the request.
 
 ```php
-function readSubscriptionGroup(string $uid): FullSubscriptionGroupResponse
+function readSubscriptionGroup(string $uid, ?array $mInclude = null): FullSubscriptionGroupResponse
 ```
 
 ## Parameters
@@ -240,6 +240,7 @@ function readSubscriptionGroup(string $uid): FullSubscriptionGroupResponse
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `uid` | `string` | Template, Required | The uid of the subscription group |
+| `mInclude` | [`?(string(SubscriptionGroupInclude)[])`](../../doc/models/subscription-group-include.md) | Query, Optional | Allows including additional data in the response. Use in query: `include[]=current_billing_amount_in_cents`. |
 
 ## Response Type
 
@@ -250,7 +251,7 @@ function readSubscriptionGroup(string $uid): FullSubscriptionGroupResponse
 ```php
 $uid = 'uid0';
 
-$result = $subscriptionGroupsController->readSubscriptionGroup($uid);
+Liquid error: Value cannot be null. (Parameter 'key')$result = Liquid error: Value cannot be null. (Parameter 'key')$subscriptionGroupsController->readSubscriptionGroup($uid);
 ```
 
 ## Example Response *(as JSON)*

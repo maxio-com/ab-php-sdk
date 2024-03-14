@@ -38,6 +38,26 @@ class SubscriptionGroupSubscriptionError implements \JsonSerializable
     private $paymentProfileChargifyToken;
 
     /**
+     * @var string[]|null
+     */
+    private $base;
+
+    /**
+     * @var string[]|null
+     */
+    private $paymentProfileExpirationMonth;
+
+    /**
+     * @var string[]|null
+     */
+    private $paymentProfileExpirationYear;
+
+    /**
+     * @var string[]|null
+     */
+    private $paymentProfileFullNumber;
+
+    /**
      * Returns Product.
      *
      * @return string[]|null
@@ -125,6 +145,94 @@ class SubscriptionGroupSubscriptionError implements \JsonSerializable
         $this->paymentProfileChargifyToken = $paymentProfileChargifyToken;
     }
 
+    /**
+     * Returns Base.
+     *
+     * @return string[]|null
+     */
+    public function getBase(): ?array
+    {
+        return $this->base;
+    }
+
+    /**
+     * Sets Base.
+     *
+     * @maps base
+     *
+     * @param string[]|null $base
+     */
+    public function setBase(?array $base): void
+    {
+        $this->base = $base;
+    }
+
+    /**
+     * Returns Payment Profile Expiration Month.
+     *
+     * @return string[]|null
+     */
+    public function getPaymentProfileExpirationMonth(): ?array
+    {
+        return $this->paymentProfileExpirationMonth;
+    }
+
+    /**
+     * Sets Payment Profile Expiration Month.
+     *
+     * @maps payment_profile.expiration_month
+     *
+     * @param string[]|null $paymentProfileExpirationMonth
+     */
+    public function setPaymentProfileExpirationMonth(?array $paymentProfileExpirationMonth): void
+    {
+        $this->paymentProfileExpirationMonth = $paymentProfileExpirationMonth;
+    }
+
+    /**
+     * Returns Payment Profile Expiration Year.
+     *
+     * @return string[]|null
+     */
+    public function getPaymentProfileExpirationYear(): ?array
+    {
+        return $this->paymentProfileExpirationYear;
+    }
+
+    /**
+     * Sets Payment Profile Expiration Year.
+     *
+     * @maps payment_profile.expiration_year
+     *
+     * @param string[]|null $paymentProfileExpirationYear
+     */
+    public function setPaymentProfileExpirationYear(?array $paymentProfileExpirationYear): void
+    {
+        $this->paymentProfileExpirationYear = $paymentProfileExpirationYear;
+    }
+
+    /**
+     * Returns Payment Profile Full Number.
+     *
+     * @return string[]|null
+     */
+    public function getPaymentProfileFullNumber(): ?array
+    {
+        return $this->paymentProfileFullNumber;
+    }
+
+    /**
+     * Sets Payment Profile Full Number.
+     *
+     * @maps payment_profile.full_number
+     *
+     * @param string[]|null $paymentProfileFullNumber
+     */
+    public function setPaymentProfileFullNumber(?array $paymentProfileFullNumber): void
+    {
+        $this->paymentProfileFullNumber = $paymentProfileFullNumber;
+    }
+
     private $additionalProperties = [];
 
     /**
@@ -151,16 +259,28 @@ class SubscriptionGroupSubscriptionError implements \JsonSerializable
     {
         $json = [];
         if (isset($this->product)) {
-            $json['product']                        = $this->product;
+            $json['product']                          = $this->product;
         }
         if (isset($this->productPricePointId)) {
-            $json['product_price_point_id']         = $this->productPricePointId;
+            $json['product_price_point_id']           = $this->productPricePointId;
         }
         if (isset($this->paymentProfile)) {
-            $json['payment_profile']                = $this->paymentProfile;
+            $json['payment_profile']                  = $this->paymentProfile;
         }
         if (isset($this->paymentProfileChargifyToken)) {
-            $json['payment_profile.chargify_token'] = $this->paymentProfileChargifyToken;
+            $json['payment_profile.chargify_token']   = $this->paymentProfileChargifyToken;
+        }
+        if (isset($this->base)) {
+            $json['base']                             = $this->base;
+        }
+        if (isset($this->paymentProfileExpirationMonth)) {
+            $json['payment_profile.expiration_month'] = $this->paymentProfileExpirationMonth;
+        }
+        if (isset($this->paymentProfileExpirationYear)) {
+            $json['payment_profile.expiration_year']  = $this->paymentProfileExpirationYear;
+        }
+        if (isset($this->paymentProfileFullNumber)) {
+            $json['payment_profile.full_number']      = $this->paymentProfileFullNumber;
         }
         $json = array_merge($json, $this->additionalProperties);
 

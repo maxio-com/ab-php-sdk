@@ -12,65 +12,42 @@ namespace AdvancedBillingLib\Models;
 
 use stdClass;
 
-class CreateSubscriptionGroup implements \JsonSerializable
+class SubscriptionGroupMembersArrayError implements \JsonSerializable
 {
     /**
-     * @var int
+     * @var string[]
      */
-    private $subscriptionId;
+    private $members;
 
     /**
-     * @var int[]|null
+     * @param string[] $members
      */
-    private $memberIds;
-
-    /**
-     * @param int $subscriptionId
-     */
-    public function __construct(int $subscriptionId)
+    public function __construct(array $members)
     {
-        $this->subscriptionId = $subscriptionId;
+        $this->members = $members;
     }
 
     /**
-     * Returns Subscription Id.
+     * Returns Members.
+     *
+     * @return string[]
      */
-    public function getSubscriptionId(): int
+    public function getMembers(): array
     {
-        return $this->subscriptionId;
+        return $this->members;
     }
 
     /**
-     * Sets Subscription Id.
+     * Sets Members.
      *
      * @required
-     * @maps subscription_id
-     */
-    public function setSubscriptionId(int $subscriptionId): void
-    {
-        $this->subscriptionId = $subscriptionId;
-    }
-
-    /**
-     * Returns Member Ids.
+     * @maps members
      *
-     * @return int[]|null
+     * @param string[] $members
      */
-    public function getMemberIds(): ?array
+    public function setMembers(array $members): void
     {
-        return $this->memberIds;
-    }
-
-    /**
-     * Sets Member Ids.
-     *
-     * @maps member_ids
-     *
-     * @param int[]|null $memberIds
-     */
-    public function setMemberIds(?array $memberIds): void
-    {
-        $this->memberIds = $memberIds;
+        $this->members = $members;
     }
 
     private $additionalProperties = [];
@@ -98,10 +75,7 @@ class CreateSubscriptionGroup implements \JsonSerializable
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
-        $json['subscription_id'] = $this->subscriptionId;
-        if (isset($this->memberIds)) {
-            $json['member_ids']  = $this->memberIds;
-        }
+        $json['members'] = $this->members;
         $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;

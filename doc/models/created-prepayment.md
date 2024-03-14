@@ -9,12 +9,12 @@
 
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
-| `id` | `?int` | Optional | - | getId(): ?int | setId(?int id): void |
-| `subscriptionId` | `?int` | Optional | - | getSubscriptionId(): ?int | setSubscriptionId(?int subscriptionId): void |
-| `amountInCents` | `?int` | Optional | - | getAmountInCents(): ?int | setAmountInCents(?int amountInCents): void |
+| `id` | `?int` | Optional | **Constraints**: `>= 1` | getId(): ?int | setId(?int id): void |
+| `subscriptionId` | `?int` | Optional | **Constraints**: `>= 1` | getSubscriptionId(): ?int | setSubscriptionId(?int subscriptionId): void |
+| `amountInCents` | `?int` | Optional | **Constraints**: `>= 0.01` | getAmountInCents(): ?int | setAmountInCents(?int amountInCents): void |
 | `memo` | `?string` | Optional | - | getMemo(): ?string | setMemo(?string memo): void |
 | `createdAt` | `?DateTime` | Optional | - | getCreatedAt(): ?\DateTime | setCreatedAt(?\DateTime createdAt): void |
-| `startingBalanceInCents` | `?int` | Optional | - | getStartingBalanceInCents(): ?int | setStartingBalanceInCents(?int startingBalanceInCents): void |
+| `startingBalanceInCents` | `?int` | Optional | **Constraints**: `>= 0` | getStartingBalanceInCents(): ?int | setStartingBalanceInCents(?int startingBalanceInCents): void |
 | `endingBalanceInCents` | `?int` | Optional | - | getEndingBalanceInCents(): ?int | setEndingBalanceInCents(?int endingBalanceInCents): void |
 
 ## Example (as JSON)

@@ -130,6 +130,15 @@ class ListSubscriptionGroupsItemBuilder
     }
 
     /**
+     * Sets group type field.
+     */
+    public function groupType(?string $value): self
+    {
+        $this->instance->setGroupType($value);
+        return $this;
+    }
+
+    /**
      * Add an additional property to this model.
      *
      * @param string $name Name of property
