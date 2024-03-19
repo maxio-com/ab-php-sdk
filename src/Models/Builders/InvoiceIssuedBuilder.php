@@ -37,9 +37,8 @@ class InvoiceIssuedBuilder
         string $uid,
         string $number,
         string $role,
-        \DateTime $dueDate,
-        \DateTime $issueDate,
-        \DateTime $paidDate,
+        string $issueDate,
+        string $paidDate,
         string $dueAmount,
         string $paidAmount,
         string $taxAmount,
@@ -54,7 +53,6 @@ class InvoiceIssuedBuilder
             $uid,
             $number,
             $role,
-            $dueDate,
             $issueDate,
             $paidDate,
             $dueAmount,
@@ -67,6 +65,15 @@ class InvoiceIssuedBuilder
             $consolidationLevel,
             $lineItems
         ));
+    }
+
+    /**
+     * Sets due date field.
+     */
+    public function dueDate(?\DateTime $value): self
+    {
+        $this->instance->setDueDate($value);
+        return $this;
     }
 
     /**

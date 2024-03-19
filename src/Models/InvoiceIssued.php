@@ -31,17 +31,17 @@ class InvoiceIssued implements \JsonSerializable
     private $role;
 
     /**
-     * @var \DateTime
+     * @var \DateTime|null
      */
     private $dueDate;
 
     /**
-     * @var \DateTime
+     * @var string
      */
     private $issueDate;
 
     /**
-     * @var \DateTime
+     * @var string
      */
     private $paidDate;
 
@@ -94,9 +94,8 @@ class InvoiceIssued implements \JsonSerializable
      * @param string $uid
      * @param string $number
      * @param string $role
-     * @param \DateTime $dueDate
-     * @param \DateTime $issueDate
-     * @param \DateTime $paidDate
+     * @param string $issueDate
+     * @param string $paidDate
      * @param string $dueAmount
      * @param string $paidAmount
      * @param string $taxAmount
@@ -111,9 +110,8 @@ class InvoiceIssued implements \JsonSerializable
         string $uid,
         string $number,
         string $role,
-        \DateTime $dueDate,
-        \DateTime $issueDate,
-        \DateTime $paidDate,
+        string $issueDate,
+        string $paidDate,
         string $dueAmount,
         string $paidAmount,
         string $taxAmount,
@@ -127,7 +125,6 @@ class InvoiceIssued implements \JsonSerializable
         $this->uid = $uid;
         $this->number = $number;
         $this->role = $role;
-        $this->dueDate = $dueDate;
         $this->issueDate = $issueDate;
         $this->paidDate = $paidDate;
         $this->dueAmount = $dueAmount;
@@ -201,7 +198,7 @@ class InvoiceIssued implements \JsonSerializable
     /**
      * Returns Due Date.
      */
-    public function getDueDate(): \DateTime
+    public function getDueDate(): ?\DateTime
     {
         return $this->dueDate;
     }
@@ -209,51 +206,52 @@ class InvoiceIssued implements \JsonSerializable
     /**
      * Sets Due Date.
      *
-     * @required
      * @maps due_date
      * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromSimpleDate
      */
-    public function setDueDate(\DateTime $dueDate): void
+    public function setDueDate(?\DateTime $dueDate): void
     {
         $this->dueDate = $dueDate;
     }
 
     /**
      * Returns Issue Date.
+     * Invoice issue date. Can be an empty string if value is missing.
      */
-    public function getIssueDate(): \DateTime
+    public function getIssueDate(): string
     {
         return $this->issueDate;
     }
 
     /**
      * Sets Issue Date.
+     * Invoice issue date. Can be an empty string if value is missing.
      *
      * @required
      * @maps issue_date
-     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromSimpleDate
      */
-    public function setIssueDate(\DateTime $issueDate): void
+    public function setIssueDate(string $issueDate): void
     {
         $this->issueDate = $issueDate;
     }
 
     /**
      * Returns Paid Date.
+     * Paid date. Can be an empty string if value is missing.
      */
-    public function getPaidDate(): \DateTime
+    public function getPaidDate(): string
     {
         return $this->paidDate;
     }
 
     /**
      * Sets Paid Date.
+     * Paid date. Can be an empty string if value is missing.
      *
      * @required
      * @maps paid_date
-     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromSimpleDate
      */
-    public function setPaidDate(\DateTime $paidDate): void
+    public function setPaidDate(string $paidDate): void
     {
         $this->paidDate = $paidDate;
     }
@@ -462,8 +460,8 @@ class InvoiceIssued implements \JsonSerializable
         $json['number']              = $this->number;
         $json['role']                = $this->role;
         $json['due_date']            = DateTimeHelper::toSimpleDate($this->dueDate);
-        $json['issue_date']          = DateTimeHelper::toSimpleDate($this->issueDate);
-        $json['paid_date']           = DateTimeHelper::toSimpleDate($this->paidDate);
+        $json['issue_date']          = $this->issueDate;
+        $json['paid_date']           = $this->paidDate;
         $json['due_amount']          = $this->dueAmount;
         $json['paid_amount']         = $this->paidAmount;
         $json['tax_amount']          = $this->taxAmount;
