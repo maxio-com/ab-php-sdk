@@ -12,9 +12,9 @@
 | `uid` | `string` | Required | - | getUid(): string | setUid(string uid): void |
 | `number` | `string` | Required | - | getNumber(): string | setNumber(string number): void |
 | `role` | `string` | Required | - | getRole(): string | setRole(string role): void |
-| `dueDate` | `DateTime` | Required | - | getDueDate(): \DateTime | setDueDate(\DateTime dueDate): void |
-| `issueDate` | `DateTime` | Required | - | getIssueDate(): \DateTime | setIssueDate(\DateTime issueDate): void |
-| `paidDate` | `DateTime` | Required | - | getPaidDate(): \DateTime | setPaidDate(\DateTime paidDate): void |
+| `dueDate` | `?DateTime` | Required | - | getDueDate(): ?\DateTime | setDueDate(?\DateTime dueDate): void |
+| `issueDate` | `string` | Required | Invoice issue date. Can be an empty string if value is missing. | getIssueDate(): string | setIssueDate(string issueDate): void |
+| `paidDate` | `string` | Required | Paid date. Can be an empty string if value is missing. | getPaidDate(): string | setPaidDate(string paidDate): void |
 | `dueAmount` | `string` | Required | - | getDueAmount(): string | setDueAmount(string dueAmount): void |
 | `paidAmount` | `string` | Required | - | getPaidAmount(): string | setPaidAmount(string paidAmount): void |
 | `taxAmount` | `string` | Required | - | getTaxAmount(): string | setTaxAmount(string taxAmount): void |
@@ -33,8 +33,8 @@
   "number": "number8",
   "role": "role2",
   "due_date": "2016-03-13",
-  "issue_date": "2016-03-13",
-  "paid_date": "2016-03-13",
+  "issue_date": "issue_date0",
+  "paid_date": "paid_date6",
   "due_amount": "due_amount6",
   "paid_amount": "paid_amount4",
   "tax_amount": "tax_amount2",
