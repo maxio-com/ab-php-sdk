@@ -14,13 +14,11 @@ use AdvancedBillingLib\Exceptions\ApiException;
 use AdvancedBillingLib\Exceptions\ErrorListResponseException;
 use AdvancedBillingLib\Models\DeductServiceCreditRequest;
 use AdvancedBillingLib\Models\IssueServiceCreditRequest;
-use AdvancedBillingLib\Models\ListSubscriptionGroupPrepaymentDateField;
 use AdvancedBillingLib\Models\ListSubscriptionGroupPrepaymentResponse;
 use AdvancedBillingLib\Models\ServiceCredit;
 use AdvancedBillingLib\Models\ServiceCreditResponse;
 use AdvancedBillingLib\Models\SubscriptionGroupPrepaymentRequest;
 use AdvancedBillingLib\Models\SubscriptionGroupPrepaymentResponse;
-use AdvancedBillingLib\Utils\DateTimeHelper;
 use Core\Request\Parameters\BodyParam;
 use Core\Request\Parameters\HeaderParam;
 use Core\Request\Parameters\QueryParam;
@@ -82,20 +80,9 @@ class SubscriptionGroupInvoiceAccountController extends BaseController
             ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('uid', $options)->extract('uid')->required(),
-                QueryParam::init('filter[date_field]', $options)
-                    ->commaSeparated()
-                    ->extract('filterDateField')
-                    ->serializeBy([ListSubscriptionGroupPrepaymentDateField::class, 'checkValue']),
-                QueryParam::init('filter[end_date]', $options)
-                    ->commaSeparated()
-                    ->extract('filterEndDate')
-                    ->serializeBy([DateTimeHelper::class, 'toSimpleDate']),
-                QueryParam::init('filter[start_date]', $options)
-                    ->commaSeparated()
-                    ->extract('filterStartDate')
-                    ->serializeBy([DateTimeHelper::class, 'toSimpleDate']),
                 QueryParam::init('page', $options)->commaSeparated()->extract('page', 1),
-                QueryParam::init('per_page', $options)->commaSeparated()->extract('perPage', 20)
+                QueryParam::init('per_page', $options)->commaSeparated()->extract('perPage', 20),
+                QueryParam::init('filter', $options)->commaSeparated()->extract('filter')
             );
 
         $_resHandler = $this->responseHandler()

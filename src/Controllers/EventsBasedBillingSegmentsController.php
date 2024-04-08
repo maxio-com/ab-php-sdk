@@ -104,18 +104,7 @@ class EventsBasedBillingSegmentsController extends BaseController
                 TemplateParam::init('price_point_id', $options)->extract('pricePointId')->required(),
                 QueryParam::init('page', $options)->commaSeparated()->extract('page', 1),
                 QueryParam::init('per_page', $options)->commaSeparated()->extract('perPage', 30),
-                QueryParam::init('filter[segment_property_1_value]', $options)
-                    ->commaSeparated()
-                    ->extract('filterSegmentProperty1Value'),
-                QueryParam::init('filter[segment_property_2_value]', $options)
-                    ->commaSeparated()
-                    ->extract('filterSegmentProperty2Value'),
-                QueryParam::init('filter[segment_property_3_value]', $options)
-                    ->commaSeparated()
-                    ->extract('filterSegmentProperty3Value'),
-                QueryParam::init('filter[segment_property_4_value]', $options)
-                    ->commaSeparated()
-                    ->extract('filterSegmentProperty4Value')
+                QueryParam::init('filter', $options)->commaSeparated()->extract('filter')
             );
 
         $_resHandler = $this->responseHandler()

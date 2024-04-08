@@ -299,8 +299,8 @@ class CustomFieldsController extends BaseController
                     ->required()
                     ->serializeBy([ResourceType::class, 'checkValue']),
                 TemplateParam::init('resource_id', $options)->extract('resourceId')->required(),
-                QueryParam::init('page', $options)->plain()->extract('page', 1),
-                QueryParam::init('per_page', $options)->plain()->extract('perPage', 20)
+                QueryParam::init('page', $options)->commaSeparated()->extract('page', 1),
+                QueryParam::init('per_page', $options)->commaSeparated()->extract('perPage', 20)
             );
 
         $_resHandler = $this->responseHandler()->type(PaginatedMetadata::class);
@@ -396,8 +396,8 @@ class CustomFieldsController extends BaseController
                     ->required()
                     ->serializeBy([ResourceType::class, 'checkValue']),
                 TemplateParam::init('resource_id', $resourceId)->required(),
-                QueryParam::init('name', $name)->plain(),
-                QueryParam::init('names[]', $names)->plain()
+                QueryParam::init('name', $name)->unIndexed(),
+                QueryParam::init('names', $names)->unIndexed()
             );
 
         $_resHandler = $this->responseHandler()
@@ -437,32 +437,32 @@ class CustomFieldsController extends BaseController
                     ->extract('resourceType')
                     ->required()
                     ->serializeBy([ResourceType::class, 'checkValue']),
-                QueryParam::init('page', $options)->commaSeparated()->extract('page', 1),
-                QueryParam::init('per_page', $options)->commaSeparated()->extract('perPage', 20),
+                QueryParam::init('page', $options)->unIndexed()->extract('page', 1),
+                QueryParam::init('per_page', $options)->unIndexed()->extract('perPage', 20),
                 QueryParam::init('date_field', $options)
-                    ->commaSeparated()
+                    ->unIndexed()
                     ->extract('dateField')
                     ->serializeBy([BasicDateField::class, 'checkValue']),
                 QueryParam::init('start_date', $options)
-                    ->commaSeparated()
+                    ->unIndexed()
                     ->extract('startDate')
                     ->serializeBy([DateTimeHelper::class, 'toSimpleDate']),
                 QueryParam::init('end_date', $options)
-                    ->commaSeparated()
+                    ->unIndexed()
                     ->extract('endDate')
                     ->serializeBy([DateTimeHelper::class, 'toSimpleDate']),
                 QueryParam::init('start_datetime', $options)
-                    ->commaSeparated()
+                    ->unIndexed()
                     ->extract('startDatetime')
                     ->serializeBy([DateTimeHelper::class, 'toRfc3339DateTime']),
                 QueryParam::init('end_datetime', $options)
-                    ->commaSeparated()
+                    ->unIndexed()
                     ->extract('endDatetime')
                     ->serializeBy([DateTimeHelper::class, 'toRfc3339DateTime']),
-                QueryParam::init('with_deleted', $options)->commaSeparated()->extract('withDeleted'),
-                QueryParam::init('resource_ids[]', $options)->commaSeparated()->extract('resourceIds'),
+                QueryParam::init('with_deleted', $options)->unIndexed()->extract('withDeleted'),
+                QueryParam::init('resource_ids', $options)->unIndexed()->extract('resourceIds'),
                 QueryParam::init('direction', $options)
-                    ->commaSeparated()
+                    ->unIndexed()
                     ->extract('direction')
                     ->serializeBy([SortingDirection::class, 'checkValue'])
             );

@@ -105,6 +105,11 @@ class UpdateCustomer implements \JsonSerializable
     private $parentId = [];
 
     /**
+     * @var array
+     */
+    private $verified = [];
+
+    /**
      * Returns First Name.
      */
     public function getFirstName(): ?string
@@ -441,6 +446,38 @@ class UpdateCustomer implements \JsonSerializable
         $this->parentId = [];
     }
 
+    /**
+     * Returns Verified.
+     * Is the customer verified to use ACH as a payment method. Available only on Authorize.Net gateway
+     */
+    public function getVerified(): ?bool
+    {
+        if (count($this->verified) == 0) {
+            return null;
+        }
+        return $this->verified['value'];
+    }
+
+    /**
+     * Sets Verified.
+     * Is the customer verified to use ACH as a payment method. Available only on Authorize.Net gateway
+     *
+     * @maps verified
+     */
+    public function setVerified(?bool $verified): void
+    {
+        $this->verified['value'] = $verified;
+    }
+
+    /**
+     * Unsets Verified.
+     * Is the customer verified to use ACH as a payment method. Available only on Authorize.Net gateway
+     */
+    public function unsetVerified(): void
+    {
+        $this->verified = [];
+    }
+
     private $additionalProperties = [];
 
     /**
@@ -519,6 +556,9 @@ class UpdateCustomer implements \JsonSerializable
         }
         if (!empty($this->parentId)) {
             $json['parent_id']         = $this->parentId['value'];
+        }
+        if (!empty($this->verified)) {
+            $json['verified']          = $this->verified['value'];
         }
         $json = array_merge($json, $this->additionalProperties);
 

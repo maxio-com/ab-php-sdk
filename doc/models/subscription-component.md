@@ -17,7 +17,7 @@
 | `unitBalance` | `?int` | Optional | - | getUnitBalance(): ?int | setUnitBalance(?int unitBalance): void |
 | `currency` | `?string` | Optional | - | getCurrency(): ?string | setCurrency(?string currency): void |
 | `allocatedQuantity` | int\|string\|null | Optional | This is a container for one-of cases. | getAllocatedQuantity(): | setAllocatedQuantity( allocatedQuantity): void |
-| `pricingScheme` | string([PricingScheme](../../doc/models/pricing-scheme.md))\|null | Optional | This is a container for one-of cases. | getPricingScheme(): ?string | setPricingScheme(?string pricingScheme): void |
+| `pricingScheme` | [`?string(PricingScheme)`](../../doc/models/pricing-scheme.md) | Optional | - | getPricingScheme(): ?string | setPricingScheme(?string pricingScheme): void |
 | `componentId` | `?int` | Optional | - | getComponentId(): ?int | setComponentId(?int componentId): void |
 | `componentHandle` | `?string` | Optional | - | getComponentHandle(): ?string | setComponentHandle(?string componentHandle): void |
 | `subscriptionId` | `?int` | Optional | - | getSubscriptionId(): ?int | setSubscriptionId(?int subscriptionId): void |

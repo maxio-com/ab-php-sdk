@@ -10,7 +10,6 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
-use AdvancedBillingLib\ApiHelper;
 use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
@@ -1184,7 +1183,6 @@ class Subscription implements \JsonSerializable
      * Sets Group.
      *
      * @maps group
-     * @mapsBy anyOf(oneOf(NestedSubscriptionGroup),null)
      */
     public function setGroup(?NestedSubscriptionGroup $group): void
     {
@@ -1579,7 +1577,8 @@ class Subscription implements \JsonSerializable
 
     /**
      * Returns Current Billing Amount in Cents.
-     * The balance in cents plus the estimated renewal amount in cents.
+     * The balance in cents plus the estimated renewal amount in cents. Returned ONLY for readSubscription
+     * operation as it's compute intensive operation.
      */
     public function getCurrentBillingAmountInCents(): ?int
     {
@@ -1588,7 +1587,8 @@ class Subscription implements \JsonSerializable
 
     /**
      * Sets Current Billing Amount in Cents.
-     * The balance in cents plus the estimated renewal amount in cents.
+     * The balance in cents plus the estimated renewal amount in cents. Returned ONLY for readSubscription
+     * operation as it's compute intensive operation.
      *
      * @maps current_billing_amount_in_cents
      */
@@ -2241,11 +2241,7 @@ class Subscription implements \JsonSerializable
             $json['credit_card']                           = $this->creditCard;
         }
         if (!empty($this->group)) {
-            $json['group']                                 =
-                ApiHelper::getJsonHelper()->verifyTypes(
-                    $this->group['value'],
-                    'anyOf(oneOf(NestedSubscriptionGroup),null)'
-                );
+            $json['group']                                 = $this->group['value'];
         }
         if (isset($this->bankAccount)) {
             $json['bank_account']                          = $this->bankAccount;

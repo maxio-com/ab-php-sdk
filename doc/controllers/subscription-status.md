@@ -102,7 +102,6 @@ $result = $subscriptionStatusController->retrySubscription($subscriptionId);
     "coupon_uses_allowed": null,
     "reason_code": null,
     "automatically_resume_at": null,
-    "coupon_codes": [],
     "offer_id": null,
     "credit_balance_in_cents": 0,
     "prepayment_balance_in_cents": 0,
@@ -760,7 +759,6 @@ $result = $subscriptionStatusController->updateAutomaticSubscriptionResumption(
     "coupon_uses_allowed": null,
     "reason_code": null,
     "automatically_resume_at": "2019-01-20T00:00:00-06:00",
-    "coupon_codes": [],
     "customer": {
       "id": 19948683,
       "first_name": "Vanessa",
@@ -817,8 +815,7 @@ $result = $subscriptionStatusController->updateAutomaticSubscriptionResumption(
         "description": "",
         "handle": "acme-products",
         "accounting_code": null
-      },
-      "public_signup_pages": []
+      }
     },
     "credit_card": {
       "id": 13826563,

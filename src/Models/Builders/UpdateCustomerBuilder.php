@@ -210,6 +210,24 @@ class UpdateCustomerBuilder
     }
 
     /**
+     * Sets verified field.
+     */
+    public function verified(?bool $value): self
+    {
+        $this->instance->setVerified($value);
+        return $this;
+    }
+
+    /**
+     * Unsets verified field.
+     */
+    public function unsetVerified(): self
+    {
+        $this->instance->unsetVerified();
+        return $this;
+    }
+
+    /**
      * Add an additional property to this model.
      *
      * @param string $name Name of property

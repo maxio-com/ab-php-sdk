@@ -10,7 +10,6 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
-use AdvancedBillingLib\ApiHelper;
 use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
@@ -454,8 +453,7 @@ class ComponentPricePoint implements \JsonSerializable
      * property is only available for sites with Multifrequency enabled.
      *
      * @maps interval_unit
-     * @mapsBy anyOf(oneOf(IntervalUnit),null)
-     * @factory \AdvancedBillingLib\Models\IntervalUnit::checkValue IntervalUnit
+     * @factory \AdvancedBillingLib\Models\IntervalUnit::checkValue
      */
     public function setIntervalUnit(?string $intervalUnit): void
     {
@@ -571,14 +569,7 @@ class ComponentPricePoint implements \JsonSerializable
             $json['interval']               = $this->interval['value'];
         }
         if (!empty($this->intervalUnit)) {
-            $json['interval_unit']          =
-                ApiHelper::getJsonHelper()->verifyTypes(
-                    $this->intervalUnit['value'],
-                    'anyOf(oneOf(IntervalUnit),null)',
-                    [
-                        '\AdvancedBillingLib\Models\IntervalUnit::checkValue IntervalUnit'
-                    ]
-                );
+            $json['interval_unit']          = IntervalUnit::checkValue($this->intervalUnit['value']);
         }
         if (isset($this->currencyPrices)) {
             $json['currency_prices']        = $this->currencyPrices;

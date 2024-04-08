@@ -14,7 +14,6 @@ use AdvancedBillingLib\Exceptions\ApiException;
 use AdvancedBillingLib\Exceptions\ErrorListResponseException;
 use AdvancedBillingLib\Models\BasicDateField;
 use AdvancedBillingLib\Models\CreateProductFamilyRequest;
-use AdvancedBillingLib\Models\IncludeNotNull;
 use AdvancedBillingLib\Models\ListProductsInclude;
 use AdvancedBillingLib\Models\ProductFamilyResponse;
 use AdvancedBillingLib\Models\ProductResponse;
@@ -51,6 +50,7 @@ class ProductFamiliesController extends BaseController
                     ->commaSeparated()
                     ->extract('dateField')
                     ->serializeBy([BasicDateField::class, 'checkValue']),
+                QueryParam::init('filter', $options)->commaSeparated()->extract('filter'),
                 QueryParam::init('start_date', $options)->commaSeparated()->extract('startDate'),
                 QueryParam::init('end_date', $options)->commaSeparated()->extract('endDate'),
                 QueryParam::init('start_datetime', $options)->commaSeparated()->extract('startDatetime'),
@@ -59,14 +59,7 @@ class ProductFamiliesController extends BaseController
                 QueryParam::init('include', $options)
                     ->commaSeparated()
                     ->extract('mInclude')
-                    ->serializeBy([ListProductsInclude::class, 'checkValue']),
-                QueryParam::init('filter[prepaid_product_price_point][product_price_point_id]', $options)
-                    ->commaSeparated()
-                    ->extract('filterPrepaidProductPricePointProductPricePointId')
-                    ->serializeBy([IncludeNotNull::class, 'checkValue']),
-                QueryParam::init('filter[use_site_exchange_rate]', $options)
-                    ->commaSeparated()
-                    ->extract('filterUseSiteExchangeRate')
+                    ->serializeBy([ListProductsInclude::class, 'checkValue'])
             );
 
         $_resHandler = $this->responseHandler()

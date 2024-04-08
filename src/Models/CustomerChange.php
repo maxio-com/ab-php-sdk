@@ -10,7 +10,6 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
-use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class CustomerChange implements \JsonSerializable
@@ -50,7 +49,6 @@ class CustomerChange implements \JsonSerializable
      * Sets Payer.
      *
      * @maps payer
-     * @mapsBy anyOf(oneOf(CustomerPayerChange),null)
      */
     public function setPayer(?CustomerPayerChange $payer): void
     {
@@ -80,7 +78,6 @@ class CustomerChange implements \JsonSerializable
      * Sets Shipping Address.
      *
      * @maps shipping_address
-     * @mapsBy anyOf(oneOf(AddressChange),null)
      */
     public function setShippingAddress(?AddressChange $shippingAddress): void
     {
@@ -110,7 +107,6 @@ class CustomerChange implements \JsonSerializable
      * Sets Billing Address.
      *
      * @maps billing_address
-     * @mapsBy anyOf(oneOf(AddressChange),null)
      */
     public function setBillingAddress(?AddressChange $billingAddress): void
     {
@@ -140,7 +136,6 @@ class CustomerChange implements \JsonSerializable
      * Sets Custom Fields.
      *
      * @maps custom_fields
-     * @mapsBy anyOf(oneOf(CustomerCustomFieldsChange),null)
      */
     public function setCustomFields(?CustomerCustomFieldsChange $customFields): void
     {
@@ -181,32 +176,16 @@ class CustomerChange implements \JsonSerializable
     {
         $json = [];
         if (!empty($this->payer)) {
-            $json['payer']            =
-                ApiHelper::getJsonHelper()->verifyTypes(
-                    $this->payer['value'],
-                    'anyOf(oneOf(CustomerPayerChange),null)'
-                );
+            $json['payer']            = $this->payer['value'];
         }
         if (!empty($this->shippingAddress)) {
-            $json['shipping_address'] =
-                ApiHelper::getJsonHelper()->verifyTypes(
-                    $this->shippingAddress['value'],
-                    'anyOf(oneOf(AddressChange),null)'
-                );
+            $json['shipping_address'] = $this->shippingAddress['value'];
         }
         if (!empty($this->billingAddress)) {
-            $json['billing_address']  =
-                ApiHelper::getJsonHelper()->verifyTypes(
-                    $this->billingAddress['value'],
-                    'anyOf(oneOf(AddressChange),null)'
-                );
+            $json['billing_address']  = $this->billingAddress['value'];
         }
         if (!empty($this->customFields)) {
-            $json['custom_fields']    =
-                ApiHelper::getJsonHelper()->verifyTypes(
-                    $this->customFields['value'],
-                    'anyOf(oneOf(CustomerCustomFieldsChange),null)'
-                );
+            $json['custom_fields']    = $this->customFields['value'];
         }
         $json = array_merge($json, $this->additionalProperties);
 

@@ -100,7 +100,6 @@ $result = $customFieldsController->createMetafields(
   {
     "name": "Color",
     "scope": {
-      "hosted": [],
       "csv": "0",
       "statements": "0",
       "invoices": "0",
@@ -113,7 +112,6 @@ $result = $customFieldsController->createMetafields(
   {
     "name": "Brand",
     "scope": {
-      "hosted": [],
       "csv": "0",
       "statements": "0",
       "invoices": "0",
@@ -470,7 +468,7 @@ $resourceType = ResourceType::SUBSCRIPTIONS;
 
 $resourceId = 60;
 
-Liquid error: Value cannot be null. (Parameter 'key')Liquid error: Value cannot be null. (Parameter 'key')$customFieldsController->deleteMetadata(
+$customFieldsController->deleteMetadata(
     $resourceType,
     $resourceId
 );
@@ -526,7 +524,7 @@ function listMetadataForResourceType(array $options): PaginatedMetadata
 ## Example Usage
 
 ```php
-$collect = Liquid error: Value cannot be null. (Parameter 'key')[
+$collect = [
     'resource_type' => ResourceType::SUBSCRIPTIONS,
     'page' => 2,
     'per_page' => 50,

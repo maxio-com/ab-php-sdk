@@ -888,14 +888,17 @@ function listSubscriptions(array $options): array
 ## Example Usage
 
 ```php
-$collect = Liquid error: Value cannot be null. (Parameter 'key')[
+$collect = [
     'page' => 2,
     'per_page' => 50,
     'start_date' => DateTimeHelper::fromSimpleDate('2022-07-01'),
     'end_date' => DateTimeHelper::fromSimpleDate('2022-08-01'),
     'start_datetime' => DateTimeHelper::fromRfc3339DateTime('2022-07-01 09:00:05'),
     'end_datetime' => DateTimeHelper::fromRfc3339DateTime('2022-08-01 10:00:05'),
-    'sort' => SubscriptionSort::SIGNUP_DATE
+    'sort' => SubscriptionSort::SIGNUP_DATE,
+    'include' => [
+        SubscriptionListInclude::SELF_SERVICE_PAGE_TOKEN
+    ]
 ];
 
 $result = $subscriptionsController->listSubscriptions($collect);
@@ -1130,7 +1133,15 @@ function readSubscription(int $subscriptionId, ?array $mInclude = null): Subscri
 ```php
 $subscriptionId = 222;
 
-Liquid error: Value cannot be null. (Parameter 'key')$result = Liquid error: Value cannot be null. (Parameter 'key')$subscriptionsController->readSubscription($subscriptionId);
+$include = [
+    SubscriptionInclude::COUPONS,
+    SubscriptionInclude::SELF_SERVICE_PAGE_TOKEN
+];
+
+$result = $subscriptionsController->readSubscription(
+    $subscriptionId,
+    $include
+);
 ```
 
 ## Example Response *(as JSON)*
@@ -1397,9 +1408,15 @@ $subscriptionId = 222;
 
 $ack = 252;
 
-Liquid error: Value cannot be null. (Parameter 'key')Liquid error: Value cannot be null. (Parameter 'key')$subscriptionsController->purgeSubscription(
+$cascade = [
+    SubscriptionPurgeType::CUSTOMER,
+    SubscriptionPurgeType::PAYMENT_PROFILE
+];
+
+$subscriptionsController->purgeSubscription(
     $subscriptionId,
-    $ack
+    $ack,
+    $cascade
 );
 ```
 

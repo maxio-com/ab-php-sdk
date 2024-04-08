@@ -160,9 +160,7 @@ class InsightsController extends BaseController
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/subscriptions_mrr.json')
             ->auth('BasicAuth')
             ->parameters(
-                QueryParam::init('filter[subscription_ids]', $options)
-                    ->commaSeparated()
-                    ->extract('filterSubscriptionIds'),
+                QueryParam::init('filter', $options)->commaSeparated()->extract('filter'),
                 QueryParam::init('at_time', $options)->commaSeparated()->extract('atTime'),
                 QueryParam::init('page', $options)->commaSeparated()->extract('page', 1),
                 QueryParam::init('per_page', $options)->commaSeparated()->extract('perPage', 20),

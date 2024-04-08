@@ -15,7 +15,6 @@ use AdvancedBillingLib\Exceptions\ErrorListResponseException;
 use AdvancedBillingLib\Exceptions\RefundPrepaymentAggregatedErrorsResponseException;
 use AdvancedBillingLib\Exceptions\RefundPrepaymentBaseErrorsResponseException;
 use AdvancedBillingLib\Models\AccountBalances;
-use AdvancedBillingLib\Models\BasicDateField;
 use AdvancedBillingLib\Models\CreatePrepaymentRequest;
 use AdvancedBillingLib\Models\CreatePrepaymentResponse;
 use AdvancedBillingLib\Models\DeductServiceCreditRequest;
@@ -24,7 +23,6 @@ use AdvancedBillingLib\Models\PrepaymentResponse;
 use AdvancedBillingLib\Models\PrepaymentsResponse;
 use AdvancedBillingLib\Models\RefundPrepaymentRequest;
 use AdvancedBillingLib\Models\ServiceCredit;
-use AdvancedBillingLib\Utils\DateTimeHelper;
 use Core\Request\Parameters\BodyParam;
 use Core\Request\Parameters\HeaderParam;
 use Core\Request\Parameters\QueryParam;
@@ -123,18 +121,7 @@ class SubscriptionInvoiceAccountController extends BaseController
                 TemplateParam::init('subscription_id', $options)->extract('subscriptionId')->required(),
                 QueryParam::init('page', $options)->commaSeparated()->extract('page', 1),
                 QueryParam::init('per_page', $options)->commaSeparated()->extract('perPage', 20),
-                QueryParam::init('filter[date_field]', $options)
-                    ->commaSeparated()
-                    ->extract('filterDateField')
-                    ->serializeBy([BasicDateField::class, 'checkValue']),
-                QueryParam::init('filter[start_date]', $options)
-                    ->commaSeparated()
-                    ->extract('filterStartDate')
-                    ->serializeBy([DateTimeHelper::class, 'toSimpleDate']),
-                QueryParam::init('filter[end_date]', $options)
-                    ->commaSeparated()
-                    ->extract('filterEndDate')
-                    ->serializeBy([DateTimeHelper::class, 'toSimpleDate'])
+                QueryParam::init('filter', $options)->commaSeparated()->extract('filter')
             );
 
         $_resHandler = $this->responseHandler()

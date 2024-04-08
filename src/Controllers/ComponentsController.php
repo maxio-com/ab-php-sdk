@@ -27,7 +27,6 @@ use AdvancedBillingLib\Models\CreateMeteredComponent;
 use AdvancedBillingLib\Models\CreateOnOffComponent;
 use AdvancedBillingLib\Models\CreatePrepaidComponent;
 use AdvancedBillingLib\Models\CreateQuantityBasedComponent;
-use AdvancedBillingLib\Models\IncludeNotNull;
 use AdvancedBillingLib\Models\ListComponentsPricePointsInclude;
 use AdvancedBillingLib\Models\ListComponentsPricePointsResponse;
 use AdvancedBillingLib\Models\PricePointType;
@@ -35,7 +34,6 @@ use AdvancedBillingLib\Models\SortingDirection;
 use AdvancedBillingLib\Models\UpdateComponentPricePointRequest;
 use AdvancedBillingLib\Models\UpdateComponentRequest;
 use AdvancedBillingLib\Models\UpdateCurrencyPricesRequest;
-use AdvancedBillingLib\Utils\DateTimeHelper;
 use Core\Request\Parameters\BodyParam;
 use Core\Request\Parameters\HeaderParam;
 use Core\Request\Parameters\QueryParam;
@@ -465,10 +463,7 @@ class ComponentsController extends BaseController
                 QueryParam::init('include_archived', $options)->commaSeparated()->extract('includeArchived'),
                 QueryParam::init('page', $options)->commaSeparated()->extract('page', 1),
                 QueryParam::init('per_page', $options)->commaSeparated()->extract('perPage', 20),
-                QueryParam::init('filter[ids]', $options)->commaSeparated()->extract('filterIds'),
-                QueryParam::init('filter[use_site_exchange_rate]', $options)
-                    ->commaSeparated()
-                    ->extract('filterUseSiteExchangeRate')
+                QueryParam::init('filter', $options)->commaSeparated()->extract('filter')
             );
 
         $_resHandler = $this->responseHandler()->type(ComponentResponse::class, 1);
@@ -564,9 +559,9 @@ class ComponentsController extends BaseController
             ->parameters(
                 TemplateParam::init('product_family_id', $options)->extract('productFamilyId')->required(),
                 QueryParam::init('include_archived', $options)->commaSeparated()->extract('includeArchived'),
-                QueryParam::init('filter[ids]', $options)->commaSeparated()->extract('filterIds'),
                 QueryParam::init('page', $options)->commaSeparated()->extract('page', 1),
                 QueryParam::init('per_page', $options)->commaSeparated()->extract('perPage', 20),
+                QueryParam::init('filter', $options)->commaSeparated()->extract('filter'),
                 QueryParam::init('date_field', $options)
                     ->commaSeparated()
                     ->extract('dateField')
@@ -574,10 +569,7 @@ class ComponentsController extends BaseController
                 QueryParam::init('end_date', $options)->commaSeparated()->extract('endDate'),
                 QueryParam::init('end_datetime', $options)->commaSeparated()->extract('endDatetime'),
                 QueryParam::init('start_date', $options)->commaSeparated()->extract('startDate'),
-                QueryParam::init('start_datetime', $options)->commaSeparated()->extract('startDatetime'),
-                QueryParam::init('filter[use_site_exchange_rate]', $options)
-                    ->commaSeparated()
-                    ->extract('filterUseSiteExchangeRate')
+                QueryParam::init('start_datetime', $options)->commaSeparated()->extract('startDatetime')
             );
 
         $_resHandler = $this->responseHandler()->type(ComponentResponse::class, 1);
@@ -888,45 +880,17 @@ class ComponentsController extends BaseController
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/components_price_points.json')
             ->auth('BasicAuth')
             ->parameters(
-                QueryParam::init('filter[date_field]', $options)
-                    ->commaSeparated()
-                    ->extract('filterDateField')
-                    ->serializeBy([BasicDateField::class, 'checkValue']),
-                QueryParam::init('filter[end_date]', $options)
-                    ->commaSeparated()
-                    ->extract('filterEndDate')
-                    ->serializeBy([DateTimeHelper::class, 'toSimpleDate']),
-                QueryParam::init('filter[end_datetime]', $options)
-                    ->commaSeparated()
-                    ->extract('filterEndDatetime')
-                    ->serializeBy([DateTimeHelper::class, 'toRfc3339DateTime']),
                 QueryParam::init('include', $options)
                     ->commaSeparated()
                     ->extract('mInclude')
                     ->serializeBy([ListComponentsPricePointsInclude::class, 'checkValue']),
                 QueryParam::init('page', $options)->commaSeparated()->extract('page', 1),
                 QueryParam::init('per_page', $options)->commaSeparated()->extract('perPage', 20),
-                QueryParam::init('filter[start_date]', $options)
-                    ->commaSeparated()
-                    ->extract('filterStartDate')
-                    ->serializeBy([DateTimeHelper::class, 'toSimpleDate']),
-                QueryParam::init('filter[start_datetime]', $options)
-                    ->commaSeparated()
-                    ->extract('filterStartDatetime')
-                    ->serializeBy([DateTimeHelper::class, 'toRfc3339DateTime']),
-                QueryParam::init('filter[type]', $options)
-                    ->commaSeparated()
-                    ->extract('filterType')
-                    ->serializeBy([PricePointType::class, 'checkValue']),
                 QueryParam::init('direction', $options)
                     ->commaSeparated()
                     ->extract('direction')
                     ->serializeBy([SortingDirection::class, 'checkValue']),
-                QueryParam::init('filter[ids]', $options)->commaSeparated()->extract('filterIds'),
-                QueryParam::init('filter[archived_at]', $options)
-                    ->commaSeparated()
-                    ->extract('filterArchivedAt')
-                    ->serializeBy([IncludeNotNull::class, 'checkValue'])
+                QueryParam::init('filter', $options)->commaSeparated()->extract('filter')
             );
 
         $_resHandler = $this->responseHandler()

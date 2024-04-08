@@ -12,7 +12,7 @@
 | `id` | `?int` | Optional | The unique ID assigned to the component by Chargify. This ID can be used to fetch the component from the API. | getId(): ?int | setId(?int id): void |
 | `name` | `?string` | Optional | The name of the Component, suitable for display on statements. i.e. Text Messages. | getName(): ?string | setName(?string name): void |
 | `handle` | `?string` | Optional | The component API handle | getHandle(): ?string | setHandle(?string handle): void |
-| `pricingScheme` | string([PricingScheme](../../doc/models/pricing-scheme.md))\|null | Optional | This is a container for one-of cases. | getPricingScheme(): ?string | setPricingScheme(?string pricingScheme): void |
+| `pricingScheme` | [`?string(PricingScheme)`](../../doc/models/pricing-scheme.md) | Optional | - | getPricingScheme(): ?string | setPricingScheme(?string pricingScheme): void |
 | `unitName` | `?string` | Optional | The name of the unit that the component’s usage is measured in. i.e. message | getUnitName(): ?string | setUnitName(?string unitName): void |
 | `unitPrice` | `?string` | Optional | The amount the customer will be charged per unit. This field is only populated for ‘per_unit’ pricing schemes, otherwise it may be null. | getUnitPrice(): ?string | setUnitPrice(?string unitPrice): void |
 | `productFamilyId` | `?int` | Optional | The id of the Product Family to which the Component belongs | getProductFamilyId(): ?int | setProductFamilyId(?int productFamilyId): void |
@@ -52,7 +52,7 @@
   "id": 24,
   "name": "name2",
   "handle": "handle8",
-  "pricing_scheme": "tiered",
+  "pricing_scheme": "per_unit",
   "unit_name": "unit_name4"
 }
 ```

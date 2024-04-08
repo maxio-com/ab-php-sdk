@@ -10,7 +10,6 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
-use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class RecordPaymentResponse implements \JsonSerializable
@@ -62,7 +61,6 @@ class RecordPaymentResponse implements \JsonSerializable
      * Sets Prepayment.
      *
      * @maps prepayment
-     * @mapsBy anyOf(oneOf(InvoicePrePayment),null)
      */
     public function setPrepayment(?InvoicePrePayment $prepayment): void
     {
@@ -106,11 +104,7 @@ class RecordPaymentResponse implements \JsonSerializable
             $json['paid_invoices'] = $this->paidInvoices;
         }
         if (!empty($this->prepayment)) {
-            $json['prepayment']    =
-                ApiHelper::getJsonHelper()->verifyTypes(
-                    $this->prepayment['value'],
-                    'anyOf(oneOf(InvoicePrePayment),null)'
-                );
+            $json['prepayment']    = $this->prepayment['value'];
         }
         $json = array_merge($json, $this->additionalProperties);
 

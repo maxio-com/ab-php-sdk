@@ -14,13 +14,11 @@ use AdvancedBillingLib\Exceptions\ApiException;
 use AdvancedBillingLib\Exceptions\ErrorArrayMapResponseException;
 use AdvancedBillingLib\Exceptions\ErrorListResponseException;
 use AdvancedBillingLib\Exceptions\ProductPricePointErrorResponseException;
-use AdvancedBillingLib\Models\BasicDateField;
 use AdvancedBillingLib\Models\BulkCreateProductPricePointsRequest;
 use AdvancedBillingLib\Models\BulkCreateProductPricePointsResponse;
 use AdvancedBillingLib\Models\CreateProductCurrencyPricesRequest;
 use AdvancedBillingLib\Models\CreateProductPricePointRequest;
 use AdvancedBillingLib\Models\CurrencyPricesResponse;
-use AdvancedBillingLib\Models\IncludeNotNull;
 use AdvancedBillingLib\Models\ListProductPricePointsResponse;
 use AdvancedBillingLib\Models\ListProductsPricePointsInclude;
 use AdvancedBillingLib\Models\PricePointType;
@@ -29,7 +27,6 @@ use AdvancedBillingLib\Models\ProductResponse;
 use AdvancedBillingLib\Models\SortingDirection;
 use AdvancedBillingLib\Models\UpdateCurrencyPricesRequest;
 use AdvancedBillingLib\Models\UpdateProductPricePointRequest;
-use AdvancedBillingLib\Utils\DateTimeHelper;
 use Core\Request\Parameters\BodyParam;
 use Core\Request\Parameters\HeaderParam;
 use Core\Request\Parameters\QueryParam;
@@ -418,35 +415,7 @@ class ProductPricePointsController extends BaseController
                     ->commaSeparated()
                     ->extract('direction')
                     ->serializeBy([SortingDirection::class, 'checkValue']),
-                QueryParam::init('filter[archived_at]', $options)
-                    ->commaSeparated()
-                    ->extract('filterArchivedAt')
-                    ->serializeBy([IncludeNotNull::class, 'checkValue']),
-                QueryParam::init('filter[date_field]', $options)
-                    ->commaSeparated()
-                    ->extract('filterDateField')
-                    ->serializeBy([BasicDateField::class, 'checkValue']),
-                QueryParam::init('filter[end_date]', $options)
-                    ->commaSeparated()
-                    ->extract('filterEndDate')
-                    ->serializeBy([DateTimeHelper::class, 'toSimpleDate']),
-                QueryParam::init('filter[end_datetime]', $options)
-                    ->commaSeparated()
-                    ->extract('filterEndDatetime')
-                    ->serializeBy([DateTimeHelper::class, 'toRfc3339DateTime']),
-                QueryParam::init('filter[ids]', $options)->commaSeparated()->extract('filterIds'),
-                QueryParam::init('filter[start_date]', $options)
-                    ->commaSeparated()
-                    ->extract('filterStartDate')
-                    ->serializeBy([DateTimeHelper::class, 'toSimpleDate']),
-                QueryParam::init('filter[start_datetime]', $options)
-                    ->commaSeparated()
-                    ->extract('filterStartDatetime')
-                    ->serializeBy([DateTimeHelper::class, 'toRfc3339DateTime']),
-                QueryParam::init('filter[type]', $options)
-                    ->commaSeparated()
-                    ->extract('filterType')
-                    ->serializeBy([PricePointType::class, 'checkValue']),
+                QueryParam::init('filter', $options)->commaSeparated()->extract('filter'),
                 QueryParam::init('include', $options)
                     ->commaSeparated()
                     ->extract('mInclude')

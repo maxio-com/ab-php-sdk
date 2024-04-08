@@ -32,7 +32,6 @@ use AdvancedBillingLib\Models\SortingDirection;
 use AdvancedBillingLib\Models\SubscriptionComponentResponse;
 use AdvancedBillingLib\Models\SubscriptionListDateField;
 use AdvancedBillingLib\Models\SubscriptionResponse;
-use AdvancedBillingLib\Models\SubscriptionStateFilter;
 use AdvancedBillingLib\Models\UpdateAllocationExpirationDate;
 use AdvancedBillingLib\Models\UsageResponse;
 use AdvancedBillingLib\Utils\DateTimeHelper;
@@ -106,6 +105,7 @@ class SubscriptionComponentsController extends BaseController
                     ->commaSeparated()
                     ->extract('direction')
                     ->serializeBy([SortingDirection::class, 'checkValue']),
+                QueryParam::init('filter', $options)->commaSeparated()->extract('filter'),
                 QueryParam::init('end_date', $options)->commaSeparated()->extract('endDate'),
                 QueryParam::init('end_datetime', $options)->commaSeparated()->extract('endDatetime'),
                 QueryParam::init('price_point_ids', $options)
@@ -122,11 +122,7 @@ class SubscriptionComponentsController extends BaseController
                 QueryParam::init('include', $options)
                     ->commaSeparated()
                     ->extract('mInclude')
-                    ->serializeBy([ListSubscriptionComponentsInclude::class, 'checkValue']),
-                QueryParam::init('filter[use_site_exchange_rate]', $options)
-                    ->commaSeparated()
-                    ->extract('filterUseSiteExchangeRate'),
-                QueryParam::init('filter[currencies]', $options)->commaSeparated()->extract('filterCurrencies')
+                    ->serializeBy([ListSubscriptionComponentsInclude::class, 'checkValue'])
             );
 
         $_resHandler = $this->responseHandler()->type(SubscriptionComponentResponse::class, 1);
@@ -934,6 +930,7 @@ class SubscriptionComponentsController extends BaseController
                     ->commaSeparated()
                     ->extract('direction')
                     ->serializeBy([SortingDirection::class, 'checkValue']),
+                QueryParam::init('filter', $options)->commaSeparated()->extract('filter'),
                 QueryParam::init('date_field', $options)
                     ->commaSeparated()
                     ->extract('dateField')
@@ -951,35 +948,7 @@ class SubscriptionComponentsController extends BaseController
                 QueryParam::init('include', $options)
                     ->commaSeparated()
                     ->extract('mInclude')
-                    ->serializeBy([ListSubscriptionComponentsInclude::class, 'checkValue']),
-                QueryParam::init('filter[use_site_exchange_rate]', $options)
-                    ->commaSeparated()
-                    ->extract('filterUseSiteExchangeRate'),
-                QueryParam::init('filter[currencies]', $options)->commaSeparated()->extract('filterCurrencies'),
-                QueryParam::init('filter[subscription][states]', $options)
-                    ->commaSeparated()
-                    ->extract('filterSubscriptionStates')
-                    ->serializeBy([SubscriptionStateFilter::class, 'checkValue']),
-                QueryParam::init('filter[subscription][date_field]', $options)
-                    ->commaSeparated()
-                    ->extract('filterSubscriptionDateField')
-                    ->serializeBy([SubscriptionListDateField::class, 'checkValue']),
-                QueryParam::init('filter[subscription][start_date]', $options)
-                    ->commaSeparated()
-                    ->extract('filterSubscriptionStartDate')
-                    ->serializeBy([DateTimeHelper::class, 'toSimpleDate']),
-                QueryParam::init('filter[subscription][start_datetime]', $options)
-                    ->commaSeparated()
-                    ->extract('filterSubscriptionStartDatetime')
-                    ->serializeBy([DateTimeHelper::class, 'toRfc3339DateTime']),
-                QueryParam::init('filter[subscription][end_date]', $options)
-                    ->commaSeparated()
-                    ->extract('filterSubscriptionEndDate')
-                    ->serializeBy([DateTimeHelper::class, 'toSimpleDate']),
-                QueryParam::init('filter[subscription][end_datetime]', $options)
-                    ->commaSeparated()
-                    ->extract('filterSubscriptionEndDatetime')
-                    ->serializeBy([DateTimeHelper::class, 'toRfc3339DateTime'])
+                    ->serializeBy([ListSubscriptionComponentsInclude::class, 'checkValue'])
             );
 
         $_resHandler = $this->responseHandler()->type(ListSubscriptionComponentsResponse::class);
