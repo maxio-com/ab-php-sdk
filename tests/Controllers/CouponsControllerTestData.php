@@ -7,6 +7,7 @@ namespace AdvancedBillingLib\Tests\Controllers;
 use AdvancedBillingLib\Models\Coupon;
 use AdvancedBillingLib\Models\CouponSubcodes;
 use AdvancedBillingLib\Models\CreateOrUpdateCoupon;
+use AdvancedBillingLib\Models\Builders\ListCouponsFilterBuilder;
 use AdvancedBillingLib\Models\ProductFamily;
 use AdvancedBillingLib\Tests\DataLoader\TestCouponLoader;
 use AdvancedBillingLib\Tests\DataLoader\TestProductFamilyLoader;
@@ -87,7 +88,9 @@ final class CouponsControllerTestData
 
     public function getFilterOptionsWithNotExistingId(): array
     {
-        return ['filterIds' => [$this->getNotExistingCouponId()]];
+        return ['filter' => ListCouponsFilterBuilder::init()
+                    ->ids([$this->getNotExistingCouponId()])
+                    ->build()];
     }
 
     public function getNotExistingCouponId(): int
