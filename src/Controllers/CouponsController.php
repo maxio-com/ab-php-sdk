@@ -13,7 +13,6 @@ namespace AdvancedBillingLib\Controllers;
 use AdvancedBillingLib\Exceptions\ApiException;
 use AdvancedBillingLib\Exceptions\ErrorListResponseException;
 use AdvancedBillingLib\Exceptions\SingleStringErrorResponseException;
-use AdvancedBillingLib\Models\BasicDateField;
 use AdvancedBillingLib\Models\CouponCurrencyRequest;
 use AdvancedBillingLib\Models\CouponCurrencyResponse;
 use AdvancedBillingLib\Models\CouponResponse;
@@ -21,7 +20,6 @@ use AdvancedBillingLib\Models\CouponSubcodes;
 use AdvancedBillingLib\Models\CouponSubcodesResponse;
 use AdvancedBillingLib\Models\CouponUsage;
 use AdvancedBillingLib\Models\CreateOrUpdateCoupon;
-use AdvancedBillingLib\Utils\DateTimeHelper;
 use Core\Request\Parameters\BodyParam;
 use Core\Request\Parameters\HeaderParam;
 use Core\Request\Parameters\QueryParam;
@@ -111,32 +109,8 @@ class CouponsController extends BaseController
                 TemplateParam::init('product_family_id', $options)->extract('productFamilyId')->required(),
                 QueryParam::init('page', $options)->commaSeparated()->extract('page', 1),
                 QueryParam::init('per_page', $options)->commaSeparated()->extract('perPage', 30),
-                QueryParam::init('filter[date_field]', $options)
-                    ->commaSeparated()
-                    ->extract('filterDateField')
-                    ->serializeBy([BasicDateField::class, 'checkValue']),
-                QueryParam::init('filter[end_date]', $options)
-                    ->commaSeparated()
-                    ->extract('filterEndDate')
-                    ->serializeBy([DateTimeHelper::class, 'toSimpleDate']),
-                QueryParam::init('filter[end_datetime]', $options)
-                    ->commaSeparated()
-                    ->extract('filterEndDatetime')
-                    ->serializeBy([DateTimeHelper::class, 'toRfc3339DateTime']),
-                QueryParam::init('filter[start_date]', $options)
-                    ->commaSeparated()
-                    ->extract('filterStartDate')
-                    ->serializeBy([DateTimeHelper::class, 'toSimpleDate']),
-                QueryParam::init('filter[start_datetime]', $options)
-                    ->commaSeparated()
-                    ->extract('filterStartDatetime')
-                    ->serializeBy([DateTimeHelper::class, 'toRfc3339DateTime']),
-                QueryParam::init('filter[ids]', $options)->commaSeparated()->extract('filterIds'),
-                QueryParam::init('filter[codes]', $options)->commaSeparated()->extract('filterCodes'),
-                QueryParam::init('currency_prices', $options)->commaSeparated()->extract('currencyPrices'),
-                QueryParam::init('filter[use_site_exchange_rate]', $options)
-                    ->commaSeparated()
-                    ->extract('filterUseSiteExchangeRate')
+                QueryParam::init('filter', $options)->commaSeparated()->extract('filter'),
+                QueryParam::init('currency_prices', $options)->commaSeparated()->extract('currencyPrices')
             );
 
         $_resHandler = $this->responseHandler()->type(CouponResponse::class, 1);
@@ -300,52 +274,8 @@ class CouponsController extends BaseController
             ->parameters(
                 QueryParam::init('page', $options)->commaSeparated()->extract('page', 1),
                 QueryParam::init('per_page', $options)->commaSeparated()->extract('perPage', 30),
-                QueryParam::init('date_field', $options)
-                    ->commaSeparated()
-                    ->extract('dateField')
-                    ->serializeBy([BasicDateField::class, 'checkValue']),
-                QueryParam::init('start_date', $options)
-                    ->commaSeparated()
-                    ->extract('startDate')
-                    ->serializeBy([DateTimeHelper::class, 'toSimpleDate']),
-                QueryParam::init('end_date', $options)
-                    ->commaSeparated()
-                    ->extract('endDate')
-                    ->serializeBy([DateTimeHelper::class, 'toSimpleDate']),
-                QueryParam::init('start_datetime', $options)
-                    ->commaSeparated()
-                    ->extract('startDatetime')
-                    ->serializeBy([DateTimeHelper::class, 'toRfc3339DateTime']),
-                QueryParam::init('end_datetime', $options)
-                    ->commaSeparated()
-                    ->extract('endDatetime')
-                    ->serializeBy([DateTimeHelper::class, 'toRfc3339DateTime']),
-                QueryParam::init('filter[ids]', $options)->commaSeparated()->extract('filterIds'),
-                QueryParam::init('filter[codes]', $options)->commaSeparated()->extract('filterCodes'),
-                QueryParam::init('currency_prices', $options)->commaSeparated()->extract('currencyPrices'),
-                QueryParam::init('filter[end_date]', $options)
-                    ->commaSeparated()
-                    ->extract('filterEndDate')
-                    ->serializeBy([DateTimeHelper::class, 'toSimpleDate']),
-                QueryParam::init('filter[end_datetime]', $options)
-                    ->commaSeparated()
-                    ->extract('filterEndDatetime')
-                    ->serializeBy([DateTimeHelper::class, 'toRfc3339DateTime']),
-                QueryParam::init('filter[start_date]', $options)
-                    ->commaSeparated()
-                    ->extract('filterStartDate')
-                    ->serializeBy([DateTimeHelper::class, 'toSimpleDate']),
-                QueryParam::init('filter[start_datetime]', $options)
-                    ->commaSeparated()
-                    ->extract('filterStartDatetime')
-                    ->serializeBy([DateTimeHelper::class, 'toRfc3339DateTime']),
-                QueryParam::init('filter[date_field]', $options)
-                    ->commaSeparated()
-                    ->extract('filterDateField')
-                    ->serializeBy([BasicDateField::class, 'checkValue']),
-                QueryParam::init('filter[use_site_exchange_rate]', $options)
-                    ->commaSeparated()
-                    ->extract('filterUseSiteExchangeRate')
+                QueryParam::init('filter', $options)->commaSeparated()->extract('filter'),
+                QueryParam::init('currency_prices', $options)->commaSeparated()->extract('currencyPrices')
             );
 
         $_resHandler = $this->responseHandler()->type(CouponResponse::class, 1);

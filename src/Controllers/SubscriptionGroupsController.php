@@ -125,10 +125,10 @@ class SubscriptionGroupsController extends BaseController
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/subscription_groups.json')
             ->auth('BasicAuth')
             ->parameters(
-                QueryParam::init('page', $options)->commaSeparated()->extract('page', 1),
-                QueryParam::init('per_page', $options)->commaSeparated()->extract('perPage', 20),
-                QueryParam::init('include[]', $options)
-                    ->commaSeparated()
+                QueryParam::init('page', $options)->unIndexed()->extract('page', 1),
+                QueryParam::init('per_page', $options)->unIndexed()->extract('perPage', 20),
+                QueryParam::init('include', $options)
+                    ->unIndexed()
                     ->extract('mInclude')
                     ->serializeBy([SubscriptionGroupsListInclude::class, 'checkValue'])
             );
@@ -160,8 +160,8 @@ class SubscriptionGroupsController extends BaseController
             ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('uid', $uid)->required(),
-                QueryParam::init('include[]', $mInclude)
-                    ->commaSeparated()
+                QueryParam::init('include', $mInclude)
+                    ->unIndexed()
                     ->serializeBy([SubscriptionGroupInclude::class, 'checkValue'])
             );
 
@@ -172,7 +172,7 @@ class SubscriptionGroupsController extends BaseController
 
     /**
      * Use this endpoint to update subscription group members.
-     * `"member_ids": []` should contain an array of both subscription IDs to set as group members and
+     * `"member_ids"` should contain an array of both subscription IDs to set as group members and
      * subscription IDs already present in the groups. Not including them will result in removing them from
      * subscription group. To clean up members, just leave the array empty.
      *

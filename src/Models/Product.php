@@ -10,7 +10,6 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
-use AdvancedBillingLib\ApiHelper;
 use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
@@ -412,8 +411,7 @@ class Product implements \JsonSerializable
      * A string representing the expiration interval unit for this product, either month or day
      *
      * @maps expiration_interval_unit
-     * @mapsBy anyOf(oneOf(ExtendedIntervalUnit),null)
-     * @factory \AdvancedBillingLib\Models\ExtendedIntervalUnit::checkValue ExtendedIntervalUnit
+     * @factory \AdvancedBillingLib\Models\ExtendedIntervalUnit::checkValue
      */
     public function setExpirationIntervalUnit(?string $expirationIntervalUnit): void
     {
@@ -653,8 +651,7 @@ class Product implements \JsonSerializable
      * A string representing the trial interval unit for this product, either month or day
      *
      * @maps trial_interval_unit
-     * @mapsBy anyOf(oneOf(IntervalUnit),null)
-     * @factory \AdvancedBillingLib\Models\IntervalUnit::checkValue IntervalUnit
+     * @factory \AdvancedBillingLib\Models\IntervalUnit::checkValue
      */
     public function setTrialIntervalUnit(?string $trialIntervalUnit): void
     {
@@ -1211,12 +1208,8 @@ class Product implements \JsonSerializable
         }
         if (!empty($this->expirationIntervalUnit)) {
             $json['expiration_interval_unit']       =
-                ApiHelper::getJsonHelper()->verifyTypes(
-                    $this->expirationIntervalUnit['value'],
-                    'anyOf(oneOf(ExtendedIntervalUnit),null)',
-                    [
-                        '\AdvancedBillingLib\Models\ExtendedIntervalUnit::checkValue ExtendedIntervalUnit'
-                    ]
+                ExtendedIntervalUnit::checkValue(
+                    $this->expirationIntervalUnit['value']
                 );
         }
         if (isset($this->createdAt)) {
@@ -1244,14 +1237,7 @@ class Product implements \JsonSerializable
             $json['trial_interval']                 = $this->trialInterval['value'];
         }
         if (!empty($this->trialIntervalUnit)) {
-            $json['trial_interval_unit']            =
-                ApiHelper::getJsonHelper()->verifyTypes(
-                    $this->trialIntervalUnit['value'],
-                    'anyOf(oneOf(IntervalUnit),null)',
-                    [
-                        '\AdvancedBillingLib\Models\IntervalUnit::checkValue IntervalUnit'
-                    ]
-                );
+            $json['trial_interval_unit']            = IntervalUnit::checkValue($this->trialIntervalUnit['value']);
         }
         if (!empty($this->archivedAt)) {
             $json['archived_at']                    = DateTimeHelper::toRfc3339DateTime($this->archivedAt['value']);

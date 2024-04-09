@@ -10,7 +10,6 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
-use AdvancedBillingLib\ApiHelper;
 use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
@@ -71,7 +70,6 @@ class VoidInvoiceEventData implements \JsonSerializable
      * Sets Credit Note Attributes.
      *
      * @maps credit_note_attributes
-     * @mapsBy anyOf(oneOf(CreditNote),null)
      */
     public function setCreditNoteAttributes(?CreditNote $creditNoteAttributes): void
     {
@@ -206,11 +204,7 @@ class VoidInvoiceEventData implements \JsonSerializable
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
-        $json['credit_note_attributes'] =
-            ApiHelper::getJsonHelper()->verifyTypes(
-                $this->creditNoteAttributes,
-                'anyOf(oneOf(CreditNote),null)'
-            );
+        $json['credit_note_attributes'] = $this->creditNoteAttributes;
         $json['memo']                   = $this->memo;
         $json['applied_amount']         = $this->appliedAmount;
         $json['transaction_time']       = DateTimeHelper::toRfc3339DateTime($this->transactionTime);

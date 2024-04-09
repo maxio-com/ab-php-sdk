@@ -10,7 +10,6 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
-use AdvancedBillingLib\ApiHelper;
 use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
@@ -634,7 +633,6 @@ class InvoiceLineItem implements \JsonSerializable
      * Sets Component Cost Data.
      *
      * @maps component_cost_data
-     * @mapsBy anyOf(oneOf(InvoiceLineItemComponentCostData),null)
      */
     public function setComponentCostData(?InvoiceLineItemComponentCostData $componentCostData): void
     {
@@ -797,11 +795,7 @@ class InvoiceLineItem implements \JsonSerializable
             $json['hide']                   = $this->hide;
         }
         if (!empty($this->componentCostData)) {
-            $json['component_cost_data']    =
-                ApiHelper::getJsonHelper()->verifyTypes(
-                    $this->componentCostData['value'],
-                    'anyOf(oneOf(InvoiceLineItemComponentCostData),null)'
-                );
+            $json['component_cost_data']    = $this->componentCostData['value'];
         }
         if (!empty($this->productPricePointId)) {
             $json['product_price_point_id'] = $this->productPricePointId['value'];

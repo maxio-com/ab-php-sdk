@@ -344,8 +344,7 @@ class SubscriptionComponent implements \JsonSerializable
      * Sets Pricing Scheme.
      *
      * @maps pricing_scheme
-     * @mapsBy anyOf(oneOf(PricingScheme),null)
-     * @factory \AdvancedBillingLib\Models\PricingScheme::checkValue PricingScheme
+     * @factory \AdvancedBillingLib\Models\PricingScheme::checkValue
      */
     public function setPricingScheme(?string $pricingScheme): void
     {
@@ -947,14 +946,7 @@ class SubscriptionComponent implements \JsonSerializable
                 );
         }
         if (!empty($this->pricingScheme)) {
-            $json['pricing_scheme']              =
-                ApiHelper::getJsonHelper()->verifyTypes(
-                    $this->pricingScheme['value'],
-                    'anyOf(oneOf(PricingScheme),null)',
-                    [
-                        '\AdvancedBillingLib\Models\PricingScheme::checkValue PricingScheme'
-                    ]
-                );
+            $json['pricing_scheme']              = PricingScheme::checkValue($this->pricingScheme['value']);
         }
         if (isset($this->componentId)) {
             $json['component_id']                = $this->componentId;

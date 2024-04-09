@@ -176,9 +176,12 @@ function listSubscriptionGroups(array $options): ListSubscriptionGroupsResponse
 ## Example Usage
 
 ```php
-$collect = Liquid error: Value cannot be null. (Parameter 'key')[
+$collect = [
     'page' => 2,
-    'per_page' => 50
+    'per_page' => 50,
+    'include' => [
+        SubscriptionGroupsListInclude::ACCOUNT_BALANCES
+    ]
 ];
 
 $result = $subscriptionGroupsController->listSubscriptionGroups($collect);
@@ -251,7 +254,14 @@ function readSubscriptionGroup(string $uid, ?array $mInclude = null): FullSubscr
 ```php
 $uid = 'uid0';
 
-Liquid error: Value cannot be null. (Parameter 'key')$result = Liquid error: Value cannot be null. (Parameter 'key')$subscriptionGroupsController->readSubscriptionGroup($uid);
+$include = [
+    SubscriptionGroupInclude::CURRENT_BILLING_AMOUNT_IN_CENTS
+];
+
+$result = $subscriptionGroupsController->readSubscriptionGroup(
+    $uid,
+    $include
+);
 ```
 
 ## Example Response *(as JSON)*
@@ -300,7 +310,7 @@ Liquid error: Value cannot be null. (Parameter 'key')$result = Liquid error: Val
 # Update Subscription Group Members
 
 Use this endpoint to update subscription group members.
-`"member_ids": []` should contain an array of both subscription IDs to set as group members and subscription IDs already present in the groups. Not including them will result in removing them from subscription group. To clean up members, just leave the array empty.
+`"member_ids"` should contain an array of both subscription IDs to set as group members and subscription IDs already present in the groups. Not including them will result in removing them from subscription group. To clean up members, just leave the array empty.
 
 ```php
 function updateSubscriptionGroupMembers(

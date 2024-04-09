@@ -666,7 +666,6 @@ class Allocation implements \JsonSerializable
      * Sets Payment.
      *
      * @maps payment
-     * @mapsBy anyOf(oneOf(PaymentForAllocation),null)
      */
     public function setPayment(?PaymentForAllocation $payment): void
     {
@@ -833,11 +832,7 @@ class Allocation implements \JsonSerializable
             $json['downgrade_credit']           = CreditType::checkValue($this->downgradeCredit['value']);
         }
         if (!empty($this->payment)) {
-            $json['payment']                    =
-                ApiHelper::getJsonHelper()->verifyTypes(
-                    $this->payment['value'],
-                    'anyOf(oneOf(PaymentForAllocation),null)'
-                );
+            $json['payment']                    = $this->payment['value'];
         }
         if (isset($this->expiresAt)) {
             $json['expires_at']                 = DateTimeHelper::toRfc3339DateTime($this->expiresAt);

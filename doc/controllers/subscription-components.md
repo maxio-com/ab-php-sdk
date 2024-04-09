@@ -106,6 +106,7 @@ function listSubscriptionComponents(array $options): array
 | `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
 | `dateField` | [`?string(SubscriptionListDateField)`](../../doc/models/subscription-list-date-field.md) | Query, Optional | The type of filter you'd like to apply to your search. Use in query `date_field=updated_at`. |
 | `direction` | [`?string(SortingDirection)`](../../doc/models/sorting-direction.md) | Query, Optional | Controls the order in which results are returned.<br>Use in query `direction=asc`. |
+| `filter` | [`?ListSubscriptionComponentsFilter`](../../doc/models/list-subscription-components-filter.md) | Query, Optional | Filter to use for List Subscription Components operation |
 | `endDate` | `?string` | Query, Optional | The end date (format YYYY-MM-DD) with which to filter the date_field. Returns components with a timestamp up to and including 11:59:59PM in your site’s time zone on the date specified. |
 | `endDatetime` | `?string` | Query, Optional | The end date and time (format YYYY-MM-DD HH:MM:SS) with which to filter the date_field. Returns components with a timestamp at or before exact time provided in query. You can specify timezone in query - otherwise your site''s time zone will be used. If provided, this parameter will be used instead of end_date. |
 | `pricePointIds` | [`?string(IncludeNotNull)`](../../doc/models/include-not-null.md) | Query, Optional | Allows fetching components allocation only if price point id is present. Use in query `price_point_ids=not_null`. |
@@ -114,8 +115,6 @@ function listSubscriptionComponents(array $options): array
 | `startDate` | `?string` | Query, Optional | The start date (format YYYY-MM-DD) with which to filter the date_field. Returns components with a timestamp at or after midnight (12:00:00 AM) in your site’s time zone on the date specified. |
 | `startDatetime` | `?string` | Query, Optional | The start date and time (format YYYY-MM-DD HH:MM:SS) with which to filter the date_field. Returns components with a timestamp at or after exact time provided in query. You can specify timezone in query - otherwise your site''s time zone will be used. If provided, this parameter will be used instead of start_date. |
 | `mInclude` | [`?string(ListSubscriptionComponentsInclude)`](../../doc/models/list-subscription-components-include.md) | Query, Optional | Allows including additional data in the response. Use in query `include=subscription`. |
-| `filterUseSiteExchangeRate` | `?bool` | Query, Optional | Allows fetching components allocation with matching use_site_exchange_rate based on provided value. Use in query `filter[use_site_exchange_rate]=true`. |
-| `filterCurrencies` | `?(string[])` | Query, Optional | Allows fetching components allocation with matching currency based on provided values. Use in query `filter[currencies]=EUR,USD`. |
 
 ## Response Type
 
@@ -124,9 +123,17 @@ function listSubscriptionComponents(array $options): array
 ## Example Usage
 
 ```php
-$collect = Liquid error: Value cannot be null. (Parameter 'key')Liquid error: Value cannot be null. (Parameter 'key')[
+$collect = [
     'subscription_id' => 222,
     'date_field' => SubscriptionListDateField::UPDATED_AT,
+    'filter' => ListSubscriptionComponentsFilterBuilder::init()
+        ->currencies(
+            [
+                'EUR',
+                'USD'
+            ]
+        )
+        ->build(),
     'price_point_ids' => IncludeNotNull::NOT_NULL,
     'product_family_ids' => [
         1,
@@ -380,8 +387,7 @@ $result = $subscriptionComponentsController->bulkResetSubscriptionComponentsPric
         "description": "Duis",
         "handle": "ea dolore dolore sunt",
         "accounting_code": null
-      },
-      "public_signup_pages": []
+      }
     }
   }
 }
@@ -1449,6 +1455,7 @@ function listSubscriptionComponentsForSite(array $options): ListSubscriptionComp
 | `perPage` | `?int` | Query, Optional | This parameter indicates how many records to fetch in each request. Default value is 20. The maximum allowed values is 200; any per_page value over 200 will be changed to 200.<br>Use in query `per_page=200`. |
 | `sort` | [`?string(ListSubscriptionComponentsSort)`](../../doc/models/list-subscription-components-sort.md) | Query, Optional | The attribute by which to sort. Use in query: `sort=updated_at`. |
 | `direction` | [`?string(SortingDirection)`](../../doc/models/sorting-direction.md) | Query, Optional | Controls the order in which results are returned.<br>Use in query `direction=asc`. |
+| `filter` | [`?ListSubscriptionComponentsForSiteFilter`](../../doc/models/list-subscription-components-for-site-filter.md) | Query, Optional | Filter to use for List Subscription Components For Site operation |
 | `dateField` | [`?string(SubscriptionListDateField)`](../../doc/models/subscription-list-date-field.md) | Query, Optional | The type of filter you'd like to apply to your search. Use in query: `date_field=updated_at`. |
 | `startDate` | `?string` | Query, Optional | The start date (format YYYY-MM-DD) with which to filter the date_field. Returns components with a timestamp at or after midnight (12:00:00 AM) in your site’s time zone on the date specified. Use in query `start_date=2011-12-15`. |
 | `startDatetime` | `?string` | Query, Optional | The start date and time (format YYYY-MM-DD HH:MM:SS) with which to filter the date_field. Returns components with a timestamp at or after exact time provided in query. You can specify timezone in query - otherwise your site''s time zone will be used. If provided, this parameter will be used instead of start_date. Use in query `start_datetime=2022-07-01 09:00:05`. |
@@ -1458,14 +1465,6 @@ function listSubscriptionComponentsForSite(array $options): ListSubscriptionComp
 | `pricePointIds` | [`?string(IncludeNotNull)`](../../doc/models/include-not-null.md) | Query, Optional | Allows fetching components allocation only if price point id is present. Use in query `price_point_ids=not_null`. |
 | `productFamilyIds` | `?(int[])` | Query, Optional | Allows fetching components allocation with matching product family id based on provided ids. Use in query `product_family_ids=1,2,3`. |
 | `mInclude` | [`?string(ListSubscriptionComponentsInclude)`](../../doc/models/list-subscription-components-include.md) | Query, Optional | Allows including additional data in the response. Use in query `include=subscription`. |
-| `filterUseSiteExchangeRate` | `?bool` | Query, Optional | Allows fetching components allocation with matching use_site_exchange_rate based on provided value. Use in query `filter[use_site_exchange_rate]=true`. |
-| `filterCurrencies` | `?(string[])` | Query, Optional | Allows fetching components allocation with matching currency based on provided values. Use in query `filter[currencies]=USD,EUR`. |
-| `filterSubscriptionStates` | [`?(string(SubscriptionStateFilter)[])`](../../doc/models/subscription-state-filter.md) | Query, Optional | Allows fetching components allocations that belong to the subscription with matching states based on provided values. To use this filter you also have to include the following param in the request `include=subscription`. Use in query `filter[subscription][states]=active,canceled&include=subscription`. |
-| `filterSubscriptionDateField` | [`?string(SubscriptionListDateField)`](../../doc/models/subscription-list-date-field.md) | Query, Optional | The type of filter you'd like to apply to your search. To use this filter you also have to include the following param in the request `include=subscription`. |
-| `filterSubscriptionStartDate` | `?DateTime` | Query, Optional | The start date (format YYYY-MM-DD) with which to filter the date_field. Returns components that belong to the subscription with a timestamp at or after midnight (12:00:00 AM) in your site’s time zone on the date specified. To use this filter you also have to include the following param in the request `include=subscription`. |
-| `filterSubscriptionStartDatetime` | `?DateTime` | Query, Optional | The start date and time (format YYYY-MM-DD HH:MM:SS) with which to filter the date_field. Returns components that belong to the subscription with a timestamp at or after exact time provided in query. You can specify timezone in query - otherwise your site''s time zone will be used. If provided, this parameter will be used instead of start_date. To use this filter you also have to include the following param in the request `include=subscription`. |
-| `filterSubscriptionEndDate` | `?DateTime` | Query, Optional | The end date (format YYYY-MM-DD) with which to filter the date_field. Returns components that belong to the subscription with a timestamp up to and including 11:59:59PM in your site’s time zone on the date specified. To use this filter you also have to include the following param in the request `include=subscription`. |
-| `filterSubscriptionEndDatetime` | `?DateTime` | Query, Optional | The end date and time (format YYYY-MM-DD HH:MM:SS) with which to filter the date_field. Returns components that belong to the subscription with a timestamp at or before exact time provided in query. You can specify timezone in query - otherwise your site''s time zone will be used. If provided, this parameter will be used instead of end_date. To use this filter you also have to include the following param in the request `include=subscription`. |
 
 ## Response Type
 
@@ -1474,10 +1473,18 @@ function listSubscriptionComponentsForSite(array $options): ListSubscriptionComp
 ## Example Usage
 
 ```php
-$collect = Liquid error: Value cannot be null. (Parameter 'key')Liquid error: Value cannot be null. (Parameter 'key')Liquid error: Value cannot be null. (Parameter 'key')Liquid error: Value cannot be null. (Parameter 'key')Liquid error: Value cannot be null. (Parameter 'key')Liquid error: Value cannot be null. (Parameter 'key')Liquid error: Value cannot be null. (Parameter 'key')Liquid error: Value cannot be null. (Parameter 'key')[
+$collect = [
     'page' => 2,
     'per_page' => 50,
     'sort' => ListSubscriptionComponentsSort::UPDATED_AT,
+    'filter' => ListSubscriptionComponentsForSiteFilterBuilder::init()
+        ->currencies(
+            [
+                'EUR',
+                'USD'
+            ]
+        )
+        ->build(),
     'date_field' => SubscriptionListDateField::UPDATED_AT,
     'subscription_ids' => [
         1,

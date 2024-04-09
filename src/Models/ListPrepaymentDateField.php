@@ -14,7 +14,7 @@ use Core\Utils\CoreHelper;
 use Exception;
 use stdClass;
 
-class ListSubscriptionGroupPrepaymentDateField
+class ListPrepaymentDateField
 {
     public const CREATED_AT = 'created_at';
 
@@ -37,6 +37,6 @@ class ListSubscriptionGroupPrepaymentDateField
         if (CoreHelper::checkValueOrValuesInList($value, self::_ALL_VALUES)) {
             return $value;
         }
-        throw new Exception("$value is invalid for ListSubscriptionGroupPrepaymentDateField.");
+        throw new Exception("$value is invalid for ListPrepaymentDateField.");
     }
 }

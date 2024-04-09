@@ -10,7 +10,7 @@
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
 | `paidInvoices` | [`?(PaidInvoice[])`](../../doc/models/paid-invoice.md) | Optional | - | getPaidInvoices(): ?array | setPaidInvoices(?array paidInvoices): void |
-| `prepayment` | [InvoicePrePayment](../../doc/models/invoice-pre-payment.md)\|null | Optional | This is a container for one-of cases. | getPrepayment(): ?InvoicePrePayment | setPrepayment(?InvoicePrePayment prepayment): void |
+| `prepayment` | [`?InvoicePrePayment`](../../doc/models/invoice-pre-payment.md) | Optional | - | getPrepayment(): ?InvoicePrePayment | setPrepayment(?InvoicePrePayment prepayment): void |
 
 ## Example (as JSON)
 
@@ -37,9 +37,9 @@
     }
   ],
   "prepayment": {
-    "subscription_id": 180,
-    "amount_in_cents": 100,
-    "ending_balance_in_cents": 60
+    "subscription_id": 148,
+    "amount_in_cents": 124,
+    "ending_balance_in_cents": 164
   }
 }
 ```

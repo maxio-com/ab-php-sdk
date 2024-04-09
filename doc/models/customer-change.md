@@ -9,10 +9,10 @@
 
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
-| `payer` | [CustomerPayerChange](../../doc/models/customer-payer-change.md)\|null | Optional | This is a container for one-of cases. | getPayer(): ?CustomerPayerChange | setPayer(?CustomerPayerChange payer): void |
-| `shippingAddress` | [AddressChange](../../doc/models/address-change.md)\|null | Optional | This is a container for one-of cases. | getShippingAddress(): ?AddressChange | setShippingAddress(?AddressChange shippingAddress): void |
-| `billingAddress` | [AddressChange](../../doc/models/address-change.md)\|null | Optional | This is a container for one-of cases. | getBillingAddress(): ?AddressChange | setBillingAddress(?AddressChange billingAddress): void |
-| `customFields` | [CustomerCustomFieldsChange](../../doc/models/customer-custom-fields-change.md)\|null | Optional | This is a container for one-of cases. | getCustomFields(): ?CustomerCustomFieldsChange | setCustomFields(?CustomerCustomFieldsChange customFields): void |
+| `payer` | [`?CustomerPayerChange`](../../doc/models/customer-payer-change.md) | Optional | - | getPayer(): ?CustomerPayerChange | setPayer(?CustomerPayerChange payer): void |
+| `shippingAddress` | [`?AddressChange`](../../doc/models/address-change.md) | Optional | - | getShippingAddress(): ?AddressChange | setShippingAddress(?AddressChange shippingAddress): void |
+| `billingAddress` | [`?AddressChange`](../../doc/models/address-change.md) | Optional | - | getBillingAddress(): ?AddressChange | setBillingAddress(?AddressChange billingAddress): void |
+| `customFields` | [`?CustomerCustomFieldsChange`](../../doc/models/customer-custom-fields-change.md) | Optional | - | getCustomFields(): ?CustomerCustomFieldsChange | setCustomFields(?CustomerCustomFieldsChange customFields): void |
 
 ## Example (as JSON)
 
@@ -72,9 +72,23 @@
         "name": "name0",
         "value": "value2",
         "metadatum_id": 26
+      },
+      {
+        "owner_id": 26,
+        "owner_type": "Customer",
+        "name": "name0",
+        "value": "value2",
+        "metadatum_id": 26
       }
     ],
     "after": [
+      {
+        "owner_id": 130,
+        "owner_type": "Customer",
+        "name": "name2",
+        "value": "value4",
+        "metadatum_id": 130
+      },
       {
         "owner_id": 130,
         "owner_type": "Customer",

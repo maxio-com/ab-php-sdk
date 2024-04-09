@@ -27,6 +27,7 @@
 | `taxExempt` | `?bool` | Optional | - | getTaxExempt(): ?bool | setTaxExempt(?bool taxExempt): void |
 | `taxExemptReason` | `?string` | Optional | - | getTaxExemptReason(): ?string | setTaxExemptReason(?string taxExemptReason): void |
 | `parentId` | `?int` | Optional | - | getParentId(): ?int | setParentId(?int parentId): void |
+| `verified` | `?bool` | Optional | Is the customer verified to use ACH as a payment method. Available only on Authorize.Net gateway | getVerified(): ?bool | setVerified(?bool verified): void |
 
 ## Example (as JSON)
 

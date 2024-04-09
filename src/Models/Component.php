@@ -10,7 +10,6 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
-use AdvancedBillingLib\ApiHelper;
 use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
@@ -275,8 +274,7 @@ class Component implements \JsonSerializable
      * Sets Pricing Scheme.
      *
      * @maps pricing_scheme
-     * @mapsBy anyOf(oneOf(PricingScheme),null)
-     * @factory \AdvancedBillingLib\Models\PricingScheme::checkValue PricingScheme
+     * @factory \AdvancedBillingLib\Models\PricingScheme::checkValue
      */
     public function setPricingScheme(?string $pricingScheme): void
     {
@@ -1120,14 +1118,7 @@ class Component implements \JsonSerializable
             $json['handle']                        = $this->handle['value'];
         }
         if (!empty($this->pricingScheme)) {
-            $json['pricing_scheme']                =
-                ApiHelper::getJsonHelper()->verifyTypes(
-                    $this->pricingScheme['value'],
-                    'anyOf(oneOf(PricingScheme),null)',
-                    [
-                        '\AdvancedBillingLib\Models\PricingScheme::checkValue PricingScheme'
-                    ]
-                );
+            $json['pricing_scheme']                = PricingScheme::checkValue($this->pricingScheme['value']);
         }
         if (isset($this->unitName)) {
             $json['unit_name']                     = $this->unitName;

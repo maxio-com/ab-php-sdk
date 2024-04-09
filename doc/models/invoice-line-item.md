@@ -27,7 +27,7 @@
 | `componentId` | `?int` | Optional | The ID of the component being billed. Will be `nil` for non-component charges. | getComponentId(): ?int | setComponentId(?int componentId): void |
 | `pricePointId` | `?int` | Optional | The price point ID of the component being billed. Will be `nil` for non-component charges. | getPricePointId(): ?int | setPricePointId(?int pricePointId): void |
 | `hide` | `?bool` | Optional | - | getHide(): ?bool | setHide(?bool hide): void |
-| `componentCostData` | [InvoiceLineItemComponentCostData](../../doc/models/invoice-line-item-component-cost-data.md)\|null | Optional | This is a container for one-of cases. | getComponentCostData(): ?InvoiceLineItemComponentCostData | setComponentCostData(?InvoiceLineItemComponentCostData componentCostData): void |
+| `componentCostData` | [`?InvoiceLineItemComponentCostData`](../../doc/models/invoice-line-item-component-cost-data.md) | Optional | - | getComponentCostData(): ?InvoiceLineItemComponentCostData | setComponentCostData(?InvoiceLineItemComponentCostData componentCostData): void |
 | `productPricePointId` | `?int` | Optional | The price point ID of the line item's product | getProductPricePointId(): ?int | setProductPricePointId(?int productPricePointId): void |
 | `customItem` | `?bool` | Optional | - | getCustomItem(): ?bool | setCustomItem(?bool customItem): void |
 | `kind` | `?string` | Optional | - | getKind(): ?string | setKind(?string kind): void |
