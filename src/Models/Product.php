@@ -126,9 +126,9 @@ class Product implements \JsonSerializable
     private $updateReturnUrl = [];
 
     /**
-     * @var bool|null
+     * @var array
      */
-    private $initialChargeAfterTrial;
+    private $initialChargeAfterTrial = [];
 
     /**
      * @var int|null
@@ -806,7 +806,10 @@ class Product implements \JsonSerializable
      */
     public function getInitialChargeAfterTrial(): ?bool
     {
-        return $this->initialChargeAfterTrial;
+        if (count($this->initialChargeAfterTrial) == 0) {
+            return null;
+        }
+        return $this->initialChargeAfterTrial['value'];
     }
 
     /**
@@ -816,7 +819,15 @@ class Product implements \JsonSerializable
      */
     public function setInitialChargeAfterTrial(?bool $initialChargeAfterTrial): void
     {
-        $this->initialChargeAfterTrial = $initialChargeAfterTrial;
+        $this->initialChargeAfterTrial['value'] = $initialChargeAfterTrial;
+    }
+
+    /**
+     * Unsets Initial Charge After Trial.
+     */
+    public function unsetInitialChargeAfterTrial(): void
+    {
+        $this->initialChargeAfterTrial = [];
     }
 
     /**
@@ -1254,8 +1265,8 @@ class Product implements \JsonSerializable
         if (!empty($this->updateReturnUrl)) {
             $json['update_return_url']              = $this->updateReturnUrl['value'];
         }
-        if (isset($this->initialChargeAfterTrial)) {
-            $json['initial_charge_after_trial']     = $this->initialChargeAfterTrial;
+        if (!empty($this->initialChargeAfterTrial)) {
+            $json['initial_charge_after_trial']     = $this->initialChargeAfterTrial['value'];
         }
         if (isset($this->versionNumber)) {
             $json['version_number']                 = $this->versionNumber;

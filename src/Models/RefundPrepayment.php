@@ -16,7 +16,7 @@ use stdClass;
 class RefundPrepayment implements \JsonSerializable
 {
     /**
-     * @var int
+     * @var int|null
      */
     private $amountInCents;
 
@@ -36,13 +36,11 @@ class RefundPrepayment implements \JsonSerializable
     private $external;
 
     /**
-     * @param int $amountInCents
      * @param string|float $amount
      * @param string $memo
      */
-    public function __construct(int $amountInCents, $amount, string $memo)
+    public function __construct($amount, string $memo)
     {
-        $this->amountInCents = $amountInCents;
         $this->amount = $amount;
         $this->memo = $memo;
     }
@@ -51,7 +49,7 @@ class RefundPrepayment implements \JsonSerializable
      * Returns Amount in Cents.
      * `amount` is not required if you pass `amount_in_cents`.
      */
-    public function getAmountInCents(): int
+    public function getAmountInCents(): ?int
     {
         return $this->amountInCents;
     }
@@ -60,10 +58,9 @@ class RefundPrepayment implements \JsonSerializable
      * Sets Amount in Cents.
      * `amount` is not required if you pass `amount_in_cents`.
      *
-     * @required
      * @maps amount_in_cents
      */
-    public function setAmountInCents(int $amountInCents): void
+    public function setAmountInCents(?int $amountInCents): void
     {
         $this->amountInCents = $amountInCents;
     }

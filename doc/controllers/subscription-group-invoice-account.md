@@ -161,9 +161,10 @@ $uid = 'uid0';
 
 $body = IssueServiceCreditRequestBuilder::init(
     IssueServiceCreditBuilder::init(
-        10,
-        'Credit the group account'
-    )->build()
+        10
+    )
+        ->memo('Credit the group account')
+        ->build()
 )->build();
 
 $result = $subscriptionGroupInvoiceAccountController->issueSubscriptionGroupServiceCredit(
@@ -222,9 +223,10 @@ $uid = 'uid0';
 
 $body = DeductServiceCreditRequestBuilder::init(
     DeductServiceCreditBuilder::init(
-        10,
-        'Deduct from group account'
-    )->build()
+        10
+    )
+        ->memo('Deduct from group account')
+        ->build()
 )->build();
 
 $result = $subscriptionGroupInvoiceAccountController->deductSubscriptionGroupServiceCredit(

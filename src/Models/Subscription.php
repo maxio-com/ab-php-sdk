@@ -46,14 +46,14 @@ class Subscription implements \JsonSerializable
     private $productVersionNumber;
 
     /**
-     * @var \DateTime|null
+     * @var array
      */
-    private $currentPeriodEndsAt;
+    private $currentPeriodEndsAt = [];
 
     /**
-     * @var \DateTime|null
+     * @var array
      */
-    private $nextAssessmentAt;
+    private $nextAssessmentAt = [];
 
     /**
      * @var array
@@ -66,9 +66,9 @@ class Subscription implements \JsonSerializable
     private $trialEndedAt = [];
 
     /**
-     * @var \DateTime|null
+     * @var array
      */
-    private $activatedAt;
+    private $activatedAt = [];
 
     /**
      * @var array
@@ -106,9 +106,9 @@ class Subscription implements \JsonSerializable
     private $canceledAt = [];
 
     /**
-     * @var \DateTime|null
+     * @var array
      */
-    private $currentPeriodStartedAt;
+    private $currentPeriodStartedAt = [];
 
     /**
      * @var string|null
@@ -316,9 +316,9 @@ class Subscription implements \JsonSerializable
     private $prepaymentBalanceInCents;
 
     /**
-     * @var PrepaidConfiguration|null
+     * @var array
      */
-    private $prepaidConfiguration;
+    private $prepaidConfiguration = [];
 
     /**
      * @var string|null
@@ -561,7 +561,10 @@ class Subscription implements \JsonSerializable
      */
     public function getCurrentPeriodEndsAt(): ?\DateTime
     {
-        return $this->currentPeriodEndsAt;
+        if (count($this->currentPeriodEndsAt) == 0) {
+            return null;
+        }
+        return $this->currentPeriodEndsAt['value'];
     }
 
     /**
@@ -574,7 +577,17 @@ class Subscription implements \JsonSerializable
      */
     public function setCurrentPeriodEndsAt(?\DateTime $currentPeriodEndsAt): void
     {
-        $this->currentPeriodEndsAt = $currentPeriodEndsAt;
+        $this->currentPeriodEndsAt['value'] = $currentPeriodEndsAt;
+    }
+
+    /**
+     * Unsets Current Period Ends At.
+     * Timestamp relating to the end of the current (recurring) period (i.e.,when the next regularly
+     * scheduled attempted charge will occur)
+     */
+    public function unsetCurrentPeriodEndsAt(): void
+    {
+        $this->currentPeriodEndsAt = [];
     }
 
     /**
@@ -587,7 +600,10 @@ class Subscription implements \JsonSerializable
      */
     public function getNextAssessmentAt(): ?\DateTime
     {
-        return $this->nextAssessmentAt;
+        if (count($this->nextAssessmentAt) == 0) {
+            return null;
+        }
+        return $this->nextAssessmentAt['value'];
     }
 
     /**
@@ -603,7 +619,20 @@ class Subscription implements \JsonSerializable
      */
     public function setNextAssessmentAt(?\DateTime $nextAssessmentAt): void
     {
-        $this->nextAssessmentAt = $nextAssessmentAt;
+        $this->nextAssessmentAt['value'] = $nextAssessmentAt;
+    }
+
+    /**
+     * Unsets Next Assessment At.
+     * Timestamp that indicates when capture of payment will be tried or,retried. This value will usually
+     * track the current_period_ends_at, but,will diverge if a renewal payment fails and must be retried.
+     * In that,case, the current_period_ends_at will advance to the end of the next,period (time doesn’t
+     * stop because a payment was missed) but the,next_assessment_at will be scheduled for the auto-retry
+     * time (i.e. 24,hours in the future, in some cases)
+     */
+    public function unsetNextAssessmentAt(): void
+    {
+        $this->nextAssessmentAt = [];
     }
 
     /**
@@ -679,7 +708,10 @@ class Subscription implements \JsonSerializable
      */
     public function getActivatedAt(): ?\DateTime
     {
-        return $this->activatedAt;
+        if (count($this->activatedAt) == 0) {
+            return null;
+        }
+        return $this->activatedAt['value'];
     }
 
     /**
@@ -692,7 +724,17 @@ class Subscription implements \JsonSerializable
      */
     public function setActivatedAt(?\DateTime $activatedAt): void
     {
-        $this->activatedAt = $activatedAt;
+        $this->activatedAt['value'] = $activatedAt;
+    }
+
+    /**
+     * Unsets Activated At.
+     * Timestamp for when the subscription began (i.e. when it came out of trial, or when it began in the
+     * case of no trial)
+     */
+    public function unsetActivatedAt(): void
+    {
+        $this->activatedAt = [];
     }
 
     /**
@@ -909,7 +951,10 @@ class Subscription implements \JsonSerializable
      */
     public function getCurrentPeriodStartedAt(): ?\DateTime
     {
-        return $this->currentPeriodStartedAt;
+        if (count($this->currentPeriodStartedAt) == 0) {
+            return null;
+        }
+        return $this->currentPeriodStartedAt['value'];
     }
 
     /**
@@ -921,7 +966,16 @@ class Subscription implements \JsonSerializable
      */
     public function setCurrentPeriodStartedAt(?\DateTime $currentPeriodStartedAt): void
     {
-        $this->currentPeriodStartedAt = $currentPeriodStartedAt;
+        $this->currentPeriodStartedAt['value'] = $currentPeriodStartedAt;
+    }
+
+    /**
+     * Unsets Current Period Started At.
+     * Timestamp relating to the start of the current (recurring) period
+     */
+    public function unsetCurrentPeriodStartedAt(): void
+    {
+        $this->currentPeriodStartedAt = [];
     }
 
     /**
@@ -2066,7 +2120,10 @@ class Subscription implements \JsonSerializable
      */
     public function getPrepaidConfiguration(): ?PrepaidConfiguration
     {
-        return $this->prepaidConfiguration;
+        if (count($this->prepaidConfiguration) == 0) {
+            return null;
+        }
+        return $this->prepaidConfiguration['value'];
     }
 
     /**
@@ -2076,7 +2133,15 @@ class Subscription implements \JsonSerializable
      */
     public function setPrepaidConfiguration(?PrepaidConfiguration $prepaidConfiguration): void
     {
-        $this->prepaidConfiguration = $prepaidConfiguration;
+        $this->prepaidConfiguration['value'] = $prepaidConfiguration;
+    }
+
+    /**
+     * Unsets Prepaid Configuration.
+     */
+    public function unsetPrepaidConfiguration(): void
+    {
+        $this->prepaidConfiguration = [];
     }
 
     /**
@@ -2144,14 +2209,17 @@ class Subscription implements \JsonSerializable
         if (isset($this->productVersionNumber)) {
             $json['product_version_number']                = $this->productVersionNumber;
         }
-        if (isset($this->currentPeriodEndsAt)) {
+        if (!empty($this->currentPeriodEndsAt)) {
             $json['current_period_ends_at']                =
                 DateTimeHelper::toRfc3339DateTime(
-                    $this->currentPeriodEndsAt
+                    $this->currentPeriodEndsAt['value']
                 );
         }
-        if (isset($this->nextAssessmentAt)) {
-            $json['next_assessment_at']                    = DateTimeHelper::toRfc3339DateTime($this->nextAssessmentAt);
+        if (!empty($this->nextAssessmentAt)) {
+            $json['next_assessment_at']                    =
+                DateTimeHelper::toRfc3339DateTime(
+                    $this->nextAssessmentAt['value']
+                );
         }
         if (!empty($this->trialStartedAt)) {
             $json['trial_started_at']                      =
@@ -2165,8 +2233,11 @@ class Subscription implements \JsonSerializable
                     $this->trialEndedAt['value']
                 );
         }
-        if (isset($this->activatedAt)) {
-            $json['activated_at']                          = DateTimeHelper::toRfc3339DateTime($this->activatedAt);
+        if (!empty($this->activatedAt)) {
+            $json['activated_at']                          =
+                DateTimeHelper::toRfc3339DateTime(
+                    $this->activatedAt['value']
+                );
         }
         if (!empty($this->expiresAt)) {
             $json['expires_at']                            =
@@ -2198,10 +2269,10 @@ class Subscription implements \JsonSerializable
                     $this->canceledAt['value']
                 );
         }
-        if (isset($this->currentPeriodStartedAt)) {
+        if (!empty($this->currentPeriodStartedAt)) {
             $json['current_period_started_at']             =
                 DateTimeHelper::toRfc3339DateTime(
-                    $this->currentPeriodStartedAt
+                    $this->currentPeriodStartedAt['value']
                 );
         }
         if (isset($this->previousState)) {
@@ -2342,8 +2413,8 @@ class Subscription implements \JsonSerializable
         if (isset($this->prepaymentBalanceInCents)) {
             $json['prepayment_balance_in_cents']           = $this->prepaymentBalanceInCents;
         }
-        if (isset($this->prepaidConfiguration)) {
-            $json['prepaid_configuration']                 = $this->prepaidConfiguration;
+        if (!empty($this->prepaidConfiguration)) {
+            $json['prepaid_configuration']                 = $this->prepaidConfiguration['value'];
         }
         if (isset($this->selfServicePageToken)) {
             $json['self_service_page_token']               = $this->selfServicePageToken;

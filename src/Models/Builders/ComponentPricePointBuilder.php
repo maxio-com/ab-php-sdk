@@ -102,6 +102,15 @@ class ComponentPricePointBuilder
     }
 
     /**
+     * Unsets handle field.
+     */
+    public function unsetHandle(): self
+    {
+        $this->instance->unsetHandle();
+        return $this;
+    }
+
+    /**
      * Sets archived at field.
      */
     public function archivedAt(?\DateTime $value): self

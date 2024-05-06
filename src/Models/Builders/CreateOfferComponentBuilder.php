@@ -48,6 +48,15 @@ class CreateOfferComponentBuilder
     }
 
     /**
+     * Sets price point id field.
+     */
+    public function pricePointId(?int $value): self
+    {
+        $this->instance->setPricePointId($value);
+        return $this;
+    }
+
+    /**
      * Sets starting quantity field.
      */
     public function startingQuantity(?int $value): self

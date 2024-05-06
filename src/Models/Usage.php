@@ -22,9 +22,9 @@ class Usage implements \JsonSerializable
     private $id;
 
     /**
-     * @var string|null
+     * @var array
      */
-    private $memo;
+    private $memo = [];
 
     /**
      * @var \DateTime|null
@@ -84,7 +84,10 @@ class Usage implements \JsonSerializable
      */
     public function getMemo(): ?string
     {
-        return $this->memo;
+        if (count($this->memo) == 0) {
+            return null;
+        }
+        return $this->memo['value'];
     }
 
     /**
@@ -94,7 +97,15 @@ class Usage implements \JsonSerializable
      */
     public function setMemo(?string $memo): void
     {
-        $this->memo = $memo;
+        $this->memo['value'] = $memo;
+    }
+
+    /**
+     * Unsets Memo.
+     */
+    public function unsetMemo(): void
+    {
+        $this->memo = [];
     }
 
     /**
@@ -257,8 +268,8 @@ class Usage implements \JsonSerializable
         if (isset($this->id)) {
             $json['id']               = $this->id;
         }
-        if (isset($this->memo)) {
-            $json['memo']             = $this->memo;
+        if (!empty($this->memo)) {
+            $json['memo']             = $this->memo['value'];
         }
         if (isset($this->createdAt)) {
             $json['created_at']       = DateTimeHelper::toRfc3339DateTime($this->createdAt);

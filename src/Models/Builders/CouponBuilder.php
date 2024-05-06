@@ -336,6 +336,15 @@ class CouponBuilder
     }
 
     /**
+     * Unsets compounding strategy field.
+     */
+    public function unsetCompoundingStrategy(): self
+    {
+        $this->instance->unsetCompoundingStrategy();
+        return $this;
+    }
+
+    /**
      * Sets use site exchange rate field.
      */
     public function useSiteExchangeRate(?bool $value): self

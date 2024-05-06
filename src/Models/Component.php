@@ -101,9 +101,9 @@ class Component implements \JsonSerializable
     private $pricePointCount;
 
     /**
-     * @var string|null
+     * @var array
      */
-    private $pricePointsUrl;
+    private $pricePointsUrl = [];
 
     /**
      * @var string|null
@@ -642,7 +642,10 @@ class Component implements \JsonSerializable
      */
     public function getPricePointsUrl(): ?string
     {
-        return $this->pricePointsUrl;
+        if (count($this->pricePointsUrl) == 0) {
+            return null;
+        }
+        return $this->pricePointsUrl['value'];
     }
 
     /**
@@ -653,7 +656,16 @@ class Component implements \JsonSerializable
      */
     public function setPricePointsUrl(?string $pricePointsUrl): void
     {
-        $this->pricePointsUrl = $pricePointsUrl;
+        $this->pricePointsUrl['value'] = $pricePointsUrl;
+    }
+
+    /**
+     * Unsets Price Points Url.
+     * URL that points to the location to read the existing price points via GET request
+     */
+    public function unsetPricePointsUrl(): void
+    {
+        $this->pricePointsUrl = [];
     }
 
     /**
@@ -1159,8 +1171,8 @@ class Component implements \JsonSerializable
         if (isset($this->pricePointCount)) {
             $json['price_point_count']             = $this->pricePointCount;
         }
-        if (isset($this->pricePointsUrl)) {
-            $json['price_points_url']              = $this->pricePointsUrl;
+        if (!empty($this->pricePointsUrl)) {
+            $json['price_points_url']              = $this->pricePointsUrl['value'];
         }
         if (isset($this->defaultPricePointName)) {
             $json['default_price_point_name']      = $this->defaultPricePointName;

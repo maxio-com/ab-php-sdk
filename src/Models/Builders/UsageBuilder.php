@@ -57,6 +57,15 @@ class UsageBuilder
     }
 
     /**
+     * Unsets memo field.
+     */
+    public function unsetMemo(): self
+    {
+        $this->instance->unsetMemo();
+        return $this;
+    }
+
+    /**
      * Sets created at field.
      */
     public function createdAt(?\DateTime $value): self

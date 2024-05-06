@@ -355,6 +355,15 @@ class ProductBuilder
     }
 
     /**
+     * Unsets initial charge after trial field.
+     */
+    public function unsetInitialChargeAfterTrial(): self
+    {
+        $this->instance->unsetInitialChargeAfterTrial();
+        return $this;
+    }
+
+    /**
      * Sets version number field.
      */
     public function versionNumber(?int $value): self

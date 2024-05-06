@@ -33,9 +33,18 @@ class DeductServiceCreditBuilder
     /**
      * Initializes a new deduct service credit Builder object.
      */
-    public static function init($amount, string $memo): self
+    public static function init($amount): self
     {
-        return new self(new DeductServiceCredit($amount, $memo));
+        return new self(new DeductServiceCredit($amount));
+    }
+
+    /**
+     * Sets memo field.
+     */
+    public function memo(?string $value): self
+    {
+        $this->instance->setMemo($value);
+        return $this;
     }
 
     /**

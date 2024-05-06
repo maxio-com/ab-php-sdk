@@ -22,6 +22,11 @@ class CreateOfferComponent implements \JsonSerializable
     /**
      * @var int|null
      */
+    private $pricePointId;
+
+    /**
+     * @var int|null
+     */
     private $startingQuantity;
 
     /**
@@ -40,6 +45,24 @@ class CreateOfferComponent implements \JsonSerializable
     public function setComponentId(?int $componentId): void
     {
         $this->componentId = $componentId;
+    }
+
+    /**
+     * Returns Price Point Id.
+     */
+    public function getPricePointId(): ?int
+    {
+        return $this->pricePointId;
+    }
+
+    /**
+     * Sets Price Point Id.
+     *
+     * @maps price_point_id
+     */
+    public function setPricePointId(?int $pricePointId): void
+    {
+        $this->pricePointId = $pricePointId;
     }
 
     /**
@@ -87,6 +110,9 @@ class CreateOfferComponent implements \JsonSerializable
         $json = [];
         if (isset($this->componentId)) {
             $json['component_id']      = $this->componentId;
+        }
+        if (isset($this->pricePointId)) {
+            $json['price_point_id']    = $this->pricePointId;
         }
         if (isset($this->startingQuantity)) {
             $json['starting_quantity'] = $this->startingQuantity;

@@ -66,6 +66,15 @@ class ProductPricePointBuilder
     }
 
     /**
+     * Unsets handle field.
+     */
+    public function unsetHandle(): self
+    {
+        $this->instance->unsetHandle();
+        return $this;
+    }
+
+    /**
      * Sets price in cents field.
      */
     public function priceInCents(?int $value): self
@@ -102,6 +111,15 @@ class ProductPricePointBuilder
     }
 
     /**
+     * Unsets trial price in cents field.
+     */
+    public function unsetTrialPriceInCents(): self
+    {
+        $this->instance->unsetTrialPriceInCents();
+        return $this;
+    }
+
+    /**
      * Sets trial interval field.
      */
     public function trialInterval(?int $value): self
@@ -111,11 +129,29 @@ class ProductPricePointBuilder
     }
 
     /**
+     * Unsets trial interval field.
+     */
+    public function unsetTrialInterval(): self
+    {
+        $this->instance->unsetTrialInterval();
+        return $this;
+    }
+
+    /**
      * Sets trial interval unit field.
      */
     public function trialIntervalUnit(?string $value): self
     {
         $this->instance->setTrialIntervalUnit($value);
+        return $this;
+    }
+
+    /**
+     * Unsets trial interval unit field.
+     */
+    public function unsetTrialIntervalUnit(): self
+    {
+        $this->instance->unsetTrialIntervalUnit();
         return $this;
     }
 
@@ -138,11 +174,29 @@ class ProductPricePointBuilder
     }
 
     /**
+     * Unsets introductory offer field.
+     */
+    public function unsetIntroductoryOffer(): self
+    {
+        $this->instance->unsetIntroductoryOffer();
+        return $this;
+    }
+
+    /**
      * Sets initial charge in cents field.
      */
     public function initialChargeInCents(?int $value): self
     {
         $this->instance->setInitialChargeInCents($value);
+        return $this;
+    }
+
+    /**
+     * Unsets initial charge in cents field.
+     */
+    public function unsetInitialChargeInCents(): self
+    {
+        $this->instance->unsetInitialChargeInCents();
         return $this;
     }
 
@@ -156,6 +210,15 @@ class ProductPricePointBuilder
     }
 
     /**
+     * Unsets initial charge after trial field.
+     */
+    public function unsetInitialChargeAfterTrial(): self
+    {
+        $this->instance->unsetInitialChargeAfterTrial();
+        return $this;
+    }
+
+    /**
      * Sets expiration interval field.
      */
     public function expirationInterval(?int $value): self
@@ -165,11 +228,29 @@ class ProductPricePointBuilder
     }
 
     /**
+     * Unsets expiration interval field.
+     */
+    public function unsetExpirationInterval(): self
+    {
+        $this->instance->unsetExpirationInterval();
+        return $this;
+    }
+
+    /**
      * Sets expiration interval unit field.
      */
     public function expirationIntervalUnit(?string $value): self
     {
         $this->instance->setExpirationIntervalUnit($value);
+        return $this;
+    }
+
+    /**
+     * Unsets expiration interval unit field.
+     */
+    public function unsetExpirationIntervalUnit(): self
+    {
+        $this->instance->unsetExpirationIntervalUnit();
         return $this;
     }
 

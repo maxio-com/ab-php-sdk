@@ -10,58 +10,58 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models\Builders;
 
-use AdvancedBillingLib\Models\PrepaymentAggregatedError;
+use AdvancedBillingLib\Models\HistoricUsage;
 use Core\Utils\CoreHelper;
 
 /**
- * Builder for model PrepaymentAggregatedError
+ * Builder for model HistoricUsage
  *
- * @see PrepaymentAggregatedError
+ * @see HistoricUsage
  */
-class PrepaymentAggregatedErrorBuilder
+class HistoricUsageBuilder
 {
     /**
-     * @var PrepaymentAggregatedError
+     * @var HistoricUsage
      */
     private $instance;
 
-    private function __construct(PrepaymentAggregatedError $instance)
+    private function __construct(HistoricUsage $instance)
     {
         $this->instance = $instance;
     }
 
     /**
-     * Initializes a new prepayment aggregated error Builder object.
+     * Initializes a new historic usage Builder object.
      */
     public static function init(): self
     {
-        return new self(new PrepaymentAggregatedError());
+        return new self(new HistoricUsage());
     }
 
     /**
-     * Sets amount in cents field.
+     * Sets total usage quantity field.
      */
-    public function amountInCents(?array $value): self
+    public function totalUsageQuantity(?float $value): self
     {
-        $this->instance->setAmountInCents($value);
+        $this->instance->setTotalUsageQuantity($value);
         return $this;
     }
 
     /**
-     * Sets base field.
+     * Sets billing period starts at field.
      */
-    public function base(?array $value): self
+    public function billingPeriodStartsAt(?\DateTime $value): self
     {
-        $this->instance->setBase($value);
+        $this->instance->setBillingPeriodStartsAt($value);
         return $this;
     }
 
     /**
-     * Sets external field.
+     * Sets billing period ends at field.
      */
-    public function external(?array $value): self
+    public function billingPeriodEndsAt(?\DateTime $value): self
     {
-        $this->instance->setExternal($value);
+        $this->instance->setBillingPeriodEndsAt($value);
         return $this;
     }
 
@@ -78,9 +78,9 @@ class PrepaymentAggregatedErrorBuilder
     }
 
     /**
-     * Initializes a new prepayment aggregated error object.
+     * Initializes a new historic usage object.
      */
-    public function build(): PrepaymentAggregatedError
+    public function build(): HistoricUsage
     {
         return CoreHelper::clone($this->instance);
     }

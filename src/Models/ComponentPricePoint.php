@@ -46,9 +46,9 @@ class ComponentPricePoint implements \JsonSerializable
     private $componentId;
 
     /**
-     * @var string|null
+     * @var array
      */
-    private $handle;
+    private $handle = [];
 
     /**
      * @var array
@@ -231,7 +231,10 @@ class ComponentPricePoint implements \JsonSerializable
      */
     public function getHandle(): ?string
     {
-        return $this->handle;
+        if (count($this->handle) == 0) {
+            return null;
+        }
+        return $this->handle['value'];
     }
 
     /**
@@ -241,7 +244,15 @@ class ComponentPricePoint implements \JsonSerializable
      */
     public function setHandle(?string $handle): void
     {
-        $this->handle = $handle;
+        $this->handle['value'] = $handle;
+    }
+
+    /**
+     * Unsets Handle.
+     */
+    public function unsetHandle(): void
+    {
+        $this->handle = [];
     }
 
     /**
@@ -541,8 +552,8 @@ class ComponentPricePoint implements \JsonSerializable
         if (isset($this->componentId)) {
             $json['component_id']           = $this->componentId;
         }
-        if (isset($this->handle)) {
-            $json['handle']                 = $this->handle;
+        if (!empty($this->handle)) {
+            $json['handle']                 = $this->handle['value'];
         }
         if (!empty($this->archivedAt)) {
             $json['archived_at']            = DateTimeHelper::toRfc3339DateTime($this->archivedAt['value']);

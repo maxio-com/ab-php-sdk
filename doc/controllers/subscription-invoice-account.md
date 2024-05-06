@@ -205,8 +205,7 @@ $subscriptionId = 222;
 
 $body = IssueServiceCreditRequestBuilder::init(
     IssueServiceCreditBuilder::init(
-        '1',
-        'Courtesy credit'
+        '1'
     )->build()
 )->build();
 
@@ -227,6 +226,12 @@ $result = $subscriptionInvoiceAccountController->issueServiceCredit(
   "memo": "Credit to group account"
 }
 ```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 422 | Unprocessable Entity (WebDAV) | `ApiException` |
 
 
 # Deduct Service Credit
@@ -255,9 +260,10 @@ $subscriptionId = 222;
 
 $body = DeductServiceCreditRequestBuilder::init(
     DeductServiceCreditBuilder::init(
-        '1',
-        'Deduction'
-    )->build()
+        '1'
+    )
+        ->memo('Deduction')
+        ->build()
 )->build();
 
 $subscriptionInvoiceAccountController->deductServiceCredit(
@@ -270,7 +276,7 @@ $subscriptionInvoiceAccountController->deductServiceCredit(
 
 | HTTP Status Code | Error Description | Exception Class |
 |  --- | --- | --- |
-| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
+| 422 | Unprocessable Entity (WebDAV) | `ApiException` |
 
 
 # Refund Prepayment
@@ -282,7 +288,7 @@ The amount may be passed either as a decimal, with `amount`, or an integer in ce
 ```php
 function refundPrepayment(
     int $subscriptionId,
-    string $prepaymentId,
+    int $prepaymentId,
     ?RefundPrepaymentRequest $body = null
 ): PrepaymentResponse
 ```
@@ -292,7 +298,7 @@ function refundPrepayment(
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
-| `prepaymentId` | `string` | Template, Required | id of prepayment |
+| `prepaymentId` | `int` | Template, Required | id of prepayment |
 | `body` | [`?RefundPrepaymentRequest`](../../doc/models/refund-prepayment-request.md) | Body, Optional | - |
 
 ## Response Type
@@ -304,7 +310,7 @@ function refundPrepayment(
 ```php
 $subscriptionId = 222;
 
-$prepaymentId = 'prepayment_id8';
+$prepaymentId = 228;
 
 $result = $subscriptionInvoiceAccountController->refundPrepayment(
     $subscriptionId,
@@ -318,5 +324,5 @@ $result = $subscriptionInvoiceAccountController->refundPrepayment(
 |  --- | --- | --- |
 | 400 | Bad Request | [`RefundPrepaymentBaseErrorsResponseException`](../../doc/models/refund-prepayment-base-errors-response-exception.md) |
 | 404 | Not Found | `ApiException` |
-| 422 | Unprocessable Entity | [`RefundPrepaymentAggregatedErrorsResponseException`](../../doc/models/refund-prepayment-aggregated-errors-response-exception.md) |
+| 422 | Unprocessable Entity | `ApiException` |
 

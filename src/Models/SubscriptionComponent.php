@@ -107,9 +107,9 @@ class SubscriptionComponent implements \JsonSerializable
     private $pricePointHandle = [];
 
     /**
-     * @var string|null
+     * @var array
      */
-    private $pricePointType;
+    private $pricePointType = [];
 
     /**
      * @var array
@@ -155,6 +155,11 @@ class SubscriptionComponent implements \JsonSerializable
      * @var SubscriptionComponentSubscription|null
      */
     private $subscription;
+
+    /**
+     * @var HistoricUsage[]|null
+     */
+    private $historicUsages;
 
     /**
      * @var bool|null
@@ -613,19 +618,29 @@ class SubscriptionComponent implements \JsonSerializable
      */
     public function getPricePointType(): ?string
     {
-        return $this->pricePointType;
+        if (count($this->pricePointType) == 0) {
+            return null;
+        }
+        return $this->pricePointType['value'];
     }
 
     /**
      * Sets Price Point Type.
      *
      * @maps price_point_type
-     * @mapsBy anyOf(oneOf(PricePointType),null)
-     * @factory \AdvancedBillingLib\Models\PricePointType::checkValue PricePointType
+     * @factory \AdvancedBillingLib\Models\PricePointType::checkValue
      */
     public function setPricePointType(?string $pricePointType): void
     {
-        $this->pricePointType = $pricePointType;
+        $this->pricePointType['value'] = $pricePointType;
+    }
+
+    /**
+     * Unsets Price Point Type.
+     */
+    public function unsetPricePointType(): void
+    {
+        $this->pricePointType = [];
     }
 
     /**
@@ -828,6 +843,28 @@ class SubscriptionComponent implements \JsonSerializable
     }
 
     /**
+     * Returns Historic Usages.
+     *
+     * @return HistoricUsage[]|null
+     */
+    public function getHistoricUsages(): ?array
+    {
+        return $this->historicUsages;
+    }
+
+    /**
+     * Sets Historic Usages.
+     *
+     * @maps historic_usages
+     *
+     * @param HistoricUsage[]|null $historicUsages
+     */
+    public function setHistoricUsages(?array $historicUsages): void
+    {
+        $this->historicUsages = $historicUsages;
+    }
+
+    /**
      * Returns Display on Hosted Page.
      */
     public function getDisplayOnHostedPage(): ?bool
@@ -975,15 +1012,8 @@ class SubscriptionComponent implements \JsonSerializable
         if (!empty($this->pricePointHandle)) {
             $json['price_point_handle']          = $this->pricePointHandle['value'];
         }
-        if (isset($this->pricePointType)) {
-            $json['price_point_type']            =
-                ApiHelper::getJsonHelper()->verifyTypes(
-                    $this->pricePointType,
-                    'anyOf(oneOf(PricePointType),null)',
-                    [
-                        '\AdvancedBillingLib\Models\PricePointType::checkValue PricePointType'
-                    ]
-                );
+        if (!empty($this->pricePointType)) {
+            $json['price_point_type']            = PricePointType::checkValue($this->pricePointType['value']);
         }
         if (!empty($this->pricePointName)) {
             $json['price_point_name']            = $this->pricePointName['value'];
@@ -1011,6 +1041,9 @@ class SubscriptionComponent implements \JsonSerializable
         }
         if (isset($this->subscription)) {
             $json['subscription']                = $this->subscription;
+        }
+        if (isset($this->historicUsages)) {
+            $json['historic_usages']             = $this->historicUsages;
         }
         if (isset($this->displayOnHostedPage)) {
             $json['display_on_hosted_page']      = $this->displayOnHostedPage;
