@@ -26,9 +26,9 @@ class ProductPricePoint implements \JsonSerializable
     private $name;
 
     /**
-     * @var string|null
+     * @var array
      */
-    private $handle;
+    private $handle = [];
 
     /**
      * @var int|null
@@ -46,19 +46,19 @@ class ProductPricePoint implements \JsonSerializable
     private $intervalUnit;
 
     /**
-     * @var int|null
+     * @var array
      */
-    private $trialPriceInCents;
+    private $trialPriceInCents = [];
 
     /**
-     * @var int|null
+     * @var array
      */
-    private $trialInterval;
+    private $trialInterval = [];
 
     /**
-     * @var string|null
+     * @var array
      */
-    private $trialIntervalUnit;
+    private $trialIntervalUnit = [];
 
     /**
      * @var string|null
@@ -66,29 +66,29 @@ class ProductPricePoint implements \JsonSerializable
     private $trialType;
 
     /**
-     * @var bool|null
+     * @var array
      */
-    private $introductoryOffer;
+    private $introductoryOffer = [];
 
     /**
-     * @var int|null
+     * @var array
      */
-    private $initialChargeInCents;
+    private $initialChargeInCents = [];
 
     /**
-     * @var bool|null
+     * @var array
      */
-    private $initialChargeAfterTrial;
+    private $initialChargeAfterTrial = [];
 
     /**
-     * @var int|null
+     * @var array
      */
-    private $expirationInterval;
+    private $expirationInterval = [];
 
     /**
-     * @var string|null
+     * @var array
      */
-    private $expirationIntervalUnit;
+    private $expirationIntervalUnit = [];
 
     /**
      * @var int|null
@@ -179,7 +179,10 @@ class ProductPricePoint implements \JsonSerializable
      */
     public function getHandle(): ?string
     {
-        return $this->handle;
+        if (count($this->handle) == 0) {
+            return null;
+        }
+        return $this->handle['value'];
     }
 
     /**
@@ -190,7 +193,16 @@ class ProductPricePoint implements \JsonSerializable
      */
     public function setHandle(?string $handle): void
     {
-        $this->handle = $handle;
+        $this->handle['value'] = $handle;
+    }
+
+    /**
+     * Unsets Handle.
+     * The product price point API handle
+     */
+    public function unsetHandle(): void
+    {
+        $this->handle = [];
     }
 
     /**
@@ -262,7 +274,10 @@ class ProductPricePoint implements \JsonSerializable
      */
     public function getTrialPriceInCents(): ?int
     {
-        return $this->trialPriceInCents;
+        if (count($this->trialPriceInCents) == 0) {
+            return null;
+        }
+        return $this->trialPriceInCents['value'];
     }
 
     /**
@@ -273,7 +288,16 @@ class ProductPricePoint implements \JsonSerializable
      */
     public function setTrialPriceInCents(?int $trialPriceInCents): void
     {
-        $this->trialPriceInCents = $trialPriceInCents;
+        $this->trialPriceInCents['value'] = $trialPriceInCents;
+    }
+
+    /**
+     * Unsets Trial Price in Cents.
+     * The product price point trial price, in integer cents
+     */
+    public function unsetTrialPriceInCents(): void
+    {
+        $this->trialPriceInCents = [];
     }
 
     /**
@@ -283,7 +307,10 @@ class ProductPricePoint implements \JsonSerializable
      */
     public function getTrialInterval(): ?int
     {
-        return $this->trialInterval;
+        if (count($this->trialInterval) == 0) {
+            return null;
+        }
+        return $this->trialInterval['value'];
     }
 
     /**
@@ -295,7 +322,17 @@ class ProductPricePoint implements \JsonSerializable
      */
     public function setTrialInterval(?int $trialInterval): void
     {
-        $this->trialInterval = $trialInterval;
+        $this->trialInterval['value'] = $trialInterval;
+    }
+
+    /**
+     * Unsets Trial Interval.
+     * The numerical trial interval. i.e. an interval of ‘30’ coupled with a trial_interval_unit of day
+     * would mean this product price point trial would last 30 days
+     */
+    public function unsetTrialInterval(): void
+    {
+        $this->trialInterval = [];
     }
 
     /**
@@ -304,7 +341,10 @@ class ProductPricePoint implements \JsonSerializable
      */
     public function getTrialIntervalUnit(): ?string
     {
-        return $this->trialIntervalUnit;
+        if (count($this->trialIntervalUnit) == 0) {
+            return null;
+        }
+        return $this->trialIntervalUnit['value'];
     }
 
     /**
@@ -316,7 +356,16 @@ class ProductPricePoint implements \JsonSerializable
      */
     public function setTrialIntervalUnit(?string $trialIntervalUnit): void
     {
-        $this->trialIntervalUnit = $trialIntervalUnit;
+        $this->trialIntervalUnit['value'] = $trialIntervalUnit;
+    }
+
+    /**
+     * Unsets Trial Interval Unit.
+     * A string representing the trial interval unit for this product price point, either month or day
+     */
+    public function unsetTrialIntervalUnit(): void
+    {
+        $this->trialIntervalUnit = [];
     }
 
     /**
@@ -343,7 +392,10 @@ class ProductPricePoint implements \JsonSerializable
      */
     public function getIntroductoryOffer(): ?bool
     {
-        return $this->introductoryOffer;
+        if (count($this->introductoryOffer) == 0) {
+            return null;
+        }
+        return $this->introductoryOffer['value'];
     }
 
     /**
@@ -354,7 +406,16 @@ class ProductPricePoint implements \JsonSerializable
      */
     public function setIntroductoryOffer(?bool $introductoryOffer): void
     {
-        $this->introductoryOffer = $introductoryOffer;
+        $this->introductoryOffer['value'] = $introductoryOffer;
+    }
+
+    /**
+     * Unsets Introductory Offer.
+     * reserved for future use
+     */
+    public function unsetIntroductoryOffer(): void
+    {
+        $this->introductoryOffer = [];
     }
 
     /**
@@ -363,7 +424,10 @@ class ProductPricePoint implements \JsonSerializable
      */
     public function getInitialChargeInCents(): ?int
     {
-        return $this->initialChargeInCents;
+        if (count($this->initialChargeInCents) == 0) {
+            return null;
+        }
+        return $this->initialChargeInCents['value'];
     }
 
     /**
@@ -374,7 +438,16 @@ class ProductPricePoint implements \JsonSerializable
      */
     public function setInitialChargeInCents(?int $initialChargeInCents): void
     {
-        $this->initialChargeInCents = $initialChargeInCents;
+        $this->initialChargeInCents['value'] = $initialChargeInCents;
+    }
+
+    /**
+     * Unsets Initial Charge in Cents.
+     * The product price point initial charge, in integer cents
+     */
+    public function unsetInitialChargeInCents(): void
+    {
+        $this->initialChargeInCents = [];
     }
 
     /**
@@ -382,7 +455,10 @@ class ProductPricePoint implements \JsonSerializable
      */
     public function getInitialChargeAfterTrial(): ?bool
     {
-        return $this->initialChargeAfterTrial;
+        if (count($this->initialChargeAfterTrial) == 0) {
+            return null;
+        }
+        return $this->initialChargeAfterTrial['value'];
     }
 
     /**
@@ -392,7 +468,15 @@ class ProductPricePoint implements \JsonSerializable
      */
     public function setInitialChargeAfterTrial(?bool $initialChargeAfterTrial): void
     {
-        $this->initialChargeAfterTrial = $initialChargeAfterTrial;
+        $this->initialChargeAfterTrial['value'] = $initialChargeAfterTrial;
+    }
+
+    /**
+     * Unsets Initial Charge After Trial.
+     */
+    public function unsetInitialChargeAfterTrial(): void
+    {
+        $this->initialChargeAfterTrial = [];
     }
 
     /**
@@ -402,7 +486,10 @@ class ProductPricePoint implements \JsonSerializable
      */
     public function getExpirationInterval(): ?int
     {
-        return $this->expirationInterval;
+        if (count($this->expirationInterval) == 0) {
+            return null;
+        }
+        return $this->expirationInterval['value'];
     }
 
     /**
@@ -414,7 +501,17 @@ class ProductPricePoint implements \JsonSerializable
      */
     public function setExpirationInterval(?int $expirationInterval): void
     {
-        $this->expirationInterval = $expirationInterval;
+        $this->expirationInterval['value'] = $expirationInterval;
+    }
+
+    /**
+     * Unsets Expiration Interval.
+     * The numerical expiration interval. i.e. an expiration_interval of ‘30’ coupled with an
+     * expiration_interval_unit of day would mean this product price point would expire after 30 days
+     */
+    public function unsetExpirationInterval(): void
+    {
+        $this->expirationInterval = [];
     }
 
     /**
@@ -424,7 +521,10 @@ class ProductPricePoint implements \JsonSerializable
      */
     public function getExpirationIntervalUnit(): ?string
     {
-        return $this->expirationIntervalUnit;
+        if (count($this->expirationIntervalUnit) == 0) {
+            return null;
+        }
+        return $this->expirationIntervalUnit['value'];
     }
 
     /**
@@ -437,7 +537,17 @@ class ProductPricePoint implements \JsonSerializable
      */
     public function setExpirationIntervalUnit(?string $expirationIntervalUnit): void
     {
-        $this->expirationIntervalUnit = $expirationIntervalUnit;
+        $this->expirationIntervalUnit['value'] = $expirationIntervalUnit;
+    }
+
+    /**
+     * Unsets Expiration Interval Unit.
+     * A string representing the expiration interval unit for this product price point, either month or
+     * day
+     */
+    public function unsetExpirationIntervalUnit(): void
+    {
+        $this->expirationIntervalUnit = [];
     }
 
     /**
@@ -689,8 +799,8 @@ class ProductPricePoint implements \JsonSerializable
         if (isset($this->name)) {
             $json['name']                       = $this->name;
         }
-        if (isset($this->handle)) {
-            $json['handle']                     = $this->handle;
+        if (!empty($this->handle)) {
+            $json['handle']                     = $this->handle['value'];
         }
         if (isset($this->priceInCents)) {
             $json['price_in_cents']             = $this->priceInCents;
@@ -701,32 +811,32 @@ class ProductPricePoint implements \JsonSerializable
         if (isset($this->intervalUnit)) {
             $json['interval_unit']              = IntervalUnit::checkValue($this->intervalUnit);
         }
-        if (isset($this->trialPriceInCents)) {
-            $json['trial_price_in_cents']       = $this->trialPriceInCents;
+        if (!empty($this->trialPriceInCents)) {
+            $json['trial_price_in_cents']       = $this->trialPriceInCents['value'];
         }
-        if (isset($this->trialInterval)) {
-            $json['trial_interval']             = $this->trialInterval;
+        if (!empty($this->trialInterval)) {
+            $json['trial_interval']             = $this->trialInterval['value'];
         }
-        if (isset($this->trialIntervalUnit)) {
-            $json['trial_interval_unit']        = IntervalUnit::checkValue($this->trialIntervalUnit);
+        if (!empty($this->trialIntervalUnit)) {
+            $json['trial_interval_unit']        = IntervalUnit::checkValue($this->trialIntervalUnit['value']);
         }
         if (isset($this->trialType)) {
             $json['trial_type']                 = $this->trialType;
         }
-        if (isset($this->introductoryOffer)) {
-            $json['introductory_offer']         = $this->introductoryOffer;
+        if (!empty($this->introductoryOffer)) {
+            $json['introductory_offer']         = $this->introductoryOffer['value'];
         }
-        if (isset($this->initialChargeInCents)) {
-            $json['initial_charge_in_cents']    = $this->initialChargeInCents;
+        if (!empty($this->initialChargeInCents)) {
+            $json['initial_charge_in_cents']    = $this->initialChargeInCents['value'];
         }
-        if (isset($this->initialChargeAfterTrial)) {
-            $json['initial_charge_after_trial'] = $this->initialChargeAfterTrial;
+        if (!empty($this->initialChargeAfterTrial)) {
+            $json['initial_charge_after_trial'] = $this->initialChargeAfterTrial['value'];
         }
-        if (isset($this->expirationInterval)) {
-            $json['expiration_interval']        = $this->expirationInterval;
+        if (!empty($this->expirationInterval)) {
+            $json['expiration_interval']        = $this->expirationInterval['value'];
         }
-        if (isset($this->expirationIntervalUnit)) {
-            $json['expiration_interval_unit']   = IntervalUnit::checkValue($this->expirationIntervalUnit);
+        if (!empty($this->expirationIntervalUnit)) {
+            $json['expiration_interval_unit']   = IntervalUnit::checkValue($this->expirationIntervalUnit['value']);
         }
         if (isset($this->productId)) {
             $json['product_id']                 = $this->productId;

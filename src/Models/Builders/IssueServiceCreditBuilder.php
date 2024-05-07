@@ -33,9 +33,18 @@ class IssueServiceCreditBuilder
     /**
      * Initializes a new issue service credit Builder object.
      */
-    public static function init($amount, string $memo): self
+    public static function init($amount): self
     {
-        return new self(new IssueServiceCredit($amount, $memo));
+        return new self(new IssueServiceCredit($amount));
+    }
+
+    /**
+     * Sets memo field.
+     */
+    public function memo(?string $value): self
+    {
+        $this->instance->setMemo($value);
+        return $this;
     }
 
     /**

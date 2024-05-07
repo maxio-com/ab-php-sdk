@@ -27,7 +27,7 @@
 | `archivedAt` | `?DateTime` | Optional | - | getArchivedAt(): ?\DateTime | setArchivedAt(?\DateTime archivedAt): void |
 | `pricePointId` | `?int` | Optional | - | getPricePointId(): ?int | setPricePointId(?int pricePointId): void |
 | `pricePointHandle` | `?string` | Optional | - | getPricePointHandle(): ?string | setPricePointHandle(?string pricePointHandle): void |
-| `pricePointType` | string([PricePointType](../../doc/models/price-point-type.md))\|null | Optional | This is a container for one-of cases. | getPricePointType(): ?string | setPricePointType(?string pricePointType): void |
+| `pricePointType` | [`?string(PricePointType)`](../../doc/models/price-point-type.md) | Optional | - | getPricePointType(): ?string | setPricePointType(?string pricePointType): void |
 | `pricePointName` | `?string` | Optional | - | getPricePointName(): ?string | setPricePointName(?string pricePointName): void |
 | `productFamilyId` | `?int` | Optional | - | getProductFamilyId(): ?int | setProductFamilyId(?int productFamilyId): void |
 | `productFamilyHandle` | `?string` | Optional | - | getProductFamilyHandle(): ?string | setProductFamilyHandle(?string productFamilyHandle): void |
@@ -37,6 +37,7 @@
 | `description` | `?string` | Optional | - | getDescription(): ?string | setDescription(?string description): void |
 | `allowFractionalQuantities` | `?bool` | Optional | - | getAllowFractionalQuantities(): ?bool | setAllowFractionalQuantities(?bool allowFractionalQuantities): void |
 | `subscription` | [`?SubscriptionComponentSubscription`](../../doc/models/subscription-component-subscription.md) | Optional | An optional object, will be returned if provided `include=subscription` query param. | getSubscription(): ?SubscriptionComponentSubscription | setSubscription(?SubscriptionComponentSubscription subscription): void |
+| `historicUsages` | [`?(HistoricUsage[])`](../../doc/models/historic-usage.md) | Optional | - | getHistoricUsages(): ?array | setHistoricUsages(?array historicUsages): void |
 | `displayOnHostedPage` | `?bool` | Optional | - | getDisplayOnHostedPage(): ?bool | setDisplayOnHostedPage(?bool displayOnHostedPage): void |
 | `interval` | `?int` | Optional | The numerical interval. i.e. an interval of '30' coupled with an interval_unit of day would mean this component price point would renew every 30 days. This property is only available for sites with Multifrequency enabled. | getInterval(): ?int | setInterval(?int interval): void |
 | `intervalUnit` | [`?string(IntervalUnit)`](../../doc/models/interval-unit.md) | Optional | A string representing the interval unit for this component price point, either month or day. This property is only available for sites with Multifrequency enabled. | getIntervalUnit(): ?string | setIntervalUnit(?string intervalUnit): void |

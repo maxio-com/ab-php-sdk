@@ -14,13 +14,16 @@ use Core\Utils\CoreHelper;
 use Exception;
 use stdClass;
 
-class ListSubscriptionComponentsInclude
+/**
+ * Allows to filter by `not_null` or `null`.
+ */
+class IncludeNullOrNotNull
 {
-    public const SUBSCRIPTION = 'subscription';
+    public const NOT_NULL = 'not_null';
 
-    public const HISTORIC_USAGES = 'historic_usages';
+    public const NULL = 'null';
 
-    private const _ALL_VALUES = [self::SUBSCRIPTION, self::HISTORIC_USAGES];
+    private const _ALL_VALUES = [self::NOT_NULL, self::NULL];
 
     /**
      * Ensures that all the given values are present in this Enum.
@@ -37,6 +40,6 @@ class ListSubscriptionComponentsInclude
         if (CoreHelper::checkValueOrValuesInList($value, self::_ALL_VALUES)) {
             return $value;
         }
-        throw new Exception("$value is invalid for ListSubscriptionComponentsInclude.");
+        throw new Exception("$value is invalid for IncludeNullOrNotNull.");
     }
 }

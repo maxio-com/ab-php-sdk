@@ -274,6 +274,15 @@ class SubscriptionComponentBuilder
     }
 
     /**
+     * Unsets price point type field.
+     */
+    public function unsetPricePointType(): self
+    {
+        $this->instance->unsetPricePointType();
+        return $this;
+    }
+
+    /**
      * Sets price point name field.
      */
     public function pricePointName(?string $value): self
@@ -378,6 +387,15 @@ class SubscriptionComponentBuilder
     public function subscription(?SubscriptionComponentSubscription $value): self
     {
         $this->instance->setSubscription($value);
+        return $this;
+    }
+
+    /**
+     * Sets historic usages field.
+     */
+    public function historicUsages(?array $value): self
+    {
+        $this->instance->setHistoricUsages($value);
         return $this;
     }
 

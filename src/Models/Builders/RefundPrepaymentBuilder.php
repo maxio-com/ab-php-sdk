@@ -33,9 +33,18 @@ class RefundPrepaymentBuilder
     /**
      * Initializes a new refund prepayment Builder object.
      */
-    public static function init(int $amountInCents, $amount, string $memo): self
+    public static function init($amount, string $memo): self
     {
-        return new self(new RefundPrepayment($amountInCents, $amount, $memo));
+        return new self(new RefundPrepayment($amount, $memo));
+    }
+
+    /**
+     * Sets amount in cents field.
+     */
+    public function amountInCents(?int $value): self
+    {
+        $this->instance->setAmountInCents($value);
+        return $this;
     }
 
     /**

@@ -11,8 +11,6 @@ declare(strict_types=1);
 namespace AdvancedBillingLib\Controllers;
 
 use AdvancedBillingLib\Exceptions\ApiException;
-use AdvancedBillingLib\Exceptions\ErrorListResponseException;
-use AdvancedBillingLib\Exceptions\RefundPrepaymentAggregatedErrorsResponseException;
 use AdvancedBillingLib\Exceptions\RefundPrepaymentBaseErrorsResponseException;
 use AdvancedBillingLib\Models\AccountBalances;
 use AdvancedBillingLib\Models\CreatePrepaymentRequest;
@@ -155,7 +153,14 @@ class SubscriptionInvoiceAccountController extends BaseController
                 BodyParam::init($body)
             );
 
-        $_resHandler = $this->responseHandler()->type(ServiceCredit::class);
+        $_resHandler = $this->responseHandler()
+            ->throwErrorOn(
+                '422',
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.'
+                )
+            )
+            ->type(ServiceCredit::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
     }
@@ -188,8 +193,7 @@ class SubscriptionInvoiceAccountController extends BaseController
             ->throwErrorOn(
                 '422',
                 ErrorType::initWithErrorTemplate(
-                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
-                    ErrorListResponseException::class
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.'
                 )
             );
 
@@ -205,7 +209,7 @@ class SubscriptionInvoiceAccountController extends BaseController
      * `amount_in_cents`.
      *
      * @param int $subscriptionId The Chargify id of the subscription
-     * @param string $prepaymentId id of prepayment
+     * @param int $prepaymentId id of prepayment
      * @param RefundPrepaymentRequest|null $body
      *
      * @return PrepaymentResponse Response from the API call
@@ -214,7 +218,7 @@ class SubscriptionInvoiceAccountController extends BaseController
      */
     public function refundPrepayment(
         int $subscriptionId,
-        string $prepaymentId,
+        int $prepaymentId,
         ?RefundPrepaymentRequest $body = null
     ): PrepaymentResponse {
         $_reqBuilder = $this->requestBuilder(
@@ -241,8 +245,7 @@ class SubscriptionInvoiceAccountController extends BaseController
             ->throwErrorOn(
                 '422',
                 ErrorType::initWithErrorTemplate(
-                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
-                    RefundPrepaymentAggregatedErrorsResponseException::class
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.'
                 )
             )
             ->type(PrepaymentResponse::class);

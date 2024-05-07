@@ -10,7 +10,6 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
-use AdvancedBillingLib\ApiHelper;
 use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
@@ -122,9 +121,9 @@ class Coupon implements \JsonSerializable
     private $stackable;
 
     /**
-     * @var string|null
+     * @var array
      */
-    private $compoundingStrategy;
+    private $compoundingStrategy = [];
 
     /**
      * @var bool|null
@@ -674,19 +673,29 @@ class Coupon implements \JsonSerializable
      */
     public function getCompoundingStrategy(): ?string
     {
-        return $this->compoundingStrategy;
+        if (count($this->compoundingStrategy) == 0) {
+            return null;
+        }
+        return $this->compoundingStrategy['value'];
     }
 
     /**
      * Sets Compounding Strategy.
      *
      * @maps compounding_strategy
-     * @mapsBy anyOf(anyOf(CompoundingStrategy),null)
-     * @factory \AdvancedBillingLib\Models\CompoundingStrategy::checkValue CompoundingStrategy
+     * @factory \AdvancedBillingLib\Models\CompoundingStrategy::checkValue
      */
     public function setCompoundingStrategy(?string $compoundingStrategy): void
     {
-        $this->compoundingStrategy = $compoundingStrategy;
+        $this->compoundingStrategy['value'] = $compoundingStrategy;
+    }
+
+    /**
+     * Unsets Compounding Strategy.
+     */
+    public function unsetCompoundingStrategy(): void
+    {
+        $this->compoundingStrategy = [];
     }
 
     /**
@@ -928,14 +937,10 @@ class Coupon implements \JsonSerializable
         if (isset($this->stackable)) {
             $json['stackable']                        = $this->stackable;
         }
-        if (isset($this->compoundingStrategy)) {
+        if (!empty($this->compoundingStrategy)) {
             $json['compounding_strategy']             =
-                ApiHelper::getJsonHelper()->verifyTypes(
-                    $this->compoundingStrategy,
-                    'anyOf(anyOf(CompoundingStrategy),null)',
-                    [
-                        '\AdvancedBillingLib\Models\CompoundingStrategy::checkValue CompoundingStrategy'
-                    ]
+                CompoundingStrategy::checkValue(
+                    $this->compoundingStrategy['value']
                 );
         }
         if (isset($this->useSiteExchangeRate)) {

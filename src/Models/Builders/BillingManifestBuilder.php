@@ -93,6 +93,15 @@ class BillingManifestBuilder
     }
 
     /**
+     * Unsets start date field.
+     */
+    public function unsetStartDate(): self
+    {
+        $this->instance->unsetStartDate();
+        return $this;
+    }
+
+    /**
      * Sets end date field.
      */
     public function endDate(?\DateTime $value): self
@@ -102,11 +111,29 @@ class BillingManifestBuilder
     }
 
     /**
+     * Unsets end date field.
+     */
+    public function unsetEndDate(): self
+    {
+        $this->instance->unsetEndDate();
+        return $this;
+    }
+
+    /**
      * Sets period type field.
      */
     public function periodType(?string $value): self
     {
         $this->instance->setPeriodType($value);
+        return $this;
+    }
+
+    /**
+     * Unsets period type field.
+     */
+    public function unsetPeriodType(): self
+    {
+        $this->instance->unsetPeriodType();
         return $this;
     }
 

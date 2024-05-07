@@ -273,6 +273,15 @@ class ComponentBuilder
     }
 
     /**
+     * Unsets price points url field.
+     */
+    public function unsetPricePointsUrl(): self
+    {
+        $this->instance->unsetPricePointsUrl();
+        return $this;
+    }
+
+    /**
      * Sets default price point name field.
      */
     public function defaultPricePointName(?string $value): self

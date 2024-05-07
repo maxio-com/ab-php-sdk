@@ -21,18 +21,16 @@ class IssueServiceCredit implements \JsonSerializable
     private $amount;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $memo;
 
     /**
      * @param float|string $amount
-     * @param string $memo
      */
-    public function __construct($amount, string $memo)
+    public function __construct($amount)
     {
         $this->amount = $amount;
-        $this->memo = $memo;
     }
 
     /**
@@ -62,7 +60,7 @@ class IssueServiceCredit implements \JsonSerializable
     /**
      * Returns Memo.
      */
-    public function getMemo(): string
+    public function getMemo(): ?string
     {
         return $this->memo;
     }
@@ -70,10 +68,9 @@ class IssueServiceCredit implements \JsonSerializable
     /**
      * Sets Memo.
      *
-     * @required
      * @maps memo
      */
-    public function setMemo(string $memo): void
+    public function setMemo(?string $memo): void
     {
         $this->memo = $memo;
     }
@@ -103,8 +100,10 @@ class IssueServiceCredit implements \JsonSerializable
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
-        $json['amount'] = ApiHelper::getJsonHelper()->verifyTypes($this->amount, 'oneOf(float,string)');
-        $json['memo']   = $this->memo;
+        $json['amount']   = ApiHelper::getJsonHelper()->verifyTypes($this->amount, 'oneOf(float,string)');
+        if (isset($this->memo)) {
+            $json['memo'] = $this->memo;
+        }
         $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;

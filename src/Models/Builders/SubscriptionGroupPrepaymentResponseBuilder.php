@@ -84,6 +84,15 @@ class SubscriptionGroupPrepaymentResponseBuilder
     }
 
     /**
+     * Unsets memo field.
+     */
+    public function unsetMemo(): self
+    {
+        $this->instance->unsetMemo();
+        return $this;
+    }
+
+    /**
      * Add an additional property to this model.
      *
      * @param string $name Name of property

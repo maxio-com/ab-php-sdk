@@ -108,11 +108,29 @@ class SubscriptionBuilder
     }
 
     /**
+     * Unsets current period ends at field.
+     */
+    public function unsetCurrentPeriodEndsAt(): self
+    {
+        $this->instance->unsetCurrentPeriodEndsAt();
+        return $this;
+    }
+
+    /**
      * Sets next assessment at field.
      */
     public function nextAssessmentAt(?\DateTime $value): self
     {
         $this->instance->setNextAssessmentAt($value);
+        return $this;
+    }
+
+    /**
+     * Unsets next assessment at field.
+     */
+    public function unsetNextAssessmentAt(): self
+    {
+        $this->instance->unsetNextAssessmentAt();
         return $this;
     }
 
@@ -158,6 +176,15 @@ class SubscriptionBuilder
     public function activatedAt(?\DateTime $value): self
     {
         $this->instance->setActivatedAt($value);
+        return $this;
+    }
+
+    /**
+     * Unsets activated at field.
+     */
+    public function unsetActivatedAt(): self
+    {
+        $this->instance->unsetActivatedAt();
         return $this;
     }
 
@@ -275,6 +302,15 @@ class SubscriptionBuilder
     public function currentPeriodStartedAt(?\DateTime $value): self
     {
         $this->instance->setCurrentPeriodStartedAt($value);
+        return $this;
+    }
+
+    /**
+     * Unsets current period started at field.
+     */
+    public function unsetCurrentPeriodStartedAt(): self
+    {
+        $this->instance->unsetCurrentPeriodStartedAt();
         return $this;
     }
 
@@ -860,6 +896,15 @@ class SubscriptionBuilder
     public function prepaidConfiguration(?PrepaidConfiguration $value): self
     {
         $this->instance->setPrepaidConfiguration($value);
+        return $this;
+    }
+
+    /**
+     * Unsets prepaid configuration field.
+     */
+    public function unsetPrepaidConfiguration(): self
+    {
+        $this->instance->unsetPrepaidConfiguration();
         return $this;
     }
 

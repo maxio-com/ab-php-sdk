@@ -30,7 +30,7 @@
 | `archivedAt` | `?DateTime` | Optional | - | getArchivedAt(): ?\DateTime | setArchivedAt(?\DateTime archivedAt): void |
 | `conversionLimit` | `?string` | Optional | - | getConversionLimit(): ?string | setConversionLimit(?string conversionLimit): void |
 | `stackable` | `?bool` | Optional | - | getStackable(): ?bool | setStackable(?bool stackable): void |
-| `compoundingStrategy` | string([CompoundingStrategy](../../doc/models/compounding-strategy.md))\|null | Optional | This is a container for any-of cases. | getCompoundingStrategy(): ?string | setCompoundingStrategy(?string compoundingStrategy): void |
+| `compoundingStrategy` | [`?string(CompoundingStrategy)`](../../doc/models/compounding-strategy.md) | Optional | - | getCompoundingStrategy(): ?string | setCompoundingStrategy(?string compoundingStrategy): void |
 | `useSiteExchangeRate` | `?bool` | Optional | - | getUseSiteExchangeRate(): ?bool | setUseSiteExchangeRate(?bool useSiteExchangeRate): void |
 | `createdAt` | `?DateTime` | Optional | - | getCreatedAt(): ?\DateTime | setCreatedAt(?\DateTime createdAt): void |
 | `updatedAt` | `?DateTime` | Optional | - | getUpdatedAt(): ?\DateTime | setUpdatedAt(?\DateTime updatedAt): void |

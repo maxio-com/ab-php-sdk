@@ -10,6 +10,7 @@
 | Name |
 |  --- |
 | `SUBSCRIPTION` |
+| `HISTORIC_USAGES` |
 
 ## Example
 

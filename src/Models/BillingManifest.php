@@ -41,19 +41,19 @@ class BillingManifest implements \JsonSerializable
     private $subtotalInCents;
 
     /**
-     * @var \DateTime|null
+     * @var array
      */
-    private $startDate;
+    private $startDate = [];
 
     /**
-     * @var \DateTime|null
+     * @var array
      */
-    private $endDate;
+    private $endDate = [];
 
     /**
-     * @var string|null
+     * @var array
      */
-    private $periodType;
+    private $periodType = [];
 
     /**
      * @var int|null
@@ -159,7 +159,10 @@ class BillingManifest implements \JsonSerializable
      */
     public function getStartDate(): ?\DateTime
     {
-        return $this->startDate;
+        if (count($this->startDate) == 0) {
+            return null;
+        }
+        return $this->startDate['value'];
     }
 
     /**
@@ -170,7 +173,15 @@ class BillingManifest implements \JsonSerializable
      */
     public function setStartDate(?\DateTime $startDate): void
     {
-        $this->startDate = $startDate;
+        $this->startDate['value'] = $startDate;
+    }
+
+    /**
+     * Unsets Start Date.
+     */
+    public function unsetStartDate(): void
+    {
+        $this->startDate = [];
     }
 
     /**
@@ -178,7 +189,10 @@ class BillingManifest implements \JsonSerializable
      */
     public function getEndDate(): ?\DateTime
     {
-        return $this->endDate;
+        if (count($this->endDate) == 0) {
+            return null;
+        }
+        return $this->endDate['value'];
     }
 
     /**
@@ -189,7 +203,15 @@ class BillingManifest implements \JsonSerializable
      */
     public function setEndDate(?\DateTime $endDate): void
     {
-        $this->endDate = $endDate;
+        $this->endDate['value'] = $endDate;
+    }
+
+    /**
+     * Unsets End Date.
+     */
+    public function unsetEndDate(): void
+    {
+        $this->endDate = [];
     }
 
     /**
@@ -197,7 +219,10 @@ class BillingManifest implements \JsonSerializable
      */
     public function getPeriodType(): ?string
     {
-        return $this->periodType;
+        if (count($this->periodType) == 0) {
+            return null;
+        }
+        return $this->periodType['value'];
     }
 
     /**
@@ -207,7 +232,15 @@ class BillingManifest implements \JsonSerializable
      */
     public function setPeriodType(?string $periodType): void
     {
-        $this->periodType = $periodType;
+        $this->periodType['value'] = $periodType;
+    }
+
+    /**
+     * Unsets Period Type.
+     */
+    public function unsetPeriodType(): void
+    {
+        $this->periodType = [];
     }
 
     /**
@@ -268,14 +301,14 @@ class BillingManifest implements \JsonSerializable
         if (isset($this->subtotalInCents)) {
             $json['subtotal_in_cents']         = $this->subtotalInCents;
         }
-        if (isset($this->startDate)) {
-            $json['start_date']                = DateTimeHelper::toRfc3339DateTime($this->startDate);
+        if (!empty($this->startDate)) {
+            $json['start_date']                = DateTimeHelper::toRfc3339DateTime($this->startDate['value']);
         }
-        if (isset($this->endDate)) {
-            $json['end_date']                  = DateTimeHelper::toRfc3339DateTime($this->endDate);
+        if (!empty($this->endDate)) {
+            $json['end_date']                  = DateTimeHelper::toRfc3339DateTime($this->endDate['value']);
         }
-        if (isset($this->periodType)) {
-            $json['period_type']               = $this->periodType;
+        if (!empty($this->periodType)) {
+            $json['period_type']               = $this->periodType['value'];
         }
         if (isset($this->existingBalanceInCents)) {
             $json['existing_balance_in_cents'] = $this->existingBalanceInCents;

@@ -245,7 +245,7 @@ class ListPricePointsFilter implements \JsonSerializable
      * `filter[archived_at]=not_null`.
      *
      * @maps archived_at
-     * @factory \AdvancedBillingLib\Models\IncludeNotNull::checkValue
+     * @factory \AdvancedBillingLib\Models\IncludeNullOrNotNull::checkValue
      */
     public function setArchivedAt(?string $archivedAt): void
     {
@@ -299,7 +299,7 @@ class ListPricePointsFilter implements \JsonSerializable
             $json['ids']            = $this->ids;
         }
         if (isset($this->archivedAt)) {
-            $json['archived_at']    = IncludeNotNull::checkValue($this->archivedAt);
+            $json['archived_at']    = IncludeNullOrNotNull::checkValue($this->archivedAt);
         }
         $json = array_merge($json, $this->additionalProperties);
 

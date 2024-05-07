@@ -35,9 +35,9 @@ class SubscriptionGroupPrepaymentResponse implements \JsonSerializable
     private $entryType;
 
     /**
-     * @var string|null
+     * @var array
      */
-    private $memo;
+    private $memo = [];
 
     /**
      * Returns Id.
@@ -124,7 +124,10 @@ class SubscriptionGroupPrepaymentResponse implements \JsonSerializable
      */
     public function getMemo(): ?string
     {
-        return $this->memo;
+        if (count($this->memo) == 0) {
+            return null;
+        }
+        return $this->memo['value'];
     }
 
     /**
@@ -135,7 +138,16 @@ class SubscriptionGroupPrepaymentResponse implements \JsonSerializable
      */
     public function setMemo(?string $memo): void
     {
-        $this->memo = $memo;
+        $this->memo['value'] = $memo;
+    }
+
+    /**
+     * Unsets Memo.
+     * A memo attached to the entry.
+     */
+    public function unsetMemo(): void
+    {
+        $this->memo = [];
     }
 
     private $additionalProperties = [];
@@ -175,8 +187,8 @@ class SubscriptionGroupPrepaymentResponse implements \JsonSerializable
         if (isset($this->entryType)) {
             $json['entry_type']              = ServiceCreditType::checkValue($this->entryType);
         }
-        if (isset($this->memo)) {
-            $json['memo']                    = $this->memo;
+        if (!empty($this->memo)) {
+            $json['memo']                    = $this->memo['value'];
         }
         $json = array_merge($json, $this->additionalProperties);
 
