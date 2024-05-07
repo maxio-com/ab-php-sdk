@@ -8,8 +8,8 @@
         "php": "^7.2 || ^8.0",
         "ext-json": "*",
         "apimatic/unirest-php": "^4.0.0",
-        "apimatic/core-interfaces": "~0.1.0",
-        "apimatic/core": "~0.3.0"
+        "apimatic/core-interfaces": "~0.1.4",
+        "apimatic/core": "~0.3.8"
     },
     "autoload": {
         "psr-4": {
