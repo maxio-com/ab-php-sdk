@@ -44,6 +44,7 @@ final class TestCouponFactory
             ->archivedAt(CouponTestData::ARCHIVED_AT)
             ->conversionLimit(CouponTestData::CONVERSION_LIMIT)
             ->stackable(CouponTestData::STACKABLE)
+            ->useSiteExchangeRate(CouponTestData::USE_SITE_EXCHANGE_RATE)
             ->compoundingStrategy(CouponTestData::COMPOUNDING_STRATEGY)
             ->discountType(CouponTestData::DISCOUNT_TYPE)
             ->excludeMidPeriodAllocations(CouponTestData::EXCLUDE_MID_PERIOD_ALLOCATIONS)

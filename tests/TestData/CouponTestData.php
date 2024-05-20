@@ -15,6 +15,7 @@ final class CouponTestData
     public const CODE_ONE = 'TEST_CODE';
     public const PERCENTAGE = '100.0';
     public const STACKABLE = true;
+    public const USE_SITE_EXCHANGE_RATE = true;
     public const COMPOUNDING_STRATEGY = CompoundingStrategy::FULLPRICE;
     public const AMOUNT = null;
     public const AMOUNT_IN_CENTS = null;
