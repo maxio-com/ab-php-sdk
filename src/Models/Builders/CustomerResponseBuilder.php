@@ -10,7 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models\Builders;
 
-use AdvancedBillingLib\Models\Customer;
+use AdvancedBillingLib\Models\Customer1;
 use AdvancedBillingLib\Models\CustomerResponse;
 use Core\Utils\CoreHelper;
 
@@ -34,7 +34,7 @@ class CustomerResponseBuilder
     /**
      * Initializes a new customer response Builder object.
      */
-    public static function init(Customer $customer): self
+    public static function init(Customer1 $customer): self
     {
         return new self(new CustomerResponse($customer));
     }

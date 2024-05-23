@@ -143,10 +143,10 @@ class Subscription implements \JsonSerializable
     /**
      * @var string|null
      */
-    private $paymentCollectionMethod = CollectionMethod::AUTOMATIC;
+    private $paymentCollectionMethod;
 
     /**
-     * @var Customer|null
+     * @var Customer1|null
      */
     private $customer;
 
@@ -1171,7 +1171,7 @@ class Subscription implements \JsonSerializable
     /**
      * Returns Customer.
      */
-    public function getCustomer(): ?Customer
+    public function getCustomer(): ?Customer1
     {
         return $this->customer;
     }
@@ -1181,7 +1181,7 @@ class Subscription implements \JsonSerializable
      *
      * @maps customer
      */
-    public function setCustomer(?Customer $customer): void
+    public function setCustomer(?Customer1 $customer): void
     {
         $this->customer = $customer;
     }

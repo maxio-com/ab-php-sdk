@@ -10,7 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models\Builders;
 
-use AdvancedBillingLib\Models\Customer;
+use AdvancedBillingLib\Models\Customer1;
 use AdvancedBillingLib\Models\SubscriptionGroupSignupSuccess;
 use AdvancedBillingLib\Models\SubscriptionGroupSignupSuccessData;
 use Core\Utils\CoreHelper;
@@ -35,7 +35,7 @@ class SubscriptionGroupSignupSuccessBuilder
     /**
      * Initializes a new subscription group signup success Builder object.
      */
-    public static function init(SubscriptionGroupSignupSuccessData $subscriptionGroup, Customer $customer): self
+    public static function init(SubscriptionGroupSignupSuccessData $subscriptionGroup, Customer1 $customer): self
     {
         return new self(new SubscriptionGroupSignupSuccess($subscriptionGroup, $customer));
     }

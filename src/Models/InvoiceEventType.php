@@ -29,6 +29,8 @@ class InvoiceEventType
 
     public const APPLY_DEBIT_NOTE = 'apply_debit_note';
 
+    public const CREATE_DEBIT_NOTE = 'create_debit_note';
+
     public const REFUND_INVOICE = 'refund_invoice';
 
     public const VOID_INVOICE = 'void_invoice';
@@ -53,6 +55,7 @@ class InvoiceEventType
         self::CREATE_CREDIT_NOTE,
         self::APPLY_PAYMENT,
         self::APPLY_DEBIT_NOTE,
+        self::CREATE_DEBIT_NOTE,
         self::REFUND_INVOICE,
         self::VOID_INVOICE,
         self::VOID_REMAINDER,

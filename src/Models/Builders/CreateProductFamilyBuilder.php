@@ -33,17 +33,26 @@ class CreateProductFamilyBuilder
     /**
      * Initializes a new create product family Builder object.
      */
-    public static function init(): self
+    public static function init(string $name): self
     {
-        return new self(new CreateProductFamily());
+        return new self(new CreateProductFamily($name));
     }
 
     /**
-     * Sets name field.
+     * Sets handle field.
      */
-    public function name(?string $value): self
+    public function handle(?string $value): self
     {
-        $this->instance->setName($value);
+        $this->instance->setHandle($value);
+        return $this;
+    }
+
+    /**
+     * Unsets handle field.
+     */
+    public function unsetHandle(): self
+    {
+        $this->instance->unsetHandle();
         return $this;
     }
 

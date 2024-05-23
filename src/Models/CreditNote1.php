@@ -76,7 +76,7 @@ class CreditNote1 implements \JsonSerializable
     private $seller;
 
     /**
-     * @var Customer1|null
+     * @var Customer|null
      */
     private $customer;
 
@@ -424,7 +424,7 @@ class CreditNote1 implements \JsonSerializable
     /**
      * Returns Customer.
      */
-    public function getCustomer(): ?Customer1
+    public function getCustomer(): ?Customer
     {
         return $this->customer;
     }
@@ -434,7 +434,7 @@ class CreditNote1 implements \JsonSerializable
      *
      * @maps customer
      */
-    public function setCustomer(?Customer1 $customer): void
+    public function setCustomer(?Customer $customer): void
     {
         $this->customer = $customer;
     }

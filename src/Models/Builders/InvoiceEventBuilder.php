@@ -10,7 +10,8 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models\Builders;
 
-use AdvancedBillingLib\Models\Invoice;
+use AdvancedBillingLib\Models\ApplyCreditNoteEventData1;
+use AdvancedBillingLib\Models\Invoice1;
 use AdvancedBillingLib\Models\InvoiceEvent;
 use Core\Utils\CoreHelper;
 
@@ -49,24 +50,6 @@ class InvoiceEventBuilder
     }
 
     /**
-     * Sets event type field.
-     */
-    public function eventType(?string $value): self
-    {
-        $this->instance->setEventType($value);
-        return $this;
-    }
-
-    /**
-     * Sets event data field.
-     */
-    public function eventData($value): self
-    {
-        $this->instance->setEventData($value);
-        return $this;
-    }
-
-    /**
      * Sets timestamp field.
      */
     public function timestamp(?\DateTime $value): self
@@ -78,9 +61,27 @@ class InvoiceEventBuilder
     /**
      * Sets invoice field.
      */
-    public function invoice(?Invoice $value): self
+    public function invoice(?Invoice1 $value): self
     {
         $this->instance->setInvoice($value);
+        return $this;
+    }
+
+    /**
+     * Sets event type field.
+     */
+    public function eventType(?string $value): self
+    {
+        $this->instance->setEventType($value);
+        return $this;
+    }
+
+    /**
+     * Sets event data field.
+     */
+    public function eventData(?ApplyCreditNoteEventData1 $value): self
+    {
+        $this->instance->setEventData($value);
         return $this;
     }
 

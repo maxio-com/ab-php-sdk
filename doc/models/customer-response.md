@@ -9,7 +9,7 @@
 
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
-| `customer` | [`Customer`](../../doc/models/customer.md) | Required | - | getCustomer(): Customer | setCustomer(Customer customer): void |
+| `customer` | [`Customer1`](../../doc/models/customer-1.md) | Required | - | getCustomer(): Customer1 | setCustomer(Customer1 customer): void |
 
 ## Example (as JSON)
 

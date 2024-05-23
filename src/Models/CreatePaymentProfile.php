@@ -780,8 +780,8 @@ class CreatePaymentProfile implements \JsonSerializable
 
     /**
      * Returns Bank Account Number.
-     * (Required when creating with ACH, GoCardless, Stripe BECS Direct Debit and bank_iban is blank) The
-     * customerʼs bank account number
+     * (Required when creating with ACH, GoCardless, Stripe BECS or BACS Direct Debit, and bank_iban is
+     * blank) The customerʼs bank account number
      */
     public function getBankAccountNumber(): ?string
     {
@@ -790,8 +790,8 @@ class CreatePaymentProfile implements \JsonSerializable
 
     /**
      * Sets Bank Account Number.
-     * (Required when creating with ACH, GoCardless, Stripe BECS Direct Debit and bank_iban is blank) The
-     * customerʼs bank account number
+     * (Required when creating with ACH, GoCardless, Stripe BECS or BACS Direct Debit, and bank_iban is
+     * blank) The customerʼs bank account number
      *
      * @maps bank_account_number
      */
@@ -802,8 +802,8 @@ class CreatePaymentProfile implements \JsonSerializable
 
     /**
      * Returns Bank Branch Code.
-     * (Optional when creating with GoCardless, required with Stripe BECS Direct Debit) Branch code.
-     * Alternatively, an IBAN can be provided
+     * (Optional when creating with GoCardless, required with Stripe BECS or BACS Direct Debit) Branch/Sort
+     * code. Alternatively, an IBAN can be provided
      */
     public function getBankBranchCode(): ?string
     {
@@ -812,8 +812,8 @@ class CreatePaymentProfile implements \JsonSerializable
 
     /**
      * Sets Bank Branch Code.
-     * (Optional when creating with GoCardless, required with Stripe BECS Direct Debit) Branch code.
-     * Alternatively, an IBAN can be provided
+     * (Optional when creating with GoCardless, required with Stripe BECS or BACS Direct Debit) Branch/Sort
+     * code. Alternatively, an IBAN can be provided
      *
      * @maps bank_branch_code
      */

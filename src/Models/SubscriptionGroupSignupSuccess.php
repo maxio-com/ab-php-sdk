@@ -20,15 +20,15 @@ class SubscriptionGroupSignupSuccess implements \JsonSerializable
     private $subscriptionGroup;
 
     /**
-     * @var Customer
+     * @var Customer1
      */
     private $customer;
 
     /**
      * @param SubscriptionGroupSignupSuccessData $subscriptionGroup
-     * @param Customer $customer
+     * @param Customer1 $customer
      */
-    public function __construct(SubscriptionGroupSignupSuccessData $subscriptionGroup, Customer $customer)
+    public function __construct(SubscriptionGroupSignupSuccessData $subscriptionGroup, Customer1 $customer)
     {
         $this->subscriptionGroup = $subscriptionGroup;
         $this->customer = $customer;
@@ -56,7 +56,7 @@ class SubscriptionGroupSignupSuccess implements \JsonSerializable
     /**
      * Returns Customer.
      */
-    public function getCustomer(): Customer
+    public function getCustomer(): Customer1
     {
         return $this->customer;
     }
@@ -67,7 +67,7 @@ class SubscriptionGroupSignupSuccess implements \JsonSerializable
      * @required
      * @maps customer
      */
-    public function setCustomer(Customer $customer): void
+    public function setCustomer(Customer1 $customer): void
     {
         $this->customer = $customer;
     }

@@ -1,5 +1,5 @@
 
-# Invoice Event Data Payment Method
+# Apply Credit Note Event Data 1 Payment Method
 
 ## Data Type
 

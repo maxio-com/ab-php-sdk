@@ -21,7 +21,7 @@
 | `currency` | `?string` | Optional | The ISO 4217 currency code (3 character string) representing the currency of the credit note amount fields. | getCurrency(): ?string | setCurrency(?string currency): void |
 | `memo` | `?string` | Optional | The memo printed on credit note, which is a description of the reason for the credit. | getMemo(): ?string | setMemo(?string memo): void |
 | `seller` | [`?Seller`](../../doc/models/seller.md) | Optional | - | getSeller(): ?Seller | setSeller(?Seller seller): void |
-| `customer` | [`?Customer1`](../../doc/models/customer-1.md) | Optional | - | getCustomer(): ?Customer1 | setCustomer(?Customer1 customer): void |
+| `customer` | [`?Customer`](../../doc/models/customer.md) | Optional | - | getCustomer(): ?Customer | setCustomer(?Customer customer): void |
 | `billingAddress` | [`?BillingAddress`](../../doc/models/billing-address.md) | Optional | - | getBillingAddress(): ?BillingAddress | setBillingAddress(?BillingAddress billingAddress): void |
 | `shippingAddress` | [`?ShippingAddress`](../../doc/models/shipping-address.md) | Optional | - | getShippingAddress(): ?ShippingAddress | setShippingAddress(?ShippingAddress shippingAddress): void |
 | `subtotalAmount` | `?string` | Optional | Subtotal of the credit note, which is the sum of all line items before discounts or taxes. Note that this is a positive amount representing the credit back to the customer. | getSubtotalAmount(): ?string | setSubtotalAmount(?string subtotalAmount): void |

@@ -12,7 +12,7 @@ namespace AdvancedBillingLib\Models\Builders;
 
 use AdvancedBillingLib\Models\BankAccountPaymentProfile;
 use AdvancedBillingLib\Models\CreditCardPaymentProfile;
-use AdvancedBillingLib\Models\Customer;
+use AdvancedBillingLib\Models\Customer1;
 use AdvancedBillingLib\Models\NestedSubscriptionGroup;
 use AdvancedBillingLib\Models\PrepaidConfiguration;
 use AdvancedBillingLib\Models\Product;
@@ -407,7 +407,7 @@ class SubscriptionBuilder
     /**
      * Sets customer field.
      */
-    public function customer(?Customer $value): self
+    public function customer(?Customer1 $value): self
     {
         $this->instance->setCustomer($value);
         return $this;

@@ -12,7 +12,7 @@ namespace AdvancedBillingLib\Models\Builders;
 
 use AdvancedBillingLib\Models\BillingAddress;
 use AdvancedBillingLib\Models\CreditNote1;
-use AdvancedBillingLib\Models\Customer1;
+use AdvancedBillingLib\Models\Customer;
 use AdvancedBillingLib\Models\Seller;
 use AdvancedBillingLib\Models\ShippingAddress;
 use Core\Utils\CoreHelper;
@@ -153,7 +153,7 @@ class CreditNote1Builder
     /**
      * Sets customer field.
      */
-    public function customer(?Customer1 $value): self
+    public function customer(?Customer $value): self
     {
         $this->instance->setCustomer($value);
         return $this;

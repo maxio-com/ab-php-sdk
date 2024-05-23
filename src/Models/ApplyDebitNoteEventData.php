@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
 /**
@@ -36,6 +37,16 @@ class ApplyDebitNoteEventData implements \JsonSerializable
      * @var string
      */
     private $appliedAmount;
+
+    /**
+     * @var array
+     */
+    private $memo = [];
+
+    /**
+     * @var array
+     */
+    private $transactionTime = [];
 
     /**
      * @param string $debitNoteNumber
@@ -141,6 +152,71 @@ class ApplyDebitNoteEventData implements \JsonSerializable
         $this->appliedAmount = $appliedAmount;
     }
 
+    /**
+     * Returns Memo.
+     * The debit note memo.
+     */
+    public function getMemo(): ?string
+    {
+        if (count($this->memo) == 0) {
+            return null;
+        }
+        return $this->memo['value'];
+    }
+
+    /**
+     * Sets Memo.
+     * The debit note memo.
+     *
+     * @maps memo
+     */
+    public function setMemo(?string $memo): void
+    {
+        $this->memo['value'] = $memo;
+    }
+
+    /**
+     * Unsets Memo.
+     * The debit note memo.
+     */
+    public function unsetMemo(): void
+    {
+        $this->memo = [];
+    }
+
+    /**
+     * Returns Transaction Time.
+     * The time the debit note was applied, in ISO 8601 format, i.e. "2019-06-07T17:20:06Z"
+     */
+    public function getTransactionTime(): ?\DateTime
+    {
+        if (count($this->transactionTime) == 0) {
+            return null;
+        }
+        return $this->transactionTime['value'];
+    }
+
+    /**
+     * Sets Transaction Time.
+     * The time the debit note was applied, in ISO 8601 format, i.e. "2019-06-07T17:20:06Z"
+     *
+     * @maps transaction_time
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
+     */
+    public function setTransactionTime(?\DateTime $transactionTime): void
+    {
+        $this->transactionTime['value'] = $transactionTime;
+    }
+
+    /**
+     * Unsets Transaction Time.
+     * The time the debit note was applied, in ISO 8601 format, i.e. "2019-06-07T17:20:06Z"
+     */
+    public function unsetTransactionTime(): void
+    {
+        $this->transactionTime = [];
+    }
+
     private $additionalProperties = [];
 
     /**
@@ -166,10 +242,16 @@ class ApplyDebitNoteEventData implements \JsonSerializable
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
-        $json['debit_note_number'] = $this->debitNoteNumber;
-        $json['debit_note_uid']    = $this->debitNoteUid;
-        $json['original_amount']   = $this->originalAmount;
-        $json['applied_amount']    = $this->appliedAmount;
+        $json['debit_note_number']    = $this->debitNoteNumber;
+        $json['debit_note_uid']       = $this->debitNoteUid;
+        $json['original_amount']      = $this->originalAmount;
+        $json['applied_amount']       = $this->appliedAmount;
+        if (!empty($this->memo)) {
+            $json['memo']             = $this->memo['value'];
+        }
+        if (!empty($this->transactionTime)) {
+            $json['transaction_time'] = DateTimeHelper::toRfc3339DateTime($this->transactionTime['value']);
+        }
         $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;

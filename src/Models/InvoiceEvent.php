@@ -10,10 +10,13 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
-use AdvancedBillingLib\ApiHelper;
 use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
+/**
+ * @discriminator event_type
+ * @discriminatorType Invoice Event
+ */
 class InvoiceEvent implements \JsonSerializable
 {
     /**
@@ -22,24 +25,24 @@ class InvoiceEvent implements \JsonSerializable
     private $id;
 
     /**
-     * @var string|null
-     */
-    private $eventType;
-
-    /**
-     * @var ApplyCreditNoteEventData|ApplyDebitNoteEventData|ApplyPaymentEventData|ChangeInvoiceCollectionMethodEventData|IssueInvoiceEventData|RefundInvoiceEventData|RemovePaymentEventData|VoidInvoiceEventData|VoidRemainderEventData|null
-     */
-    private $eventData;
-
-    /**
      * @var \DateTime|null
      */
     private $timestamp;
 
     /**
-     * @var Invoice|null
+     * @var Invoice1|null
      */
     private $invoice;
+
+    /**
+     * @var string|null
+     */
+    private $eventType;
+
+    /**
+     * @var ApplyCreditNoteEventData1|null
+     */
+    private $eventData;
 
     /**
      * Returns Id.
@@ -57,54 +60,6 @@ class InvoiceEvent implements \JsonSerializable
     public function setId(?int $id): void
     {
         $this->id = $id;
-    }
-
-    /**
-     * Returns Event Type.
-     * Invoice Event Type
-     */
-    public function getEventType(): ?string
-    {
-        return $this->eventType;
-    }
-
-    /**
-     * Sets Event Type.
-     * Invoice Event Type
-     *
-     * @maps event_type
-     * @factory \AdvancedBillingLib\Models\InvoiceEventType::checkValue
-     */
-    public function setEventType(?string $eventType): void
-    {
-        $this->eventType = $eventType;
-    }
-
-    /**
-     * Returns Event Data.
-     * The event data is the data that, when combined with the command, results in the output invoice found
-     * in the invoice field.
-     *
-     * @return ApplyCreditNoteEventData|ApplyDebitNoteEventData|ApplyPaymentEventData|ChangeInvoiceCollectionMethodEventData|IssueInvoiceEventData|RefundInvoiceEventData|RemovePaymentEventData|VoidInvoiceEventData|VoidRemainderEventData|null
-     */
-    public function getEventData()
-    {
-        return $this->eventData;
-    }
-
-    /**
-     * Sets Event Data.
-     * The event data is the data that, when combined with the command, results in the output invoice found
-     * in the invoice field.
-     *
-     * @maps event_data
-     * @mapsBy anyOf(anyOf(ApplyCreditNoteEventData,ApplyDebitNoteEventData,ApplyPaymentEventData,ChangeInvoiceCollectionMethodEventData,IssueInvoiceEventData,RefundInvoiceEventData,RemovePaymentEventData,VoidInvoiceEventData,VoidRemainderEventData),null)
-     *
-     * @param ApplyCreditNoteEventData|ApplyDebitNoteEventData|ApplyPaymentEventData|ChangeInvoiceCollectionMethodEventData|IssueInvoiceEventData|RefundInvoiceEventData|RemovePaymentEventData|VoidInvoiceEventData|VoidRemainderEventData|null $eventData
-     */
-    public function setEventData($eventData): void
-    {
-        $this->eventData = $eventData;
     }
 
     /**
@@ -129,7 +84,7 @@ class InvoiceEvent implements \JsonSerializable
     /**
      * Returns Invoice.
      */
-    public function getInvoice(): ?Invoice
+    public function getInvoice(): ?Invoice1
     {
         return $this->invoice;
     }
@@ -139,9 +94,47 @@ class InvoiceEvent implements \JsonSerializable
      *
      * @maps invoice
      */
-    public function setInvoice(?Invoice $invoice): void
+    public function setInvoice(?Invoice1 $invoice): void
     {
         $this->invoice = $invoice;
+    }
+
+    /**
+     * Returns Event Type.
+     */
+    public function getEventType(): ?string
+    {
+        return $this->eventType;
+    }
+
+    /**
+     * Sets Event Type.
+     *
+     * @maps event_type
+     */
+    public function setEventType(?string $eventType): void
+    {
+        $this->eventType = $eventType;
+    }
+
+    /**
+     * Returns Event Data.
+     * Example schema for an `apply_credit_note` event
+     */
+    public function getEventData(): ?ApplyCreditNoteEventData1
+    {
+        return $this->eventData;
+    }
+
+    /**
+     * Sets Event Data.
+     * Example schema for an `apply_credit_note` event
+     *
+     * @maps event_data
+     */
+    public function setEventData(?ApplyCreditNoteEventData1 $eventData): void
+    {
+        $this->eventData = $eventData;
     }
 
     private $additionalProperties = [];
@@ -172,23 +165,15 @@ class InvoiceEvent implements \JsonSerializable
         if (isset($this->id)) {
             $json['id']         = $this->id;
         }
-        if (isset($this->eventType)) {
-            $json['event_type'] = InvoiceEventType::checkValue($this->eventType);
-        }
-        if (isset($this->eventData)) {
-            $json['event_data'] =
-                ApiHelper::getJsonHelper()->verifyTypes(
-                    $this->eventData,
-                    'anyOf(anyOf(ApplyCreditNoteEventData,ApplyDebitNoteEventData,ApplyPaymentEventDa' .
-                    'ta,ChangeInvoiceCollectionMethodEventData,IssueInvoiceEventData,RefundInvoiceEve' .
-                    'ntData,RemovePaymentEventData,VoidInvoiceEventData,VoidRemainderEventData),null)'
-                );
-        }
         if (isset($this->timestamp)) {
             $json['timestamp']  = DateTimeHelper::toRfc3339DateTime($this->timestamp);
         }
         if (isset($this->invoice)) {
             $json['invoice']    = $this->invoice;
+        }
+        $json['event_type']     = $this->eventType ?? 'Invoice Event';
+        if (isset($this->eventData)) {
+            $json['event_data'] = $this->eventData;
         }
         $json = array_merge($json, $this->additionalProperties);
 
