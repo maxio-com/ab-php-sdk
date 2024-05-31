@@ -32,7 +32,7 @@ class SubscriptionGroupSignup implements \JsonSerializable
     /**
      * @var string|null
      */
-    private $paymentCollectionMethod = CollectionMethod::AUTOMATIC;
+    private $paymentCollectionMethod;
 
     /**
      * @var PayerAttributes|null

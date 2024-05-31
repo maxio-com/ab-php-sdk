@@ -122,7 +122,8 @@ class SubscriptionComponentsController extends BaseController
                 QueryParam::init('include', $options)
                     ->commaSeparated()
                     ->extract('mInclude')
-                    ->serializeBy([ListSubscriptionComponentsInclude::class, 'checkValue'])
+                    ->serializeBy([ListSubscriptionComponentsInclude::class, 'checkValue']),
+                QueryParam::init('in_use', $options)->commaSeparated()->extract('inUse')
             );
 
         $_resHandler = $this->responseHandler()->type(SubscriptionComponentResponse::class, 1);

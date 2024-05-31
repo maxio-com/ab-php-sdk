@@ -115,6 +115,7 @@ function listSubscriptionComponents(array $options): array
 | `startDate` | `?string` | Query, Optional | The start date (format YYYY-MM-DD) with which to filter the date_field. Returns components with a timestamp at or after midnight (12:00:00 AM) in your site’s time zone on the date specified. |
 | `startDatetime` | `?string` | Query, Optional | The start date and time (format YYYY-MM-DD HH:MM:SS) with which to filter the date_field. Returns components with a timestamp at or after exact time provided in query. You can specify timezone in query - otherwise your site''s time zone will be used. If provided, this parameter will be used instead of start_date. |
 | `mInclude` | [`?(string(ListSubscriptionComponentsInclude)[])`](../../doc/models/list-subscription-components-include.md) | Query, Optional | Allows including additional data in the response. Use in query `include=subscription,historic_usages`. |
+| `inUse` | `?bool` | Query, Optional | If in_use is set to true, it returns only components that are currently in use. However, if it's set to false or not provided, it returns all components connected with the subscription. |
 
 ## Response Type
 
@@ -144,7 +145,8 @@ $collect = [
     'include' => [
         ListSubscriptionComponentsInclude::SUBSCRIPTION,
         ListSubscriptionComponentsInclude::HISTORIC_USAGES
-    ]
+    ],
+    'in_use' => true
 ];
 
 $result = $subscriptionComponentsController->listSubscriptionComponents($collect);

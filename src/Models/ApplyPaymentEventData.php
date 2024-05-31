@@ -22,6 +22,11 @@ class ApplyPaymentEventData implements \JsonSerializable
     /**
      * @var string
      */
+    private $consolidationLevel;
+
+    /**
+     * @var string
+     */
     private $memo;
 
     /**
@@ -70,6 +75,7 @@ class ApplyPaymentEventData implements \JsonSerializable
     private $external;
 
     /**
+     * @param string $consolidationLevel
      * @param string $memo
      * @param string $originalAmount
      * @param string $appliedAmount
@@ -77,17 +83,39 @@ class ApplyPaymentEventData implements \JsonSerializable
      * @param PaymentMethodApplePay|PaymentMethodBankAccount|PaymentMethodCreditCard|PaymentMethodExternal|PaymentMethodPaypal $paymentMethod
      */
     public function __construct(
+        string $consolidationLevel,
         string $memo,
         string $originalAmount,
         string $appliedAmount,
         \DateTime $transactionTime,
         $paymentMethod
     ) {
+        $this->consolidationLevel = $consolidationLevel;
         $this->memo = $memo;
         $this->originalAmount = $originalAmount;
         $this->appliedAmount = $appliedAmount;
         $this->transactionTime = $transactionTime;
         $this->paymentMethod = $paymentMethod;
+    }
+
+    /**
+     * Returns Consolidation Level.
+     */
+    public function getConsolidationLevel(): string
+    {
+        return $this->consolidationLevel;
+    }
+
+    /**
+     * Sets Consolidation Level.
+     *
+     * @required
+     * @maps consolidation_level
+     * @factory \AdvancedBillingLib\Models\InvoiceConsolidationLevel::checkValue
+     */
+    public function setConsolidationLevel(string $consolidationLevel): void
+    {
+        $this->consolidationLevel = $consolidationLevel;
     }
 
     /**
@@ -350,6 +378,7 @@ class ApplyPaymentEventData implements \JsonSerializable
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
+        $json['consolidation_level']             = InvoiceConsolidationLevel::checkValue($this->consolidationLevel);
         $json['memo']                            = $this->memo;
         $json['original_amount']                 = $this->originalAmount;
         $json['applied_amount']                  = $this->appliedAmount;

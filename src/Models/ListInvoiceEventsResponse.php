@@ -10,12 +10,13 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class ListInvoiceEventsResponse implements \JsonSerializable
 {
     /**
-     * @var InvoiceEvent[]|null
+     * @var array<ApplyCreditNoteEvent|ApplyDebitNoteEvent|ApplyPaymentEvent|BackportInvoiceEvent|ChangeChargebackStatusEvent|ChangeInvoiceCollectionMethodEvent|ChangeInvoiceStatusEvent|CreateCreditNoteEvent|CreateDebitNoteEvent|FailedPaymentEvent|IssueInvoiceEvent|RefundInvoiceEvent|RemovePaymentEvent|VoidInvoiceEvent|VoidRemainderEvent>|null
      */
     private $events;
 
@@ -37,7 +38,7 @@ class ListInvoiceEventsResponse implements \JsonSerializable
     /**
      * Returns Events.
      *
-     * @return InvoiceEvent[]|null
+     * @return array<ApplyCreditNoteEvent|ApplyDebitNoteEvent|ApplyPaymentEvent|BackportInvoiceEvent|ChangeChargebackStatusEvent|ChangeInvoiceCollectionMethodEvent|ChangeInvoiceStatusEvent|CreateCreditNoteEvent|CreateDebitNoteEvent|FailedPaymentEvent|IssueInvoiceEvent|RefundInvoiceEvent|RemovePaymentEvent|VoidInvoiceEvent|VoidRemainderEvent>|null
      */
     public function getEvents(): ?array
     {
@@ -48,8 +49,9 @@ class ListInvoiceEventsResponse implements \JsonSerializable
      * Sets Events.
      *
      * @maps events
+     * @mapsBy anyOf(anyOf{eventType}(ApplyCreditNoteEvent{applyCreditNote},ApplyDebitNoteEvent{applyDebitNote},ApplyPaymentEvent{applyPayment},BackportInvoiceEvent{backportInvoice},ChangeChargebackStatusEvent{changeChargebackStatus},ChangeInvoiceCollectionMethodEvent{changeInvoiceCollectionMethod},ChangeInvoiceStatusEvent{changeInvoiceStatus},CreateCreditNoteEvent{createCreditNote},CreateDebitNoteEvent{createDebitNote},FailedPaymentEvent{failedPayment},IssueInvoiceEvent{issueInvoice},RefundInvoiceEvent{refundInvoice},RemovePaymentEvent{removePayment},VoidInvoiceEvent{voidInvoice},VoidRemainderEvent{voidRemainder})[],null)
      *
-     * @param InvoiceEvent[]|null $events
+     * @param array<ApplyCreditNoteEvent|ApplyDebitNoteEvent|ApplyPaymentEvent|BackportInvoiceEvent|ChangeChargebackStatusEvent|ChangeInvoiceCollectionMethodEvent|ChangeInvoiceStatusEvent|CreateCreditNoteEvent|CreateDebitNoteEvent|FailedPaymentEvent|IssueInvoiceEvent|RefundInvoiceEvent|RemovePaymentEvent|VoidInvoiceEvent|VoidRemainderEvent>|null $events
      */
     public function setEvents(?array $events): void
     {
@@ -136,7 +138,18 @@ class ListInvoiceEventsResponse implements \JsonSerializable
     {
         $json = [];
         if (isset($this->events)) {
-            $json['events']      = $this->events;
+            $json['events']      =
+                ApiHelper::getJsonHelper()->verifyTypes(
+                    $this->events,
+                    'anyOf(anyOf{eventType}(ApplyCreditNoteEvent{applyCreditNote},ApplyDebitNoteEvent' .
+                    '{applyDebitNote},ApplyPaymentEvent{applyPayment},BackportInvoiceEvent{backportIn' .
+                    'voice},ChangeChargebackStatusEvent{changeChargebackStatus},ChangeInvoiceCollecti' .
+                    'onMethodEvent{changeInvoiceCollectionMethod},ChangeInvoiceStatusEvent{changeInvo' .
+                    'iceStatus},CreateCreditNoteEvent{createCreditNote},CreateDebitNoteEvent{createDe' .
+                    'bitNote},FailedPaymentEvent{failedPayment},IssueInvoiceEvent{issueInvoice},Refun' .
+                    'dInvoiceEvent{refundInvoice},RemovePaymentEvent{removePayment},VoidInvoiceEvent{' .
+                    'voidInvoice},VoidRemainderEvent{voidRemainder})[],null)'
+                );
         }
         if (isset($this->page)) {
             $json['page']        = $this->page;

@@ -109,8 +109,8 @@ class IssueInvoiceEventData implements \JsonSerializable
 
     /**
      * Returns From Status.
-     * The status of the invoice before event occurence. See [Invoice Statuses](https://chargify.zendesk.
-     * com/hc/en-us/articles/4407737494171#line-item-breakdowns) for more.
+     * The status of the invoice before event occurrence. See [Invoice Statuses](https://maxio-chargify.
+     * zendesk.com/hc/en-us/articles/5405078794253-Introduction-to-Invoices#invoice-statusess) for more.
      */
     public function getFromStatus(): string
     {
@@ -119,8 +119,8 @@ class IssueInvoiceEventData implements \JsonSerializable
 
     /**
      * Sets From Status.
-     * The status of the invoice before event occurence. See [Invoice Statuses](https://chargify.zendesk.
-     * com/hc/en-us/articles/4407737494171#line-item-breakdowns) for more.
+     * The status of the invoice before event occurrence. See [Invoice Statuses](https://maxio-chargify.
+     * zendesk.com/hc/en-us/articles/5405078794253-Introduction-to-Invoices#invoice-statusess) for more.
      *
      * @required
      * @maps from_status
@@ -133,8 +133,8 @@ class IssueInvoiceEventData implements \JsonSerializable
 
     /**
      * Returns To Status.
-     * The status of the invoice after event occurence. See [Invoice Statuses](https://chargify.zendesk.
-     * com/hc/en-us/articles/4407737494171#line-item-breakdowns) for more.
+     * The status of the invoice after event occurrence. See [Invoice Statuses](https://maxio-chargify.
+     * zendesk.com/hc/en-us/articles/5405078794253-Introduction-to-Invoices#invoice-statusess) for more.
      */
     public function getToStatus(): string
     {
@@ -143,8 +143,8 @@ class IssueInvoiceEventData implements \JsonSerializable
 
     /**
      * Sets To Status.
-     * The status of the invoice after event occurence. See [Invoice Statuses](https://chargify.zendesk.
-     * com/hc/en-us/articles/4407737494171#line-item-breakdowns) for more.
+     * The status of the invoice after event occurrence. See [Invoice Statuses](https://maxio-chargify.
+     * zendesk.com/hc/en-us/articles/5405078794253-Introduction-to-Invoices#invoice-statusess) for more.
      *
      * @required
      * @maps to_status

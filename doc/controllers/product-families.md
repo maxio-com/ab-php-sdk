@@ -188,8 +188,9 @@ function createProductFamily(?CreateProductFamilyRequest $body = null): ProductF
 
 ```php
 $body = CreateProductFamilyRequestBuilder::init(
-    CreateProductFamilyBuilder::init()
-        ->name('Acme Projects')
+    CreateProductFamilyBuilder::init(
+        'Acme Projects'
+    )
         ->description('Amazing project management tool')
         ->build()
 )->build();

@@ -15,9 +15,14 @@ use stdClass;
 class CreateProductFamily implements \JsonSerializable
 {
     /**
-     * @var string|null
+     * @var string
      */
     private $name;
+
+    /**
+     * @var array
+     */
+    private $handle = [];
 
     /**
      * @var array
@@ -25,9 +30,17 @@ class CreateProductFamily implements \JsonSerializable
     private $description = [];
 
     /**
+     * @param string $name
+     */
+    public function __construct(string $name)
+    {
+        $this->name = $name;
+    }
+
+    /**
      * Returns Name.
      */
-    public function getName(): ?string
+    public function getName(): string
     {
         return $this->name;
     }
@@ -35,11 +48,41 @@ class CreateProductFamily implements \JsonSerializable
     /**
      * Sets Name.
      *
+     * @required
      * @maps name
      */
-    public function setName(?string $name): void
+    public function setName(string $name): void
     {
         $this->name = $name;
+    }
+
+    /**
+     * Returns Handle.
+     */
+    public function getHandle(): ?string
+    {
+        if (count($this->handle) == 0) {
+            return null;
+        }
+        return $this->handle['value'];
+    }
+
+    /**
+     * Sets Handle.
+     *
+     * @maps handle
+     */
+    public function setHandle(?string $handle): void
+    {
+        $this->handle['value'] = $handle;
+    }
+
+    /**
+     * Unsets Handle.
+     */
+    public function unsetHandle(): void
+    {
+        $this->handle = [];
     }
 
     /**
@@ -96,8 +139,9 @@ class CreateProductFamily implements \JsonSerializable
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
-        if (isset($this->name)) {
-            $json['name']        = $this->name;
+        $json['name']            = $this->name;
+        if (!empty($this->handle)) {
+            $json['handle']      = $this->handle['value'];
         }
         if (!empty($this->description)) {
             $json['description'] = $this->description['value'];
