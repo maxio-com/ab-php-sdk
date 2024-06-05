@@ -247,7 +247,8 @@ class Customer implements \JsonSerializable
 
     /**
      * Returns Organization.
-     * The organization of the customer
+     * The organization of the customer. If no value, `null` or empty string is provided, `organization`
+     * will be populated with the customer's first and last name, separated with a space.
      */
     public function getOrganization(): ?string
     {
@@ -259,7 +260,8 @@ class Customer implements \JsonSerializable
 
     /**
      * Sets Organization.
-     * The organization of the customer
+     * The organization of the customer. If no value, `null` or empty string is provided, `organization`
+     * will be populated with the customer's first and last name, separated with a space.
      *
      * @maps organization
      */
@@ -270,7 +272,8 @@ class Customer implements \JsonSerializable
 
     /**
      * Unsets Organization.
-     * The organization of the customer
+     * The organization of the customer. If no value, `null` or empty string is provided, `organization`
+     * will be populated with the customer's first and last name, separated with a space.
      */
     public function unsetOrganization(): void
     {

@@ -13,7 +13,7 @@
 | `lastName` | `?string` | Optional | The last name of the customer | getLastName(): ?string | setLastName(?string lastName): void |
 | `email` | `?string` | Optional | The email address of the customer | getEmail(): ?string | setEmail(?string email): void |
 | `ccEmails` | `?string` | Optional | A comma-separated list of emails that should be cc’d on all customer communications (i.e. “joe@example.com, sue@example.com”) | getCcEmails(): ?string | setCcEmails(?string ccEmails): void |
-| `organization` | `?string` | Optional | The organization of the customer | getOrganization(): ?string | setOrganization(?string organization): void |
+| `organization` | `?string` | Optional | The organization of the customer. If no value, `null` or empty string is provided, `organization` will be populated with the customer's first and last name, separated with a space. | getOrganization(): ?string | setOrganization(?string organization): void |
 | `reference` | `?string` | Optional | The unique identifier used within your own application for this customer | getReference(): ?string | setReference(?string reference): void |
 | `id` | `?int` | Optional | The customer ID in Chargify | getId(): ?int | setId(?int id): void |
 | `createdAt` | `?DateTime` | Optional | The timestamp in which the customer object was created in Chargify | getCreatedAt(): ?\DateTime | setCreatedAt(?\DateTime createdAt): void |
