@@ -25,6 +25,22 @@ class ApiHelper
      * @var array
      */
     private const DISCRIMINATOR_SUBSTITUTIONS = [
+        'applyCreditNote' => 'apply_credit_note',
+        'applyDebitNote' => 'apply_debit_note',
+        'applyPayment' => 'apply_payment',
+        'backportInvoice' => 'backport_invoice',
+        'changeChargebackStatus' => 'change_chargeback_status',
+        'changeInvoiceCollectionMethod' => 'change_invoice_collection_method',
+        'changeInvoiceStatus' => 'change_invoice_status',
+        'createCreditNote' => 'create_credit_note',
+        'createDebitNote' => 'create_debit_note',
+        'failedPayment' => 'failed_payment',
+        'issueInvoice' => 'issue_invoice',
+        'refundInvoice' => 'refund_invoice',
+        'removePayment' => 'remove_payment',
+        'voidInvoice' => 'void_invoice',
+        'voidRemainder' => 'void_remainder',
+        'eventType' => 'event_type',
         'applePay' => 'apple_pay',
         'bankAccount' => 'bank_account',
         'creditCard' => 'credit_card',

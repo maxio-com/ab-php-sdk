@@ -34,7 +34,7 @@
 | `delayedCancelAt` | `?DateTime` | Optional | Timestamp for when the subscription is currently set to cancel. | getDelayedCancelAt(): ?\DateTime | setDelayedCancelAt(?\DateTime delayedCancelAt): void |
 | `couponCode` | `?string` | Optional | (deprecated) The coupon code of the single coupon currently applied to the subscription. See coupon_codes instead as subscriptions can now have more than one coupon. | getCouponCode(): ?string | setCouponCode(?string couponCode): void |
 | `snapDay` | `?string` | Optional | The day of the month that the subscription will charge according to calendar billing rules, if used. | getSnapDay(): ?string | setSnapDay(?string snapDay): void |
-| `paymentCollectionMethod` | [`?string(CollectionMethod)`](../../doc/models/collection-method.md) | Optional | The type of payment collection to be used in the subscription. For legacy Statements Architecture valid options are - `invoice`, `automatic`. For current Relationship Invoicing Architecture valid options are - `remittance`, `automatic`, `prepaid`.<br>**Default**: `CollectionMethod::AUTOMATIC` | getPaymentCollectionMethod(): ?string | setPaymentCollectionMethod(?string paymentCollectionMethod): void |
+| `paymentCollectionMethod` | [`?string(CollectionMethod)`](../../doc/models/collection-method.md) | Optional | The type of payment collection to be used in the subscription. For legacy Statements Architecture valid options are - `invoice`, `automatic`. For current Relationship Invoicing Architecture valid options are - `remittance`, `automatic`, `prepaid`. | getPaymentCollectionMethod(): ?string | setPaymentCollectionMethod(?string paymentCollectionMethod): void |
 | `customer` | [`?Customer`](../../doc/models/customer.md) | Optional | - | getCustomer(): ?Customer | setCustomer(?Customer customer): void |
 | `product` | [`?Product`](../../doc/models/product.md) | Optional | - | getProduct(): ?Product | setProduct(?Product product): void |
 | `creditCard` | [`?CreditCardPaymentProfile`](../../doc/models/credit-card-payment-profile.md) | Optional | - | getCreditCard(): ?CreditCardPaymentProfile | setCreditCard(?CreditCardPaymentProfile creditCard): void |
@@ -76,7 +76,6 @@
 
 ```json
 {
-  "payment_collection_method": "automatic",
   "credit_card": {
     "id": 10088716,
     "first_name": "Test",

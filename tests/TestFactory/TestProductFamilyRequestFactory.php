@@ -20,8 +20,7 @@ final class TestProductFamilyRequestFactory
 
     private function createCreateProductFamily(string $name): CreateProductFamily
     {
-        return CreateProductFamilyBuilder::init()
-            ->name($name)
+        return CreateProductFamilyBuilder::init($name)
             ->description(ProductFamilyTestData::DESCRIPTION)
             ->build();
     }

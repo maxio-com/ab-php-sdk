@@ -98,7 +98,7 @@ class Invoice implements \JsonSerializable
     /**
      * @var string|null
      */
-    private $collectionMethod = CollectionMethod::AUTOMATIC;
+    private $collectionMethod;
 
     /**
      * @var string|null
@@ -582,8 +582,8 @@ class Invoice implements \JsonSerializable
 
     /**
      * Returns Status.
-     * The current status of the invoice. See [Invoice Statuses](https://chargify.zendesk.com/hc/en-
-     * us/articles/4407737494171#line-item-breakdowns) for more.
+     * The current status of the invoice. See [Invoice Statuses](https://maxio-chargify.zendesk.com/hc/en-
+     * us/articles/5405078794253-Introduction-to-Invoices#invoice-statuses) for more.
      */
     public function getStatus(): ?string
     {
@@ -592,8 +592,8 @@ class Invoice implements \JsonSerializable
 
     /**
      * Sets Status.
-     * The current status of the invoice. See [Invoice Statuses](https://chargify.zendesk.com/hc/en-
-     * us/articles/4407737494171#line-item-breakdowns) for more.
+     * The current status of the invoice. See [Invoice Statuses](https://maxio-chargify.zendesk.com/hc/en-
+     * us/articles/5405078794253-Introduction-to-Invoices#invoice-statuses) for more.
      *
      * @maps status
      * @factory \AdvancedBillingLib\Models\InvoiceStatus::checkValue

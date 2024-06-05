@@ -45,6 +45,42 @@ class ApplyDebitNoteEventDataBuilder
     }
 
     /**
+     * Sets memo field.
+     */
+    public function memo(?string $value): self
+    {
+        $this->instance->setMemo($value);
+        return $this;
+    }
+
+    /**
+     * Unsets memo field.
+     */
+    public function unsetMemo(): self
+    {
+        $this->instance->unsetMemo();
+        return $this;
+    }
+
+    /**
+     * Sets transaction time field.
+     */
+    public function transactionTime(?\DateTime $value): self
+    {
+        $this->instance->setTransactionTime($value);
+        return $this;
+    }
+
+    /**
+     * Unsets transaction time field.
+     */
+    public function unsetTransactionTime(): self
+    {
+        $this->instance->unsetTransactionTime();
+        return $this;
+    }
+
+    /**
      * Add an additional property to this model.
      *
      * @param string $name Name of property

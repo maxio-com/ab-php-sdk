@@ -10,6 +10,8 @@ use AdvancedBillingLib\Models\Coupon;
 use AdvancedBillingLib\Models\Invoice;
 use AdvancedBillingLib\Models\InvoiceEvent;
 use AdvancedBillingLib\Models\InvoiceEventType;
+use AdvancedBillingLib\Models\IssueInvoiceEvent;
+use AdvancedBillingLib\Models\VoidInvoiceEvent;
 use AdvancedBillingLib\Models\Subscription;
 use AdvancedBillingLib\Tests\TestData\InvoiceTestData;
 use AdvancedBillingLib\Tests\TestStatusCode;
@@ -92,6 +94,7 @@ final class InvoicesControllerTestAssertions
     {
         foreach ($events as $event) {
             $this->testCase::assertEquals(InvoiceEventType::ISSUE_INVOICE, $event->getEventType());
+            $this->testCase::assertInstanceOf(IssueInvoiceEvent::class, $event);
         }
     }
 
@@ -102,6 +105,7 @@ final class InvoicesControllerTestAssertions
     {
         foreach ($events as $event) {
             $this->testCase::assertEquals(InvoiceEventType::VOID_INVOICE, $event->getEventType());
+            $this->testCase::assertInstanceOf(VoidInvoiceEvent::class, $event);
         }
     }
 

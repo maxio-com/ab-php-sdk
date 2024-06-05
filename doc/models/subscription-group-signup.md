@@ -12,7 +12,7 @@
 | `paymentProfileId` | `?int` | Optional | - | getPaymentProfileId(): ?int | setPaymentProfileId(?int paymentProfileId): void |
 | `payerId` | `?int` | Optional | - | getPayerId(): ?int | setPayerId(?int payerId): void |
 | `payerReference` | `?string` | Optional | - | getPayerReference(): ?string | setPayerReference(?string payerReference): void |
-| `paymentCollectionMethod` | [`?string(CollectionMethod)`](../../doc/models/collection-method.md) | Optional | The type of payment collection to be used in the subscription. For legacy Statements Architecture valid options are - `invoice`, `automatic`. For current Relationship Invoicing Architecture valid options are - `remittance`, `automatic`, `prepaid`.<br>**Default**: `CollectionMethod::AUTOMATIC` | getPaymentCollectionMethod(): ?string | setPaymentCollectionMethod(?string paymentCollectionMethod): void |
+| `paymentCollectionMethod` | [`?string(CollectionMethod)`](../../doc/models/collection-method.md) | Optional | The type of payment collection to be used in the subscription. For legacy Statements Architecture valid options are - `invoice`, `automatic`. For current Relationship Invoicing Architecture valid options are - `remittance`, `automatic`, `prepaid`. | getPaymentCollectionMethod(): ?string | setPaymentCollectionMethod(?string paymentCollectionMethod): void |
 | `payerAttributes` | [`?PayerAttributes`](../../doc/models/payer-attributes.md) | Optional | - | getPayerAttributes(): ?PayerAttributes | setPayerAttributes(?PayerAttributes payerAttributes): void |
 | `creditCardAttributes` | [`?SubscriptionGroupCreditCard`](../../doc/models/subscription-group-credit-card.md) | Optional | - | getCreditCardAttributes(): ?SubscriptionGroupCreditCard | setCreditCardAttributes(?SubscriptionGroupCreditCard creditCardAttributes): void |
 | `bankAccountAttributes` | [`?SubscriptionGroupBankAccount`](../../doc/models/subscription-group-bank-account.md) | Optional | - | getBankAccountAttributes(): ?SubscriptionGroupBankAccount | setBankAccountAttributes(?SubscriptionGroupBankAccount bankAccountAttributes): void |
@@ -22,7 +22,6 @@
 
 ```json
 {
-  "payment_collection_method": "automatic",
   "subscriptions": [
     {
       "metafields": {
@@ -39,6 +38,7 @@
   "payment_profile_id": 42,
   "payer_id": 64,
   "payer_reference": "payer_reference8",
+  "payment_collection_method": "automatic",
   "payer_attributes": {
     "first_name": "first_name2",
     "last_name": "last_name0",

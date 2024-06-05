@@ -63,7 +63,7 @@ class ProformaInvoice implements \JsonSerializable
     /**
      * @var string|null
      */
-    private $collectionMethod = CollectionMethod::AUTOMATIC;
+    private $collectionMethod;
 
     /**
      * @var string|null

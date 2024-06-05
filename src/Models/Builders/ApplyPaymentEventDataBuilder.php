@@ -34,15 +34,21 @@ class ApplyPaymentEventDataBuilder
      * Initializes a new apply payment event data Builder object.
      */
     public static function init(
+        string $consolidationLevel,
         string $memo,
         string $originalAmount,
         string $appliedAmount,
         \DateTime $transactionTime,
         $paymentMethod
     ): self {
-        return new self(
-            new ApplyPaymentEventData($memo, $originalAmount, $appliedAmount, $transactionTime, $paymentMethod)
-        );
+        return new self(new ApplyPaymentEventData(
+            $consolidationLevel,
+            $memo,
+            $originalAmount,
+            $appliedAmount,
+            $transactionTime,
+            $paymentMethod
+        ));
     }
 
     /**

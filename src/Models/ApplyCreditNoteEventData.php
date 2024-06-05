@@ -49,9 +49,9 @@ class ApplyCreditNoteEventData implements \JsonSerializable
     private $transactionTime;
 
     /**
-     * @var string|null
+     * @var array
      */
-    private $memo;
+    private $memo = [];
 
     /**
      * @var string|null
@@ -225,7 +225,10 @@ class ApplyCreditNoteEventData implements \JsonSerializable
      */
     public function getMemo(): ?string
     {
-        return $this->memo;
+        if (count($this->memo) == 0) {
+            return null;
+        }
+        return $this->memo['value'];
     }
 
     /**
@@ -236,7 +239,16 @@ class ApplyCreditNoteEventData implements \JsonSerializable
      */
     public function setMemo(?string $memo): void
     {
-        $this->memo = $memo;
+        $this->memo['value'] = $memo;
+    }
+
+    /**
+     * Unsets Memo.
+     * The credit note memo.
+     */
+    public function unsetMemo(): void
+    {
+        $this->memo = [];
     }
 
     /**
@@ -336,8 +348,8 @@ class ApplyCreditNoteEventData implements \JsonSerializable
         if (isset($this->transactionTime)) {
             $json['transaction_time']     = DateTimeHelper::toRfc3339DateTime($this->transactionTime);
         }
-        if (isset($this->memo)) {
-            $json['memo']                 = $this->memo;
+        if (!empty($this->memo)) {
+            $json['memo']                 = $this->memo['value'];
         }
         if (isset($this->role)) {
             $json['role']                 = $this->role;

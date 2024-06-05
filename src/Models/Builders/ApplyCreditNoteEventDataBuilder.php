@@ -64,6 +64,15 @@ class ApplyCreditNoteEventDataBuilder
     }
 
     /**
+     * Unsets memo field.
+     */
+    public function unsetMemo(): self
+    {
+        $this->instance->unsetMemo();
+        return $this;
+    }
+
+    /**
      * Sets role field.
      */
     public function role(?string $value): self
