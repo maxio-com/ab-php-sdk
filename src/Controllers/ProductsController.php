@@ -33,15 +33,15 @@ class ProductsController extends BaseController
      * + [Changing a Subscription's Product](https://maxio-chargify.zendesk.com/hc/en-
      * us/articles/5404225334669-Product-Changes-Migrations)
      *
-     * @param int $productFamilyId The Chargify id of the product family to which the product
-     *        belongs
+     * @param string $productFamilyId Either the product family's id or its handle prefixed with
+     *        `handle:`
      * @param CreateOrUpdateProductRequest|null $body
      *
      * @return ProductResponse Response from the API call
      *
      * @throws ApiException Thrown if API call fails
      */
-    public function createProduct(int $productFamilyId, ?CreateOrUpdateProductRequest $body = null): ProductResponse
+    public function createProduct(string $productFamilyId, ?CreateOrUpdateProductRequest $body = null): ProductResponse
     {
         $_reqBuilder = $this->requestBuilder(
             RequestMethod::POST,

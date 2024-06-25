@@ -26,7 +26,7 @@ final class ProductsControllerTest extends TestCase
 
         $product = $this->client
             ->getProductsController()
-            ->createProduct($productFamily->getId(), $this->testData->createRequest())
+            ->createProduct(strval($productFamily->getId()), $this->testData->createRequest())
             ->getProduct();
 
         $this->assertions->assertProductCreated(
@@ -56,13 +56,13 @@ final class ProductsControllerTest extends TestCase
 
         $this->client
             ->getProductsController()
-            ->createProduct($productFamily->getId(), $this->testData->createRequest())
+            ->createProduct(strval($productFamily->getId()), $this->testData->createRequest())
             ->getProduct();
 
         try {
             $this->client
                 ->getProductsController()
-                ->createProduct($productFamily->getId(), $this->testData->createRequest())
+                ->createProduct(strval($productFamily->getId()), $this->testData->createRequest())
                 ->getProduct();
         } catch (ApiException $e) {
             $this->assertions->assertProductCannotBeCreated($e);

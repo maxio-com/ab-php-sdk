@@ -15,6 +15,7 @@ use AdvancedBillingLib\Authentication\BasicAuthManager;
 use AdvancedBillingLib\Controllers\AdvanceInvoiceController;
 use AdvancedBillingLib\Controllers\APIExportsController;
 use AdvancedBillingLib\Controllers\BillingPortalController;
+use AdvancedBillingLib\Controllers\ComponentPricePointsController;
 use AdvancedBillingLib\Controllers\ComponentsController;
 use AdvancedBillingLib\Controllers\CouponsController;
 use AdvancedBillingLib\Controllers\CustomersController;
@@ -62,6 +63,8 @@ class AdvancedBillingClient implements ConfigurationInterface
     private $coupons;
 
     private $components;
+
+    private $componentPricePoints;
 
     private $customers;
 
@@ -130,15 +133,12 @@ class AdvancedBillingClient implements ConfigurationInterface
     public function __construct(array $config = [])
     {
         $this->config = array_merge(ConfigurationDefaults::_ALL, CoreHelper::clone($config));
-        $this->basicAuthManager = new BasicAuthManager(
-            $this->config['basicAuthUserName'] ?? ConfigurationDefaults::BASIC_AUTH_USER_NAME,
-            $this->config['basicAuthPassword'] ?? ConfigurationDefaults::BASIC_AUTH_PASSWORD
-        );
+        $this->basicAuthManager = new BasicAuthManager($this->config);
         $this->client = ClientBuilder::init(new HttpClient(Configuration::init($this)))
             ->converter(new CompatibilityConverter())
             ->jsonHelper(ApiHelper::getJsonHelper())
             ->apiCallback($this->config['httpCallback'] ?? null)
-            ->userAgent('AB SDK PHP:3.0.0 on OS {os-info}')
+            ->userAgent('AB SDK PHP:4.0.0 on OS {os-info}')
             ->globalConfig($this->getGlobalConfiguration())
             ->globalErrors($this->getGlobalErrors())
             ->serverUrls(self::ENVIRONMENT_MAP[$this->getEnvironment()], Server::DEFAULT_)
@@ -339,6 +339,17 @@ class AdvancedBillingClient implements ConfigurationInterface
             $this->components = new ComponentsController($this->client);
         }
         return $this->components;
+    }
+
+    /**
+     * Returns Component Price Points Controller
+     */
+    public function getComponentPricePointsController(): ComponentPricePointsController
+    {
+        if ($this->componentPricePoints == null) {
+            $this->componentPricePoints = new ComponentPricePointsController($this->client);
+        }
+        return $this->componentPricePoints;
     }
 
     /**

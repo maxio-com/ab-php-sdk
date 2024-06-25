@@ -15,7 +15,7 @@ namespace AdvancedBillingLib;
  */
 class ConfigurationDefaults
 {
-    public const TIMEOUT = 30;
+    public const TIMEOUT = 120;
 
     public const ENABLE_RETRIES = false;
 
