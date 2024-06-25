@@ -8,7 +8,7 @@ The following parameters are configurable for the API Client:
 | `subdomain` | `string` | The subdomain for your Chargify site.<br>*Default*: `'subdomain'` |
 | `domain` | `string` | The Chargify server domain.<br>*Default*: `'chargify.com'` |
 | `environment` | `Environment` | The API environment. <br> **Default: `Environment.PRODUCTION`** |
-| `timeout` | `int` | Timeout for API calls in seconds.<br>*Default*: `30` |
+| `timeout` | `int` | Timeout for API calls in seconds.<br>*Default*: `120` |
 | `enableRetries` | `bool` | Whether to enable retries and backoff feature.<br>*Default*: `false` |
 | `numberOfRetries` | `int` | The number of retries to make.<br>*Default*: `0` |
 | `retryInterval` | `float` | The retry time interval between the endpoint calls.<br>*Default*: `1` |
@@ -48,6 +48,7 @@ The gateway for the SDK. This class acts as a factory for the Controllers and al
 | getBillingPortalController() | Gets BillingPortalController |
 | getCouponsController() | Gets CouponsController |
 | getComponentsController() | Gets ComponentsController |
+| getComponentPricePointsController() | Gets ComponentPricePointsController |
 | getCustomersController() | Gets CustomersController |
 | getCustomFieldsController() | Gets CustomFieldsController |
 | getEventsController() | Gets EventsController |

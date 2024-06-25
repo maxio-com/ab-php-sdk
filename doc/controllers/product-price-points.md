@@ -250,7 +250,7 @@ $result = $productPricePointsController->updateProductPricePoint(
 
 # Read Product Price Point
 
-Use this endpoint to retrieve details for a specific product price point.
+Use this endpoint to retrieve details for a specific product price point. You can achieve this by using either the product price point ID or handle.
 
 ```php
 function readProductPricePoint(

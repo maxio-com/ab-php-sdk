@@ -26,14 +26,14 @@ Use this method to create a product within your Chargify site.
 + [Changing a Subscription's Product](https://maxio-chargify.zendesk.com/hc/en-us/articles/5404225334669-Product-Changes-Migrations)
 
 ```php
-function createProduct(int $productFamilyId, ?CreateOrUpdateProductRequest $body = null): ProductResponse
+function createProduct(string $productFamilyId, ?CreateOrUpdateProductRequest $body = null): ProductResponse
 ```
 
 ## Parameters
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `productFamilyId` | `int` | Template, Required | The Chargify id of the product family to which the product belongs |
+| `productFamilyId` | `string` | Template, Required | Either the product family's id or its handle prefixed with `handle:` |
 | `body` | [`?CreateOrUpdateProductRequest`](../../doc/models/create-or-update-product-request.md) | Body, Optional | - |
 
 ## Response Type
@@ -43,7 +43,7 @@ function createProduct(int $productFamilyId, ?CreateOrUpdateProductRequest $body
 ## Example Usage
 
 ```php
-$productFamilyId = 140;
+$productFamilyId = 'product_family_id4';
 
 $body = CreateOrUpdateProductRequestBuilder::init(
     CreateOrUpdateProductBuilder::init(
