@@ -22,7 +22,7 @@ final class TestProductLoader
         return $this->client
             ->getProductsController()
             ->createProduct(
-                $productFamilyId,
+                strval($productFamilyId),
                 $this->productRequestFactory->create($name, $handle)
             )
             ->getProduct();
