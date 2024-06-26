@@ -20,7 +20,9 @@ class IntervalUnit
 
     public const MONTH = 'month';
 
-    private const _ALL_VALUES = [self::DAY, self::MONTH];
+    public const NEVER = 'never';
+
+    private const _ALL_VALUES = [self::DAY, self::MONTH, self::NEVER];
 
     /**
      * Ensures that all the given values are present in this Enum.
