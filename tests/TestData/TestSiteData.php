@@ -6,11 +6,11 @@ namespace AdvancedBillingLib\Tests\TestData;
 
 final class TestSiteData
 {
-    public const SITE_ID = 86566;
+    public const SITE_ID = 87357;
     public const SITE_NAME = 'PHP SDK';
     public const SITE_SUBDOMAIN = 'php-sdk';
     public const SITE_CURRENCY = 'USD';
-    public const SELLER_ID = 56887;
+    public const SELLER_ID = 58665;
     public const EMPTY_NON_PRIMARY_CURRENCIES_LIST = ["EUR"];
     public const RELATIONSHIP_INVOICING_ENABLED = true;
     public const CUSTOMER_HIERARCHY_ENABLED = false;
