@@ -27,7 +27,7 @@ final class TestComponentLoader
         return $this->client
             ->getComponentsController()
             ->createQuantityBasedComponent(
-                $productFamilyId,
+                (string) $productFamilyId,
                 $this->componentRequestFactory->createCreateQuantityBasedComponent($name, $unitName, $pricingScheme)
             )
             ->getComponent();
