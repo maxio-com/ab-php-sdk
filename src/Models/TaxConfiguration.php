@@ -70,8 +70,8 @@ class TaxConfiguration implements \JsonSerializable
     /**
      * Returns Fully Configured.
      * Returns `true` when Chargify has been properly configured to charge tax using the specified tax
-     * system. More details about taxes: https://maxio-chargify.zendesk.com/hc/en-us/articles/5405488905869-
-     * Taxes-Introduction
+     * system. More details about taxes: https://maxio.zendesk.com/hc/en-us/articles/24287012608909-Taxes-
+     * Overview
      */
     public function getFullyConfigured(): ?bool
     {
@@ -81,8 +81,8 @@ class TaxConfiguration implements \JsonSerializable
     /**
      * Sets Fully Configured.
      * Returns `true` when Chargify has been properly configured to charge tax using the specified tax
-     * system. More details about taxes: https://maxio-chargify.zendesk.com/hc/en-us/articles/5405488905869-
-     * Taxes-Introduction
+     * system. More details about taxes: https://maxio.zendesk.com/hc/en-us/articles/24287012608909-Taxes-
+     * Overview
      *
      * @maps fully_configured
      */

@@ -363,7 +363,7 @@ class GetOneTimeTokenPaymentProfile implements \JsonSerializable
      *
      * @required
      * @maps current_vault
-     * @factory \AdvancedBillingLib\Models\CurrentVault::checkValue
+     * @factory \AdvancedBillingLib\Models\CreditCardVault::checkValue
      */
     public function setCurrentVault(string $currentVault): void
     {
@@ -654,7 +654,7 @@ class GetOneTimeTokenPaymentProfile implements \JsonSerializable
         if (!empty($this->customerId)) {
             $json['customer_id']          = $this->customerId['value'];
         }
-        $json['current_vault']            = CurrentVault::checkValue($this->currentVault);
+        $json['current_vault']            = CreditCardVault::checkValue($this->currentVault);
         $json['vault_token']              = $this->vaultToken;
         $json['billing_address']          = $this->billingAddress;
         if (isset($this->billingAddress2)) {

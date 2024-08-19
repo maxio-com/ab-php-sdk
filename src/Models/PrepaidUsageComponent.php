@@ -106,9 +106,9 @@ class PrepaidUsageComponent implements \JsonSerializable
     private $expirationInterval;
 
     /**
-     * @var string|null
+     * @var array
      */
-    private $expirationIntervalUnit;
+    private $expirationIntervalUnit = [];
 
     /**
      * @var bool|null
@@ -270,8 +270,8 @@ class PrepaidUsageComponent implements \JsonSerializable
     /**
      * Returns Prices.
      * (Not required for ‘per_unit’ pricing schemes) One or more price brackets. See [Price Bracket
-     * Rules](https://chargify.zendesk.com/hc/en-us/articles/4407755865883#general-price-bracket-rules) for
-     * an overview of how price brackets work for different pricing schemes.
+     * Rules](https://maxio.zendesk.com/hc/en-us/articles/24261149166733-Component-Pricing-Schemes#price-
+     * bracket-rules) for an overview of how price brackets work for different pricing schemes.
      *
      * @return Price[]|null
      */
@@ -283,8 +283,8 @@ class PrepaidUsageComponent implements \JsonSerializable
     /**
      * Sets Prices.
      * (Not required for ‘per_unit’ pricing schemes) One or more price brackets. See [Price Bracket
-     * Rules](https://chargify.zendesk.com/hc/en-us/articles/4407755865883#general-price-bracket-rules) for
-     * an overview of how price brackets work for different pricing schemes.
+     * Rules](https://maxio.zendesk.com/hc/en-us/articles/24261149166733-Component-Pricing-Schemes#price-
+     * bracket-rules) for an overview of how price brackets work for different pricing schemes.
      *
      * @maps prices
      *
@@ -575,18 +575,29 @@ class PrepaidUsageComponent implements \JsonSerializable
      */
     public function getExpirationIntervalUnit(): ?string
     {
-        return $this->expirationIntervalUnit;
+        if (count($this->expirationIntervalUnit) == 0) {
+            return null;
+        }
+        return $this->expirationIntervalUnit['value'];
     }
 
     /**
      * Sets Expiration Interval Unit.
      *
      * @maps expiration_interval_unit
-     * @factory \AdvancedBillingLib\Models\IntervalUnit::checkValue
+     * @factory \AdvancedBillingLib\Models\ExpirationIntervalUnit::checkValue
      */
     public function setExpirationIntervalUnit(?string $expirationIntervalUnit): void
     {
-        $this->expirationIntervalUnit = $expirationIntervalUnit;
+        $this->expirationIntervalUnit['value'] = $expirationIntervalUnit;
+    }
+
+    /**
+     * Unsets Expiration Interval Unit.
+     */
+    public function unsetExpirationIntervalUnit(): void
+    {
+        $this->expirationIntervalUnit = [];
     }
 
     /**
@@ -728,8 +739,11 @@ class PrepaidUsageComponent implements \JsonSerializable
         if (isset($this->expirationInterval)) {
             $json['expiration_interval']         = $this->expirationInterval;
         }
-        if (isset($this->expirationIntervalUnit)) {
-            $json['expiration_interval_unit']    = IntervalUnit::checkValue($this->expirationIntervalUnit);
+        if (!empty($this->expirationIntervalUnit)) {
+            $json['expiration_interval_unit']    =
+                ExpirationIntervalUnit::checkValue(
+                    $this->expirationIntervalUnit['value']
+                );
         }
         if (isset($this->displayOnHostedPage)) {
             $json['display_on_hosted_page']      = $this->displayOnHostedPage;

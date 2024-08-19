@@ -18,7 +18,7 @@
 | `rolloverPrepaidRemainder` | `?bool` | Optional | Boolean which controls whether or not remaining units should be rolled over to the next period | getRolloverPrepaidRemainder(): ?bool | setRolloverPrepaidRemainder(?bool rolloverPrepaidRemainder): void |
 | `renewPrepaidAllocation` | `?bool` | Optional | Boolean which controls whether or not the allocated quantity should be renewed at the beginning of each period | getRenewPrepaidAllocation(): ?bool | setRenewPrepaidAllocation(?bool renewPrepaidAllocation): void |
 | `expirationInterval` | `?float` | Optional | (only for prepaid usage components where rollover_prepaid_remainder is true) The number of `expiration_interval_unit`s after which rollover amounts should expire | getExpirationInterval(): ?float | setExpirationInterval(?float expirationInterval): void |
-| `expirationIntervalUnit` | [`?string(IntervalUnit)`](../../doc/models/interval-unit.md) | Optional | - | getExpirationIntervalUnit(): ?string | setExpirationIntervalUnit(?string expirationIntervalUnit): void |
+| `expirationIntervalUnit` | [`?string(ExpirationIntervalUnit)`](../../doc/models/expiration-interval-unit.md) | Optional | A string representing the expiration interval unit for this component, either month or day | getExpirationIntervalUnit(): ?string | setExpirationIntervalUnit(?string expirationIntervalUnit): void |
 
 ## Example (as JSON)
 

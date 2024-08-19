@@ -15,14 +15,14 @@
 | `handle` | `?string` | Optional | (Optional) | getHandle(): ?string | setHandle(?string handle): void |
 | `priceInCents` | string\|int | Required | This is a container for one-of cases. | getPriceInCents(): | setPriceInCents( priceInCents): void |
 | `interval` | string\|int | Required | This is a container for one-of cases. | getInterval(): | setInterval( interval): void |
-| `intervalUnit` | [`string(IntervalUnit)`](../../doc/models/interval-unit.md) | Required | Required if using `custom_price` attribute. | getIntervalUnit(): string | setIntervalUnit(string intervalUnit): void |
+| `intervalUnit` | [`?string(IntervalUnit)`](../../doc/models/interval-unit.md) | Required | Required if using `custom_price` attribute. | getIntervalUnit(): ?string | setIntervalUnit(?string intervalUnit): void |
 | `trialPriceInCents` | string\|int\|null | Optional | This is a container for one-of cases. | getTrialPriceInCents(): | setTrialPriceInCents( trialPriceInCents): void |
 | `trialInterval` | string\|int\|null | Optional | This is a container for one-of cases. | getTrialInterval(): | setTrialInterval( trialInterval): void |
 | `trialIntervalUnit` | [`?string(IntervalUnit)`](../../doc/models/interval-unit.md) | Optional | (Optional) | getTrialIntervalUnit(): ?string | setTrialIntervalUnit(?string trialIntervalUnit): void |
 | `initialChargeInCents` | string\|int\|null | Optional | This is a container for one-of cases. | getInitialChargeInCents(): | setInitialChargeInCents( initialChargeInCents): void |
 | `initialChargeAfterTrial` | `?bool` | Optional | (Optional) | getInitialChargeAfterTrial(): ?bool | setInitialChargeAfterTrial(?bool initialChargeAfterTrial): void |
 | `expirationInterval` | string\|int\|null | Optional | This is a container for one-of cases. | getExpirationInterval(): | setExpirationInterval( expirationInterval): void |
-| `expirationIntervalUnit` | [`?string(IntervalUnit)`](../../doc/models/interval-unit.md) | Optional | (Optional) | getExpirationIntervalUnit(): ?string | setExpirationIntervalUnit(?string expirationIntervalUnit): void |
+| `expirationIntervalUnit` | [`?string(ExpirationIntervalUnit)`](../../doc/models/expiration-interval-unit.md) | Optional | (Optional) | getExpirationIntervalUnit(): ?string | setExpirationIntervalUnit(?string expirationIntervalUnit): void |
 | `taxIncluded` | `?bool` | Optional | (Optional) | getTaxIncluded(): ?bool | setTaxIncluded(?bool taxIncluded): void |
 
 ## Example (as JSON)

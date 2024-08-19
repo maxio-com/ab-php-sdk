@@ -22,7 +22,9 @@ class PaymentType
 
     public const PAYPAL_ACCOUNT = 'paypal_account';
 
-    private const _ALL_VALUES = [self::CREDIT_CARD, self::BANK_ACCOUNT, self::PAYPAL_ACCOUNT];
+    public const APPLE_PAY = 'apple_pay';
+
+    private const _ALL_VALUES = [self::CREDIT_CARD, self::BANK_ACCOUNT, self::PAYPAL_ACCOUNT, self::APPLE_PAY];
 
     /**
      * Ensures that all the given values are present in this Enum.

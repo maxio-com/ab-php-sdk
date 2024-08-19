@@ -508,14 +508,14 @@ class CreateSubscription implements \JsonSerializable
      * Returns Next Billing At.
      * (Optional) Set this attribute to a future date/time to sync imported subscriptions to your existing
      * renewal schedule. See the notes on “Date/Time Format” in our [subscription import
-     * documentation](https://maxio-chargify.zendesk.com/hc/en-us/articles/5404863655821#date-format). If
-     * you provide a next_billing_at timestamp that is in the future, no trial or initial charges will be
-     * applied when you create the subscription. In fact, no payment will be captured at all. The first
-     * payment will be captured, according to the prices defined by the product, near the time specified by
-     * next_billing_at. If you do not provide a value for next_billing_at, any trial and/or initial charges
-     * will be assessed and charged at the time of subscription creation. If the card cannot be
-     * successfully charged, the subscription will not be created. See further notes in the section on
-     * Importing Subscriptions.
+     * documentation](https://maxio.zendesk.com/hc/en-us/articles/24251489107213-Advanced-Billing-
+     * Subscription-Imports#date-format). If you provide a next_billing_at timestamp that is in the future,
+     * no trial or initial charges will be applied when you create the subscription. In fact, no payment
+     * will be captured at all. The first payment will be captured, according to the prices defined by the
+     * product, near the time specified by next_billing_at. If you do not provide a value for
+     * next_billing_at, any trial and/or initial charges will be assessed and charged at the time of
+     * subscription creation. If the card cannot be successfully charged, the subscription will not be
+     * created. See further notes in the section on Importing Subscriptions.
      */
     public function getNextBillingAt(): ?\DateTime
     {
@@ -526,14 +526,14 @@ class CreateSubscription implements \JsonSerializable
      * Sets Next Billing At.
      * (Optional) Set this attribute to a future date/time to sync imported subscriptions to your existing
      * renewal schedule. See the notes on “Date/Time Format” in our [subscription import
-     * documentation](https://maxio-chargify.zendesk.com/hc/en-us/articles/5404863655821#date-format). If
-     * you provide a next_billing_at timestamp that is in the future, no trial or initial charges will be
-     * applied when you create the subscription. In fact, no payment will be captured at all. The first
-     * payment will be captured, according to the prices defined by the product, near the time specified by
-     * next_billing_at. If you do not provide a value for next_billing_at, any trial and/or initial charges
-     * will be assessed and charged at the time of subscription creation. If the card cannot be
-     * successfully charged, the subscription will not be created. See further notes in the section on
-     * Importing Subscriptions.
+     * documentation](https://maxio.zendesk.com/hc/en-us/articles/24251489107213-Advanced-Billing-
+     * Subscription-Imports#date-format). If you provide a next_billing_at timestamp that is in the future,
+     * no trial or initial charges will be applied when you create the subscription. In fact, no payment
+     * will be captured at all. The first payment will be captured, according to the prices defined by the
+     * product, near the time specified by next_billing_at. If you do not provide a value for
+     * next_billing_at, any trial and/or initial charges will be assessed and charged at the time of
+     * subscription creation. If the card cannot be successfully charged, the subscription will not be
+     * created. See further notes in the section on Importing Subscriptions.
      *
      * @maps next_billing_at
      * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
@@ -547,14 +547,14 @@ class CreateSubscription implements \JsonSerializable
      * Returns Initial Billing At.
      * (Optional) Set this attribute to a future date/time to create a subscription in the "Awaiting
      * Signup" state, rather than "Active" or "Trialing". See the notes on “Date/Time Format” in our
-     * [subscription import documentation](https://maxio-chargify.zendesk.com/hc/en-
-     * us/articles/5404863655821#date-format). In the "Awaiting Signup" state, a subscription behaves like
-     * any other. It can be canceled, allocated to, had its billing date changed. etc. When the
-     * initial_billing_at date hits, the subscription will transition to the expected state. If the product
-     * has a trial, the subscription will enter a trial, otherwise it will go active. Setup fees will be
-     * respected either before or after the trial, as configured on the price point. If the payment is due
-     * at the initial_billing_at and it fails the subscription will be immediately canceled. See further
-     * notes in the section on Delayed Signups.
+     * [subscription import documentation](https://maxio.zendesk.com/hc/en-us/articles/24251489107213-
+     * Advanced-Billing-Subscription-Imports#date-format). In the "Awaiting Signup" state, a subscription
+     * behaves like any other. It can be canceled, allocated to, had its billing date changed. etc. When
+     * the initial_billing_at date hits, the subscription will transition to the expected state. If the
+     * product has a trial, the subscription will enter a trial, otherwise it will go active. Setup fees
+     * will be respected either before or after the trial, as configured on the price point. If the payment
+     * is due at the initial_billing_at and it fails the subscription will be immediately canceled. See
+     * further notes in the section on Delayed Signups.
      */
     public function getInitialBillingAt(): ?\DateTime
     {
@@ -565,14 +565,14 @@ class CreateSubscription implements \JsonSerializable
      * Sets Initial Billing At.
      * (Optional) Set this attribute to a future date/time to create a subscription in the "Awaiting
      * Signup" state, rather than "Active" or "Trialing". See the notes on “Date/Time Format” in our
-     * [subscription import documentation](https://maxio-chargify.zendesk.com/hc/en-
-     * us/articles/5404863655821#date-format). In the "Awaiting Signup" state, a subscription behaves like
-     * any other. It can be canceled, allocated to, had its billing date changed. etc. When the
-     * initial_billing_at date hits, the subscription will transition to the expected state. If the product
-     * has a trial, the subscription will enter a trial, otherwise it will go active. Setup fees will be
-     * respected either before or after the trial, as configured on the price point. If the payment is due
-     * at the initial_billing_at and it fails the subscription will be immediately canceled. See further
-     * notes in the section on Delayed Signups.
+     * [subscription import documentation](https://maxio.zendesk.com/hc/en-us/articles/24251489107213-
+     * Advanced-Billing-Subscription-Imports#date-format). In the "Awaiting Signup" state, a subscription
+     * behaves like any other. It can be canceled, allocated to, had its billing date changed. etc. When
+     * the initial_billing_at date hits, the subscription will transition to the expected state. If the
+     * product has a trial, the subscription will enter a trial, otherwise it will go active. Setup fees
+     * will be respected either before or after the trial, as configured on the price point. If the payment
+     * is due at the initial_billing_at and it fails the subscription will be immediately canceled. See
+     * further notes in the section on Delayed Signups.
      *
      * @maps initial_billing_at
      * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
@@ -753,8 +753,8 @@ class CreateSubscription implements \JsonSerializable
     /**
      * Returns Components.
      * (Optional) An array of component ids and quantities to be added to the subscription. See
-     * [Components](https://maxio-chargify.zendesk.com/hc/en-us/articles/5405020625677) for more
-     * information.
+     * [Components](https://maxio.zendesk.com/hc/en-us/articles/24261141522189-Components-Overview) for
+     * more information.
      *
      * @return CreateSubscriptionComponent[]|null
      */
@@ -766,8 +766,8 @@ class CreateSubscription implements \JsonSerializable
     /**
      * Sets Components.
      * (Optional) An array of component ids and quantities to be added to the subscription. See
-     * [Components](https://maxio-chargify.zendesk.com/hc/en-us/articles/5405020625677) for more
-     * information.
+     * [Components](https://maxio.zendesk.com/hc/en-us/articles/24261141522189-Components-Overview) for
+     * more information.
      *
      * @maps components
      *
@@ -866,8 +866,8 @@ class CreateSubscription implements \JsonSerializable
 
     /**
      * Returns Ref.
-     * A valid referral code. (optional, see [Referrals](https://maxio-chargify.zendesk.com/hc/en-
-     * us/articles/5405420204045-Referrals-Reference#how-to-obtain-referral-codes) for more details). If
+     * A valid referral code. (optional, see [Referrals](https://maxio.zendesk.com/hc/en-
+     * us/articles/24286981223693-Referrals-Reference#how-to-obtain-referral-codes) for more details). If
      * supplied, must be valid, or else subscription creation will fail.
      */
     public function getRef(): ?string
@@ -877,8 +877,8 @@ class CreateSubscription implements \JsonSerializable
 
     /**
      * Sets Ref.
-     * A valid referral code. (optional, see [Referrals](https://maxio-chargify.zendesk.com/hc/en-
-     * us/articles/5405420204045-Referrals-Reference#how-to-obtain-referral-codes) for more details). If
+     * A valid referral code. (optional, see [Referrals](https://maxio.zendesk.com/hc/en-
+     * us/articles/24286981223693-Referrals-Reference#how-to-obtain-referral-codes) for more details). If
      * supplied, must be valid, or else subscription creation will fail.
      *
      * @maps ref

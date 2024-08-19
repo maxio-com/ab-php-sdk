@@ -12,4 +12,5 @@
 | `CREDIT_CARD` |
 | `BANK_ACCOUNT` |
 | `PAYPAL_ACCOUNT` |
+| `APPLE_PAY` |
 

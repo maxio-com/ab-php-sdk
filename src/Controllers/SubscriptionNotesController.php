@@ -30,8 +30,8 @@ class SubscriptionNotesController extends BaseController
      *
      * If you have structured data such as birth date, color, etc., consider using Metadata instead.
      *
-     * Full documentation on how to use Notes in the Chargify UI can be located [here](https://maxio-
-     * chargify.zendesk.com/hc/en-us/articles/5404434903181-Subscription-Summary#notes).
+     * Full documentation on how to use Notes in the Advanced Billing UI can be located [here](https:
+     * //maxio.zendesk.com/hc/en-us/articles/24251712214413-Subscription-Summary-Overview).
      *
      * @param int $subscriptionId The Chargify id of the subscription
      * @param UpdateSubscriptionNoteRequest|null $body
@@ -87,7 +87,7 @@ class SubscriptionNotesController extends BaseController
      * note attached to a subscription.
      *
      * @param int $subscriptionId The Chargify id of the subscription
-     * @param int $noteId The Chargify id of the note
+     * @param int $noteId The Advanced Billing id of the note
      *
      * @return SubscriptionNoteResponse Response from the API call
      *
@@ -114,7 +114,7 @@ class SubscriptionNotesController extends BaseController
      * Use the following method to update a note for a Subscription.
      *
      * @param int $subscriptionId The Chargify id of the subscription
-     * @param int $noteId The Chargify id of the note
+     * @param int $noteId The Advanced Billing id of the note
      * @param UpdateSubscriptionNoteRequest|null $body
      *
      * @return SubscriptionNoteResponse Response from the API call
@@ -147,7 +147,7 @@ class SubscriptionNotesController extends BaseController
      * Use the following method to delete a note for a Subscription.
      *
      * @param int $subscriptionId The Chargify id of the subscription
-     * @param int $noteId The Chargify id of the note
+     * @param int $noteId The Advanced Billing id of the note
      *
      * @return void Response from the API call
      *

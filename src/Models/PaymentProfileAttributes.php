@@ -145,7 +145,7 @@ class PaymentProfileAttributes implements \JsonSerializable
 
     /**
      * Returns Chargify Token.
-     * (Optional) Token received after sending billing informations using chargify.js. This token must be
+     * (Optional) Token received after sending billing information using chargify.js. This token must be
      * passed as a sole attribute of `payment_profile_attributes` (i.e. tok_9g6hw85pnpt6knmskpwp4ttt)
      */
     public function getChargifyToken(): ?string
@@ -155,7 +155,7 @@ class PaymentProfileAttributes implements \JsonSerializable
 
     /**
      * Sets Chargify Token.
-     * (Optional) Token received after sending billing informations using chargify.js. This token must be
+     * (Optional) Token received after sending billing information using chargify.js. This token must be
      * passed as a sole attribute of `payment_profile_attributes` (i.e. tok_9g6hw85pnpt6knmskpwp4ttt)
      *
      * @maps chargify_token
@@ -195,6 +195,7 @@ class PaymentProfileAttributes implements \JsonSerializable
      * Sets Payment Type.
      *
      * @maps payment_type
+     * @factory \AdvancedBillingLib\Models\PaymentType::checkValue
      */
     public function setPaymentType(?string $paymentType): void
     {
@@ -534,7 +535,7 @@ class PaymentProfileAttributes implements \JsonSerializable
      * provided vault_token.
      *
      * @maps current_vault
-     * @factory \AdvancedBillingLib\Models\CurrentVault::checkValue
+     * @factory \AdvancedBillingLib\Models\AllVaults::checkValue
      */
     public function setCurrentVault(?string $currentVault): void
     {
@@ -751,7 +752,7 @@ class PaymentProfileAttributes implements \JsonSerializable
             $json['id']                   = $this->id;
         }
         if (isset($this->paymentType)) {
-            $json['payment_type']         = $this->paymentType;
+            $json['payment_type']         = PaymentType::checkValue($this->paymentType);
         }
         if (isset($this->firstName)) {
             $json['first_name']           = $this->firstName;
@@ -801,7 +802,7 @@ class PaymentProfileAttributes implements \JsonSerializable
             $json['billing_zip']          = $this->billingZip;
         }
         if (isset($this->currentVault)) {
-            $json['current_vault']        = CurrentVault::checkValue($this->currentVault);
+            $json['current_vault']        = AllVaults::checkValue($this->currentVault);
         }
         if (isset($this->vaultToken)) {
             $json['vault_token']          = $this->vaultToken;

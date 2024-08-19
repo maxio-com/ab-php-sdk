@@ -276,6 +276,11 @@ class Invoice implements \JsonSerializable
     private $previousBalanceData;
 
     /**
+     * @var \DateTime|null
+     */
+    private $publicUrlExpiresOn;
+
+    /**
      * Returns Id.
      */
     public function getId(): ?int
@@ -582,8 +587,8 @@ class Invoice implements \JsonSerializable
 
     /**
      * Returns Status.
-     * The current status of the invoice. See [Invoice Statuses](https://maxio-chargify.zendesk.com/hc/en-
-     * us/articles/5405078794253-Introduction-to-Invoices#invoice-statuses) for more.
+     * The current status of the invoice. See [Invoice Statuses](https://maxio.zendesk.com/hc/en-
+     * us/articles/24252287829645-Advanced-Billing-Invoices-Overview#invoice-statuses) for more.
      */
     public function getStatus(): ?string
     {
@@ -592,8 +597,8 @@ class Invoice implements \JsonSerializable
 
     /**
      * Sets Status.
-     * The current status of the invoice. See [Invoice Statuses](https://maxio-chargify.zendesk.com/hc/en-
-     * us/articles/5405078794253-Introduction-to-Invoices#invoice-statuses) for more.
+     * The current status of the invoice. See [Invoice Statuses](https://maxio.zendesk.com/hc/en-
+     * us/articles/24252287829645-Advanced-Billing-Invoices-Overview#invoice-statuses) for more.
      *
      * @maps status
      * @factory \AdvancedBillingLib\Models\InvoiceStatus::checkValue
@@ -730,8 +735,8 @@ class Invoice implements \JsonSerializable
      * "Parent" invoices do not have lines of their own, but they have subtotals and totals which aggregate
      * the member invoice segments.
      *
-     * See also the [invoice consolidation documentation](https://chargify.zendesk.com/hc/en-
-     * us/articles/4407746391835).
+     * See also the [invoice consolidation documentation](https://maxio.zendesk.com/hc/en-
+     * us/articles/24252269909389-Invoice-Consolidation).
      */
     public function getConsolidationLevel(): ?string
     {
@@ -750,8 +755,8 @@ class Invoice implements \JsonSerializable
      * "Parent" invoices do not have lines of their own, but they have subtotals and totals which aggregate
      * the member invoice segments.
      *
-     * See also the [invoice consolidation documentation](https://chargify.zendesk.com/hc/en-
-     * us/articles/4407746391835).
+     * See also the [invoice consolidation documentation](https://maxio.zendesk.com/hc/en-
+     * us/articles/24252269909389-Invoice-Consolidation).
      *
      * @maps consolidation_level
      * @factory \AdvancedBillingLib\Models\InvoiceConsolidationLevel::checkValue
@@ -1467,6 +1472,27 @@ class Invoice implements \JsonSerializable
         $this->previousBalanceData = $previousBalanceData;
     }
 
+    /**
+     * Returns Public Url Expires On.
+     * The format is `"YYYY-MM-DD"`.
+     */
+    public function getPublicUrlExpiresOn(): ?\DateTime
+    {
+        return $this->publicUrlExpiresOn;
+    }
+
+    /**
+     * Sets Public Url Expires On.
+     * The format is `"YYYY-MM-DD"`.
+     *
+     * @maps public_url_expires_on
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromSimpleDate
+     */
+    public function setPublicUrlExpiresOn(?\DateTime $publicUrlExpiresOn): void
+    {
+        $this->publicUrlExpiresOn = $publicUrlExpiresOn;
+    }
+
     private $additionalProperties = [];
 
     /**
@@ -1647,6 +1673,9 @@ class Invoice implements \JsonSerializable
         }
         if (isset($this->previousBalanceData)) {
             $json['previous_balance_data']         = $this->previousBalanceData;
+        }
+        if (isset($this->publicUrlExpiresOn)) {
+            $json['public_url_expires_on']         = DateTimeHelper::toSimpleDate($this->publicUrlExpiresOn);
         }
         $json = array_merge($json, $this->additionalProperties);
 

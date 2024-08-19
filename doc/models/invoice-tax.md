@@ -20,6 +20,9 @@
 | `transactionId` | `?int` | Optional | - | getTransactionId(): ?int | setTransactionId(?int transactionId): void |
 | `lineItemBreakouts` | [`?(InvoiceTaxBreakout[])`](../../doc/models/invoice-tax-breakout.md) | Optional | - | getLineItemBreakouts(): ?array | setLineItemBreakouts(?array lineItemBreakouts): void |
 | `taxComponentBreakouts` | [`?(InvoiceTaxComponentBreakout[])`](../../doc/models/invoice-tax-component-breakout.md) | Optional | - | getTaxComponentBreakouts(): ?array | setTaxComponentBreakouts(?array taxComponentBreakouts): void |
+| `euVat` | `?bool` | Optional | - | getEuVat(): ?bool | setEuVat(?bool euVat): void |
+| `type` | `?string` | Optional | - | getType(): ?string | setType(?string type): void |
+| `taxExemptAmount` | `?string` | Optional | - | getTaxExemptAmount(): ?string | setTaxExemptAmount(?string taxExemptAmount): void |
 
 ## Example (as JSON)
 

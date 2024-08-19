@@ -33,9 +33,18 @@ class ComponentCustomPriceBuilder
     /**
      * Initializes a new component custom price Builder object.
      */
-    public static function init(): self
+    public static function init(array $prices): self
     {
-        return new self(new ComponentCustomPrice());
+        return new self(new ComponentCustomPrice($prices));
+    }
+
+    /**
+     * Sets tax included field.
+     */
+    public function taxIncluded(?bool $value): self
+    {
+        $this->instance->setTaxIncluded($value);
+        return $this;
     }
 
     /**
@@ -66,11 +75,11 @@ class ComponentCustomPriceBuilder
     }
 
     /**
-     * Sets prices field.
+     * Unsets interval unit field.
      */
-    public function prices(?array $value): self
+    public function unsetIntervalUnit(): self
     {
-        $this->instance->setPrices($value);
+        $this->instance->unsetIntervalUnit();
         return $this;
     }
 

@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
 class ResentInvitation implements \JsonSerializable
@@ -33,6 +34,16 @@ class ResentInvitation implements \JsonSerializable
      * @var int|null
      */
     private $uninvitedCount;
+
+    /**
+     * @var \DateTime|null
+     */
+    private $lastInviteSentAt;
+
+    /**
+     * @var \DateTime|null
+     */
+    private $lastInviteAcceptedAt;
 
     /**
      * Returns Last Sent At.
@@ -106,6 +117,44 @@ class ResentInvitation implements \JsonSerializable
         $this->uninvitedCount = $uninvitedCount;
     }
 
+    /**
+     * Returns Last Invite Sent At.
+     */
+    public function getLastInviteSentAt(): ?\DateTime
+    {
+        return $this->lastInviteSentAt;
+    }
+
+    /**
+     * Sets Last Invite Sent At.
+     *
+     * @maps last_invite_sent_at
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
+     */
+    public function setLastInviteSentAt(?\DateTime $lastInviteSentAt): void
+    {
+        $this->lastInviteSentAt = $lastInviteSentAt;
+    }
+
+    /**
+     * Returns Last Invite Accepted At.
+     */
+    public function getLastInviteAcceptedAt(): ?\DateTime
+    {
+        return $this->lastInviteAcceptedAt;
+    }
+
+    /**
+     * Sets Last Invite Accepted At.
+     *
+     * @maps last_invite_accepted_at
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
+     */
+    public function setLastInviteAcceptedAt(?\DateTime $lastInviteAcceptedAt): void
+    {
+        $this->lastInviteAcceptedAt = $lastInviteAcceptedAt;
+    }
+
     private $additionalProperties = [];
 
     /**
@@ -132,16 +181,22 @@ class ResentInvitation implements \JsonSerializable
     {
         $json = [];
         if (isset($this->lastSentAt)) {
-            $json['last_sent_at']          = $this->lastSentAt;
+            $json['last_sent_at']            = $this->lastSentAt;
         }
         if (isset($this->lastAcceptedAt)) {
-            $json['last_accepted_at']      = $this->lastAcceptedAt;
+            $json['last_accepted_at']        = $this->lastAcceptedAt;
         }
         if (isset($this->sendInviteLinkText)) {
-            $json['send_invite_link_text'] = $this->sendInviteLinkText;
+            $json['send_invite_link_text']   = $this->sendInviteLinkText;
         }
         if (isset($this->uninvitedCount)) {
-            $json['uninvited_count']       = $this->uninvitedCount;
+            $json['uninvited_count']         = $this->uninvitedCount;
+        }
+        if (isset($this->lastInviteSentAt)) {
+            $json['last_invite_sent_at']     = DateTimeHelper::toRfc3339DateTime($this->lastInviteSentAt);
+        }
+        if (isset($this->lastInviteAcceptedAt)) {
+            $json['last_invite_accepted_at'] = DateTimeHelper::toRfc3339DateTime($this->lastInviteAcceptedAt);
         }
         $json = array_merge($json, $this->additionalProperties);
 

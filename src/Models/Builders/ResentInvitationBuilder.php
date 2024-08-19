@@ -75,6 +75,24 @@ class ResentInvitationBuilder
     }
 
     /**
+     * Sets last invite sent at field.
+     */
+    public function lastInviteSentAt(?\DateTime $value): self
+    {
+        $this->instance->setLastInviteSentAt($value);
+        return $this;
+    }
+
+    /**
+     * Sets last invite accepted at field.
+     */
+    public function lastInviteAcceptedAt(?\DateTime $value): self
+    {
+        $this->instance->setLastInviteAcceptedAt($value);
+        return $this;
+    }
+
+    /**
      * Add an additional property to this model.
      *
      * @param string $name Name of property

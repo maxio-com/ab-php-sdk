@@ -75,9 +75,9 @@ class CreateProductPricePoint implements \JsonSerializable
     private $expirationInterval;
 
     /**
-     * @var string|null
+     * @var array
      */
-    private $expirationIntervalUnit;
+    private $expirationIntervalUnit = [];
 
     /**
      * @var bool|null
@@ -348,25 +348,38 @@ class CreateProductPricePoint implements \JsonSerializable
 
     /**
      * Returns Expiration Interval Unit.
-     * A string representing the expiration interval unit for this product price point, either month or
-     * day
+     * A string representing the expiration interval unit for this product price point, either month, day
+     * or never
      */
     public function getExpirationIntervalUnit(): ?string
     {
-        return $this->expirationIntervalUnit;
+        if (count($this->expirationIntervalUnit) == 0) {
+            return null;
+        }
+        return $this->expirationIntervalUnit['value'];
     }
 
     /**
      * Sets Expiration Interval Unit.
-     * A string representing the expiration interval unit for this product price point, either month or
-     * day
+     * A string representing the expiration interval unit for this product price point, either month, day
+     * or never
      *
      * @maps expiration_interval_unit
-     * @factory \AdvancedBillingLib\Models\IntervalUnit::checkValue
+     * @factory \AdvancedBillingLib\Models\ExpirationIntervalUnit::checkValue
      */
     public function setExpirationIntervalUnit(?string $expirationIntervalUnit): void
     {
-        $this->expirationIntervalUnit = $expirationIntervalUnit;
+        $this->expirationIntervalUnit['value'] = $expirationIntervalUnit;
+    }
+
+    /**
+     * Unsets Expiration Interval Unit.
+     * A string representing the expiration interval unit for this product price point, either month, day
+     * or never
+     */
+    public function unsetExpirationIntervalUnit(): void
+    {
+        $this->expirationIntervalUnit = [];
     }
 
     /**
@@ -444,8 +457,11 @@ class CreateProductPricePoint implements \JsonSerializable
         if (isset($this->expirationInterval)) {
             $json['expiration_interval']        = $this->expirationInterval;
         }
-        if (isset($this->expirationIntervalUnit)) {
-            $json['expiration_interval_unit']   = IntervalUnit::checkValue($this->expirationIntervalUnit);
+        if (!empty($this->expirationIntervalUnit)) {
+            $json['expiration_interval_unit']   =
+                ExpirationIntervalUnit::checkValue(
+                    $this->expirationIntervalUnit['value']
+                );
         }
         if (isset($this->useSiteExchangeRate)) {
             $json['use_site_exchange_rate']     = $this->useSiteExchangeRate;

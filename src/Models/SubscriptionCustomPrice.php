@@ -40,7 +40,7 @@ class SubscriptionCustomPrice implements \JsonSerializable
     private $interval;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $intervalUnit;
 
@@ -75,9 +75,9 @@ class SubscriptionCustomPrice implements \JsonSerializable
     private $expirationInterval;
 
     /**
-     * @var string|null
+     * @var array
      */
-    private $expirationIntervalUnit;
+    private $expirationIntervalUnit = [];
 
     /**
      * @var bool|null
@@ -87,13 +87,11 @@ class SubscriptionCustomPrice implements \JsonSerializable
     /**
      * @param string|int $priceInCents
      * @param string|int $interval
-     * @param string $intervalUnit
      */
-    public function __construct($priceInCents, $interval, string $intervalUnit)
+    public function __construct($priceInCents, $interval)
     {
         $this->priceInCents = $priceInCents;
         $this->interval = $interval;
-        $this->intervalUnit = $intervalUnit;
     }
 
     /**
@@ -192,7 +190,7 @@ class SubscriptionCustomPrice implements \JsonSerializable
      * Returns Interval Unit.
      * Required if using `custom_price` attribute.
      */
-    public function getIntervalUnit(): string
+    public function getIntervalUnit(): ?string
     {
         return $this->intervalUnit;
     }
@@ -201,11 +199,10 @@ class SubscriptionCustomPrice implements \JsonSerializable
      * Sets Interval Unit.
      * Required if using `custom_price` attribute.
      *
-     * @required
      * @maps interval_unit
      * @factory \AdvancedBillingLib\Models\IntervalUnit::checkValue
      */
-    public function setIntervalUnit(string $intervalUnit): void
+    public function setIntervalUnit(?string $intervalUnit): void
     {
         $this->intervalUnit = $intervalUnit;
     }
@@ -357,7 +354,10 @@ class SubscriptionCustomPrice implements \JsonSerializable
      */
     public function getExpirationIntervalUnit(): ?string
     {
-        return $this->expirationIntervalUnit;
+        if (count($this->expirationIntervalUnit) == 0) {
+            return null;
+        }
+        return $this->expirationIntervalUnit['value'];
     }
 
     /**
@@ -365,11 +365,20 @@ class SubscriptionCustomPrice implements \JsonSerializable
      * (Optional)
      *
      * @maps expiration_interval_unit
-     * @factory \AdvancedBillingLib\Models\IntervalUnit::checkValue
+     * @factory \AdvancedBillingLib\Models\ExpirationIntervalUnit::checkValue
      */
     public function setExpirationIntervalUnit(?string $expirationIntervalUnit): void
     {
-        $this->expirationIntervalUnit = $expirationIntervalUnit;
+        $this->expirationIntervalUnit['value'] = $expirationIntervalUnit;
+    }
+
+    /**
+     * Unsets Expiration Interval Unit.
+     * (Optional)
+     */
+    public function unsetExpirationIntervalUnit(): void
+    {
+        $this->expirationIntervalUnit = [];
     }
 
     /**
@@ -468,8 +477,11 @@ class SubscriptionCustomPrice implements \JsonSerializable
                     'anyOf(oneOf(string,int),null)'
                 );
         }
-        if (isset($this->expirationIntervalUnit)) {
-            $json['expiration_interval_unit']   = IntervalUnit::checkValue($this->expirationIntervalUnit);
+        if (!empty($this->expirationIntervalUnit)) {
+            $json['expiration_interval_unit']   =
+                ExpirationIntervalUnit::checkValue(
+                    $this->expirationIntervalUnit['value']
+                );
         }
         if (isset($this->taxIncluded)) {
             $json['tax_included']               = $this->taxIncluded;

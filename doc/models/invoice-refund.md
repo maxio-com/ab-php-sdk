@@ -17,6 +17,7 @@
 | `gatewayTransactionId` | `?string` | Optional | The transaction ID for the refund as returned from the payment gateway | getGatewayTransactionId(): ?string | setGatewayTransactionId(?string gatewayTransactionId): void |
 | `gatewayUsed` | `?string` | Optional | - | getGatewayUsed(): ?string | setGatewayUsed(?string gatewayUsed): void |
 | `gatewayHandle` | `?string` | Optional | - | getGatewayHandle(): ?string | setGatewayHandle(?string gatewayHandle): void |
+| `achLateReject` | `?bool` | Optional | - | getAchLateReject(): ?bool | setAchLateReject(?bool achLateReject): void |
 
 ## Example (as JSON)
 

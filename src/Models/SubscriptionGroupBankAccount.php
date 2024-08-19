@@ -375,7 +375,7 @@ class SubscriptionGroupBankAccount implements \JsonSerializable
 
     /**
      * Returns Current Vault.
-     * The vault that stores the payment profile with the provided vault_token.
+     * The vault that stores the payment profile with the provided vault_token. Use `bogus` for testing.
      */
     public function getCurrentVault(): ?string
     {
@@ -384,7 +384,7 @@ class SubscriptionGroupBankAccount implements \JsonSerializable
 
     /**
      * Sets Current Vault.
-     * The vault that stores the payment profile with the provided vault_token.
+     * The vault that stores the payment profile with the provided vault_token. Use `bogus` for testing.
      *
      * @maps current_vault
      * @factory \AdvancedBillingLib\Models\BankAccountVault::checkValue

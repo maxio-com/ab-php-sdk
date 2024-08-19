@@ -16,12 +16,12 @@ use stdClass;
 class PaymentProfileResponse implements \JsonSerializable
 {
     /**
-     * @var BankAccountPaymentProfile|CreditCardPaymentProfile
+     * @var ApplePayPaymentProfile|BankAccountPaymentProfile|CreditCardPaymentProfile|PaypalPaymentProfile
      */
     private $paymentProfile;
 
     /**
-     * @param BankAccountPaymentProfile|CreditCardPaymentProfile $paymentProfile
+     * @param ApplePayPaymentProfile|BankAccountPaymentProfile|CreditCardPaymentProfile|PaypalPaymentProfile $paymentProfile
      */
     public function __construct($paymentProfile)
     {
@@ -31,7 +31,7 @@ class PaymentProfileResponse implements \JsonSerializable
     /**
      * Returns Payment Profile.
      *
-     * @return BankAccountPaymentProfile|CreditCardPaymentProfile
+     * @return ApplePayPaymentProfile|BankAccountPaymentProfile|CreditCardPaymentProfile|PaypalPaymentProfile
      */
     public function getPaymentProfile()
     {
@@ -43,9 +43,9 @@ class PaymentProfileResponse implements \JsonSerializable
      *
      * @required
      * @maps payment_profile
-     * @mapsBy oneOf(BankAccountPaymentProfile,CreditCardPaymentProfile)
+     * @mapsBy anyOf{paymentType}(ApplePayPaymentProfile{applePay2},BankAccountPaymentProfile{bankAccount2},CreditCardPaymentProfile{creditCard2},PaypalPaymentProfile{paypalAccount2})
      *
-     * @param BankAccountPaymentProfile|CreditCardPaymentProfile $paymentProfile
+     * @param ApplePayPaymentProfile|BankAccountPaymentProfile|CreditCardPaymentProfile|PaypalPaymentProfile $paymentProfile
      */
     public function setPaymentProfile($paymentProfile): void
     {
@@ -80,7 +80,8 @@ class PaymentProfileResponse implements \JsonSerializable
         $json['payment_profile'] =
             ApiHelper::getJsonHelper()->verifyTypes(
                 $this->paymentProfile,
-                'oneOf(BankAccountPaymentProfile,CreditCardPaymentProfile)'
+                'anyOf{paymentType}(ApplePayPaymentProfile{applePay2},BankAccountPaymentProfile{bankA' .
+                'ccount2},CreditCardPaymentProfile{creditCard2},PaypalPaymentProfile{paypalAccount2})'
             );
         $json = array_merge($json, $this->additionalProperties);
 

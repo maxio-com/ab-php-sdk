@@ -84,6 +84,15 @@ class ComponentPricePointItemBuilder
     }
 
     /**
+     * Unsets interval unit field.
+     */
+    public function unsetIntervalUnit(): self
+    {
+        $this->instance->unsetIntervalUnit();
+        return $this;
+    }
+
+    /**
      * Sets prices field.
      */
     public function prices(?array $value): self

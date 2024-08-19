@@ -15,6 +15,7 @@ use AdvancedBillingLib\Exceptions\ComponentAllocationErrorException;
 use AdvancedBillingLib\Exceptions\ComponentPricePointErrorException;
 use AdvancedBillingLib\Exceptions\ErrorListResponseException;
 use AdvancedBillingLib\Exceptions\SubscriptionComponentAllocationErrorException;
+use AdvancedBillingLib\Models\ActivateEventBasedComponent;
 use AdvancedBillingLib\Models\AllocateComponents;
 use AdvancedBillingLib\Models\AllocationPreviewResponse;
 use AdvancedBillingLib\Models\AllocationResponse;
@@ -48,8 +49,8 @@ class SubscriptionComponentsController extends BaseController
      * This request will list information regarding a specific component owned by a subscription.
      *
      * @param int $subscriptionId The Chargify id of the subscription
-     * @param int $componentId The Chargify id of the component. Alternatively, the component's
-     *        handle prefixed by `handle:`
+     * @param int $componentId The Advanced Billing id of the component. Alternatively, the
+     *        component's handle prefixed by `handle:`
      *
      * @return SubscriptionComponentResponse Response from the API call
      *
@@ -207,10 +208,10 @@ class SubscriptionComponentsController extends BaseController
      *
      * ## Allocations Documentation
      *
-     * Full documentation on how to record Allocations in the Chargify UI can be located [here](https:
-     * //maxio-chargify.zendesk.com/hc/en-us/articles/5404527849997). It is focused on how allocations
-     * operate within the Chargify UI.It goes into greater detail on how the user interface will react when
-     * recording allocations.
+     * Full documentation on how to record Allocations in the Advanced Billing UI can be located
+     * [here](https://maxio.zendesk.com/hc/en-us/articles/24251883961485-Component-Allocations-Overview).
+     * It is focused on how allocations operate within the Advanced Billing UI.It goes into greater detail
+     * on how the user interface will react when recording allocations.
      *
      * This documentation also goes into greater detail on how proration is taken into consideration when
      * applying component allocations.
@@ -225,8 +226,8 @@ class SubscriptionComponentsController extends BaseController
      * component type always generate charges immediately without proration.
      *
      * For background information on prorated components and upgrade/downgrade schemes, see [Setting
-     * Component Allocations.](https://maxio-chargify.zendesk.com/hc/en-us/articles/5404527849997#proration-
-     * upgrades-vs-downgrades).
+     * Component Allocations.](https://maxio.zendesk.com/hc/en-us/articles/24251906165133-Component-
+     * Allocations-Proration).
      * See the tables below for valid values.
      *
      * | upgrade_charge | Definition                                                        |
@@ -253,23 +254,23 @@ class SubscriptionComponentsController extends BaseController
      * ### Order of Resolution for upgrade_charge and downgrade_credit
      *
      * 1. Per allocation in API call (within a single allocation of the `allocations` array)
-     * 2. [Component-level default value](https://maxio-chargify.zendesk.com/hc/en-
-     * us/articles/5404527849997-Component-Allocations#component-allocations-0-0)
+     * 2. [Component-level default value](https://maxio.zendesk.com/hc/en-us/articles/24251883961485-
+     * Component-Allocations-Overview)
      * 3. Allocation API call top level (outside of the `allocations` array)
-     * 4. [Site-level default value](https://maxio-chargify.zendesk.com/hc/en-
-     * us/articles/5404527849997#proration-schemes)
+     * 4. [Site-level default value](https://maxio.zendesk.com/hc/en-us/articles/24251906165133-Component-
+     * Allocations-Proration#proration-schemes)
      *
      * ### Order of Resolution for accrue charge
      *
      * 1. Allocation API call top level (outside of the `allocations` array)
-     * 2. [Site-level default value](https://maxio-chargify.zendesk.com/hc/en-
-     * us/articles/5404527849997#proration-schemes)
+     * 2. [Site-level default value](https://maxio.zendesk.com/hc/en-us/articles/24251906165133-Component-
+     * Allocations-Proration#proration-schemes)
      *
      * **NOTE: Proration uses the current price of the component as well as the current tax rates. Changes
      * to either may cause the prorated charge/credit to be wrong.**
      *
      * @param int $subscriptionId The Chargify id of the subscription
-     * @param int $componentId The Chargify id of the component
+     * @param int $componentId The Advanced Billing id of the component
      * @param CreateAllocationRequest|null $body
      *
      * @return AllocationResponse Response from the API call
@@ -314,9 +315,9 @@ class SubscriptionComponentsController extends BaseController
      * When a subscription's on/off component has been toggled to on (`1`) or off (`0`), usage will be
      * logged in this response.
      *
-     * ## Querying data via Chargify gem
+     * ## Querying data via Advanced Billing gem
      *
-     * You can also query the current quantity via the [official Chargify Gem.](http://github.
+     * You can also query the current quantity via the [official Advanced Billing Gem.](http://github.
      * com/chargify/chargify_api_ares)
      *
      * ```# First way
@@ -331,7 +332,7 @@ class SubscriptionComponentsController extends BaseController
      * ```
      *
      * @param int $subscriptionId The Chargify id of the subscription
-     * @param int $componentId The Chargify id of the component
+     * @param int $componentId The Advanced Billing id of the component
      * @param int|null $page Result records are organized in pages. By default, the first page of
      *        results is displayed. The page parameter specifies a page number of results to fetch.
      *        You can start navigating through the pages to consume the results. You do this by
@@ -415,9 +416,9 @@ class SubscriptionComponentsController extends BaseController
     }
 
     /**
-     * Chargify offers the ability to preview a potential subscription's **quantity-based** or **on/off**
-     * component allocation in the middle of the current billing period.  This is useful if you want users
-     * to be able to see the effect of a component operation before actually doing it.
+     * Advanced Billing offers the ability to preview a potential subscription's **quantity-based** or
+     * **on/off** component allocation in the middle of the current billing period.  This is useful if you
+     * want users to be able to see the effect of a component operation before actually doing it.
      *
      * ## Fine-grained Component Control: Use with multiple `upgrade_charge`s or `downgrade_credits`
      *
@@ -482,8 +483,8 @@ class SubscriptionComponentsController extends BaseController
      * subscription's current period beginning date.
      *
      * @param int $subscriptionId The Chargify id of the subscription
-     * @param int $componentId The Chargify id of the component
-     * @param int $allocationId The Chargify id of the allocation
+     * @param int $componentId The Advanced Billing id of the component
+     * @param int $allocationId The Advanced Billing id of the allocation
      * @param UpdateAllocationExpirationDate|null $body
      *
      * @return void Response from the API call
@@ -541,8 +542,8 @@ class SubscriptionComponentsController extends BaseController
      * issued along with a Credit Note.
      *
      * @param int $subscriptionId The Chargify id of the subscription
-     * @param int $componentId The Chargify id of the component
-     * @param int $allocationId The Chargify id of the allocation
+     * @param int $componentId The Advanced Billing id of the component
+     * @param int $allocationId The Advanced Billing id of the allocation
      * @param CreditSchemeRequest|null $body
      *
      * @return void Response from the API call
@@ -584,22 +585,23 @@ class SubscriptionComponentsController extends BaseController
     /**
      * ## Documentation
      *
-     * Full documentation on how to create Components in the Chargify UI can be located [here](https:
-     * //maxio-chargify.zendesk.com/hc/en-us/articles/5405020625677#creating-components). Additionally, for
-     * information on how to record component usage against a subscription, please see the following
-     * resources:
+     * Full documentation on how to create Components in the Advanced Billing UI can be located
+     * [here](https://maxio.zendesk.com/hc/en-us/articles/24261149711501-Create-Edit-and-Archive-
+     * Components). Additionally, for information on how to record component usage against a subscription,
+     * please see the following resources:
      *
-     * + [Recording Metered Component Usage](https://maxio-chargify.zendesk.com/hc/en-
-     * us/articles/5404527849997#reporting-metered-component-usage)
-     * + [Reporting Prepaid Component Status](https://maxio-chargify.zendesk.com/hc/en-
-     * us/articles/5404527849997#reporting-prepaid-component-status)
+     * + [Recording Metered Component Usage](https://maxio.zendesk.com/hc/en-us/articles/24251890500109-
+     * Reporting-Component-Allocations#reporting-metered-component-usage)
+     * + [Reporting Prepaid Component Status](https://maxio.zendesk.com/hc/en-us/articles/24251890500109-
+     * Reporting-Component-Allocations#reporting-prepaid-component-status)
      *
-     * You may choose to report metered or prepaid usage to Chargify as often as you wish. You may report
-     * usage as it happens. You may also report usage periodically, such as each night or once per billing
-     * period. If usage events occur in your system very frequently (on the order of thousands of times an
-     * hour), it is best to accumulate usage into batches on your side, and then report those batches less
-     * frequently, such as daily. This will ensure you remain below any API throttling limits. If your use
-     * case requires higher rates of usage reporting, we recommend utilizing Events Based Components.
+     * You may choose to report metered or prepaid usage to Advanced Billing as often as you wish. You may
+     * report usage as it happens. You may also report usage periodically, such as each night or once per
+     * billing period. If usage events occur in your system very frequently (on the order of thousands of
+     * times an hour), it is best to accumulate usage into batches on your side, and then report those
+     * batches less frequently, such as daily. This will ensure you remain below any API throttling limits.
+     * If your use case requires higher rates of usage reporting, we recommend utilizing Events Based
+     * Components.
      *
      * ## Create Usage for Subscription
      *
@@ -609,8 +611,8 @@ class SubscriptionComponentsController extends BaseController
      *
      * ## Price Point ID usage
      *
-     * If you are using price points, for metered and prepaid usage components, Chargify gives you the
-     * option to specify a price point in your request.
+     * If you are using price points, for metered and prepaid usage components, Advanced Billing gives you
+     * the option to specify a price point in your request.
      *
      * You do not need to specify a price point ID. If a price point is not included, the default price
      * point for the component will be used when the usage is recorded.
@@ -658,8 +660,8 @@ class SubscriptionComponentsController extends BaseController
      * to record that a subscriber has sent both an SMS Message and an Email, send an API call for each.
      *
      * @param int $subscriptionId The Chargify id of the subscription
-     * @param int|string $componentId Either the Chargify id for the component or the component's
-     *        handle prefixed by `handle:`
+     * @param int|string $componentId Either the Advanced Billing id for the component or the
+     *        component's handle prefixed by `handle:`
      * @param CreateUsageRequest|null $body
      *
      * @return UsageResponse Response from the API call
@@ -757,25 +759,29 @@ class SubscriptionComponentsController extends BaseController
      * In order to bill your subscribers on your Events data under the Events-Based Billing feature, the
      * components must be activated for the subscriber.
      *
-     * Learn more about the role of activation in the [Events-Based Billing docs](https://chargify.zendesk.
-     * com/hc/en-us/articles/4407720810907#activating-components-for-subscribers).
+     * Learn more about the role of activation in the [Events-Based Billing docs](https://maxio.zendesk.
+     * com/hc/en-us/articles/24260323329805-Events-Based-Billing-Overview).
      *
      * Use this endpoint to activate an event-based component for a single subscription. Activating an
-     * event-based component causes Chargify to bill for events when the subscription is renewed.
+     * event-based component causes Advanced Billing to bill for events when the subscription is renewed.
      *
      * *Note: it is possible to stream events for a subscription at any time, regardless of component
      * activation status. The activation status only determines if the subscription should be billed for
      * event-based component usage at renewal.*
      *
-     * @param int $subscriptionId The Chargify id of the subscription
-     * @param int $componentId The Chargify id of the component
+     * @param int $subscriptionId The Advanced Billing id of the subscription
+     * @param int $componentId The Advanced Billing id of the component
+     * @param ActivateEventBasedComponent|null $body
      *
      * @return void Response from the API call
      *
      * @throws ApiException Thrown if API call fails
      */
-    public function activateEventBasedComponent(int $subscriptionId, int $componentId): void
-    {
+    public function activateEventBasedComponent(
+        int $subscriptionId,
+        int $componentId,
+        ?ActivateEventBasedComponent $body = null
+    ): void {
         $_reqBuilder = $this->requestBuilder(
             RequestMethod::POST,
             '/event_based_billing/subscriptions/{subscription_id}/components/{component_id}/activate.json'
@@ -783,7 +789,9 @@ class SubscriptionComponentsController extends BaseController
             ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
-                TemplateParam::init('component_id', $componentId)->required()
+                TemplateParam::init('component_id', $componentId)->required(),
+                HeaderParam::init('Content-Type', 'application/json'),
+                BodyParam::init($body)
             );
 
         $this->execute($_reqBuilder);
@@ -791,10 +799,10 @@ class SubscriptionComponentsController extends BaseController
 
     /**
      * Use this endpoint to deactivate an event-based component for a single subscription. Deactivating the
-     * event-based component causes Chargify to ignore related events at subscription renewal.
+     * event-based component causes Advanced Billing to ignore related events at subscription renewal.
      *
-     * @param int $subscriptionId The Chargify id of the subscription
-     * @param int $componentId The Chargify id of the component
+     * @param int $subscriptionId The Advanced Billing id of the subscription
+     * @param int $componentId The Advanced Billing id of the component
      *
      * @return void Response from the API call
      *
@@ -819,22 +827,22 @@ class SubscriptionComponentsController extends BaseController
      * ## Documentation
      *
      * Events-Based Billing is an evolved form of metered billing that is based on data-rich events
-     * streamed in real-time from your system to Chargify.
+     * streamed in real-time from your system to Advanced Billing.
      *
      * These events can then be transformed, enriched, or analyzed to form the computed totals of usage
      * charges billed to your customers.
      *
-     * This API allows you to stream events into the Chargify data ingestion engine.
+     * This API allows you to stream events into the Advanced Billing data ingestion engine.
      *
-     * Learn more about the feature in general in the [Events-Based Billing help docs](https://chargify.
-     * zendesk.com/hc/en-us/articles/4407720613403).
+     * Learn more about the feature in general in the [Events-Based Billing help docs](https://maxio.
+     * zendesk.com/hc/en-us/articles/24260323329805-Events-Based-Billing-Overview).
      *
      * ## Record Event
      *
      * Use this endpoint to record a single event.
      *
-     * *Note: this endpoint differs from the standard Chargify endpoints in that the URL subdomain will be
-     * `events` and your site subdomain will be included in the URL path. For example:*
+     * *Note: this endpoint differs from the standard Chargify API endpoints in that the URL subdomain will
+     * be `events` and your site subdomain will be included in the URL path. For example:*
      *
      * ```
      * https://events.chargify.com/my-site-subdomain/events/my-stream-api-handle
@@ -842,8 +850,8 @@ class SubscriptionComponentsController extends BaseController
      *
      * @param string $subdomain Your site's subdomain
      * @param string $apiHandle Identifies the Stream for which the event should be published.
-     * @param string|null $storeUid If you've attached your own Keen project as a Chargify event
-     *        data-store, use this parameter to indicate the data-store.
+     * @param string|null $storeUid If you've attached your own Keen project as an Advanced Billing
+     *        event data-store, use this parameter to indicate the data-store.
      * @param EBBEvent|null $body
      *
      * @return void Response from the API call
@@ -872,7 +880,7 @@ class SubscriptionComponentsController extends BaseController
     /**
      * Use this endpoint to record a collection of events.
      *
-     * *Note: this endpoint differs from the standard Chargify endpoints in that the subdomain will be
+     * *Note: this endpoint differs from the standard Chargify API endpoints in that the subdomain will be
      * `events` and your site subdomain will be included in the URL path.*
      *
      * A maximum of 1000 events can be published in a single request. A 422 will be returned if this limit
@@ -880,8 +888,8 @@ class SubscriptionComponentsController extends BaseController
      *
      * @param string $subdomain Your site's subdomain
      * @param string $apiHandle Identifies the Stream for which the events should be published.
-     * @param string|null $storeUid If you've attached your own Keen project as a Chargify event
-     *        data-store, use this parameter to indicate the data-store.
+     * @param string|null $storeUid If you've attached your own Keen project as an Advanced Billing
+     *        event data-store, use this parameter to indicate the data-store.
      * @param EBBEvent[]|null $body
      *
      * @return void Response from the API call

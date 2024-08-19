@@ -33,9 +33,9 @@ class CreditCardPaymentProfileBuilder
     /**
      * Initializes a new credit card payment profile Builder object.
      */
-    public static function init(string $maskedCardNumber): self
+    public static function init(string $paymentType): self
     {
-        return new self(new CreditCardPaymentProfile($maskedCardNumber));
+        return new self(new CreditCardPaymentProfile($paymentType));
     }
 
     /**
@@ -62,6 +62,15 @@ class CreditCardPaymentProfileBuilder
     public function lastName(?string $value): self
     {
         $this->instance->setLastName($value);
+        return $this;
+    }
+
+    /**
+     * Sets masked card number field.
+     */
+    public function maskedCardNumber(?string $value): self
+    {
+        $this->instance->setMaskedCardNumber($value);
         return $this;
     }
 
@@ -251,15 +260,6 @@ class CreditCardPaymentProfileBuilder
     public function unsetBillingAddress2(): self
     {
         $this->instance->unsetBillingAddress2();
-        return $this;
-    }
-
-    /**
-     * Sets payment type field.
-     */
-    public function paymentType(?string $value): self
-    {
-        $this->instance->setPaymentType($value);
         return $this;
     }
 

@@ -547,7 +547,7 @@ class CreatePaymentProfile implements \JsonSerializable
      * The vault that stores the payment profile with the provided `vault_token`. Use `bogus` for testing.
      *
      * @maps current_vault
-     * @factory \AdvancedBillingLib\Models\CurrentVault::checkValue
+     * @factory \AdvancedBillingLib\Models\AllVaults::checkValue
      */
     public function setCurrentVault(?string $currentVault): void
     {
@@ -968,7 +968,7 @@ class CreatePaymentProfile implements \JsonSerializable
             $json['billing_zip']              = $this->billingZip;
         }
         if (isset($this->currentVault)) {
-            $json['current_vault']            = CurrentVault::checkValue($this->currentVault);
+            $json['current_vault']            = AllVaults::checkValue($this->currentVault);
         }
         if (isset($this->vaultToken)) {
             $json['vault_token']              = $this->vaultToken;

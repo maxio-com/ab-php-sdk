@@ -55,6 +55,11 @@ class InvoiceRefund implements \JsonSerializable
     private $gatewayHandle = [];
 
     /**
+     * @var array
+     */
+    private $achLateReject = [];
+
+    /**
      * Returns Transaction Id.
      */
     public function getTransactionId(): ?int
@@ -223,6 +228,35 @@ class InvoiceRefund implements \JsonSerializable
         $this->gatewayHandle = [];
     }
 
+    /**
+     * Returns Ach Late Reject.
+     */
+    public function getAchLateReject(): ?bool
+    {
+        if (count($this->achLateReject) == 0) {
+            return null;
+        }
+        return $this->achLateReject['value'];
+    }
+
+    /**
+     * Sets Ach Late Reject.
+     *
+     * @maps ach_late_reject
+     */
+    public function setAchLateReject(?bool $achLateReject): void
+    {
+        $this->achLateReject['value'] = $achLateReject;
+    }
+
+    /**
+     * Unsets Ach Late Reject.
+     */
+    public function unsetAchLateReject(): void
+    {
+        $this->achLateReject = [];
+    }
+
     private $additionalProperties = [];
 
     /**
@@ -271,6 +305,9 @@ class InvoiceRefund implements \JsonSerializable
         }
         if (!empty($this->gatewayHandle)) {
             $json['gateway_handle']         = $this->gatewayHandle['value'];
+        }
+        if (!empty($this->achLateReject)) {
+            $json['ach_late_reject']        = $this->achLateReject['value'];
         }
         $json = array_merge($json, $this->additionalProperties);
 

@@ -44,7 +44,12 @@ class ApiHelper
         'applePay' => 'apple_pay',
         'bankAccount' => 'bank_account',
         'creditCard' => 'credit_card',
-        'paypalAccount' => 'paypal_account'
+        'paypalAccount' => 'paypal_account',
+        'applePay2' => 'apple_pay',
+        'bankAccount2' => 'bank_account',
+        'creditCard2' => 'credit_card',
+        'paypalAccount2' => 'paypal_account',
+        'paymentType' => 'payment_type'
     ];
 
     /**

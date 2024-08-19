@@ -202,6 +202,15 @@ class AllocationBuilder
     }
 
     /**
+     * Unsets interval unit field.
+     */
+    public function unsetIntervalUnit(): self
+    {
+        $this->instance->unsetIntervalUnit();
+        return $this;
+    }
+
+    /**
      * Sets previous price point id field.
      */
     public function previousPricePointId(?int $value): self

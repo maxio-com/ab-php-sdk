@@ -14,7 +14,7 @@
 | `expirationYear` | string\|int\|null | Optional | This is a container for one-of cases. | getExpirationYear(): | setExpirationYear( expirationYear): void |
 | `chargifyToken` | `?string` | Optional | - | getChargifyToken(): ?string | setChargifyToken(?string chargifyToken): void |
 | `vaultToken` | `?string` | Optional | - | getVaultToken(): ?string | setVaultToken(?string vaultToken): void |
-| `currentVault` | [`?string(CurrentVault)`](../../doc/models/current-vault.md) | Optional | The vault that stores the payment profile with the provided `vault_token`. Use `bogus` for testing. | getCurrentVault(): ?string | setCurrentVault(?string currentVault): void |
+| `currentVault` | [`?string(CreditCardVault)`](../../doc/models/credit-card-vault.md) | Optional | The vault that stores the payment profile with the provided `vault_token`. Use `bogus` for testing. | getCurrentVault(): ?string | setCurrentVault(?string currentVault): void |
 | `gatewayHandle` | `?string` | Optional | - | getGatewayHandle(): ?string | setGatewayHandle(?string gatewayHandle): void |
 | `firstName` | `?string` | Optional | - | getFirstName(): ?string | setFirstName(?string firstName): void |
 | `lastName` | `?string` | Optional | - | getLastName(): ?string | setLastName(?string lastName): void |
