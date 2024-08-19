@@ -26,7 +26,7 @@ final class TestPaymentProfileFactory
 
     private function fromCreditCardPaymentProfile(CreditCardPaymentProfile $paymentProfile): CreditCardPaymentProfile
     {
-        return CreditCardPaymentProfileBuilder::init($paymentProfile->getMaskedCardNumber())
+        return CreditCardPaymentProfileBuilder::init($paymentProfile->getPaymentType())
             ->id($paymentProfile->getId())
             ->firstName($paymentProfile->getFirstName())
             ->lastName($paymentProfile->getLastName())
@@ -36,7 +36,7 @@ final class TestPaymentProfileFactory
             ->customerId($paymentProfile->getCustomerId())
             ->currentVault($paymentProfile->getCurrentVault())
             ->vaultToken($paymentProfile->getVaultToken())
-            ->paymentType($paymentProfile->getPaymentType())
+            ->maskedCardNumber($paymentProfile->getMaskedCardNumber())
             ->disabled(PaymentProfileTestData::CARD_DISABLED)
             ->billingAddress($paymentProfile->getBillingAddress())
             ->billingState($paymentProfile->getBillingState())

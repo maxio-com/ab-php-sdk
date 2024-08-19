@@ -43,7 +43,7 @@ final class TestComponentLoader
         return $this->client
             ->getComponentsController()
             ->createQuantityBasedComponent(
-                $productFamilyId,
+                (string) $productFamilyId,
                 $this->componentRequestFactory->createCreateQuantityBasedComponent(
                     $name,
                     $unitName,
@@ -58,7 +58,7 @@ final class TestComponentLoader
         return $this->client
             ->getComponentsController()
             ->createOnOffComponent(
-                $productFamilyId,
+                (string) $productFamilyId,
                 $this->componentRequestFactory->createCreateOnOffComponent($name)
             )
             ->getComponent();
@@ -72,7 +72,7 @@ final class TestComponentLoader
         return $this->client
             ->getComponentsController()
             ->createOnOffComponent(
-                $productFamilyId,
+                (string) $productFamilyId,
                 $this->componentRequestFactory->createCreateOnOffComponentWithAllowedFractionalQuantitiesAndCustomPricePoint($name)
             )
             ->getComponent();

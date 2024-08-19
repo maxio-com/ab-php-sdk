@@ -25,7 +25,7 @@ final class ComponentsControllerTest extends TestCase
         $component = $this->client
             ->getComponentsController()
             ->createQuantityBasedComponent(
-                $productFamily->getId(),
+                (string) $productFamily->getId(),
                 $this->testData->getCreateQuantityBasedComponentRequest()
             )
             ->getComponent();
@@ -54,7 +54,7 @@ final class ComponentsControllerTest extends TestCase
         $component = $this->client
             ->getComponentsController()
             ->createOnOffComponent(
-                $productFamily->getId(),
+                (string) $productFamily->getId(),
                 $this->testData->getCreateOnOffComponentRequest()
             )
             ->getComponent();

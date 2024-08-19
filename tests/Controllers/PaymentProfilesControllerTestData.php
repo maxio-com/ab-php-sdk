@@ -47,7 +47,7 @@ final class PaymentProfilesControllerTestData
         int $customerId
     ): CreditCardPaymentProfile
     {
-        return CreditCardPaymentProfileBuilder::init(PaymentProfileTestData::MASKED_CARD_NUMBER)
+        return CreditCardPaymentProfileBuilder::init(PaymentProfileTestData::CREDIT_CARD_PAYMENT_TYPE)
             ->id($paymentProfileId)
             ->firstName(CustomerTestData::FIRST_NAME)
             ->lastName(CustomerTestData::LAST_NAME)
@@ -64,7 +64,7 @@ final class PaymentProfilesControllerTestData
             ->billingCountry(PaymentProfileTestData::BILLING_COUNTRY)
             ->customerVaultToken(PaymentProfileTestData::CUSTOMER_VAULT_TOKEN)
             ->billingAddress2(PaymentProfileTestData::BILLING_ADDRESS_TWO)
-            ->paymentType(PaymentProfileTestData::CREDIT_CARD_PAYMENT_TYPE)
+            ->maskedCardNumber(PaymentProfileTestData::MASKED_CARD_NUMBER)
             ->disabled(PaymentProfileTestData::CARD_DISABLED)
             ->siteGatewaySettingId(PaymentProfileTestData::SITE_GATEWAY_SETTING_ID)
             ->gatewayHandle(PaymentProfileTestData::GATEWAY_HANDLE)
