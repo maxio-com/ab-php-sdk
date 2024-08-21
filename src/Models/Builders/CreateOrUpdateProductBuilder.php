@@ -98,6 +98,15 @@ class CreateOrUpdateProductBuilder
     }
 
     /**
+     * Unsets trial interval unit field.
+     */
+    public function unsetTrialIntervalUnit(): self
+    {
+        $this->instance->unsetTrialIntervalUnit();
+        return $this;
+    }
+
+    /**
      * Sets trial type field.
      */
     public function trialType(?string $value): self
@@ -121,6 +130,15 @@ class CreateOrUpdateProductBuilder
     public function expirationIntervalUnit(?string $value): self
     {
         $this->instance->setExpirationIntervalUnit($value);
+        return $this;
+    }
+
+    /**
+     * Unsets expiration interval unit field.
+     */
+    public function unsetExpirationIntervalUnit(): self
+    {
+        $this->instance->unsetExpirationIntervalUnit();
         return $this;
     }
 

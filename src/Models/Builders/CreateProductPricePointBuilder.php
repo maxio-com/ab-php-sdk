@@ -120,6 +120,15 @@ class CreateProductPricePointBuilder
     }
 
     /**
+     * Unsets expiration interval unit field.
+     */
+    public function unsetExpirationIntervalUnit(): self
+    {
+        $this->instance->unsetExpirationIntervalUnit();
+        return $this;
+    }
+
+    /**
      * Sets use site exchange rate field.
      */
     public function useSiteExchangeRate(?bool $value): self

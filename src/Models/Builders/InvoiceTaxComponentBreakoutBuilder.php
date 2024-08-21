@@ -75,6 +75,96 @@ class InvoiceTaxComponentBreakoutBuilder
     }
 
     /**
+     * Sets tax amount field.
+     */
+    public function taxAmount(?string $value): self
+    {
+        $this->instance->setTaxAmount($value);
+        return $this;
+    }
+
+    /**
+     * Sets taxable amount field.
+     */
+    public function taxableAmount(?string $value): self
+    {
+        $this->instance->setTaxableAmount($value);
+        return $this;
+    }
+
+    /**
+     * Sets tax exempt amount field.
+     */
+    public function taxExemptAmount(?string $value): self
+    {
+        $this->instance->setTaxExemptAmount($value);
+        return $this;
+    }
+
+    /**
+     * Sets non taxable amount field.
+     */
+    public function nonTaxableAmount(?string $value): self
+    {
+        $this->instance->setNonTaxableAmount($value);
+        return $this;
+    }
+
+    /**
+     * Sets tax name field.
+     */
+    public function taxName(?string $value): self
+    {
+        $this->instance->setTaxName($value);
+        return $this;
+    }
+
+    /**
+     * Sets tax type field.
+     */
+    public function taxType(?string $value): self
+    {
+        $this->instance->setTaxType($value);
+        return $this;
+    }
+
+    /**
+     * Sets rate type field.
+     */
+    public function rateType(?string $value): self
+    {
+        $this->instance->setRateType($value);
+        return $this;
+    }
+
+    /**
+     * Sets tax authority type field.
+     */
+    public function taxAuthorityType(?int $value): self
+    {
+        $this->instance->setTaxAuthorityType($value);
+        return $this;
+    }
+
+    /**
+     * Sets state assigned no field.
+     */
+    public function stateAssignedNo(?string $value): self
+    {
+        $this->instance->setStateAssignedNo($value);
+        return $this;
+    }
+
+    /**
+     * Sets tax sub type field.
+     */
+    public function taxSubType(?string $value): self
+    {
+        $this->instance->setTaxSubType($value);
+        return $this;
+    }
+
+    /**
      * Add an additional property to this model.
      *
      * @param string $name Name of property

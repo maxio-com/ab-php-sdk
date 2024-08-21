@@ -35,23 +35,23 @@ class CustomersController extends BaseController
      * If provided, the `reference` value must be unique. It represents a unique identifier for the
      * customer from your own app, i.e. the customer’s ID. This allows you to retrieve a given customer via
      * a piece of shared information. Alternatively, you may choose to leave `reference` blank, and store
-     * Chargify’s unique ID for the customer, which is in the `id` attribute.
+     * Advanced Billing’s unique ID for the customer, which is in the `id` attribute.
      *
-     * Full documentation on how to locate, create and edit Customers in the Chargify UI can be located
-     * [here](https://chargify.zendesk.com/hc/en-us/articles/4407659914267).
+     * Full documentation on how to locate, create and edit Customers in the Advanced Billing UI can be
+     * located [here](https://maxio.zendesk.com/hc/en-us/articles/24252190590093-Customer-Details).
      *
      * ## Required Country Format
      *
-     * Chargify requires that you use the ISO Standard Country codes when formatting country attribute of
-     * the customer.
+     * Advanced Billing requires that you use the ISO Standard Country codes when formatting country
+     * attribute of the customer.
      *
      * Countries should be formatted as 2 characters. For more information, please see the following
      * wikipedia article on [ISO_3166-1.](http://en.wikipedia.org/wiki/ISO_3166-1#Current_codes)
      *
      * ## Required State Format
      *
-     * Chargify requires that you use the ISO Standard State codes when formatting state attribute of the
-     * customer.
+     * Advanced Billing requires that you use the ISO Standard State codes when formatting state attribute
+     * of the customer.
      *
      * + US States (2 characters): [ISO_3166-2](https://en.wikipedia.org/wiki/ISO_3166-2:US)
      *
@@ -61,10 +61,10 @@ class CustomersController extends BaseController
      *
      * ## Locale
      *
-     * Chargify allows you to attribute a language/region to your customer to deliver invoices in any
-     * required language.
-     * For more: [Customer Locale](https://chargify.zendesk.com/hc/en-us/articles/4407870384283#customer-
-     * locale)
+     * Advanced Billing allows you to attribute a language/region to your customer to deliver invoices in
+     * any required language.
+     * For more: [Customer Locale](https://maxio.zendesk.com/hc/en-us/articles/24286672013709-Customer-
+     * Locale)
      *
      * @param CreateCustomerRequest|null $body
      *
@@ -102,7 +102,7 @@ class CustomersController extends BaseController
      * Common use cases are:
      *
      * + Search by an email
-     * + Search by a Chargify ID
+     * + Search by an Advanced Billing ID
      * + Search by an organization
      * + Search by a reference value from your application
      * + Search by a first or last name
@@ -144,9 +144,9 @@ class CustomersController extends BaseController
     }
 
     /**
-     * This method allows to retrieve the Customer properties by Chargify-generated Customer ID.
+     * This method allows to retrieve the Customer properties by Advanced Billing-generated Customer ID.
      *
-     * @param int $id The Chargify id of the customer
+     * @param int $id The Advanced Billing id of the customer
      *
      * @return CustomerResponse Response from the API call
      *
@@ -166,7 +166,7 @@ class CustomersController extends BaseController
     /**
      * This method allows to update the Customer.
      *
-     * @param int $id The Chargify id of the customer
+     * @param int $id The Advanced Billing id of the customer
      * @param UpdateCustomerRequest|null $body
      *
      * @return CustomerResponse Response from the API call
@@ -200,7 +200,7 @@ class CustomersController extends BaseController
     /**
      * This method allows you to delete the Customer.
      *
-     * @param int $id The Chargify id of the customer
+     * @param int $id The Advanced Billing id of the customer
      *
      * @return void Response from the API call
      *

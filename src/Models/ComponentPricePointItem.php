@@ -35,9 +35,9 @@ class ComponentPricePointItem implements \JsonSerializable
     private $interval;
 
     /**
-     * @var string|null
+     * @var array
      */
-    private $intervalUnit;
+    private $intervalUnit = [];
 
     /**
      * @var Price[]|null
@@ -134,7 +134,10 @@ class ComponentPricePointItem implements \JsonSerializable
      */
     public function getIntervalUnit(): ?string
     {
-        return $this->intervalUnit;
+        if (count($this->intervalUnit) == 0) {
+            return null;
+        }
+        return $this->intervalUnit['value'];
     }
 
     /**
@@ -147,7 +150,17 @@ class ComponentPricePointItem implements \JsonSerializable
      */
     public function setIntervalUnit(?string $intervalUnit): void
     {
-        $this->intervalUnit = $intervalUnit;
+        $this->intervalUnit['value'] = $intervalUnit;
+    }
+
+    /**
+     * Unsets Interval Unit.
+     * A string representing the interval unit for this component price point, either month or day. This
+     * property is only available for sites with Multifrequency enabled.
+     */
+    public function unsetIntervalUnit(): void
+    {
+        $this->intervalUnit = [];
     }
 
     /**
@@ -209,8 +222,8 @@ class ComponentPricePointItem implements \JsonSerializable
         if (isset($this->interval)) {
             $json['interval']       = $this->interval;
         }
-        if (isset($this->intervalUnit)) {
-            $json['interval_unit']  = IntervalUnit::checkValue($this->intervalUnit);
+        if (!empty($this->intervalUnit)) {
+            $json['interval_unit']  = IntervalUnit::checkValue($this->intervalUnit['value']);
         }
         if (isset($this->prices)) {
             $json['prices']         = $this->prices;

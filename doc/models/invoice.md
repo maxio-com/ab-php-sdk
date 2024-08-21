@@ -22,13 +22,13 @@
 | `issueDate` | `?DateTime` | Optional | Date the invoice was issued to the customer.  This is the date that the invoice was made available for payment.<br><br>The format is `"YYYY-MM-DD"`. | getIssueDate(): ?\DateTime | setIssueDate(?\DateTime issueDate): void |
 | `dueDate` | `?DateTime` | Optional | Date the invoice is due.<br><br>The format is `"YYYY-MM-DD"`. | getDueDate(): ?\DateTime | setDueDate(?\DateTime dueDate): void |
 | `paidDate` | `?DateTime` | Optional | Date the invoice became fully paid.<br><br>If partial payments are applied to the invoice, this date will not be present until payment has been made in full.<br><br>The format is `"YYYY-MM-DD"`. | getPaidDate(): ?\DateTime | setPaidDate(?\DateTime paidDate): void |
-| `status` | [`?string(InvoiceStatus)`](../../doc/models/invoice-status.md) | Optional | The current status of the invoice. See [Invoice Statuses](https://maxio-chargify.zendesk.com/hc/en-us/articles/5405078794253-Introduction-to-Invoices#invoice-statuses) for more. | getStatus(): ?string | setStatus(?string status): void |
+| `status` | [`?string(InvoiceStatus)`](../../doc/models/invoice-status.md) | Optional | The current status of the invoice. See [Invoice Statuses](https://maxio.zendesk.com/hc/en-us/articles/24252287829645-Advanced-Billing-Invoices-Overview#invoice-statuses) for more. | getStatus(): ?string | setStatus(?string status): void |
 | `role` | [`?string(InvoiceRole)`](../../doc/models/invoice-role.md) | Optional | - | getRole(): ?string | setRole(?string role): void |
 | `parentInvoiceId` | `?int` | Optional | - | getParentInvoiceId(): ?int | setParentInvoiceId(?int parentInvoiceId): void |
 | `collectionMethod` | [`?string(CollectionMethod)`](../../doc/models/collection-method.md) | Optional | The type of payment collection to be used in the subscription. For legacy Statements Architecture valid options are - `invoice`, `automatic`. For current Relationship Invoicing Architecture valid options are - `remittance`, `automatic`, `prepaid`. | getCollectionMethod(): ?string | setCollectionMethod(?string collectionMethod): void |
 | `paymentInstructions` | `?string` | Optional | A message that is printed on the invoice when it is marked for remittance collection. It is intended to describe to the customer how they may make payment, and is configured by the merchant. | getPaymentInstructions(): ?string | setPaymentInstructions(?string paymentInstructions): void |
 | `currency` | `?string` | Optional | The ISO 4217 currency code (3 character string) representing the currency of invoice transaction. | getCurrency(): ?string | setCurrency(?string currency): void |
-| `consolidationLevel` | [`?string(InvoiceConsolidationLevel)`](../../doc/models/invoice-consolidation-level.md) | Optional | Consolidation level of the invoice, which is applicable to invoice consolidation.  It will hold one of the following values:<br><br>* "none": A normal invoice with no consolidation.<br>* "child": An invoice segment which has been combined into a consolidated invoice.<br>* "parent": A consolidated invoice, whose contents are composed of invoice segments.<br><br>"Parent" invoices do not have lines of their own, but they have subtotals and totals which aggregate the member invoice segments.<br><br>See also the [invoice consolidation documentation](https://chargify.zendesk.com/hc/en-us/articles/4407746391835). | getConsolidationLevel(): ?string | setConsolidationLevel(?string consolidationLevel): void |
+| `consolidationLevel` | [`?string(InvoiceConsolidationLevel)`](../../doc/models/invoice-consolidation-level.md) | Optional | Consolidation level of the invoice, which is applicable to invoice consolidation.  It will hold one of the following values:<br><br>* "none": A normal invoice with no consolidation.<br>* "child": An invoice segment which has been combined into a consolidated invoice.<br>* "parent": A consolidated invoice, whose contents are composed of invoice segments.<br><br>"Parent" invoices do not have lines of their own, but they have subtotals and totals which aggregate the member invoice segments.<br><br>See also the [invoice consolidation documentation](https://maxio.zendesk.com/hc/en-us/articles/24252269909389-Invoice-Consolidation). | getConsolidationLevel(): ?string | setConsolidationLevel(?string consolidationLevel): void |
 | `parentInvoiceUid` | `?string` | Optional | For invoices with `consolidation_level` of `child`, this specifies the UID of the parent (consolidated) invoice. | getParentInvoiceUid(): ?string | setParentInvoiceUid(?string parentInvoiceUid): void |
 | `subscriptionGroupId` | `?int` | Optional | - | getSubscriptionGroupId(): ?int | setSubscriptionGroupId(?int subscriptionGroupId): void |
 | `parentInvoiceNumber` | `?int` | Optional | For invoices with `consolidation_level` of `child`, this specifies the number of the parent (consolidated) invoice. | getParentInvoiceNumber(): ?int | setParentInvoiceNumber(?int parentInvoiceNumber): void |
@@ -61,6 +61,7 @@
 | `displaySettings` | [`?InvoiceDisplaySettings`](../../doc/models/invoice-display-settings.md) | Optional | - | getDisplaySettings(): ?InvoiceDisplaySettings | setDisplaySettings(?InvoiceDisplaySettings displaySettings): void |
 | `publicUrl` | `?string` | Optional | The public URL of the invoice | getPublicUrl(): ?string | setPublicUrl(?string publicUrl): void |
 | `previousBalanceData` | [`?InvoicePreviousBalance`](../../doc/models/invoice-previous-balance.md) | Optional | - | getPreviousBalanceData(): ?InvoicePreviousBalance | setPreviousBalanceData(?InvoicePreviousBalance previousBalanceData): void |
+| `publicUrlExpiresOn` | `?DateTime` | Optional | The format is `"YYYY-MM-DD"`. | getPublicUrlExpiresOn(): ?\DateTime | setPublicUrlExpiresOn(?\DateTime publicUrlExpiresOn): void |
 
 ## Example (as JSON)
 
@@ -69,6 +70,7 @@
   "issue_date": "2024-01-01",
   "due_date": "2024-01-01",
   "paid_date": "2024-01-01",
+  "public_url_expires_on": "2024-01-21",
   "id": 252,
   "uid": "uid0",
   "site_id": 178,

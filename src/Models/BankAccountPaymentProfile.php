@@ -85,7 +85,7 @@ class BankAccountPaymentProfile implements \JsonSerializable
     private $bankName;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $maskedBankRoutingNumber;
 
@@ -105,7 +105,7 @@ class BankAccountPaymentProfile implements \JsonSerializable
     private $bankAccountHolderType;
 
     /**
-     * @var string|null
+     * @var string
      */
     private $paymentType;
 
@@ -125,13 +125,13 @@ class BankAccountPaymentProfile implements \JsonSerializable
     private $gatewayHandle = [];
 
     /**
-     * @param string $maskedBankRoutingNumber
      * @param string $maskedBankAccountNumber
+     * @param string $paymentType
      */
-    public function __construct(string $maskedBankRoutingNumber, string $maskedBankAccountNumber)
+    public function __construct(string $maskedBankAccountNumber, string $paymentType)
     {
-        $this->maskedBankRoutingNumber = $maskedBankRoutingNumber;
         $this->maskedBankAccountNumber = $maskedBankAccountNumber;
+        $this->paymentType = $paymentType;
     }
 
     /**
@@ -220,7 +220,7 @@ class BankAccountPaymentProfile implements \JsonSerializable
 
     /**
      * Returns Current Vault.
-     * The vault that stores the payment profile with the provided vault_token.
+     * The vault that stores the payment profile with the provided vault_token. Use `bogus` for testing.
      */
     public function getCurrentVault(): ?string
     {
@@ -229,7 +229,7 @@ class BankAccountPaymentProfile implements \JsonSerializable
 
     /**
      * Sets Current Vault.
-     * The vault that stores the payment profile with the provided vault_token.
+     * The vault that stores the payment profile with the provided vault_token. Use `bogus` for testing.
      *
      * @maps current_vault
      * @factory \AdvancedBillingLib\Models\BankAccountVault::checkValue
@@ -511,7 +511,7 @@ class BankAccountPaymentProfile implements \JsonSerializable
      * A string representation of the stored bank routing number with all but the last 4 digits marked with
      * X’s (i.e. ‘XXXXXXX1111’). payment_type will be bank_account
      */
-    public function getMaskedBankRoutingNumber(): string
+    public function getMaskedBankRoutingNumber(): ?string
     {
         return $this->maskedBankRoutingNumber;
     }
@@ -521,10 +521,9 @@ class BankAccountPaymentProfile implements \JsonSerializable
      * A string representation of the stored bank routing number with all but the last 4 digits marked with
      * X’s (i.e. ‘XXXXXXX1111’). payment_type will be bank_account
      *
-     * @required
      * @maps masked_bank_routing_number
      */
-    public function setMaskedBankRoutingNumber(string $maskedBankRoutingNumber): void
+    public function setMaskedBankRoutingNumber(?string $maskedBankRoutingNumber): void
     {
         $this->maskedBankRoutingNumber = $maskedBankRoutingNumber;
     }
@@ -597,7 +596,7 @@ class BankAccountPaymentProfile implements \JsonSerializable
     /**
      * Returns Payment Type.
      */
-    public function getPaymentType(): ?string
+    public function getPaymentType(): string
     {
         return $this->paymentType;
     }
@@ -605,10 +604,11 @@ class BankAccountPaymentProfile implements \JsonSerializable
     /**
      * Sets Payment Type.
      *
+     * @required
      * @maps payment_type
      * @factory \AdvancedBillingLib\Models\PaymentType::checkValue
      */
-    public function setPaymentType(?string $paymentType): void
+    public function setPaymentType(string $paymentType): void
     {
         $this->paymentType = $paymentType;
     }
@@ -719,66 +719,66 @@ class BankAccountPaymentProfile implements \JsonSerializable
     {
         $json = [];
         if (isset($this->id)) {
-            $json['id']                       = $this->id;
+            $json['id']                         = $this->id;
         }
         if (isset($this->firstName)) {
-            $json['first_name']               = $this->firstName;
+            $json['first_name']                 = $this->firstName;
         }
         if (isset($this->lastName)) {
-            $json['last_name']                = $this->lastName;
+            $json['last_name']                  = $this->lastName;
         }
         if (isset($this->customerId)) {
-            $json['customer_id']              = $this->customerId;
+            $json['customer_id']                = $this->customerId;
         }
         if (isset($this->currentVault)) {
-            $json['current_vault']            = BankAccountVault::checkValue($this->currentVault);
+            $json['current_vault']              = BankAccountVault::checkValue($this->currentVault);
         }
         if (isset($this->vaultToken)) {
-            $json['vault_token']              = $this->vaultToken;
+            $json['vault_token']                = $this->vaultToken;
         }
         if (!empty($this->billingAddress)) {
-            $json['billing_address']          = $this->billingAddress['value'];
+            $json['billing_address']            = $this->billingAddress['value'];
         }
         if (!empty($this->billingCity)) {
-            $json['billing_city']             = $this->billingCity['value'];
+            $json['billing_city']               = $this->billingCity['value'];
         }
         if (!empty($this->billingState)) {
-            $json['billing_state']            = $this->billingState['value'];
+            $json['billing_state']              = $this->billingState['value'];
         }
         if (!empty($this->billingZip)) {
-            $json['billing_zip']              = $this->billingZip['value'];
+            $json['billing_zip']                = $this->billingZip['value'];
         }
         if (!empty($this->billingCountry)) {
-            $json['billing_country']          = $this->billingCountry['value'];
+            $json['billing_country']            = $this->billingCountry['value'];
         }
         if (!empty($this->customerVaultToken)) {
-            $json['customer_vault_token']     = $this->customerVaultToken['value'];
+            $json['customer_vault_token']       = $this->customerVaultToken['value'];
         }
         if (!empty($this->billingAddress2)) {
-            $json['billing_address_2']        = $this->billingAddress2['value'];
+            $json['billing_address_2']          = $this->billingAddress2['value'];
         }
         if (isset($this->bankName)) {
-            $json['bank_name']                = $this->bankName;
+            $json['bank_name']                  = $this->bankName;
         }
-        $json['masked_bank_routing_number']   = $this->maskedBankRoutingNumber;
-        $json['masked_bank_account_number']   = $this->maskedBankAccountNumber;
+        if (isset($this->maskedBankRoutingNumber)) {
+            $json['masked_bank_routing_number'] = $this->maskedBankRoutingNumber;
+        }
+        $json['masked_bank_account_number']     = $this->maskedBankAccountNumber;
         if (isset($this->bankAccountType)) {
-            $json['bank_account_type']        = BankAccountType::checkValue($this->bankAccountType);
+            $json['bank_account_type']          = BankAccountType::checkValue($this->bankAccountType);
         }
         if (isset($this->bankAccountHolderType)) {
-            $json['bank_account_holder_type'] = BankAccountHolderType::checkValue($this->bankAccountHolderType);
+            $json['bank_account_holder_type']   = BankAccountHolderType::checkValue($this->bankAccountHolderType);
         }
-        if (isset($this->paymentType)) {
-            $json['payment_type']             = PaymentType::checkValue($this->paymentType);
-        }
+        $json['payment_type']                   = PaymentType::checkValue($this->paymentType);
         if (isset($this->verified)) {
-            $json['verified']                 = $this->verified;
+            $json['verified']                   = $this->verified;
         }
         if (!empty($this->siteGatewaySettingId)) {
-            $json['site_gateway_setting_id']  = $this->siteGatewaySettingId['value'];
+            $json['site_gateway_setting_id']    = $this->siteGatewaySettingId['value'];
         }
         if (!empty($this->gatewayHandle)) {
-            $json['gateway_handle']           = $this->gatewayHandle['value'];
+            $json['gateway_handle']             = $this->gatewayHandle['value'];
         }
         $json = array_merge($json, $this->additionalProperties);
 

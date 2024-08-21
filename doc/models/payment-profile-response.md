@@ -9,21 +9,19 @@
 
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
-| `paymentProfile` | [BankAccountPaymentProfile](../../doc/models/bank-account-payment-profile.md)\|[CreditCardPaymentProfile](../../doc/models/credit-card-payment-profile.md) | Required | This is a container for one-of cases. | getPaymentProfile(): | setPaymentProfile( paymentProfile): void |
+| `paymentProfile` | [ApplePayPaymentProfile](../../doc/models/apple-pay-payment-profile.md)\|[BankAccountPaymentProfile](../../doc/models/bank-account-payment-profile.md)\|[CreditCardPaymentProfile](../../doc/models/credit-card-payment-profile.md)\|[PaypalPaymentProfile](../../doc/models/paypal-payment-profile.md) | Required | - | getPaymentProfile(): | setPaymentProfile( paymentProfile): void |
 
 ## Example (as JSON)
 
 ```json
 {
   "payment_profile": {
-    "masked_bank_routing_number": "masked_bank_routing_number8",
-    "masked_bank_account_number": "masked_bank_account_number8",
-    "verified": false,
-    "id": 188,
-    "first_name": "first_name6",
-    "last_name": "last_name4",
-    "customer_id": 226,
-    "current_vault": "authorizenet"
+    "payment_type": "apple_pay",
+    "id": 60,
+    "first_name": "first_name2",
+    "last_name": "last_name0",
+    "customer_id": 98,
+    "current_vault": "braintree_blue"
   }
 }
 ```

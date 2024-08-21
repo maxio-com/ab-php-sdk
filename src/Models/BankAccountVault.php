@@ -15,22 +15,36 @@ use Exception;
 use stdClass;
 
 /**
- * The vault that stores the payment profile with the provided vault_token.
+ * The vault that stores the payment profile with the provided vault_token. Use `bogus` for testing.
  */
 class BankAccountVault
 {
-    public const BOGUS = 'bogus';
-
     public const AUTHORIZENET = 'authorizenet';
 
-    public const STRIPE_CONNECT = 'stripe_connect';
+    public const BLUE_SNAP = 'blue_snap';
 
-    public const BRAINTREE_BLUE = 'braintree_blue';
+    public const BOGUS = 'bogus';
+
+    public const FORTE = 'forte';
 
     public const GOCARDLESS = 'gocardless';
 
-    private const _ALL_VALUES =
-        [self::BOGUS, self::AUTHORIZENET, self::STRIPE_CONNECT, self::BRAINTREE_BLUE, self::GOCARDLESS];
+    public const MAXIO_PAYMENTS = 'maxio_payments';
+
+    public const MAXP = 'maxp';
+
+    public const STRIPE_CONNECT = 'stripe_connect';
+
+    private const _ALL_VALUES = [
+        self::AUTHORIZENET,
+        self::BLUE_SNAP,
+        self::BOGUS,
+        self::FORTE,
+        self::GOCARDLESS,
+        self::MAXIO_PAYMENTS,
+        self::MAXP,
+        self::STRIPE_CONNECT
+    ];
 
     /**
      * Ensures that all the given values are present in this Enum.

@@ -567,6 +567,15 @@ class InvoiceBuilder
     }
 
     /**
+     * Sets public url expires on field.
+     */
+    public function publicUrlExpiresOn(?\DateTime $value): self
+    {
+        $this->instance->setPublicUrlExpiresOn($value);
+        return $this;
+    }
+
+    /**
      * Add an additional property to this model.
      *
      * @param string $name Name of property

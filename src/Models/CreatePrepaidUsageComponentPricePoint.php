@@ -60,9 +60,9 @@ class CreatePrepaidUsageComponentPricePoint implements \JsonSerializable
     private $expirationInterval;
 
     /**
-     * @var string|null
+     * @var array
      */
-    private $expirationIntervalUnit;
+    private $expirationIntervalUnit = [];
 
     /**
      * @param string $name
@@ -269,21 +269,35 @@ class CreatePrepaidUsageComponentPricePoint implements \JsonSerializable
 
     /**
      * Returns Expiration Interval Unit.
+     * A string representing the expiration interval unit for this component, either month or day
      */
     public function getExpirationIntervalUnit(): ?string
     {
-        return $this->expirationIntervalUnit;
+        if (count($this->expirationIntervalUnit) == 0) {
+            return null;
+        }
+        return $this->expirationIntervalUnit['value'];
     }
 
     /**
      * Sets Expiration Interval Unit.
+     * A string representing the expiration interval unit for this component, either month or day
      *
      * @maps expiration_interval_unit
-     * @factory \AdvancedBillingLib\Models\IntervalUnit::checkValue
+     * @factory \AdvancedBillingLib\Models\ExpirationIntervalUnit::checkValue
      */
     public function setExpirationIntervalUnit(?string $expirationIntervalUnit): void
     {
-        $this->expirationIntervalUnit = $expirationIntervalUnit;
+        $this->expirationIntervalUnit['value'] = $expirationIntervalUnit;
+    }
+
+    /**
+     * Unsets Expiration Interval Unit.
+     * A string representing the expiration interval unit for this component, either month or day
+     */
+    public function unsetExpirationIntervalUnit(): void
+    {
+        $this->expirationIntervalUnit = [];
     }
 
     private $additionalProperties = [];
@@ -330,8 +344,11 @@ class CreatePrepaidUsageComponentPricePoint implements \JsonSerializable
         if (isset($this->expirationInterval)) {
             $json['expiration_interval']        = $this->expirationInterval;
         }
-        if (isset($this->expirationIntervalUnit)) {
-            $json['expiration_interval_unit']   = IntervalUnit::checkValue($this->expirationIntervalUnit);
+        if (!empty($this->expirationIntervalUnit)) {
+            $json['expiration_interval_unit']   =
+                ExpirationIntervalUnit::checkValue(
+                    $this->expirationIntervalUnit['value']
+                );
         }
         $json = array_merge($json, $this->additionalProperties);
 

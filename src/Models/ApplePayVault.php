@@ -14,15 +14,14 @@ use Core\Utils\CoreHelper;
 use Exception;
 use stdClass;
 
-class ExtendedIntervalUnit
+/**
+ * The vault that stores the payment profile with the provided vault_token.
+ */
+class ApplePayVault
 {
-    public const DAY = 'day';
+    public const BRAINTREE_BLUE = 'braintree_blue';
 
-    public const MONTH = 'month';
-
-    public const NEVER = 'never';
-
-    private const _ALL_VALUES = [self::DAY, self::MONTH, self::NEVER];
+    private const _ALL_VALUES = [self::BRAINTREE_BLUE];
 
     /**
      * Ensures that all the given values are present in this Enum.
@@ -39,6 +38,6 @@ class ExtendedIntervalUnit
         if (CoreHelper::checkValueOrValuesInList($value, self::_ALL_VALUES)) {
             return $value;
         }
-        throw new Exception("$value is invalid for ExtendedIntervalUnit.");
+        throw new Exception("$value is invalid for ApplePayVault.");
     }
 }

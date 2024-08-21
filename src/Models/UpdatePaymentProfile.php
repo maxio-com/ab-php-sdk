@@ -218,7 +218,7 @@ class UpdatePaymentProfile implements \JsonSerializable
      * The vault that stores the payment profile with the provided `vault_token`. Use `bogus` for testing.
      *
      * @maps current_vault
-     * @factory \AdvancedBillingLib\Models\CurrentVault::checkValue
+     * @factory \AdvancedBillingLib\Models\AllVaults::checkValue
      */
     public function setCurrentVault(?string $currentVault): void
     {
@@ -417,7 +417,7 @@ class UpdatePaymentProfile implements \JsonSerializable
             $json['expiration_year']   = $this->expirationYear;
         }
         if (isset($this->currentVault)) {
-            $json['current_vault']     = CurrentVault::checkValue($this->currentVault);
+            $json['current_vault']     = AllVaults::checkValue($this->currentVault);
         }
         if (isset($this->billingAddress)) {
             $json['billing_address']   = $this->billingAddress;

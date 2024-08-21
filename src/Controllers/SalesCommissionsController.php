@@ -35,7 +35,7 @@ class SalesCommissionsController extends BaseController
      *
      * Access to the Sales Commission API endpoints is available to users with financial access, where the
      * seller has the Advanced Analytics component enabled. For further information on getting access to
-     * Advanced Analytics please contact Chargify support.
+     * Advanced Analytics please contact Maxio support.
      *
      * > Note: The request is at seller level, it means `<<subdomain>>` variable will be replaced by `app`
      *
@@ -79,7 +79,7 @@ class SalesCommissionsController extends BaseController
      *
      * Access to the Sales Commission API endpoints is available to users with financial access, where the
      * seller has the Advanced Analytics component enabled. For further information on getting access to
-     * Advanced Analytics please contact Chargify support.
+     * Advanced Analytics please contact Maxio support.
      *
      * > Note: The request is at seller level, it means `<<subdomain>>` variable will be replaced by `app`
      *
@@ -120,12 +120,12 @@ class SalesCommissionsController extends BaseController
      *
      * Access to the Sales Commission API endpoints is available to users with financial access, where the
      * seller has the Advanced Analytics component enabled. For further information on getting access to
-     * Advanced Analytics please contact Chargify support.
+     * Advanced Analytics please contact Maxio support.
      *
      * > Note: The request is at seller level, it means `<<subdomain>>` variable will be replaced by `app`
      *
      * @param string $sellerId The Chargify id of your seller account
-     * @param string $salesRepId The Chargify id of sales rep.
+     * @param string $salesRepId The Advanced Billing id of sales rep.
      * @param string|null $authorization For authorization use user API key. See details
      *        [here](https://developers.chargify.com/docs/developer-docs/ZG9jOjMyNzk5NTg0-2020-04-
      *        20-new-api-authentication).

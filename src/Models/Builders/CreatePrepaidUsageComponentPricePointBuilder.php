@@ -98,6 +98,15 @@ class CreatePrepaidUsageComponentPricePointBuilder
     }
 
     /**
+     * Unsets expiration interval unit field.
+     */
+    public function unsetExpirationIntervalUnit(): self
+    {
+        $this->instance->unsetExpirationIntervalUnit();
+        return $this;
+    }
+
+    /**
      * Add an additional property to this model.
      *
      * @param string $name Name of property

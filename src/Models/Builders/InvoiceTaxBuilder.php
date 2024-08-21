@@ -147,6 +147,33 @@ class InvoiceTaxBuilder
     }
 
     /**
+     * Sets eu vat field.
+     */
+    public function euVat(?bool $value): self
+    {
+        $this->instance->setEuVat($value);
+        return $this;
+    }
+
+    /**
+     * Sets type field.
+     */
+    public function type(?string $value): self
+    {
+        $this->instance->setType($value);
+        return $this;
+    }
+
+    /**
+     * Sets tax exempt amount field.
+     */
+    public function taxExemptAmount(?string $value): self
+    {
+        $this->instance->setTaxExemptAmount($value);
+        return $this;
+    }
+
+    /**
      * Add an additional property to this model.
      *
      * @param string $name Name of property

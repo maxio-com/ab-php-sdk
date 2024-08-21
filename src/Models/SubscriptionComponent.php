@@ -172,9 +172,9 @@ class SubscriptionComponent implements \JsonSerializable
     private $interval;
 
     /**
-     * @var string|null
+     * @var array
      */
-    private $intervalUnit;
+    private $intervalUnit = [];
 
     /**
      * Returns Id.
@@ -913,7 +913,10 @@ class SubscriptionComponent implements \JsonSerializable
      */
     public function getIntervalUnit(): ?string
     {
-        return $this->intervalUnit;
+        if (count($this->intervalUnit) == 0) {
+            return null;
+        }
+        return $this->intervalUnit['value'];
     }
 
     /**
@@ -926,7 +929,17 @@ class SubscriptionComponent implements \JsonSerializable
      */
     public function setIntervalUnit(?string $intervalUnit): void
     {
-        $this->intervalUnit = $intervalUnit;
+        $this->intervalUnit['value'] = $intervalUnit;
+    }
+
+    /**
+     * Unsets Interval Unit.
+     * A string representing the interval unit for this component price point, either month or day. This
+     * property is only available for sites with Multifrequency enabled.
+     */
+    public function unsetIntervalUnit(): void
+    {
+        $this->intervalUnit = [];
     }
 
     private $additionalProperties = [];
@@ -1051,8 +1064,8 @@ class SubscriptionComponent implements \JsonSerializable
         if (isset($this->interval)) {
             $json['interval']                    = $this->interval;
         }
-        if (isset($this->intervalUnit)) {
-            $json['interval_unit']               = IntervalUnit::checkValue($this->intervalUnit);
+        if (!empty($this->intervalUnit)) {
+            $json['interval_unit']               = IntervalUnit::checkValue($this->intervalUnit['value']);
         }
         $json = array_merge($json, $this->additionalProperties);
 

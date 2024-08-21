@@ -70,6 +70,21 @@ class InvoiceTax implements \JsonSerializable
     private $taxComponentBreakouts;
 
     /**
+     * @var bool|null
+     */
+    private $euVat;
+
+    /**
+     * @var string|null
+     */
+    private $type;
+
+    /**
+     * @var string|null
+     */
+    private $taxExemptAmount;
+
+    /**
      * Returns Uid.
      */
     public function getUid(): ?string
@@ -287,6 +302,60 @@ class InvoiceTax implements \JsonSerializable
         $this->taxComponentBreakouts = $taxComponentBreakouts;
     }
 
+    /**
+     * Returns Eu Vat.
+     */
+    public function getEuVat(): ?bool
+    {
+        return $this->euVat;
+    }
+
+    /**
+     * Sets Eu Vat.
+     *
+     * @maps eu_vat
+     */
+    public function setEuVat(?bool $euVat): void
+    {
+        $this->euVat = $euVat;
+    }
+
+    /**
+     * Returns Type.
+     */
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    /**
+     * Sets Type.
+     *
+     * @maps type
+     */
+    public function setType(?string $type): void
+    {
+        $this->type = $type;
+    }
+
+    /**
+     * Returns Tax Exempt Amount.
+     */
+    public function getTaxExemptAmount(): ?string
+    {
+        return $this->taxExemptAmount;
+    }
+
+    /**
+     * Sets Tax Exempt Amount.
+     *
+     * @maps tax_exempt_amount
+     */
+    public function setTaxExemptAmount(?string $taxExemptAmount): void
+    {
+        $this->taxExemptAmount = $taxExemptAmount;
+    }
+
     private $additionalProperties = [];
 
     /**
@@ -344,6 +413,15 @@ class InvoiceTax implements \JsonSerializable
         }
         if (isset($this->taxComponentBreakouts)) {
             $json['tax_component_breakouts'] = $this->taxComponentBreakouts;
+        }
+        if (isset($this->euVat)) {
+            $json['eu_vat']                  = $this->euVat;
+        }
+        if (isset($this->type)) {
+            $json['type']                    = $this->type;
+        }
+        if (isset($this->taxExemptAmount)) {
+            $json['tax_exempt_amount']       = $this->taxExemptAmount;
         }
         $json = array_merge($json, $this->additionalProperties);
 

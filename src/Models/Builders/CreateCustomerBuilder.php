@@ -183,6 +183,24 @@ class CreateCustomerBuilder
     }
 
     /**
+     * Sets salesforce id field.
+     */
+    public function salesforceId(?string $value): self
+    {
+        $this->instance->setSalesforceId($value);
+        return $this;
+    }
+
+    /**
+     * Unsets salesforce id field.
+     */
+    public function unsetSalesforceId(): self
+    {
+        $this->instance->unsetSalesforceId();
+        return $this;
+    }
+
+    /**
      * Add an additional property to this model.
      *
      * @param string $name Name of property

@@ -39,13 +39,15 @@ class ComponentPricePointsController extends BaseController
      * Sets a new default price point for the component. This new default will apply to all new
      * subscriptions going forward - existing subscriptions will remain on their current price point.
      *
-     * See [Price Points Documentation](https://chargify.zendesk.com/hc/en-us/articles/4407755865883#price-
-     * points) for more information on price points and moving subscriptions between price points.
+     * See [Price Points Documentation](https://maxio.zendesk.com/hc/en-us/articles/24261191737101-Price-
+     * Points-Components) for more information on price points and moving subscriptions between price
+     * points.
      *
      * Note: Custom price points are not able to be set as the default for a component.
      *
-     * @param int $componentId The Chargify id of the component to which the price point belongs
-     * @param int $pricePointId The Chargify id of the price point
+     * @param int $componentId The Advanced Billing id of the component to which the price point
+     *        belongs
+     * @param int $pricePointId The Advanced Billing id of the price point
      *
      * @return ComponentResponse Response from the API call
      *
@@ -71,7 +73,7 @@ class ComponentPricePointsController extends BaseController
     /**
      * This endpoint can be used to create a new price point for an existing component.
      *
-     * @param int $componentId The Chargify id of the component
+     * @param int $componentId The Advanced Billing id of the component
      * @param CreateComponentPricePointRequest|null $body
      *
      * @return ComponentPricePointResponse Response from the API call
@@ -137,8 +139,8 @@ class ComponentPricePointsController extends BaseController
     /**
      * Use this endpoint to create multiple component price points in one request.
      *
-     * @param string $componentId The Chargify id of the component for which you want to fetch price
-     *        points.
+     * @param string $componentId The Advanced Billing id of the component for which you want to
+     *        fetch price points.
      * @param CreateComponentPricePointsRequest|null $body
      *
      * @return ComponentPricePointsResponse Response from the API call
@@ -293,8 +295,9 @@ class ComponentPricePointsController extends BaseController
     /**
      * Use this endpoint to unarchive a component price point.
      *
-     * @param int $componentId The Chargify id of the component to which the price point belongs
-     * @param int $pricePointId The Chargify id of the price point
+     * @param int $componentId The Advanced Billing id of the component to which the price point
+     *        belongs
+     * @param int $pricePointId The Advanced Billing id of the price point
      *
      * @return ComponentPricePointResponse Response from the API call
      *
@@ -327,7 +330,7 @@ class ComponentPricePointsController extends BaseController
      *
      * Note: Currency Prices are not able to be created for custom price points.
      *
-     * @param int $pricePointId The Chargify id of the price point
+     * @param int $pricePointId The Advanced Billing id of the price point
      * @param CreateCurrencyPricesRequest|null $body
      *
      * @return ComponentCurrencyPricesResponse Response from the API call
@@ -365,7 +368,7 @@ class ComponentPricePointsController extends BaseController
      *
      * Note: Currency Prices are not able to be updated for custom price points.
      *
-     * @param int $pricePointId The Chargify id of the price point
+     * @param int $pricePointId The Advanced Billing id of the price point
      * @param UpdateCurrencyPricesRequest|null $body
      *
      * @return ComponentCurrencyPricesResponse Response from the API call

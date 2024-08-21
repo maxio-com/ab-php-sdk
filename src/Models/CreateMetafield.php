@@ -103,7 +103,7 @@ class CreateMetafield implements \JsonSerializable
 
     /**
      * Returns Enum.
-     * Only applicable when input_type is radio or dropdown
+     * Only applicable when input_type is radio or dropdown. Empty strings will not be submitted.
      *
      * @return string[]|null
      */
@@ -114,7 +114,7 @@ class CreateMetafield implements \JsonSerializable
 
     /**
      * Sets Enum.
-     * Only applicable when input_type is radio or dropdown
+     * Only applicable when input_type is radio or dropdown. Empty strings will not be submitted.
      *
      * @maps enum
      *

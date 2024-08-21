@@ -27,6 +27,7 @@
 | `taxExempt` | `?bool` | Optional | - | getTaxExempt(): ?bool | setTaxExempt(?bool taxExempt): void |
 | `taxExemptReason` | `?string` | Optional | - | getTaxExemptReason(): ?string | setTaxExemptReason(?string taxExemptReason): void |
 | `parentId` | `?int` | Optional | The parent ID in Chargify if applicable. Parent is another Customer object. | getParentId(): ?int | setParentId(?int parentId): void |
+| `salesforceId` | `?string` | Optional | The Salesforce ID of the customer | getSalesforceId(): ?string | setSalesforceId(?string salesforceId): void |
 
 ## Example (as JSON)
 

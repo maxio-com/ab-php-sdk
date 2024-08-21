@@ -516,8 +516,8 @@ class ProductPricePoint implements \JsonSerializable
 
     /**
      * Returns Expiration Interval Unit.
-     * A string representing the expiration interval unit for this product price point, either month or
-     * day
+     * A string representing the expiration interval unit for this product price point, either month, day
+     * or never
      */
     public function getExpirationIntervalUnit(): ?string
     {
@@ -529,11 +529,11 @@ class ProductPricePoint implements \JsonSerializable
 
     /**
      * Sets Expiration Interval Unit.
-     * A string representing the expiration interval unit for this product price point, either month or
-     * day
+     * A string representing the expiration interval unit for this product price point, either month, day
+     * or never
      *
      * @maps expiration_interval_unit
-     * @factory \AdvancedBillingLib\Models\IntervalUnit::checkValue
+     * @factory \AdvancedBillingLib\Models\ExpirationIntervalUnit::checkValue
      */
     public function setExpirationIntervalUnit(?string $expirationIntervalUnit): void
     {
@@ -542,8 +542,8 @@ class ProductPricePoint implements \JsonSerializable
 
     /**
      * Unsets Expiration Interval Unit.
-     * A string representing the expiration interval unit for this product price point, either month or
-     * day
+     * A string representing the expiration interval unit for this product price point, either month, day
+     * or never
      */
     public function unsetExpirationIntervalUnit(): void
     {
@@ -836,7 +836,10 @@ class ProductPricePoint implements \JsonSerializable
             $json['expiration_interval']        = $this->expirationInterval['value'];
         }
         if (!empty($this->expirationIntervalUnit)) {
-            $json['expiration_interval_unit']   = IntervalUnit::checkValue($this->expirationIntervalUnit['value']);
+            $json['expiration_interval_unit']   =
+                ExpirationIntervalUnit::checkValue(
+                    $this->expirationIntervalUnit['value']
+                );
         }
         if (isset($this->productId)) {
             $json['product_id']                 = $this->productId;

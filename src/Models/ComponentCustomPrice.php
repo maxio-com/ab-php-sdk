@@ -18,6 +18,11 @@ use stdClass;
 class ComponentCustomPrice implements \JsonSerializable
 {
     /**
+     * @var bool|null
+     */
+    private $taxIncluded;
+
+    /**
      * @var string|null
      */
     private $pricingScheme;
@@ -28,14 +33,42 @@ class ComponentCustomPrice implements \JsonSerializable
     private $interval;
 
     /**
-     * @var string|null
+     * @var array
      */
-    private $intervalUnit;
+    private $intervalUnit = [];
 
     /**
-     * @var Price[]|null
+     * @var Price[]
      */
     private $prices;
+
+    /**
+     * @param Price[] $prices
+     */
+    public function __construct(array $prices)
+    {
+        $this->prices = $prices;
+    }
+
+    /**
+     * Returns Tax Included.
+     * Whether or not the price point includes tax
+     */
+    public function getTaxIncluded(): ?bool
+    {
+        return $this->taxIncluded;
+    }
+
+    /**
+     * Sets Tax Included.
+     * Whether or not the price point includes tax
+     *
+     * @maps tax_included
+     */
+    public function setTaxIncluded(?bool $taxIncluded): void
+    {
+        $this->taxIncluded = $taxIncluded;
+    }
 
     /**
      * Returns Pricing Scheme.
@@ -89,7 +122,10 @@ class ComponentCustomPrice implements \JsonSerializable
      */
     public function getIntervalUnit(): ?string
     {
-        return $this->intervalUnit;
+        if (count($this->intervalUnit) == 0) {
+            return null;
+        }
+        return $this->intervalUnit['value'];
     }
 
     /**
@@ -102,16 +138,26 @@ class ComponentCustomPrice implements \JsonSerializable
      */
     public function setIntervalUnit(?string $intervalUnit): void
     {
-        $this->intervalUnit = $intervalUnit;
+        $this->intervalUnit['value'] = $intervalUnit;
+    }
+
+    /**
+     * Unsets Interval Unit.
+     * A string representing the interval unit for this component price point, either month or day. This
+     * property is only available for sites with Multifrequency enabled.
+     */
+    public function unsetIntervalUnit(): void
+    {
+        $this->intervalUnit = [];
     }
 
     /**
      * Returns Prices.
      * On/off components only need one price bracket starting at 1
      *
-     * @return Price[]|null
+     * @return Price[]
      */
-    public function getPrices(): ?array
+    public function getPrices(): array
     {
         return $this->prices;
     }
@@ -120,11 +166,12 @@ class ComponentCustomPrice implements \JsonSerializable
      * Sets Prices.
      * On/off components only need one price bracket starting at 1
      *
+     * @required
      * @maps prices
      *
-     * @param Price[]|null $prices
+     * @param Price[] $prices
      */
-    public function setPrices(?array $prices): void
+    public function setPrices(array $prices): void
     {
         $this->prices = $prices;
     }
@@ -154,18 +201,19 @@ class ComponentCustomPrice implements \JsonSerializable
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
+        if (isset($this->taxIncluded)) {
+            $json['tax_included']   = $this->taxIncluded;
+        }
         if (isset($this->pricingScheme)) {
             $json['pricing_scheme'] = PricingScheme::checkValue($this->pricingScheme);
         }
         if (isset($this->interval)) {
             $json['interval']       = $this->interval;
         }
-        if (isset($this->intervalUnit)) {
-            $json['interval_unit']  = IntervalUnit::checkValue($this->intervalUnit);
+        if (!empty($this->intervalUnit)) {
+            $json['interval_unit']  = IntervalUnit::checkValue($this->intervalUnit['value']);
         }
-        if (isset($this->prices)) {
-            $json['prices']         = $this->prices;
-        }
+        $json['prices']             = $this->prices;
         $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;

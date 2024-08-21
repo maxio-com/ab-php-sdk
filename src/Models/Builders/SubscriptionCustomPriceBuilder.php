@@ -33,9 +33,9 @@ class SubscriptionCustomPriceBuilder
     /**
      * Initializes a new subscription custom price Builder object.
      */
-    public static function init($priceInCents, $interval, string $intervalUnit): self
+    public static function init($priceInCents, $interval): self
     {
-        return new self(new SubscriptionCustomPrice($priceInCents, $interval, $intervalUnit));
+        return new self(new SubscriptionCustomPrice($priceInCents, $interval));
     }
 
     /**
@@ -53,6 +53,15 @@ class SubscriptionCustomPriceBuilder
     public function handle(?string $value): self
     {
         $this->instance->setHandle($value);
+        return $this;
+    }
+
+    /**
+     * Sets interval unit field.
+     */
+    public function intervalUnit(?string $value): self
+    {
+        $this->instance->setIntervalUnit($value);
         return $this;
     }
 
@@ -116,6 +125,15 @@ class SubscriptionCustomPriceBuilder
     public function expirationIntervalUnit(?string $value): self
     {
         $this->instance->setExpirationIntervalUnit($value);
+        return $this;
+    }
+
+    /**
+     * Unsets expiration interval unit field.
+     */
+    public function unsetExpirationIntervalUnit(): self
+    {
+        $this->instance->unsetExpirationIntervalUnit();
         return $this;
     }
 

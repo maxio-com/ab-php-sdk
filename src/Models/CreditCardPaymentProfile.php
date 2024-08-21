@@ -30,7 +30,7 @@ class CreditCardPaymentProfile implements \JsonSerializable
     private $lastName;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $maskedCardNumber;
 
@@ -100,7 +100,7 @@ class CreditCardPaymentProfile implements \JsonSerializable
     private $billingAddress2 = [];
 
     /**
-     * @var string|null
+     * @var string
      */
     private $paymentType;
 
@@ -125,11 +125,11 @@ class CreditCardPaymentProfile implements \JsonSerializable
     private $gatewayHandle = [];
 
     /**
-     * @param string $maskedCardNumber
+     * @param string $paymentType
      */
-    public function __construct(string $maskedCardNumber)
+    public function __construct(string $paymentType)
     {
-        $this->maskedCardNumber = $maskedCardNumber;
+        $this->paymentType = $paymentType;
     }
 
     /**
@@ -201,7 +201,7 @@ class CreditCardPaymentProfile implements \JsonSerializable
      * A string representation of the credit card number with all but the last 4 digits masked with X’s (i.
      * e. ‘XXXX-XXXX-XXXX-1234’).
      */
-    public function getMaskedCardNumber(): string
+    public function getMaskedCardNumber(): ?string
     {
         return $this->maskedCardNumber;
     }
@@ -211,10 +211,9 @@ class CreditCardPaymentProfile implements \JsonSerializable
      * A string representation of the credit card number with all but the last 4 digits masked with X’s (i.
      * e. ‘XXXX-XXXX-XXXX-1234’).
      *
-     * @required
      * @maps masked_card_number
      */
-    public function setMaskedCardNumber(string $maskedCardNumber): void
+    public function setMaskedCardNumber(?string $maskedCardNumber): void
     {
         $this->maskedCardNumber = $maskedCardNumber;
     }
@@ -314,7 +313,7 @@ class CreditCardPaymentProfile implements \JsonSerializable
      * The vault that stores the payment profile with the provided `vault_token`. Use `bogus` for testing.
      *
      * @maps current_vault
-     * @factory \AdvancedBillingLib\Models\CurrentVault::checkValue
+     * @factory \AdvancedBillingLib\Models\CreditCardVault::checkValue
      */
     public function setCurrentVault(?string $currentVault): void
     {
@@ -583,7 +582,7 @@ class CreditCardPaymentProfile implements \JsonSerializable
     /**
      * Returns Payment Type.
      */
-    public function getPaymentType(): ?string
+    public function getPaymentType(): string
     {
         return $this->paymentType;
     }
@@ -591,10 +590,11 @@ class CreditCardPaymentProfile implements \JsonSerializable
     /**
      * Sets Payment Type.
      *
+     * @required
      * @maps payment_type
      * @factory \AdvancedBillingLib\Models\PaymentType::checkValue
      */
-    public function setPaymentType(?string $paymentType): void
+    public function setPaymentType(string $paymentType): void
     {
         $this->paymentType = $paymentType;
     }
@@ -734,7 +734,9 @@ class CreditCardPaymentProfile implements \JsonSerializable
         if (isset($this->lastName)) {
             $json['last_name']               = $this->lastName;
         }
-        $json['masked_card_number']          = $this->maskedCardNumber;
+        if (isset($this->maskedCardNumber)) {
+            $json['masked_card_number']      = $this->maskedCardNumber;
+        }
         if (isset($this->cardType)) {
             $json['card_type']               = CardType::checkValue($this->cardType);
         }
@@ -748,7 +750,7 @@ class CreditCardPaymentProfile implements \JsonSerializable
             $json['customer_id']             = $this->customerId;
         }
         if (isset($this->currentVault)) {
-            $json['current_vault']           = CurrentVault::checkValue($this->currentVault);
+            $json['current_vault']           = CreditCardVault::checkValue($this->currentVault);
         }
         if (!empty($this->vaultToken)) {
             $json['vault_token']             = $this->vaultToken['value'];
@@ -774,9 +776,7 @@ class CreditCardPaymentProfile implements \JsonSerializable
         if (!empty($this->billingAddress2)) {
             $json['billing_address_2']       = $this->billingAddress2['value'];
         }
-        if (isset($this->paymentType)) {
-            $json['payment_type']            = PaymentType::checkValue($this->paymentType);
-        }
+        $json['payment_type']                = PaymentType::checkValue($this->paymentType);
         if (isset($this->disabled)) {
             $json['disabled']                = $this->disabled;
         }

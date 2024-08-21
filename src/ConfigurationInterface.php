@@ -24,12 +24,12 @@ interface ConfigurationInterface extends HttpConfigurations
     public function getEnvironment(): string;
 
     /**
-     * Get the subdomain for your Chargify site.
+     * Get the subdomain for your Advanced Billing site.
      */
     public function getSubdomain(): string;
 
     /**
-     * Get the Chargify server domain.
+     * Get the Advanced Billing server domain.
      */
     public function getDomain(): string;
 

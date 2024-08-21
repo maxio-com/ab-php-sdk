@@ -105,6 +105,11 @@ class CustomerAttributes implements \JsonSerializable
     private $parentId = [];
 
     /**
+     * @var array
+     */
+    private $salesforceId = [];
+
+    /**
      * Returns First Name.
      * The first name of the customer. Required when creating a customer via attributes.
      */
@@ -510,6 +515,38 @@ class CustomerAttributes implements \JsonSerializable
         $this->parentId = [];
     }
 
+    /**
+     * Returns Salesforce Id.
+     * (Optional) The Salesforce ID of the customer.
+     */
+    public function getSalesforceId(): ?string
+    {
+        if (count($this->salesforceId) == 0) {
+            return null;
+        }
+        return $this->salesforceId['value'];
+    }
+
+    /**
+     * Sets Salesforce Id.
+     * (Optional) The Salesforce ID of the customer.
+     *
+     * @maps salesforce_id
+     */
+    public function setSalesforceId(?string $salesforceId): void
+    {
+        $this->salesforceId['value'] = $salesforceId;
+    }
+
+    /**
+     * Unsets Salesforce Id.
+     * (Optional) The Salesforce ID of the customer.
+     */
+    public function unsetSalesforceId(): void
+    {
+        $this->salesforceId = [];
+    }
+
     private $additionalProperties = [];
 
     /**
@@ -536,58 +573,61 @@ class CustomerAttributes implements \JsonSerializable
     {
         $json = [];
         if (isset($this->firstName)) {
-            $json['first_name']   = $this->firstName;
+            $json['first_name']    = $this->firstName;
         }
         if (isset($this->lastName)) {
-            $json['last_name']    = $this->lastName;
+            $json['last_name']     = $this->lastName;
         }
         if (isset($this->email)) {
-            $json['email']        = $this->email;
+            $json['email']         = $this->email;
         }
         if (isset($this->ccEmails)) {
-            $json['cc_emails']    = $this->ccEmails;
+            $json['cc_emails']     = $this->ccEmails;
         }
         if (isset($this->organization)) {
-            $json['organization'] = $this->organization;
+            $json['organization']  = $this->organization;
         }
         if (isset($this->reference)) {
-            $json['reference']    = $this->reference;
+            $json['reference']     = $this->reference;
         }
         if (isset($this->address)) {
-            $json['address']      = $this->address;
+            $json['address']       = $this->address;
         }
         if (!empty($this->address2)) {
-            $json['address_2']    = $this->address2['value'];
+            $json['address_2']     = $this->address2['value'];
         }
         if (isset($this->city)) {
-            $json['city']         = $this->city;
+            $json['city']          = $this->city;
         }
         if (isset($this->state)) {
-            $json['state']        = $this->state;
+            $json['state']         = $this->state;
         }
         if (isset($this->zip)) {
-            $json['zip']          = $this->zip;
+            $json['zip']           = $this->zip;
         }
         if (isset($this->country)) {
-            $json['country']      = $this->country;
+            $json['country']       = $this->country;
         }
         if (isset($this->phone)) {
-            $json['phone']        = $this->phone;
+            $json['phone']         = $this->phone;
         }
         if (isset($this->verified)) {
-            $json['verified']     = $this->verified;
+            $json['verified']      = $this->verified;
         }
         if (isset($this->taxExempt)) {
-            $json['tax_exempt']   = $this->taxExempt;
+            $json['tax_exempt']    = $this->taxExempt;
         }
         if (isset($this->vatNumber)) {
-            $json['vat_number']   = $this->vatNumber;
+            $json['vat_number']    = $this->vatNumber;
         }
         if (isset($this->metafields)) {
-            $json['metafields']   = $this->metafields;
+            $json['metafields']    = $this->metafields;
         }
         if (!empty($this->parentId)) {
-            $json['parent_id']    = $this->parentId['value'];
+            $json['parent_id']     = $this->parentId['value'];
+        }
+        if (!empty($this->salesforceId)) {
+            $json['salesforce_id'] = $this->salesforceId['value'];
         }
         $json = array_merge($json, $this->additionalProperties);
 

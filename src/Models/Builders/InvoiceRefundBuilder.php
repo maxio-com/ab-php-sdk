@@ -129,6 +129,24 @@ class InvoiceRefundBuilder
     }
 
     /**
+     * Sets ach late reject field.
+     */
+    public function achLateReject(?bool $value): self
+    {
+        $this->instance->setAchLateReject($value);
+        return $this;
+    }
+
+    /**
+     * Unsets ach late reject field.
+     */
+    public function unsetAchLateReject(): self
+    {
+        $this->instance->unsetAchLateReject();
+        return $this;
+    }
+
+    /**
      * Add an additional property to this model.
      *
      * @param string $name Name of property

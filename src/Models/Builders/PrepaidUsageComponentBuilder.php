@@ -220,6 +220,15 @@ class PrepaidUsageComponentBuilder
     }
 
     /**
+     * Unsets expiration interval unit field.
+     */
+    public function unsetExpirationIntervalUnit(): self
+    {
+        $this->instance->unsetExpirationIntervalUnit();
+        return $this;
+    }
+
+    /**
      * Sets display on hosted page field.
      */
     public function displayOnHostedPage(?bool $value): self

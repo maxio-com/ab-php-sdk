@@ -37,7 +37,8 @@ use CoreInterfaces\Core\Request\RequestMethod;
 class ProductPricePointsController extends BaseController
 {
     /**
-     * [Product Price Point Documentation](https://chargify.zendesk.com/hc/en-us/articles/4407755824155)
+     * [Product Price Point Documentation](https://maxio.zendesk.com/hc/en-us/articles/24261111947789-
+     * Product-Price-Points)
      *
      * @param int|string $productId The id or handle of the product. When using the handle, it must
      *        be prefixed with `handle:`
@@ -227,8 +228,8 @@ class ProductPricePointsController extends BaseController
     /**
      * Use this endpoint to unarchive an archived product price point.
      *
-     * @param int $productId The Chargify id of the product to which the price point belongs
-     * @param int $pricePointId The Chargify id of the product price point
+     * @param int $productId The Advanced Billing id of the product to which the price point belongs
+     * @param int $pricePointId The Advanced Billing id of the product price point
      *
      * @return ProductPricePointResponse Response from the API call
      *
@@ -256,8 +257,8 @@ class ProductPricePointsController extends BaseController
      *
      * Note: Custom product price points are not able to be set as the default for a product.
      *
-     * @param int $productId The Chargify id of the product to which the price point belongs
-     * @param int $pricePointId The Chargify id of the product price point
+     * @param int $productId The Advanced Billing id of the product to which the price point belongs
+     * @param int $pricePointId The Advanced Billing id of the product price point
      *
      * @return ProductResponse Response from the API call
      *
@@ -283,7 +284,7 @@ class ProductPricePointsController extends BaseController
     /**
      * Use this endpoint to create multiple product price points in one request.
      *
-     * @param int $productId The Chargify id of the product to which the price points belong
+     * @param int $productId The Advanced Billing id of the product to which the price points belong
      * @param BulkCreateProductPricePointsRequest|null $body
      *
      * @return BulkCreateProductPricePointsResponse Response from the API call
@@ -324,7 +325,7 @@ class ProductPricePointsController extends BaseController
      *
      * Note: Currency Prices are not able to be created for custom product price points.
      *
-     * @param int $productPricePointId The Chargify id of the product price point
+     * @param int $productPricePointId The Advanced Billing id of the product price point
      * @param CreateProductCurrencyPricesRequest|null $body
      *
      * @return CurrencyPricesResponse Response from the API call
@@ -369,7 +370,7 @@ class ProductPricePointsController extends BaseController
      *
      * Note: Currency Prices are not able to be updated for custom product price points.
      *
-     * @param int $productPricePointId The Chargify id of the product price point
+     * @param int $productPricePointId The Advanced Billing id of the product price point
      * @param UpdateCurrencyPricesRequest|null $body
      *
      * @return CurrencyPricesResponse Response from the API call

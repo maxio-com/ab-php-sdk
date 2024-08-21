@@ -42,11 +42,11 @@ class ComponentsController extends BaseController
      * the start of every billing period. If you want to bill for a quantity of something that does not
      * change unless you change it, then you want quantity components, instead.
      *
-     * For more information on components, please see our documentation [here](https://maxio-chargify.
-     * zendesk.com/hc/en-us/articles/5405020625677).
+     * For more information on components, please see our documentation [here](https://maxio.zendesk.
+     * com/hc/en-us/articles/24261141522189-Components-Overview).
      *
-     * @param int $productFamilyId The Chargify id of the product family to which the component
-     *        belongs
+     * @param string $productFamilyId Either the product family's id or its handle prefixed with
+     *        `handle:`
      * @param CreateMeteredComponent|null $body
      *
      * @return ComponentResponse Response from the API call
@@ -54,7 +54,7 @@ class ComponentsController extends BaseController
      * @throws ApiException Thrown if API call fails
      */
     public function createMeteredComponent(
-        int $productFamilyId,
+        string $productFamilyId,
         ?CreateMeteredComponent $body = null
     ): ComponentResponse {
         $_reqBuilder = $this->requestBuilder(
@@ -101,11 +101,11 @@ class ComponentsController extends BaseController
      * The allocated quantity for one-time quantity-based components immediately gets reset back to zero
      * after the allocation is made.
      *
-     * For more information on components, please see our documentation [here](https://maxio-chargify.
-     * zendesk.com/hc/en-us/articles/5405020625677).
+     * For more information on components, please see our documentation [here](https://maxio.zendesk.
+     * com/hc/en-us/articles/24261141522189-Components-Overview).
      *
-     * @param int $productFamilyId The Chargify id of the product family to which the component
-     *        belongs
+     * @param string $productFamilyId Either the product family's id or its handle prefixed with
+     *        `handle:`
      * @param CreateQuantityBasedComponent|null $body
      *
      * @return ComponentResponse Response from the API call
@@ -113,7 +113,7 @@ class ComponentsController extends BaseController
      * @throws ApiException Thrown if API call fails
      */
     public function createQuantityBasedComponent(
-        int $productFamilyId,
+        string $productFamilyId,
         ?CreateQuantityBasedComponent $body = null
     ): ComponentResponse {
         $_reqBuilder = $this->requestBuilder(
@@ -148,19 +148,21 @@ class ComponentsController extends BaseController
      * On/off components are used for any flat fee, recurring add on (think $99/month for tech support or a
      * flat add on shipping fee).
      *
-     * For more information on components, please see our documentation [here](https://maxio-chargify.
-     * zendesk.com/hc/en-us/articles/5405020625677).
+     * For more information on components, please see our documentation [here](https://maxio.zendesk.
+     * com/hc/en-us/articles/24261141522189-Components-Overview).
      *
-     * @param int $productFamilyId The Chargify id of the product family to which the component
-     *        belongs
+     * @param string $productFamilyId Either the product family's id or its handle prefixed with
+     *        `handle:`
      * @param CreateOnOffComponent|null $body
      *
      * @return ComponentResponse Response from the API call
      *
      * @throws ApiException Thrown if API call fails
      */
-    public function createOnOffComponent(int $productFamilyId, ?CreateOnOffComponent $body = null): ComponentResponse
-    {
+    public function createOnOffComponent(
+        string $productFamilyId,
+        ?CreateOnOffComponent $body = null
+    ): ComponentResponse {
         $_reqBuilder = $this->requestBuilder(
             RequestMethod::POST,
             '/product_families/{product_family_id}/on_off_components.json'
@@ -195,11 +197,11 @@ class ComponentsController extends BaseController
      * charge at the end of the period for the amount of units used, prepaid components are charged for at
      * the time of purchase, and we subsequently keep track of the usage against the amount purchased.
      *
-     * For more information on components, please see our documentation [here](https://maxio-chargify.
-     * zendesk.com/hc/en-us/articles/5405020625677).
+     * For more information on components, please see our documentation [here](https://maxio.zendesk.
+     * com/hc/en-us/articles/24261141522189-Components-Overview).
      *
-     * @param int $productFamilyId The Chargify id of the product family to which the component
-     *        belongs
+     * @param string $productFamilyId Either the product family's id or its handle prefixed with
+     *        `handle:`
      * @param CreatePrepaidComponent|null $body
      *
      * @return ComponentResponse Response from the API call
@@ -207,7 +209,7 @@ class ComponentsController extends BaseController
      * @throws ApiException Thrown if API call fails
      */
     public function createPrepaidUsageComponent(
-        int $productFamilyId,
+        string $productFamilyId,
         ?CreatePrepaidComponent $body = null
     ): ComponentResponse {
         $_reqBuilder = $this->requestBuilder(
@@ -248,11 +250,11 @@ class ComponentsController extends BaseController
      * So, instead of reporting usage directly for each component (as you would with metered components),
      * the usage is derived from analysis of your events.
      *
-     * For more information on components, please see our documentation [here](https://maxio-chargify.
-     * zendesk.com/hc/en-us/articles/5405020625677).
+     * For more information on components, please see our documentation [here](https://maxio.zendesk.
+     * com/hc/en-us/articles/24261141522189-Components-Overview).
      *
-     * @param int $productFamilyId The Chargify id of the product family to which the component
-     *        belongs
+     * @param string $productFamilyId Either the product family's id or its handle prefixed with
+     *        `handle:`
      * @param CreateEBBComponent|null $body
      *
      * @return ComponentResponse Response from the API call
@@ -260,7 +262,7 @@ class ComponentsController extends BaseController
      * @throws ApiException Thrown if API call fails
      */
     public function createEventBasedComponent(
-        int $productFamilyId,
+        string $productFamilyId,
         ?CreateEBBComponent $body = null
     ): ComponentResponse {
         $_reqBuilder = $this->requestBuilder(
@@ -315,10 +317,10 @@ class ComponentsController extends BaseController
      * You may read the component by either the component's id or handle. When using the handle, it must be
      * prefixed with `handle:`.
      *
-     * @param int $productFamilyId The Chargify id of the product family to which the component
-     *        belongs
-     * @param string $componentId Either the Chargify id of the component or the handle for the
-     *        component prefixed with `handle:`
+     * @param int $productFamilyId The Advanced Billing id of the product family to which the
+     *        component belongs
+     * @param string $componentId Either the Advanced Billing id of the component or the handle for
+     *        the component prefixed with `handle:`
      *
      * @return ComponentResponse Response from the API call
      *
@@ -347,10 +349,10 @@ class ComponentsController extends BaseController
      * You may read the component by either the component's id or handle. When using the handle, it must be
      * prefixed with `handle:`.
      *
-     * @param int $productFamilyId The Chargify id of the product family to which the component
-     *        belongs
-     * @param string $componentId Either the Chargify id of the component or the handle for the
-     *        component prefixed with `handle:`
+     * @param int $productFamilyId The Advanced Billing id of the product family to which the
+     *        component belongs
+     * @param string $componentId Either the Advanced Billing id of the component or the handle for
+     *        the component prefixed with `handle:`
      * @param UpdateComponentRequest|null $body
      *
      * @return ComponentResponse Response from the API call
@@ -391,10 +393,10 @@ class ComponentsController extends BaseController
      * Sending a DELETE request to this endpoint will archive the component. All current subscribers will
      * be unffected; their subscription/purchase will continue to be charged as usual.
      *
-     * @param int $productFamilyId The Chargify id of the product family to which the component
-     *        belongs
-     * @param string $componentId Either the Chargify id of the component or the handle for the
-     *        component prefixed with `handle:`
+     * @param int $productFamilyId The Advanced Billing id of the product family to which the
+     *        component belongs
+     * @param string $componentId Either the Advanced Billing id of the component or the handle for
+     *        the component prefixed with `handle:`
      *
      * @return Component Response from the API call
      *

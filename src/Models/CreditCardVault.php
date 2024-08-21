@@ -17,19 +17,19 @@ use stdClass;
 /**
  * The vault that stores the payment profile with the provided `vault_token`. Use `bogus` for testing.
  */
-class CurrentVault
+class CreditCardVault
 {
     public const ADYEN = 'adyen';
 
     public const AUTHORIZENET = 'authorizenet';
-
-    public const AVALARA = 'avalara';
 
     public const BEANSTREAM = 'beanstream';
 
     public const BLUE_SNAP = 'blue_snap';
 
     public const BOGUS = 'bogus';
+
+    public const BRAINTREE1 = 'braintree1';
 
     public const BRAINTREE_BLUE = 'braintree_blue';
 
@@ -41,17 +41,19 @@ class CurrentVault
 
     public const EWAY = 'eway';
 
+    public const EWAY_RAPID = 'eway_rapid';
+
     public const EWAY_RAPID_STD = 'eway_rapid_std';
 
     public const FIRSTDATA = 'firstdata';
 
     public const FORTE = 'forte';
 
-    public const GOCARDLESS = 'gocardless';
-
     public const LITLE = 'litle';
 
     public const MAXIO_PAYMENTS = 'maxio_payments';
+
+    public const MAXP = 'maxp';
 
     public const MODUSLINK = 'moduslink';
 
@@ -63,9 +65,17 @@ class CurrentVault
 
     public const PAYMENT_EXPRESS = 'payment_express';
 
+    public const PAYMILL = 'paymill';
+
+    public const PAYPAL = 'paypal';
+
+    public const PAYPAL_COMPLETE = 'paypal_complete';
+
     public const PIN = 'pin';
 
     public const SQUARE = 'square';
+
+    public const STRIPE = 'stripe';
 
     public const STRIPE_CONNECT = 'stripe_connect';
 
@@ -73,34 +83,42 @@ class CurrentVault
 
     public const UNIPAAS = 'unipaas';
 
+    public const WIRECARD = 'wirecard';
+
     private const _ALL_VALUES = [
         self::ADYEN,
         self::AUTHORIZENET,
-        self::AVALARA,
         self::BEANSTREAM,
         self::BLUE_SNAP,
         self::BOGUS,
+        self::BRAINTREE1,
         self::BRAINTREE_BLUE,
         self::CHECKOUT,
         self::CYBERSOURCE,
         self::ELAVON,
         self::EWAY,
+        self::EWAY_RAPID,
         self::EWAY_RAPID_STD,
         self::FIRSTDATA,
         self::FORTE,
-        self::GOCARDLESS,
         self::LITLE,
         self::MAXIO_PAYMENTS,
+        self::MAXP,
         self::MODUSLINK,
         self::MONERIS,
         self::NMI,
         self::ORBITAL,
         self::PAYMENT_EXPRESS,
+        self::PAYMILL,
+        self::PAYPAL,
+        self::PAYPAL_COMPLETE,
         self::PIN,
         self::SQUARE,
+        self::STRIPE,
         self::STRIPE_CONNECT,
         self::TRUST_COMMERCE,
-        self::UNIPAAS
+        self::UNIPAAS,
+        self::WIRECARD
     ];
 
     /**
@@ -118,6 +136,6 @@ class CurrentVault
         if (CoreHelper::checkValueOrValuesInList($value, self::_ALL_VALUES)) {
             return $value;
         }
-        throw new Exception("$value is invalid for CurrentVault.");
+        throw new Exception("$value is invalid for CreditCardVault.");
     }
 }

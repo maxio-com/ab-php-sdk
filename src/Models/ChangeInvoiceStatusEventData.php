@@ -94,8 +94,8 @@ class ChangeInvoiceStatusEventData implements \JsonSerializable
 
     /**
      * Returns From Status.
-     * The status of the invoice before any changes occurred. See [Invoice Statuses](https://maxio-chargify.
-     * zendesk.com/hc/en-us/articles/5405078794253-Introduction-to-Invoices#invoice-statuses) for more.
+     * The status of the invoice before any changes occurred. See [Invoice Statuses](https://maxio.zendesk.
+     * com/hc/en-us/articles/24252287829645-Advanced-Billing-Invoices-Overview#invoice-statuses) for more.
      */
     public function getFromStatus(): string
     {
@@ -104,8 +104,8 @@ class ChangeInvoiceStatusEventData implements \JsonSerializable
 
     /**
      * Sets From Status.
-     * The status of the invoice before any changes occurred. See [Invoice Statuses](https://maxio-chargify.
-     * zendesk.com/hc/en-us/articles/5405078794253-Introduction-to-Invoices#invoice-statuses) for more.
+     * The status of the invoice before any changes occurred. See [Invoice Statuses](https://maxio.zendesk.
+     * com/hc/en-us/articles/24252287829645-Advanced-Billing-Invoices-Overview#invoice-statuses) for more.
      *
      * @required
      * @maps from_status
@@ -118,9 +118,9 @@ class ChangeInvoiceStatusEventData implements \JsonSerializable
 
     /**
      * Returns To Status.
-     * The updated status of the invoice after changes have been made. See [Invoice Statuses](https://maxio-
-     * chargify.zendesk.com/hc/en-us/articles/5405078794253-Introduction-to-Invoices#invoice-statuses) for
-     * more.
+     * The updated status of the invoice after changes have been made. See [Invoice Statuses](https://maxio.
+     * zendesk.com/hc/en-us/articles/24252287829645-Advanced-Billing-Invoices-Overview#invoice-statuses)
+     * for more.
      */
     public function getToStatus(): string
     {
@@ -129,9 +129,9 @@ class ChangeInvoiceStatusEventData implements \JsonSerializable
 
     /**
      * Sets To Status.
-     * The updated status of the invoice after changes have been made. See [Invoice Statuses](https://maxio-
-     * chargify.zendesk.com/hc/en-us/articles/5405078794253-Introduction-to-Invoices#invoice-statuses) for
-     * more.
+     * The updated status of the invoice after changes have been made. See [Invoice Statuses](https://maxio.
+     * zendesk.com/hc/en-us/articles/24252287829645-Advanced-Billing-Invoices-Overview#invoice-statuses)
+     * for more.
      *
      * @required
      * @maps to_status

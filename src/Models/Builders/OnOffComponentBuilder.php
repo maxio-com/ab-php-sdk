@@ -201,6 +201,15 @@ class OnOffComponentBuilder
     }
 
     /**
+     * Unsets interval unit field.
+     */
+    public function unsetIntervalUnit(): self
+    {
+        $this->instance->unsetIntervalUnit();
+        return $this;
+    }
+
+    /**
      * Add an additional property to this model.
      *
      * @param string $name Name of property

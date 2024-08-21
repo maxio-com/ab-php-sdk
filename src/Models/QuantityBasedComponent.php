@@ -111,9 +111,9 @@ class QuantityBasedComponent implements \JsonSerializable
     private $interval;
 
     /**
-     * @var string|null
+     * @var array
      */
-    private $intervalUnit;
+    private $intervalUnit = [];
 
     /**
      * @param string $name
@@ -266,8 +266,8 @@ class QuantityBasedComponent implements \JsonSerializable
     /**
      * Returns Prices.
      * (Not required for ‘per_unit’ pricing schemes) One or more price brackets. See [Price Bracket
-     * Rules](https://chargify.zendesk.com/hc/en-us/articles/4407755865883#price-bracket-rules) for an
-     * overview of how price brackets work for different pricing schemes.
+     * Rules](https://maxio.zendesk.com/hc/en-us/articles/24261149166733-Component-Pricing-Schemes#price-
+     * bracket-rules) for an overview of how price brackets work for different pricing schemes.
      *
      * @return Price[]|null
      */
@@ -279,8 +279,8 @@ class QuantityBasedComponent implements \JsonSerializable
     /**
      * Sets Prices.
      * (Not required for ‘per_unit’ pricing schemes) One or more price brackets. See [Price Bracket
-     * Rules](https://chargify.zendesk.com/hc/en-us/articles/4407755865883#price-bracket-rules) for an
-     * overview of how price brackets work for different pricing schemes.
+     * Rules](https://maxio.zendesk.com/hc/en-us/articles/24261149166733-Component-Pricing-Schemes#price-
+     * bracket-rules) for an overview of how price brackets work for different pricing schemes.
      *
      * @maps prices
      *
@@ -591,7 +591,10 @@ class QuantityBasedComponent implements \JsonSerializable
      */
     public function getIntervalUnit(): ?string
     {
-        return $this->intervalUnit;
+        if (count($this->intervalUnit) == 0) {
+            return null;
+        }
+        return $this->intervalUnit['value'];
     }
 
     /**
@@ -604,7 +607,17 @@ class QuantityBasedComponent implements \JsonSerializable
      */
     public function setIntervalUnit(?string $intervalUnit): void
     {
-        $this->intervalUnit = $intervalUnit;
+        $this->intervalUnit['value'] = $intervalUnit;
+    }
+
+    /**
+     * Unsets Interval Unit.
+     * A string representing the interval unit for this component's default price point, either month or
+     * day. This property is only available for sites with Multifrequency enabled.
+     */
+    public function unsetIntervalUnit(): void
+    {
+        $this->intervalUnit = [];
     }
 
     private $additionalProperties = [];
@@ -687,8 +700,8 @@ class QuantityBasedComponent implements \JsonSerializable
         if (isset($this->interval)) {
             $json['interval']                    = $this->interval;
         }
-        if (isset($this->intervalUnit)) {
-            $json['interval_unit']               = IntervalUnit::checkValue($this->intervalUnit);
+        if (!empty($this->intervalUnit)) {
+            $json['interval_unit']               = IntervalUnit::checkValue($this->intervalUnit['value']);
         }
         $json = array_merge($json, $this->additionalProperties);
 

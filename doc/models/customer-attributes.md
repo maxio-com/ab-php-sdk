@@ -27,6 +27,7 @@
 | `vatNumber` | `?string` | Optional | (Optional) Supplying the VAT number allows EU customer’s to opt-out of the Value Added Tax assuming the merchant address and customer billing address are not within the same EU country. It’s important to omit the country code from the VAT number upon entry. Otherwise, taxes will be assessed upon the purchase. | getVatNumber(): ?string | setVatNumber(?string vatNumber): void |
 | `metafields` | `?array<string,string>` | Optional | (Optional) A set of key/value pairs representing custom fields and their values. Metafields will be created “on-the-fly” in your site for a given key, if they have not been created yet. | getMetafields(): ?array | setMetafields(?array metafields): void |
 | `parentId` | `?int` | Optional | The parent ID in Chargify if applicable. Parent is another Customer object. | getParentId(): ?int | setParentId(?int parentId): void |
+| `salesforceId` | `?string` | Optional | (Optional) The Salesforce ID of the customer. | getSalesforceId(): ?string | setSalesforceId(?string salesforceId): void |
 
 ## Example (as JSON)
 

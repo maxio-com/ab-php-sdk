@@ -396,7 +396,7 @@ class Product implements \JsonSerializable
 
     /**
      * Returns Expiration Interval Unit.
-     * A string representing the expiration interval unit for this product, either month or day
+     * A string representing the expiration interval unit for this product, either month, day or never
      */
     public function getExpirationIntervalUnit(): ?string
     {
@@ -408,10 +408,10 @@ class Product implements \JsonSerializable
 
     /**
      * Sets Expiration Interval Unit.
-     * A string representing the expiration interval unit for this product, either month or day
+     * A string representing the expiration interval unit for this product, either month, day or never
      *
      * @maps expiration_interval_unit
-     * @factory \AdvancedBillingLib\Models\ExtendedIntervalUnit::checkValue
+     * @factory \AdvancedBillingLib\Models\ExpirationIntervalUnit::checkValue
      */
     public function setExpirationIntervalUnit(?string $expirationIntervalUnit): void
     {
@@ -420,7 +420,7 @@ class Product implements \JsonSerializable
 
     /**
      * Unsets Expiration Interval Unit.
-     * A string representing the expiration interval unit for this product, either month or day
+     * A string representing the expiration interval unit for this product, either month, day or never
      */
     public function unsetExpirationIntervalUnit(): void
     {
@@ -1219,7 +1219,7 @@ class Product implements \JsonSerializable
         }
         if (!empty($this->expirationIntervalUnit)) {
             $json['expiration_interval_unit']       =
-                ExtendedIntervalUnit::checkValue(
+                ExpirationIntervalUnit::checkValue(
                     $this->expirationIntervalUnit['value']
                 );
         }

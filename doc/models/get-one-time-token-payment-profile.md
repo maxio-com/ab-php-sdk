@@ -17,7 +17,7 @@
 | `expirationMonth` | `float` | Required | - | getExpirationMonth(): float | setExpirationMonth(float expirationMonth): void |
 | `expirationYear` | `float` | Required | - | getExpirationYear(): float | setExpirationYear(float expirationYear): void |
 | `customerId` | `?string` | Optional | - | getCustomerId(): ?string | setCustomerId(?string customerId): void |
-| `currentVault` | [`string(CurrentVault)`](../../doc/models/current-vault.md) | Required | The vault that stores the payment profile with the provided `vault_token`. Use `bogus` for testing. | getCurrentVault(): string | setCurrentVault(string currentVault): void |
+| `currentVault` | [`string(CreditCardVault)`](../../doc/models/credit-card-vault.md) | Required | The vault that stores the payment profile with the provided `vault_token`. Use `bogus` for testing. | getCurrentVault(): string | setCurrentVault(string currentVault): void |
 | `vaultToken` | `string` | Required | **Constraints**: *Minimum Length*: `1` | getVaultToken(): string | setVaultToken(string vaultToken): void |
 | `billingAddress` | `string` | Required | **Constraints**: *Minimum Length*: `1` | getBillingAddress(): string | setBillingAddress(string billingAddress): void |
 | `billingAddress2` | `?string` | Optional | - | getBillingAddress2(): ?string | setBillingAddress2(?string billingAddress2): void |
@@ -43,7 +43,7 @@
   "expiration_month": 187.78,
   "expiration_year": 164.44,
   "customer_id": "customer_id0",
-  "current_vault": "firstdata",
+  "current_vault": "braintree_blue",
   "vault_token": "vault_token4",
   "billing_address": "billing_address4",
   "billing_address_2": "billing_address_24",

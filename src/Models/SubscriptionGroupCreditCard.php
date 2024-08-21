@@ -234,7 +234,7 @@ class SubscriptionGroupCreditCard implements \JsonSerializable
      * The vault that stores the payment profile with the provided `vault_token`. Use `bogus` for testing.
      *
      * @maps current_vault
-     * @factory \AdvancedBillingLib\Models\CurrentVault::checkValue
+     * @factory \AdvancedBillingLib\Models\CreditCardVault::checkValue
      */
     public function setCurrentVault(?string $currentVault): void
     {
@@ -549,7 +549,7 @@ class SubscriptionGroupCreditCard implements \JsonSerializable
             $json['vault_token']          = $this->vaultToken;
         }
         if (isset($this->currentVault)) {
-            $json['current_vault']        = CurrentVault::checkValue($this->currentVault);
+            $json['current_vault']        = CreditCardVault::checkValue($this->currentVault);
         }
         if (isset($this->gatewayHandle)) {
             $json['gateway_handle']       = $this->gatewayHandle;
