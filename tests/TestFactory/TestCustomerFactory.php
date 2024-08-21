@@ -40,6 +40,7 @@ final class TestCustomerFactory
             ->vatNumber(CustomerTestData::VAT_NUMBER)
             ->parentId(CustomerTestData::PARENT_ID)
             ->locale(CustomerTestData::LOCALE)
+            ->salesforceId(null)
             ->build();
     }
 }
