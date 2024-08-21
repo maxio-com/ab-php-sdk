@@ -105,6 +105,11 @@ class CreateCustomer implements \JsonSerializable
     private $parentId = [];
 
     /**
+     * @var array
+     */
+    private $salesforceId = [];
+
+    /**
      * @param string $firstName
      * @param string $lastName
      * @param string $email
@@ -459,6 +464,38 @@ class CreateCustomer implements \JsonSerializable
         $this->parentId = [];
     }
 
+    /**
+     * Returns Salesforce Id.
+     * The Salesforce ID of the customer
+     */
+    public function getSalesforceId(): ?string
+    {
+        if (count($this->salesforceId) == 0) {
+            return null;
+        }
+        return $this->salesforceId['value'];
+    }
+
+    /**
+     * Sets Salesforce Id.
+     * The Salesforce ID of the customer
+     *
+     * @maps salesforce_id
+     */
+    public function setSalesforceId(?string $salesforceId): void
+    {
+        $this->salesforceId['value'] = $salesforceId;
+    }
+
+    /**
+     * Unsets Salesforce Id.
+     * The Salesforce ID of the customer
+     */
+    public function unsetSalesforceId(): void
+    {
+        $this->salesforceId = [];
+    }
+
     private $additionalProperties = [];
 
     /**
@@ -531,6 +568,9 @@ class CreateCustomer implements \JsonSerializable
         }
         if (!empty($this->parentId)) {
             $json['parent_id']         = $this->parentId['value'];
+        }
+        if (!empty($this->salesforceId)) {
+            $json['salesforce_id']     = $this->salesforceId['value'];
         }
         $json = array_merge($json, $this->additionalProperties);
 

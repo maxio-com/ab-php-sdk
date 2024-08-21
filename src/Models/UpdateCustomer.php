@@ -110,6 +110,11 @@ class UpdateCustomer implements \JsonSerializable
     private $verified = [];
 
     /**
+     * @var array
+     */
+    private $salesforceId = [];
+
+    /**
      * Returns First Name.
      */
     public function getFirstName(): ?string
@@ -478,6 +483,38 @@ class UpdateCustomer implements \JsonSerializable
         $this->verified = [];
     }
 
+    /**
+     * Returns Salesforce Id.
+     * The Salesforce ID of the customer
+     */
+    public function getSalesforceId(): ?string
+    {
+        if (count($this->salesforceId) == 0) {
+            return null;
+        }
+        return $this->salesforceId['value'];
+    }
+
+    /**
+     * Sets Salesforce Id.
+     * The Salesforce ID of the customer
+     *
+     * @maps salesforce_id
+     */
+    public function setSalesforceId(?string $salesforceId): void
+    {
+        $this->salesforceId['value'] = $salesforceId;
+    }
+
+    /**
+     * Unsets Salesforce Id.
+     * The Salesforce ID of the customer
+     */
+    public function unsetSalesforceId(): void
+    {
+        $this->salesforceId = [];
+    }
+
     private $additionalProperties = [];
 
     /**
@@ -559,6 +596,9 @@ class UpdateCustomer implements \JsonSerializable
         }
         if (!empty($this->verified)) {
             $json['verified']          = $this->verified['value'];
+        }
+        if (!empty($this->salesforceId)) {
+            $json['salesforce_id']     = $this->salesforceId['value'];
         }
         $json = array_merge($json, $this->additionalProperties);
 

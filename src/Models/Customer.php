@@ -151,6 +151,11 @@ class Customer implements \JsonSerializable
     private $defaultSubscriptionGroupUid = [];
 
     /**
+     * @var array
+     */
+    private $salesforceId = [];
+
+    /**
      * Returns First Name.
      * The first name of the customer
      */
@@ -949,6 +954,38 @@ class Customer implements \JsonSerializable
         $this->defaultSubscriptionGroupUid = [];
     }
 
+    /**
+     * Returns Salesforce Id.
+     * The Salesforce ID for the customer
+     */
+    public function getSalesforceId(): ?string
+    {
+        if (count($this->salesforceId) == 0) {
+            return null;
+        }
+        return $this->salesforceId['value'];
+    }
+
+    /**
+     * Sets Salesforce Id.
+     * The Salesforce ID for the customer
+     *
+     * @maps salesforce_id
+     */
+    public function setSalesforceId(?string $salesforceId): void
+    {
+        $this->salesforceId['value'] = $salesforceId;
+    }
+
+    /**
+     * Unsets Salesforce Id.
+     * The Salesforce ID for the customer
+     */
+    public function unsetSalesforceId(): void
+    {
+        $this->salesforceId = [];
+    }
+
     private $additionalProperties = [];
 
     /**
@@ -1063,6 +1100,9 @@ class Customer implements \JsonSerializable
         }
         if (!empty($this->defaultSubscriptionGroupUid)) {
             $json['default_subscription_group_uid'] = $this->defaultSubscriptionGroupUid['value'];
+        }
+        if (!empty($this->salesforceId)) {
+            $json['salesforce_id']                  = $this->salesforceId['value'];
         }
         $json = array_merge($json, $this->additionalProperties);
 
