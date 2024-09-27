@@ -15,6 +15,11 @@ use stdClass;
 class ListProductsFilter implements \JsonSerializable
 {
     /**
+     * @var int[]|null
+     */
+    private $ids;
+
+    /**
      * @var PrepaidProductPricePointFilter|null
      */
     private $prepaidProductPricePoint;
@@ -23,6 +28,30 @@ class ListProductsFilter implements \JsonSerializable
      * @var bool|null
      */
     private $useSiteExchangeRate;
+
+    /**
+     * Returns Ids.
+     * Allows fetching products with matching id based on provided values. Use in query `filter[ids]=1,2,3`.
+     *
+     * @return int[]|null
+     */
+    public function getIds(): ?array
+    {
+        return $this->ids;
+    }
+
+    /**
+     * Sets Ids.
+     * Allows fetching products with matching id based on provided values. Use in query `filter[ids]=1,2,3`.
+     *
+     * @maps ids
+     *
+     * @param int[]|null $ids
+     */
+    public function setIds(?array $ids): void
+    {
+        $this->ids = $ids;
+    }
 
     /**
      * Returns Prepaid Product Price Point.
@@ -95,6 +124,9 @@ class ListProductsFilter implements \JsonSerializable
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
+        if (isset($this->ids)) {
+            $json['ids']                         = $this->ids;
+        }
         if (isset($this->prepaidProductPricePoint)) {
             $json['prepaid_product_price_point'] = $this->prepaidProductPricePoint;
         }

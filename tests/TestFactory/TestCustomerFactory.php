@@ -25,6 +25,7 @@ final class TestCustomerFactory
             ->reference(CustomerTestData::REFERENCE)
             ->address(CustomerTestData::ADDRESS)
             ->address2(CustomerTestData::ADDRESS_TWO)
+            ->additionalProperty('address_3', null)
             ->city(CustomerTestData::CITY)
             ->state(CustomerTestData::STATE)
             ->stateName(CustomerTestData::STATE_NAME)

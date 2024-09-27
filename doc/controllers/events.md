@@ -88,11 +88,11 @@ function listEvents(array $options): array
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `page` | `?int` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`. |
-| `perPage` | `?int` | Query, Optional | This parameter indicates how many records to fetch in each request. Default value is 20. The maximum allowed values is 200; any per_page value over 200 will be changed to 200.<br>Use in query `per_page=200`. |
+| `page` | `?int` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`.<br>**Default**: `1`<br>**Constraints**: `>= 1` |
+| `perPage` | `?int` | Query, Optional | This parameter indicates how many records to fetch in each request. Default value is 20. The maximum allowed values is 200; any per_page value over 200 will be changed to 200.<br>Use in query `per_page=200`.<br>**Default**: `20`<br>**Constraints**: `<= 200` |
 | `sinceId` | `?int` | Query, Optional | Returns events with an id greater than or equal to the one specified |
 | `maxId` | `?int` | Query, Optional | Returns events with an id less than or equal to the one specified |
-| `direction` | [`?string(Direction)`](../../doc/models/direction.md) | Query, Optional | The sort direction of the returned events. |
+| `direction` | [`?string(Direction)`](../../doc/models/direction.md) | Query, Optional | The sort direction of the returned events.<br>**Default**: `Direction::DESC` |
 | `filter` | [`?(string(EventType)[])`](../../doc/models/event-type.md) | Query, Optional | You can pass multiple event keys after comma.<br>Use in query `filter=signup_success,payment_success`. |
 | `dateField` | [`?string(ListEventsDateField)`](../../doc/models/list-events-date-field.md) | Query, Optional | The type of filter you would like to apply to your search. |
 | `startDate` | `?string` | Query, Optional | The start date (format YYYY-MM-DD) with which to filter the date_field. Returns components with a timestamp at or after midnight (12:00:00 AM) in your site’s time zone on the date specified. |
@@ -109,13 +109,13 @@ function listEvents(array $options): array
 ```php
 $collect = [
     'page' => 2,
-    'per_page' => 50,
+    'perPage' => 50,
     'direction' => Direction::DESC,
     'filter' => [
         EventType::CUSTOM_FIELD_VALUE_CHANGE,
         EventType::PAYMENT_SUCCESS
     ],
-    'date_field' => ListEventsDateField::CREATED_AT
+    'dateField' => ListEventsDateField::CREATED_AT
 ];
 
 $result = $eventsController->listEvents($collect);
@@ -199,11 +199,11 @@ function listSubscriptionEvents(array $options): array
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
-| `page` | `?int` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`. |
-| `perPage` | `?int` | Query, Optional | This parameter indicates how many records to fetch in each request. Default value is 20. The maximum allowed values is 200; any per_page value over 200 will be changed to 200.<br>Use in query `per_page=200`. |
+| `page` | `?int` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`.<br>**Default**: `1`<br>**Constraints**: `>= 1` |
+| `perPage` | `?int` | Query, Optional | This parameter indicates how many records to fetch in each request. Default value is 20. The maximum allowed values is 200; any per_page value over 200 will be changed to 200.<br>Use in query `per_page=200`.<br>**Default**: `20`<br>**Constraints**: `<= 200` |
 | `sinceId` | `?int` | Query, Optional | Returns events with an id greater than or equal to the one specified |
 | `maxId` | `?int` | Query, Optional | Returns events with an id less than or equal to the one specified |
-| `direction` | [`?string(Direction)`](../../doc/models/direction.md) | Query, Optional | The sort direction of the returned events. |
+| `direction` | [`?string(Direction)`](../../doc/models/direction.md) | Query, Optional | The sort direction of the returned events.<br>**Default**: `Direction::DESC` |
 | `filter` | [`?(string(EventType)[])`](../../doc/models/event-type.md) | Query, Optional | You can pass multiple event keys after comma.<br>Use in query `filter=signup_success,payment_success`. |
 
 ## Response Type
@@ -214,9 +214,9 @@ function listSubscriptionEvents(array $options): array
 
 ```php
 $collect = [
-    'subscription_id' => 222,
+    'subscriptionId' => 222,
     'page' => 2,
-    'per_page' => 50,
+    'perPage' => 50,
     'direction' => Direction::DESC,
     'filter' => [
         EventType::CUSTOM_FIELD_VALUE_CHANGE,
@@ -283,11 +283,11 @@ function readEventsCount(array $options): CountResponse
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `page` | `?int` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`. |
-| `perPage` | `?int` | Query, Optional | This parameter indicates how many records to fetch in each request. Default value is 20. The maximum allowed values is 200; any per_page value over 200 will be changed to 200.<br>Use in query `per_page=200`. |
+| `page` | `?int` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`.<br>**Default**: `1`<br>**Constraints**: `>= 1` |
+| `perPage` | `?int` | Query, Optional | This parameter indicates how many records to fetch in each request. Default value is 20. The maximum allowed values is 200; any per_page value over 200 will be changed to 200.<br>Use in query `per_page=200`.<br>**Default**: `20`<br>**Constraints**: `<= 200` |
 | `sinceId` | `?int` | Query, Optional | Returns events with an id greater than or equal to the one specified |
 | `maxId` | `?int` | Query, Optional | Returns events with an id less than or equal to the one specified |
-| `direction` | [`?string(Direction)`](../../doc/models/direction.md) | Query, Optional | The sort direction of the returned events. |
+| `direction` | [`?string(Direction)`](../../doc/models/direction.md) | Query, Optional | The sort direction of the returned events.<br>**Default**: `Direction::DESC` |
 | `filter` | [`?(string(EventType)[])`](../../doc/models/event-type.md) | Query, Optional | You can pass multiple event keys after comma.<br>Use in query `filter=signup_success,payment_success`. |
 
 ## Response Type
@@ -299,7 +299,7 @@ function readEventsCount(array $options): CountResponse
 ```php
 $collect = [
     'page' => 2,
-    'per_page' => 50,
+    'perPage' => 50,
     'direction' => Direction::DESC,
     'filter' => [
         EventType::CUSTOM_FIELD_VALUE_CHANGE,
