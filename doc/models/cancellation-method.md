@@ -16,4 +16,5 @@ The process used to cancel the subscription, if the subscription has been cancel
 | `DUNNING` |
 | `BILLING_PORTAL` |
 | `UNKNOWN` |
+| `IMPORTED` |
 

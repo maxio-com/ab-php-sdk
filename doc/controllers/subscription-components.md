@@ -125,8 +125,8 @@ function listSubscriptionComponents(array $options): array
 
 ```php
 $collect = [
-    'subscription_id' => 222,
-    'date_field' => SubscriptionListDateField::UPDATED_AT,
+    'subscriptionId' => 222,
+    'dateField' => SubscriptionListDateField::UPDATED_AT,
     'filter' => ListSubscriptionComponentsFilterBuilder::init()
         ->currencies(
             [
@@ -135,18 +135,18 @@ $collect = [
             ]
         )
         ->build(),
-    'price_point_ids' => IncludeNotNull::NOT_NULL,
-    'product_family_ids' => [
+    'pricePointIds' => IncludeNotNull::NOT_NULL,
+    'productFamilyIds' => [
         1,
         2,
         3
     ],
     'sort' => ListSubscriptionComponentsSort::UPDATED_AT,
-    'include' => [
+    'mInclude' => [
         ListSubscriptionComponentsInclude::SUBSCRIPTION,
         ListSubscriptionComponentsInclude::HISTORIC_USAGES
     ],
-    'in_use' => true
+    'inUse' => true
 ];
 
 $result = $subscriptionComponentsController->listSubscriptionComponents($collect);
@@ -561,7 +561,7 @@ function listAllocations(int $subscriptionId, int $componentId, ?int $page = 1):
 |  --- | --- | --- | --- |
 | `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
 | `componentId` | `int` | Template, Required | The Advanced Billing id of the component |
-| `page` | `?int` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`. |
+| `page` | `?int` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`.<br>**Default**: `1`<br>**Constraints**: `>= 1` |
 
 ## Response Type
 
@@ -1194,8 +1194,8 @@ function listUsages(array $options): array
 | `maxId` | `?int` | Query, Optional | Returns usages with an id less than or equal to the one specified |
 | `sinceDate` | `?DateTime` | Query, Optional | Returns usages with a created_at date greater than or equal to midnight (12:00 AM) on the date specified. |
 | `untilDate` | `?DateTime` | Query, Optional | Returns usages with a created_at date less than or equal to midnight (12:00 AM) on the date specified. |
-| `page` | `?int` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`. |
-| `perPage` | `?int` | Query, Optional | This parameter indicates how many records to fetch in each request. Default value is 20. The maximum allowed values is 200; any per_page value over 200 will be changed to 200.<br>Use in query `per_page=200`. |
+| `page` | `?int` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`.<br>**Default**: `1`<br>**Constraints**: `>= 1` |
+| `perPage` | `?int` | Query, Optional | This parameter indicates how many records to fetch in each request. Default value is 20. The maximum allowed values is 200; any per_page value over 200 will be changed to 200.<br>Use in query `per_page=200`.<br>**Default**: `20`<br>**Constraints**: `<= 200` |
 
 ## Response Type
 
@@ -1205,10 +1205,10 @@ function listUsages(array $options): array
 
 ```php
 $collect = [
-    'subscription_id' => 222,
-    'component_id' => 144,
+    'subscriptionId' => 222,
+    'componentId' => 144,
     'page' => 2,
-    'per_page' => 50
+    'perPage' => 50
 ];
 
 $result = $subscriptionComponentsController->listUsages($collect);
@@ -1486,8 +1486,8 @@ function listSubscriptionComponentsForSite(array $options): ListSubscriptionComp
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `page` | `?int` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`. |
-| `perPage` | `?int` | Query, Optional | This parameter indicates how many records to fetch in each request. Default value is 20. The maximum allowed values is 200; any per_page value over 200 will be changed to 200.<br>Use in query `per_page=200`. |
+| `page` | `?int` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`.<br>**Default**: `1`<br>**Constraints**: `>= 1` |
+| `perPage` | `?int` | Query, Optional | This parameter indicates how many records to fetch in each request. Default value is 20. The maximum allowed values is 200; any per_page value over 200 will be changed to 200.<br>Use in query `per_page=200`.<br>**Default**: `20`<br>**Constraints**: `<= 200` |
 | `sort` | [`?string(ListSubscriptionComponentsSort)`](../../doc/models/list-subscription-components-sort.md) | Query, Optional | The attribute by which to sort. Use in query: `sort=updated_at`. |
 | `direction` | [`?string(SortingDirection)`](../../doc/models/sorting-direction.md) | Query, Optional | Controls the order in which results are returned.<br>Use in query `direction=asc`. |
 | `filter` | [`?ListSubscriptionComponentsForSiteFilter`](../../doc/models/list-subscription-components-for-site-filter.md) | Query, Optional | Filter to use for List Subscription Components For Site operation |
@@ -1496,7 +1496,7 @@ function listSubscriptionComponentsForSite(array $options): ListSubscriptionComp
 | `startDatetime` | `?string` | Query, Optional | The start date and time (format YYYY-MM-DD HH:MM:SS) with which to filter the date_field. Returns components with a timestamp at or after exact time provided in query. You can specify timezone in query - otherwise your site''s time zone will be used. If provided, this parameter will be used instead of start_date. Use in query `start_datetime=2022-07-01 09:00:05`. |
 | `endDate` | `?string` | Query, Optional | The end date (format YYYY-MM-DD) with which to filter the date_field. Returns components with a timestamp up to and including 11:59:59PM in your site’s time zone on the date specified. Use in query `end_date=2011-12-16`. |
 | `endDatetime` | `?string` | Query, Optional | The end date and time (format YYYY-MM-DD HH:MM:SS) with which to filter the date_field. Returns components with a timestamp at or before exact time provided in query. You can specify timezone in query - otherwise your site''s time zone will be used. If provided, this parameter will be used instead of end_date. Use in query `end_datetime=2022-07-01 09:00:05`. |
-| `subscriptionIds` | `?(int[])` | Query, Optional | Allows fetching components allocation with matching subscription id based on provided ids. Use in query `subscription_ids=1,2,3`. |
+| `subscriptionIds` | `?(int[])` | Query, Optional | Allows fetching components allocation with matching subscription id based on provided ids. Use in query `subscription_ids=1,2,3`.<br>**Constraints**: *Minimum Items*: `1`, *Maximum Items*: `200` |
 | `pricePointIds` | [`?string(IncludeNotNull)`](../../doc/models/include-not-null.md) | Query, Optional | Allows fetching components allocation only if price point id is present. Use in query `price_point_ids=not_null`. |
 | `productFamilyIds` | `?(int[])` | Query, Optional | Allows fetching components allocation with matching product family id based on provided ids. Use in query `product_family_ids=1,2,3`. |
 | `mInclude` | [`?string(ListSubscriptionComponentsInclude)`](../../doc/models/list-subscription-components-include.md) | Query, Optional | Allows including additional data in the response. Use in query `include=subscription,historic_usages`. |
@@ -1510,7 +1510,7 @@ function listSubscriptionComponentsForSite(array $options): ListSubscriptionComp
 ```php
 $collect = [
     'page' => 2,
-    'per_page' => 50,
+    'perPage' => 50,
     'sort' => ListSubscriptionComponentsSort::UPDATED_AT,
     'filter' => ListSubscriptionComponentsForSiteFilterBuilder::init()
         ->currencies(
@@ -1520,19 +1520,19 @@ $collect = [
             ]
         )
         ->build(),
-    'date_field' => SubscriptionListDateField::UPDATED_AT,
-    'subscription_ids' => [
+    'dateField' => SubscriptionListDateField::UPDATED_AT,
+    'subscriptionIds' => [
         1,
         2,
         3
     ],
-    'price_point_ids' => IncludeNotNull::NOT_NULL,
-    'product_family_ids' => [
+    'pricePointIds' => IncludeNotNull::NOT_NULL,
+    'productFamilyIds' => [
         1,
         2,
         3
     ],
-    'include' => ListSubscriptionComponentsInclude::SUBSCRIPTION
+    'mInclude' => ListSubscriptionComponentsInclude::SUBSCRIPTION
 ];
 
 $result = $subscriptionComponentsController->listSubscriptionComponentsForSite($collect);

@@ -30,8 +30,10 @@ class CancellationMethod
 
     public const UNKNOWN = 'unknown';
 
+    public const IMPORTED = 'imported';
+
     private const _ALL_VALUES =
-        [self::MERCHANT_UI, self::MERCHANT_API, self::DUNNING, self::BILLING_PORTAL, self::UNKNOWN];
+        [self::MERCHANT_UI, self::MERCHANT_API, self::DUNNING, self::BILLING_PORTAL, self::UNKNOWN, self::IMPORTED];
 
     /**
      * Ensures that all the given values are present in this Enum.

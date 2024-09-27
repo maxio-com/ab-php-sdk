@@ -29,7 +29,7 @@ $client = AdvancedBillingClientBuilder::init()
             'BasicAuthPassword'
         )
     )
-    ->environment('production')
+    ->environment(Environment::PRODUCTION)
     ->subdomain('subdomain')
     ->domain('chargify.com')
     ->build();
