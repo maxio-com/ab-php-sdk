@@ -40,6 +40,15 @@ class ListProductsFilterBuilder
     }
 
     /**
+     * Sets ids field.
+     */
+    public function ids(?array $value): self
+    {
+        $this->instance->setIds($value);
+        return $this;
+    }
+
+    /**
      * Sets prepaid product price point field.
      */
     public function prepaidProductPricePoint(?PrepaidProductPricePointFilter $value): self

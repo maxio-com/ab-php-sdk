@@ -52,6 +52,15 @@ $collect = [
     'page' => 2,
     'perPage' => 50,
     'dateField' => BasicDateField::UPDATED_AT,
+    'filter' => ListProductsFilterBuilder::init()
+        ->ids(
+            [
+                1,
+                2,
+                3
+            ]
+        )
+        ->build(),
     'mInclude' => ListProductsInclude::PREPAID_PRODUCT_PRICE_POINT
 ];
 
