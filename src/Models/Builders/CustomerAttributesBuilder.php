@@ -237,6 +237,24 @@ class CustomerAttributesBuilder
     }
 
     /**
+     * Sets default auto renewal profile id field.
+     */
+    public function defaultAutoRenewalProfileId(?int $value): self
+    {
+        $this->instance->setDefaultAutoRenewalProfileId($value);
+        return $this;
+    }
+
+    /**
+     * Unsets default auto renewal profile id field.
+     */
+    public function unsetDefaultAutoRenewalProfileId(): self
+    {
+        $this->instance->unsetDefaultAutoRenewalProfileId();
+        return $this;
+    }
+
+    /**
      * Add an additional property to this model.
      *
      * @param string $name Name of property

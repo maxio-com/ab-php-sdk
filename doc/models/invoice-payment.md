@@ -19,6 +19,8 @@
 | `gatewayHandle` | `?string` | Optional | - | getGatewayHandle(): ?string | setGatewayHandle(?string gatewayHandle): void |
 | `gatewayUsed` | `?string` | Optional | - | getGatewayUsed(): ?string | setGatewayUsed(?string gatewayUsed): void |
 | `gatewayTransactionId` | `?string` | Optional | The transaction ID for the payment as returned from the payment gateway | getGatewayTransactionId(): ?string | setGatewayTransactionId(?string gatewayTransactionId): void |
+| `receivedOn` | `?DateTime` | Optional | Date reflecting when the payment was received from a customer. Must be in the past. Applicable only to<br>`external` payments. | getReceivedOn(): ?\DateTime | setReceivedOn(?\DateTime receivedOn): void |
+| `uid` | `?string` | Optional | - | getUid(): ?string | setUid(?string uid): void |
 
 ## Example (as JSON)
 

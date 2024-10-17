@@ -480,6 +480,42 @@ class CustomerBuilder
     }
 
     /**
+     * Sets tax exempt reason field.
+     */
+    public function taxExemptReason(?string $value): self
+    {
+        $this->instance->setTaxExemptReason($value);
+        return $this;
+    }
+
+    /**
+     * Unsets tax exempt reason field.
+     */
+    public function unsetTaxExemptReason(): self
+    {
+        $this->instance->unsetTaxExemptReason();
+        return $this;
+    }
+
+    /**
+     * Sets default auto renewal profile id field.
+     */
+    public function defaultAutoRenewalProfileId(?int $value): self
+    {
+        $this->instance->setDefaultAutoRenewalProfileId($value);
+        return $this;
+    }
+
+    /**
+     * Unsets default auto renewal profile id field.
+     */
+    public function unsetDefaultAutoRenewalProfileId(): self
+    {
+        $this->instance->unsetDefaultAutoRenewalProfileId();
+        return $this;
+    }
+
+    /**
      * Add an additional property to this model.
      *
      * @param string $name Name of property

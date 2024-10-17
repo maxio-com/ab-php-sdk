@@ -148,6 +148,33 @@ class InvoicePaymentBuilder
     }
 
     /**
+     * Sets received on field.
+     */
+    public function receivedOn(?\DateTime $value): self
+    {
+        $this->instance->setReceivedOn($value);
+        return $this;
+    }
+
+    /**
+     * Unsets received on field.
+     */
+    public function unsetReceivedOn(): self
+    {
+        $this->instance->unsetReceivedOn();
+        return $this;
+    }
+
+    /**
+     * Sets uid field.
+     */
+    public function uid(?string $value): self
+    {
+        $this->instance->setUid($value);
+        return $this;
+    }
+
+    /**
      * Add an additional property to this model.
      *
      * @param string $name Name of property

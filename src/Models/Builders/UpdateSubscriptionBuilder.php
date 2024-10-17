@@ -212,6 +212,24 @@ class UpdateSubscriptionBuilder
     }
 
     /**
+     * Sets product price point id field.
+     */
+    public function productPricePointId(?int $value): self
+    {
+        $this->instance->setProductPricePointId($value);
+        return $this;
+    }
+
+    /**
+     * Sets product price point handle field.
+     */
+    public function productPricePointHandle(?string $value): self
+    {
+        $this->instance->setProductPricePointHandle($value);
+        return $this;
+    }
+
+    /**
      * Add an additional property to this model.
      *
      * @param string $name Name of property

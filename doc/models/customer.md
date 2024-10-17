@@ -27,7 +27,7 @@
 | `country` | `?string` | Optional | The customer shipping address country | getCountry(): ?string | setCountry(?string country): void |
 | `countryName` | `?string` | Optional | The customer's full name of country | getCountryName(): ?string | setCountryName(?string countryName): void |
 | `phone` | `?string` | Optional | The phone number of the customer | getPhone(): ?string | setPhone(?string phone): void |
-| `verified` | `?bool` | Optional | Is the customer verified to use ACH as a payment method. Available only on Authorize.Net gateway | getVerified(): ?bool | setVerified(?bool verified): void |
+| `verified` | `?bool` | Optional | Is the customer verified to use ACH as a payment method. | getVerified(): ?bool | setVerified(?bool verified): void |
 | `portalCustomerCreatedAt` | `?DateTime` | Optional | The timestamp of when the Billing Portal entry was created at for the customer | getPortalCustomerCreatedAt(): ?\DateTime | setPortalCustomerCreatedAt(?\DateTime portalCustomerCreatedAt): void |
 | `portalInviteLastSentAt` | `?DateTime` | Optional | The timestamp of when the Billing Portal invite was last sent at | getPortalInviteLastSentAt(): ?\DateTime | setPortalInviteLastSentAt(?\DateTime portalInviteLastSentAt): void |
 | `portalInviteLastAcceptedAt` | `?DateTime` | Optional | The timestamp of when the Billing Portal invite was last accepted | getPortalInviteLastAcceptedAt(): ?\DateTime | setPortalInviteLastAcceptedAt(?\DateTime portalInviteLastAcceptedAt): void |
@@ -37,6 +37,8 @@
 | `locale` | `?string` | Optional | The locale for the customer to identify language-region | getLocale(): ?string | setLocale(?string locale): void |
 | `defaultSubscriptionGroupUid` | `?string` | Optional | - | getDefaultSubscriptionGroupUid(): ?string | setDefaultSubscriptionGroupUid(?string defaultSubscriptionGroupUid): void |
 | `salesforceId` | `?string` | Optional | The Salesforce ID for the customer | getSalesforceId(): ?string | setSalesforceId(?string salesforceId): void |
+| `taxExemptReason` | `?string` | Optional | The Tax Exemption Reason Code for the customer | getTaxExemptReason(): ?string | setTaxExemptReason(?string taxExemptReason): void |
+| `defaultAutoRenewalProfileId` | `?int` | Optional | The default auto-renewal profile ID for the customer | getDefaultAutoRenewalProfileId(): ?int | setDefaultAutoRenewalProfileId(?int defaultAutoRenewalProfileId): void |
 
 ## Example (as JSON)
 

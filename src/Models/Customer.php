@@ -156,6 +156,16 @@ class Customer implements \JsonSerializable
     private $salesforceId = [];
 
     /**
+     * @var array
+     */
+    private $taxExemptReason = [];
+
+    /**
+     * @var array
+     */
+    private $defaultAutoRenewalProfileId = [];
+
+    /**
      * Returns First Name.
      * The first name of the customer
      */
@@ -669,7 +679,7 @@ class Customer implements \JsonSerializable
 
     /**
      * Returns Verified.
-     * Is the customer verified to use ACH as a payment method. Available only on Authorize.Net gateway
+     * Is the customer verified to use ACH as a payment method.
      */
     public function getVerified(): ?bool
     {
@@ -681,7 +691,7 @@ class Customer implements \JsonSerializable
 
     /**
      * Sets Verified.
-     * Is the customer verified to use ACH as a payment method. Available only on Authorize.Net gateway
+     * Is the customer verified to use ACH as a payment method.
      *
      * @maps verified
      */
@@ -692,7 +702,7 @@ class Customer implements \JsonSerializable
 
     /**
      * Unsets Verified.
-     * Is the customer verified to use ACH as a payment method. Available only on Authorize.Net gateway
+     * Is the customer verified to use ACH as a payment method.
      */
     public function unsetVerified(): void
     {
@@ -986,6 +996,70 @@ class Customer implements \JsonSerializable
         $this->salesforceId = [];
     }
 
+    /**
+     * Returns Tax Exempt Reason.
+     * The Tax Exemption Reason Code for the customer
+     */
+    public function getTaxExemptReason(): ?string
+    {
+        if (count($this->taxExemptReason) == 0) {
+            return null;
+        }
+        return $this->taxExemptReason['value'];
+    }
+
+    /**
+     * Sets Tax Exempt Reason.
+     * The Tax Exemption Reason Code for the customer
+     *
+     * @maps tax_exempt_reason
+     */
+    public function setTaxExemptReason(?string $taxExemptReason): void
+    {
+        $this->taxExemptReason['value'] = $taxExemptReason;
+    }
+
+    /**
+     * Unsets Tax Exempt Reason.
+     * The Tax Exemption Reason Code for the customer
+     */
+    public function unsetTaxExemptReason(): void
+    {
+        $this->taxExemptReason = [];
+    }
+
+    /**
+     * Returns Default Auto Renewal Profile Id.
+     * The default auto-renewal profile ID for the customer
+     */
+    public function getDefaultAutoRenewalProfileId(): ?int
+    {
+        if (count($this->defaultAutoRenewalProfileId) == 0) {
+            return null;
+        }
+        return $this->defaultAutoRenewalProfileId['value'];
+    }
+
+    /**
+     * Sets Default Auto Renewal Profile Id.
+     * The default auto-renewal profile ID for the customer
+     *
+     * @maps default_auto_renewal_profile_id
+     */
+    public function setDefaultAutoRenewalProfileId(?int $defaultAutoRenewalProfileId): void
+    {
+        $this->defaultAutoRenewalProfileId['value'] = $defaultAutoRenewalProfileId;
+    }
+
+    /**
+     * Unsets Default Auto Renewal Profile Id.
+     * The default auto-renewal profile ID for the customer
+     */
+    public function unsetDefaultAutoRenewalProfileId(): void
+    {
+        $this->defaultAutoRenewalProfileId = [];
+    }
+
     private $additionalProperties = [];
 
     /**
@@ -1012,97 +1086,103 @@ class Customer implements \JsonSerializable
     {
         $json = [];
         if (isset($this->firstName)) {
-            $json['first_name']                     = $this->firstName;
+            $json['first_name']                      = $this->firstName;
         }
         if (isset($this->lastName)) {
-            $json['last_name']                      = $this->lastName;
+            $json['last_name']                       = $this->lastName;
         }
         if (isset($this->email)) {
-            $json['email']                          = $this->email;
+            $json['email']                           = $this->email;
         }
         if (!empty($this->ccEmails)) {
-            $json['cc_emails']                      = $this->ccEmails['value'];
+            $json['cc_emails']                       = $this->ccEmails['value'];
         }
         if (!empty($this->organization)) {
-            $json['organization']                   = $this->organization['value'];
+            $json['organization']                    = $this->organization['value'];
         }
         if (!empty($this->reference)) {
-            $json['reference']                      = $this->reference['value'];
+            $json['reference']                       = $this->reference['value'];
         }
         if (isset($this->id)) {
-            $json['id']                             = $this->id;
+            $json['id']                              = $this->id;
         }
         if (isset($this->createdAt)) {
-            $json['created_at']                     = DateTimeHelper::toRfc3339DateTime($this->createdAt);
+            $json['created_at']                      = DateTimeHelper::toRfc3339DateTime($this->createdAt);
         }
         if (isset($this->updatedAt)) {
-            $json['updated_at']                     = DateTimeHelper::toRfc3339DateTime($this->updatedAt);
+            $json['updated_at']                      = DateTimeHelper::toRfc3339DateTime($this->updatedAt);
         }
         if (!empty($this->address)) {
-            $json['address']                        = $this->address['value'];
+            $json['address']                         = $this->address['value'];
         }
         if (!empty($this->address2)) {
-            $json['address_2']                      = $this->address2['value'];
+            $json['address_2']                       = $this->address2['value'];
         }
         if (!empty($this->city)) {
-            $json['city']                           = $this->city['value'];
+            $json['city']                            = $this->city['value'];
         }
         if (!empty($this->state)) {
-            $json['state']                          = $this->state['value'];
+            $json['state']                           = $this->state['value'];
         }
         if (!empty($this->stateName)) {
-            $json['state_name']                     = $this->stateName['value'];
+            $json['state_name']                      = $this->stateName['value'];
         }
         if (!empty($this->zip)) {
-            $json['zip']                            = $this->zip['value'];
+            $json['zip']                             = $this->zip['value'];
         }
         if (!empty($this->country)) {
-            $json['country']                        = $this->country['value'];
+            $json['country']                         = $this->country['value'];
         }
         if (!empty($this->countryName)) {
-            $json['country_name']                   = $this->countryName['value'];
+            $json['country_name']                    = $this->countryName['value'];
         }
         if (!empty($this->phone)) {
-            $json['phone']                          = $this->phone['value'];
+            $json['phone']                           = $this->phone['value'];
         }
         if (!empty($this->verified)) {
-            $json['verified']                       = $this->verified['value'];
+            $json['verified']                        = $this->verified['value'];
         }
         if (!empty($this->portalCustomerCreatedAt)) {
-            $json['portal_customer_created_at']     =
+            $json['portal_customer_created_at']      =
                 DateTimeHelper::toRfc3339DateTime(
                     $this->portalCustomerCreatedAt['value']
                 );
         }
         if (!empty($this->portalInviteLastSentAt)) {
-            $json['portal_invite_last_sent_at']     =
+            $json['portal_invite_last_sent_at']      =
                 DateTimeHelper::toRfc3339DateTime(
                     $this->portalInviteLastSentAt['value']
                 );
         }
         if (!empty($this->portalInviteLastAcceptedAt)) {
-            $json['portal_invite_last_accepted_at'] =
+            $json['portal_invite_last_accepted_at']  =
                 DateTimeHelper::toRfc3339DateTime(
                     $this->portalInviteLastAcceptedAt['value']
                 );
         }
         if (isset($this->taxExempt)) {
-            $json['tax_exempt']                     = $this->taxExempt;
+            $json['tax_exempt']                      = $this->taxExempt;
         }
         if (!empty($this->vatNumber)) {
-            $json['vat_number']                     = $this->vatNumber['value'];
+            $json['vat_number']                      = $this->vatNumber['value'];
         }
         if (!empty($this->parentId)) {
-            $json['parent_id']                      = $this->parentId['value'];
+            $json['parent_id']                       = $this->parentId['value'];
         }
         if (!empty($this->locale)) {
-            $json['locale']                         = $this->locale['value'];
+            $json['locale']                          = $this->locale['value'];
         }
         if (!empty($this->defaultSubscriptionGroupUid)) {
-            $json['default_subscription_group_uid'] = $this->defaultSubscriptionGroupUid['value'];
+            $json['default_subscription_group_uid']  = $this->defaultSubscriptionGroupUid['value'];
         }
         if (!empty($this->salesforceId)) {
-            $json['salesforce_id']                  = $this->salesforceId['value'];
+            $json['salesforce_id']                   = $this->salesforceId['value'];
+        }
+        if (!empty($this->taxExemptReason)) {
+            $json['tax_exempt_reason']               = $this->taxExemptReason['value'];
+        }
+        if (!empty($this->defaultAutoRenewalProfileId)) {
+            $json['default_auto_renewal_profile_id'] = $this->defaultAutoRenewalProfileId['value'];
         }
         $json = array_merge($json, $this->additionalProperties);
 
