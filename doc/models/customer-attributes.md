@@ -28,6 +28,7 @@
 | `metafields` | `?array<string,string>` | Optional | (Optional) A set of key/value pairs representing custom fields and their values. Metafields will be created “on-the-fly” in your site for a given key, if they have not been created yet. | getMetafields(): ?array | setMetafields(?array metafields): void |
 | `parentId` | `?int` | Optional | The parent ID in Chargify if applicable. Parent is another Customer object. | getParentId(): ?int | setParentId(?int parentId): void |
 | `salesforceId` | `?string` | Optional | (Optional) The Salesforce ID of the customer. | getSalesforceId(): ?string | setSalesforceId(?string salesforceId): void |
+| `defaultAutoRenewalProfileId` | `?int` | Optional | (Optional) The default auto-renewal profile ID for the customer | getDefaultAutoRenewalProfileId(): ?int | setDefaultAutoRenewalProfileId(?int defaultAutoRenewalProfileId): void |
 
 ## Example (as JSON)
 

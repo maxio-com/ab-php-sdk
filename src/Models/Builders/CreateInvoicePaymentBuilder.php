@@ -84,6 +84,15 @@ class CreateInvoicePaymentBuilder
     }
 
     /**
+     * Sets received on field.
+     */
+    public function receivedOn(?\DateTime $value): self
+    {
+        $this->instance->setReceivedOn($value);
+        return $this;
+    }
+
+    /**
      * Add an additional property to this model.
      *
      * @param string $name Name of property

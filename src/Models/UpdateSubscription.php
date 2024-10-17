@@ -102,6 +102,16 @@ class UpdateSubscription implements \JsonSerializable
     private $dunningCommunicationDelayTimeZone = [];
 
     /**
+     * @var int|null
+     */
+    private $productPricePointId;
+
+    /**
+     * @var string|null
+     */
+    private $productPricePointHandle;
+
+    /**
      * Returns Credit Card Attributes.
      */
     public function getCreditCardAttributes(): ?CreditCardAttributes
@@ -471,6 +481,46 @@ class UpdateSubscription implements \JsonSerializable
         $this->dunningCommunicationDelayTimeZone = [];
     }
 
+    /**
+     * Returns Product Price Point Id.
+     * Set to change the current product's price point.
+     */
+    public function getProductPricePointId(): ?int
+    {
+        return $this->productPricePointId;
+    }
+
+    /**
+     * Sets Product Price Point Id.
+     * Set to change the current product's price point.
+     *
+     * @maps product_price_point_id
+     */
+    public function setProductPricePointId(?int $productPricePointId): void
+    {
+        $this->productPricePointId = $productPricePointId;
+    }
+
+    /**
+     * Returns Product Price Point Handle.
+     * Set to change the current product's price point.
+     */
+    public function getProductPricePointHandle(): ?string
+    {
+        return $this->productPricePointHandle;
+    }
+
+    /**
+     * Sets Product Price Point Handle.
+     * Set to change the current product's price point.
+     *
+     * @maps product_price_point_handle
+     */
+    public function setProductPricePointHandle(?string $productPricePointHandle): void
+    {
+        $this->productPricePointHandle = $productPricePointHandle;
+    }
+
     private $additionalProperties = [];
 
     /**
@@ -557,6 +607,12 @@ class UpdateSubscription implements \JsonSerializable
         }
         if (!empty($this->dunningCommunicationDelayTimeZone)) {
             $json['dunning_communication_delay_time_zone'] = $this->dunningCommunicationDelayTimeZone['value'];
+        }
+        if (isset($this->productPricePointId)) {
+            $json['product_price_point_id']                = $this->productPricePointId;
+        }
+        if (isset($this->productPricePointHandle)) {
+            $json['product_price_point_handle']            = $this->productPricePointHandle;
         }
         $json = array_merge($json, $this->additionalProperties);
 

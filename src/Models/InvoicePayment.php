@@ -66,6 +66,16 @@ class InvoicePayment implements \JsonSerializable
     private $gatewayTransactionId = [];
 
     /**
+     * @var array
+     */
+    private $receivedOn = [];
+
+    /**
+     * @var string|null
+     */
+    private $uid;
+
+    /**
      * Returns Transaction Time.
      */
     public function getTransactionTime(): ?\DateTime
@@ -271,6 +281,63 @@ class InvoicePayment implements \JsonSerializable
         $this->gatewayTransactionId = [];
     }
 
+    /**
+     * Returns Received On.
+     * Date reflecting when the payment was received from a customer. Must be in the past. Applicable only
+     * to
+     * `external` payments.
+     */
+    public function getReceivedOn(): ?\DateTime
+    {
+        if (count($this->receivedOn) == 0) {
+            return null;
+        }
+        return $this->receivedOn['value'];
+    }
+
+    /**
+     * Sets Received On.
+     * Date reflecting when the payment was received from a customer. Must be in the past. Applicable only
+     * to
+     * `external` payments.
+     *
+     * @maps received_on
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromSimpleDate
+     */
+    public function setReceivedOn(?\DateTime $receivedOn): void
+    {
+        $this->receivedOn['value'] = $receivedOn;
+    }
+
+    /**
+     * Unsets Received On.
+     * Date reflecting when the payment was received from a customer. Must be in the past. Applicable only
+     * to
+     * `external` payments.
+     */
+    public function unsetReceivedOn(): void
+    {
+        $this->receivedOn = [];
+    }
+
+    /**
+     * Returns Uid.
+     */
+    public function getUid(): ?string
+    {
+        return $this->uid;
+    }
+
+    /**
+     * Sets Uid.
+     *
+     * @maps uid
+     */
+    public function setUid(?string $uid): void
+    {
+        $this->uid = $uid;
+    }
+
     private $additionalProperties = [];
 
     /**
@@ -325,6 +392,12 @@ class InvoicePayment implements \JsonSerializable
         }
         if (!empty($this->gatewayTransactionId)) {
             $json['gateway_transaction_id'] = $this->gatewayTransactionId['value'];
+        }
+        if (!empty($this->receivedOn)) {
+            $json['received_on']            = DateTimeHelper::toSimpleDate($this->receivedOn['value']);
+        }
+        if (isset($this->uid)) {
+            $json['uid']                    = $this->uid;
         }
         $json = array_merge($json, $this->additionalProperties);
 

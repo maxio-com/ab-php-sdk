@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace AdvancedBillingLib\Models;
 
 use AdvancedBillingLib\ApiHelper;
+use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
 class CreateInvoicePayment implements \JsonSerializable
@@ -41,6 +42,11 @@ class CreateInvoicePayment implements \JsonSerializable
     private $paymentProfileId;
 
     /**
+     * @var \DateTime|null
+     */
+    private $receivedOn;
+
+    /**
      * Returns Amount.
      * A string of the dollar amount to be refunded (eg. "10.50" => $10.50)
      *
@@ -67,7 +73,7 @@ class CreateInvoicePayment implements \JsonSerializable
 
     /**
      * Returns Memo.
-     * A description to be attached to the payment.
+     * A description to be attached to the payment. Applicable only to `external` payments.
      */
     public function getMemo(): ?string
     {
@@ -76,7 +82,7 @@ class CreateInvoicePayment implements \JsonSerializable
 
     /**
      * Sets Memo.
-     * A description to be attached to the payment.
+     * A description to be attached to the payment. Applicable only to `external` payments.
      *
      * @maps memo
      */
@@ -108,7 +114,8 @@ class CreateInvoicePayment implements \JsonSerializable
 
     /**
      * Returns Details.
-     * Additional information related to the payment method (eg. Check #)
+     * Additional information related to the payment method (eg. Check #). Applicable only to `external`
+     * payments.
      */
     public function getDetails(): ?string
     {
@@ -117,7 +124,8 @@ class CreateInvoicePayment implements \JsonSerializable
 
     /**
      * Sets Details.
-     * Additional information related to the payment method (eg. Check #)
+     * Additional information related to the payment method (eg. Check #). Applicable only to `external`
+     * payments.
      *
      * @maps details
      */
@@ -144,6 +152,31 @@ class CreateInvoicePayment implements \JsonSerializable
     public function setPaymentProfileId(?int $paymentProfileId): void
     {
         $this->paymentProfileId = $paymentProfileId;
+    }
+
+    /**
+     * Returns Received On.
+     * Date reflecting when the payment was received from a customer. Must be in the past. Applicable only
+     * to
+     * `external` payments.
+     */
+    public function getReceivedOn(): ?\DateTime
+    {
+        return $this->receivedOn;
+    }
+
+    /**
+     * Sets Received On.
+     * Date reflecting when the payment was received from a customer. Must be in the past. Applicable only
+     * to
+     * `external` payments.
+     *
+     * @maps received_on
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromSimpleDate
+     */
+    public function setReceivedOn(?\DateTime $receivedOn): void
+    {
+        $this->receivedOn = $receivedOn;
     }
 
     private $additionalProperties = [];
@@ -189,6 +222,9 @@ class CreateInvoicePayment implements \JsonSerializable
         }
         if (isset($this->paymentProfileId)) {
             $json['payment_profile_id'] = $this->paymentProfileId;
+        }
+        if (isset($this->receivedOn)) {
+            $json['received_on']        = DateTimeHelper::toSimpleDate($this->receivedOn);
         }
         $json = array_merge($json, $this->additionalProperties);
 
