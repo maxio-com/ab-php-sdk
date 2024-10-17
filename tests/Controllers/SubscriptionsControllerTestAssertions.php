@@ -30,6 +30,7 @@ final class SubscriptionsControllerTestAssertions
         // Removed because of modifying value on read.
         unset($expectedSubscriptionJson['updated_at']);
         unset($subscriptionJson['updated_at']);
+        $expectedSubscription->getCustomer()->unsetDefaultAutoRenewalProfileId();
 
         $this->testCase::assertEquals($expectedSubscriptionJson, $subscriptionJson);
     }
@@ -39,6 +40,8 @@ final class SubscriptionsControllerTestAssertions
         ?Subscription $subscription
     ): void
     {
+        // in customer api its null but here its unavailable
+        $expectedSubscription->getCustomer()->unsetDefaultAutoRenewalProfileId();
         $this->testCase::assertNotNull($subscription);
         $this->testCase::assertEquals($expectedSubscription, $subscription);
     }

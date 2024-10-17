@@ -42,6 +42,8 @@ final class TestCustomerFactory
             ->parentId(CustomerTestData::PARENT_ID)
             ->locale(CustomerTestData::LOCALE)
             ->salesforceId(null)
+            ->defaultAutoRenewalProfileId(null)
+            ->taxExemptReason(null)
             ->build();
     }
 }
