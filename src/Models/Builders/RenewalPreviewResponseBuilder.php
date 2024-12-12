@@ -32,7 +32,9 @@ class RenewalPreviewResponseBuilder
     }
 
     /**
-     * Initializes a new renewal preview response Builder object.
+     * Initializes a new Renewal Preview Response Builder object.
+     *
+     * @param RenewalPreview $renewalPreview
      */
     public static function init(RenewalPreview $renewalPreview): self
     {
@@ -42,8 +44,8 @@ class RenewalPreviewResponseBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -52,7 +54,7 @@ class RenewalPreviewResponseBuilder
     }
 
     /**
-     * Initializes a new renewal preview response object.
+     * Initializes a new Renewal Preview Response object.
      */
     public function build(): RenewalPreviewResponse
     {

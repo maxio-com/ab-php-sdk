@@ -32,7 +32,9 @@ class CreateAllocationRequestBuilder
     }
 
     /**
-     * Initializes a new create allocation request Builder object.
+     * Initializes a new Create Allocation Request Builder object.
+     *
+     * @param CreateAllocation $allocation
      */
     public static function init(CreateAllocation $allocation): self
     {
@@ -42,8 +44,8 @@ class CreateAllocationRequestBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -52,7 +54,7 @@ class CreateAllocationRequestBuilder
     }
 
     /**
-     * Initializes a new create allocation request object.
+     * Initializes a new Create Allocation Request object.
      */
     public function build(): CreateAllocationRequest
     {

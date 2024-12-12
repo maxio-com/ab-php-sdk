@@ -31,7 +31,7 @@ class AppliedCreditNoteDataBuilder
     }
 
     /**
-     * Initializes a new applied credit note data Builder object.
+     * Initializes a new Applied Credit Note Data Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class AppliedCreditNoteDataBuilder
 
     /**
      * Sets uid field.
+     *
+     * @param string|null $value
      */
     public function uid(?string $value): self
     {
@@ -49,6 +51,8 @@ class AppliedCreditNoteDataBuilder
 
     /**
      * Sets number field.
+     *
+     * @param string|null $value
      */
     public function number(?string $value): self
     {
@@ -59,8 +63,8 @@ class AppliedCreditNoteDataBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -69,7 +73,7 @@ class AppliedCreditNoteDataBuilder
     }
 
     /**
-     * Initializes a new applied credit note data object.
+     * Initializes a new Applied Credit Note Data object.
      */
     public function build(): AppliedCreditNoteData
     {

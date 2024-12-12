@@ -31,7 +31,11 @@ class PaymentMethodBankAccountBuilder
     }
 
     /**
-     * Initializes a new payment method bank account Builder object.
+     * Initializes a new Payment Method Bank Account Builder object.
+     *
+     * @param string $maskedAccountNumber
+     * @param string $maskedRoutingNumber
+     * @param string $type
      */
     public static function init(string $maskedAccountNumber, string $maskedRoutingNumber, string $type): self
     {
@@ -41,8 +45,8 @@ class PaymentMethodBankAccountBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -51,7 +55,7 @@ class PaymentMethodBankAccountBuilder
     }
 
     /**
-     * Initializes a new payment method bank account object.
+     * Initializes a new Payment Method Bank Account object.
      */
     public function build(): PaymentMethodBankAccount
     {

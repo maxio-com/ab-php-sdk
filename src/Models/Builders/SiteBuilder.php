@@ -35,7 +35,7 @@ class SiteBuilder
     }
 
     /**
-     * Initializes a new site Builder object.
+     * Initializes a new Site Builder object.
      */
     public static function init(): self
     {
@@ -44,6 +44,8 @@ class SiteBuilder
 
     /**
      * Sets id field.
+     *
+     * @param int|null $value
      */
     public function id(?int $value): self
     {
@@ -53,6 +55,8 @@ class SiteBuilder
 
     /**
      * Sets name field.
+     *
+     * @param string|null $value
      */
     public function name(?string $value): self
     {
@@ -62,6 +66,8 @@ class SiteBuilder
 
     /**
      * Sets subdomain field.
+     *
+     * @param string|null $value
      */
     public function subdomain(?string $value): self
     {
@@ -71,6 +77,8 @@ class SiteBuilder
 
     /**
      * Sets currency field.
+     *
+     * @param string|null $value
      */
     public function currency(?string $value): self
     {
@@ -80,6 +88,8 @@ class SiteBuilder
 
     /**
      * Sets seller id field.
+     *
+     * @param int|null $value
      */
     public function sellerId(?int $value): self
     {
@@ -89,6 +99,8 @@ class SiteBuilder
 
     /**
      * Sets non primary currencies field.
+     *
+     * @param string[]|null $value
      */
     public function nonPrimaryCurrencies(?array $value): self
     {
@@ -98,6 +110,8 @@ class SiteBuilder
 
     /**
      * Sets relationship invoicing enabled field.
+     *
+     * @param bool|null $value
      */
     public function relationshipInvoicingEnabled(?bool $value): self
     {
@@ -107,6 +121,8 @@ class SiteBuilder
 
     /**
      * Sets customer hierarchy enabled field.
+     *
+     * @param bool|null $value
      */
     public function customerHierarchyEnabled(?bool $value): self
     {
@@ -116,6 +132,8 @@ class SiteBuilder
 
     /**
      * Sets whopays enabled field.
+     *
+     * @param bool|null $value
      */
     public function whopaysEnabled(?bool $value): self
     {
@@ -125,6 +143,8 @@ class SiteBuilder
 
     /**
      * Sets whopays default payer field.
+     *
+     * @param string|null $value
      */
     public function whopaysDefaultPayer(?string $value): self
     {
@@ -134,6 +154,8 @@ class SiteBuilder
 
     /**
      * Sets allocation settings field.
+     *
+     * @param AllocationSettings|null $value
      */
     public function allocationSettings(?AllocationSettings $value): self
     {
@@ -143,6 +165,8 @@ class SiteBuilder
 
     /**
      * Sets default payment collection method field.
+     *
+     * @param string|null $value
      */
     public function defaultPaymentCollectionMethod(?string $value): self
     {
@@ -152,6 +176,8 @@ class SiteBuilder
 
     /**
      * Sets organization address field.
+     *
+     * @param OrganizationAddress|null $value
      */
     public function organizationAddress(?OrganizationAddress $value): self
     {
@@ -161,6 +187,8 @@ class SiteBuilder
 
     /**
      * Sets tax configuration field.
+     *
+     * @param TaxConfiguration|null $value
      */
     public function taxConfiguration(?TaxConfiguration $value): self
     {
@@ -170,6 +198,8 @@ class SiteBuilder
 
     /**
      * Sets net terms field.
+     *
+     * @param NetTerms|null $value
      */
     public function netTerms(?NetTerms $value): self
     {
@@ -179,6 +209,8 @@ class SiteBuilder
 
     /**
      * Sets test field.
+     *
+     * @param bool|null $value
      */
     public function test(?bool $value): self
     {
@@ -189,8 +221,8 @@ class SiteBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -199,7 +231,7 @@ class SiteBuilder
     }
 
     /**
-     * Initializes a new site object.
+     * Initializes a new Site object.
      */
     public function build(): Site
     {

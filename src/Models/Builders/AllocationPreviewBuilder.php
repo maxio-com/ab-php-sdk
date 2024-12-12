@@ -11,6 +11,8 @@ declare(strict_types=1);
 namespace AdvancedBillingLib\Models\Builders;
 
 use AdvancedBillingLib\Models\AllocationPreview;
+use AdvancedBillingLib\Models\AllocationPreviewItem;
+use AdvancedBillingLib\Models\AllocationPreviewLineItem;
 use Core\Utils\CoreHelper;
 
 /**
@@ -31,7 +33,7 @@ class AllocationPreviewBuilder
     }
 
     /**
-     * Initializes a new allocation preview Builder object.
+     * Initializes a new Allocation Preview Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +42,8 @@ class AllocationPreviewBuilder
 
     /**
      * Sets start date field.
+     *
+     * @param \DateTime|null $value
      */
     public function startDate(?\DateTime $value): self
     {
@@ -49,6 +53,8 @@ class AllocationPreviewBuilder
 
     /**
      * Sets end date field.
+     *
+     * @param \DateTime|null $value
      */
     public function endDate(?\DateTime $value): self
     {
@@ -58,6 +64,8 @@ class AllocationPreviewBuilder
 
     /**
      * Sets subtotal in cents field.
+     *
+     * @param int|null $value
      */
     public function subtotalInCents(?int $value): self
     {
@@ -67,6 +75,8 @@ class AllocationPreviewBuilder
 
     /**
      * Sets total tax in cents field.
+     *
+     * @param int|null $value
      */
     public function totalTaxInCents(?int $value): self
     {
@@ -76,6 +86,8 @@ class AllocationPreviewBuilder
 
     /**
      * Sets total discount in cents field.
+     *
+     * @param int|null $value
      */
     public function totalDiscountInCents(?int $value): self
     {
@@ -85,6 +97,8 @@ class AllocationPreviewBuilder
 
     /**
      * Sets total in cents field.
+     *
+     * @param int|null $value
      */
     public function totalInCents(?int $value): self
     {
@@ -94,6 +108,8 @@ class AllocationPreviewBuilder
 
     /**
      * Sets direction field.
+     *
+     * @param string|null $value
      */
     public function direction(?string $value): self
     {
@@ -103,6 +119,8 @@ class AllocationPreviewBuilder
 
     /**
      * Sets proration scheme field.
+     *
+     * @param string|null $value
      */
     public function prorationScheme(?string $value): self
     {
@@ -112,6 +130,8 @@ class AllocationPreviewBuilder
 
     /**
      * Sets line items field.
+     *
+     * @param AllocationPreviewLineItem[]|null $value
      */
     public function lineItems(?array $value): self
     {
@@ -121,6 +141,8 @@ class AllocationPreviewBuilder
 
     /**
      * Sets accrue charge field.
+     *
+     * @param bool|null $value
      */
     public function accrueCharge(?bool $value): self
     {
@@ -130,6 +152,8 @@ class AllocationPreviewBuilder
 
     /**
      * Sets allocations field.
+     *
+     * @param AllocationPreviewItem[]|null $value
      */
     public function allocations(?array $value): self
     {
@@ -139,6 +163,8 @@ class AllocationPreviewBuilder
 
     /**
      * Sets period type field.
+     *
+     * @param string|null $value
      */
     public function periodType(?string $value): self
     {
@@ -148,6 +174,8 @@ class AllocationPreviewBuilder
 
     /**
      * Sets existing balance in cents field.
+     *
+     * @param int|null $value
      */
     public function existingBalanceInCents(?int $value): self
     {
@@ -158,8 +186,8 @@ class AllocationPreviewBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -168,7 +196,7 @@ class AllocationPreviewBuilder
     }
 
     /**
-     * Initializes a new allocation preview object.
+     * Initializes a new Allocation Preview object.
      */
     public function build(): AllocationPreview
     {

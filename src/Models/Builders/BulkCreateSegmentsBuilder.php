@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace AdvancedBillingLib\Models\Builders;
 
 use AdvancedBillingLib\Models\BulkCreateSegments;
+use AdvancedBillingLib\Models\CreateSegment;
 use Core\Utils\CoreHelper;
 
 /**
@@ -31,7 +32,7 @@ class BulkCreateSegmentsBuilder
     }
 
     /**
-     * Initializes a new bulk create segments Builder object.
+     * Initializes a new Bulk Create Segments Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +41,8 @@ class BulkCreateSegmentsBuilder
 
     /**
      * Sets segments field.
+     *
+     * @param CreateSegment[]|null $value
      */
     public function segments(?array $value): self
     {
@@ -50,8 +53,8 @@ class BulkCreateSegmentsBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -60,7 +63,7 @@ class BulkCreateSegmentsBuilder
     }
 
     /**
-     * Initializes a new bulk create segments object.
+     * Initializes a new Bulk Create Segments object.
      */
     public function build(): BulkCreateSegments
     {

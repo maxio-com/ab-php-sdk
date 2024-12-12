@@ -32,7 +32,9 @@ class ProductResponseBuilder
     }
 
     /**
-     * Initializes a new product response Builder object.
+     * Initializes a new Product Response Builder object.
+     *
+     * @param Product $product
      */
     public static function init(Product $product): self
     {
@@ -42,8 +44,8 @@ class ProductResponseBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -52,7 +54,7 @@ class ProductResponseBuilder
     }
 
     /**
-     * Initializes a new product response object.
+     * Initializes a new Product Response object.
      */
     public function build(): ProductResponse
     {

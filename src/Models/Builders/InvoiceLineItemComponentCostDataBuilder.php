@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models\Builders;
 
+use AdvancedBillingLib\Models\ComponentCostData;
 use AdvancedBillingLib\Models\InvoiceLineItemComponentCostData;
 use Core\Utils\CoreHelper;
 
@@ -31,7 +32,7 @@ class InvoiceLineItemComponentCostDataBuilder
     }
 
     /**
-     * Initializes a new invoice line item component cost data Builder object.
+     * Initializes a new Invoice Line Item Component Cost Data Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +41,8 @@ class InvoiceLineItemComponentCostDataBuilder
 
     /**
      * Sets rates field.
+     *
+     * @param ComponentCostData[]|null $value
      */
     public function rates(?array $value): self
     {
@@ -50,8 +53,8 @@ class InvoiceLineItemComponentCostDataBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -60,7 +63,7 @@ class InvoiceLineItemComponentCostDataBuilder
     }
 
     /**
-     * Initializes a new invoice line item component cost data object.
+     * Initializes a new Invoice Line Item Component Cost Data object.
      */
     public function build(): InvoiceLineItemComponentCostData
     {

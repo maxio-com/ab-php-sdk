@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models\Builders;
 
+use AdvancedBillingLib\Models\ListSubscriptionGroupsItem;
 use AdvancedBillingLib\Models\ListSubscriptionGroupsMeta;
 use AdvancedBillingLib\Models\ListSubscriptionGroupsResponse;
 use Core\Utils\CoreHelper;
@@ -32,7 +33,7 @@ class ListSubscriptionGroupsResponseBuilder
     }
 
     /**
-     * Initializes a new list subscription groups response Builder object.
+     * Initializes a new List Subscription Groups Response Builder object.
      */
     public static function init(): self
     {
@@ -41,6 +42,8 @@ class ListSubscriptionGroupsResponseBuilder
 
     /**
      * Sets subscription groups field.
+     *
+     * @param ListSubscriptionGroupsItem[]|null $value
      */
     public function subscriptionGroups(?array $value): self
     {
@@ -50,6 +53,8 @@ class ListSubscriptionGroupsResponseBuilder
 
     /**
      * Sets meta field.
+     *
+     * @param ListSubscriptionGroupsMeta|null $value
      */
     public function meta(?ListSubscriptionGroupsMeta $value): self
     {
@@ -60,8 +65,8 @@ class ListSubscriptionGroupsResponseBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -70,7 +75,7 @@ class ListSubscriptionGroupsResponseBuilder
     }
 
     /**
-     * Initializes a new list subscription groups response object.
+     * Initializes a new List Subscription Groups Response object.
      */
     public function build(): ListSubscriptionGroupsResponse
     {

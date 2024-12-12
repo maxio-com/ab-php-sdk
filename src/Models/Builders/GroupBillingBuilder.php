@@ -31,7 +31,7 @@ class GroupBillingBuilder
     }
 
     /**
-     * Initializes a new group billing Builder object.
+     * Initializes a new Group Billing Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class GroupBillingBuilder
 
     /**
      * Sets accrue field.
+     *
+     * @param bool|null $value
      */
     public function accrue(?bool $value): self
     {
@@ -49,6 +51,8 @@ class GroupBillingBuilder
 
     /**
      * Sets align date field.
+     *
+     * @param bool|null $value
      */
     public function alignDate(?bool $value): self
     {
@@ -58,6 +62,8 @@ class GroupBillingBuilder
 
     /**
      * Sets prorate field.
+     *
+     * @param bool|null $value
      */
     public function prorate(?bool $value): self
     {
@@ -68,8 +74,8 @@ class GroupBillingBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -78,7 +84,7 @@ class GroupBillingBuilder
     }
 
     /**
-     * Initializes a new group billing object.
+     * Initializes a new Group Billing object.
      */
     public function build(): GroupBilling
     {

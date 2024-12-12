@@ -11,6 +11,9 @@ declare(strict_types=1);
 namespace AdvancedBillingLib\Models\Builders;
 
 use AdvancedBillingLib\Models\Offer;
+use AdvancedBillingLib\Models\OfferDiscount;
+use AdvancedBillingLib\Models\OfferItem;
+use AdvancedBillingLib\Models\OfferSignupPage;
 use Core\Utils\CoreHelper;
 
 /**
@@ -31,7 +34,7 @@ class OfferBuilder
     }
 
     /**
-     * Initializes a new offer Builder object.
+     * Initializes a new Offer Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +43,8 @@ class OfferBuilder
 
     /**
      * Sets id field.
+     *
+     * @param int|null $value
      */
     public function id(?int $value): self
     {
@@ -49,6 +54,8 @@ class OfferBuilder
 
     /**
      * Sets site id field.
+     *
+     * @param int|null $value
      */
     public function siteId(?int $value): self
     {
@@ -58,6 +65,8 @@ class OfferBuilder
 
     /**
      * Sets product family id field.
+     *
+     * @param int|null $value
      */
     public function productFamilyId(?int $value): self
     {
@@ -67,6 +76,8 @@ class OfferBuilder
 
     /**
      * Sets product id field.
+     *
+     * @param int|null $value
      */
     public function productId(?int $value): self
     {
@@ -76,6 +87,8 @@ class OfferBuilder
 
     /**
      * Sets product price point id field.
+     *
+     * @param int|null $value
      */
     public function productPricePointId(?int $value): self
     {
@@ -85,6 +98,8 @@ class OfferBuilder
 
     /**
      * Sets product revisable number field.
+     *
+     * @param int|null $value
      */
     public function productRevisableNumber(?int $value): self
     {
@@ -94,6 +109,8 @@ class OfferBuilder
 
     /**
      * Sets name field.
+     *
+     * @param string|null $value
      */
     public function name(?string $value): self
     {
@@ -103,6 +120,8 @@ class OfferBuilder
 
     /**
      * Sets handle field.
+     *
+     * @param string|null $value
      */
     public function handle(?string $value): self
     {
@@ -112,6 +131,8 @@ class OfferBuilder
 
     /**
      * Sets description field.
+     *
+     * @param string|null $value
      */
     public function description(?string $value): self
     {
@@ -130,6 +151,8 @@ class OfferBuilder
 
     /**
      * Sets created at field.
+     *
+     * @param \DateTime|null $value
      */
     public function createdAt(?\DateTime $value): self
     {
@@ -139,6 +162,8 @@ class OfferBuilder
 
     /**
      * Sets updated at field.
+     *
+     * @param \DateTime|null $value
      */
     public function updatedAt(?\DateTime $value): self
     {
@@ -148,6 +173,8 @@ class OfferBuilder
 
     /**
      * Sets archived at field.
+     *
+     * @param \DateTime|null $value
      */
     public function archivedAt(?\DateTime $value): self
     {
@@ -166,6 +193,8 @@ class OfferBuilder
 
     /**
      * Sets offer items field.
+     *
+     * @param OfferItem[]|null $value
      */
     public function offerItems(?array $value): self
     {
@@ -175,6 +204,8 @@ class OfferBuilder
 
     /**
      * Sets offer discounts field.
+     *
+     * @param OfferDiscount[]|null $value
      */
     public function offerDiscounts(?array $value): self
     {
@@ -184,6 +215,8 @@ class OfferBuilder
 
     /**
      * Sets product family name field.
+     *
+     * @param string|null $value
      */
     public function productFamilyName(?string $value): self
     {
@@ -193,6 +226,8 @@ class OfferBuilder
 
     /**
      * Sets product name field.
+     *
+     * @param string|null $value
      */
     public function productName(?string $value): self
     {
@@ -202,6 +237,8 @@ class OfferBuilder
 
     /**
      * Sets product price point name field.
+     *
+     * @param string|null $value
      */
     public function productPricePointName(?string $value): self
     {
@@ -211,6 +248,8 @@ class OfferBuilder
 
     /**
      * Sets product price in cents field.
+     *
+     * @param int|null $value
      */
     public function productPriceInCents(?int $value): self
     {
@@ -220,6 +259,8 @@ class OfferBuilder
 
     /**
      * Sets offer signup pages field.
+     *
+     * @param OfferSignupPage[]|null $value
      */
     public function offerSignupPages(?array $value): self
     {
@@ -230,8 +271,8 @@ class OfferBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -240,7 +281,7 @@ class OfferBuilder
     }
 
     /**
-     * Initializes a new offer object.
+     * Initializes a new Offer object.
      */
     public function build(): Offer
     {

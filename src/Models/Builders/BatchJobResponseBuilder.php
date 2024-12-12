@@ -32,7 +32,9 @@ class BatchJobResponseBuilder
     }
 
     /**
-     * Initializes a new batch job response Builder object.
+     * Initializes a new Batch Job Response Builder object.
+     *
+     * @param BatchJob $batchjob
      */
     public static function init(BatchJob $batchjob): self
     {
@@ -42,8 +44,8 @@ class BatchJobResponseBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -52,7 +54,7 @@ class BatchJobResponseBuilder
     }
 
     /**
-     * Initializes a new batch job response object.
+     * Initializes a new Batch Job Response object.
      */
     public function build(): BatchJobResponse
     {

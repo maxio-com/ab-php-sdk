@@ -152,6 +152,10 @@ class CreateInvoiceCoupon implements \JsonSerializable
 
     /**
      * Returns Compounding Strategy.
+     * Applicable only to stackable coupons. For `compound`, Percentage-based discounts will be calculated
+     * against the remaining price, after prior discounts have been calculated. For `full-price`,
+     * Percentage-based discounts will always be calculated against the original item price, before other
+     * discounts are applied.
      */
     public function getCompoundingStrategy(): ?string
     {
@@ -160,6 +164,10 @@ class CreateInvoiceCoupon implements \JsonSerializable
 
     /**
      * Sets Compounding Strategy.
+     * Applicable only to stackable coupons. For `compound`, Percentage-based discounts will be calculated
+     * against the remaining price, after prior discounts have been calculated. For `full-price`,
+     * Percentage-based discounts will always be calculated against the original item price, before other
+     * discounts are applied.
      *
      * @maps compounding_strategy
      * @factory \AdvancedBillingLib\Models\CompoundingStrategy::checkValue
@@ -174,12 +182,27 @@ class CreateInvoiceCoupon implements \JsonSerializable
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function addAdditionalProperty(string $name, $value)
     {
         $this->additionalProperties[$name] = $value;
+    }
+
+    /**
+     * Find an additional property by name in this model or false if property does not exist.
+     *
+     * @param string $name Name of property.
+     *
+     * @return mixed|false Value of the property.
+     */
+    public function findAdditionalProperty(string $name)
+    {
+        if (isset($this->additionalProperties[$name])) {
+            return $this->additionalProperties[$name];
+        }
+        return false;
     }
 
     /**

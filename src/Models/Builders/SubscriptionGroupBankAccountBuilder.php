@@ -31,7 +31,7 @@ class SubscriptionGroupBankAccountBuilder
     }
 
     /**
-     * Initializes a new subscription group bank account Builder object.
+     * Initializes a new Subscription Group Bank Account Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class SubscriptionGroupBankAccountBuilder
 
     /**
      * Sets bank name field.
+     *
+     * @param string|null $value
      */
     public function bankName(?string $value): self
     {
@@ -49,6 +51,8 @@ class SubscriptionGroupBankAccountBuilder
 
     /**
      * Sets bank account number field.
+     *
+     * @param string|null $value
      */
     public function bankAccountNumber(?string $value): self
     {
@@ -58,6 +62,8 @@ class SubscriptionGroupBankAccountBuilder
 
     /**
      * Sets bank routing number field.
+     *
+     * @param string|null $value
      */
     public function bankRoutingNumber(?string $value): self
     {
@@ -67,6 +73,8 @@ class SubscriptionGroupBankAccountBuilder
 
     /**
      * Sets bank iban field.
+     *
+     * @param string|null $value
      */
     public function bankIban(?string $value): self
     {
@@ -76,6 +84,8 @@ class SubscriptionGroupBankAccountBuilder
 
     /**
      * Sets bank branch code field.
+     *
+     * @param string|null $value
      */
     public function bankBranchCode(?string $value): self
     {
@@ -85,6 +95,8 @@ class SubscriptionGroupBankAccountBuilder
 
     /**
      * Sets bank account type field.
+     *
+     * @param string|null $value
      */
     public function bankAccountType(?string $value): self
     {
@@ -94,6 +106,8 @@ class SubscriptionGroupBankAccountBuilder
 
     /**
      * Sets bank account holder type field.
+     *
+     * @param string|null $value
      */
     public function bankAccountHolderType(?string $value): self
     {
@@ -103,6 +117,8 @@ class SubscriptionGroupBankAccountBuilder
 
     /**
      * Sets payment type field.
+     *
+     * @param string|null $value
      */
     public function paymentType(?string $value): self
     {
@@ -112,6 +128,8 @@ class SubscriptionGroupBankAccountBuilder
 
     /**
      * Sets billing address field.
+     *
+     * @param string|null $value
      */
     public function billingAddress(?string $value): self
     {
@@ -121,6 +139,8 @@ class SubscriptionGroupBankAccountBuilder
 
     /**
      * Sets billing city field.
+     *
+     * @param string|null $value
      */
     public function billingCity(?string $value): self
     {
@@ -130,6 +150,8 @@ class SubscriptionGroupBankAccountBuilder
 
     /**
      * Sets billing state field.
+     *
+     * @param string|null $value
      */
     public function billingState(?string $value): self
     {
@@ -139,6 +161,8 @@ class SubscriptionGroupBankAccountBuilder
 
     /**
      * Sets billing zip field.
+     *
+     * @param string|null $value
      */
     public function billingZip(?string $value): self
     {
@@ -148,6 +172,8 @@ class SubscriptionGroupBankAccountBuilder
 
     /**
      * Sets billing country field.
+     *
+     * @param string|null $value
      */
     public function billingCountry(?string $value): self
     {
@@ -157,6 +183,8 @@ class SubscriptionGroupBankAccountBuilder
 
     /**
      * Sets chargify token field.
+     *
+     * @param string|null $value
      */
     public function chargifyToken(?string $value): self
     {
@@ -166,6 +194,8 @@ class SubscriptionGroupBankAccountBuilder
 
     /**
      * Sets current vault field.
+     *
+     * @param string|null $value
      */
     public function currentVault(?string $value): self
     {
@@ -175,6 +205,8 @@ class SubscriptionGroupBankAccountBuilder
 
     /**
      * Sets gateway handle field.
+     *
+     * @param string|null $value
      */
     public function gatewayHandle(?string $value): self
     {
@@ -185,8 +217,8 @@ class SubscriptionGroupBankAccountBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -195,7 +227,7 @@ class SubscriptionGroupBankAccountBuilder
     }
 
     /**
-     * Initializes a new subscription group bank account object.
+     * Initializes a new Subscription Group Bank Account object.
      */
     public function build(): SubscriptionGroupBankAccount
     {

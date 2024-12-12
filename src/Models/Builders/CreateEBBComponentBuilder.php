@@ -32,7 +32,9 @@ class CreateEBBComponentBuilder
     }
 
     /**
-     * Initializes a new create ebbcomponent Builder object.
+     * Initializes a new Create EBB Component Builder object.
+     *
+     * @param EBBComponent $eventBasedComponent
      */
     public static function init(EBBComponent $eventBasedComponent): self
     {
@@ -42,8 +44,8 @@ class CreateEBBComponentBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -52,7 +54,7 @@ class CreateEBBComponentBuilder
     }
 
     /**
-     * Initializes a new create ebbcomponent object.
+     * Initializes a new Create EBB Component object.
      */
     public function build(): CreateEBBComponent
     {

@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace AdvancedBillingLib\Models\Builders;
 
 use AdvancedBillingLib\Models\BulkComponentsPricePointAssignment;
+use AdvancedBillingLib\Models\ComponentPricePointAssignment;
 use Core\Utils\CoreHelper;
 
 /**
@@ -31,7 +32,7 @@ class BulkComponentsPricePointAssignmentBuilder
     }
 
     /**
-     * Initializes a new bulk components price point assignment Builder object.
+     * Initializes a new Bulk Components Price Point Assignment Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +41,8 @@ class BulkComponentsPricePointAssignmentBuilder
 
     /**
      * Sets components field.
+     *
+     * @param ComponentPricePointAssignment[]|null $value
      */
     public function components(?array $value): self
     {
@@ -50,8 +53,8 @@ class BulkComponentsPricePointAssignmentBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -60,7 +63,7 @@ class BulkComponentsPricePointAssignmentBuilder
     }
 
     /**
-     * Initializes a new bulk components price point assignment object.
+     * Initializes a new Bulk Components Price Point Assignment object.
      */
     public function build(): BulkComponentsPricePointAssignment
     {

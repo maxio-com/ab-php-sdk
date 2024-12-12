@@ -31,7 +31,10 @@ class PaymentRelatedEventsBuilder
     }
 
     /**
-     * Initializes a new payment related events Builder object.
+     * Initializes a new Payment Related Events Builder object.
+     *
+     * @param int $productId
+     * @param int $accountTransactionId
      */
     public static function init(int $productId, int $accountTransactionId): self
     {
@@ -41,8 +44,8 @@ class PaymentRelatedEventsBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -51,7 +54,7 @@ class PaymentRelatedEventsBuilder
     }
 
     /**
-     * Initializes a new payment related events object.
+     * Initializes a new Payment Related Events object.
      */
     public function build(): PaymentRelatedEvents
     {

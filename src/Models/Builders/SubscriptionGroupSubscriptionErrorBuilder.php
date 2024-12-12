@@ -31,7 +31,7 @@ class SubscriptionGroupSubscriptionErrorBuilder
     }
 
     /**
-     * Initializes a new subscription group subscription error Builder object.
+     * Initializes a new Subscription Group Subscription Error Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class SubscriptionGroupSubscriptionErrorBuilder
 
     /**
      * Sets product field.
+     *
+     * @param string[]|null $value
      */
     public function product(?array $value): self
     {
@@ -49,6 +51,8 @@ class SubscriptionGroupSubscriptionErrorBuilder
 
     /**
      * Sets product price point id field.
+     *
+     * @param string[]|null $value
      */
     public function productPricePointId(?array $value): self
     {
@@ -58,6 +62,8 @@ class SubscriptionGroupSubscriptionErrorBuilder
 
     /**
      * Sets payment profile field.
+     *
+     * @param string[]|null $value
      */
     public function paymentProfile(?array $value): self
     {
@@ -67,6 +73,8 @@ class SubscriptionGroupSubscriptionErrorBuilder
 
     /**
      * Sets payment profile chargify token field.
+     *
+     * @param string[]|null $value
      */
     public function paymentProfileChargifyToken(?array $value): self
     {
@@ -76,6 +84,8 @@ class SubscriptionGroupSubscriptionErrorBuilder
 
     /**
      * Sets base field.
+     *
+     * @param string[]|null $value
      */
     public function base(?array $value): self
     {
@@ -85,6 +95,8 @@ class SubscriptionGroupSubscriptionErrorBuilder
 
     /**
      * Sets payment profile expiration month field.
+     *
+     * @param string[]|null $value
      */
     public function paymentProfileExpirationMonth(?array $value): self
     {
@@ -94,6 +106,8 @@ class SubscriptionGroupSubscriptionErrorBuilder
 
     /**
      * Sets payment profile expiration year field.
+     *
+     * @param string[]|null $value
      */
     public function paymentProfileExpirationYear(?array $value): self
     {
@@ -103,6 +117,8 @@ class SubscriptionGroupSubscriptionErrorBuilder
 
     /**
      * Sets payment profile full number field.
+     *
+     * @param string[]|null $value
      */
     public function paymentProfileFullNumber(?array $value): self
     {
@@ -113,8 +129,8 @@ class SubscriptionGroupSubscriptionErrorBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -123,7 +139,7 @@ class SubscriptionGroupSubscriptionErrorBuilder
     }
 
     /**
-     * Initializes a new subscription group subscription error object.
+     * Initializes a new Subscription Group Subscription Error object.
      */
     public function build(): SubscriptionGroupSubscriptionError
     {

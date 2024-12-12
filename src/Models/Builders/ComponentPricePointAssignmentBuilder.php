@@ -31,7 +31,7 @@ class ComponentPricePointAssignmentBuilder
     }
 
     /**
-     * Initializes a new component price point assignment Builder object.
+     * Initializes a new Component Price Point Assignment Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class ComponentPricePointAssignmentBuilder
 
     /**
      * Sets component id field.
+     *
+     * @param int|null $value
      */
     public function componentId(?int $value): self
     {
@@ -49,6 +51,8 @@ class ComponentPricePointAssignmentBuilder
 
     /**
      * Sets price point field.
+     *
+     * @param string|int|null $value
      */
     public function pricePoint($value): self
     {
@@ -59,8 +63,8 @@ class ComponentPricePointAssignmentBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -69,7 +73,7 @@ class ComponentPricePointAssignmentBuilder
     }
 
     /**
-     * Initializes a new component price point assignment object.
+     * Initializes a new Component Price Point Assignment object.
      */
     public function build(): ComponentPricePointAssignment
     {

@@ -13,6 +13,7 @@ namespace AdvancedBillingLib\Models\Builders;
 use AdvancedBillingLib\Models\CreditCardAttributes;
 use AdvancedBillingLib\Models\SubscriptionCustomPrice;
 use AdvancedBillingLib\Models\UpdateSubscription;
+use AdvancedBillingLib\Models\UpdateSubscriptionComponent;
 use Core\Utils\CoreHelper;
 
 /**
@@ -33,7 +34,7 @@ class UpdateSubscriptionBuilder
     }
 
     /**
-     * Initializes a new update subscription Builder object.
+     * Initializes a new Update Subscription Builder object.
      */
     public static function init(): self
     {
@@ -42,6 +43,8 @@ class UpdateSubscriptionBuilder
 
     /**
      * Sets credit card attributes field.
+     *
+     * @param CreditCardAttributes|null $value
      */
     public function creditCardAttributes(?CreditCardAttributes $value): self
     {
@@ -51,6 +54,8 @@ class UpdateSubscriptionBuilder
 
     /**
      * Sets product handle field.
+     *
+     * @param string|null $value
      */
     public function productHandle(?string $value): self
     {
@@ -60,6 +65,8 @@ class UpdateSubscriptionBuilder
 
     /**
      * Sets product id field.
+     *
+     * @param int|null $value
      */
     public function productId(?int $value): self
     {
@@ -69,6 +76,8 @@ class UpdateSubscriptionBuilder
 
     /**
      * Sets product change delayed field.
+     *
+     * @param bool|null $value
      */
     public function productChangeDelayed(?bool $value): self
     {
@@ -78,6 +87,8 @@ class UpdateSubscriptionBuilder
 
     /**
      * Sets next product id field.
+     *
+     * @param string|null $value
      */
     public function nextProductId(?string $value): self
     {
@@ -87,6 +98,8 @@ class UpdateSubscriptionBuilder
 
     /**
      * Sets next product price point id field.
+     *
+     * @param string|null $value
      */
     public function nextProductPricePointId(?string $value): self
     {
@@ -96,6 +109,8 @@ class UpdateSubscriptionBuilder
 
     /**
      * Sets snap day field.
+     *
+     * @param string|int|null $value
      */
     public function snapDay($value): self
     {
@@ -105,6 +120,8 @@ class UpdateSubscriptionBuilder
 
     /**
      * Sets next billing at field.
+     *
+     * @param \DateTime|null $value
      */
     public function nextBillingAt(?\DateTime $value): self
     {
@@ -114,6 +131,8 @@ class UpdateSubscriptionBuilder
 
     /**
      * Sets payment collection method field.
+     *
+     * @param string|null $value
      */
     public function paymentCollectionMethod(?string $value): self
     {
@@ -123,6 +142,8 @@ class UpdateSubscriptionBuilder
 
     /**
      * Sets receives invoice emails field.
+     *
+     * @param bool|null $value
      */
     public function receivesInvoiceEmails(?bool $value): self
     {
@@ -132,6 +153,8 @@ class UpdateSubscriptionBuilder
 
     /**
      * Sets net terms field.
+     *
+     * @param string|int|null $value
      */
     public function netTerms($value): self
     {
@@ -141,6 +164,8 @@ class UpdateSubscriptionBuilder
 
     /**
      * Sets stored credential transaction id field.
+     *
+     * @param int|null $value
      */
     public function storedCredentialTransactionId(?int $value): self
     {
@@ -150,6 +175,8 @@ class UpdateSubscriptionBuilder
 
     /**
      * Sets reference field.
+     *
+     * @param string|null $value
      */
     public function reference(?string $value): self
     {
@@ -159,6 +186,8 @@ class UpdateSubscriptionBuilder
 
     /**
      * Sets custom price field.
+     *
+     * @param SubscriptionCustomPrice|null $value
      */
     public function customPrice(?SubscriptionCustomPrice $value): self
     {
@@ -168,6 +197,8 @@ class UpdateSubscriptionBuilder
 
     /**
      * Sets components field.
+     *
+     * @param UpdateSubscriptionComponent[]|null $value
      */
     public function components(?array $value): self
     {
@@ -177,6 +208,8 @@ class UpdateSubscriptionBuilder
 
     /**
      * Sets dunning communication delay enabled field.
+     *
+     * @param bool|null $value
      */
     public function dunningCommunicationDelayEnabled(?bool $value): self
     {
@@ -185,16 +218,9 @@ class UpdateSubscriptionBuilder
     }
 
     /**
-     * Unsets dunning communication delay enabled field.
-     */
-    public function unsetDunningCommunicationDelayEnabled(): self
-    {
-        $this->instance->unsetDunningCommunicationDelayEnabled();
-        return $this;
-    }
-
-    /**
      * Sets dunning communication delay time zone field.
+     *
+     * @param string|null $value
      */
     public function dunningCommunicationDelayTimeZone(?string $value): self
     {
@@ -213,6 +239,8 @@ class UpdateSubscriptionBuilder
 
     /**
      * Sets product price point id field.
+     *
+     * @param int|null $value
      */
     public function productPricePointId(?int $value): self
     {
@@ -222,6 +250,8 @@ class UpdateSubscriptionBuilder
 
     /**
      * Sets product price point handle field.
+     *
+     * @param string|null $value
      */
     public function productPricePointHandle(?string $value): self
     {
@@ -232,8 +262,8 @@ class UpdateSubscriptionBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -242,7 +272,7 @@ class UpdateSubscriptionBuilder
     }
 
     /**
-     * Initializes a new update subscription object.
+     * Initializes a new Update Subscription object.
      */
     public function build(): UpdateSubscription
     {

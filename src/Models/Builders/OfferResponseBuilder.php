@@ -32,7 +32,7 @@ class OfferResponseBuilder
     }
 
     /**
-     * Initializes a new offer response Builder object.
+     * Initializes a new Offer Response Builder object.
      */
     public static function init(): self
     {
@@ -41,6 +41,8 @@ class OfferResponseBuilder
 
     /**
      * Sets offer field.
+     *
+     * @param Offer|null $value
      */
     public function offer(?Offer $value): self
     {
@@ -51,8 +53,8 @@ class OfferResponseBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -61,7 +63,7 @@ class OfferResponseBuilder
     }
 
     /**
-     * Initializes a new offer response object.
+     * Initializes a new Offer Response object.
      */
     public function build(): OfferResponse
     {

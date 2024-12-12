@@ -32,7 +32,9 @@ class UpsertPrepaidConfigurationRequestBuilder
     }
 
     /**
-     * Initializes a new upsert prepaid configuration request Builder object.
+     * Initializes a new Upsert Prepaid Configuration Request Builder object.
+     *
+     * @param UpsertPrepaidConfiguration $prepaidConfiguration
      */
     public static function init(UpsertPrepaidConfiguration $prepaidConfiguration): self
     {
@@ -42,8 +44,8 @@ class UpsertPrepaidConfigurationRequestBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -52,7 +54,7 @@ class UpsertPrepaidConfigurationRequestBuilder
     }
 
     /**
-     * Initializes a new upsert prepaid configuration request object.
+     * Initializes a new Upsert Prepaid Configuration Request object.
      */
     public function build(): UpsertPrepaidConfigurationRequest
     {

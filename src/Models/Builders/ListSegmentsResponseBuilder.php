@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace AdvancedBillingLib\Models\Builders;
 
 use AdvancedBillingLib\Models\ListSegmentsResponse;
+use AdvancedBillingLib\Models\Segment;
 use Core\Utils\CoreHelper;
 
 /**
@@ -31,7 +32,7 @@ class ListSegmentsResponseBuilder
     }
 
     /**
-     * Initializes a new list segments response Builder object.
+     * Initializes a new List Segments Response Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +41,8 @@ class ListSegmentsResponseBuilder
 
     /**
      * Sets segments field.
+     *
+     * @param Segment[]|null $value
      */
     public function segments(?array $value): self
     {
@@ -50,8 +53,8 @@ class ListSegmentsResponseBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -60,7 +63,7 @@ class ListSegmentsResponseBuilder
     }
 
     /**
-     * Initializes a new list segments response object.
+     * Initializes a new List Segments Response object.
      */
     public function build(): ListSegmentsResponse
     {

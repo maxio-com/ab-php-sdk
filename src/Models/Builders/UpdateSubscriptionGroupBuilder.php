@@ -31,7 +31,7 @@ class UpdateSubscriptionGroupBuilder
     }
 
     /**
-     * Initializes a new update subscription group Builder object.
+     * Initializes a new Update Subscription Group Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class UpdateSubscriptionGroupBuilder
 
     /**
      * Sets member ids field.
+     *
+     * @param int[]|null $value
      */
     public function memberIds(?array $value): self
     {
@@ -50,8 +52,8 @@ class UpdateSubscriptionGroupBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -60,7 +62,7 @@ class UpdateSubscriptionGroupBuilder
     }
 
     /**
-     * Initializes a new update subscription group object.
+     * Initializes a new Update Subscription Group object.
      */
     public function build(): UpdateSubscriptionGroup
     {

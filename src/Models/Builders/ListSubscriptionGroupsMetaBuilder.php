@@ -31,7 +31,7 @@ class ListSubscriptionGroupsMetaBuilder
     }
 
     /**
-     * Initializes a new list subscription groups meta Builder object.
+     * Initializes a new List Subscription Groups Meta Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class ListSubscriptionGroupsMetaBuilder
 
     /**
      * Sets current page field.
+     *
+     * @param int|null $value
      */
     public function currentPage(?int $value): self
     {
@@ -49,6 +51,8 @@ class ListSubscriptionGroupsMetaBuilder
 
     /**
      * Sets total count field.
+     *
+     * @param int|null $value
      */
     public function totalCount(?int $value): self
     {
@@ -59,8 +63,8 @@ class ListSubscriptionGroupsMetaBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -69,7 +73,7 @@ class ListSubscriptionGroupsMetaBuilder
     }
 
     /**
-     * Initializes a new list subscription groups meta object.
+     * Initializes a new List Subscription Groups Meta object.
      */
     public function build(): ListSubscriptionGroupsMeta
     {

@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models\Builders;
 
+use AdvancedBillingLib\Models\CreateInvoicePaymentApplication;
 use AdvancedBillingLib\Models\CreateMultiInvoicePayment;
 use Core\Utils\CoreHelper;
 
@@ -31,7 +32,10 @@ class CreateMultiInvoicePaymentBuilder
     }
 
     /**
-     * Initializes a new create multi invoice payment Builder object.
+     * Initializes a new Create Multi Invoice Payment Builder object.
+     *
+     * @param string|float $amount
+     * @param CreateInvoicePaymentApplication[] $applications
      */
     public static function init($amount, array $applications): self
     {
@@ -40,6 +44,8 @@ class CreateMultiInvoicePaymentBuilder
 
     /**
      * Sets memo field.
+     *
+     * @param string|null $value
      */
     public function memo(?string $value): self
     {
@@ -49,6 +55,8 @@ class CreateMultiInvoicePaymentBuilder
 
     /**
      * Sets details field.
+     *
+     * @param string|null $value
      */
     public function details(?string $value): self
     {
@@ -58,6 +66,8 @@ class CreateMultiInvoicePaymentBuilder
 
     /**
      * Sets method field.
+     *
+     * @param string|null $value
      */
     public function method(?string $value): self
     {
@@ -67,6 +77,8 @@ class CreateMultiInvoicePaymentBuilder
 
     /**
      * Sets received on field.
+     *
+     * @param string|null $value
      */
     public function receivedOn(?string $value): self
     {
@@ -77,8 +89,8 @@ class CreateMultiInvoicePaymentBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -87,7 +99,7 @@ class CreateMultiInvoicePaymentBuilder
     }
 
     /**
-     * Initializes a new create multi invoice payment object.
+     * Initializes a new Create Multi Invoice Payment object.
      */
     public function build(): CreateMultiInvoicePayment
     {

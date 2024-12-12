@@ -31,9 +31,12 @@ class UpdateCurrencyPriceBuilder
     }
 
     /**
-     * Initializes a new update currency price Builder object.
+     * Initializes a new Update Currency Price Builder object.
+     *
+     * @param int $id
+     * @param float $price
      */
-    public static function init(int $id, int $price): self
+    public static function init(int $id, float $price): self
     {
         return new self(new UpdateCurrencyPrice($id, $price));
     }
@@ -41,8 +44,8 @@ class UpdateCurrencyPriceBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -51,7 +54,7 @@ class UpdateCurrencyPriceBuilder
     }
 
     /**
-     * Initializes a new update currency price object.
+     * Initializes a new Update Currency Price object.
      */
     public function build(): UpdateCurrencyPrice
     {

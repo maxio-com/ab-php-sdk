@@ -31,7 +31,10 @@ class PaymentMethodPaypalBuilder
     }
 
     /**
-     * Initializes a new payment method paypal Builder object.
+     * Initializes a new Payment Method Paypal Builder object.
+     *
+     * @param string $email
+     * @param string $type
      */
     public static function init(string $email, string $type): self
     {
@@ -41,8 +44,8 @@ class PaymentMethodPaypalBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -51,7 +54,7 @@ class PaymentMethodPaypalBuilder
     }
 
     /**
-     * Initializes a new payment method paypal object.
+     * Initializes a new Payment Method Paypal object.
      */
     public function build(): PaymentMethodPaypal
     {

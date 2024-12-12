@@ -31,7 +31,7 @@ class ComponentPricePointErrorItemBuilder
     }
 
     /**
-     * Initializes a new component price point error item Builder object.
+     * Initializes a new Component Price Point Error Item Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class ComponentPricePointErrorItemBuilder
 
     /**
      * Sets component id field.
+     *
+     * @param int|null $value
      */
     public function componentId(?int $value): self
     {
@@ -49,6 +51,8 @@ class ComponentPricePointErrorItemBuilder
 
     /**
      * Sets message field.
+     *
+     * @param string|null $value
      */
     public function message(?string $value): self
     {
@@ -58,6 +62,8 @@ class ComponentPricePointErrorItemBuilder
 
     /**
      * Sets price point field.
+     *
+     * @param int|null $value
      */
     public function pricePoint(?int $value): self
     {
@@ -68,8 +74,8 @@ class ComponentPricePointErrorItemBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -78,7 +84,7 @@ class ComponentPricePointErrorItemBuilder
     }
 
     /**
-     * Initializes a new component price point error item object.
+     * Initializes a new Component Price Point Error Item object.
      */
     public function build(): ComponentPricePointErrorItem
     {

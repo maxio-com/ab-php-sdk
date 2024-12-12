@@ -32,7 +32,9 @@ class ListMRRResponseBuilder
     }
 
     /**
-     * Initializes a new list mrrresponse Builder object.
+     * Initializes a new List MRR Response Builder object.
+     *
+     * @param ListMRRResponseResult $mrr
      */
     public static function init(ListMRRResponseResult $mrr): self
     {
@@ -42,8 +44,8 @@ class ListMRRResponseBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -52,7 +54,7 @@ class ListMRRResponseBuilder
     }
 
     /**
-     * Initializes a new list mrrresponse object.
+     * Initializes a new List MRR Response object.
      */
     public function build(): ListMRRResponse
     {

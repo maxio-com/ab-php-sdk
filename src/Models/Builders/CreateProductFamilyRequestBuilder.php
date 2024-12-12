@@ -32,7 +32,9 @@ class CreateProductFamilyRequestBuilder
     }
 
     /**
-     * Initializes a new create product family request Builder object.
+     * Initializes a new Create Product Family Request Builder object.
+     *
+     * @param CreateProductFamily $productFamily
      */
     public static function init(CreateProductFamily $productFamily): self
     {
@@ -42,8 +44,8 @@ class CreateProductFamilyRequestBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -52,7 +54,7 @@ class CreateProductFamilyRequestBuilder
     }
 
     /**
-     * Initializes a new create product family request object.
+     * Initializes a new Create Product Family Request object.
      */
     public function build(): CreateProductFamilyRequest
     {

@@ -10,10 +10,14 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models\Builders;
 
+use AdvancedBillingLib\Models\CreditNoteLineItem;
 use AdvancedBillingLib\Models\DebitNote;
 use AdvancedBillingLib\Models\InvoiceAddress;
 use AdvancedBillingLib\Models\InvoiceCustomer;
+use AdvancedBillingLib\Models\InvoiceDiscount;
+use AdvancedBillingLib\Models\InvoiceRefund;
 use AdvancedBillingLib\Models\InvoiceSeller;
+use AdvancedBillingLib\Models\InvoiceTax;
 use Core\Utils\CoreHelper;
 
 /**
@@ -34,7 +38,7 @@ class DebitNoteBuilder
     }
 
     /**
-     * Initializes a new debit note Builder object.
+     * Initializes a new Debit Note Builder object.
      */
     public static function init(): self
     {
@@ -43,6 +47,8 @@ class DebitNoteBuilder
 
     /**
      * Sets uid field.
+     *
+     * @param string|null $value
      */
     public function uid(?string $value): self
     {
@@ -52,6 +58,8 @@ class DebitNoteBuilder
 
     /**
      * Sets site id field.
+     *
+     * @param int|null $value
      */
     public function siteId(?int $value): self
     {
@@ -61,6 +69,8 @@ class DebitNoteBuilder
 
     /**
      * Sets customer id field.
+     *
+     * @param int|null $value
      */
     public function customerId(?int $value): self
     {
@@ -70,6 +80,8 @@ class DebitNoteBuilder
 
     /**
      * Sets subscription id field.
+     *
+     * @param int|null $value
      */
     public function subscriptionId(?int $value): self
     {
@@ -79,6 +91,8 @@ class DebitNoteBuilder
 
     /**
      * Sets number field.
+     *
+     * @param int|null $value
      */
     public function number(?int $value): self
     {
@@ -88,6 +102,8 @@ class DebitNoteBuilder
 
     /**
      * Sets sequence number field.
+     *
+     * @param int|null $value
      */
     public function sequenceNumber(?int $value): self
     {
@@ -97,6 +113,8 @@ class DebitNoteBuilder
 
     /**
      * Sets origin credit note uid field.
+     *
+     * @param string|null $value
      */
     public function originCreditNoteUid(?string $value): self
     {
@@ -106,6 +124,8 @@ class DebitNoteBuilder
 
     /**
      * Sets origin credit note number field.
+     *
+     * @param string|null $value
      */
     public function originCreditNoteNumber(?string $value): self
     {
@@ -115,6 +135,8 @@ class DebitNoteBuilder
 
     /**
      * Sets issue date field.
+     *
+     * @param \DateTime|null $value
      */
     public function issueDate(?\DateTime $value): self
     {
@@ -124,6 +146,8 @@ class DebitNoteBuilder
 
     /**
      * Sets applied date field.
+     *
+     * @param \DateTime|null $value
      */
     public function appliedDate(?\DateTime $value): self
     {
@@ -133,6 +157,8 @@ class DebitNoteBuilder
 
     /**
      * Sets due date field.
+     *
+     * @param \DateTime|null $value
      */
     public function dueDate(?\DateTime $value): self
     {
@@ -142,6 +168,8 @@ class DebitNoteBuilder
 
     /**
      * Sets status field.
+     *
+     * @param string|null $value
      */
     public function status(?string $value): self
     {
@@ -151,6 +179,8 @@ class DebitNoteBuilder
 
     /**
      * Sets memo field.
+     *
+     * @param string|null $value
      */
     public function memo(?string $value): self
     {
@@ -160,6 +190,8 @@ class DebitNoteBuilder
 
     /**
      * Sets role field.
+     *
+     * @param string|null $value
      */
     public function role(?string $value): self
     {
@@ -169,6 +201,8 @@ class DebitNoteBuilder
 
     /**
      * Sets currency field.
+     *
+     * @param string|null $value
      */
     public function currency(?string $value): self
     {
@@ -178,6 +212,8 @@ class DebitNoteBuilder
 
     /**
      * Sets seller field.
+     *
+     * @param InvoiceSeller|null $value
      */
     public function seller(?InvoiceSeller $value): self
     {
@@ -187,6 +223,8 @@ class DebitNoteBuilder
 
     /**
      * Sets customer field.
+     *
+     * @param InvoiceCustomer|null $value
      */
     public function customer(?InvoiceCustomer $value): self
     {
@@ -196,6 +234,8 @@ class DebitNoteBuilder
 
     /**
      * Sets billing address field.
+     *
+     * @param InvoiceAddress|null $value
      */
     public function billingAddress(?InvoiceAddress $value): self
     {
@@ -205,6 +245,8 @@ class DebitNoteBuilder
 
     /**
      * Sets shipping address field.
+     *
+     * @param InvoiceAddress|null $value
      */
     public function shippingAddress(?InvoiceAddress $value): self
     {
@@ -214,6 +256,8 @@ class DebitNoteBuilder
 
     /**
      * Sets line items field.
+     *
+     * @param CreditNoteLineItem[]|null $value
      */
     public function lineItems(?array $value): self
     {
@@ -223,6 +267,8 @@ class DebitNoteBuilder
 
     /**
      * Sets discounts field.
+     *
+     * @param InvoiceDiscount[]|null $value
      */
     public function discounts(?array $value): self
     {
@@ -232,6 +278,8 @@ class DebitNoteBuilder
 
     /**
      * Sets taxes field.
+     *
+     * @param InvoiceTax[]|null $value
      */
     public function taxes(?array $value): self
     {
@@ -241,6 +289,8 @@ class DebitNoteBuilder
 
     /**
      * Sets refunds field.
+     *
+     * @param InvoiceRefund[]|null $value
      */
     public function refunds(?array $value): self
     {
@@ -251,8 +301,8 @@ class DebitNoteBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -261,7 +311,7 @@ class DebitNoteBuilder
     }
 
     /**
-     * Initializes a new debit note object.
+     * Initializes a new Debit Note object.
      */
     public function build(): DebitNote
     {

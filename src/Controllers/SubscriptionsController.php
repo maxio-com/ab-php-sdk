@@ -16,6 +16,7 @@ use AdvancedBillingLib\Exceptions\ErrorListResponseException;
 use AdvancedBillingLib\Exceptions\SingleErrorResponseException;
 use AdvancedBillingLib\Exceptions\SubscriptionAddCouponErrorException;
 use AdvancedBillingLib\Exceptions\SubscriptionRemoveCouponErrorsException;
+use AdvancedBillingLib\Exceptions\SubscriptionResponseErrorException;
 use AdvancedBillingLib\Models\ActivateSubscriptionRequest;
 use AdvancedBillingLib\Models\AddCouponsRequest;
 use AdvancedBillingLib\Models\CreateSubscriptionRequest;
@@ -76,6 +77,18 @@ class SubscriptionsController extends BaseController
      * `credit_card_attributes` or `bank_account_attributes` for ACH and Direct Debit. That said, when you
      * read the subscription after creation, we return the profile details under `credit_card` or
      * `bank_account`.
+     *
+     * ## Bulk creation of subscriptions
+     *
+     * Bulk creation of subscriptions is currently not supported. For scenarios where multiple
+     * subscriptions must be added, particularly when assigning to the same subscription group, it is
+     * essential to switch to a single-threaded approach.
+     *
+     * To avoid data conflicts or inaccuracies, incorporate a sleep interval between requests.
+     *
+     * While this single-threaded approach may impact performance, it ensures data consistency and accuracy
+     * in cases where concurrent creation attempts could otherwise lead to issues with subscription
+     * alignment and integrity.
      *
      * ## Taxable Subscriptions
      *
@@ -1190,7 +1203,9 @@ class SubscriptionsController extends BaseController
             ->auth('BasicAuth')
             ->parameters(QueryParam::init('reference', $reference)->commaSeparated());
 
-        $_resHandler = $this->responseHandler()->type(SubscriptionResponse::class);
+        $_resHandler = $this->responseHandler()
+            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
+            ->type(SubscriptionResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
     }
@@ -1215,23 +1230,33 @@ class SubscriptionsController extends BaseController
      * @param string[]|null $cascade Options are "customer" or "payment_profile". Use in query:
      *        `cascade[]=customer&cascade[]=payment_profile`.
      *
-     * @return void Response from the API call
+     * @return SubscriptionResponse Response from the API call
      *
      * @throws ApiException Thrown if API call fails
      */
-    public function purgeSubscription(int $subscriptionId, int $ack, ?array $cascade = null): void
+    public function purgeSubscription(int $subscriptionId, int $ack, ?array $cascade = null): SubscriptionResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/subscriptions/{subscription_id}/purge.json')
             ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('subscription_id', $subscriptionId)->required(),
-                QueryParam::init('ack', $ack)->commaSeparated()->required(),
+                QueryParam::init('ack', $ack)->unIndexed()->required(),
                 QueryParam::init('cascade', $cascade)
-                    ->commaSeparated()
+                    ->unIndexed()
                     ->serializeBy([SubscriptionPurgeType::class, 'checkValue'])
             );
 
-        $this->execute($_reqBuilder);
+        $_resHandler = $this->responseHandler()
+            ->throwErrorOn(
+                '400',
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    SubscriptionResponseErrorException::class
+                )
+            )
+            ->type(SubscriptionResponse::class);
+
+        return $this->execute($_reqBuilder, $_resHandler);
     }
 
     /**
@@ -1259,7 +1284,14 @@ class SubscriptionsController extends BaseController
                 BodyParam::init($body)
             );
 
-        $_resHandler = $this->responseHandler()->type(PrepaidConfigurationResponse::class);
+        $_resHandler = $this->responseHandler()
+            ->throwErrorOn(
+                '422',
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.'
+                )
+            )
+            ->type(PrepaidConfigurationResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
     }

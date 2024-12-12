@@ -31,7 +31,7 @@ class PortalManagementLinkBuilder
     }
 
     /**
-     * Initializes a new portal management link Builder object.
+     * Initializes a new Portal Management Link Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class PortalManagementLinkBuilder
 
     /**
      * Sets url field.
+     *
+     * @param string|null $value
      */
     public function url(?string $value): self
     {
@@ -49,6 +51,8 @@ class PortalManagementLinkBuilder
 
     /**
      * Sets fetch count field.
+     *
+     * @param int|null $value
      */
     public function fetchCount(?int $value): self
     {
@@ -58,6 +62,8 @@ class PortalManagementLinkBuilder
 
     /**
      * Sets created at field.
+     *
+     * @param \DateTime|null $value
      */
     public function createdAt(?\DateTime $value): self
     {
@@ -67,6 +73,8 @@ class PortalManagementLinkBuilder
 
     /**
      * Sets new link available at field.
+     *
+     * @param \DateTime|null $value
      */
     public function newLinkAvailableAt(?\DateTime $value): self
     {
@@ -76,6 +84,8 @@ class PortalManagementLinkBuilder
 
     /**
      * Sets expires at field.
+     *
+     * @param \DateTime|null $value
      */
     public function expiresAt(?\DateTime $value): self
     {
@@ -85,6 +95,8 @@ class PortalManagementLinkBuilder
 
     /**
      * Sets last invite sent at field.
+     *
+     * @param \DateTime|null $value
      */
     public function lastInviteSentAt(?\DateTime $value): self
     {
@@ -104,8 +116,8 @@ class PortalManagementLinkBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -114,7 +126,7 @@ class PortalManagementLinkBuilder
     }
 
     /**
-     * Initializes a new portal management link object.
+     * Initializes a new Portal Management Link object.
      */
     public function build(): PortalManagementLink
     {

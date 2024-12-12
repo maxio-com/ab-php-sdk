@@ -32,7 +32,9 @@ class BankAccountVerificationRequestBuilder
     }
 
     /**
-     * Initializes a new bank account verification request Builder object.
+     * Initializes a new Bank Account Verification Request Builder object.
+     *
+     * @param BankAccountVerification $bankAccountVerification
      */
     public static function init(BankAccountVerification $bankAccountVerification): self
     {
@@ -42,8 +44,8 @@ class BankAccountVerificationRequestBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -52,7 +54,7 @@ class BankAccountVerificationRequestBuilder
     }
 
     /**
-     * Initializes a new bank account verification request object.
+     * Initializes a new Bank Account Verification Request object.
      */
     public function build(): BankAccountVerificationRequest
     {

@@ -31,7 +31,7 @@ class InvoiceTaxComponentBreakoutBuilder
     }
 
     /**
-     * Initializes a new invoice tax component breakout Builder object.
+     * Initializes a new Invoice Tax Component Breakout Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class InvoiceTaxComponentBreakoutBuilder
 
     /**
      * Sets tax rule id field.
+     *
+     * @param int|null $value
      */
     public function taxRuleId(?int $value): self
     {
@@ -49,6 +51,8 @@ class InvoiceTaxComponentBreakoutBuilder
 
     /**
      * Sets percentage field.
+     *
+     * @param string|null $value
      */
     public function percentage(?string $value): self
     {
@@ -58,6 +62,8 @@ class InvoiceTaxComponentBreakoutBuilder
 
     /**
      * Sets country code field.
+     *
+     * @param string|null $value
      */
     public function countryCode(?string $value): self
     {
@@ -67,6 +73,8 @@ class InvoiceTaxComponentBreakoutBuilder
 
     /**
      * Sets subdivision code field.
+     *
+     * @param string|null $value
      */
     public function subdivisionCode(?string $value): self
     {
@@ -76,6 +84,8 @@ class InvoiceTaxComponentBreakoutBuilder
 
     /**
      * Sets tax amount field.
+     *
+     * @param string|null $value
      */
     public function taxAmount(?string $value): self
     {
@@ -85,6 +95,8 @@ class InvoiceTaxComponentBreakoutBuilder
 
     /**
      * Sets taxable amount field.
+     *
+     * @param string|null $value
      */
     public function taxableAmount(?string $value): self
     {
@@ -94,6 +106,8 @@ class InvoiceTaxComponentBreakoutBuilder
 
     /**
      * Sets tax exempt amount field.
+     *
+     * @param string|null $value
      */
     public function taxExemptAmount(?string $value): self
     {
@@ -103,6 +117,8 @@ class InvoiceTaxComponentBreakoutBuilder
 
     /**
      * Sets non taxable amount field.
+     *
+     * @param string|null $value
      */
     public function nonTaxableAmount(?string $value): self
     {
@@ -112,6 +128,8 @@ class InvoiceTaxComponentBreakoutBuilder
 
     /**
      * Sets tax name field.
+     *
+     * @param string|null $value
      */
     public function taxName(?string $value): self
     {
@@ -121,6 +139,8 @@ class InvoiceTaxComponentBreakoutBuilder
 
     /**
      * Sets tax type field.
+     *
+     * @param string|null $value
      */
     public function taxType(?string $value): self
     {
@@ -130,6 +150,8 @@ class InvoiceTaxComponentBreakoutBuilder
 
     /**
      * Sets rate type field.
+     *
+     * @param string|null $value
      */
     public function rateType(?string $value): self
     {
@@ -139,6 +161,8 @@ class InvoiceTaxComponentBreakoutBuilder
 
     /**
      * Sets tax authority type field.
+     *
+     * @param int|null $value
      */
     public function taxAuthorityType(?int $value): self
     {
@@ -148,6 +172,8 @@ class InvoiceTaxComponentBreakoutBuilder
 
     /**
      * Sets state assigned no field.
+     *
+     * @param string|null $value
      */
     public function stateAssignedNo(?string $value): self
     {
@@ -157,6 +183,8 @@ class InvoiceTaxComponentBreakoutBuilder
 
     /**
      * Sets tax sub type field.
+     *
+     * @param string|null $value
      */
     public function taxSubType(?string $value): self
     {
@@ -167,8 +195,8 @@ class InvoiceTaxComponentBreakoutBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -177,7 +205,7 @@ class InvoiceTaxComponentBreakoutBuilder
     }
 
     /**
-     * Initializes a new invoice tax component breakout object.
+     * Initializes a new Invoice Tax Component Breakout object.
      */
     public function build(): InvoiceTaxComponentBreakout
     {

@@ -31,7 +31,11 @@ class RefundConsolidatedInvoiceBuilder
     }
 
     /**
-     * Initializes a new refund consolidated invoice Builder object.
+     * Initializes a new Refund Consolidated Invoice Builder object.
+     *
+     * @param string $memo
+     * @param int $paymentId
+     * @param string[]|string $segmentUids
      */
     public static function init(string $memo, int $paymentId, $segmentUids): self
     {
@@ -40,6 +44,8 @@ class RefundConsolidatedInvoiceBuilder
 
     /**
      * Sets external field.
+     *
+     * @param bool|null $value
      */
     public function external(?bool $value): self
     {
@@ -49,6 +55,8 @@ class RefundConsolidatedInvoiceBuilder
 
     /**
      * Sets apply credit field.
+     *
+     * @param bool|null $value
      */
     public function applyCredit(?bool $value): self
     {
@@ -58,6 +66,8 @@ class RefundConsolidatedInvoiceBuilder
 
     /**
      * Sets amount field.
+     *
+     * @param string|null $value
      */
     public function amount(?string $value): self
     {
@@ -68,8 +78,8 @@ class RefundConsolidatedInvoiceBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -78,7 +88,7 @@ class RefundConsolidatedInvoiceBuilder
     }
 
     /**
-     * Initializes a new refund consolidated invoice object.
+     * Initializes a new Refund Consolidated Invoice object.
      */
     public function build(): RefundConsolidatedInvoice
     {

@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace AdvancedBillingLib\Models\Builders;
 
 use AdvancedBillingLib\Models\InvoiceLineItemEventData;
+use AdvancedBillingLib\Models\InvoiceLineItemPricingDetail;
 use Core\Utils\CoreHelper;
 
 /**
@@ -31,7 +32,7 @@ class InvoiceLineItemEventDataBuilder
     }
 
     /**
-     * Initializes a new invoice line item event data Builder object.
+     * Initializes a new Invoice Line Item Event Data Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +41,8 @@ class InvoiceLineItemEventDataBuilder
 
     /**
      * Sets uid field.
+     *
+     * @param string|null $value
      */
     public function uid(?string $value): self
     {
@@ -49,6 +52,8 @@ class InvoiceLineItemEventDataBuilder
 
     /**
      * Sets title field.
+     *
+     * @param string|null $value
      */
     public function title(?string $value): self
     {
@@ -58,6 +63,8 @@ class InvoiceLineItemEventDataBuilder
 
     /**
      * Sets description field.
+     *
+     * @param string|null $value
      */
     public function description(?string $value): self
     {
@@ -67,6 +74,8 @@ class InvoiceLineItemEventDataBuilder
 
     /**
      * Sets quantity field.
+     *
+     * @param int|null $value
      */
     public function quantity(?int $value): self
     {
@@ -76,6 +85,8 @@ class InvoiceLineItemEventDataBuilder
 
     /**
      * Sets quantity delta field.
+     *
+     * @param int|null $value
      */
     public function quantityDelta(?int $value): self
     {
@@ -94,6 +105,8 @@ class InvoiceLineItemEventDataBuilder
 
     /**
      * Sets unit price field.
+     *
+     * @param string|null $value
      */
     public function unitPrice(?string $value): self
     {
@@ -103,6 +116,8 @@ class InvoiceLineItemEventDataBuilder
 
     /**
      * Sets period range start field.
+     *
+     * @param string|null $value
      */
     public function periodRangeStart(?string $value): self
     {
@@ -112,6 +127,8 @@ class InvoiceLineItemEventDataBuilder
 
     /**
      * Sets period range end field.
+     *
+     * @param string|null $value
      */
     public function periodRangeEnd(?string $value): self
     {
@@ -121,6 +138,8 @@ class InvoiceLineItemEventDataBuilder
 
     /**
      * Sets amount field.
+     *
+     * @param string|null $value
      */
     public function amount(?string $value): self
     {
@@ -130,6 +149,8 @@ class InvoiceLineItemEventDataBuilder
 
     /**
      * Sets line references field.
+     *
+     * @param string|null $value
      */
     public function lineReferences(?string $value): self
     {
@@ -139,6 +160,8 @@ class InvoiceLineItemEventDataBuilder
 
     /**
      * Sets pricing details index field.
+     *
+     * @param int|null $value
      */
     public function pricingDetailsIndex(?int $value): self
     {
@@ -157,6 +180,8 @@ class InvoiceLineItemEventDataBuilder
 
     /**
      * Sets pricing details field.
+     *
+     * @param InvoiceLineItemPricingDetail[]|null $value
      */
     public function pricingDetails(?array $value): self
     {
@@ -166,6 +191,8 @@ class InvoiceLineItemEventDataBuilder
 
     /**
      * Sets tax code field.
+     *
+     * @param string|null $value
      */
     public function taxCode(?string $value): self
     {
@@ -184,6 +211,8 @@ class InvoiceLineItemEventDataBuilder
 
     /**
      * Sets tax amount field.
+     *
+     * @param string|null $value
      */
     public function taxAmount(?string $value): self
     {
@@ -193,6 +222,8 @@ class InvoiceLineItemEventDataBuilder
 
     /**
      * Sets product id field.
+     *
+     * @param int|null $value
      */
     public function productId(?int $value): self
     {
@@ -202,6 +233,8 @@ class InvoiceLineItemEventDataBuilder
 
     /**
      * Sets product price point id field.
+     *
+     * @param int|null $value
      */
     public function productPricePointId(?int $value): self
     {
@@ -220,6 +253,8 @@ class InvoiceLineItemEventDataBuilder
 
     /**
      * Sets price point id field.
+     *
+     * @param int|null $value
      */
     public function pricePointId(?int $value): self
     {
@@ -238,6 +273,8 @@ class InvoiceLineItemEventDataBuilder
 
     /**
      * Sets component id field.
+     *
+     * @param int|null $value
      */
     public function componentId(?int $value): self
     {
@@ -256,6 +293,8 @@ class InvoiceLineItemEventDataBuilder
 
     /**
      * Sets billing schedule item id field.
+     *
+     * @param int|null $value
      */
     public function billingScheduleItemId(?int $value): self
     {
@@ -274,6 +313,8 @@ class InvoiceLineItemEventDataBuilder
 
     /**
      * Sets custom item field.
+     *
+     * @param bool|null $value
      */
     public function customItem(?bool $value): self
     {
@@ -293,8 +334,8 @@ class InvoiceLineItemEventDataBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -303,7 +344,7 @@ class InvoiceLineItemEventDataBuilder
     }
 
     /**
-     * Initializes a new invoice line item event data object.
+     * Initializes a new Invoice Line Item Event Data object.
      */
     public function build(): InvoiceLineItemEventData
     {

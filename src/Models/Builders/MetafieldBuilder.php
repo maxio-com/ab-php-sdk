@@ -32,7 +32,7 @@ class MetafieldBuilder
     }
 
     /**
-     * Initializes a new metafield Builder object.
+     * Initializes a new Metafield Builder object.
      */
     public static function init(): self
     {
@@ -41,6 +41,8 @@ class MetafieldBuilder
 
     /**
      * Sets id field.
+     *
+     * @param int|null $value
      */
     public function id(?int $value): self
     {
@@ -50,6 +52,8 @@ class MetafieldBuilder
 
     /**
      * Sets name field.
+     *
+     * @param string|null $value
      */
     public function name(?string $value): self
     {
@@ -59,6 +63,8 @@ class MetafieldBuilder
 
     /**
      * Sets scope field.
+     *
+     * @param MetafieldScope|null $value
      */
     public function scope(?MetafieldScope $value): self
     {
@@ -68,6 +74,8 @@ class MetafieldBuilder
 
     /**
      * Sets data count field.
+     *
+     * @param int|null $value
      */
     public function dataCount(?int $value): self
     {
@@ -77,6 +85,8 @@ class MetafieldBuilder
 
     /**
      * Sets input type field.
+     *
+     * @param string|null $value
      */
     public function inputType(?string $value): self
     {
@@ -86,6 +96,8 @@ class MetafieldBuilder
 
     /**
      * Sets enum field.
+     *
+     * @param string|string[]|null $value
      */
     public function enum($value): self
     {
@@ -105,8 +117,8 @@ class MetafieldBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -115,7 +127,7 @@ class MetafieldBuilder
     }
 
     /**
-     * Initializes a new metafield object.
+     * Initializes a new Metafield object.
      */
     public function build(): Metafield
     {

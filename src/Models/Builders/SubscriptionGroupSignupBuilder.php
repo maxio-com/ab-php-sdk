@@ -14,6 +14,7 @@ use AdvancedBillingLib\Models\PayerAttributes;
 use AdvancedBillingLib\Models\SubscriptionGroupBankAccount;
 use AdvancedBillingLib\Models\SubscriptionGroupCreditCard;
 use AdvancedBillingLib\Models\SubscriptionGroupSignup;
+use AdvancedBillingLib\Models\SubscriptionGroupSignupItem;
 use Core\Utils\CoreHelper;
 
 /**
@@ -34,7 +35,9 @@ class SubscriptionGroupSignupBuilder
     }
 
     /**
-     * Initializes a new subscription group signup Builder object.
+     * Initializes a new Subscription Group Signup Builder object.
+     *
+     * @param SubscriptionGroupSignupItem[] $subscriptions
      */
     public static function init(array $subscriptions): self
     {
@@ -43,6 +46,8 @@ class SubscriptionGroupSignupBuilder
 
     /**
      * Sets payment profile id field.
+     *
+     * @param int|null $value
      */
     public function paymentProfileId(?int $value): self
     {
@@ -52,6 +57,8 @@ class SubscriptionGroupSignupBuilder
 
     /**
      * Sets payer id field.
+     *
+     * @param int|null $value
      */
     public function payerId(?int $value): self
     {
@@ -61,6 +68,8 @@ class SubscriptionGroupSignupBuilder
 
     /**
      * Sets payer reference field.
+     *
+     * @param string|null $value
      */
     public function payerReference(?string $value): self
     {
@@ -70,6 +79,8 @@ class SubscriptionGroupSignupBuilder
 
     /**
      * Sets payment collection method field.
+     *
+     * @param string|null $value
      */
     public function paymentCollectionMethod(?string $value): self
     {
@@ -79,6 +90,8 @@ class SubscriptionGroupSignupBuilder
 
     /**
      * Sets payer attributes field.
+     *
+     * @param PayerAttributes|null $value
      */
     public function payerAttributes(?PayerAttributes $value): self
     {
@@ -88,6 +101,8 @@ class SubscriptionGroupSignupBuilder
 
     /**
      * Sets credit card attributes field.
+     *
+     * @param SubscriptionGroupCreditCard|null $value
      */
     public function creditCardAttributes(?SubscriptionGroupCreditCard $value): self
     {
@@ -97,6 +112,8 @@ class SubscriptionGroupSignupBuilder
 
     /**
      * Sets bank account attributes field.
+     *
+     * @param SubscriptionGroupBankAccount|null $value
      */
     public function bankAccountAttributes(?SubscriptionGroupBankAccount $value): self
     {
@@ -107,8 +124,8 @@ class SubscriptionGroupSignupBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -117,7 +134,7 @@ class SubscriptionGroupSignupBuilder
     }
 
     /**
-     * Initializes a new subscription group signup object.
+     * Initializes a new Subscription Group Signup object.
      */
     public function build(): SubscriptionGroupSignup
     {

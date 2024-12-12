@@ -32,7 +32,9 @@ class CreateCustomerRequestBuilder
     }
 
     /**
-     * Initializes a new create customer request Builder object.
+     * Initializes a new Create Customer Request Builder object.
+     *
+     * @param CreateCustomer $customer
      */
     public static function init(CreateCustomer $customer): self
     {
@@ -42,8 +44,8 @@ class CreateCustomerRequestBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -52,7 +54,7 @@ class CreateCustomerRequestBuilder
     }
 
     /**
-     * Initializes a new create customer request object.
+     * Initializes a new Create Customer Request object.
      */
     public function build(): CreateCustomerRequest
     {

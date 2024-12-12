@@ -31,7 +31,7 @@ class BankAccountAttributesBuilder
     }
 
     /**
-     * Initializes a new bank account attributes Builder object.
+     * Initializes a new Bank Account Attributes Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class BankAccountAttributesBuilder
 
     /**
      * Sets chargify token field.
+     *
+     * @param string|null $value
      */
     public function chargifyToken(?string $value): self
     {
@@ -49,6 +51,8 @@ class BankAccountAttributesBuilder
 
     /**
      * Sets bank name field.
+     *
+     * @param string|null $value
      */
     public function bankName(?string $value): self
     {
@@ -58,6 +62,8 @@ class BankAccountAttributesBuilder
 
     /**
      * Sets bank routing number field.
+     *
+     * @param string|null $value
      */
     public function bankRoutingNumber(?string $value): self
     {
@@ -67,6 +73,8 @@ class BankAccountAttributesBuilder
 
     /**
      * Sets bank account number field.
+     *
+     * @param string|null $value
      */
     public function bankAccountNumber(?string $value): self
     {
@@ -76,6 +84,8 @@ class BankAccountAttributesBuilder
 
     /**
      * Sets bank account type field.
+     *
+     * @param string|null $value
      */
     public function bankAccountType(?string $value): self
     {
@@ -85,6 +95,8 @@ class BankAccountAttributesBuilder
 
     /**
      * Sets bank branch code field.
+     *
+     * @param string|null $value
      */
     public function bankBranchCode(?string $value): self
     {
@@ -94,6 +106,8 @@ class BankAccountAttributesBuilder
 
     /**
      * Sets bank iban field.
+     *
+     * @param string|null $value
      */
     public function bankIban(?string $value): self
     {
@@ -103,6 +117,8 @@ class BankAccountAttributesBuilder
 
     /**
      * Sets bank account holder type field.
+     *
+     * @param string|null $value
      */
     public function bankAccountHolderType(?string $value): self
     {
@@ -112,6 +128,8 @@ class BankAccountAttributesBuilder
 
     /**
      * Sets payment type field.
+     *
+     * @param string|null $value
      */
     public function paymentType(?string $value): self
     {
@@ -121,6 +139,8 @@ class BankAccountAttributesBuilder
 
     /**
      * Sets current vault field.
+     *
+     * @param string|null $value
      */
     public function currentVault(?string $value): self
     {
@@ -130,6 +150,8 @@ class BankAccountAttributesBuilder
 
     /**
      * Sets vault token field.
+     *
+     * @param string|null $value
      */
     public function vaultToken(?string $value): self
     {
@@ -139,6 +161,8 @@ class BankAccountAttributesBuilder
 
     /**
      * Sets customer vault token field.
+     *
+     * @param string|null $value
      */
     public function customerVaultToken(?string $value): self
     {
@@ -149,8 +173,8 @@ class BankAccountAttributesBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -159,7 +183,7 @@ class BankAccountAttributesBuilder
     }
 
     /**
-     * Initializes a new bank account attributes object.
+     * Initializes a new Bank Account Attributes object.
      */
     public function build(): BankAccountAttributes
     {

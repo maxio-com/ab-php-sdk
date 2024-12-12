@@ -32,7 +32,10 @@ class InvoiceStatus
 
     public const CANCELED = 'canceled';
 
-    private const _ALL_VALUES = [self::DRAFT, self::OPEN, self::PAID, self::PENDING, self::VOIDED, self::CANCELED];
+    public const PROCESSING = 'processing';
+
+    private const _ALL_VALUES =
+        [self::DRAFT, self::OPEN, self::PAID, self::PENDING, self::VOIDED, self::CANCELED, self::PROCESSING];
 
     /**
      * Ensures that all the given values are present in this Enum.

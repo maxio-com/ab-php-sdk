@@ -31,7 +31,7 @@ class InvoicePayerBuilder
     }
 
     /**
-     * Initializes a new invoice payer Builder object.
+     * Initializes a new Invoice Payer Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class InvoicePayerBuilder
 
     /**
      * Sets chargify id field.
+     *
+     * @param int|null $value
      */
     public function chargifyId(?int $value): self
     {
@@ -49,6 +51,8 @@ class InvoicePayerBuilder
 
     /**
      * Sets first name field.
+     *
+     * @param string|null $value
      */
     public function firstName(?string $value): self
     {
@@ -58,6 +62,8 @@ class InvoicePayerBuilder
 
     /**
      * Sets last name field.
+     *
+     * @param string|null $value
      */
     public function lastName(?string $value): self
     {
@@ -67,6 +73,8 @@ class InvoicePayerBuilder
 
     /**
      * Sets organization field.
+     *
+     * @param string|null $value
      */
     public function organization(?string $value): self
     {
@@ -85,6 +93,8 @@ class InvoicePayerBuilder
 
     /**
      * Sets email field.
+     *
+     * @param string|null $value
      */
     public function email(?string $value): self
     {
@@ -94,6 +104,8 @@ class InvoicePayerBuilder
 
     /**
      * Sets vat number field.
+     *
+     * @param string|null $value
      */
     public function vatNumber(?string $value): self
     {
@@ -113,8 +125,8 @@ class InvoicePayerBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -123,7 +135,7 @@ class InvoicePayerBuilder
     }
 
     /**
-     * Initializes a new invoice payer object.
+     * Initializes a new Invoice Payer object.
      */
     public function build(): InvoicePayer
     {

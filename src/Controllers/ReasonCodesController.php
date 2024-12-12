@@ -13,8 +13,8 @@ namespace AdvancedBillingLib\Controllers;
 use AdvancedBillingLib\Exceptions\ApiException;
 use AdvancedBillingLib\Exceptions\ErrorListResponseException;
 use AdvancedBillingLib\Models\CreateReasonCodeRequest;
+use AdvancedBillingLib\Models\OkResponse;
 use AdvancedBillingLib\Models\ReasonCodeResponse;
-use AdvancedBillingLib\Models\ReasonCodesJsonResponse;
 use AdvancedBillingLib\Models\UpdateReasonCodeRequest;
 use Core\Request\Parameters\BodyParam;
 use Core\Request\Parameters\HeaderParam;
@@ -89,7 +89,15 @@ class ReasonCodesController extends BaseController
                 QueryParam::init('per_page', $options)->commaSeparated()->extract('perPage', 20)
             );
 
-        $_resHandler = $this->responseHandler()->type(ReasonCodeResponse::class, 1);
+        $_resHandler = $this->responseHandler()
+            ->throwErrorOn(
+                '422',
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
+            )
+            ->type(ReasonCodeResponse::class, 1);
 
         return $this->execute($_reqBuilder, $_resHandler);
     }
@@ -139,6 +147,13 @@ class ReasonCodesController extends BaseController
 
         $_resHandler = $this->responseHandler()
             ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
+            ->throwErrorOn(
+                '422',
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
+            )
             ->type(ReasonCodeResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
@@ -150,11 +165,11 @@ class ReasonCodesController extends BaseController
      *
      * @param int $reasonCodeId The Advanced Billing id of the reason code
      *
-     * @return ReasonCodesJsonResponse Response from the API call
+     * @return OkResponse Response from the API call
      *
      * @throws ApiException Thrown if API call fails
      */
-    public function deleteReasonCode(int $reasonCodeId): ReasonCodesJsonResponse
+    public function deleteReasonCode(int $reasonCodeId): OkResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::DELETE, '/reason_codes/{reason_code_id}.json')
             ->auth('BasicAuth')
@@ -162,7 +177,7 @@ class ReasonCodesController extends BaseController
 
         $_resHandler = $this->responseHandler()
             ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
-            ->type(ReasonCodesJsonResponse::class);
+            ->type(OkResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
     }

@@ -31,7 +31,7 @@ class ItemPricePointDataBuilder
     }
 
     /**
-     * Initializes a new item price point data Builder object.
+     * Initializes a new Item Price Point Data Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class ItemPricePointDataBuilder
 
     /**
      * Sets id field.
+     *
+     * @param int|null $value
      */
     public function id(?int $value): self
     {
@@ -49,6 +51,8 @@ class ItemPricePointDataBuilder
 
     /**
      * Sets handle field.
+     *
+     * @param string|null $value
      */
     public function handle(?string $value): self
     {
@@ -58,6 +62,8 @@ class ItemPricePointDataBuilder
 
     /**
      * Sets name field.
+     *
+     * @param string|null $value
      */
     public function name(?string $value): self
     {
@@ -68,8 +74,8 @@ class ItemPricePointDataBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -78,7 +84,7 @@ class ItemPricePointDataBuilder
     }
 
     /**
-     * Initializes a new item price point data object.
+     * Initializes a new Item Price Point Data object.
      */
     public function build(): ItemPricePointData
     {

@@ -150,6 +150,12 @@ $result = $componentPricePointsController->createComponentPricePoint(
 );
 ```
 
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 422 | Unprocessable Entity (WebDAV) | [`ErrorArrayMapResponseException`](../../doc/models/error-array-map-response-exception.md) |
+
 
 # List Component Price Points
 
@@ -364,6 +370,12 @@ $result = $componentPricePointsController->bulkCreateComponentPricePoints(
 }
 ```
 
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
+
 
 # Update Component Price Point
 
@@ -454,7 +466,11 @@ $result = $componentPricePointsController->updateComponentPricePoint(
 Use this endpoint to retrieve details for a specific component price point. You can achieve this by using either the component price point ID or handle.
 
 ```php
-function readComponentPricePoint($componentId, $pricePointId): ComponentPricePointResponse
+function readComponentPricePoint(
+    $componentId,
+    $pricePointId,
+    ?bool $currencyPrices = null
+): ComponentPricePointResponse
 ```
 
 ## Parameters
@@ -463,6 +479,7 @@ function readComponentPricePoint($componentId, $pricePointId): ComponentPricePoi
 |  --- | --- | --- | --- |
 | `componentId` | int\|string | Template, Required | This is a container for one-of cases. |
 | `pricePointId` | int\|string | Template, Required | This is a container for one-of cases. |
+| `currencyPrices` | `?bool` | Query, Optional | Include an array of currency price data |
 
 ## Response Type
 

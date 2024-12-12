@@ -31,7 +31,7 @@ class CancellationOptionsBuilder
     }
 
     /**
-     * Initializes a new cancellation options Builder object.
+     * Initializes a new Cancellation Options Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class CancellationOptionsBuilder
 
     /**
      * Sets cancellation message field.
+     *
+     * @param string|null $value
      */
     public function cancellationMessage(?string $value): self
     {
@@ -49,6 +51,8 @@ class CancellationOptionsBuilder
 
     /**
      * Sets reason code field.
+     *
+     * @param string|null $value
      */
     public function reasonCode(?string $value): self
     {
@@ -59,8 +63,8 @@ class CancellationOptionsBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -69,7 +73,7 @@ class CancellationOptionsBuilder
     }
 
     /**
-     * Initializes a new cancellation options object.
+     * Initializes a new Cancellation Options object.
      */
     public function build(): CancellationOptions
     {

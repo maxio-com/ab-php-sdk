@@ -10,7 +10,9 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models\Builders;
 
+use AdvancedBillingLib\Models\CreateComponentPricePoint;
 use AdvancedBillingLib\Models\CreateComponentPricePointRequest;
+use AdvancedBillingLib\Models\CreatePrepaidUsageComponentPricePoint;
 use Core\Utils\CoreHelper;
 
 /**
@@ -31,7 +33,9 @@ class CreateComponentPricePointRequestBuilder
     }
 
     /**
-     * Initializes a new create component price point request Builder object.
+     * Initializes a new Create Component Price Point Request Builder object.
+     *
+     * @param CreateComponentPricePoint|CreatePrepaidUsageComponentPricePoint $pricePoint
      */
     public static function init($pricePoint): self
     {
@@ -41,8 +45,8 @@ class CreateComponentPricePointRequestBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -51,7 +55,7 @@ class CreateComponentPricePointRequestBuilder
     }
 
     /**
-     * Initializes a new create component price point request object.
+     * Initializes a new Create Component Price Point Request object.
      */
     public function build(): CreateComponentPricePointRequest
     {

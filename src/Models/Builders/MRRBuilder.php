@@ -32,7 +32,7 @@ class MRRBuilder
     }
 
     /**
-     * Initializes a new mrr Builder object.
+     * Initializes a new MRR Builder object.
      */
     public static function init(): self
     {
@@ -41,6 +41,8 @@ class MRRBuilder
 
     /**
      * Sets amount in cents field.
+     *
+     * @param int|null $value
      */
     public function amountInCents(?int $value): self
     {
@@ -50,6 +52,8 @@ class MRRBuilder
 
     /**
      * Sets amount formatted field.
+     *
+     * @param string|null $value
      */
     public function amountFormatted(?string $value): self
     {
@@ -59,6 +63,8 @@ class MRRBuilder
 
     /**
      * Sets currency field.
+     *
+     * @param string|null $value
      */
     public function currency(?string $value): self
     {
@@ -68,6 +74,8 @@ class MRRBuilder
 
     /**
      * Sets currency symbol field.
+     *
+     * @param string|null $value
      */
     public function currencySymbol(?string $value): self
     {
@@ -77,6 +85,8 @@ class MRRBuilder
 
     /**
      * Sets breakouts field.
+     *
+     * @param Breakouts|null $value
      */
     public function breakouts(?Breakouts $value): self
     {
@@ -86,6 +96,8 @@ class MRRBuilder
 
     /**
      * Sets at time field.
+     *
+     * @param \DateTime|null $value
      */
     public function atTime(?\DateTime $value): self
     {
@@ -96,8 +108,8 @@ class MRRBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -106,7 +118,7 @@ class MRRBuilder
     }
 
     /**
-     * Initializes a new mrr object.
+     * Initializes a new MRR object.
      */
     public function build(): MRR
     {

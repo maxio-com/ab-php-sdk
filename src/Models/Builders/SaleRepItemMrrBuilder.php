@@ -31,7 +31,7 @@ class SaleRepItemMrrBuilder
     }
 
     /**
-     * Initializes a new sale rep item mrr Builder object.
+     * Initializes a new Sale Rep Item Mrr Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class SaleRepItemMrrBuilder
 
     /**
      * Sets mrr field.
+     *
+     * @param string|null $value
      */
     public function mrr(?string $value): self
     {
@@ -49,6 +51,8 @@ class SaleRepItemMrrBuilder
 
     /**
      * Sets usage field.
+     *
+     * @param string|null $value
      */
     public function usage(?string $value): self
     {
@@ -58,6 +62,8 @@ class SaleRepItemMrrBuilder
 
     /**
      * Sets recurring field.
+     *
+     * @param string|null $value
      */
     public function recurring(?string $value): self
     {
@@ -68,8 +74,8 @@ class SaleRepItemMrrBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -78,7 +84,7 @@ class SaleRepItemMrrBuilder
     }
 
     /**
-     * Initializes a new sale rep item mrr object.
+     * Initializes a new Sale Rep Item Mrr object.
      */
     public function build(): SaleRepItemMrr
     {

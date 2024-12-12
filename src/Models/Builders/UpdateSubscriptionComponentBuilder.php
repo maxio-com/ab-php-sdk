@@ -32,7 +32,7 @@ class UpdateSubscriptionComponentBuilder
     }
 
     /**
-     * Initializes a new update subscription component Builder object.
+     * Initializes a new Update Subscription Component Builder object.
      */
     public static function init(): self
     {
@@ -41,6 +41,8 @@ class UpdateSubscriptionComponentBuilder
 
     /**
      * Sets component id field.
+     *
+     * @param int|null $value
      */
     public function componentId(?int $value): self
     {
@@ -50,6 +52,8 @@ class UpdateSubscriptionComponentBuilder
 
     /**
      * Sets custom price field.
+     *
+     * @param ComponentCustomPrice|null $value
      */
     public function customPrice(?ComponentCustomPrice $value): self
     {
@@ -60,8 +64,8 @@ class UpdateSubscriptionComponentBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -70,7 +74,7 @@ class UpdateSubscriptionComponentBuilder
     }
 
     /**
-     * Initializes a new update subscription component object.
+     * Initializes a new Update Subscription Component object.
      */
     public function build(): UpdateSubscriptionComponent
     {

@@ -31,7 +31,7 @@ class InvoicePaymentApplicationBuilder
     }
 
     /**
-     * Initializes a new invoice payment application Builder object.
+     * Initializes a new Invoice Payment Application Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class InvoicePaymentApplicationBuilder
 
     /**
      * Sets invoice uid field.
+     *
+     * @param string|null $value
      */
     public function invoiceUid(?string $value): self
     {
@@ -49,6 +51,8 @@ class InvoicePaymentApplicationBuilder
 
     /**
      * Sets application uid field.
+     *
+     * @param string|null $value
      */
     public function applicationUid(?string $value): self
     {
@@ -58,6 +62,8 @@ class InvoicePaymentApplicationBuilder
 
     /**
      * Sets applied amount field.
+     *
+     * @param string|null $value
      */
     public function appliedAmount(?string $value): self
     {
@@ -68,8 +74,8 @@ class InvoicePaymentApplicationBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -78,7 +84,7 @@ class InvoicePaymentApplicationBuilder
     }
 
     /**
-     * Initializes a new invoice payment application object.
+     * Initializes a new Invoice Payment Application object.
      */
     public function build(): InvoicePaymentApplication
     {

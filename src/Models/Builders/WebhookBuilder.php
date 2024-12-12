@@ -31,7 +31,7 @@ class WebhookBuilder
     }
 
     /**
-     * Initializes a new webhook Builder object.
+     * Initializes a new Webhook Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class WebhookBuilder
 
     /**
      * Sets event field.
+     *
+     * @param string|null $value
      */
     public function event(?string $value): self
     {
@@ -49,6 +51,8 @@ class WebhookBuilder
 
     /**
      * Sets id field.
+     *
+     * @param int|null $value
      */
     public function id(?int $value): self
     {
@@ -58,6 +62,8 @@ class WebhookBuilder
 
     /**
      * Sets created at field.
+     *
+     * @param \DateTime|null $value
      */
     public function createdAt(?\DateTime $value): self
     {
@@ -67,6 +73,8 @@ class WebhookBuilder
 
     /**
      * Sets last error field.
+     *
+     * @param string|null $value
      */
     public function lastError(?string $value): self
     {
@@ -76,6 +84,8 @@ class WebhookBuilder
 
     /**
      * Sets last error at field.
+     *
+     * @param \DateTime|null $value
      */
     public function lastErrorAt(?\DateTime $value): self
     {
@@ -85,6 +95,8 @@ class WebhookBuilder
 
     /**
      * Sets accepted at field.
+     *
+     * @param \DateTime|null $value
      */
     public function acceptedAt(?\DateTime $value): self
     {
@@ -103,6 +115,8 @@ class WebhookBuilder
 
     /**
      * Sets last sent at field.
+     *
+     * @param \DateTime|null $value
      */
     public function lastSentAt(?\DateTime $value): self
     {
@@ -112,6 +126,8 @@ class WebhookBuilder
 
     /**
      * Sets last sent url field.
+     *
+     * @param string|null $value
      */
     public function lastSentUrl(?string $value): self
     {
@@ -121,6 +137,8 @@ class WebhookBuilder
 
     /**
      * Sets successful field.
+     *
+     * @param bool|null $value
      */
     public function successful(?bool $value): self
     {
@@ -130,6 +148,8 @@ class WebhookBuilder
 
     /**
      * Sets body field.
+     *
+     * @param string|null $value
      */
     public function body(?string $value): self
     {
@@ -139,6 +159,8 @@ class WebhookBuilder
 
     /**
      * Sets signature field.
+     *
+     * @param string|null $value
      */
     public function signature(?string $value): self
     {
@@ -148,6 +170,8 @@ class WebhookBuilder
 
     /**
      * Sets signature hmac sha 256 field.
+     *
+     * @param string|null $value
      */
     public function signatureHmacSha256(?string $value): self
     {
@@ -158,8 +182,8 @@ class WebhookBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -168,7 +192,7 @@ class WebhookBuilder
     }
 
     /**
-     * Initializes a new webhook object.
+     * Initializes a new Webhook object.
      */
     public function build(): Webhook
     {

@@ -31,7 +31,7 @@ class InvoiceCustomFieldBuilder
     }
 
     /**
-     * Initializes a new invoice custom field Builder object.
+     * Initializes a new Invoice Custom Field Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class InvoiceCustomFieldBuilder
 
     /**
      * Sets owner id field.
+     *
+     * @param int|null $value
      */
     public function ownerId(?int $value): self
     {
@@ -49,6 +51,8 @@ class InvoiceCustomFieldBuilder
 
     /**
      * Sets owner type field.
+     *
+     * @param string|null $value
      */
     public function ownerType(?string $value): self
     {
@@ -58,6 +62,8 @@ class InvoiceCustomFieldBuilder
 
     /**
      * Sets name field.
+     *
+     * @param string|null $value
      */
     public function name(?string $value): self
     {
@@ -67,6 +73,8 @@ class InvoiceCustomFieldBuilder
 
     /**
      * Sets value field.
+     *
+     * @param string|null $value
      */
     public function value(?string $value): self
     {
@@ -76,6 +84,8 @@ class InvoiceCustomFieldBuilder
 
     /**
      * Sets metadatum id field.
+     *
+     * @param int|null $value
      */
     public function metadatumId(?int $value): self
     {
@@ -86,8 +96,8 @@ class InvoiceCustomFieldBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -96,7 +106,7 @@ class InvoiceCustomFieldBuilder
     }
 
     /**
-     * Initializes a new invoice custom field object.
+     * Initializes a new Invoice Custom Field object.
      */
     public function build(): InvoiceCustomField
     {

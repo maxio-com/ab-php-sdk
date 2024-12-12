@@ -31,7 +31,7 @@ class OrganizationAddressBuilder
     }
 
     /**
-     * Initializes a new organization address Builder object.
+     * Initializes a new Organization Address Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class OrganizationAddressBuilder
 
     /**
      * Sets street field.
+     *
+     * @param string|null $value
      */
     public function street(?string $value): self
     {
@@ -58,6 +60,8 @@ class OrganizationAddressBuilder
 
     /**
      * Sets line 2 field.
+     *
+     * @param string|null $value
      */
     public function line2(?string $value): self
     {
@@ -76,6 +80,8 @@ class OrganizationAddressBuilder
 
     /**
      * Sets city field.
+     *
+     * @param string|null $value
      */
     public function city(?string $value): self
     {
@@ -94,6 +100,8 @@ class OrganizationAddressBuilder
 
     /**
      * Sets state field.
+     *
+     * @param string|null $value
      */
     public function state(?string $value): self
     {
@@ -112,6 +120,8 @@ class OrganizationAddressBuilder
 
     /**
      * Sets zip field.
+     *
+     * @param string|null $value
      */
     public function zip(?string $value): self
     {
@@ -130,6 +140,8 @@ class OrganizationAddressBuilder
 
     /**
      * Sets country field.
+     *
+     * @param string|null $value
      */
     public function country(?string $value): self
     {
@@ -148,6 +160,8 @@ class OrganizationAddressBuilder
 
     /**
      * Sets name field.
+     *
+     * @param string|null $value
      */
     public function name(?string $value): self
     {
@@ -166,6 +180,8 @@ class OrganizationAddressBuilder
 
     /**
      * Sets phone field.
+     *
+     * @param string|null $value
      */
     public function phone(?string $value): self
     {
@@ -185,8 +201,8 @@ class OrganizationAddressBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -195,7 +211,7 @@ class OrganizationAddressBuilder
     }
 
     /**
-     * Initializes a new organization address object.
+     * Initializes a new Organization Address object.
      */
     public function build(): OrganizationAddress
     {

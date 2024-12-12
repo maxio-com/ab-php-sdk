@@ -10,6 +10,8 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models\Builders;
 
+use AdvancedBillingLib\Models\ComponentCustomPrice;
+use AdvancedBillingLib\Models\Price;
 use AdvancedBillingLib\Models\SubscriptionGroupComponentCustomPrice;
 use Core\Utils\CoreHelper;
 
@@ -31,7 +33,7 @@ class SubscriptionGroupComponentCustomPriceBuilder
     }
 
     /**
-     * Initializes a new subscription group component custom price Builder object.
+     * Initializes a new Subscription Group Component Custom Price Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +42,8 @@ class SubscriptionGroupComponentCustomPriceBuilder
 
     /**
      * Sets pricing scheme field.
+     *
+     * @param string|null $value
      */
     public function pricingScheme(?string $value): self
     {
@@ -49,6 +53,8 @@ class SubscriptionGroupComponentCustomPriceBuilder
 
     /**
      * Sets prices field.
+     *
+     * @param Price[]|null $value
      */
     public function prices(?array $value): self
     {
@@ -58,6 +64,8 @@ class SubscriptionGroupComponentCustomPriceBuilder
 
     /**
      * Sets overage pricing field.
+     *
+     * @param ComponentCustomPrice[]|null $value
      */
     public function overagePricing(?array $value): self
     {
@@ -68,8 +76,8 @@ class SubscriptionGroupComponentCustomPriceBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -78,7 +86,7 @@ class SubscriptionGroupComponentCustomPriceBuilder
     }
 
     /**
-     * Initializes a new subscription group component custom price object.
+     * Initializes a new Subscription Group Component Custom Price object.
      */
     public function build(): SubscriptionGroupComponentCustomPrice
     {

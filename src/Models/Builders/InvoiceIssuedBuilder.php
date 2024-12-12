@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace AdvancedBillingLib\Models\Builders;
 
 use AdvancedBillingLib\Models\InvoiceIssued;
+use AdvancedBillingLib\Models\InvoiceLineItemEventData;
 use Core\Utils\CoreHelper;
 
 /**
@@ -31,7 +32,22 @@ class InvoiceIssuedBuilder
     }
 
     /**
-     * Initializes a new invoice issued Builder object.
+     * Initializes a new Invoice Issued Builder object.
+     *
+     * @param string $uid
+     * @param string $number
+     * @param string $role
+     * @param string $issueDate
+     * @param string $paidDate
+     * @param string $dueAmount
+     * @param string $paidAmount
+     * @param string $taxAmount
+     * @param string $refundAmount
+     * @param string $totalAmount
+     * @param string $statusAmount
+     * @param string $productName
+     * @param string $consolidationLevel
+     * @param InvoiceLineItemEventData[] $lineItems
      */
     public static function init(
         string $uid,
@@ -69,6 +85,8 @@ class InvoiceIssuedBuilder
 
     /**
      * Sets due date field.
+     *
+     * @param \DateTime|null $value
      */
     public function dueDate(?\DateTime $value): self
     {
@@ -79,8 +97,8 @@ class InvoiceIssuedBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -89,7 +107,7 @@ class InvoiceIssuedBuilder
     }
 
     /**
-     * Initializes a new invoice issued object.
+     * Initializes a new Invoice Issued object.
      */
     public function build(): InvoiceIssued
     {

@@ -32,7 +32,7 @@ class ProformaErrorBuilder
     }
 
     /**
-     * Initializes a new proforma error Builder object.
+     * Initializes a new Proforma Error Builder object.
      */
     public static function init(): self
     {
@@ -41,6 +41,8 @@ class ProformaErrorBuilder
 
     /**
      * Sets subscription field.
+     *
+     * @param BaseStringError|null $value
      */
     public function subscription(?BaseStringError $value): self
     {
@@ -51,8 +53,8 @@ class ProformaErrorBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -61,7 +63,7 @@ class ProformaErrorBuilder
     }
 
     /**
-     * Initializes a new proforma error object.
+     * Initializes a new Proforma Error object.
      */
     public function build(): ProformaError
     {

@@ -31,7 +31,14 @@ class ComponentAllocationChangeBuilder
     }
 
     /**
-     * Initializes a new component allocation change Builder object.
+     * Initializes a new Component Allocation Change Builder object.
+     *
+     * @param int $previousAllocation
+     * @param int $newAllocation
+     * @param int $componentId
+     * @param string $componentHandle
+     * @param string $memo
+     * @param int $allocationId
      */
     public static function init(
         int $previousAllocation,
@@ -53,6 +60,8 @@ class ComponentAllocationChangeBuilder
 
     /**
      * Sets allocated quantity field.
+     *
+     * @param int|string|null $value
      */
     public function allocatedQuantity($value): self
     {
@@ -63,8 +72,8 @@ class ComponentAllocationChangeBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -73,7 +82,7 @@ class ComponentAllocationChangeBuilder
     }
 
     /**
-     * Initializes a new component allocation change object.
+     * Initializes a new Component Allocation Change object.
      */
     public function build(): ComponentAllocationChange
     {

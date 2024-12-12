@@ -12,6 +12,7 @@ namespace AdvancedBillingLib\Models\Builders;
 
 use AdvancedBillingLib\Models\Breakouts;
 use AdvancedBillingLib\Models\Movement;
+use AdvancedBillingLib\Models\MovementLineItem;
 use Core\Utils\CoreHelper;
 
 /**
@@ -32,7 +33,7 @@ class MovementBuilder
     }
 
     /**
-     * Initializes a new movement Builder object.
+     * Initializes a new Movement Builder object.
      */
     public static function init(): self
     {
@@ -41,6 +42,8 @@ class MovementBuilder
 
     /**
      * Sets timestamp field.
+     *
+     * @param \DateTime|null $value
      */
     public function timestamp(?\DateTime $value): self
     {
@@ -50,6 +53,8 @@ class MovementBuilder
 
     /**
      * Sets amount in cents field.
+     *
+     * @param int|null $value
      */
     public function amountInCents(?int $value): self
     {
@@ -59,6 +64,8 @@ class MovementBuilder
 
     /**
      * Sets amount formatted field.
+     *
+     * @param string|null $value
      */
     public function amountFormatted(?string $value): self
     {
@@ -68,6 +75,8 @@ class MovementBuilder
 
     /**
      * Sets description field.
+     *
+     * @param string|null $value
      */
     public function description(?string $value): self
     {
@@ -77,6 +86,8 @@ class MovementBuilder
 
     /**
      * Sets category field.
+     *
+     * @param string|null $value
      */
     public function category(?string $value): self
     {
@@ -86,6 +97,8 @@ class MovementBuilder
 
     /**
      * Sets breakouts field.
+     *
+     * @param Breakouts|null $value
      */
     public function breakouts(?Breakouts $value): self
     {
@@ -95,6 +108,8 @@ class MovementBuilder
 
     /**
      * Sets line items field.
+     *
+     * @param MovementLineItem[]|null $value
      */
     public function lineItems(?array $value): self
     {
@@ -104,6 +119,8 @@ class MovementBuilder
 
     /**
      * Sets subscription id field.
+     *
+     * @param int|null $value
      */
     public function subscriptionId(?int $value): self
     {
@@ -113,6 +130,8 @@ class MovementBuilder
 
     /**
      * Sets subscriber name field.
+     *
+     * @param string|null $value
      */
     public function subscriberName(?string $value): self
     {
@@ -123,8 +142,8 @@ class MovementBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -133,7 +152,7 @@ class MovementBuilder
     }
 
     /**
-     * Initializes a new movement object.
+     * Initializes a new Movement object.
      */
     public function build(): Movement
     {

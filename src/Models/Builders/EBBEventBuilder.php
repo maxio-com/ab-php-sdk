@@ -32,7 +32,7 @@ class EBBEventBuilder
     }
 
     /**
-     * Initializes a new ebbevent Builder object.
+     * Initializes a new EBB Event Builder object.
      */
     public static function init(): self
     {
@@ -41,6 +41,8 @@ class EBBEventBuilder
 
     /**
      * Sets chargify field.
+     *
+     * @param ChargifyEBB|null $value
      */
     public function chargify(?ChargifyEBB $value): self
     {
@@ -51,8 +53,8 @@ class EBBEventBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -61,7 +63,7 @@ class EBBEventBuilder
     }
 
     /**
-     * Initializes a new ebbevent object.
+     * Initializes a new EBB Event object.
      */
     public function build(): EBBEvent
     {

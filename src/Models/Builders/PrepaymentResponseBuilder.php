@@ -32,7 +32,9 @@ class PrepaymentResponseBuilder
     }
 
     /**
-     * Initializes a new prepayment response Builder object.
+     * Initializes a new Prepayment Response Builder object.
+     *
+     * @param Prepayment $prepayment
      */
     public static function init(Prepayment $prepayment): self
     {
@@ -42,8 +44,8 @@ class PrepaymentResponseBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -52,7 +54,7 @@ class PrepaymentResponseBuilder
     }
 
     /**
-     * Initializes a new prepayment response object.
+     * Initializes a new Prepayment Response object.
      */
     public function build(): PrepaymentResponse
     {

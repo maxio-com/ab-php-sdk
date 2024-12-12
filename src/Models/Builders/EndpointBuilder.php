@@ -31,7 +31,7 @@ class EndpointBuilder
     }
 
     /**
-     * Initializes a new endpoint Builder object.
+     * Initializes a new Endpoint Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class EndpointBuilder
 
     /**
      * Sets id field.
+     *
+     * @param int|null $value
      */
     public function id(?int $value): self
     {
@@ -49,6 +51,8 @@ class EndpointBuilder
 
     /**
      * Sets url field.
+     *
+     * @param string|null $value
      */
     public function url(?string $value): self
     {
@@ -58,6 +62,8 @@ class EndpointBuilder
 
     /**
      * Sets site id field.
+     *
+     * @param int|null $value
      */
     public function siteId(?int $value): self
     {
@@ -67,6 +73,8 @@ class EndpointBuilder
 
     /**
      * Sets status field.
+     *
+     * @param string|null $value
      */
     public function status(?string $value): self
     {
@@ -76,6 +84,8 @@ class EndpointBuilder
 
     /**
      * Sets webhook subscriptions field.
+     *
+     * @param string[]|null $value
      */
     public function webhookSubscriptions(?array $value): self
     {
@@ -86,8 +96,8 @@ class EndpointBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -96,7 +106,7 @@ class EndpointBuilder
     }
 
     /**
-     * Initializes a new endpoint object.
+     * Initializes a new Endpoint object.
      */
     public function build(): Endpoint
     {

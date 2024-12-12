@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace AdvancedBillingLib\Models\Builders;
 
 use AdvancedBillingLib\Models\CreateComponentPricePoint;
+use AdvancedBillingLib\Models\Price;
 use Core\Utils\CoreHelper;
 
 /**
@@ -31,7 +32,11 @@ class CreateComponentPricePointBuilder
     }
 
     /**
-     * Initializes a new create component price point Builder object.
+     * Initializes a new Create Component Price Point Builder object.
+     *
+     * @param string $name
+     * @param string $pricingScheme
+     * @param Price[] $prices
      */
     public static function init(string $name, string $pricingScheme, array $prices): self
     {
@@ -40,6 +45,8 @@ class CreateComponentPricePointBuilder
 
     /**
      * Sets handle field.
+     *
+     * @param string|null $value
      */
     public function handle(?string $value): self
     {
@@ -49,6 +56,8 @@ class CreateComponentPricePointBuilder
 
     /**
      * Sets use site exchange rate field.
+     *
+     * @param bool|null $value
      */
     public function useSiteExchangeRate(?bool $value): self
     {
@@ -58,6 +67,8 @@ class CreateComponentPricePointBuilder
 
     /**
      * Sets tax included field.
+     *
+     * @param bool|null $value
      */
     public function taxIncluded(?bool $value): self
     {
@@ -67,6 +78,8 @@ class CreateComponentPricePointBuilder
 
     /**
      * Sets interval field.
+     *
+     * @param int|null $value
      */
     public function interval(?int $value): self
     {
@@ -76,6 +89,8 @@ class CreateComponentPricePointBuilder
 
     /**
      * Sets interval unit field.
+     *
+     * @param string|null $value
      */
     public function intervalUnit(?string $value): self
     {
@@ -95,8 +110,8 @@ class CreateComponentPricePointBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -105,7 +120,7 @@ class CreateComponentPricePointBuilder
     }
 
     /**
-     * Initializes a new create component price point object.
+     * Initializes a new Create Component Price Point object.
      */
     public function build(): CreateComponentPricePoint
     {

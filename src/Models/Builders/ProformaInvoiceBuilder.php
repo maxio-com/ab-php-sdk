@@ -12,8 +12,14 @@ namespace AdvancedBillingLib\Models\Builders;
 
 use AdvancedBillingLib\Models\InvoiceAddress;
 use AdvancedBillingLib\Models\InvoiceCustomer;
+use AdvancedBillingLib\Models\InvoiceCustomField;
+use AdvancedBillingLib\Models\InvoiceLineItem;
 use AdvancedBillingLib\Models\InvoiceSeller;
 use AdvancedBillingLib\Models\ProformaInvoice;
+use AdvancedBillingLib\Models\ProformaInvoiceCredit;
+use AdvancedBillingLib\Models\ProformaInvoiceDiscount;
+use AdvancedBillingLib\Models\ProformaInvoicePayment;
+use AdvancedBillingLib\Models\ProformaInvoiceTax;
 use Core\Utils\CoreHelper;
 
 /**
@@ -34,7 +40,7 @@ class ProformaInvoiceBuilder
     }
 
     /**
-     * Initializes a new proforma invoice Builder object.
+     * Initializes a new Proforma Invoice Builder object.
      */
     public static function init(): self
     {
@@ -43,6 +49,8 @@ class ProformaInvoiceBuilder
 
     /**
      * Sets uid field.
+     *
+     * @param string|null $value
      */
     public function uid(?string $value): self
     {
@@ -52,6 +60,8 @@ class ProformaInvoiceBuilder
 
     /**
      * Sets site id field.
+     *
+     * @param int|null $value
      */
     public function siteId(?int $value): self
     {
@@ -61,6 +71,8 @@ class ProformaInvoiceBuilder
 
     /**
      * Sets customer id field.
+     *
+     * @param int|null $value
      */
     public function customerId(?int $value): self
     {
@@ -79,6 +91,8 @@ class ProformaInvoiceBuilder
 
     /**
      * Sets subscription id field.
+     *
+     * @param int|null $value
      */
     public function subscriptionId(?int $value): self
     {
@@ -97,6 +111,8 @@ class ProformaInvoiceBuilder
 
     /**
      * Sets number field.
+     *
+     * @param int|null $value
      */
     public function number(?int $value): self
     {
@@ -115,6 +131,8 @@ class ProformaInvoiceBuilder
 
     /**
      * Sets sequence number field.
+     *
+     * @param int|null $value
      */
     public function sequenceNumber(?int $value): self
     {
@@ -133,6 +151,8 @@ class ProformaInvoiceBuilder
 
     /**
      * Sets created at field.
+     *
+     * @param \DateTime|null $value
      */
     public function createdAt(?\DateTime $value): self
     {
@@ -142,6 +162,8 @@ class ProformaInvoiceBuilder
 
     /**
      * Sets delivery date field.
+     *
+     * @param \DateTime|null $value
      */
     public function deliveryDate(?\DateTime $value): self
     {
@@ -151,6 +173,8 @@ class ProformaInvoiceBuilder
 
     /**
      * Sets status field.
+     *
+     * @param string|null $value
      */
     public function status(?string $value): self
     {
@@ -160,6 +184,8 @@ class ProformaInvoiceBuilder
 
     /**
      * Sets collection method field.
+     *
+     * @param string|null $value
      */
     public function collectionMethod(?string $value): self
     {
@@ -169,6 +195,8 @@ class ProformaInvoiceBuilder
 
     /**
      * Sets payment instructions field.
+     *
+     * @param string|null $value
      */
     public function paymentInstructions(?string $value): self
     {
@@ -178,6 +206,8 @@ class ProformaInvoiceBuilder
 
     /**
      * Sets currency field.
+     *
+     * @param string|null $value
      */
     public function currency(?string $value): self
     {
@@ -187,6 +217,8 @@ class ProformaInvoiceBuilder
 
     /**
      * Sets consolidation level field.
+     *
+     * @param string|null $value
      */
     public function consolidationLevel(?string $value): self
     {
@@ -196,6 +228,8 @@ class ProformaInvoiceBuilder
 
     /**
      * Sets product name field.
+     *
+     * @param string|null $value
      */
     public function productName(?string $value): self
     {
@@ -205,6 +239,8 @@ class ProformaInvoiceBuilder
 
     /**
      * Sets product family name field.
+     *
+     * @param string|null $value
      */
     public function productFamilyName(?string $value): self
     {
@@ -214,6 +250,8 @@ class ProformaInvoiceBuilder
 
     /**
      * Sets role field.
+     *
+     * @param string|null $value
      */
     public function role(?string $value): self
     {
@@ -223,6 +261,8 @@ class ProformaInvoiceBuilder
 
     /**
      * Sets seller field.
+     *
+     * @param InvoiceSeller|null $value
      */
     public function seller(?InvoiceSeller $value): self
     {
@@ -232,6 +272,8 @@ class ProformaInvoiceBuilder
 
     /**
      * Sets customer field.
+     *
+     * @param InvoiceCustomer|null $value
      */
     public function customer(?InvoiceCustomer $value): self
     {
@@ -241,6 +283,8 @@ class ProformaInvoiceBuilder
 
     /**
      * Sets memo field.
+     *
+     * @param string|null $value
      */
     public function memo(?string $value): self
     {
@@ -250,6 +294,8 @@ class ProformaInvoiceBuilder
 
     /**
      * Sets billing address field.
+     *
+     * @param InvoiceAddress|null $value
      */
     public function billingAddress(?InvoiceAddress $value): self
     {
@@ -259,6 +305,8 @@ class ProformaInvoiceBuilder
 
     /**
      * Sets shipping address field.
+     *
+     * @param InvoiceAddress|null $value
      */
     public function shippingAddress(?InvoiceAddress $value): self
     {
@@ -268,6 +316,8 @@ class ProformaInvoiceBuilder
 
     /**
      * Sets subtotal amount field.
+     *
+     * @param string|null $value
      */
     public function subtotalAmount(?string $value): self
     {
@@ -277,6 +327,8 @@ class ProformaInvoiceBuilder
 
     /**
      * Sets discount amount field.
+     *
+     * @param string|null $value
      */
     public function discountAmount(?string $value): self
     {
@@ -286,6 +338,8 @@ class ProformaInvoiceBuilder
 
     /**
      * Sets tax amount field.
+     *
+     * @param string|null $value
      */
     public function taxAmount(?string $value): self
     {
@@ -295,6 +349,8 @@ class ProformaInvoiceBuilder
 
     /**
      * Sets total amount field.
+     *
+     * @param string|null $value
      */
     public function totalAmount(?string $value): self
     {
@@ -304,6 +360,8 @@ class ProformaInvoiceBuilder
 
     /**
      * Sets credit amount field.
+     *
+     * @param string|null $value
      */
     public function creditAmount(?string $value): self
     {
@@ -313,6 +371,8 @@ class ProformaInvoiceBuilder
 
     /**
      * Sets paid amount field.
+     *
+     * @param string|null $value
      */
     public function paidAmount(?string $value): self
     {
@@ -322,6 +382,8 @@ class ProformaInvoiceBuilder
 
     /**
      * Sets refund amount field.
+     *
+     * @param string|null $value
      */
     public function refundAmount(?string $value): self
     {
@@ -331,6 +393,8 @@ class ProformaInvoiceBuilder
 
     /**
      * Sets due amount field.
+     *
+     * @param string|null $value
      */
     public function dueAmount(?string $value): self
     {
@@ -340,6 +404,8 @@ class ProformaInvoiceBuilder
 
     /**
      * Sets line items field.
+     *
+     * @param InvoiceLineItem[]|null $value
      */
     public function lineItems(?array $value): self
     {
@@ -349,6 +415,8 @@ class ProformaInvoiceBuilder
 
     /**
      * Sets discounts field.
+     *
+     * @param ProformaInvoiceDiscount[]|null $value
      */
     public function discounts(?array $value): self
     {
@@ -358,6 +426,8 @@ class ProformaInvoiceBuilder
 
     /**
      * Sets taxes field.
+     *
+     * @param ProformaInvoiceTax[]|null $value
      */
     public function taxes(?array $value): self
     {
@@ -367,6 +437,8 @@ class ProformaInvoiceBuilder
 
     /**
      * Sets credits field.
+     *
+     * @param ProformaInvoiceCredit[]|null $value
      */
     public function credits(?array $value): self
     {
@@ -376,6 +448,8 @@ class ProformaInvoiceBuilder
 
     /**
      * Sets payments field.
+     *
+     * @param ProformaInvoicePayment[]|null $value
      */
     public function payments(?array $value): self
     {
@@ -385,6 +459,8 @@ class ProformaInvoiceBuilder
 
     /**
      * Sets custom fields field.
+     *
+     * @param InvoiceCustomField[]|null $value
      */
     public function customFields(?array $value): self
     {
@@ -394,6 +470,8 @@ class ProformaInvoiceBuilder
 
     /**
      * Sets public url field.
+     *
+     * @param string|null $value
      */
     public function publicUrl(?string $value): self
     {
@@ -413,8 +491,8 @@ class ProformaInvoiceBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -423,7 +501,7 @@ class ProformaInvoiceBuilder
     }
 
     /**
-     * Initializes a new proforma invoice object.
+     * Initializes a new Proforma Invoice object.
      */
     public function build(): ProformaInvoice
     {

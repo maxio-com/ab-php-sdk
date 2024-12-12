@@ -26,12 +26,7 @@ interface ConfigurationInterface extends HttpConfigurations
     /**
      * Get the subdomain for your Advanced Billing site.
      */
-    public function getSubdomain(): string;
-
-    /**
-     * Get the Advanced Billing server domain.
-     */
-    public function getDomain(): string;
+    public function getSite(): string;
 
     /**
      * Get the credentials to use with BasicAuth
@@ -50,5 +45,5 @@ interface ConfigurationInterface extends HttpConfigurations
      *
      * @return string Base URI
      */
-    public function getBaseUri(string $server = Server::DEFAULT_): string;
+    public function getBaseUri(string $server = Server::PRODUCTION): string;
 }

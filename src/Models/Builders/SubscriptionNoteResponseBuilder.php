@@ -32,7 +32,9 @@ class SubscriptionNoteResponseBuilder
     }
 
     /**
-     * Initializes a new subscription note response Builder object.
+     * Initializes a new Subscription Note Response Builder object.
+     *
+     * @param SubscriptionNote $note
      */
     public static function init(SubscriptionNote $note): self
     {
@@ -42,8 +44,8 @@ class SubscriptionNoteResponseBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -52,7 +54,7 @@ class SubscriptionNoteResponseBuilder
     }
 
     /**
-     * Initializes a new subscription note response object.
+     * Initializes a new Subscription Note Response object.
      */
     public function build(): SubscriptionNoteResponse
     {

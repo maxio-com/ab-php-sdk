@@ -31,7 +31,7 @@ class ProformaInvoicePaymentBuilder
     }
 
     /**
-     * Initializes a new proforma invoice payment Builder object.
+     * Initializes a new Proforma Invoice Payment Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class ProformaInvoicePaymentBuilder
 
     /**
      * Sets memo field.
+     *
+     * @param string|null $value
      */
     public function memo(?string $value): self
     {
@@ -49,6 +51,8 @@ class ProformaInvoicePaymentBuilder
 
     /**
      * Sets original amount field.
+     *
+     * @param string|null $value
      */
     public function originalAmount(?string $value): self
     {
@@ -58,6 +62,8 @@ class ProformaInvoicePaymentBuilder
 
     /**
      * Sets applied amount field.
+     *
+     * @param string|null $value
      */
     public function appliedAmount(?string $value): self
     {
@@ -67,6 +73,8 @@ class ProformaInvoicePaymentBuilder
 
     /**
      * Sets prepayment field.
+     *
+     * @param bool|null $value
      */
     public function prepayment(?bool $value): self
     {
@@ -77,8 +85,8 @@ class ProformaInvoicePaymentBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -87,7 +95,7 @@ class ProformaInvoicePaymentBuilder
     }
 
     /**
-     * Initializes a new proforma invoice payment object.
+     * Initializes a new Proforma Invoice Payment object.
      */
     public function build(): ProformaInvoicePayment
     {

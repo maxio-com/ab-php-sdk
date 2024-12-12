@@ -44,6 +44,14 @@ Credit card details may be required, depending on the options for the product be
 
 If you are creating a subscription with a payment profile, the attribute to send will be `credit_card_attributes` or `bank_account_attributes` for ACH and Direct Debit. That said, when you read the subscription after creation, we return the profile details under `credit_card` or `bank_account`.
 
+## Bulk creation of subscriptions
+
+Bulk creation of subscriptions is currently not supported. For scenarios where multiple subscriptions must be added, particularly when assigning to the same subscription group, it is essential to switch to a single-threaded approach.
+
+To avoid data conflicts or inaccuracies, incorporate a sleep interval between requests.
+
+While this single-threaded approach may impact performance, it ensures data consistency and accuracy in cases where concurrent creation attempts could otherwise lead to issues with subscription alignment and integrity.
+
 ## Taxable Subscriptions
 
 If your intent is to charge your subscribers tax via [Avalara Taxes](https://maxio.zendesk.com/hc/en-us/articles/24287043035661-Avalara-VAT-Tax) or [Custom Taxes](https://maxio.zendesk.com/hc/en-us/articles/24287044212749-Custom-Taxes), there are a few considerations to be made regarding collecting subscription data.
@@ -364,7 +372,7 @@ For more information on Stripe Direct Debit, please view the following two resou
 
 For more information on Stripe Direct Debit, please view the following two resources:
 
-+ [Payment Profiles via API for Stripe BECS Direct Debit]($e/Payment%20Profiles/createPaymentProfile)
++ [Payment Profiles via API for Stripe BECS Direct Debit](../../doc/controllers/payment-profiles.md#create-payment-profile)
 
 + [Full documentation on Stripe Direct Debit](https://maxio.zendesk.com/hc/en-us/articles/24176170430093-Stripe-SEPA-and-BECS-Direct-Debit)
 
@@ -395,7 +403,7 @@ For more information on Stripe Direct Debit, please view the following two resou
 
 For more information on Stripe Direct Debit, please view the following two resources:
 
-+ [Payment Profiles via API for Stripe BACS Direct Debit]($e/Payment%20Profiles/createPaymentProfile)
++ [Payment Profiles via API for Stripe BACS Direct Debit](../../doc/controllers/payment-profiles.md#create-payment-profile)
 
 + [Full documentation on Stripe Direct Debit](https://maxio.zendesk.com/hc/en-us/articles/24176170430093-Stripe-SEPA-and-BECS-Direct-Debit)
 
@@ -693,6 +701,7 @@ function createSubscription(?CreateSubscriptionRequest $body = null): Subscripti
 $body = CreateSubscriptionRequestBuilder::init(
     CreateSubscriptionBuilder::init()
         ->productHandle('basic')
+        ->paymentCollectionMethod(CollectionMethod::REMITTANCE)
         ->customerAttributes(
             CustomerAttributesBuilder::init()
                 ->firstName('Joe')
@@ -707,26 +716,6 @@ $body = CreateSubscriptionRequestBuilder::init(
                 ->zip('02120')
                 ->country('US')
                 ->phone('(617) 111 - 0000')
-                ->build()
-        )
-        ->creditCardAttributes(
-            PaymentProfileAttributesBuilder::init()
-                ->firstName('Joe')
-                ->lastName('Smith')
-                ->fullNumber('4111111111111111')
-                ->cardType(CardType::VISA)
-                ->expirationMonth(
-                    '1'
-                )
-                ->expirationYear(
-                    '2021'
-                )
-                ->billingAddress('123 Mass Ave.')
-                ->billingAddress2('billing_address_22')
-                ->billingCity('Boston')
-                ->billingState('MA')
-                ->billingCountry('US')
-                ->billingZip('02120')
                 ->build()
         )
         ->build()
@@ -1408,6 +1397,12 @@ function findSubscription(?string $reference = null): SubscriptionResponse
 $result = $subscriptionsController->findSubscription();
 ```
 
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 404 | Not Found | `ApiException` |
+
 
 # Purge Subscription
 
@@ -1422,7 +1417,7 @@ If you need to remove subscriptions from a live site, please contact support to 
 The query params will be: `?ack={customer_id}&cascade[]=customer&cascade[]=payment_profile`
 
 ```php
-function purgeSubscription(int $subscriptionId, int $ack, ?array $cascade = null): void
+function purgeSubscription(int $subscriptionId, int $ack, ?array $cascade = null): SubscriptionResponse
 ```
 
 ## Parameters
@@ -1435,7 +1430,7 @@ function purgeSubscription(int $subscriptionId, int $ack, ?array $cascade = null
 
 ## Response Type
 
-`void`
+[`SubscriptionResponse`](../../doc/models/subscription-response.md)
 
 ## Example Usage
 
@@ -1449,12 +1444,18 @@ $cascade = [
     SubscriptionPurgeType::PAYMENT_PROFILE
 ];
 
-$subscriptionsController->purgeSubscription(
+$result = $subscriptionsController->purgeSubscription(
     $subscriptionId,
     $ack,
     $cascade
 );
 ```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 400 | Bad Request | [`SubscriptionResponseErrorException`](../../doc/models/subscription-response-error-exception.md) |
 
 
 # Update Prepaid Subscription Configuration
@@ -1512,6 +1513,12 @@ $result = $subscriptionsController->updatePrepaidSubscriptionConfiguration(
   }
 }
 ```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 422 | Unprocessable Entity (WebDAV) | `ApiException` |
 
 
 # Preview Subscription

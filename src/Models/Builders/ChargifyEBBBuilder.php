@@ -31,7 +31,7 @@ class ChargifyEBBBuilder
     }
 
     /**
-     * Initializes a new chargify ebb Builder object.
+     * Initializes a new Chargify EBB Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class ChargifyEBBBuilder
 
     /**
      * Sets timestamp field.
+     *
+     * @param \DateTime|null $value
      */
     public function timestamp(?\DateTime $value): self
     {
@@ -49,6 +51,8 @@ class ChargifyEBBBuilder
 
     /**
      * Sets id field.
+     *
+     * @param string|null $value
      */
     public function id(?string $value): self
     {
@@ -58,6 +62,8 @@ class ChargifyEBBBuilder
 
     /**
      * Sets created at field.
+     *
+     * @param \DateTime|null $value
      */
     public function createdAt(?\DateTime $value): self
     {
@@ -67,6 +73,8 @@ class ChargifyEBBBuilder
 
     /**
      * Sets uniqueness token field.
+     *
+     * @param string|null $value
      */
     public function uniquenessToken(?string $value): self
     {
@@ -76,6 +84,8 @@ class ChargifyEBBBuilder
 
     /**
      * Sets subscription id field.
+     *
+     * @param int|null $value
      */
     public function subscriptionId(?int $value): self
     {
@@ -85,6 +95,8 @@ class ChargifyEBBBuilder
 
     /**
      * Sets subscription reference field.
+     *
+     * @param string|null $value
      */
     public function subscriptionReference(?string $value): self
     {
@@ -95,8 +107,8 @@ class ChargifyEBBBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -105,7 +117,7 @@ class ChargifyEBBBuilder
     }
 
     /**
-     * Initializes a new chargify ebb object.
+     * Initializes a new Chargify EBB object.
      */
     public function build(): ChargifyEBB
     {

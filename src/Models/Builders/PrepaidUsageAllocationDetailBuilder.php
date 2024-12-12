@@ -31,7 +31,7 @@ class PrepaidUsageAllocationDetailBuilder
     }
 
     /**
-     * Initializes a new prepaid usage allocation detail Builder object.
+     * Initializes a new Prepaid Usage Allocation Detail Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class PrepaidUsageAllocationDetailBuilder
 
     /**
      * Sets allocation id field.
+     *
+     * @param int|null $value
      */
     public function allocationId(?int $value): self
     {
@@ -49,6 +51,8 @@ class PrepaidUsageAllocationDetailBuilder
 
     /**
      * Sets charge id field.
+     *
+     * @param int|null $value
      */
     public function chargeId(?int $value): self
     {
@@ -58,6 +62,8 @@ class PrepaidUsageAllocationDetailBuilder
 
     /**
      * Sets usage quantity field.
+     *
+     * @param int|null $value
      */
     public function usageQuantity(?int $value): self
     {
@@ -68,8 +74,8 @@ class PrepaidUsageAllocationDetailBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -78,7 +84,7 @@ class PrepaidUsageAllocationDetailBuilder
     }
 
     /**
-     * Initializes a new prepaid usage allocation detail object.
+     * Initializes a new Prepaid Usage Allocation Detail object.
      */
     public function build(): PrepaidUsageAllocationDetail
     {

@@ -32,7 +32,9 @@ class SubscriptionMigrationPreviewRequestBuilder
     }
 
     /**
-     * Initializes a new subscription migration preview request Builder object.
+     * Initializes a new Subscription Migration Preview Request Builder object.
+     *
+     * @param SubscriptionMigrationPreviewOptions $migration
      */
     public static function init(SubscriptionMigrationPreviewOptions $migration): self
     {
@@ -42,8 +44,8 @@ class SubscriptionMigrationPreviewRequestBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -52,7 +54,7 @@ class SubscriptionMigrationPreviewRequestBuilder
     }
 
     /**
-     * Initializes a new subscription migration preview request object.
+     * Initializes a new Subscription Migration Preview Request object.
      */
     public function build(): SubscriptionMigrationPreviewRequest
     {

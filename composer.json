@@ -25,16 +25,17 @@
         "forum": "https://maxio-saasoptics.zendesk.com/",
         "docs": "https://developers.chargify.com/docs/api-docs/7b6ea12f39549-chargify-api"
     },
+    "prefer-stable": false,
     "require": {
         "php": "^7.2 || ^8.0",
         "ext-json": "*",
         "apimatic/unirest-php": "^4.0.0",
         "apimatic/core-interfaces": "~0.1.5",
-        "apimatic/core": "~0.3.11"
+        "apimatic/core": "~0.3.12"
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "^3.5",
-        "phan/phan": "5.4.2"
+        "phan/phan": "5.4.5"
     },
     "autoload": {
         "psr-4": {

@@ -31,7 +31,7 @@ class ProrationBuilder
     }
 
     /**
-     * Initializes a new proration Builder object.
+     * Initializes a new Proration Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class ProrationBuilder
 
     /**
      * Sets preserve period field.
+     *
+     * @param bool|null $value
      */
     public function preservePeriod(?bool $value): self
     {
@@ -50,8 +52,8 @@ class ProrationBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -60,7 +62,7 @@ class ProrationBuilder
     }
 
     /**
-     * Initializes a new proration object.
+     * Initializes a new Proration object.
      */
     public function build(): Proration
     {

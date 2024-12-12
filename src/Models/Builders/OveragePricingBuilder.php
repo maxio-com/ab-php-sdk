@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace AdvancedBillingLib\Models\Builders;
 
 use AdvancedBillingLib\Models\OveragePricing;
+use AdvancedBillingLib\Models\Price;
 use Core\Utils\CoreHelper;
 
 /**
@@ -31,7 +32,9 @@ class OveragePricingBuilder
     }
 
     /**
-     * Initializes a new overage pricing Builder object.
+     * Initializes a new Overage Pricing Builder object.
+     *
+     * @param string $pricingScheme
      */
     public static function init(string $pricingScheme): self
     {
@@ -40,6 +43,8 @@ class OveragePricingBuilder
 
     /**
      * Sets prices field.
+     *
+     * @param Price[]|null $value
      */
     public function prices(?array $value): self
     {
@@ -50,8 +55,8 @@ class OveragePricingBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -60,7 +65,7 @@ class OveragePricingBuilder
     }
 
     /**
-     * Initializes a new overage pricing object.
+     * Initializes a new Overage Pricing object.
      */
     public function build(): OveragePricing
     {

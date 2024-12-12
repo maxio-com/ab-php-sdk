@@ -31,7 +31,7 @@ class UsageBuilder
     }
 
     /**
-     * Initializes a new usage Builder object.
+     * Initializes a new Usage Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class UsageBuilder
 
     /**
      * Sets id field.
+     *
+     * @param int|null $value
      */
     public function id(?int $value): self
     {
@@ -49,6 +51,8 @@ class UsageBuilder
 
     /**
      * Sets memo field.
+     *
+     * @param string|null $value
      */
     public function memo(?string $value): self
     {
@@ -67,6 +71,8 @@ class UsageBuilder
 
     /**
      * Sets created at field.
+     *
+     * @param \DateTime|null $value
      */
     public function createdAt(?\DateTime $value): self
     {
@@ -76,6 +82,8 @@ class UsageBuilder
 
     /**
      * Sets price point id field.
+     *
+     * @param int|null $value
      */
     public function pricePointId(?int $value): self
     {
@@ -85,6 +93,8 @@ class UsageBuilder
 
     /**
      * Sets quantity field.
+     *
+     * @param int|string|null $value
      */
     public function quantity($value): self
     {
@@ -94,6 +104,8 @@ class UsageBuilder
 
     /**
      * Sets overage quantity field.
+     *
+     * @param int|null $value
      */
     public function overageQuantity(?int $value): self
     {
@@ -103,6 +115,8 @@ class UsageBuilder
 
     /**
      * Sets component id field.
+     *
+     * @param int|null $value
      */
     public function componentId(?int $value): self
     {
@@ -112,6 +126,8 @@ class UsageBuilder
 
     /**
      * Sets component handle field.
+     *
+     * @param string|null $value
      */
     public function componentHandle(?string $value): self
     {
@@ -121,6 +137,8 @@ class UsageBuilder
 
     /**
      * Sets subscription id field.
+     *
+     * @param int|null $value
      */
     public function subscriptionId(?int $value): self
     {
@@ -131,8 +149,8 @@ class UsageBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -141,7 +159,7 @@ class UsageBuilder
     }
 
     /**
-     * Initializes a new usage object.
+     * Initializes a new Usage object.
      */
     public function build(): Usage
     {

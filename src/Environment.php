@@ -16,12 +16,13 @@ namespace AdvancedBillingLib;
 class Environment
 {
     /**
-     * Production server
+     * Default Advanced Billing environment hosted in US. Valid for the majority of our customers.
      */
-    public const PRODUCTION = 'production';
+    public const US = 'US';
 
     /**
-     * Production server
+     * Advanced Billing environment hosted in EU. Use only when you requested EU hosting for your AB
+     * account.
      */
-    public const ENVIRONMENT2 = 'environment2';
+    public const EU = 'EU';
 }

@@ -31,7 +31,10 @@ class PaymentCollectionMethodChangedBuilder
     }
 
     /**
-     * Initializes a new payment collection method changed Builder object.
+     * Initializes a new Payment Collection Method Changed Builder object.
+     *
+     * @param string $previousValue
+     * @param string $currentValue
      */
     public static function init(string $previousValue, string $currentValue): self
     {
@@ -41,8 +44,8 @@ class PaymentCollectionMethodChangedBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -51,7 +54,7 @@ class PaymentCollectionMethodChangedBuilder
     }
 
     /**
-     * Initializes a new payment collection method changed object.
+     * Initializes a new Payment Collection Method Changed object.
      */
     public function build(): PaymentCollectionMethodChanged
     {

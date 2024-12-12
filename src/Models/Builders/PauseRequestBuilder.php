@@ -32,7 +32,7 @@ class PauseRequestBuilder
     }
 
     /**
-     * Initializes a new pause request Builder object.
+     * Initializes a new Pause Request Builder object.
      */
     public static function init(): self
     {
@@ -41,6 +41,8 @@ class PauseRequestBuilder
 
     /**
      * Sets hold field.
+     *
+     * @param AutoResume|null $value
      */
     public function hold(?AutoResume $value): self
     {
@@ -51,8 +53,8 @@ class PauseRequestBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -61,7 +63,7 @@ class PauseRequestBuilder
     }
 
     /**
-     * Initializes a new pause request object.
+     * Initializes a new Pause Request object.
      */
     public function build(): PauseRequest
     {

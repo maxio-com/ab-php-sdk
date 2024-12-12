@@ -26,6 +26,7 @@
 | `productVersion` | `?int` | Optional | The version of the product subscribed when the charge was made. | getProductVersion(): ?int | setProductVersion(?int productVersion): void |
 | `componentId` | `?int` | Optional | The ID of the component being billed. Will be `nil` for non-component charges. | getComponentId(): ?int | setComponentId(?int componentId): void |
 | `pricePointId` | `?int` | Optional | The price point ID of the component being billed. Will be `nil` for non-component charges. | getPricePointId(): ?int | setPricePointId(?int pricePointId): void |
+| `billingScheduleItemId` | `?int` | Optional | - | getBillingScheduleItemId(): ?int | setBillingScheduleItemId(?int billingScheduleItemId): void |
 | `hide` | `?bool` | Optional | - | getHide(): ?bool | setHide(?bool hide): void |
 | `componentCostData` | [`?InvoiceLineItemComponentCostData`](../../doc/models/invoice-line-item-component-cost-data.md) | Optional | - | getComponentCostData(): ?InvoiceLineItemComponentCostData | setComponentCostData(?InvoiceLineItemComponentCostData componentCostData): void |
 | `productPricePointId` | `?int` | Optional | The price point ID of the line item's product | getProductPricePointId(): ?int | setProductPricePointId(?int productPricePointId): void |

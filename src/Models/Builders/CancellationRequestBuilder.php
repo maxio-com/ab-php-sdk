@@ -32,7 +32,9 @@ class CancellationRequestBuilder
     }
 
     /**
-     * Initializes a new cancellation request Builder object.
+     * Initializes a new Cancellation Request Builder object.
+     *
+     * @param CancellationOptions $subscription
      */
     public static function init(CancellationOptions $subscription): self
     {
@@ -42,8 +44,8 @@ class CancellationRequestBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -52,7 +54,7 @@ class CancellationRequestBuilder
     }
 
     /**
-     * Initializes a new cancellation request object.
+     * Initializes a new Cancellation Request object.
      */
     public function build(): CancellationRequest
     {

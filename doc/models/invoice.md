@@ -48,6 +48,7 @@
 | `taxAmount` | `?string` | Optional | Total tax on the invoice. | getTaxAmount(): ?string | setTaxAmount(?string taxAmount): void |
 | `totalAmount` | `?string` | Optional | The invoice total, which is `subtotal_amount - discount_amount + tax_amount`.' | getTotalAmount(): ?string | setTotalAmount(?string totalAmount): void |
 | `creditAmount` | `?string` | Optional | The amount of credit (from credit notes) applied to this invoice.<br><br>Credits offset the amount due from the customer. | getCreditAmount(): ?string | setCreditAmount(?string creditAmount): void |
+| `debitAmount` | `?string` | Optional | - | getDebitAmount(): ?string | setDebitAmount(?string debitAmount): void |
 | `refundAmount` | `?string` | Optional | - | getRefundAmount(): ?string | setRefundAmount(?string refundAmount): void |
 | `paidAmount` | `?string` | Optional | The amount paid on the invoice by the customer. | getPaidAmount(): ?string | setPaidAmount(?string paidAmount): void |
 | `dueAmount` | `?string` | Optional | Amount due on the invoice, which is `total_amount - credit_amount - paid_amount`. | getDueAmount(): ?string | setDueAmount(?string dueAmount): void |
@@ -55,10 +56,12 @@
 | `discounts` | [`?(InvoiceDiscount[])`](../../doc/models/invoice-discount.md) | Optional | - | getDiscounts(): ?array | setDiscounts(?array discounts): void |
 | `taxes` | [`?(InvoiceTax[])`](../../doc/models/invoice-tax.md) | Optional | - | getTaxes(): ?array | setTaxes(?array taxes): void |
 | `credits` | [`?(InvoiceCredit[])`](../../doc/models/invoice-credit.md) | Optional | - | getCredits(): ?array | setCredits(?array credits): void |
+| `debits` | [`?(InvoiceDebit[])`](../../doc/models/invoice-debit.md) | Optional | - | getDebits(): ?array | setDebits(?array debits): void |
 | `refunds` | [`?(InvoiceRefund[])`](../../doc/models/invoice-refund.md) | Optional | - | getRefunds(): ?array | setRefunds(?array refunds): void |
 | `payments` | [`?(InvoicePayment[])`](../../doc/models/invoice-payment.md) | Optional | - | getPayments(): ?array | setPayments(?array payments): void |
 | `customFields` | [`?(InvoiceCustomField[])`](../../doc/models/invoice-custom-field.md) | Optional | - | getCustomFields(): ?array | setCustomFields(?array customFields): void |
 | `displaySettings` | [`?InvoiceDisplaySettings`](../../doc/models/invoice-display-settings.md) | Optional | - | getDisplaySettings(): ?InvoiceDisplaySettings | setDisplaySettings(?InvoiceDisplaySettings displaySettings): void |
+| `avataxDetails` | [`?InvoiceAvataxDetails`](../../doc/models/invoice-avatax-details.md) | Optional | - | getAvataxDetails(): ?InvoiceAvataxDetails | setAvataxDetails(?InvoiceAvataxDetails avataxDetails): void |
 | `publicUrl` | `?string` | Optional | The public URL of the invoice | getPublicUrl(): ?string | setPublicUrl(?string publicUrl): void |
 | `previousBalanceData` | [`?InvoicePreviousBalance`](../../doc/models/invoice-previous-balance.md) | Optional | - | getPreviousBalanceData(): ?InvoicePreviousBalance | setPreviousBalanceData(?InvoicePreviousBalance previousBalanceData): void |
 | `publicUrlExpiresOn` | `?DateTime` | Optional | The format is `"YYYY-MM-DD"`. | getPublicUrlExpiresOn(): ?\DateTime | setPublicUrlExpiresOn(?\DateTime publicUrlExpiresOn): void |

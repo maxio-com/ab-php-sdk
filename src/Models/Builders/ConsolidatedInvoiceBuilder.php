@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace AdvancedBillingLib\Models\Builders;
 
 use AdvancedBillingLib\Models\ConsolidatedInvoice;
+use AdvancedBillingLib\Models\Invoice;
 use Core\Utils\CoreHelper;
 
 /**
@@ -31,7 +32,7 @@ class ConsolidatedInvoiceBuilder
     }
 
     /**
-     * Initializes a new consolidated invoice Builder object.
+     * Initializes a new Consolidated Invoice Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +41,8 @@ class ConsolidatedInvoiceBuilder
 
     /**
      * Sets invoices field.
+     *
+     * @param Invoice[]|null $value
      */
     public function invoices(?array $value): self
     {
@@ -50,8 +53,8 @@ class ConsolidatedInvoiceBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -60,7 +63,7 @@ class ConsolidatedInvoiceBuilder
     }
 
     /**
-     * Initializes a new consolidated invoice object.
+     * Initializes a new Consolidated Invoice object.
      */
     public function build(): ConsolidatedInvoice
     {

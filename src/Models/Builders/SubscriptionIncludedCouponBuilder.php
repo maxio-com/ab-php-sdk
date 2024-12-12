@@ -31,7 +31,7 @@ class SubscriptionIncludedCouponBuilder
     }
 
     /**
-     * Initializes a new subscription included coupon Builder object.
+     * Initializes a new Subscription Included Coupon Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class SubscriptionIncludedCouponBuilder
 
     /**
      * Sets code field.
+     *
+     * @param string|null $value
      */
     public function code(?string $value): self
     {
@@ -49,6 +51,8 @@ class SubscriptionIncludedCouponBuilder
 
     /**
      * Sets use count field.
+     *
+     * @param int|null $value
      */
     public function useCount(?int $value): self
     {
@@ -58,6 +62,8 @@ class SubscriptionIncludedCouponBuilder
 
     /**
      * Sets uses allowed field.
+     *
+     * @param int|null $value
      */
     public function usesAllowed(?int $value): self
     {
@@ -67,6 +73,8 @@ class SubscriptionIncludedCouponBuilder
 
     /**
      * Sets expires at field.
+     *
+     * @param string|null $value
      */
     public function expiresAt(?string $value): self
     {
@@ -85,6 +93,8 @@ class SubscriptionIncludedCouponBuilder
 
     /**
      * Sets recurring field.
+     *
+     * @param bool|null $value
      */
     public function recurring(?bool $value): self
     {
@@ -94,6 +104,8 @@ class SubscriptionIncludedCouponBuilder
 
     /**
      * Sets amount in cents field.
+     *
+     * @param int|null $value
      */
     public function amountInCents(?int $value): self
     {
@@ -112,6 +124,8 @@ class SubscriptionIncludedCouponBuilder
 
     /**
      * Sets percentage field.
+     *
+     * @param string|null $value
      */
     public function percentage(?string $value): self
     {
@@ -131,8 +145,8 @@ class SubscriptionIncludedCouponBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -141,7 +155,7 @@ class SubscriptionIncludedCouponBuilder
     }
 
     /**
-     * Initializes a new subscription included coupon object.
+     * Initializes a new Subscription Included Coupon object.
      */
     public function build(): SubscriptionIncludedCoupon
     {

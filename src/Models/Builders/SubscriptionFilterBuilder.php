@@ -31,7 +31,7 @@ class SubscriptionFilterBuilder
     }
 
     /**
-     * Initializes a new subscription filter Builder object.
+     * Initializes a new Subscription Filter Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class SubscriptionFilterBuilder
 
     /**
      * Sets states field.
+     *
+     * @param string[]|null $value
      */
     public function states(?array $value): self
     {
@@ -49,6 +51,8 @@ class SubscriptionFilterBuilder
 
     /**
      * Sets date field field.
+     *
+     * @param string|null $value
      */
     public function dateField(?string $value): self
     {
@@ -58,6 +62,8 @@ class SubscriptionFilterBuilder
 
     /**
      * Sets start date field.
+     *
+     * @param \DateTime|null $value
      */
     public function startDate(?\DateTime $value): self
     {
@@ -67,6 +73,8 @@ class SubscriptionFilterBuilder
 
     /**
      * Sets end date field.
+     *
+     * @param \DateTime|null $value
      */
     public function endDate(?\DateTime $value): self
     {
@@ -76,6 +84,8 @@ class SubscriptionFilterBuilder
 
     /**
      * Sets start datetime field.
+     *
+     * @param \DateTime|null $value
      */
     public function startDatetime(?\DateTime $value): self
     {
@@ -85,6 +95,8 @@ class SubscriptionFilterBuilder
 
     /**
      * Sets end datetime field.
+     *
+     * @param \DateTime|null $value
      */
     public function endDatetime(?\DateTime $value): self
     {
@@ -95,8 +107,8 @@ class SubscriptionFilterBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -105,7 +117,7 @@ class SubscriptionFilterBuilder
     }
 
     /**
-     * Initializes a new subscription filter object.
+     * Initializes a new Subscription Filter object.
      */
     public function build(): SubscriptionFilter
     {

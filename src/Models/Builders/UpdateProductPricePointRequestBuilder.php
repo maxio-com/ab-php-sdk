@@ -32,7 +32,9 @@ class UpdateProductPricePointRequestBuilder
     }
 
     /**
-     * Initializes a new update product price point request Builder object.
+     * Initializes a new Update Product Price Point Request Builder object.
+     *
+     * @param UpdateProductPricePoint $pricePoint
      */
     public static function init(UpdateProductPricePoint $pricePoint): self
     {
@@ -42,8 +44,8 @@ class UpdateProductPricePointRequestBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -52,7 +54,7 @@ class UpdateProductPricePointRequestBuilder
     }
 
     /**
-     * Initializes a new update product price point request object.
+     * Initializes a new Update Product Price Point Request object.
      */
     public function build(): UpdateProductPricePointRequest
     {

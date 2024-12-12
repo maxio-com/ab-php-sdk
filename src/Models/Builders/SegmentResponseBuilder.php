@@ -32,7 +32,7 @@ class SegmentResponseBuilder
     }
 
     /**
-     * Initializes a new segment response Builder object.
+     * Initializes a new Segment Response Builder object.
      */
     public static function init(): self
     {
@@ -41,6 +41,8 @@ class SegmentResponseBuilder
 
     /**
      * Sets segment field.
+     *
+     * @param Segment|null $value
      */
     public function segment(?Segment $value): self
     {
@@ -51,8 +53,8 @@ class SegmentResponseBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -61,7 +63,7 @@ class SegmentResponseBuilder
     }
 
     /**
-     * Initializes a new segment response object.
+     * Initializes a new Segment Response object.
      */
     public function build(): SegmentResponse
     {

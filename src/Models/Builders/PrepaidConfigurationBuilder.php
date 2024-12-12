@@ -31,7 +31,7 @@ class PrepaidConfigurationBuilder
     }
 
     /**
-     * Initializes a new prepaid configuration Builder object.
+     * Initializes a new Prepaid Configuration Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class PrepaidConfigurationBuilder
 
     /**
      * Sets id field.
+     *
+     * @param int|null $value
      */
     public function id(?int $value): self
     {
@@ -49,6 +51,8 @@ class PrepaidConfigurationBuilder
 
     /**
      * Sets initial funding amount in cents field.
+     *
+     * @param int|null $value
      */
     public function initialFundingAmountInCents(?int $value): self
     {
@@ -58,6 +62,8 @@ class PrepaidConfigurationBuilder
 
     /**
      * Sets replenish to amount in cents field.
+     *
+     * @param int|null $value
      */
     public function replenishToAmountInCents(?int $value): self
     {
@@ -67,6 +73,8 @@ class PrepaidConfigurationBuilder
 
     /**
      * Sets auto replenish field.
+     *
+     * @param bool|null $value
      */
     public function autoReplenish(?bool $value): self
     {
@@ -76,6 +84,8 @@ class PrepaidConfigurationBuilder
 
     /**
      * Sets replenish threshold amount in cents field.
+     *
+     * @param int|null $value
      */
     public function replenishThresholdAmountInCents(?int $value): self
     {
@@ -86,8 +96,8 @@ class PrepaidConfigurationBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -96,7 +106,7 @@ class PrepaidConfigurationBuilder
     }
 
     /**
-     * Initializes a new prepaid configuration object.
+     * Initializes a new Prepaid Configuration object.
      */
     public function build(): PrepaidConfiguration
     {

@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace AdvancedBillingLib\Models\Builders;
 
 use AdvancedBillingLib\Models\RenewalPreview;
+use AdvancedBillingLib\Models\RenewalPreviewLineItem;
 use Core\Utils\CoreHelper;
 
 /**
@@ -31,7 +32,7 @@ class RenewalPreviewBuilder
     }
 
     /**
-     * Initializes a new renewal preview Builder object.
+     * Initializes a new Renewal Preview Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +41,8 @@ class RenewalPreviewBuilder
 
     /**
      * Sets next assessment at field.
+     *
+     * @param \DateTime|null $value
      */
     public function nextAssessmentAt(?\DateTime $value): self
     {
@@ -49,6 +52,8 @@ class RenewalPreviewBuilder
 
     /**
      * Sets subtotal in cents field.
+     *
+     * @param int|null $value
      */
     public function subtotalInCents(?int $value): self
     {
@@ -58,6 +63,8 @@ class RenewalPreviewBuilder
 
     /**
      * Sets total tax in cents field.
+     *
+     * @param int|null $value
      */
     public function totalTaxInCents(?int $value): self
     {
@@ -67,6 +74,8 @@ class RenewalPreviewBuilder
 
     /**
      * Sets total discount in cents field.
+     *
+     * @param int|null $value
      */
     public function totalDiscountInCents(?int $value): self
     {
@@ -76,6 +85,8 @@ class RenewalPreviewBuilder
 
     /**
      * Sets total in cents field.
+     *
+     * @param int|null $value
      */
     public function totalInCents(?int $value): self
     {
@@ -85,6 +96,8 @@ class RenewalPreviewBuilder
 
     /**
      * Sets existing balance in cents field.
+     *
+     * @param int|null $value
      */
     public function existingBalanceInCents(?int $value): self
     {
@@ -94,6 +107,8 @@ class RenewalPreviewBuilder
 
     /**
      * Sets total amount due in cents field.
+     *
+     * @param int|null $value
      */
     public function totalAmountDueInCents(?int $value): self
     {
@@ -103,6 +118,8 @@ class RenewalPreviewBuilder
 
     /**
      * Sets uncalculated taxes field.
+     *
+     * @param bool|null $value
      */
     public function uncalculatedTaxes(?bool $value): self
     {
@@ -112,6 +129,8 @@ class RenewalPreviewBuilder
 
     /**
      * Sets line items field.
+     *
+     * @param RenewalPreviewLineItem[]|null $value
      */
     public function lineItems(?array $value): self
     {
@@ -122,8 +141,8 @@ class RenewalPreviewBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -132,7 +151,7 @@ class RenewalPreviewBuilder
     }
 
     /**
-     * Initializes a new renewal preview object.
+     * Initializes a new Renewal Preview object.
      */
     public function build(): RenewalPreview
     {

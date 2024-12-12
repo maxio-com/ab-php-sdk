@@ -32,7 +32,9 @@ class ComponentPricePointResponseBuilder
     }
 
     /**
-     * Initializes a new component price point response Builder object.
+     * Initializes a new Component Price Point Response Builder object.
+     *
+     * @param ComponentPricePoint $pricePoint
      */
     public static function init(ComponentPricePoint $pricePoint): self
     {
@@ -42,8 +44,8 @@ class ComponentPricePointResponseBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -52,7 +54,7 @@ class ComponentPricePointResponseBuilder
     }
 
     /**
-     * Initializes a new component price point response object.
+     * Initializes a new Component Price Point Response object.
      */
     public function build(): ComponentPricePointResponse
     {

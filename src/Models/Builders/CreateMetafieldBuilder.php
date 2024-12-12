@@ -32,7 +32,7 @@ class CreateMetafieldBuilder
     }
 
     /**
-     * Initializes a new create metafield Builder object.
+     * Initializes a new Create Metafield Builder object.
      */
     public static function init(): self
     {
@@ -41,6 +41,8 @@ class CreateMetafieldBuilder
 
     /**
      * Sets name field.
+     *
+     * @param string|null $value
      */
     public function name(?string $value): self
     {
@@ -50,6 +52,8 @@ class CreateMetafieldBuilder
 
     /**
      * Sets scope field.
+     *
+     * @param MetafieldScope|null $value
      */
     public function scope(?MetafieldScope $value): self
     {
@@ -59,6 +63,8 @@ class CreateMetafieldBuilder
 
     /**
      * Sets input type field.
+     *
+     * @param string|null $value
      */
     public function inputType(?string $value): self
     {
@@ -68,6 +74,8 @@ class CreateMetafieldBuilder
 
     /**
      * Sets enum field.
+     *
+     * @param string[]|null $value
      */
     public function enum(?array $value): self
     {
@@ -78,8 +86,8 @@ class CreateMetafieldBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -88,7 +96,7 @@ class CreateMetafieldBuilder
     }
 
     /**
-     * Initializes a new create metafield object.
+     * Initializes a new Create Metafield object.
      */
     public function build(): CreateMetafield
     {

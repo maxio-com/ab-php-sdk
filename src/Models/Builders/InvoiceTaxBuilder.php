@@ -11,6 +11,8 @@ declare(strict_types=1);
 namespace AdvancedBillingLib\Models\Builders;
 
 use AdvancedBillingLib\Models\InvoiceTax;
+use AdvancedBillingLib\Models\InvoiceTaxBreakout;
+use AdvancedBillingLib\Models\InvoiceTaxComponentBreakout;
 use Core\Utils\CoreHelper;
 
 /**
@@ -31,7 +33,7 @@ class InvoiceTaxBuilder
     }
 
     /**
-     * Initializes a new invoice tax Builder object.
+     * Initializes a new Invoice Tax Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +42,8 @@ class InvoiceTaxBuilder
 
     /**
      * Sets uid field.
+     *
+     * @param string|null $value
      */
     public function uid(?string $value): self
     {
@@ -49,6 +53,8 @@ class InvoiceTaxBuilder
 
     /**
      * Sets title field.
+     *
+     * @param string|null $value
      */
     public function title(?string $value): self
     {
@@ -58,6 +64,8 @@ class InvoiceTaxBuilder
 
     /**
      * Sets description field.
+     *
+     * @param string|null $value
      */
     public function description(?string $value): self
     {
@@ -76,6 +84,8 @@ class InvoiceTaxBuilder
 
     /**
      * Sets source type field.
+     *
+     * @param string|null $value
      */
     public function sourceType(?string $value): self
     {
@@ -85,6 +95,8 @@ class InvoiceTaxBuilder
 
     /**
      * Sets source id field.
+     *
+     * @param int|null $value
      */
     public function sourceId(?int $value): self
     {
@@ -94,6 +106,8 @@ class InvoiceTaxBuilder
 
     /**
      * Sets percentage field.
+     *
+     * @param string|null $value
      */
     public function percentage(?string $value): self
     {
@@ -103,6 +117,8 @@ class InvoiceTaxBuilder
 
     /**
      * Sets taxable amount field.
+     *
+     * @param string|null $value
      */
     public function taxableAmount(?string $value): self
     {
@@ -112,6 +128,8 @@ class InvoiceTaxBuilder
 
     /**
      * Sets tax amount field.
+     *
+     * @param string|null $value
      */
     public function taxAmount(?string $value): self
     {
@@ -121,6 +139,8 @@ class InvoiceTaxBuilder
 
     /**
      * Sets transaction id field.
+     *
+     * @param int|null $value
      */
     public function transactionId(?int $value): self
     {
@@ -130,6 +150,8 @@ class InvoiceTaxBuilder
 
     /**
      * Sets line item breakouts field.
+     *
+     * @param InvoiceTaxBreakout[]|null $value
      */
     public function lineItemBreakouts(?array $value): self
     {
@@ -139,6 +161,8 @@ class InvoiceTaxBuilder
 
     /**
      * Sets tax component breakouts field.
+     *
+     * @param InvoiceTaxComponentBreakout[]|null $value
      */
     public function taxComponentBreakouts(?array $value): self
     {
@@ -148,6 +172,8 @@ class InvoiceTaxBuilder
 
     /**
      * Sets eu vat field.
+     *
+     * @param bool|null $value
      */
     public function euVat(?bool $value): self
     {
@@ -157,6 +183,8 @@ class InvoiceTaxBuilder
 
     /**
      * Sets type field.
+     *
+     * @param string|null $value
      */
     public function type(?string $value): self
     {
@@ -166,6 +194,8 @@ class InvoiceTaxBuilder
 
     /**
      * Sets tax exempt amount field.
+     *
+     * @param string|null $value
      */
     public function taxExemptAmount(?string $value): self
     {
@@ -176,8 +206,8 @@ class InvoiceTaxBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -186,7 +216,7 @@ class InvoiceTaxBuilder
     }
 
     /**
-     * Initializes a new invoice tax object.
+     * Initializes a new Invoice Tax object.
      */
     public function build(): InvoiceTax
     {

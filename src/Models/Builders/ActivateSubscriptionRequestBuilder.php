@@ -31,7 +31,7 @@ class ActivateSubscriptionRequestBuilder
     }
 
     /**
-     * Initializes a new activate subscription request Builder object.
+     * Initializes a new Activate Subscription Request Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class ActivateSubscriptionRequestBuilder
 
     /**
      * Sets revert on failure field.
+     *
+     * @param bool|null $value
      */
     public function revertOnFailure(?bool $value): self
     {
@@ -59,8 +61,8 @@ class ActivateSubscriptionRequestBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -69,7 +71,7 @@ class ActivateSubscriptionRequestBuilder
     }
 
     /**
-     * Initializes a new activate subscription request object.
+     * Initializes a new Activate Subscription Request object.
      */
     public function build(): ActivateSubscriptionRequest
     {

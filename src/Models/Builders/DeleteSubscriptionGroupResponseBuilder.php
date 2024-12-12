@@ -31,7 +31,7 @@ class DeleteSubscriptionGroupResponseBuilder
     }
 
     /**
-     * Initializes a new delete subscription group response Builder object.
+     * Initializes a new Delete Subscription Group Response Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class DeleteSubscriptionGroupResponseBuilder
 
     /**
      * Sets uid field.
+     *
+     * @param string|null $value
      */
     public function uid(?string $value): self
     {
@@ -49,6 +51,8 @@ class DeleteSubscriptionGroupResponseBuilder
 
     /**
      * Sets deleted field.
+     *
+     * @param bool|null $value
      */
     public function deleted(?bool $value): self
     {
@@ -59,8 +63,8 @@ class DeleteSubscriptionGroupResponseBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -69,7 +73,7 @@ class DeleteSubscriptionGroupResponseBuilder
     }
 
     /**
-     * Initializes a new delete subscription group response object.
+     * Initializes a new Delete Subscription Group Response object.
      */
     public function build(): DeleteSubscriptionGroupResponse
     {

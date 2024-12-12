@@ -31,7 +31,9 @@ class CreateOrUpdateSegmentPriceBuilder
     }
 
     /**
-     * Initializes a new create or update segment price Builder object.
+     * Initializes a new Create Or Update Segment Price Builder object.
+     *
+     * @param string|float $unitPrice
      */
     public static function init($unitPrice): self
     {
@@ -40,6 +42,8 @@ class CreateOrUpdateSegmentPriceBuilder
 
     /**
      * Sets starting quantity field.
+     *
+     * @param int|null $value
      */
     public function startingQuantity(?int $value): self
     {
@@ -49,6 +53,8 @@ class CreateOrUpdateSegmentPriceBuilder
 
     /**
      * Sets ending quantity field.
+     *
+     * @param int|null $value
      */
     public function endingQuantity(?int $value): self
     {
@@ -59,8 +65,8 @@ class CreateOrUpdateSegmentPriceBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -69,7 +75,7 @@ class CreateOrUpdateSegmentPriceBuilder
     }
 
     /**
-     * Initializes a new create or update segment price object.
+     * Initializes a new Create Or Update Segment Price object.
      */
     public function build(): CreateOrUpdateSegmentPrice
     {

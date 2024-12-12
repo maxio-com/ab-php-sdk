@@ -31,7 +31,7 @@ class CreditNoteLineItemBuilder
     }
 
     /**
-     * Initializes a new credit note line item Builder object.
+     * Initializes a new Credit Note Line Item Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class CreditNoteLineItemBuilder
 
     /**
      * Sets uid field.
+     *
+     * @param string|null $value
      */
     public function uid(?string $value): self
     {
@@ -49,6 +51,8 @@ class CreditNoteLineItemBuilder
 
     /**
      * Sets title field.
+     *
+     * @param string|null $value
      */
     public function title(?string $value): self
     {
@@ -58,6 +62,8 @@ class CreditNoteLineItemBuilder
 
     /**
      * Sets description field.
+     *
+     * @param string|null $value
      */
     public function description(?string $value): self
     {
@@ -67,6 +73,8 @@ class CreditNoteLineItemBuilder
 
     /**
      * Sets quantity field.
+     *
+     * @param string|null $value
      */
     public function quantity(?string $value): self
     {
@@ -76,6 +84,8 @@ class CreditNoteLineItemBuilder
 
     /**
      * Sets unit price field.
+     *
+     * @param string|null $value
      */
     public function unitPrice(?string $value): self
     {
@@ -85,6 +95,8 @@ class CreditNoteLineItemBuilder
 
     /**
      * Sets subtotal amount field.
+     *
+     * @param string|null $value
      */
     public function subtotalAmount(?string $value): self
     {
@@ -94,6 +106,8 @@ class CreditNoteLineItemBuilder
 
     /**
      * Sets discount amount field.
+     *
+     * @param string|null $value
      */
     public function discountAmount(?string $value): self
     {
@@ -103,6 +117,8 @@ class CreditNoteLineItemBuilder
 
     /**
      * Sets tax amount field.
+     *
+     * @param string|null $value
      */
     public function taxAmount(?string $value): self
     {
@@ -112,6 +128,8 @@ class CreditNoteLineItemBuilder
 
     /**
      * Sets total amount field.
+     *
+     * @param string|null $value
      */
     public function totalAmount(?string $value): self
     {
@@ -121,6 +139,8 @@ class CreditNoteLineItemBuilder
 
     /**
      * Sets tiered unit price field.
+     *
+     * @param bool|null $value
      */
     public function tieredUnitPrice(?bool $value): self
     {
@@ -130,6 +150,8 @@ class CreditNoteLineItemBuilder
 
     /**
      * Sets period range start field.
+     *
+     * @param \DateTime|null $value
      */
     public function periodRangeStart(?\DateTime $value): self
     {
@@ -139,6 +161,8 @@ class CreditNoteLineItemBuilder
 
     /**
      * Sets period range end field.
+     *
+     * @param \DateTime|null $value
      */
     public function periodRangeEnd(?\DateTime $value): self
     {
@@ -148,6 +172,8 @@ class CreditNoteLineItemBuilder
 
     /**
      * Sets product id field.
+     *
+     * @param int|null $value
      */
     public function productId(?int $value): self
     {
@@ -157,6 +183,8 @@ class CreditNoteLineItemBuilder
 
     /**
      * Sets product version field.
+     *
+     * @param int|null $value
      */
     public function productVersion(?int $value): self
     {
@@ -166,6 +194,8 @@ class CreditNoteLineItemBuilder
 
     /**
      * Sets component id field.
+     *
+     * @param int|null $value
      */
     public function componentId(?int $value): self
     {
@@ -184,6 +214,8 @@ class CreditNoteLineItemBuilder
 
     /**
      * Sets price point id field.
+     *
+     * @param int|null $value
      */
     public function pricePointId(?int $value): self
     {
@@ -202,6 +234,8 @@ class CreditNoteLineItemBuilder
 
     /**
      * Sets billing schedule item id field.
+     *
+     * @param int|null $value
      */
     public function billingScheduleItemId(?int $value): self
     {
@@ -220,6 +254,8 @@ class CreditNoteLineItemBuilder
 
     /**
      * Sets custom item field.
+     *
+     * @param bool|null $value
      */
     public function customItem(?bool $value): self
     {
@@ -230,8 +266,8 @@ class CreditNoteLineItemBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -240,7 +276,7 @@ class CreditNoteLineItemBuilder
     }
 
     /**
-     * Initializes a new credit note line item object.
+     * Initializes a new Credit Note Line Item object.
      */
     public function build(): CreditNoteLineItem
     {

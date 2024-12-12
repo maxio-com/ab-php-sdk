@@ -32,7 +32,9 @@ class UpdateComponentRequestBuilder
     }
 
     /**
-     * Initializes a new update component request Builder object.
+     * Initializes a new Update Component Request Builder object.
+     *
+     * @param UpdateComponent $component
      */
     public static function init(UpdateComponent $component): self
     {
@@ -42,8 +44,8 @@ class UpdateComponentRequestBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -52,7 +54,7 @@ class UpdateComponentRequestBuilder
     }
 
     /**
-     * Initializes a new update component request object.
+     * Initializes a new Update Component Request object.
      */
     public function build(): UpdateComponentRequest
     {

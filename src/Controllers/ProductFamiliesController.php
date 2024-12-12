@@ -17,6 +17,7 @@ use AdvancedBillingLib\Models\CreateProductFamilyRequest;
 use AdvancedBillingLib\Models\ListProductsInclude;
 use AdvancedBillingLib\Models\ProductFamilyResponse;
 use AdvancedBillingLib\Models\ProductResponse;
+use AdvancedBillingLib\Utils\DateTimeHelper;
 use Core\Request\Parameters\BodyParam;
 use Core\Request\Parameters\HeaderParam;
 use Core\Request\Parameters\QueryParam;
@@ -51,10 +52,22 @@ class ProductFamiliesController extends BaseController
                     ->extract('dateField')
                     ->serializeBy([BasicDateField::class, 'checkValue']),
                 QueryParam::init('filter', $options)->commaSeparated()->extract('filter'),
-                QueryParam::init('start_date', $options)->commaSeparated()->extract('startDate'),
-                QueryParam::init('end_date', $options)->commaSeparated()->extract('endDate'),
-                QueryParam::init('start_datetime', $options)->commaSeparated()->extract('startDatetime'),
-                QueryParam::init('end_datetime', $options)->commaSeparated()->extract('endDatetime'),
+                QueryParam::init('start_date', $options)
+                    ->commaSeparated()
+                    ->extract('startDate')
+                    ->serializeBy([DateTimeHelper::class, 'toSimpleDate']),
+                QueryParam::init('end_date', $options)
+                    ->commaSeparated()
+                    ->extract('endDate')
+                    ->serializeBy([DateTimeHelper::class, 'toSimpleDate']),
+                QueryParam::init('start_datetime', $options)
+                    ->commaSeparated()
+                    ->extract('startDatetime')
+                    ->serializeBy([DateTimeHelper::class, 'toRfc3339DateTime']),
+                QueryParam::init('end_datetime', $options)
+                    ->commaSeparated()
+                    ->extract('endDatetime')
+                    ->serializeBy([DateTimeHelper::class, 'toRfc3339DateTime']),
                 QueryParam::init('include_archived', $options)->commaSeparated()->extract('includeArchived'),
                 QueryParam::init('include', $options)
                     ->commaSeparated()
@@ -119,10 +132,22 @@ class ProductFamiliesController extends BaseController
                     ->commaSeparated()
                     ->extract('dateField')
                     ->serializeBy([BasicDateField::class, 'checkValue']),
-                QueryParam::init('start_date', $options)->commaSeparated()->extract('startDate'),
-                QueryParam::init('end_date', $options)->commaSeparated()->extract('endDate'),
-                QueryParam::init('start_datetime', $options)->commaSeparated()->extract('startDatetime'),
-                QueryParam::init('end_datetime', $options)->commaSeparated()->extract('endDatetime')
+                QueryParam::init('start_date', $options)
+                    ->commaSeparated()
+                    ->extract('startDate')
+                    ->serializeBy([DateTimeHelper::class, 'toSimpleDate']),
+                QueryParam::init('end_date', $options)
+                    ->commaSeparated()
+                    ->extract('endDate')
+                    ->serializeBy([DateTimeHelper::class, 'toSimpleDate']),
+                QueryParam::init('start_datetime', $options)
+                    ->commaSeparated()
+                    ->extract('startDatetime')
+                    ->serializeBy([DateTimeHelper::class, 'toRfc3339DateTime']),
+                QueryParam::init('end_datetime', $options)
+                    ->commaSeparated()
+                    ->extract('endDatetime')
+                    ->serializeBy([DateTimeHelper::class, 'toRfc3339DateTime'])
             );
 
         $_resHandler = $this->responseHandler()->type(ProductFamilyResponse::class, 1);

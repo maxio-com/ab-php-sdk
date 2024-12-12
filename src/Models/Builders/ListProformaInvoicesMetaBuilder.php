@@ -31,7 +31,7 @@ class ListProformaInvoicesMetaBuilder
     }
 
     /**
-     * Initializes a new list proforma invoices meta Builder object.
+     * Initializes a new List Proforma Invoices Meta Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class ListProformaInvoicesMetaBuilder
 
     /**
      * Sets total count field.
+     *
+     * @param int|null $value
      */
     public function totalCount(?int $value): self
     {
@@ -49,6 +51,8 @@ class ListProformaInvoicesMetaBuilder
 
     /**
      * Sets current page field.
+     *
+     * @param int|null $value
      */
     public function currentPage(?int $value): self
     {
@@ -58,6 +62,8 @@ class ListProformaInvoicesMetaBuilder
 
     /**
      * Sets total pages field.
+     *
+     * @param int|null $value
      */
     public function totalPages(?int $value): self
     {
@@ -67,6 +73,8 @@ class ListProformaInvoicesMetaBuilder
 
     /**
      * Sets status code field.
+     *
+     * @param int|null $value
      */
     public function statusCode(?int $value): self
     {
@@ -77,8 +85,8 @@ class ListProformaInvoicesMetaBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -87,7 +95,7 @@ class ListProformaInvoicesMetaBuilder
     }
 
     /**
-     * Initializes a new list proforma invoices meta object.
+     * Initializes a new List Proforma Invoices Meta object.
      */
     public function build(): ListProformaInvoicesMeta
     {

@@ -32,7 +32,9 @@ class UpdateSegmentRequestBuilder
     }
 
     /**
-     * Initializes a new update segment request Builder object.
+     * Initializes a new Update Segment Request Builder object.
+     *
+     * @param UpdateSegment $segment
      */
     public static function init(UpdateSegment $segment): self
     {
@@ -42,8 +44,8 @@ class UpdateSegmentRequestBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -52,7 +54,7 @@ class UpdateSegmentRequestBuilder
     }
 
     /**
-     * Initializes a new update segment request object.
+     * Initializes a new Update Segment Request object.
      */
     public function build(): UpdateSegmentRequest
     {

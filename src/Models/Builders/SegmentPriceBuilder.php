@@ -31,7 +31,7 @@ class SegmentPriceBuilder
     }
 
     /**
-     * Initializes a new segment price Builder object.
+     * Initializes a new Segment Price Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class SegmentPriceBuilder
 
     /**
      * Sets id field.
+     *
+     * @param int|null $value
      */
     public function id(?int $value): self
     {
@@ -49,6 +51,8 @@ class SegmentPriceBuilder
 
     /**
      * Sets component id field.
+     *
+     * @param int|null $value
      */
     public function componentId(?int $value): self
     {
@@ -58,6 +62,8 @@ class SegmentPriceBuilder
 
     /**
      * Sets starting quantity field.
+     *
+     * @param int|null $value
      */
     public function startingQuantity(?int $value): self
     {
@@ -67,6 +73,8 @@ class SegmentPriceBuilder
 
     /**
      * Sets ending quantity field.
+     *
+     * @param int|null $value
      */
     public function endingQuantity(?int $value): self
     {
@@ -85,6 +93,8 @@ class SegmentPriceBuilder
 
     /**
      * Sets unit price field.
+     *
+     * @param string|null $value
      */
     public function unitPrice(?string $value): self
     {
@@ -94,6 +104,8 @@ class SegmentPriceBuilder
 
     /**
      * Sets price point id field.
+     *
+     * @param int|null $value
      */
     public function pricePointId(?int $value): self
     {
@@ -103,6 +115,8 @@ class SegmentPriceBuilder
 
     /**
      * Sets formatted unit price field.
+     *
+     * @param string|null $value
      */
     public function formattedUnitPrice(?string $value): self
     {
@@ -112,6 +126,8 @@ class SegmentPriceBuilder
 
     /**
      * Sets segment id field.
+     *
+     * @param int|null $value
      */
     public function segmentId(?int $value): self
     {
@@ -122,8 +138,8 @@ class SegmentPriceBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -132,7 +148,7 @@ class SegmentPriceBuilder
     }
 
     /**
-     * Initializes a new segment price object.
+     * Initializes a new Segment Price object.
      */
     public function build(): SegmentPrice
     {

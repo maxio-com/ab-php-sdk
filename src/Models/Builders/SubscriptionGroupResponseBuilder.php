@@ -32,7 +32,9 @@ class SubscriptionGroupResponseBuilder
     }
 
     /**
-     * Initializes a new subscription group response Builder object.
+     * Initializes a new Subscription Group Response Builder object.
+     *
+     * @param SubscriptionGroup $subscriptionGroup
      */
     public static function init(SubscriptionGroup $subscriptionGroup): self
     {
@@ -42,8 +44,8 @@ class SubscriptionGroupResponseBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -52,7 +54,7 @@ class SubscriptionGroupResponseBuilder
     }
 
     /**
-     * Initializes a new subscription group response object.
+     * Initializes a new Subscription Group Response object.
      */
     public function build(): SubscriptionGroupResponse
     {

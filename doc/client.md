@@ -5,9 +5,8 @@ The following parameters are configurable for the API Client:
 
 | Parameter | Type | Description |
 |  --- | --- | --- |
-| `subdomain` | `string` | The subdomain for your Advanced Billing site.<br>*Default*: `'subdomain'` |
-| `domain` | `string` | The Advanced Billing server domain.<br>*Default*: `'chargify.com'` |
-| `environment` | `Environment` | The API environment. <br> **Default: `Environment.PRODUCTION`** |
+| `site` | `string` | The subdomain for your Advanced Billing site.<br>*Default*: `'subdomain'` |
+| `environment` | `Environment` | The API environment. <br> **Default: `Environment.US`** |
 | `timeout` | `int` | Timeout for API calls in seconds.<br>*Default*: `120` |
 | `enableRetries` | `bool` | Whether to enable retries and backoff feature.<br>*Default*: `false` |
 | `numberOfRetries` | `int` | The number of retries to make.<br>*Default*: `0` |
@@ -29,9 +28,8 @@ $client = AdvancedBillingClientBuilder::init()
             'BasicAuthPassword'
         )
     )
-    ->environment(Environment::PRODUCTION)
-    ->subdomain('subdomain')
-    ->domain('chargify.com')
+    ->environment(Environment::US)
+    ->site('subdomain')
     ->build();
 ```
 

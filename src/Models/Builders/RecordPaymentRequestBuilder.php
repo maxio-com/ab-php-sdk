@@ -32,7 +32,9 @@ class RecordPaymentRequestBuilder
     }
 
     /**
-     * Initializes a new record payment request Builder object.
+     * Initializes a new Record Payment Request Builder object.
+     *
+     * @param CreatePayment $payment
      */
     public static function init(CreatePayment $payment): self
     {
@@ -42,8 +44,8 @@ class RecordPaymentRequestBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -52,7 +54,7 @@ class RecordPaymentRequestBuilder
     }
 
     /**
-     * Initializes a new record payment request object.
+     * Initializes a new Record Payment Request object.
      */
     public function build(): RecordPaymentRequest
     {

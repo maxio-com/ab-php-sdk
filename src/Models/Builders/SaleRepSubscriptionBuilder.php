@@ -31,7 +31,7 @@ class SaleRepSubscriptionBuilder
     }
 
     /**
-     * Initializes a new sale rep subscription Builder object.
+     * Initializes a new Sale Rep Subscription Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class SaleRepSubscriptionBuilder
 
     /**
      * Sets id field.
+     *
+     * @param int|null $value
      */
     public function id(?int $value): self
     {
@@ -49,6 +51,8 @@ class SaleRepSubscriptionBuilder
 
     /**
      * Sets site name field.
+     *
+     * @param string|null $value
      */
     public function siteName(?string $value): self
     {
@@ -58,6 +62,8 @@ class SaleRepSubscriptionBuilder
 
     /**
      * Sets subscription url field.
+     *
+     * @param string|null $value
      */
     public function subscriptionUrl(?string $value): self
     {
@@ -67,6 +73,8 @@ class SaleRepSubscriptionBuilder
 
     /**
      * Sets customer name field.
+     *
+     * @param string|null $value
      */
     public function customerName(?string $value): self
     {
@@ -76,6 +84,8 @@ class SaleRepSubscriptionBuilder
 
     /**
      * Sets created at field.
+     *
+     * @param string|null $value
      */
     public function createdAt(?string $value): self
     {
@@ -85,6 +95,8 @@ class SaleRepSubscriptionBuilder
 
     /**
      * Sets mrr field.
+     *
+     * @param string|null $value
      */
     public function mrr(?string $value): self
     {
@@ -94,6 +106,8 @@ class SaleRepSubscriptionBuilder
 
     /**
      * Sets usage field.
+     *
+     * @param string|null $value
      */
     public function usage(?string $value): self
     {
@@ -103,6 +117,8 @@ class SaleRepSubscriptionBuilder
 
     /**
      * Sets recurring field.
+     *
+     * @param string|null $value
      */
     public function recurring(?string $value): self
     {
@@ -112,6 +128,8 @@ class SaleRepSubscriptionBuilder
 
     /**
      * Sets last payment field.
+     *
+     * @param string|null $value
      */
     public function lastPayment(?string $value): self
     {
@@ -121,6 +139,8 @@ class SaleRepSubscriptionBuilder
 
     /**
      * Sets churn date field.
+     *
+     * @param string|null $value
      */
     public function churnDate(?string $value): self
     {
@@ -140,8 +160,8 @@ class SaleRepSubscriptionBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -150,7 +170,7 @@ class SaleRepSubscriptionBuilder
     }
 
     /**
-     * Initializes a new sale rep subscription object.
+     * Initializes a new Sale Rep Subscription object.
      */
     public function build(): SaleRepSubscription
     {

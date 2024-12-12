@@ -32,7 +32,9 @@ class CustomerChangesPreviewResponseBuilder
     }
 
     /**
-     * Initializes a new customer changes preview response Builder object.
+     * Initializes a new Customer Changes Preview Response Builder object.
+     *
+     * @param CustomerChange $changes
      */
     public static function init(CustomerChange $changes): self
     {
@@ -42,8 +44,8 @@ class CustomerChangesPreviewResponseBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -52,7 +54,7 @@ class CustomerChangesPreviewResponseBuilder
     }
 
     /**
-     * Initializes a new customer changes preview response object.
+     * Initializes a new Customer Changes Preview Response object.
      */
     public function build(): CustomerChangesPreviewResponse
     {

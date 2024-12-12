@@ -12,6 +12,7 @@ namespace AdvancedBillingLib\Models\Builders;
 
 use AdvancedBillingLib\Models\CreatePrepaidUsageComponentPricePoint;
 use AdvancedBillingLib\Models\OveragePricing;
+use AdvancedBillingLib\Models\Price;
 use Core\Utils\CoreHelper;
 
 /**
@@ -32,7 +33,12 @@ class CreatePrepaidUsageComponentPricePointBuilder
     }
 
     /**
-     * Initializes a new create prepaid usage component price point Builder object.
+     * Initializes a new Create Prepaid Usage Component Price Point Builder object.
+     *
+     * @param string $name
+     * @param string $pricingScheme
+     * @param Price[] $prices
+     * @param OveragePricing $overagePricing
      */
     public static function init(
         string $name,
@@ -45,6 +51,8 @@ class CreatePrepaidUsageComponentPricePointBuilder
 
     /**
      * Sets handle field.
+     *
+     * @param string|null $value
      */
     public function handle(?string $value): self
     {
@@ -54,6 +62,8 @@ class CreatePrepaidUsageComponentPricePointBuilder
 
     /**
      * Sets use site exchange rate field.
+     *
+     * @param bool|null $value
      */
     public function useSiteExchangeRate(?bool $value): self
     {
@@ -63,6 +73,8 @@ class CreatePrepaidUsageComponentPricePointBuilder
 
     /**
      * Sets rollover prepaid remainder field.
+     *
+     * @param bool|null $value
      */
     public function rolloverPrepaidRemainder(?bool $value): self
     {
@@ -72,6 +84,8 @@ class CreatePrepaidUsageComponentPricePointBuilder
 
     /**
      * Sets renew prepaid allocation field.
+     *
+     * @param bool|null $value
      */
     public function renewPrepaidAllocation(?bool $value): self
     {
@@ -81,6 +95,8 @@ class CreatePrepaidUsageComponentPricePointBuilder
 
     /**
      * Sets expiration interval field.
+     *
+     * @param float|null $value
      */
     public function expirationInterval(?float $value): self
     {
@@ -90,6 +106,8 @@ class CreatePrepaidUsageComponentPricePointBuilder
 
     /**
      * Sets expiration interval unit field.
+     *
+     * @param string|null $value
      */
     public function expirationIntervalUnit(?string $value): self
     {
@@ -109,8 +127,8 @@ class CreatePrepaidUsageComponentPricePointBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -119,7 +137,7 @@ class CreatePrepaidUsageComponentPricePointBuilder
     }
 
     /**
-     * Initializes a new create prepaid usage component price point object.
+     * Initializes a new Create Prepaid Usage Component Price Point object.
      */
     public function build(): CreatePrepaidUsageComponentPricePoint
     {

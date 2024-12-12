@@ -31,7 +31,7 @@ class ListSegmentsFilterBuilder
     }
 
     /**
-     * Initializes a new list segments filter Builder object.
+     * Initializes a new List Segments Filter Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class ListSegmentsFilterBuilder
 
     /**
      * Sets segment property 1 value field.
+     *
+     * @param string|null $value
      */
     public function segmentProperty1Value(?string $value): self
     {
@@ -49,6 +51,8 @@ class ListSegmentsFilterBuilder
 
     /**
      * Sets segment property 2 value field.
+     *
+     * @param string|null $value
      */
     public function segmentProperty2Value(?string $value): self
     {
@@ -58,6 +62,8 @@ class ListSegmentsFilterBuilder
 
     /**
      * Sets segment property 3 value field.
+     *
+     * @param string|null $value
      */
     public function segmentProperty3Value(?string $value): self
     {
@@ -67,6 +73,8 @@ class ListSegmentsFilterBuilder
 
     /**
      * Sets segment property 4 value field.
+     *
+     * @param string|null $value
      */
     public function segmentProperty4Value(?string $value): self
     {
@@ -77,8 +85,8 @@ class ListSegmentsFilterBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -87,7 +95,7 @@ class ListSegmentsFilterBuilder
     }
 
     /**
-     * Initializes a new list segments filter object.
+     * Initializes a new List Segments Filter object.
      */
     public function build(): ListSegmentsFilter
     {

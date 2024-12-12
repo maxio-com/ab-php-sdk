@@ -32,7 +32,7 @@ class SignupProformaPreviewBuilder
     }
 
     /**
-     * Initializes a new signup proforma preview Builder object.
+     * Initializes a new Signup Proforma Preview Builder object.
      */
     public static function init(): self
     {
@@ -41,6 +41,8 @@ class SignupProformaPreviewBuilder
 
     /**
      * Sets current proforma invoice field.
+     *
+     * @param ProformaInvoice|null $value
      */
     public function currentProformaInvoice(?ProformaInvoice $value): self
     {
@@ -50,6 +52,8 @@ class SignupProformaPreviewBuilder
 
     /**
      * Sets next proforma invoice field.
+     *
+     * @param ProformaInvoice|null $value
      */
     public function nextProformaInvoice(?ProformaInvoice $value): self
     {
@@ -60,8 +64,8 @@ class SignupProformaPreviewBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -70,7 +74,7 @@ class SignupProformaPreviewBuilder
     }
 
     /**
-     * Initializes a new signup proforma preview object.
+     * Initializes a new Signup Proforma Preview object.
      */
     public function build(): SignupProformaPreview
     {

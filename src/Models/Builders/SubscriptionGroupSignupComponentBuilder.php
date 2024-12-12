@@ -32,7 +32,7 @@ class SubscriptionGroupSignupComponentBuilder
     }
 
     /**
-     * Initializes a new subscription group signup component Builder object.
+     * Initializes a new Subscription Group Signup Component Builder object.
      */
     public static function init(): self
     {
@@ -41,6 +41,8 @@ class SubscriptionGroupSignupComponentBuilder
 
     /**
      * Sets component id field.
+     *
+     * @param string|int|null $value
      */
     public function componentId($value): self
     {
@@ -50,6 +52,8 @@ class SubscriptionGroupSignupComponentBuilder
 
     /**
      * Sets allocated quantity field.
+     *
+     * @param string|int|null $value
      */
     public function allocatedQuantity($value): self
     {
@@ -59,6 +63,8 @@ class SubscriptionGroupSignupComponentBuilder
 
     /**
      * Sets unit balance field.
+     *
+     * @param string|int|null $value
      */
     public function unitBalance($value): self
     {
@@ -68,6 +74,8 @@ class SubscriptionGroupSignupComponentBuilder
 
     /**
      * Sets price point id field.
+     *
+     * @param string|int|null $value
      */
     public function pricePointId($value): self
     {
@@ -77,6 +85,8 @@ class SubscriptionGroupSignupComponentBuilder
 
     /**
      * Sets custom price field.
+     *
+     * @param SubscriptionGroupComponentCustomPrice|null $value
      */
     public function customPrice(?SubscriptionGroupComponentCustomPrice $value): self
     {
@@ -87,8 +97,8 @@ class SubscriptionGroupSignupComponentBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -97,7 +107,7 @@ class SubscriptionGroupSignupComponentBuilder
     }
 
     /**
-     * Initializes a new subscription group signup component object.
+     * Initializes a new Subscription Group Signup Component object.
      */
     public function build(): SubscriptionGroupSignupComponent
     {

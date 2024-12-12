@@ -31,7 +31,7 @@ class PublicKeyBuilder
     }
 
     /**
-     * Initializes a new public key Builder object.
+     * Initializes a new Public Key Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class PublicKeyBuilder
 
     /**
      * Sets public key field.
+     *
+     * @param string|null $value
      */
     public function publicKey(?string $value): self
     {
@@ -49,6 +51,8 @@ class PublicKeyBuilder
 
     /**
      * Sets requires security token field.
+     *
+     * @param bool|null $value
      */
     public function requiresSecurityToken(?bool $value): self
     {
@@ -58,6 +62,8 @@ class PublicKeyBuilder
 
     /**
      * Sets created at field.
+     *
+     * @param \DateTime|null $value
      */
     public function createdAt(?\DateTime $value): self
     {
@@ -68,8 +74,8 @@ class PublicKeyBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -78,7 +84,7 @@ class PublicKeyBuilder
     }
 
     /**
-     * Initializes a new public key object.
+     * Initializes a new Public Key object.
      */
     public function build(): PublicKey
     {

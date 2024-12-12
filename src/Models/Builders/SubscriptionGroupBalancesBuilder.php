@@ -32,7 +32,7 @@ class SubscriptionGroupBalancesBuilder
     }
 
     /**
-     * Initializes a new subscription group balances Builder object.
+     * Initializes a new Subscription Group Balances Builder object.
      */
     public static function init(): self
     {
@@ -41,6 +41,8 @@ class SubscriptionGroupBalancesBuilder
 
     /**
      * Sets prepayments field.
+     *
+     * @param AccountBalance|null $value
      */
     public function prepayments(?AccountBalance $value): self
     {
@@ -50,6 +52,8 @@ class SubscriptionGroupBalancesBuilder
 
     /**
      * Sets service credits field.
+     *
+     * @param AccountBalance|null $value
      */
     public function serviceCredits(?AccountBalance $value): self
     {
@@ -59,6 +63,8 @@ class SubscriptionGroupBalancesBuilder
 
     /**
      * Sets open invoices field.
+     *
+     * @param AccountBalance|null $value
      */
     public function openInvoices(?AccountBalance $value): self
     {
@@ -68,6 +74,8 @@ class SubscriptionGroupBalancesBuilder
 
     /**
      * Sets pending discounts field.
+     *
+     * @param AccountBalance|null $value
      */
     public function pendingDiscounts(?AccountBalance $value): self
     {
@@ -78,8 +86,8 @@ class SubscriptionGroupBalancesBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -88,7 +96,7 @@ class SubscriptionGroupBalancesBuilder
     }
 
     /**
-     * Initializes a new subscription group balances object.
+     * Initializes a new Subscription Group Balances object.
      */
     public function build(): SubscriptionGroupBalances
     {

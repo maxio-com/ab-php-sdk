@@ -33,7 +33,7 @@ class FullSubscriptionGroupResponseBuilder
     }
 
     /**
-     * Initializes a new full subscription group response Builder object.
+     * Initializes a new Full Subscription Group Response Builder object.
      */
     public static function init(): self
     {
@@ -42,6 +42,8 @@ class FullSubscriptionGroupResponseBuilder
 
     /**
      * Sets uid field.
+     *
+     * @param string|null $value
      */
     public function uid(?string $value): self
     {
@@ -51,6 +53,8 @@ class FullSubscriptionGroupResponseBuilder
 
     /**
      * Sets scheme field.
+     *
+     * @param int|null $value
      */
     public function scheme(?int $value): self
     {
@@ -60,6 +64,8 @@ class FullSubscriptionGroupResponseBuilder
 
     /**
      * Sets customer id field.
+     *
+     * @param int|null $value
      */
     public function customerId(?int $value): self
     {
@@ -69,6 +75,8 @@ class FullSubscriptionGroupResponseBuilder
 
     /**
      * Sets payment profile id field.
+     *
+     * @param int|null $value
      */
     public function paymentProfileId(?int $value): self
     {
@@ -78,6 +86,8 @@ class FullSubscriptionGroupResponseBuilder
 
     /**
      * Sets subscription ids field.
+     *
+     * @param int[]|null $value
      */
     public function subscriptionIds(?array $value): self
     {
@@ -87,6 +97,8 @@ class FullSubscriptionGroupResponseBuilder
 
     /**
      * Sets primary subscription id field.
+     *
+     * @param int|null $value
      */
     public function primarySubscriptionId(?int $value): self
     {
@@ -96,6 +108,8 @@ class FullSubscriptionGroupResponseBuilder
 
     /**
      * Sets next assessment at field.
+     *
+     * @param \DateTime|null $value
      */
     public function nextAssessmentAt(?\DateTime $value): self
     {
@@ -105,6 +119,8 @@ class FullSubscriptionGroupResponseBuilder
 
     /**
      * Sets state field.
+     *
+     * @param string|null $value
      */
     public function state(?string $value): self
     {
@@ -114,6 +130,8 @@ class FullSubscriptionGroupResponseBuilder
 
     /**
      * Sets cancel at end of period field.
+     *
+     * @param bool|null $value
      */
     public function cancelAtEndOfPeriod(?bool $value): self
     {
@@ -123,6 +141,8 @@ class FullSubscriptionGroupResponseBuilder
 
     /**
      * Sets current billing amount in cents field.
+     *
+     * @param int|null $value
      */
     public function currentBillingAmountInCents(?int $value): self
     {
@@ -132,6 +152,8 @@ class FullSubscriptionGroupResponseBuilder
 
     /**
      * Sets customer field.
+     *
+     * @param SubscriptionGroupCustomer|null $value
      */
     public function customer(?SubscriptionGroupCustomer $value): self
     {
@@ -141,6 +163,8 @@ class FullSubscriptionGroupResponseBuilder
 
     /**
      * Sets account balances field.
+     *
+     * @param SubscriptionGroupBalances|null $value
      */
     public function accountBalances(?SubscriptionGroupBalances $value): self
     {
@@ -151,8 +175,8 @@ class FullSubscriptionGroupResponseBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -161,7 +185,7 @@ class FullSubscriptionGroupResponseBuilder
     }
 
     /**
-     * Initializes a new full subscription group response object.
+     * Initializes a new Full Subscription Group Response object.
      */
     public function build(): FullSubscriptionGroupResponse
     {

@@ -31,7 +31,7 @@ class InvoiceTaxBreakoutBuilder
     }
 
     /**
-     * Initializes a new invoice tax breakout Builder object.
+     * Initializes a new Invoice Tax Breakout Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class InvoiceTaxBreakoutBuilder
 
     /**
      * Sets uid field.
+     *
+     * @param string|null $value
      */
     public function uid(?string $value): self
     {
@@ -49,6 +51,8 @@ class InvoiceTaxBreakoutBuilder
 
     /**
      * Sets taxable amount field.
+     *
+     * @param string|null $value
      */
     public function taxableAmount(?string $value): self
     {
@@ -58,6 +62,8 @@ class InvoiceTaxBreakoutBuilder
 
     /**
      * Sets tax amount field.
+     *
+     * @param string|null $value
      */
     public function taxAmount(?string $value): self
     {
@@ -67,6 +73,8 @@ class InvoiceTaxBreakoutBuilder
 
     /**
      * Sets tax exempt amount field.
+     *
+     * @param string|null $value
      */
     public function taxExemptAmount(?string $value): self
     {
@@ -77,8 +85,8 @@ class InvoiceTaxBreakoutBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -87,7 +95,7 @@ class InvoiceTaxBreakoutBuilder
     }
 
     /**
-     * Initializes a new invoice tax breakout object.
+     * Initializes a new Invoice Tax Breakout object.
      */
     public function build(): InvoiceTaxBreakout
     {

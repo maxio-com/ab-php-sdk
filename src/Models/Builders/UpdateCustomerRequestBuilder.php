@@ -32,7 +32,9 @@ class UpdateCustomerRequestBuilder
     }
 
     /**
-     * Initializes a new update customer request Builder object.
+     * Initializes a new Update Customer Request Builder object.
+     *
+     * @param UpdateCustomer $customer
      */
     public static function init(UpdateCustomer $customer): self
     {
@@ -42,8 +44,8 @@ class UpdateCustomerRequestBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -52,7 +54,7 @@ class UpdateCustomerRequestBuilder
     }
 
     /**
-     * Initializes a new update customer request object.
+     * Initializes a new Update Customer Request object.
      */
     public function build(): UpdateCustomerRequest
     {

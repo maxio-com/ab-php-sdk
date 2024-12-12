@@ -32,7 +32,7 @@ class AccountBalancesBuilder
     }
 
     /**
-     * Initializes a new account balances Builder object.
+     * Initializes a new Account Balances Builder object.
      */
     public static function init(): self
     {
@@ -41,6 +41,8 @@ class AccountBalancesBuilder
 
     /**
      * Sets open invoices field.
+     *
+     * @param AccountBalance|null $value
      */
     public function openInvoices(?AccountBalance $value): self
     {
@@ -50,6 +52,8 @@ class AccountBalancesBuilder
 
     /**
      * Sets pending invoices field.
+     *
+     * @param AccountBalance|null $value
      */
     public function pendingInvoices(?AccountBalance $value): self
     {
@@ -59,6 +63,8 @@ class AccountBalancesBuilder
 
     /**
      * Sets pending discounts field.
+     *
+     * @param AccountBalance|null $value
      */
     public function pendingDiscounts(?AccountBalance $value): self
     {
@@ -68,6 +74,8 @@ class AccountBalancesBuilder
 
     /**
      * Sets service credits field.
+     *
+     * @param AccountBalance|null $value
      */
     public function serviceCredits(?AccountBalance $value): self
     {
@@ -77,6 +85,8 @@ class AccountBalancesBuilder
 
     /**
      * Sets prepayments field.
+     *
+     * @param AccountBalance|null $value
      */
     public function prepayments(?AccountBalance $value): self
     {
@@ -87,8 +97,8 @@ class AccountBalancesBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -97,7 +107,7 @@ class AccountBalancesBuilder
     }
 
     /**
-     * Initializes a new account balances object.
+     * Initializes a new Account Balances object.
      */
     public function build(): AccountBalances
     {

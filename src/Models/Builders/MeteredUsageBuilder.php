@@ -31,7 +31,14 @@ class MeteredUsageBuilder
     }
 
     /**
-     * Initializes a new metered usage Builder object.
+     * Initializes a new Metered Usage Builder object.
+     *
+     * @param string $previousUnitBalance
+     * @param int $newUnitBalance
+     * @param int $usageQuantity
+     * @param int $componentId
+     * @param string $componentHandle
+     * @param string $memo
      */
     public static function init(
         string $previousUnitBalance,
@@ -54,8 +61,8 @@ class MeteredUsageBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -64,7 +71,7 @@ class MeteredUsageBuilder
     }
 
     /**
-     * Initializes a new metered usage object.
+     * Initializes a new Metered Usage object.
      */
     public function build(): MeteredUsage
     {

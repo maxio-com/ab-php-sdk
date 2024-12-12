@@ -31,7 +31,7 @@ class BillingScheduleBuilder
     }
 
     /**
-     * Initializes a new billing schedule Builder object.
+     * Initializes a new Billing Schedule Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class BillingScheduleBuilder
 
     /**
      * Sets initial billing at field.
+     *
+     * @param \DateTime|null $value
      */
     public function initialBillingAt(?\DateTime $value): self
     {
@@ -50,8 +52,8 @@ class BillingScheduleBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -60,7 +62,7 @@ class BillingScheduleBuilder
     }
 
     /**
-     * Initializes a new billing schedule object.
+     * Initializes a new Billing Schedule object.
      */
     public function build(): BillingSchedule
     {

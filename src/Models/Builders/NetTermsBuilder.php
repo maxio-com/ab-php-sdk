@@ -31,7 +31,7 @@ class NetTermsBuilder
     }
 
     /**
-     * Initializes a new net terms Builder object.
+     * Initializes a new Net Terms Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class NetTermsBuilder
 
     /**
      * Sets default net terms field.
+     *
+     * @param int|null $value
      */
     public function defaultNetTerms(?int $value): self
     {
@@ -49,6 +51,8 @@ class NetTermsBuilder
 
     /**
      * Sets automatic net terms field.
+     *
+     * @param int|null $value
      */
     public function automaticNetTerms(?int $value): self
     {
@@ -58,6 +62,8 @@ class NetTermsBuilder
 
     /**
      * Sets remittance net terms field.
+     *
+     * @param int|null $value
      */
     public function remittanceNetTerms(?int $value): self
     {
@@ -67,6 +73,8 @@ class NetTermsBuilder
 
     /**
      * Sets net terms on remittance signups enabled field.
+     *
+     * @param bool|null $value
      */
     public function netTermsOnRemittanceSignupsEnabled(?bool $value): self
     {
@@ -76,6 +84,8 @@ class NetTermsBuilder
 
     /**
      * Sets custom net terms enabled field.
+     *
+     * @param bool|null $value
      */
     public function customNetTermsEnabled(?bool $value): self
     {
@@ -86,8 +96,8 @@ class NetTermsBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -96,7 +106,7 @@ class NetTermsBuilder
     }
 
     /**
-     * Initializes a new net terms object.
+     * Initializes a new Net Terms object.
      */
     public function build(): NetTerms
     {

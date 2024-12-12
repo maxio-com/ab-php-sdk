@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace AdvancedBillingLib\Models\Builders;
 
 use AdvancedBillingLib\Models\SaleRep;
+use AdvancedBillingLib\Models\SaleRepSubscription;
 use Core\Utils\CoreHelper;
 
 /**
@@ -31,7 +32,7 @@ class SaleRepBuilder
     }
 
     /**
-     * Initializes a new sale rep Builder object.
+     * Initializes a new Sale Rep Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +41,8 @@ class SaleRepBuilder
 
     /**
      * Sets id field.
+     *
+     * @param int|null $value
      */
     public function id(?int $value): self
     {
@@ -49,6 +52,8 @@ class SaleRepBuilder
 
     /**
      * Sets full name field.
+     *
+     * @param string|null $value
      */
     public function fullName(?string $value): self
     {
@@ -58,6 +63,8 @@ class SaleRepBuilder
 
     /**
      * Sets subscriptions count field.
+     *
+     * @param int|null $value
      */
     public function subscriptionsCount(?int $value): self
     {
@@ -67,6 +74,8 @@ class SaleRepBuilder
 
     /**
      * Sets test mode field.
+     *
+     * @param bool|null $value
      */
     public function testMode(?bool $value): self
     {
@@ -76,6 +85,8 @@ class SaleRepBuilder
 
     /**
      * Sets subscriptions field.
+     *
+     * @param SaleRepSubscription[]|null $value
      */
     public function subscriptions(?array $value): self
     {
@@ -86,8 +97,8 @@ class SaleRepBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -96,7 +107,7 @@ class SaleRepBuilder
     }
 
     /**
-     * Initializes a new sale rep object.
+     * Initializes a new Sale Rep object.
      */
     public function build(): SaleRep
     {

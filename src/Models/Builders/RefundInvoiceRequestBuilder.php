@@ -10,6 +10,8 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models\Builders;
 
+use AdvancedBillingLib\Models\RefundConsolidatedInvoice;
+use AdvancedBillingLib\Models\RefundInvoice;
 use AdvancedBillingLib\Models\RefundInvoiceRequest;
 use Core\Utils\CoreHelper;
 
@@ -31,7 +33,9 @@ class RefundInvoiceRequestBuilder
     }
 
     /**
-     * Initializes a new refund invoice request Builder object.
+     * Initializes a new Refund Invoice Request Builder object.
+     *
+     * @param RefundInvoice|RefundConsolidatedInvoice $refund
      */
     public static function init($refund): self
     {
@@ -41,8 +45,8 @@ class RefundInvoiceRequestBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -51,7 +55,7 @@ class RefundInvoiceRequestBuilder
     }
 
     /**
-     * Initializes a new refund invoice request object.
+     * Initializes a new Refund Invoice Request object.
      */
     public function build(): RefundInvoiceRequest
     {

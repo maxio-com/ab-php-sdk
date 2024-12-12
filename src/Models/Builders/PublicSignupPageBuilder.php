@@ -31,7 +31,7 @@ class PublicSignupPageBuilder
     }
 
     /**
-     * Initializes a new public signup page Builder object.
+     * Initializes a new Public Signup Page Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class PublicSignupPageBuilder
 
     /**
      * Sets id field.
+     *
+     * @param int|null $value
      */
     public function id(?int $value): self
     {
@@ -49,6 +51,8 @@ class PublicSignupPageBuilder
 
     /**
      * Sets return url field.
+     *
+     * @param string|null $value
      */
     public function returnUrl(?string $value): self
     {
@@ -67,6 +71,8 @@ class PublicSignupPageBuilder
 
     /**
      * Sets return params field.
+     *
+     * @param string|null $value
      */
     public function returnParams(?string $value): self
     {
@@ -85,6 +91,8 @@ class PublicSignupPageBuilder
 
     /**
      * Sets url field.
+     *
+     * @param string|null $value
      */
     public function url(?string $value): self
     {
@@ -95,8 +103,8 @@ class PublicSignupPageBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -105,7 +113,7 @@ class PublicSignupPageBuilder
     }
 
     /**
-     * Initializes a new public signup page object.
+     * Initializes a new Public Signup Page object.
      */
     public function build(): PublicSignupPage
     {

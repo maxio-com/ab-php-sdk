@@ -10,22 +10,19 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
-use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class AddSubscriptionToAGroup implements \JsonSerializable
 {
     /**
-     * @var GroupSettings|bool|null
+     * @var GroupSettings|null
      */
     private $group;
 
     /**
      * Returns Group.
-     *
-     * @return GroupSettings|bool|null
      */
-    public function getGroup()
+    public function getGroup(): ?GroupSettings
     {
         return $this->group;
     }
@@ -34,11 +31,8 @@ class AddSubscriptionToAGroup implements \JsonSerializable
      * Sets Group.
      *
      * @maps group
-     * @mapsBy anyOf(oneOf(GroupSettings,bool),null)
-     *
-     * @param GroupSettings|bool|null $group
      */
-    public function setGroup($group): void
+    public function setGroup(?GroupSettings $group): void
     {
         $this->group = $group;
     }
@@ -48,12 +42,27 @@ class AddSubscriptionToAGroup implements \JsonSerializable
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function addAdditionalProperty(string $name, $value)
     {
         $this->additionalProperties[$name] = $value;
+    }
+
+    /**
+     * Find an additional property by name in this model or false if property does not exist.
+     *
+     * @param string $name Name of property.
+     *
+     * @return mixed|false Value of the property.
+     */
+    public function findAdditionalProperty(string $name)
+    {
+        if (isset($this->additionalProperties[$name])) {
+            return $this->additionalProperties[$name];
+        }
+        return false;
     }
 
     /**
@@ -69,11 +78,7 @@ class AddSubscriptionToAGroup implements \JsonSerializable
     {
         $json = [];
         if (isset($this->group)) {
-            $json['group'] =
-                ApiHelper::getJsonHelper()->verifyTypes(
-                    $this->group,
-                    'anyOf(oneOf(GroupSettings,bool),null)'
-                );
+            $json['group'] = $this->group;
         }
         $json = array_merge($json, $this->additionalProperties);
 

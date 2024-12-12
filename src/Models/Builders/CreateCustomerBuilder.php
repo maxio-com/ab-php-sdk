@@ -31,7 +31,11 @@ class CreateCustomerBuilder
     }
 
     /**
-     * Initializes a new create customer Builder object.
+     * Initializes a new Create Customer Builder object.
+     *
+     * @param string $firstName
+     * @param string $lastName
+     * @param string $email
      */
     public static function init(string $firstName, string $lastName, string $email): self
     {
@@ -40,6 +44,8 @@ class CreateCustomerBuilder
 
     /**
      * Sets cc emails field.
+     *
+     * @param string|null $value
      */
     public function ccEmails(?string $value): self
     {
@@ -49,6 +55,8 @@ class CreateCustomerBuilder
 
     /**
      * Sets organization field.
+     *
+     * @param string|null $value
      */
     public function organization(?string $value): self
     {
@@ -58,6 +66,8 @@ class CreateCustomerBuilder
 
     /**
      * Sets reference field.
+     *
+     * @param string|null $value
      */
     public function reference(?string $value): self
     {
@@ -67,6 +77,8 @@ class CreateCustomerBuilder
 
     /**
      * Sets address field.
+     *
+     * @param string|null $value
      */
     public function address(?string $value): self
     {
@@ -76,6 +88,8 @@ class CreateCustomerBuilder
 
     /**
      * Sets address 2 field.
+     *
+     * @param string|null $value
      */
     public function address2(?string $value): self
     {
@@ -85,6 +99,8 @@ class CreateCustomerBuilder
 
     /**
      * Sets city field.
+     *
+     * @param string|null $value
      */
     public function city(?string $value): self
     {
@@ -94,6 +110,8 @@ class CreateCustomerBuilder
 
     /**
      * Sets state field.
+     *
+     * @param string|null $value
      */
     public function state(?string $value): self
     {
@@ -103,6 +121,8 @@ class CreateCustomerBuilder
 
     /**
      * Sets zip field.
+     *
+     * @param string|null $value
      */
     public function zip(?string $value): self
     {
@@ -112,6 +132,8 @@ class CreateCustomerBuilder
 
     /**
      * Sets country field.
+     *
+     * @param string|null $value
      */
     public function country(?string $value): self
     {
@@ -121,6 +143,8 @@ class CreateCustomerBuilder
 
     /**
      * Sets phone field.
+     *
+     * @param string|null $value
      */
     public function phone(?string $value): self
     {
@@ -130,6 +154,8 @@ class CreateCustomerBuilder
 
     /**
      * Sets locale field.
+     *
+     * @param string|null $value
      */
     public function locale(?string $value): self
     {
@@ -139,6 +165,8 @@ class CreateCustomerBuilder
 
     /**
      * Sets vat number field.
+     *
+     * @param string|null $value
      */
     public function vatNumber(?string $value): self
     {
@@ -148,6 +176,8 @@ class CreateCustomerBuilder
 
     /**
      * Sets tax exempt field.
+     *
+     * @param bool|null $value
      */
     public function taxExempt(?bool $value): self
     {
@@ -157,6 +187,8 @@ class CreateCustomerBuilder
 
     /**
      * Sets tax exempt reason field.
+     *
+     * @param string|null $value
      */
     public function taxExemptReason(?string $value): self
     {
@@ -166,6 +198,8 @@ class CreateCustomerBuilder
 
     /**
      * Sets parent id field.
+     *
+     * @param int|null $value
      */
     public function parentId(?int $value): self
     {
@@ -184,6 +218,8 @@ class CreateCustomerBuilder
 
     /**
      * Sets salesforce id field.
+     *
+     * @param string|null $value
      */
     public function salesforceId(?string $value): self
     {
@@ -203,8 +239,8 @@ class CreateCustomerBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -213,7 +249,7 @@ class CreateCustomerBuilder
     }
 
     /**
-     * Initializes a new create customer object.
+     * Initializes a new Create Customer object.
      */
     public function build(): CreateCustomer
     {

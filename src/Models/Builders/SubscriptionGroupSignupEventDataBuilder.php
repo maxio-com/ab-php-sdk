@@ -10,39 +10,44 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models\Builders;
 
-use AdvancedBillingLib\Models\SubscriptionGroupSignupFailure;
+use AdvancedBillingLib\Models\Customer;
+use AdvancedBillingLib\Models\SubscriptionGroupSignupEventData;
 use AdvancedBillingLib\Models\SubscriptionGroupSignupFailureData;
 use Core\Utils\CoreHelper;
 
 /**
- * Builder for model SubscriptionGroupSignupFailure
+ * Builder for model SubscriptionGroupSignupEventData
  *
- * @see SubscriptionGroupSignupFailure
+ * @see SubscriptionGroupSignupEventData
  */
-class SubscriptionGroupSignupFailureBuilder
+class SubscriptionGroupSignupEventDataBuilder
 {
     /**
-     * @var SubscriptionGroupSignupFailure
+     * @var SubscriptionGroupSignupEventData
      */
     private $instance;
 
-    private function __construct(SubscriptionGroupSignupFailure $instance)
+    private function __construct(SubscriptionGroupSignupEventData $instance)
     {
         $this->instance = $instance;
     }
 
     /**
-     * Initializes a new subscription group signup failure Builder object.
+     * Initializes a new Subscription Group Signup Event Data Builder object.
+     *
+     * @param SubscriptionGroupSignupFailureData $subscriptionGroup
      */
     public static function init(SubscriptionGroupSignupFailureData $subscriptionGroup): self
     {
-        return new self(new SubscriptionGroupSignupFailure($subscriptionGroup));
+        return new self(new SubscriptionGroupSignupEventData($subscriptionGroup));
     }
 
     /**
      * Sets customer field.
+     *
+     * @param Customer|null $value
      */
-    public function customer(?string $value): self
+    public function customer(?Customer $value): self
     {
         $this->instance->setCustomer($value);
         return $this;
@@ -51,8 +56,8 @@ class SubscriptionGroupSignupFailureBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -61,9 +66,9 @@ class SubscriptionGroupSignupFailureBuilder
     }
 
     /**
-     * Initializes a new subscription group signup failure object.
+     * Initializes a new Subscription Group Signup Event Data object.
      */
-    public function build(): SubscriptionGroupSignupFailure
+    public function build(): SubscriptionGroupSignupEventData
     {
         return CoreHelper::clone($this->instance);
     }

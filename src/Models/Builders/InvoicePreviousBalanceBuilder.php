@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models\Builders;
 
+use AdvancedBillingLib\Models\InvoiceBalanceItem;
 use AdvancedBillingLib\Models\InvoicePreviousBalance;
 use Core\Utils\CoreHelper;
 
@@ -31,7 +32,7 @@ class InvoicePreviousBalanceBuilder
     }
 
     /**
-     * Initializes a new invoice previous balance Builder object.
+     * Initializes a new Invoice Previous Balance Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +41,8 @@ class InvoicePreviousBalanceBuilder
 
     /**
      * Sets captured at field.
+     *
+     * @param \DateTime|null $value
      */
     public function capturedAt(?\DateTime $value): self
     {
@@ -49,6 +52,8 @@ class InvoicePreviousBalanceBuilder
 
     /**
      * Sets invoices field.
+     *
+     * @param InvoiceBalanceItem[]|null $value
      */
     public function invoices(?array $value): self
     {
@@ -59,8 +64,8 @@ class InvoicePreviousBalanceBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -69,7 +74,7 @@ class InvoicePreviousBalanceBuilder
     }
 
     /**
-     * Initializes a new invoice previous balance object.
+     * Initializes a new Invoice Previous Balance object.
      */
     public function build(): InvoicePreviousBalance
     {

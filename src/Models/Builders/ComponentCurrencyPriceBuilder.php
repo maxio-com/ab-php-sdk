@@ -31,7 +31,7 @@ class ComponentCurrencyPriceBuilder
     }
 
     /**
-     * Initializes a new component currency price Builder object.
+     * Initializes a new Component Currency Price Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class ComponentCurrencyPriceBuilder
 
     /**
      * Sets id field.
+     *
+     * @param int|null $value
      */
     public function id(?int $value): self
     {
@@ -49,6 +51,8 @@ class ComponentCurrencyPriceBuilder
 
     /**
      * Sets currency field.
+     *
+     * @param string|null $value
      */
     public function currency(?string $value): self
     {
@@ -58,6 +62,8 @@ class ComponentCurrencyPriceBuilder
 
     /**
      * Sets price field.
+     *
+     * @param string|null $value
      */
     public function price(?string $value): self
     {
@@ -67,6 +73,8 @@ class ComponentCurrencyPriceBuilder
 
     /**
      * Sets formatted price field.
+     *
+     * @param string|null $value
      */
     public function formattedPrice(?string $value): self
     {
@@ -76,6 +84,8 @@ class ComponentCurrencyPriceBuilder
 
     /**
      * Sets price id field.
+     *
+     * @param int|null $value
      */
     public function priceId(?int $value): self
     {
@@ -85,6 +95,8 @@ class ComponentCurrencyPriceBuilder
 
     /**
      * Sets price point id field.
+     *
+     * @param int|null $value
      */
     public function pricePointId(?int $value): self
     {
@@ -95,8 +107,8 @@ class ComponentCurrencyPriceBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -105,7 +117,7 @@ class ComponentCurrencyPriceBuilder
     }
 
     /**
-     * Initializes a new component currency price object.
+     * Initializes a new Component Currency Price object.
      */
     public function build(): ComponentCurrencyPrice
     {

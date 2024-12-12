@@ -31,7 +31,7 @@ class RenewalPreviewLineItemBuilder
     }
 
     /**
-     * Initializes a new renewal preview line item Builder object.
+     * Initializes a new Renewal Preview Line Item Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class RenewalPreviewLineItemBuilder
 
     /**
      * Sets transaction type field.
+     *
+     * @param string|null $value
      */
     public function transactionType(?string $value): self
     {
@@ -49,6 +51,8 @@ class RenewalPreviewLineItemBuilder
 
     /**
      * Sets kind field.
+     *
+     * @param string|null $value
      */
     public function kind(?string $value): self
     {
@@ -58,6 +62,8 @@ class RenewalPreviewLineItemBuilder
 
     /**
      * Sets amount in cents field.
+     *
+     * @param int|null $value
      */
     public function amountInCents(?int $value): self
     {
@@ -67,6 +73,8 @@ class RenewalPreviewLineItemBuilder
 
     /**
      * Sets memo field.
+     *
+     * @param string|null $value
      */
     public function memo(?string $value): self
     {
@@ -76,6 +84,8 @@ class RenewalPreviewLineItemBuilder
 
     /**
      * Sets discount amount in cents field.
+     *
+     * @param int|null $value
      */
     public function discountAmountInCents(?int $value): self
     {
@@ -85,6 +95,8 @@ class RenewalPreviewLineItemBuilder
 
     /**
      * Sets taxable amount in cents field.
+     *
+     * @param int|null $value
      */
     public function taxableAmountInCents(?int $value): self
     {
@@ -94,6 +106,8 @@ class RenewalPreviewLineItemBuilder
 
     /**
      * Sets product id field.
+     *
+     * @param int|null $value
      */
     public function productId(?int $value): self
     {
@@ -103,6 +117,8 @@ class RenewalPreviewLineItemBuilder
 
     /**
      * Sets product name field.
+     *
+     * @param string|null $value
      */
     public function productName(?string $value): self
     {
@@ -112,6 +128,8 @@ class RenewalPreviewLineItemBuilder
 
     /**
      * Sets component id field.
+     *
+     * @param int|null $value
      */
     public function componentId(?int $value): self
     {
@@ -121,6 +139,8 @@ class RenewalPreviewLineItemBuilder
 
     /**
      * Sets component handle field.
+     *
+     * @param string|null $value
      */
     public function componentHandle(?string $value): self
     {
@@ -130,6 +150,8 @@ class RenewalPreviewLineItemBuilder
 
     /**
      * Sets component name field.
+     *
+     * @param string|null $value
      */
     public function componentName(?string $value): self
     {
@@ -139,6 +161,8 @@ class RenewalPreviewLineItemBuilder
 
     /**
      * Sets product handle field.
+     *
+     * @param string|null $value
      */
     public function productHandle(?string $value): self
     {
@@ -148,6 +172,8 @@ class RenewalPreviewLineItemBuilder
 
     /**
      * Sets period range start field.
+     *
+     * @param string|null $value
      */
     public function periodRangeStart(?string $value): self
     {
@@ -157,6 +183,8 @@ class RenewalPreviewLineItemBuilder
 
     /**
      * Sets period range end field.
+     *
+     * @param string|null $value
      */
     public function periodRangeEnd(?string $value): self
     {
@@ -167,8 +195,8 @@ class RenewalPreviewLineItemBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -177,7 +205,7 @@ class RenewalPreviewLineItemBuilder
     }
 
     /**
-     * Initializes a new renewal preview line item object.
+     * Initializes a new Renewal Preview Line Item object.
      */
     public function build(): RenewalPreviewLineItem
     {

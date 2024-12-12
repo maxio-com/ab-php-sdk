@@ -32,7 +32,9 @@ class SignupProformaPreviewResponseBuilder
     }
 
     /**
-     * Initializes a new signup proforma preview response Builder object.
+     * Initializes a new Signup Proforma Preview Response Builder object.
+     *
+     * @param SignupProformaPreview $proformaInvoicePreview
      */
     public static function init(SignupProformaPreview $proformaInvoicePreview): self
     {
@@ -42,8 +44,8 @@ class SignupProformaPreviewResponseBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -52,7 +54,7 @@ class SignupProformaPreviewResponseBuilder
     }
 
     /**
-     * Initializes a new signup proforma preview response object.
+     * Initializes a new Signup Proforma Preview Response object.
      */
     public function build(): SignupProformaPreviewResponse
     {

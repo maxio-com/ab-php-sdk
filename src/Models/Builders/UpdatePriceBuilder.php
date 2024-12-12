@@ -31,7 +31,7 @@ class UpdatePriceBuilder
     }
 
     /**
-     * Initializes a new update price Builder object.
+     * Initializes a new Update Price Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class UpdatePriceBuilder
 
     /**
      * Sets id field.
+     *
+     * @param int|null $value
      */
     public function id(?int $value): self
     {
@@ -49,6 +51,8 @@ class UpdatePriceBuilder
 
     /**
      * Sets ending quantity field.
+     *
+     * @param int|string|null $value
      */
     public function endingQuantity($value): self
     {
@@ -58,6 +62,8 @@ class UpdatePriceBuilder
 
     /**
      * Sets unit price field.
+     *
+     * @param float|string|null $value
      */
     public function unitPrice($value): self
     {
@@ -67,6 +73,8 @@ class UpdatePriceBuilder
 
     /**
      * Sets destroy field.
+     *
+     * @param bool|null $value
      */
     public function destroy(?bool $value): self
     {
@@ -76,6 +84,8 @@ class UpdatePriceBuilder
 
     /**
      * Sets starting quantity field.
+     *
+     * @param int|string|null $value
      */
     public function startingQuantity($value): self
     {
@@ -86,8 +96,8 @@ class UpdatePriceBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -96,7 +106,7 @@ class UpdatePriceBuilder
     }
 
     /**
-     * Initializes a new update price object.
+     * Initializes a new Update Price object.
      */
     public function build(): UpdatePrice
     {

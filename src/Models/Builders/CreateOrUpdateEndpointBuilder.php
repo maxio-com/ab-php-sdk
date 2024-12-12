@@ -31,7 +31,10 @@ class CreateOrUpdateEndpointBuilder
     }
 
     /**
-     * Initializes a new create or update endpoint Builder object.
+     * Initializes a new Create Or Update Endpoint Builder object.
+     *
+     * @param string $url
+     * @param string[] $webhookSubscriptions
      */
     public static function init(string $url, array $webhookSubscriptions): self
     {
@@ -41,8 +44,8 @@ class CreateOrUpdateEndpointBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -51,7 +54,7 @@ class CreateOrUpdateEndpointBuilder
     }
 
     /**
-     * Initializes a new create or update endpoint object.
+     * Initializes a new Create Or Update Endpoint object.
      */
     public function build(): CreateOrUpdateEndpoint
     {

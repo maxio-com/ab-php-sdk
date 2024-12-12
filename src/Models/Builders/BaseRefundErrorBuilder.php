@@ -31,7 +31,7 @@ class BaseRefundErrorBuilder
     }
 
     /**
-     * Initializes a new base refund error Builder object.
+     * Initializes a new Base Refund Error Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class BaseRefundErrorBuilder
 
     /**
      * Sets base field.
+     *
+     * @param array[]|null $value
      */
     public function base(?array $value): self
     {
@@ -50,8 +52,8 @@ class BaseRefundErrorBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -60,7 +62,7 @@ class BaseRefundErrorBuilder
     }
 
     /**
-     * Initializes a new base refund error object.
+     * Initializes a new Base Refund Error object.
      */
     public function build(): BaseRefundError
     {

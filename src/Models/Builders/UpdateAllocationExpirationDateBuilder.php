@@ -32,7 +32,7 @@ class UpdateAllocationExpirationDateBuilder
     }
 
     /**
-     * Initializes a new update allocation expiration date Builder object.
+     * Initializes a new Update Allocation Expiration Date Builder object.
      */
     public static function init(): self
     {
@@ -41,6 +41,8 @@ class UpdateAllocationExpirationDateBuilder
 
     /**
      * Sets allocation field.
+     *
+     * @param AllocationExpirationDate|null $value
      */
     public function allocation(?AllocationExpirationDate $value): self
     {
@@ -51,8 +53,8 @@ class UpdateAllocationExpirationDateBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -61,7 +63,7 @@ class UpdateAllocationExpirationDateBuilder
     }
 
     /**
-     * Initializes a new update allocation expiration date object.
+     * Initializes a new Update Allocation Expiration Date object.
      */
     public function build(): UpdateAllocationExpirationDate
     {

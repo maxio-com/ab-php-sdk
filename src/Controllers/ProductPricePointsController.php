@@ -97,7 +97,8 @@ class ProductPricePointsController extends BaseController
                 QueryParam::init('filter[type]', $options)
                     ->commaSeparated()
                     ->extract('filterType')
-                    ->serializeBy([PricePointType::class, 'checkValue'])
+                    ->serializeBy([PricePointType::class, 'checkValue']),
+                QueryParam::init('archived', $options)->commaSeparated()->extract('archived')
             );
 
         $_resHandler = $this->responseHandler()->type(ListProductPricePointsResponse::class);

@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models\Builders;
 
+use AdvancedBillingLib\Models\CreateOrUpdateSegmentPrice;
 use AdvancedBillingLib\Models\CreateSegment;
 use Core\Utils\CoreHelper;
 
@@ -31,7 +32,9 @@ class CreateSegmentBuilder
     }
 
     /**
-     * Initializes a new create segment Builder object.
+     * Initializes a new Create Segment Builder object.
+     *
+     * @param string $pricingScheme
      */
     public static function init(string $pricingScheme): self
     {
@@ -40,6 +43,8 @@ class CreateSegmentBuilder
 
     /**
      * Sets segment property 1 value field.
+     *
+     * @param string|float|int|bool|null $value
      */
     public function segmentProperty1Value($value): self
     {
@@ -49,6 +54,8 @@ class CreateSegmentBuilder
 
     /**
      * Sets segment property 2 value field.
+     *
+     * @param string|float|int|bool|null $value
      */
     public function segmentProperty2Value($value): self
     {
@@ -58,6 +65,8 @@ class CreateSegmentBuilder
 
     /**
      * Sets segment property 3 value field.
+     *
+     * @param string|float|int|bool|null $value
      */
     public function segmentProperty3Value($value): self
     {
@@ -67,6 +76,8 @@ class CreateSegmentBuilder
 
     /**
      * Sets segment property 4 value field.
+     *
+     * @param string|float|int|bool|null $value
      */
     public function segmentProperty4Value($value): self
     {
@@ -76,6 +87,8 @@ class CreateSegmentBuilder
 
     /**
      * Sets prices field.
+     *
+     * @param CreateOrUpdateSegmentPrice[]|null $value
      */
     public function prices(?array $value): self
     {
@@ -86,8 +99,8 @@ class CreateSegmentBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -96,7 +109,7 @@ class CreateSegmentBuilder
     }
 
     /**
-     * Initializes a new create segment object.
+     * Initializes a new Create Segment object.
      */
     public function build(): CreateSegment
     {

@@ -33,7 +33,9 @@ class GroupSettingsBuilder
     }
 
     /**
-     * Initializes a new group settings Builder object.
+     * Initializes a new Group Settings Builder object.
+     *
+     * @param GroupTarget $target
      */
     public static function init(GroupTarget $target): self
     {
@@ -42,6 +44,8 @@ class GroupSettingsBuilder
 
     /**
      * Sets billing field.
+     *
+     * @param GroupBilling|null $value
      */
     public function billing(?GroupBilling $value): self
     {
@@ -52,8 +56,8 @@ class GroupSettingsBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -62,7 +66,7 @@ class GroupSettingsBuilder
     }
 
     /**
-     * Initializes a new group settings object.
+     * Initializes a new Group Settings object.
      */
     public function build(): GroupSettings
     {

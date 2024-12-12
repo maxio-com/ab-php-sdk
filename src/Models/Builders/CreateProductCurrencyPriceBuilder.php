@@ -31,7 +31,11 @@ class CreateProductCurrencyPriceBuilder
     }
 
     /**
-     * Initializes a new create product currency price Builder object.
+     * Initializes a new Create Product Currency Price Builder object.
+     *
+     * @param string $currency
+     * @param int $price
+     * @param string $role
      */
     public static function init(string $currency, int $price, string $role): self
     {
@@ -41,8 +45,8 @@ class CreateProductCurrencyPriceBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -51,7 +55,7 @@ class CreateProductCurrencyPriceBuilder
     }
 
     /**
-     * Initializes a new create product currency price object.
+     * Initializes a new Create Product Currency Price object.
      */
     public function build(): CreateProductCurrencyPrice
     {

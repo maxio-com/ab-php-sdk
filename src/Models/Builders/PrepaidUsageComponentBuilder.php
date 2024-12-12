@@ -10,8 +10,10 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models\Builders;
 
+use AdvancedBillingLib\Models\CreatePrepaidUsageComponentPricePoint;
 use AdvancedBillingLib\Models\OveragePricing;
 use AdvancedBillingLib\Models\PrepaidUsageComponent;
+use AdvancedBillingLib\Models\Price;
 use Core\Utils\CoreHelper;
 
 /**
@@ -32,24 +34,26 @@ class PrepaidUsageComponentBuilder
     }
 
     /**
-     * Initializes a new prepaid usage component Builder object.
+     * Initializes a new Prepaid Usage Component Builder object.
+     *
+     * @param string $name
+     * @param string $unitName
+     * @param string $pricingScheme
+     * @param OveragePricing $overagePricing
      */
-    public static function init(string $name): self
-    {
-        return new self(new PrepaidUsageComponent($name));
-    }
-
-    /**
-     * Sets unit name field.
-     */
-    public function unitName(?string $value): self
-    {
-        $this->instance->setUnitName($value);
-        return $this;
+    public static function init(
+        string $name,
+        string $unitName,
+        string $pricingScheme,
+        OveragePricing $overagePricing
+    ): self {
+        return new self(new PrepaidUsageComponent($name, $unitName, $pricingScheme, $overagePricing));
     }
 
     /**
      * Sets description field.
+     *
+     * @param string|null $value
      */
     public function description(?string $value): self
     {
@@ -59,6 +63,8 @@ class PrepaidUsageComponentBuilder
 
     /**
      * Sets handle field.
+     *
+     * @param string|null $value
      */
     public function handle(?string $value): self
     {
@@ -68,6 +74,8 @@ class PrepaidUsageComponentBuilder
 
     /**
      * Sets taxable field.
+     *
+     * @param bool|null $value
      */
     public function taxable(?bool $value): self
     {
@@ -76,16 +84,9 @@ class PrepaidUsageComponentBuilder
     }
 
     /**
-     * Sets pricing scheme field.
-     */
-    public function pricingScheme(?string $value): self
-    {
-        $this->instance->setPricingScheme($value);
-        return $this;
-    }
-
-    /**
      * Sets prices field.
+     *
+     * @param Price[]|null $value
      */
     public function prices(?array $value): self
     {
@@ -95,6 +96,8 @@ class PrepaidUsageComponentBuilder
 
     /**
      * Sets upgrade charge field.
+     *
+     * @param string|null $value
      */
     public function upgradeCharge(?string $value): self
     {
@@ -113,6 +116,8 @@ class PrepaidUsageComponentBuilder
 
     /**
      * Sets downgrade credit field.
+     *
+     * @param string|null $value
      */
     public function downgradeCredit(?string $value): self
     {
@@ -131,6 +136,8 @@ class PrepaidUsageComponentBuilder
 
     /**
      * Sets price points field.
+     *
+     * @param CreatePrepaidUsageComponentPricePoint[]|null $value
      */
     public function pricePoints(?array $value): self
     {
@@ -140,6 +147,8 @@ class PrepaidUsageComponentBuilder
 
     /**
      * Sets unit price field.
+     *
+     * @param string|float|null $value
      */
     public function unitPrice($value): self
     {
@@ -149,6 +158,8 @@ class PrepaidUsageComponentBuilder
 
     /**
      * Sets tax code field.
+     *
+     * @param string|null $value
      */
     public function taxCode(?string $value): self
     {
@@ -158,6 +169,8 @@ class PrepaidUsageComponentBuilder
 
     /**
      * Sets hide date range on invoice field.
+     *
+     * @param bool|null $value
      */
     public function hideDateRangeOnInvoice(?bool $value): self
     {
@@ -166,25 +179,9 @@ class PrepaidUsageComponentBuilder
     }
 
     /**
-     * Sets price in cents field.
-     */
-    public function priceInCents(?string $value): self
-    {
-        $this->instance->setPriceInCents($value);
-        return $this;
-    }
-
-    /**
-     * Sets overage pricing field.
-     */
-    public function overagePricing(?OveragePricing $value): self
-    {
-        $this->instance->setOveragePricing($value);
-        return $this;
-    }
-
-    /**
      * Sets rollover prepaid remainder field.
+     *
+     * @param bool|null $value
      */
     public function rolloverPrepaidRemainder(?bool $value): self
     {
@@ -194,6 +191,8 @@ class PrepaidUsageComponentBuilder
 
     /**
      * Sets renew prepaid allocation field.
+     *
+     * @param bool|null $value
      */
     public function renewPrepaidAllocation(?bool $value): self
     {
@@ -203,6 +202,8 @@ class PrepaidUsageComponentBuilder
 
     /**
      * Sets expiration interval field.
+     *
+     * @param float|null $value
      */
     public function expirationInterval(?float $value): self
     {
@@ -212,6 +213,8 @@ class PrepaidUsageComponentBuilder
 
     /**
      * Sets expiration interval unit field.
+     *
+     * @param string|null $value
      */
     public function expirationIntervalUnit(?string $value): self
     {
@@ -230,6 +233,8 @@ class PrepaidUsageComponentBuilder
 
     /**
      * Sets display on hosted page field.
+     *
+     * @param bool|null $value
      */
     public function displayOnHostedPage(?bool $value): self
     {
@@ -239,6 +244,8 @@ class PrepaidUsageComponentBuilder
 
     /**
      * Sets allow fractional quantities field.
+     *
+     * @param bool|null $value
      */
     public function allowFractionalQuantities(?bool $value): self
     {
@@ -248,6 +255,8 @@ class PrepaidUsageComponentBuilder
 
     /**
      * Sets public signup page ids field.
+     *
+     * @param int[]|null $value
      */
     public function publicSignupPageIds(?array $value): self
     {
@@ -258,8 +267,8 @@ class PrepaidUsageComponentBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -268,7 +277,7 @@ class PrepaidUsageComponentBuilder
     }
 
     /**
-     * Initializes a new prepaid usage component object.
+     * Initializes a new Prepaid Usage Component object.
      */
     public function build(): PrepaidUsageComponent
     {

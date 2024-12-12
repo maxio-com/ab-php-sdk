@@ -12,6 +12,7 @@ namespace AdvancedBillingLib\Models\Builders;
 
 use AdvancedBillingLib\Models\CalendarBilling;
 use AdvancedBillingLib\Models\SubscriptionCustomPrice;
+use AdvancedBillingLib\Models\SubscriptionGroupSignupComponent;
 use AdvancedBillingLib\Models\SubscriptionGroupSignupItem;
 use Core\Utils\CoreHelper;
 
@@ -33,7 +34,7 @@ class SubscriptionGroupSignupItemBuilder
     }
 
     /**
-     * Initializes a new subscription group signup item Builder object.
+     * Initializes a new Subscription Group Signup Item Builder object.
      */
     public static function init(): self
     {
@@ -42,6 +43,8 @@ class SubscriptionGroupSignupItemBuilder
 
     /**
      * Sets product handle field.
+     *
+     * @param string|null $value
      */
     public function productHandle(?string $value): self
     {
@@ -51,6 +54,8 @@ class SubscriptionGroupSignupItemBuilder
 
     /**
      * Sets product id field.
+     *
+     * @param int|null $value
      */
     public function productId(?int $value): self
     {
@@ -60,6 +65,8 @@ class SubscriptionGroupSignupItemBuilder
 
     /**
      * Sets product price point id field.
+     *
+     * @param int|null $value
      */
     public function productPricePointId(?int $value): self
     {
@@ -69,6 +76,8 @@ class SubscriptionGroupSignupItemBuilder
 
     /**
      * Sets product price point handle field.
+     *
+     * @param string|null $value
      */
     public function productPricePointHandle(?string $value): self
     {
@@ -78,6 +87,8 @@ class SubscriptionGroupSignupItemBuilder
 
     /**
      * Sets offer id field.
+     *
+     * @param int|null $value
      */
     public function offerId(?int $value): self
     {
@@ -87,6 +98,8 @@ class SubscriptionGroupSignupItemBuilder
 
     /**
      * Sets reference field.
+     *
+     * @param string|null $value
      */
     public function reference(?string $value): self
     {
@@ -96,6 +109,8 @@ class SubscriptionGroupSignupItemBuilder
 
     /**
      * Sets primary field.
+     *
+     * @param bool|null $value
      */
     public function primary(?bool $value): self
     {
@@ -105,6 +120,8 @@ class SubscriptionGroupSignupItemBuilder
 
     /**
      * Sets currency field.
+     *
+     * @param string|null $value
      */
     public function currency(?string $value): self
     {
@@ -114,6 +131,8 @@ class SubscriptionGroupSignupItemBuilder
 
     /**
      * Sets coupon codes field.
+     *
+     * @param string[]|null $value
      */
     public function couponCodes(?array $value): self
     {
@@ -123,6 +142,8 @@ class SubscriptionGroupSignupItemBuilder
 
     /**
      * Sets components field.
+     *
+     * @param SubscriptionGroupSignupComponent[]|null $value
      */
     public function components(?array $value): self
     {
@@ -132,6 +153,8 @@ class SubscriptionGroupSignupItemBuilder
 
     /**
      * Sets custom price field.
+     *
+     * @param SubscriptionCustomPrice|null $value
      */
     public function customPrice(?SubscriptionCustomPrice $value): self
     {
@@ -141,6 +164,8 @@ class SubscriptionGroupSignupItemBuilder
 
     /**
      * Sets calendar billing field.
+     *
+     * @param CalendarBilling|null $value
      */
     public function calendarBilling(?CalendarBilling $value): self
     {
@@ -150,6 +175,8 @@ class SubscriptionGroupSignupItemBuilder
 
     /**
      * Sets metafields field.
+     *
+     * @param array<string,string>|null $value
      */
     public function metafields(?array $value): self
     {
@@ -160,8 +187,8 @@ class SubscriptionGroupSignupItemBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -170,7 +197,7 @@ class SubscriptionGroupSignupItemBuilder
     }
 
     /**
-     * Initializes a new subscription group signup item object.
+     * Initializes a new Subscription Group Signup Item object.
      */
     public function build(): SubscriptionGroupSignupItem
     {

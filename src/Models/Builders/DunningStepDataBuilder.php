@@ -31,7 +31,13 @@ class DunningStepDataBuilder
     }
 
     /**
-     * Initializes a new dunning step data Builder object.
+     * Initializes a new Dunning Step Data Builder object.
+     *
+     * @param int $dayThreshold
+     * @param string $action
+     * @param bool $sendEmail
+     * @param bool $sendBccEmail
+     * @param bool $sendSms
      */
     public static function init(
         int $dayThreshold,
@@ -45,6 +51,8 @@ class DunningStepDataBuilder
 
     /**
      * Sets email body field.
+     *
+     * @param string|null $value
      */
     public function emailBody(?string $value): self
     {
@@ -63,6 +71,8 @@ class DunningStepDataBuilder
 
     /**
      * Sets email subject field.
+     *
+     * @param string|null $value
      */
     public function emailSubject(?string $value): self
     {
@@ -81,6 +91,8 @@ class DunningStepDataBuilder
 
     /**
      * Sets sms body field.
+     *
+     * @param string|null $value
      */
     public function smsBody(?string $value): self
     {
@@ -100,8 +112,8 @@ class DunningStepDataBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -110,7 +122,7 @@ class DunningStepDataBuilder
     }
 
     /**
-     * Initializes a new dunning step data object.
+     * Initializes a new Dunning Step Data object.
      */
     public function build(): DunningStepData
     {

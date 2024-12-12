@@ -1,5 +1,5 @@
 
-# Create or Update Percentage Coupon Percentage
+# Coupon Payload Percentage
 
 ## Data Type
 

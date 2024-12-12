@@ -32,7 +32,9 @@ class UpdateReasonCodeRequestBuilder
     }
 
     /**
-     * Initializes a new update reason code request Builder object.
+     * Initializes a new Update Reason Code Request Builder object.
+     *
+     * @param UpdateReasonCode $reasonCode
      */
     public static function init(UpdateReasonCode $reasonCode): self
     {
@@ -42,8 +44,8 @@ class UpdateReasonCodeRequestBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -52,7 +54,7 @@ class UpdateReasonCodeRequestBuilder
     }
 
     /**
-     * Initializes a new update reason code request object.
+     * Initializes a new Update Reason Code Request object.
      */
     public function build(): UpdateReasonCodeRequest
     {

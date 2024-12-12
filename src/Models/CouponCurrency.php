@@ -15,9 +15,9 @@ use stdClass;
 class CouponCurrency implements \JsonSerializable
 {
     /**
-     * @var int|null
+     * @var array
      */
-    private $id;
+    private $id = [];
 
     /**
      * @var string|null
@@ -25,9 +25,9 @@ class CouponCurrency implements \JsonSerializable
     private $currency;
 
     /**
-     * @var int|null
+     * @var array
      */
-    private $price;
+    private $price = [];
 
     /**
      * @var int|null
@@ -39,7 +39,10 @@ class CouponCurrency implements \JsonSerializable
      */
     public function getId(): ?int
     {
-        return $this->id;
+        if (count($this->id) == 0) {
+            return null;
+        }
+        return $this->id['value'];
     }
 
     /**
@@ -49,7 +52,15 @@ class CouponCurrency implements \JsonSerializable
      */
     public function setId(?int $id): void
     {
-        $this->id = $id;
+        $this->id['value'] = $id;
+    }
+
+    /**
+     * Unsets Id.
+     */
+    public function unsetId(): void
+    {
+        $this->id = [];
     }
 
     /**
@@ -73,9 +84,12 @@ class CouponCurrency implements \JsonSerializable
     /**
      * Returns Price.
      */
-    public function getPrice(): ?int
+    public function getPrice(): ?float
     {
-        return $this->price;
+        if (count($this->price) == 0) {
+            return null;
+        }
+        return $this->price['value'];
     }
 
     /**
@@ -83,9 +97,17 @@ class CouponCurrency implements \JsonSerializable
      *
      * @maps price
      */
-    public function setPrice(?int $price): void
+    public function setPrice(?float $price): void
     {
-        $this->price = $price;
+        $this->price['value'] = $price;
+    }
+
+    /**
+     * Unsets Price.
+     */
+    public function unsetPrice(): void
+    {
+        $this->price = [];
     }
 
     /**
@@ -111,12 +133,27 @@ class CouponCurrency implements \JsonSerializable
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function addAdditionalProperty(string $name, $value)
     {
         $this->additionalProperties[$name] = $value;
+    }
+
+    /**
+     * Find an additional property by name in this model or false if property does not exist.
+     *
+     * @param string $name Name of property.
+     *
+     * @return mixed|false Value of the property.
+     */
+    public function findAdditionalProperty(string $name)
+    {
+        if (isset($this->additionalProperties[$name])) {
+            return $this->additionalProperties[$name];
+        }
+        return false;
     }
 
     /**
@@ -131,14 +168,14 @@ class CouponCurrency implements \JsonSerializable
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
-        if (isset($this->id)) {
-            $json['id']        = $this->id;
+        if (!empty($this->id)) {
+            $json['id']        = $this->id['value'];
         }
         if (isset($this->currency)) {
             $json['currency']  = $this->currency;
         }
-        if (isset($this->price)) {
-            $json['price']     = $this->price;
+        if (!empty($this->price)) {
+            $json['price']     = $this->price['value'];
         }
         if (isset($this->couponId)) {
             $json['coupon_id'] = $this->couponId;

@@ -31,7 +31,7 @@ class CouponCurrencyBuilder
     }
 
     /**
-     * Initializes a new coupon currency Builder object.
+     * Initializes a new Coupon Currency Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class CouponCurrencyBuilder
 
     /**
      * Sets id field.
+     *
+     * @param int|null $value
      */
     public function id(?int $value): self
     {
@@ -48,7 +50,18 @@ class CouponCurrencyBuilder
     }
 
     /**
+     * Unsets id field.
+     */
+    public function unsetId(): self
+    {
+        $this->instance->unsetId();
+        return $this;
+    }
+
+    /**
      * Sets currency field.
+     *
+     * @param string|null $value
      */
     public function currency(?string $value): self
     {
@@ -58,15 +71,28 @@ class CouponCurrencyBuilder
 
     /**
      * Sets price field.
+     *
+     * @param float|null $value
      */
-    public function price(?int $value): self
+    public function price(?float $value): self
     {
         $this->instance->setPrice($value);
         return $this;
     }
 
     /**
+     * Unsets price field.
+     */
+    public function unsetPrice(): self
+    {
+        $this->instance->unsetPrice();
+        return $this;
+    }
+
+    /**
      * Sets coupon id field.
+     *
+     * @param int|null $value
      */
     public function couponId(?int $value): self
     {
@@ -77,8 +103,8 @@ class CouponCurrencyBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -87,7 +113,7 @@ class CouponCurrencyBuilder
     }
 
     /**
-     * Initializes a new coupon currency object.
+     * Initializes a new Coupon Currency object.
      */
     public function build(): CouponCurrency
     {

@@ -31,7 +31,12 @@ class SubscriptionGroupPrepaymentBuilder
     }
 
     /**
-     * Initializes a new subscription group prepayment Builder object.
+     * Initializes a new Subscription Group Prepayment Builder object.
+     *
+     * @param int $amount
+     * @param string $details
+     * @param string $memo
+     * @param string $method
      */
     public static function init(int $amount, string $details, string $memo, string $method): self
     {
@@ -41,8 +46,8 @@ class SubscriptionGroupPrepaymentBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -51,7 +56,7 @@ class SubscriptionGroupPrepaymentBuilder
     }
 
     /**
-     * Initializes a new subscription group prepayment object.
+     * Initializes a new Subscription Group Prepayment object.
      */
     public function build(): SubscriptionGroupPrepayment
     {

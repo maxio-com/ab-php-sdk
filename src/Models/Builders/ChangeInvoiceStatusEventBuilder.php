@@ -33,7 +33,13 @@ class ChangeInvoiceStatusEventBuilder
     }
 
     /**
-     * Initializes a new change invoice status event Builder object.
+     * Initializes a new Change Invoice Status Event Builder object.
+     *
+     * @param int $id
+     * @param \DateTime $timestamp
+     * @param Invoice $invoice
+     * @param string $eventType
+     * @param ChangeInvoiceStatusEventData $eventData
      */
     public static function init(
         int $id,
@@ -48,8 +54,8 @@ class ChangeInvoiceStatusEventBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -58,7 +64,7 @@ class ChangeInvoiceStatusEventBuilder
     }
 
     /**
-     * Initializes a new change invoice status event object.
+     * Initializes a new Change Invoice Status Event object.
      */
     public function build(): ChangeInvoiceStatusEvent
     {

@@ -31,7 +31,7 @@ class RenewalPreviewComponentBuilder
     }
 
     /**
-     * Initializes a new renewal preview component Builder object.
+     * Initializes a new Renewal Preview Component Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class RenewalPreviewComponentBuilder
 
     /**
      * Sets component id field.
+     *
+     * @param string|int|null $value
      */
     public function componentId($value): self
     {
@@ -49,6 +51,8 @@ class RenewalPreviewComponentBuilder
 
     /**
      * Sets quantity field.
+     *
+     * @param int|null $value
      */
     public function quantity(?int $value): self
     {
@@ -58,6 +62,8 @@ class RenewalPreviewComponentBuilder
 
     /**
      * Sets price point id field.
+     *
+     * @param string|int|null $value
      */
     public function pricePointId($value): self
     {
@@ -68,8 +74,8 @@ class RenewalPreviewComponentBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -78,7 +84,7 @@ class RenewalPreviewComponentBuilder
     }
 
     /**
-     * Initializes a new renewal preview component object.
+     * Initializes a new Renewal Preview Component object.
      */
     public function build(): RenewalPreviewComponent
     {

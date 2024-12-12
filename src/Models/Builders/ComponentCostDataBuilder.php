@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace AdvancedBillingLib\Models\Builders;
 
 use AdvancedBillingLib\Models\ComponentCostData;
+use AdvancedBillingLib\Models\ComponentCostDataRateTier;
 use Core\Utils\CoreHelper;
 
 /**
@@ -31,7 +32,7 @@ class ComponentCostDataBuilder
     }
 
     /**
-     * Initializes a new component cost data Builder object.
+     * Initializes a new Component Cost Data Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +41,8 @@ class ComponentCostDataBuilder
 
     /**
      * Sets component code id field.
+     *
+     * @param int|null $value
      */
     public function componentCodeId(?int $value): self
     {
@@ -58,6 +61,8 @@ class ComponentCostDataBuilder
 
     /**
      * Sets price point id field.
+     *
+     * @param int|null $value
      */
     public function pricePointId(?int $value): self
     {
@@ -67,6 +72,8 @@ class ComponentCostDataBuilder
 
     /**
      * Sets product id field.
+     *
+     * @param int|null $value
      */
     public function productId(?int $value): self
     {
@@ -76,6 +83,8 @@ class ComponentCostDataBuilder
 
     /**
      * Sets quantity field.
+     *
+     * @param string|null $value
      */
     public function quantity(?string $value): self
     {
@@ -85,6 +94,8 @@ class ComponentCostDataBuilder
 
     /**
      * Sets amount field.
+     *
+     * @param string|null $value
      */
     public function amount(?string $value): self
     {
@@ -94,6 +105,8 @@ class ComponentCostDataBuilder
 
     /**
      * Sets pricing scheme field.
+     *
+     * @param string|null $value
      */
     public function pricingScheme(?string $value): self
     {
@@ -103,6 +116,8 @@ class ComponentCostDataBuilder
 
     /**
      * Sets tiers field.
+     *
+     * @param ComponentCostDataRateTier[]|null $value
      */
     public function tiers(?array $value): self
     {
@@ -113,8 +128,8 @@ class ComponentCostDataBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -123,7 +138,7 @@ class ComponentCostDataBuilder
     }
 
     /**
-     * Initializes a new component cost data object.
+     * Initializes a new Component Cost Data object.
      */
     public function build(): ComponentCostData
     {

@@ -15,6 +15,7 @@ use AdvancedBillingLib\Models\AgreementAcceptance;
 use AdvancedBillingLib\Models\BankAccountAttributes;
 use AdvancedBillingLib\Models\CalendarBilling;
 use AdvancedBillingLib\Models\CreateSubscription;
+use AdvancedBillingLib\Models\CreateSubscriptionComponent;
 use AdvancedBillingLib\Models\CustomerAttributes;
 use AdvancedBillingLib\Models\GroupSettings;
 use AdvancedBillingLib\Models\PaymentProfileAttributes;
@@ -40,7 +41,7 @@ class CreateSubscriptionBuilder
     }
 
     /**
-     * Initializes a new create subscription Builder object.
+     * Initializes a new Create Subscription Builder object.
      */
     public static function init(): self
     {
@@ -49,6 +50,8 @@ class CreateSubscriptionBuilder
 
     /**
      * Sets product handle field.
+     *
+     * @param string|null $value
      */
     public function productHandle(?string $value): self
     {
@@ -58,6 +61,8 @@ class CreateSubscriptionBuilder
 
     /**
      * Sets product id field.
+     *
+     * @param int|null $value
      */
     public function productId(?int $value): self
     {
@@ -67,6 +72,8 @@ class CreateSubscriptionBuilder
 
     /**
      * Sets product price point handle field.
+     *
+     * @param string|null $value
      */
     public function productPricePointHandle(?string $value): self
     {
@@ -76,6 +83,8 @@ class CreateSubscriptionBuilder
 
     /**
      * Sets product price point id field.
+     *
+     * @param int|null $value
      */
     public function productPricePointId(?int $value): self
     {
@@ -85,6 +94,8 @@ class CreateSubscriptionBuilder
 
     /**
      * Sets custom price field.
+     *
+     * @param SubscriptionCustomPrice|null $value
      */
     public function customPrice(?SubscriptionCustomPrice $value): self
     {
@@ -94,6 +105,8 @@ class CreateSubscriptionBuilder
 
     /**
      * Sets coupon code field.
+     *
+     * @param string|null $value
      */
     public function couponCode(?string $value): self
     {
@@ -103,6 +116,8 @@ class CreateSubscriptionBuilder
 
     /**
      * Sets coupon codes field.
+     *
+     * @param string[]|null $value
      */
     public function couponCodes(?array $value): self
     {
@@ -112,6 +127,8 @@ class CreateSubscriptionBuilder
 
     /**
      * Sets payment collection method field.
+     *
+     * @param string|null $value
      */
     public function paymentCollectionMethod(?string $value): self
     {
@@ -121,6 +138,8 @@ class CreateSubscriptionBuilder
 
     /**
      * Sets receives invoice emails field.
+     *
+     * @param string|null $value
      */
     public function receivesInvoiceEmails(?string $value): self
     {
@@ -130,6 +149,8 @@ class CreateSubscriptionBuilder
 
     /**
      * Sets net terms field.
+     *
+     * @param string|null $value
      */
     public function netTerms(?string $value): self
     {
@@ -139,6 +160,8 @@ class CreateSubscriptionBuilder
 
     /**
      * Sets customer id field.
+     *
+     * @param int|null $value
      */
     public function customerId(?int $value): self
     {
@@ -148,6 +171,8 @@ class CreateSubscriptionBuilder
 
     /**
      * Sets next billing at field.
+     *
+     * @param \DateTime|null $value
      */
     public function nextBillingAt(?\DateTime $value): self
     {
@@ -157,6 +182,8 @@ class CreateSubscriptionBuilder
 
     /**
      * Sets initial billing at field.
+     *
+     * @param \DateTime|null $value
      */
     public function initialBillingAt(?\DateTime $value): self
     {
@@ -166,6 +193,8 @@ class CreateSubscriptionBuilder
 
     /**
      * Sets stored credential transaction id field.
+     *
+     * @param int|null $value
      */
     public function storedCredentialTransactionId(?int $value): self
     {
@@ -175,6 +204,8 @@ class CreateSubscriptionBuilder
 
     /**
      * Sets sales rep id field.
+     *
+     * @param int|null $value
      */
     public function salesRepId(?int $value): self
     {
@@ -184,6 +215,8 @@ class CreateSubscriptionBuilder
 
     /**
      * Sets payment profile id field.
+     *
+     * @param int|null $value
      */
     public function paymentProfileId(?int $value): self
     {
@@ -193,6 +226,8 @@ class CreateSubscriptionBuilder
 
     /**
      * Sets reference field.
+     *
+     * @param string|null $value
      */
     public function reference(?string $value): self
     {
@@ -202,6 +237,8 @@ class CreateSubscriptionBuilder
 
     /**
      * Sets customer attributes field.
+     *
+     * @param CustomerAttributes|null $value
      */
     public function customerAttributes(?CustomerAttributes $value): self
     {
@@ -211,6 +248,8 @@ class CreateSubscriptionBuilder
 
     /**
      * Sets payment profile attributes field.
+     *
+     * @param PaymentProfileAttributes|null $value
      */
     public function paymentProfileAttributes(?PaymentProfileAttributes $value): self
     {
@@ -220,6 +259,8 @@ class CreateSubscriptionBuilder
 
     /**
      * Sets credit card attributes field.
+     *
+     * @param PaymentProfileAttributes|null $value
      */
     public function creditCardAttributes(?PaymentProfileAttributes $value): self
     {
@@ -229,6 +270,8 @@ class CreateSubscriptionBuilder
 
     /**
      * Sets bank account attributes field.
+     *
+     * @param BankAccountAttributes|null $value
      */
     public function bankAccountAttributes(?BankAccountAttributes $value): self
     {
@@ -238,6 +281,8 @@ class CreateSubscriptionBuilder
 
     /**
      * Sets components field.
+     *
+     * @param CreateSubscriptionComponent[]|null $value
      */
     public function components(?array $value): self
     {
@@ -247,6 +292,8 @@ class CreateSubscriptionBuilder
 
     /**
      * Sets calendar billing field.
+     *
+     * @param CalendarBilling|null $value
      */
     public function calendarBilling(?CalendarBilling $value): self
     {
@@ -256,6 +303,8 @@ class CreateSubscriptionBuilder
 
     /**
      * Sets metafields field.
+     *
+     * @param array<string,string>|null $value
      */
     public function metafields(?array $value): self
     {
@@ -265,6 +314,8 @@ class CreateSubscriptionBuilder
 
     /**
      * Sets customer reference field.
+     *
+     * @param string|null $value
      */
     public function customerReference(?string $value): self
     {
@@ -274,6 +325,8 @@ class CreateSubscriptionBuilder
 
     /**
      * Sets group field.
+     *
+     * @param GroupSettings|null $value
      */
     public function group(?GroupSettings $value): self
     {
@@ -283,6 +336,8 @@ class CreateSubscriptionBuilder
 
     /**
      * Sets ref field.
+     *
+     * @param string|null $value
      */
     public function ref(?string $value): self
     {
@@ -292,6 +347,8 @@ class CreateSubscriptionBuilder
 
     /**
      * Sets cancellation message field.
+     *
+     * @param string|null $value
      */
     public function cancellationMessage(?string $value): self
     {
@@ -301,6 +358,8 @@ class CreateSubscriptionBuilder
 
     /**
      * Sets cancellation method field.
+     *
+     * @param string|null $value
      */
     public function cancellationMethod(?string $value): self
     {
@@ -310,6 +369,8 @@ class CreateSubscriptionBuilder
 
     /**
      * Sets currency field.
+     *
+     * @param string|null $value
      */
     public function currency(?string $value): self
     {
@@ -319,6 +380,8 @@ class CreateSubscriptionBuilder
 
     /**
      * Sets expires at field.
+     *
+     * @param \DateTime|null $value
      */
     public function expiresAt(?\DateTime $value): self
     {
@@ -328,6 +391,8 @@ class CreateSubscriptionBuilder
 
     /**
      * Sets expiration tracks next billing change field.
+     *
+     * @param string|null $value
      */
     public function expirationTracksNextBillingChange(?string $value): self
     {
@@ -337,6 +402,8 @@ class CreateSubscriptionBuilder
 
     /**
      * Sets agreement terms field.
+     *
+     * @param string|null $value
      */
     public function agreementTerms(?string $value): self
     {
@@ -346,6 +413,8 @@ class CreateSubscriptionBuilder
 
     /**
      * Sets authorizer first name field.
+     *
+     * @param string|null $value
      */
     public function authorizerFirstName(?string $value): self
     {
@@ -355,6 +424,8 @@ class CreateSubscriptionBuilder
 
     /**
      * Sets authorizer last name field.
+     *
+     * @param string|null $value
      */
     public function authorizerLastName(?string $value): self
     {
@@ -364,6 +435,8 @@ class CreateSubscriptionBuilder
 
     /**
      * Sets calendar billing first charge field.
+     *
+     * @param string|null $value
      */
     public function calendarBillingFirstCharge(?string $value): self
     {
@@ -373,6 +446,8 @@ class CreateSubscriptionBuilder
 
     /**
      * Sets reason code field.
+     *
+     * @param string|null $value
      */
     public function reasonCode(?string $value): self
     {
@@ -382,6 +457,8 @@ class CreateSubscriptionBuilder
 
     /**
      * Sets product change delayed field.
+     *
+     * @param bool|null $value
      */
     public function productChangeDelayed(?bool $value): self
     {
@@ -391,6 +468,8 @@ class CreateSubscriptionBuilder
 
     /**
      * Sets offer id field.
+     *
+     * @param string|int|null $value
      */
     public function offerId($value): self
     {
@@ -400,6 +479,8 @@ class CreateSubscriptionBuilder
 
     /**
      * Sets prepaid configuration field.
+     *
+     * @param UpsertPrepaidConfiguration|null $value
      */
     public function prepaidConfiguration(?UpsertPrepaidConfiguration $value): self
     {
@@ -409,6 +490,8 @@ class CreateSubscriptionBuilder
 
     /**
      * Sets previous billing at field.
+     *
+     * @param \DateTime|null $value
      */
     public function previousBillingAt(?\DateTime $value): self
     {
@@ -418,6 +501,8 @@ class CreateSubscriptionBuilder
 
     /**
      * Sets import mrr field.
+     *
+     * @param bool|null $value
      */
     public function importMrr(?bool $value): self
     {
@@ -427,6 +512,8 @@ class CreateSubscriptionBuilder
 
     /**
      * Sets canceled at field.
+     *
+     * @param \DateTime|null $value
      */
     public function canceledAt(?\DateTime $value): self
     {
@@ -436,6 +523,8 @@ class CreateSubscriptionBuilder
 
     /**
      * Sets activated at field.
+     *
+     * @param \DateTime|null $value
      */
     public function activatedAt(?\DateTime $value): self
     {
@@ -445,6 +534,8 @@ class CreateSubscriptionBuilder
 
     /**
      * Sets agreement acceptance field.
+     *
+     * @param AgreementAcceptance|null $value
      */
     public function agreementAcceptance(?AgreementAcceptance $value): self
     {
@@ -454,6 +545,8 @@ class CreateSubscriptionBuilder
 
     /**
      * Sets ach agreement field.
+     *
+     * @param ACHAgreement|null $value
      */
     public function achAgreement(?ACHAgreement $value): self
     {
@@ -463,6 +556,8 @@ class CreateSubscriptionBuilder
 
     /**
      * Sets dunning communication delay enabled field.
+     *
+     * @param bool|null $value
      */
     public function dunningCommunicationDelayEnabled(?bool $value): self
     {
@@ -471,16 +566,9 @@ class CreateSubscriptionBuilder
     }
 
     /**
-     * Unsets dunning communication delay enabled field.
-     */
-    public function unsetDunningCommunicationDelayEnabled(): self
-    {
-        $this->instance->unsetDunningCommunicationDelayEnabled();
-        return $this;
-    }
-
-    /**
      * Sets dunning communication delay time zone field.
+     *
+     * @param string|null $value
      */
     public function dunningCommunicationDelayTimeZone(?string $value): self
     {
@@ -499,6 +587,8 @@ class CreateSubscriptionBuilder
 
     /**
      * Sets skip billing manifest taxes field.
+     *
+     * @param bool|null $value
      */
     public function skipBillingManifestTaxes(?bool $value): self
     {
@@ -509,8 +599,8 @@ class CreateSubscriptionBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -519,7 +609,7 @@ class CreateSubscriptionBuilder
     }
 
     /**
-     * Initializes a new create subscription object.
+     * Initializes a new Create Subscription object.
      */
     public function build(): CreateSubscription
     {

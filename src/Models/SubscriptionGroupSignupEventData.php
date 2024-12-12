@@ -12,7 +12,7 @@ namespace AdvancedBillingLib\Models;
 
 use stdClass;
 
-class SubscriptionGroupSignupFailure implements \JsonSerializable
+class SubscriptionGroupSignupEventData implements \JsonSerializable
 {
     /**
      * @var SubscriptionGroupSignupFailureData
@@ -20,7 +20,7 @@ class SubscriptionGroupSignupFailure implements \JsonSerializable
     private $subscriptionGroup;
 
     /**
-     * @var string|null
+     * @var Customer|null
      */
     private $customer;
 
@@ -54,7 +54,7 @@ class SubscriptionGroupSignupFailure implements \JsonSerializable
     /**
      * Returns Customer.
      */
-    public function getCustomer(): ?string
+    public function getCustomer(): ?Customer
     {
         return $this->customer;
     }
@@ -64,7 +64,7 @@ class SubscriptionGroupSignupFailure implements \JsonSerializable
      *
      * @maps customer
      */
-    public function setCustomer(?string $customer): void
+    public function setCustomer(?Customer $customer): void
     {
         $this->customer = $customer;
     }
@@ -74,12 +74,27 @@ class SubscriptionGroupSignupFailure implements \JsonSerializable
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function addAdditionalProperty(string $name, $value)
     {
         $this->additionalProperties[$name] = $value;
+    }
+
+    /**
+     * Find an additional property by name in this model or false if property does not exist.
+     *
+     * @param string $name Name of property.
+     *
+     * @return mixed|false Value of the property.
+     */
+    public function findAdditionalProperty(string $name)
+    {
+        if (isset($this->additionalProperties[$name])) {
+            return $this->additionalProperties[$name];
+        }
+        return false;
     }
 
     /**

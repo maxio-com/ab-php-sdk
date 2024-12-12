@@ -32,7 +32,7 @@ class CreateUsageBuilder
     }
 
     /**
-     * Initializes a new create usage Builder object.
+     * Initializes a new Create Usage Builder object.
      */
     public static function init(): self
     {
@@ -41,6 +41,8 @@ class CreateUsageBuilder
 
     /**
      * Sets quantity field.
+     *
+     * @param float|null $value
      */
     public function quantity(?float $value): self
     {
@@ -50,6 +52,8 @@ class CreateUsageBuilder
 
     /**
      * Sets price point id field.
+     *
+     * @param string|null $value
      */
     public function pricePointId(?string $value): self
     {
@@ -59,6 +63,8 @@ class CreateUsageBuilder
 
     /**
      * Sets memo field.
+     *
+     * @param string|null $value
      */
     public function memo(?string $value): self
     {
@@ -68,6 +74,8 @@ class CreateUsageBuilder
 
     /**
      * Sets billing schedule field.
+     *
+     * @param BillingSchedule|null $value
      */
     public function billingSchedule(?BillingSchedule $value): self
     {
@@ -78,8 +86,8 @@ class CreateUsageBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -88,7 +96,7 @@ class CreateUsageBuilder
     }
 
     /**
-     * Initializes a new create usage object.
+     * Initializes a new Create Usage object.
      */
     public function build(): CreateUsage
     {

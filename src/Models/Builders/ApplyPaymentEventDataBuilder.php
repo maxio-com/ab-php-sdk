@@ -11,6 +11,11 @@ declare(strict_types=1);
 namespace AdvancedBillingLib\Models\Builders;
 
 use AdvancedBillingLib\Models\ApplyPaymentEventData;
+use AdvancedBillingLib\Models\PaymentMethodApplePay;
+use AdvancedBillingLib\Models\PaymentMethodBankAccount;
+use AdvancedBillingLib\Models\PaymentMethodCreditCard;
+use AdvancedBillingLib\Models\PaymentMethodExternal;
+use AdvancedBillingLib\Models\PaymentMethodPaypal;
 use Core\Utils\CoreHelper;
 
 /**
@@ -31,7 +36,14 @@ class ApplyPaymentEventDataBuilder
     }
 
     /**
-     * Initializes a new apply payment event data Builder object.
+     * Initializes a new Apply Payment Event Data Builder object.
+     *
+     * @param string $consolidationLevel
+     * @param string $memo
+     * @param string $originalAmount
+     * @param string $appliedAmount
+     * @param \DateTime $transactionTime
+     * @param PaymentMethodApplePay|PaymentMethodBankAccount|PaymentMethodCreditCard|PaymentMethodExternal|PaymentMethodPaypal $paymentMethod
      */
     public static function init(
         string $consolidationLevel,
@@ -53,6 +65,8 @@ class ApplyPaymentEventDataBuilder
 
     /**
      * Sets transaction id field.
+     *
+     * @param int|null $value
      */
     public function transactionId(?int $value): self
     {
@@ -62,6 +76,8 @@ class ApplyPaymentEventDataBuilder
 
     /**
      * Sets parent invoice number field.
+     *
+     * @param int|null $value
      */
     public function parentInvoiceNumber(?int $value): self
     {
@@ -80,6 +96,8 @@ class ApplyPaymentEventDataBuilder
 
     /**
      * Sets remaining prepayment amount field.
+     *
+     * @param string|null $value
      */
     public function remainingPrepaymentAmount(?string $value): self
     {
@@ -98,6 +116,8 @@ class ApplyPaymentEventDataBuilder
 
     /**
      * Sets prepayment field.
+     *
+     * @param bool|null $value
      */
     public function prepayment(?bool $value): self
     {
@@ -107,6 +127,8 @@ class ApplyPaymentEventDataBuilder
 
     /**
      * Sets external field.
+     *
+     * @param bool|null $value
      */
     public function external(?bool $value): self
     {
@@ -117,8 +139,8 @@ class ApplyPaymentEventDataBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -127,7 +149,7 @@ class ApplyPaymentEventDataBuilder
     }
 
     /**
-     * Initializes a new apply payment event data object.
+     * Initializes a new Apply Payment Event Data object.
      */
     public function build(): ApplyPaymentEventData
     {

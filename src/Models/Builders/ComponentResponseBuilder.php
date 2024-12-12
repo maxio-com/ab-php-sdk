@@ -32,7 +32,9 @@ class ComponentResponseBuilder
     }
 
     /**
-     * Initializes a new component response Builder object.
+     * Initializes a new Component Response Builder object.
+     *
+     * @param Component $component
      */
     public static function init(Component $component): self
     {
@@ -42,8 +44,8 @@ class ComponentResponseBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -52,7 +54,7 @@ class ComponentResponseBuilder
     }
 
     /**
-     * Initializes a new component response object.
+     * Initializes a new Component Response object.
      */
     public function build(): ComponentResponse
     {

@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models\Builders;
 
+use AdvancedBillingLib\Models\InvoicePaymentApplication;
 use AdvancedBillingLib\Models\MultiInvoicePayment;
 use Core\Utils\CoreHelper;
 
@@ -31,7 +32,7 @@ class MultiInvoicePaymentBuilder
     }
 
     /**
-     * Initializes a new multi invoice payment Builder object.
+     * Initializes a new Multi Invoice Payment Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +41,8 @@ class MultiInvoicePaymentBuilder
 
     /**
      * Sets transaction id field.
+     *
+     * @param int|null $value
      */
     public function transactionId(?int $value): self
     {
@@ -49,6 +52,8 @@ class MultiInvoicePaymentBuilder
 
     /**
      * Sets total amount field.
+     *
+     * @param string|null $value
      */
     public function totalAmount(?string $value): self
     {
@@ -58,6 +63,8 @@ class MultiInvoicePaymentBuilder
 
     /**
      * Sets currency code field.
+     *
+     * @param string|null $value
      */
     public function currencyCode(?string $value): self
     {
@@ -67,6 +74,8 @@ class MultiInvoicePaymentBuilder
 
     /**
      * Sets applications field.
+     *
+     * @param InvoicePaymentApplication[]|null $value
      */
     public function applications(?array $value): self
     {
@@ -77,8 +86,8 @@ class MultiInvoicePaymentBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -87,7 +96,7 @@ class MultiInvoicePaymentBuilder
     }
 
     /**
-     * Initializes a new multi invoice payment object.
+     * Initializes a new Multi Invoice Payment object.
      */
     public function build(): MultiInvoicePayment
     {

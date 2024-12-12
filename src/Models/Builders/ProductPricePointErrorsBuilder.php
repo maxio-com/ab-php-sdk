@@ -31,7 +31,7 @@ class ProductPricePointErrorsBuilder
     }
 
     /**
-     * Initializes a new product price point errors Builder object.
+     * Initializes a new Product Price Point Errors Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class ProductPricePointErrorsBuilder
 
     /**
      * Sets price point field.
+     *
+     * @param string|null $value
      */
     public function pricePoint(?string $value): self
     {
@@ -49,6 +51,8 @@ class ProductPricePointErrorsBuilder
 
     /**
      * Sets interval field.
+     *
+     * @param string[]|null $value
      */
     public function interval(?array $value): self
     {
@@ -58,6 +62,8 @@ class ProductPricePointErrorsBuilder
 
     /**
      * Sets interval unit field.
+     *
+     * @param string[]|null $value
      */
     public function intervalUnit(?array $value): self
     {
@@ -67,6 +73,8 @@ class ProductPricePointErrorsBuilder
 
     /**
      * Sets name field.
+     *
+     * @param string[]|null $value
      */
     public function name(?array $value): self
     {
@@ -76,6 +84,8 @@ class ProductPricePointErrorsBuilder
 
     /**
      * Sets price field.
+     *
+     * @param string[]|null $value
      */
     public function price(?array $value): self
     {
@@ -85,6 +95,8 @@ class ProductPricePointErrorsBuilder
 
     /**
      * Sets price in cents field.
+     *
+     * @param string[]|null $value
      */
     public function priceInCents(?array $value): self
     {
@@ -95,8 +107,8 @@ class ProductPricePointErrorsBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -105,7 +117,7 @@ class ProductPricePointErrorsBuilder
     }
 
     /**
-     * Initializes a new product price point errors object.
+     * Initializes a new Product Price Point Errors object.
      */
     public function build(): ProductPricePointErrors
     {

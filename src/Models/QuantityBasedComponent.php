@@ -81,11 +81,6 @@ class QuantityBasedComponent implements \JsonSerializable
     private $hideDateRangeOnInvoice;
 
     /**
-     * @var string|null
-     */
-    private $priceInCents;
-
-    /**
      * @var bool|null
      */
     private $recurring;
@@ -465,26 +460,6 @@ class QuantityBasedComponent implements \JsonSerializable
     }
 
     /**
-     * Returns Price in Cents.
-     * deprecated May 2011 - use unit_price instead
-     */
-    public function getPriceInCents(): ?string
-    {
-        return $this->priceInCents;
-    }
-
-    /**
-     * Sets Price in Cents.
-     * deprecated May 2011 - use unit_price instead
-     *
-     * @maps price_in_cents
-     */
-    public function setPriceInCents(?string $priceInCents): void
-    {
-        $this->priceInCents = $priceInCents;
-    }
-
-    /**
      * Returns Recurring.
      */
     public function getRecurring(): ?bool
@@ -625,12 +600,27 @@ class QuantityBasedComponent implements \JsonSerializable
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function addAdditionalProperty(string $name, $value)
     {
         $this->additionalProperties[$name] = $value;
+    }
+
+    /**
+     * Find an additional property by name in this model or false if property does not exist.
+     *
+     * @param string $name Name of property.
+     *
+     * @return mixed|false Value of the property.
+     */
+    public function findAdditionalProperty(string $name)
+    {
+        if (isset($this->additionalProperties[$name])) {
+            return $this->additionalProperties[$name];
+        }
+        return false;
     }
 
     /**
@@ -681,9 +671,6 @@ class QuantityBasedComponent implements \JsonSerializable
         }
         if (isset($this->hideDateRangeOnInvoice)) {
             $json['hide_date_range_on_invoice']  = $this->hideDateRangeOnInvoice;
-        }
-        if (isset($this->priceInCents)) {
-            $json['price_in_cents']              = $this->priceInCents;
         }
         if (isset($this->recurring)) {
             $json['recurring']                   = $this->recurring;

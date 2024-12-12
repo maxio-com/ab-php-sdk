@@ -31,7 +31,12 @@ class FailedPaymentEventDataBuilder
     }
 
     /**
-     * Initializes a new failed payment event data Builder object.
+     * Initializes a new Failed Payment Event Data Builder object.
+     *
+     * @param int $amountInCents
+     * @param int $appliedAmount
+     * @param string $paymentMethod
+     * @param int $transactionId
      */
     public static function init(
         int $amountInCents,
@@ -44,6 +49,8 @@ class FailedPaymentEventDataBuilder
 
     /**
      * Sets memo field.
+     *
+     * @param string|null $value
      */
     public function memo(?string $value): self
     {
@@ -63,8 +70,8 @@ class FailedPaymentEventDataBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -73,7 +80,7 @@ class FailedPaymentEventDataBuilder
     }
 
     /**
-     * Initializes a new failed payment event data object.
+     * Initializes a new Failed Payment Event Data object.
      */
     public function build(): FailedPaymentEventData
     {

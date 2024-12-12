@@ -31,7 +31,11 @@ class PaymentMethodCreditCardBuilder
     }
 
     /**
-     * Initializes a new payment method credit card Builder object.
+     * Initializes a new Payment Method Credit Card Builder object.
+     *
+     * @param string $cardBrand
+     * @param string $maskedCardNumber
+     * @param string $type
      */
     public static function init(string $cardBrand, string $maskedCardNumber, string $type): self
     {
@@ -40,6 +44,8 @@ class PaymentMethodCreditCardBuilder
 
     /**
      * Sets card expiration field.
+     *
+     * @param string|null $value
      */
     public function cardExpiration(?string $value): self
     {
@@ -49,6 +55,8 @@ class PaymentMethodCreditCardBuilder
 
     /**
      * Sets last four field.
+     *
+     * @param string|null $value
      */
     public function lastFour(?string $value): self
     {
@@ -68,8 +76,8 @@ class PaymentMethodCreditCardBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -78,7 +86,7 @@ class PaymentMethodCreditCardBuilder
     }
 
     /**
-     * Initializes a new payment method credit card object.
+     * Initializes a new Payment Method Credit Card object.
      */
     public function build(): PaymentMethodCreditCard
     {

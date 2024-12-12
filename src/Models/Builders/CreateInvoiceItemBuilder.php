@@ -31,7 +31,7 @@ class CreateInvoiceItemBuilder
     }
 
     /**
-     * Initializes a new create invoice item Builder object.
+     * Initializes a new Create Invoice Item Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class CreateInvoiceItemBuilder
 
     /**
      * Sets title field.
+     *
+     * @param string|null $value
      */
     public function title(?string $value): self
     {
@@ -49,6 +51,8 @@ class CreateInvoiceItemBuilder
 
     /**
      * Sets quantity field.
+     *
+     * @param float|string|null $value
      */
     public function quantity($value): self
     {
@@ -58,6 +62,8 @@ class CreateInvoiceItemBuilder
 
     /**
      * Sets unit price field.
+     *
+     * @param float|string|null $value
      */
     public function unitPrice($value): self
     {
@@ -67,6 +73,8 @@ class CreateInvoiceItemBuilder
 
     /**
      * Sets taxable field.
+     *
+     * @param bool|null $value
      */
     public function taxable(?bool $value): self
     {
@@ -76,6 +84,8 @@ class CreateInvoiceItemBuilder
 
     /**
      * Sets tax code field.
+     *
+     * @param string|null $value
      */
     public function taxCode(?string $value): self
     {
@@ -85,6 +95,8 @@ class CreateInvoiceItemBuilder
 
     /**
      * Sets period range start field.
+     *
+     * @param string|null $value
      */
     public function periodRangeStart(?string $value): self
     {
@@ -94,6 +106,8 @@ class CreateInvoiceItemBuilder
 
     /**
      * Sets period range end field.
+     *
+     * @param string|null $value
      */
     public function periodRangeEnd(?string $value): self
     {
@@ -103,6 +117,8 @@ class CreateInvoiceItemBuilder
 
     /**
      * Sets product id field.
+     *
+     * @param string|int|null $value
      */
     public function productId($value): self
     {
@@ -112,6 +128,8 @@ class CreateInvoiceItemBuilder
 
     /**
      * Sets component id field.
+     *
+     * @param string|int|null $value
      */
     public function componentId($value): self
     {
@@ -121,6 +139,8 @@ class CreateInvoiceItemBuilder
 
     /**
      * Sets price point id field.
+     *
+     * @param string|int|null $value
      */
     public function pricePointId($value): self
     {
@@ -130,6 +150,8 @@ class CreateInvoiceItemBuilder
 
     /**
      * Sets product price point id field.
+     *
+     * @param string|int|null $value
      */
     public function productPricePointId($value): self
     {
@@ -139,6 +161,8 @@ class CreateInvoiceItemBuilder
 
     /**
      * Sets description field.
+     *
+     * @param string|null $value
      */
     public function description(?string $value): self
     {
@@ -149,8 +173,8 @@ class CreateInvoiceItemBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -159,7 +183,7 @@ class CreateInvoiceItemBuilder
     }
 
     /**
-     * Initializes a new create invoice item object.
+     * Initializes a new Create Invoice Item object.
      */
     public function build(): CreateInvoiceItem
     {

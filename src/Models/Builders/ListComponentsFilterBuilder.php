@@ -31,7 +31,7 @@ class ListComponentsFilterBuilder
     }
 
     /**
-     * Initializes a new list components filter Builder object.
+     * Initializes a new List Components Filter Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class ListComponentsFilterBuilder
 
     /**
      * Sets ids field.
+     *
+     * @param int[]|null $value
      */
     public function ids(?array $value): self
     {
@@ -49,6 +51,8 @@ class ListComponentsFilterBuilder
 
     /**
      * Sets use site exchange rate field.
+     *
+     * @param bool|null $value
      */
     public function useSiteExchangeRate(?bool $value): self
     {
@@ -59,8 +63,8 @@ class ListComponentsFilterBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -69,7 +73,7 @@ class ListComponentsFilterBuilder
     }
 
     /**
-     * Initializes a new list components filter object.
+     * Initializes a new List Components Filter object.
      */
     public function build(): ListComponentsFilter
     {

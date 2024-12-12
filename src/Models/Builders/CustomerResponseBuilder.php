@@ -32,7 +32,9 @@ class CustomerResponseBuilder
     }
 
     /**
-     * Initializes a new customer response Builder object.
+     * Initializes a new Customer Response Builder object.
+     *
+     * @param Customer $customer
      */
     public static function init(Customer $customer): self
     {
@@ -42,8 +44,8 @@ class CustomerResponseBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -52,7 +54,7 @@ class CustomerResponseBuilder
     }
 
     /**
-     * Initializes a new customer response object.
+     * Initializes a new Customer Response object.
      */
     public function build(): CustomerResponse
     {

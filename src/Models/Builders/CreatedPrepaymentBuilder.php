@@ -31,7 +31,7 @@ class CreatedPrepaymentBuilder
     }
 
     /**
-     * Initializes a new created prepayment Builder object.
+     * Initializes a new Created Prepayment Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class CreatedPrepaymentBuilder
 
     /**
      * Sets id field.
+     *
+     * @param int|null $value
      */
     public function id(?int $value): self
     {
@@ -49,6 +51,8 @@ class CreatedPrepaymentBuilder
 
     /**
      * Sets subscription id field.
+     *
+     * @param int|null $value
      */
     public function subscriptionId(?int $value): self
     {
@@ -58,6 +62,8 @@ class CreatedPrepaymentBuilder
 
     /**
      * Sets amount in cents field.
+     *
+     * @param int|null $value
      */
     public function amountInCents(?int $value): self
     {
@@ -67,6 +73,8 @@ class CreatedPrepaymentBuilder
 
     /**
      * Sets memo field.
+     *
+     * @param string|null $value
      */
     public function memo(?string $value): self
     {
@@ -76,6 +84,8 @@ class CreatedPrepaymentBuilder
 
     /**
      * Sets created at field.
+     *
+     * @param \DateTime|null $value
      */
     public function createdAt(?\DateTime $value): self
     {
@@ -85,6 +95,8 @@ class CreatedPrepaymentBuilder
 
     /**
      * Sets starting balance in cents field.
+     *
+     * @param int|null $value
      */
     public function startingBalanceInCents(?int $value): self
     {
@@ -94,6 +106,8 @@ class CreatedPrepaymentBuilder
 
     /**
      * Sets ending balance in cents field.
+     *
+     * @param int|null $value
      */
     public function endingBalanceInCents(?int $value): self
     {
@@ -104,8 +118,8 @@ class CreatedPrepaymentBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -114,7 +128,7 @@ class CreatedPrepaymentBuilder
     }
 
     /**
-     * Initializes a new created prepayment object.
+     * Initializes a new Created Prepayment object.
      */
     public function build(): CreatedPrepayment
     {

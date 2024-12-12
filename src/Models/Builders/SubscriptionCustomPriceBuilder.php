@@ -31,7 +31,10 @@ class SubscriptionCustomPriceBuilder
     }
 
     /**
-     * Initializes a new subscription custom price Builder object.
+     * Initializes a new Subscription Custom Price Builder object.
+     *
+     * @param string|int $priceInCents
+     * @param string|int $interval
      */
     public static function init($priceInCents, $interval): self
     {
@@ -40,6 +43,8 @@ class SubscriptionCustomPriceBuilder
 
     /**
      * Sets name field.
+     *
+     * @param string|null $value
      */
     public function name(?string $value): self
     {
@@ -49,6 +54,8 @@ class SubscriptionCustomPriceBuilder
 
     /**
      * Sets handle field.
+     *
+     * @param string|null $value
      */
     public function handle(?string $value): self
     {
@@ -58,6 +65,8 @@ class SubscriptionCustomPriceBuilder
 
     /**
      * Sets interval unit field.
+     *
+     * @param string|null $value
      */
     public function intervalUnit(?string $value): self
     {
@@ -67,6 +76,8 @@ class SubscriptionCustomPriceBuilder
 
     /**
      * Sets trial price in cents field.
+     *
+     * @param string|int|null $value
      */
     public function trialPriceInCents($value): self
     {
@@ -76,6 +87,8 @@ class SubscriptionCustomPriceBuilder
 
     /**
      * Sets trial interval field.
+     *
+     * @param string|int|null $value
      */
     public function trialInterval($value): self
     {
@@ -85,6 +98,8 @@ class SubscriptionCustomPriceBuilder
 
     /**
      * Sets trial interval unit field.
+     *
+     * @param string|null $value
      */
     public function trialIntervalUnit(?string $value): self
     {
@@ -94,6 +109,8 @@ class SubscriptionCustomPriceBuilder
 
     /**
      * Sets initial charge in cents field.
+     *
+     * @param string|int|null $value
      */
     public function initialChargeInCents($value): self
     {
@@ -103,6 +120,8 @@ class SubscriptionCustomPriceBuilder
 
     /**
      * Sets initial charge after trial field.
+     *
+     * @param bool|null $value
      */
     public function initialChargeAfterTrial(?bool $value): self
     {
@@ -112,6 +131,8 @@ class SubscriptionCustomPriceBuilder
 
     /**
      * Sets expiration interval field.
+     *
+     * @param string|int|null $value
      */
     public function expirationInterval($value): self
     {
@@ -121,6 +142,8 @@ class SubscriptionCustomPriceBuilder
 
     /**
      * Sets expiration interval unit field.
+     *
+     * @param string|null $value
      */
     public function expirationIntervalUnit(?string $value): self
     {
@@ -139,6 +162,8 @@ class SubscriptionCustomPriceBuilder
 
     /**
      * Sets tax included field.
+     *
+     * @param bool|null $value
      */
     public function taxIncluded(?bool $value): self
     {
@@ -149,8 +174,8 @@ class SubscriptionCustomPriceBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -159,7 +184,7 @@ class SubscriptionCustomPriceBuilder
     }
 
     /**
-     * Initializes a new subscription custom price object.
+     * Initializes a new Subscription Custom Price object.
      */
     public function build(): SubscriptionCustomPrice
     {

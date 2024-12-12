@@ -31,7 +31,7 @@ class NestedSubscriptionGroupBuilder
     }
 
     /**
-     * Initializes a new nested subscription group Builder object.
+     * Initializes a new Nested Subscription Group Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class NestedSubscriptionGroupBuilder
 
     /**
      * Sets uid field.
+     *
+     * @param string|null $value
      */
     public function uid(?string $value): self
     {
@@ -49,6 +51,8 @@ class NestedSubscriptionGroupBuilder
 
     /**
      * Sets scheme field.
+     *
+     * @param int|null $value
      */
     public function scheme(?int $value): self
     {
@@ -58,6 +62,8 @@ class NestedSubscriptionGroupBuilder
 
     /**
      * Sets primary subscription id field.
+     *
+     * @param int|null $value
      */
     public function primarySubscriptionId(?int $value): self
     {
@@ -67,6 +73,8 @@ class NestedSubscriptionGroupBuilder
 
     /**
      * Sets primary field.
+     *
+     * @param bool|null $value
      */
     public function primary(?bool $value): self
     {
@@ -77,8 +85,8 @@ class NestedSubscriptionGroupBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -87,7 +95,7 @@ class NestedSubscriptionGroupBuilder
     }
 
     /**
-     * Initializes a new nested subscription group object.
+     * Initializes a new Nested Subscription Group object.
      */
     public function build(): NestedSubscriptionGroup
     {

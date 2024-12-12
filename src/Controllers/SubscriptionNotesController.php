@@ -11,12 +11,14 @@ declare(strict_types=1);
 namespace AdvancedBillingLib\Controllers;
 
 use AdvancedBillingLib\Exceptions\ApiException;
+use AdvancedBillingLib\Exceptions\ErrorListResponseException;
 use AdvancedBillingLib\Models\SubscriptionNoteResponse;
 use AdvancedBillingLib\Models\UpdateSubscriptionNoteRequest;
 use Core\Request\Parameters\BodyParam;
 use Core\Request\Parameters\HeaderParam;
 use Core\Request\Parameters\QueryParam;
 use Core\Request\Parameters\TemplateParam;
+use Core\Response\Types\ErrorType;
 use CoreInterfaces\Core\Request\RequestMethod;
 
 class SubscriptionNotesController extends BaseController
@@ -52,7 +54,15 @@ class SubscriptionNotesController extends BaseController
                 BodyParam::init($body)
             );
 
-        $_resHandler = $this->responseHandler()->type(SubscriptionNoteResponse::class);
+        $_resHandler = $this->responseHandler()
+            ->throwErrorOn(
+                '422',
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
+            )
+            ->type(SubscriptionNoteResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
     }
@@ -77,7 +87,15 @@ class SubscriptionNotesController extends BaseController
                 QueryParam::init('per_page', $options)->commaSeparated()->extract('perPage', 20)
             );
 
-        $_resHandler = $this->responseHandler()->type(SubscriptionNoteResponse::class, 1);
+        $_resHandler = $this->responseHandler()
+            ->throwErrorOn(
+                '422',
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
+            )
+            ->type(SubscriptionNoteResponse::class, 1);
 
         return $this->execute($_reqBuilder, $_resHandler);
     }
@@ -138,7 +156,15 @@ class SubscriptionNotesController extends BaseController
                 BodyParam::init($body)
             );
 
-        $_resHandler = $this->responseHandler()->type(SubscriptionNoteResponse::class);
+        $_resHandler = $this->responseHandler()
+            ->throwErrorOn(
+                '422',
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
+            )
+            ->type(SubscriptionNoteResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
     }

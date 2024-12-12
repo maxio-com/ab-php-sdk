@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models\Builders;
 
+use AdvancedBillingLib\Models\Metadata;
 use AdvancedBillingLib\Models\PaginatedMetadata;
 use Core\Utils\CoreHelper;
 
@@ -31,7 +32,7 @@ class PaginatedMetadataBuilder
     }
 
     /**
-     * Initializes a new paginated metadata Builder object.
+     * Initializes a new Paginated Metadata Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +41,8 @@ class PaginatedMetadataBuilder
 
     /**
      * Sets total count field.
+     *
+     * @param int|null $value
      */
     public function totalCount(?int $value): self
     {
@@ -49,6 +52,8 @@ class PaginatedMetadataBuilder
 
     /**
      * Sets current page field.
+     *
+     * @param int|null $value
      */
     public function currentPage(?int $value): self
     {
@@ -58,6 +63,8 @@ class PaginatedMetadataBuilder
 
     /**
      * Sets total pages field.
+     *
+     * @param int|null $value
      */
     public function totalPages(?int $value): self
     {
@@ -67,6 +74,8 @@ class PaginatedMetadataBuilder
 
     /**
      * Sets per page field.
+     *
+     * @param int|null $value
      */
     public function perPage(?int $value): self
     {
@@ -76,6 +85,8 @@ class PaginatedMetadataBuilder
 
     /**
      * Sets metadata field.
+     *
+     * @param Metadata[]|null $value
      */
     public function metadata(?array $value): self
     {
@@ -86,8 +97,8 @@ class PaginatedMetadataBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -96,7 +107,7 @@ class PaginatedMetadataBuilder
     }
 
     /**
-     * Initializes a new paginated metadata object.
+     * Initializes a new Paginated Metadata object.
      */
     public function build(): PaginatedMetadata
     {

@@ -31,7 +31,7 @@ class UpsertPrepaidConfigurationBuilder
     }
 
     /**
-     * Initializes a new upsert prepaid configuration Builder object.
+     * Initializes a new Upsert Prepaid Configuration Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class UpsertPrepaidConfigurationBuilder
 
     /**
      * Sets initial funding amount in cents field.
+     *
+     * @param int|null $value
      */
     public function initialFundingAmountInCents(?int $value): self
     {
@@ -49,6 +51,8 @@ class UpsertPrepaidConfigurationBuilder
 
     /**
      * Sets replenish to amount in cents field.
+     *
+     * @param int|null $value
      */
     public function replenishToAmountInCents(?int $value): self
     {
@@ -58,6 +62,8 @@ class UpsertPrepaidConfigurationBuilder
 
     /**
      * Sets auto replenish field.
+     *
+     * @param bool|null $value
      */
     public function autoReplenish(?bool $value): self
     {
@@ -67,6 +73,8 @@ class UpsertPrepaidConfigurationBuilder
 
     /**
      * Sets replenish threshold amount in cents field.
+     *
+     * @param int|null $value
      */
     public function replenishThresholdAmountInCents(?int $value): self
     {
@@ -77,8 +85,8 @@ class UpsertPrepaidConfigurationBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -87,7 +95,7 @@ class UpsertPrepaidConfigurationBuilder
     }
 
     /**
-     * Initializes a new upsert prepaid configuration object.
+     * Initializes a new Upsert Prepaid Configuration object.
      */
     public function build(): UpsertPrepaidConfiguration
     {

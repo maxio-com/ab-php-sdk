@@ -32,7 +32,7 @@ class ListSubscriptionGroupsItemBuilder
     }
 
     /**
-     * Initializes a new list subscription groups item Builder object.
+     * Initializes a new List Subscription Groups Item Builder object.
      */
     public static function init(): self
     {
@@ -41,6 +41,8 @@ class ListSubscriptionGroupsItemBuilder
 
     /**
      * Sets uid field.
+     *
+     * @param string|null $value
      */
     public function uid(?string $value): self
     {
@@ -50,6 +52,8 @@ class ListSubscriptionGroupsItemBuilder
 
     /**
      * Sets scheme field.
+     *
+     * @param int|null $value
      */
     public function scheme(?int $value): self
     {
@@ -59,6 +63,8 @@ class ListSubscriptionGroupsItemBuilder
 
     /**
      * Sets customer id field.
+     *
+     * @param int|null $value
      */
     public function customerId(?int $value): self
     {
@@ -68,6 +74,8 @@ class ListSubscriptionGroupsItemBuilder
 
     /**
      * Sets payment profile id field.
+     *
+     * @param int|null $value
      */
     public function paymentProfileId(?int $value): self
     {
@@ -77,6 +85,8 @@ class ListSubscriptionGroupsItemBuilder
 
     /**
      * Sets subscription ids field.
+     *
+     * @param int[]|null $value
      */
     public function subscriptionIds(?array $value): self
     {
@@ -86,6 +96,8 @@ class ListSubscriptionGroupsItemBuilder
 
     /**
      * Sets primary subscription id field.
+     *
+     * @param int|null $value
      */
     public function primarySubscriptionId(?int $value): self
     {
@@ -95,6 +107,8 @@ class ListSubscriptionGroupsItemBuilder
 
     /**
      * Sets next assessment at field.
+     *
+     * @param \DateTime|null $value
      */
     public function nextAssessmentAt(?\DateTime $value): self
     {
@@ -104,6 +118,8 @@ class ListSubscriptionGroupsItemBuilder
 
     /**
      * Sets state field.
+     *
+     * @param string|null $value
      */
     public function state(?string $value): self
     {
@@ -113,6 +129,8 @@ class ListSubscriptionGroupsItemBuilder
 
     /**
      * Sets cancel at end of period field.
+     *
+     * @param bool|null $value
      */
     public function cancelAtEndOfPeriod(?bool $value): self
     {
@@ -122,6 +140,8 @@ class ListSubscriptionGroupsItemBuilder
 
     /**
      * Sets account balances field.
+     *
+     * @param SubscriptionGroupBalances|null $value
      */
     public function accountBalances(?SubscriptionGroupBalances $value): self
     {
@@ -131,6 +151,8 @@ class ListSubscriptionGroupsItemBuilder
 
     /**
      * Sets group type field.
+     *
+     * @param string|null $value
      */
     public function groupType(?string $value): self
     {
@@ -141,8 +163,8 @@ class ListSubscriptionGroupsItemBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -151,7 +173,7 @@ class ListSubscriptionGroupsItemBuilder
     }
 
     /**
-     * Initializes a new list subscription groups item object.
+     * Initializes a new List Subscription Groups Item object.
      */
     public function build(): ListSubscriptionGroupsItem
     {

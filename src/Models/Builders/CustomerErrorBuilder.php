@@ -31,7 +31,7 @@ class CustomerErrorBuilder
     }
 
     /**
-     * Initializes a new customer error Builder object.
+     * Initializes a new Customer Error Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class CustomerErrorBuilder
 
     /**
      * Sets customer field.
+     *
+     * @param string|null $value
      */
     public function customer(?string $value): self
     {
@@ -50,8 +52,8 @@ class CustomerErrorBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -60,7 +62,7 @@ class CustomerErrorBuilder
     }
 
     /**
-     * Initializes a new customer error object.
+     * Initializes a new Customer Error object.
      */
     public function build(): CustomerError
     {

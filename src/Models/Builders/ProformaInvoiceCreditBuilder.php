@@ -31,7 +31,7 @@ class ProformaInvoiceCreditBuilder
     }
 
     /**
-     * Initializes a new proforma invoice credit Builder object.
+     * Initializes a new Proforma Invoice Credit Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class ProformaInvoiceCreditBuilder
 
     /**
      * Sets uid field.
+     *
+     * @param string|null $value
      */
     public function uid(?string $value): self
     {
@@ -49,6 +51,8 @@ class ProformaInvoiceCreditBuilder
 
     /**
      * Sets memo field.
+     *
+     * @param string|null $value
      */
     public function memo(?string $value): self
     {
@@ -58,6 +62,8 @@ class ProformaInvoiceCreditBuilder
 
     /**
      * Sets original amount field.
+     *
+     * @param string|null $value
      */
     public function originalAmount(?string $value): self
     {
@@ -67,6 +73,8 @@ class ProformaInvoiceCreditBuilder
 
     /**
      * Sets applied amount field.
+     *
+     * @param string|null $value
      */
     public function appliedAmount(?string $value): self
     {
@@ -77,8 +85,8 @@ class ProformaInvoiceCreditBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -87,7 +95,7 @@ class ProformaInvoiceCreditBuilder
     }
 
     /**
-     * Initializes a new proforma invoice credit object.
+     * Initializes a new Proforma Invoice Credit object.
      */
     public function build(): ProformaInvoiceCredit
     {

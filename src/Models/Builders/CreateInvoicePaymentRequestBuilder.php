@@ -32,7 +32,9 @@ class CreateInvoicePaymentRequestBuilder
     }
 
     /**
-     * Initializes a new create invoice payment request Builder object.
+     * Initializes a new Create Invoice Payment Request Builder object.
+     *
+     * @param CreateInvoicePayment $payment
      */
     public static function init(CreateInvoicePayment $payment): self
     {
@@ -41,6 +43,8 @@ class CreateInvoicePaymentRequestBuilder
 
     /**
      * Sets type field.
+     *
+     * @param string|null $value
      */
     public function type(?string $value): self
     {
@@ -51,8 +55,8 @@ class CreateInvoicePaymentRequestBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -61,7 +65,7 @@ class CreateInvoicePaymentRequestBuilder
     }
 
     /**
-     * Initializes a new create invoice payment request object.
+     * Initializes a new Create Invoice Payment Request object.
      */
     public function build(): CreateInvoicePaymentRequest
     {

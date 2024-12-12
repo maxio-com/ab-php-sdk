@@ -213,6 +213,11 @@ class Invoice implements \JsonSerializable
     /**
      * @var string|null
      */
+    private $debitAmount;
+
+    /**
+     * @var string|null
+     */
     private $refundAmount;
 
     /**
@@ -246,6 +251,11 @@ class Invoice implements \JsonSerializable
     private $credits;
 
     /**
+     * @var InvoiceDebit[]|null
+     */
+    private $debits;
+
+    /**
      * @var InvoiceRefund[]|null
      */
     private $refunds;
@@ -264,6 +274,11 @@ class Invoice implements \JsonSerializable
      * @var InvoiceDisplaySettings|null
      */
     private $displaySettings;
+
+    /**
+     * @var InvoiceAvataxDetails|null
+     */
+    private $avataxDetails;
 
     /**
      * @var string|null
@@ -1203,6 +1218,24 @@ class Invoice implements \JsonSerializable
     }
 
     /**
+     * Returns Debit Amount.
+     */
+    public function getDebitAmount(): ?string
+    {
+        return $this->debitAmount;
+    }
+
+    /**
+     * Sets Debit Amount.
+     *
+     * @maps debit_amount
+     */
+    public function setDebitAmount(?string $debitAmount): void
+    {
+        $this->debitAmount = $debitAmount;
+    }
+
+    /**
      * Returns Refund Amount.
      */
     public function getRefundAmount(): ?string
@@ -1351,6 +1384,28 @@ class Invoice implements \JsonSerializable
     }
 
     /**
+     * Returns Debits.
+     *
+     * @return InvoiceDebit[]|null
+     */
+    public function getDebits(): ?array
+    {
+        return $this->debits;
+    }
+
+    /**
+     * Sets Debits.
+     *
+     * @maps debits
+     *
+     * @param InvoiceDebit[]|null $debits
+     */
+    public function setDebits(?array $debits): void
+    {
+        $this->debits = $debits;
+    }
+
+    /**
      * Returns Refunds.
      *
      * @return InvoiceRefund[]|null
@@ -1435,6 +1490,24 @@ class Invoice implements \JsonSerializable
     }
 
     /**
+     * Returns Avatax Details.
+     */
+    public function getAvataxDetails(): ?InvoiceAvataxDetails
+    {
+        return $this->avataxDetails;
+    }
+
+    /**
+     * Sets Avatax Details.
+     *
+     * @maps avatax_details
+     */
+    public function setAvataxDetails(?InvoiceAvataxDetails $avataxDetails): void
+    {
+        $this->avataxDetails = $avataxDetails;
+    }
+
+    /**
      * Returns Public Url.
      * The public URL of the invoice
      */
@@ -1498,12 +1571,27 @@ class Invoice implements \JsonSerializable
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function addAdditionalProperty(string $name, $value)
     {
         $this->additionalProperties[$name] = $value;
+    }
+
+    /**
+     * Find an additional property by name in this model or false if property does not exist.
+     *
+     * @param string $name Name of property.
+     *
+     * @return mixed|false Value of the property.
+     */
+    public function findAdditionalProperty(string $name)
+    {
+        if (isset($this->additionalProperties[$name])) {
+            return $this->additionalProperties[$name];
+        }
+        return false;
     }
 
     /**
@@ -1635,6 +1723,9 @@ class Invoice implements \JsonSerializable
         if (isset($this->creditAmount)) {
             $json['credit_amount']                 = $this->creditAmount;
         }
+        if (isset($this->debitAmount)) {
+            $json['debit_amount']                  = $this->debitAmount;
+        }
         if (isset($this->refundAmount)) {
             $json['refund_amount']                 = $this->refundAmount;
         }
@@ -1656,6 +1747,9 @@ class Invoice implements \JsonSerializable
         if (isset($this->credits)) {
             $json['credits']                       = $this->credits;
         }
+        if (isset($this->debits)) {
+            $json['debits']                        = $this->debits;
+        }
         if (isset($this->refunds)) {
             $json['refunds']                       = $this->refunds;
         }
@@ -1667,6 +1761,9 @@ class Invoice implements \JsonSerializable
         }
         if (isset($this->displaySettings)) {
             $json['display_settings']              = $this->displaySettings;
+        }
+        if (isset($this->avataxDetails)) {
+            $json['avatax_details']                = $this->avataxDetails;
         }
         if (isset($this->publicUrl)) {
             $json['public_url']                    = $this->publicUrl;

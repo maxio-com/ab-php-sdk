@@ -31,7 +31,7 @@ class IssueAdvanceInvoiceRequestBuilder
     }
 
     /**
-     * Initializes a new issue advance invoice request Builder object.
+     * Initializes a new Issue Advance Invoice Request Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class IssueAdvanceInvoiceRequestBuilder
 
     /**
      * Sets force field.
+     *
+     * @param bool|null $value
      */
     public function force(?bool $value): self
     {
@@ -50,8 +52,8 @@ class IssueAdvanceInvoiceRequestBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -60,7 +62,7 @@ class IssueAdvanceInvoiceRequestBuilder
     }
 
     /**
-     * Initializes a new issue advance invoice request object.
+     * Initializes a new Issue Advance Invoice Request object.
      */
     public function build(): IssueAdvanceInvoiceRequest
     {

@@ -31,7 +31,7 @@ class ComponentAllocationErrorItemBuilder
     }
 
     /**
-     * Initializes a new component allocation error item Builder object.
+     * Initializes a new Component Allocation Error Item Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class ComponentAllocationErrorItemBuilder
 
     /**
      * Sets component id field.
+     *
+     * @param int|null $value
      */
     public function componentId(?int $value): self
     {
@@ -49,6 +51,8 @@ class ComponentAllocationErrorItemBuilder
 
     /**
      * Sets message field.
+     *
+     * @param string|null $value
      */
     public function message(?string $value): self
     {
@@ -58,6 +62,8 @@ class ComponentAllocationErrorItemBuilder
 
     /**
      * Sets kind field.
+     *
+     * @param string|null $value
      */
     public function kind(?string $value): self
     {
@@ -67,6 +73,8 @@ class ComponentAllocationErrorItemBuilder
 
     /**
      * Sets on field.
+     *
+     * @param string|null $value
      */
     public function on(?string $value): self
     {
@@ -77,8 +85,8 @@ class ComponentAllocationErrorItemBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -87,7 +95,7 @@ class ComponentAllocationErrorItemBuilder
     }
 
     /**
-     * Initializes a new component allocation error item object.
+     * Initializes a new Component Allocation Error Item object.
      */
     public function build(): ComponentAllocationErrorItem
     {

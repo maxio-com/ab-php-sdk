@@ -31,7 +31,7 @@ class ListPrepaymentsFilterBuilder
     }
 
     /**
-     * Initializes a new list prepayments filter Builder object.
+     * Initializes a new List Prepayments Filter Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class ListPrepaymentsFilterBuilder
 
     /**
      * Sets date field field.
+     *
+     * @param string|null $value
      */
     public function dateField(?string $value): self
     {
@@ -49,6 +51,8 @@ class ListPrepaymentsFilterBuilder
 
     /**
      * Sets start date field.
+     *
+     * @param \DateTime|null $value
      */
     public function startDate(?\DateTime $value): self
     {
@@ -58,6 +62,8 @@ class ListPrepaymentsFilterBuilder
 
     /**
      * Sets end date field.
+     *
+     * @param \DateTime|null $value
      */
     public function endDate(?\DateTime $value): self
     {
@@ -68,8 +74,8 @@ class ListPrepaymentsFilterBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -78,7 +84,7 @@ class ListPrepaymentsFilterBuilder
     }
 
     /**
-     * Initializes a new list prepayments filter object.
+     * Initializes a new List Prepayments Filter object.
      */
     public function build(): ListPrepaymentsFilter
     {

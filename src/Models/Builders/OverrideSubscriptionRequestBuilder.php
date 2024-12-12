@@ -32,7 +32,9 @@ class OverrideSubscriptionRequestBuilder
     }
 
     /**
-     * Initializes a new override subscription request Builder object.
+     * Initializes a new Override Subscription Request Builder object.
+     *
+     * @param OverrideSubscription $subscription
      */
     public static function init(OverrideSubscription $subscription): self
     {
@@ -42,8 +44,8 @@ class OverrideSubscriptionRequestBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -52,7 +54,7 @@ class OverrideSubscriptionRequestBuilder
     }
 
     /**
-     * Initializes a new override subscription request object.
+     * Initializes a new Override Subscription Request object.
      */
     public function build(): OverrideSubscriptionRequest
     {

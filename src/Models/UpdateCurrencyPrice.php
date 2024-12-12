@@ -20,15 +20,15 @@ class UpdateCurrencyPrice implements \JsonSerializable
     private $id;
 
     /**
-     * @var int
+     * @var float
      */
     private $price;
 
     /**
      * @param int $id
-     * @param int $price
+     * @param float $price
      */
-    public function __construct(int $id, int $price)
+    public function __construct(int $id, float $price)
     {
         $this->id = $id;
         $this->price = $price;
@@ -59,7 +59,7 @@ class UpdateCurrencyPrice implements \JsonSerializable
      * Returns Price.
      * New price for the given currency
      */
-    public function getPrice(): int
+    public function getPrice(): float
     {
         return $this->price;
     }
@@ -71,7 +71,7 @@ class UpdateCurrencyPrice implements \JsonSerializable
      * @required
      * @maps price
      */
-    public function setPrice(int $price): void
+    public function setPrice(float $price): void
     {
         $this->price = $price;
     }
@@ -81,12 +81,27 @@ class UpdateCurrencyPrice implements \JsonSerializable
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function addAdditionalProperty(string $name, $value)
     {
         $this->additionalProperties[$name] = $value;
+    }
+
+    /**
+     * Find an additional property by name in this model or false if property does not exist.
+     *
+     * @param string $name Name of property.
+     *
+     * @return mixed|false Value of the property.
+     */
+    public function findAdditionalProperty(string $name)
+    {
+        if (isset($this->additionalProperties[$name])) {
+            return $this->additionalProperties[$name];
+        }
+        return false;
     }
 
     /**

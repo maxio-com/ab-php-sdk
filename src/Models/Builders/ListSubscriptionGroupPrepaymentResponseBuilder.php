@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models\Builders;
 
+use AdvancedBillingLib\Models\ListSubscriptionGroupPrepayment;
 use AdvancedBillingLib\Models\ListSubscriptionGroupPrepaymentResponse;
 use Core\Utils\CoreHelper;
 
@@ -31,7 +32,9 @@ class ListSubscriptionGroupPrepaymentResponseBuilder
     }
 
     /**
-     * Initializes a new list subscription group prepayment response Builder object.
+     * Initializes a new List Subscription Group Prepayment Response Builder object.
+     *
+     * @param ListSubscriptionGroupPrepayment[] $prepayments
      */
     public static function init(array $prepayments): self
     {
@@ -41,8 +44,8 @@ class ListSubscriptionGroupPrepaymentResponseBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -51,7 +54,7 @@ class ListSubscriptionGroupPrepaymentResponseBuilder
     }
 
     /**
-     * Initializes a new list subscription group prepayment response object.
+     * Initializes a new List Subscription Group Prepayment Response object.
      */
     public function build(): ListSubscriptionGroupPrepaymentResponse
     {

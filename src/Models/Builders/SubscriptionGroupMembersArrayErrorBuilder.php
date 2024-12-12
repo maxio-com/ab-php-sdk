@@ -31,7 +31,9 @@ class SubscriptionGroupMembersArrayErrorBuilder
     }
 
     /**
-     * Initializes a new subscription group members array error Builder object.
+     * Initializes a new Subscription Group Members Array Error Builder object.
+     *
+     * @param string[] $members
      */
     public static function init(array $members): self
     {
@@ -41,8 +43,8 @@ class SubscriptionGroupMembersArrayErrorBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -51,7 +53,7 @@ class SubscriptionGroupMembersArrayErrorBuilder
     }
 
     /**
-     * Initializes a new subscription group members array error object.
+     * Initializes a new Subscription Group Members Array Error object.
      */
     public function build(): SubscriptionGroupMembersArrayError
     {

@@ -31,7 +31,7 @@ class AddCouponsRequestBuilder
     }
 
     /**
-     * Initializes a new add coupons request Builder object.
+     * Initializes a new Add Coupons Request Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class AddCouponsRequestBuilder
 
     /**
      * Sets codes field.
+     *
+     * @param string[]|null $value
      */
     public function codes(?array $value): self
     {
@@ -50,8 +52,8 @@ class AddCouponsRequestBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -60,7 +62,7 @@ class AddCouponsRequestBuilder
     }
 
     /**
-     * Initializes a new add coupons request object.
+     * Initializes a new Add Coupons Request object.
      */
     public function build(): AddCouponsRequest
     {

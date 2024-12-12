@@ -31,7 +31,10 @@ class ChangeInvoiceStatusEventDataBuilder
     }
 
     /**
-     * Initializes a new change invoice status event data Builder object.
+     * Initializes a new Change Invoice Status Event Data Builder object.
+     *
+     * @param string $fromStatus
+     * @param string $toStatus
      */
     public static function init(string $fromStatus, string $toStatus): self
     {
@@ -40,6 +43,8 @@ class ChangeInvoiceStatusEventDataBuilder
 
     /**
      * Sets gateway trans id field.
+     *
+     * @param string|null $value
      */
     public function gatewayTransId(?string $value): self
     {
@@ -49,6 +54,8 @@ class ChangeInvoiceStatusEventDataBuilder
 
     /**
      * Sets amount field.
+     *
+     * @param string|null $value
      */
     public function amount(?string $value): self
     {
@@ -58,6 +65,8 @@ class ChangeInvoiceStatusEventDataBuilder
 
     /**
      * Sets consolidation level field.
+     *
+     * @param string|null $value
      */
     public function consolidationLevel(?string $value): self
     {
@@ -68,8 +77,8 @@ class ChangeInvoiceStatusEventDataBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -78,7 +87,7 @@ class ChangeInvoiceStatusEventDataBuilder
     }
 
     /**
-     * Initializes a new change invoice status event data object.
+     * Initializes a new Change Invoice Status Event Data object.
      */
     public function build(): ChangeInvoiceStatusEventData
     {

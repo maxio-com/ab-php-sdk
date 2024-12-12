@@ -32,7 +32,7 @@ class InvoicePaymentBuilder
     }
 
     /**
-     * Initializes a new invoice payment Builder object.
+     * Initializes a new Invoice Payment Builder object.
      */
     public static function init(): self
     {
@@ -41,6 +41,8 @@ class InvoicePaymentBuilder
 
     /**
      * Sets transaction time field.
+     *
+     * @param \DateTime|null $value
      */
     public function transactionTime(?\DateTime $value): self
     {
@@ -50,6 +52,8 @@ class InvoicePaymentBuilder
 
     /**
      * Sets memo field.
+     *
+     * @param string|null $value
      */
     public function memo(?string $value): self
     {
@@ -59,6 +63,8 @@ class InvoicePaymentBuilder
 
     /**
      * Sets original amount field.
+     *
+     * @param string|null $value
      */
     public function originalAmount(?string $value): self
     {
@@ -68,6 +74,8 @@ class InvoicePaymentBuilder
 
     /**
      * Sets applied amount field.
+     *
+     * @param string|null $value
      */
     public function appliedAmount(?string $value): self
     {
@@ -77,6 +85,8 @@ class InvoicePaymentBuilder
 
     /**
      * Sets payment method field.
+     *
+     * @param InvoicePaymentMethod|null $value
      */
     public function paymentMethod(?InvoicePaymentMethod $value): self
     {
@@ -86,6 +96,8 @@ class InvoicePaymentBuilder
 
     /**
      * Sets transaction id field.
+     *
+     * @param int|null $value
      */
     public function transactionId(?int $value): self
     {
@@ -95,6 +107,8 @@ class InvoicePaymentBuilder
 
     /**
      * Sets prepayment field.
+     *
+     * @param bool|null $value
      */
     public function prepayment(?bool $value): self
     {
@@ -104,6 +118,8 @@ class InvoicePaymentBuilder
 
     /**
      * Sets gateway handle field.
+     *
+     * @param string|null $value
      */
     public function gatewayHandle(?string $value): self
     {
@@ -122,6 +138,8 @@ class InvoicePaymentBuilder
 
     /**
      * Sets gateway used field.
+     *
+     * @param string|null $value
      */
     public function gatewayUsed(?string $value): self
     {
@@ -131,6 +149,8 @@ class InvoicePaymentBuilder
 
     /**
      * Sets gateway transaction id field.
+     *
+     * @param string|null $value
      */
     public function gatewayTransactionId(?string $value): self
     {
@@ -149,6 +169,8 @@ class InvoicePaymentBuilder
 
     /**
      * Sets received on field.
+     *
+     * @param \DateTime|null $value
      */
     public function receivedOn(?\DateTime $value): self
     {
@@ -167,6 +189,8 @@ class InvoicePaymentBuilder
 
     /**
      * Sets uid field.
+     *
+     * @param string|null $value
      */
     public function uid(?string $value): self
     {
@@ -177,8 +201,8 @@ class InvoicePaymentBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -187,7 +211,7 @@ class InvoicePaymentBuilder
     }
 
     /**
-     * Initializes a new invoice payment object.
+     * Initializes a new Invoice Payment object.
      */
     public function build(): InvoicePayment
     {

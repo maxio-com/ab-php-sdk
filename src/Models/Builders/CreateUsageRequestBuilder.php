@@ -32,7 +32,9 @@ class CreateUsageRequestBuilder
     }
 
     /**
-     * Initializes a new create usage request Builder object.
+     * Initializes a new Create Usage Request Builder object.
+     *
+     * @param CreateUsage $usage
      */
     public static function init(CreateUsage $usage): self
     {
@@ -42,8 +44,8 @@ class CreateUsageRequestBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -52,7 +54,7 @@ class CreateUsageRequestBuilder
     }
 
     /**
-     * Initializes a new create usage request object.
+     * Initializes a new Create Usage Request object.
      */
     public function build(): CreateUsageRequest
     {

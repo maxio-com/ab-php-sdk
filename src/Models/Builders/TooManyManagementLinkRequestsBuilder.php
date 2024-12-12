@@ -31,7 +31,10 @@ class TooManyManagementLinkRequestsBuilder
     }
 
     /**
-     * Initializes a new too many management link requests Builder object.
+     * Initializes a new Too Many Management Link Requests Builder object.
+     *
+     * @param string $error
+     * @param \DateTime $newLinkAvailableAt
      */
     public static function init(string $error, \DateTime $newLinkAvailableAt): self
     {
@@ -41,8 +44,8 @@ class TooManyManagementLinkRequestsBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -51,7 +54,7 @@ class TooManyManagementLinkRequestsBuilder
     }
 
     /**
-     * Initializes a new too many management link requests object.
+     * Initializes a new Too Many Management Link Requests object.
      */
     public function build(): TooManyManagementLinkRequests
     {

@@ -205,7 +205,8 @@ class CreatePrepaidUsageComponentPricePoint implements \JsonSerializable
 
     /**
      * Returns Rollover Prepaid Remainder.
-     * Boolean which controls whether or not remaining units should be rolled over to the next period
+     * (only for prepaid usage components) Boolean which controls whether or not remaining units should be
+     * rolled over to the next period
      */
     public function getRolloverPrepaidRemainder(): ?bool
     {
@@ -214,7 +215,8 @@ class CreatePrepaidUsageComponentPricePoint implements \JsonSerializable
 
     /**
      * Sets Rollover Prepaid Remainder.
-     * Boolean which controls whether or not remaining units should be rolled over to the next period
+     * (only for prepaid usage components) Boolean which controls whether or not remaining units should be
+     * rolled over to the next period
      *
      * @maps rollover_prepaid_remainder
      */
@@ -225,8 +227,8 @@ class CreatePrepaidUsageComponentPricePoint implements \JsonSerializable
 
     /**
      * Returns Renew Prepaid Allocation.
-     * Boolean which controls whether or not the allocated quantity should be renewed at the beginning of
-     * each period
+     * (only for prepaid usage components) Boolean which controls whether or not the allocated quantity
+     * should be renewed at the beginning of each period
      */
     public function getRenewPrepaidAllocation(): ?bool
     {
@@ -235,8 +237,8 @@ class CreatePrepaidUsageComponentPricePoint implements \JsonSerializable
 
     /**
      * Sets Renew Prepaid Allocation.
-     * Boolean which controls whether or not the allocated quantity should be renewed at the beginning of
-     * each period
+     * (only for prepaid usage components) Boolean which controls whether or not the allocated quantity
+     * should be renewed at the beginning of each period
      *
      * @maps renew_prepaid_allocation
      */
@@ -269,7 +271,8 @@ class CreatePrepaidUsageComponentPricePoint implements \JsonSerializable
 
     /**
      * Returns Expiration Interval Unit.
-     * A string representing the expiration interval unit for this component, either month or day
+     * (only for prepaid usage components where rollover_prepaid_remainder is true) A string representing
+     * the expiration interval unit for this component, either month or day
      */
     public function getExpirationIntervalUnit(): ?string
     {
@@ -281,7 +284,8 @@ class CreatePrepaidUsageComponentPricePoint implements \JsonSerializable
 
     /**
      * Sets Expiration Interval Unit.
-     * A string representing the expiration interval unit for this component, either month or day
+     * (only for prepaid usage components where rollover_prepaid_remainder is true) A string representing
+     * the expiration interval unit for this component, either month or day
      *
      * @maps expiration_interval_unit
      * @factory \AdvancedBillingLib\Models\ExpirationIntervalUnit::checkValue
@@ -293,7 +297,8 @@ class CreatePrepaidUsageComponentPricePoint implements \JsonSerializable
 
     /**
      * Unsets Expiration Interval Unit.
-     * A string representing the expiration interval unit for this component, either month or day
+     * (only for prepaid usage components where rollover_prepaid_remainder is true) A string representing
+     * the expiration interval unit for this component, either month or day
      */
     public function unsetExpirationIntervalUnit(): void
     {
@@ -305,12 +310,27 @@ class CreatePrepaidUsageComponentPricePoint implements \JsonSerializable
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function addAdditionalProperty(string $name, $value)
     {
         $this->additionalProperties[$name] = $value;
+    }
+
+    /**
+     * Find an additional property by name in this model or false if property does not exist.
+     *
+     * @param string $name Name of property.
+     *
+     * @return mixed|false Value of the property.
+     */
+    public function findAdditionalProperty(string $name)
+    {
+        if (isset($this->additionalProperties[$name])) {
+            return $this->additionalProperties[$name];
+        }
+        return false;
     }
 
     /**

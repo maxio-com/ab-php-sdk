@@ -32,7 +32,9 @@ class PrepaidConfigurationResponseBuilder
     }
 
     /**
-     * Initializes a new prepaid configuration response Builder object.
+     * Initializes a new Prepaid Configuration Response Builder object.
+     *
+     * @param PrepaidConfiguration $prepaidConfiguration
      */
     public static function init(PrepaidConfiguration $prepaidConfiguration): self
     {
@@ -42,8 +44,8 @@ class PrepaidConfigurationResponseBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -52,7 +54,7 @@ class PrepaidConfigurationResponseBuilder
     }
 
     /**
-     * Initializes a new prepaid configuration response object.
+     * Initializes a new Prepaid Configuration Response object.
      */
     public function build(): PrepaidConfigurationResponse
     {

@@ -32,7 +32,13 @@ class BackportInvoiceEventBuilder
     }
 
     /**
-     * Initializes a new backport invoice event Builder object.
+     * Initializes a new Backport Invoice Event Builder object.
+     *
+     * @param int $id
+     * @param \DateTime $timestamp
+     * @param Invoice $invoice
+     * @param string $eventType
+     * @param Invoice $eventData
      */
     public static function init(
         int $id,
@@ -47,8 +53,8 @@ class BackportInvoiceEventBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -57,7 +63,7 @@ class BackportInvoiceEventBuilder
     }
 
     /**
-     * Initializes a new backport invoice event object.
+     * Initializes a new Backport Invoice Event object.
      */
     public function build(): BackportInvoiceEvent
     {

@@ -12,6 +12,7 @@ namespace AdvancedBillingLib\Controllers;
 
 use AdvancedBillingLib\Exceptions\ApiException;
 use AdvancedBillingLib\Exceptions\ErrorArrayMapResponseException;
+use AdvancedBillingLib\Exceptions\ErrorListResponseException;
 use AdvancedBillingLib\Models\CreateOfferRequest;
 use AdvancedBillingLib\Models\ListOffersResponse;
 use AdvancedBillingLib\Models\OfferResponse;
@@ -87,7 +88,15 @@ class OffersController extends BaseController
                 QueryParam::init('include_archived', $options)->commaSeparated()->extract('includeArchived')
             );
 
-        $_resHandler = $this->responseHandler()->type(ListOffersResponse::class);
+        $_resHandler = $this->responseHandler()
+            ->throwErrorOn(
+                '422',
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
+            )
+            ->type(ListOffersResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
     }

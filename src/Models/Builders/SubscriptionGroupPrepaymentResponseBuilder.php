@@ -31,7 +31,7 @@ class SubscriptionGroupPrepaymentResponseBuilder
     }
 
     /**
-     * Initializes a new subscription group prepayment response Builder object.
+     * Initializes a new Subscription Group Prepayment Response Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class SubscriptionGroupPrepaymentResponseBuilder
 
     /**
      * Sets id field.
+     *
+     * @param int|null $value
      */
     public function id(?int $value): self
     {
@@ -49,6 +51,8 @@ class SubscriptionGroupPrepaymentResponseBuilder
 
     /**
      * Sets amount in cents field.
+     *
+     * @param int|null $value
      */
     public function amountInCents(?int $value): self
     {
@@ -58,6 +62,8 @@ class SubscriptionGroupPrepaymentResponseBuilder
 
     /**
      * Sets ending balance in cents field.
+     *
+     * @param int|null $value
      */
     public function endingBalanceInCents(?int $value): self
     {
@@ -67,6 +73,8 @@ class SubscriptionGroupPrepaymentResponseBuilder
 
     /**
      * Sets entry type field.
+     *
+     * @param string|null $value
      */
     public function entryType(?string $value): self
     {
@@ -76,6 +84,8 @@ class SubscriptionGroupPrepaymentResponseBuilder
 
     /**
      * Sets memo field.
+     *
+     * @param string|null $value
      */
     public function memo(?string $value): self
     {
@@ -95,8 +105,8 @@ class SubscriptionGroupPrepaymentResponseBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -105,7 +115,7 @@ class SubscriptionGroupPrepaymentResponseBuilder
     }
 
     /**
-     * Initializes a new subscription group prepayment response object.
+     * Initializes a new Subscription Group Prepayment Response object.
      */
     public function build(): SubscriptionGroupPrepaymentResponse
     {

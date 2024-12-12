@@ -32,7 +32,7 @@ class ListProductsFilterBuilder
     }
 
     /**
-     * Initializes a new list products filter Builder object.
+     * Initializes a new List Products Filter Builder object.
      */
     public static function init(): self
     {
@@ -41,6 +41,8 @@ class ListProductsFilterBuilder
 
     /**
      * Sets ids field.
+     *
+     * @param int[]|null $value
      */
     public function ids(?array $value): self
     {
@@ -50,6 +52,8 @@ class ListProductsFilterBuilder
 
     /**
      * Sets prepaid product price point field.
+     *
+     * @param PrepaidProductPricePointFilter|null $value
      */
     public function prepaidProductPricePoint(?PrepaidProductPricePointFilter $value): self
     {
@@ -59,6 +63,8 @@ class ListProductsFilterBuilder
 
     /**
      * Sets use site exchange rate field.
+     *
+     * @param bool|null $value
      */
     public function useSiteExchangeRate(?bool $value): self
     {
@@ -69,8 +75,8 @@ class ListProductsFilterBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -79,7 +85,7 @@ class ListProductsFilterBuilder
     }
 
     /**
-     * Initializes a new list products filter object.
+     * Initializes a new List Products Filter object.
      */
     public function build(): ListProductsFilter
     {

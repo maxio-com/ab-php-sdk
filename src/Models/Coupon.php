@@ -166,6 +166,11 @@ class Coupon implements \JsonSerializable
     private $couponRestrictions;
 
     /**
+     * @var CouponCurrency[]|null
+     */
+    private $currencyPrices;
+
+    /**
      * Returns Id.
      */
     public function getId(): ?int
@@ -363,6 +368,8 @@ class Coupon implements \JsonSerializable
 
     /**
      * Returns End Date.
+     * After the given time, this coupon code will be invalid for new signups. Recurring discounts started
+     * before this date will continue to recur even after this date.
      */
     public function getEndDate(): ?\DateTime
     {
@@ -374,6 +381,8 @@ class Coupon implements \JsonSerializable
 
     /**
      * Sets End Date.
+     * After the given time, this coupon code will be invalid for new signups. Recurring discounts started
+     * before this date will continue to recur even after this date.
      *
      * @maps end_date
      * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
@@ -385,6 +394,8 @@ class Coupon implements \JsonSerializable
 
     /**
      * Unsets End Date.
+     * After the given time, this coupon code will be invalid for new signups. Recurring discounts started
+     * before this date will continue to recur even after this date.
      */
     public function unsetEndDate(): void
     {
@@ -575,6 +586,7 @@ class Coupon implements \JsonSerializable
 
     /**
      * Returns Allow Negative Balance.
+     * If set to true, discount is not limited (credits will carry forward to next billing).
      */
     public function getAllowNegativeBalance(): ?bool
     {
@@ -583,6 +595,7 @@ class Coupon implements \JsonSerializable
 
     /**
      * Sets Allow Negative Balance.
+     * If set to true, discount is not limited (credits will carry forward to next billing).
      *
      * @maps allow_negative_balance
      */
@@ -652,6 +665,7 @@ class Coupon implements \JsonSerializable
 
     /**
      * Returns Stackable.
+     * A stackable coupon can be combined with other coupons on a Subscription.
      */
     public function getStackable(): ?bool
     {
@@ -660,6 +674,7 @@ class Coupon implements \JsonSerializable
 
     /**
      * Sets Stackable.
+     * A stackable coupon can be combined with other coupons on a Subscription.
      *
      * @maps stackable
      */
@@ -670,6 +685,10 @@ class Coupon implements \JsonSerializable
 
     /**
      * Returns Compounding Strategy.
+     * Applicable only to stackable coupons. For `compound`, Percentage-based discounts will be calculated
+     * against the remaining price, after prior discounts have been calculated. For `full-price`,
+     * Percentage-based discounts will always be calculated against the original item price, before other
+     * discounts are applied.
      */
     public function getCompoundingStrategy(): ?string
     {
@@ -681,6 +700,10 @@ class Coupon implements \JsonSerializable
 
     /**
      * Sets Compounding Strategy.
+     * Applicable only to stackable coupons. For `compound`, Percentage-based discounts will be calculated
+     * against the remaining price, after prior discounts have been calculated. For `full-price`,
+     * Percentage-based discounts will always be calculated against the original item price, before other
+     * discounts are applied.
      *
      * @maps compounding_strategy
      * @factory \AdvancedBillingLib\Models\CompoundingStrategy::checkValue
@@ -692,6 +715,10 @@ class Coupon implements \JsonSerializable
 
     /**
      * Unsets Compounding Strategy.
+     * Applicable only to stackable coupons. For `compound`, Percentage-based discounts will be calculated
+     * against the remaining price, after prior discounts have been calculated. For `full-price`,
+     * Percentage-based discounts will always be calculated against the original item price, before other
+     * discounts are applied.
      */
     public function unsetCompoundingStrategy(): void
     {
@@ -849,17 +876,56 @@ class Coupon implements \JsonSerializable
         $this->couponRestrictions = $couponRestrictions;
     }
 
+    /**
+     * Returns Currency Prices.
+     * Returned in read, find, and list endpoints if the query parameter is provided.
+     *
+     * @return CouponCurrency[]|null
+     */
+    public function getCurrencyPrices(): ?array
+    {
+        return $this->currencyPrices;
+    }
+
+    /**
+     * Sets Currency Prices.
+     * Returned in read, find, and list endpoints if the query parameter is provided.
+     *
+     * @maps currency_prices
+     *
+     * @param CouponCurrency[]|null $currencyPrices
+     */
+    public function setCurrencyPrices(?array $currencyPrices): void
+    {
+        $this->currencyPrices = $currencyPrices;
+    }
+
     private $additionalProperties = [];
 
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function addAdditionalProperty(string $name, $value)
     {
         $this->additionalProperties[$name] = $value;
+    }
+
+    /**
+     * Find an additional property by name in this model or false if property does not exist.
+     *
+     * @param string $name Name of property.
+     *
+     * @return mixed|false Value of the property.
+     */
+    public function findAdditionalProperty(string $name)
+    {
+        if (isset($this->additionalProperties[$name])) {
+            return $this->additionalProperties[$name];
+        }
+        return false;
     }
 
     /**
@@ -966,6 +1032,9 @@ class Coupon implements \JsonSerializable
         }
         if (isset($this->couponRestrictions)) {
             $json['coupon_restrictions']              = $this->couponRestrictions;
+        }
+        if (isset($this->currencyPrices)) {
+            $json['currency_prices']                  = $this->currencyPrices;
         }
         $json = array_merge($json, $this->additionalProperties);
 

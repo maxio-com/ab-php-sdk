@@ -31,7 +31,14 @@ class DunnerDataBuilder
     }
 
     /**
-     * Initializes a new dunner data Builder object.
+     * Initializes a new Dunner Data Builder object.
+     *
+     * @param string $state
+     * @param int $subscriptionId
+     * @param int $revenueAtRiskInCents
+     * @param \DateTime $createdAt
+     * @param int $attempts
+     * @param \DateTime $lastAttemptedAt
      */
     public static function init(
         string $state,
@@ -49,8 +56,8 @@ class DunnerDataBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -59,7 +66,7 @@ class DunnerDataBuilder
     }
 
     /**
-     * Initializes a new dunner data object.
+     * Initializes a new Dunner Data object.
      */
     public function build(): DunnerData
     {

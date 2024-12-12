@@ -31,7 +31,7 @@ class ReactivateSubscriptionGroupRequestBuilder
     }
 
     /**
-     * Initializes a new reactivate subscription group request Builder object.
+     * Initializes a new Reactivate Subscription Group Request Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class ReactivateSubscriptionGroupRequestBuilder
 
     /**
      * Sets resume field.
+     *
+     * @param bool|null $value
      */
     public function resume(?bool $value): self
     {
@@ -49,6 +51,8 @@ class ReactivateSubscriptionGroupRequestBuilder
 
     /**
      * Sets resume members field.
+     *
+     * @param bool|null $value
      */
     public function resumeMembers(?bool $value): self
     {
@@ -59,8 +63,8 @@ class ReactivateSubscriptionGroupRequestBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -69,7 +73,7 @@ class ReactivateSubscriptionGroupRequestBuilder
     }
 
     /**
-     * Initializes a new reactivate subscription group request object.
+     * Initializes a new Reactivate Subscription Group Request object.
      */
     public function build(): ReactivateSubscriptionGroupRequest
     {

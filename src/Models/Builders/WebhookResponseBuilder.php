@@ -32,7 +32,7 @@ class WebhookResponseBuilder
     }
 
     /**
-     * Initializes a new webhook response Builder object.
+     * Initializes a new Webhook Response Builder object.
      */
     public static function init(): self
     {
@@ -41,6 +41,8 @@ class WebhookResponseBuilder
 
     /**
      * Sets webhook field.
+     *
+     * @param Webhook|null $value
      */
     public function webhook(?Webhook $value): self
     {
@@ -51,8 +53,8 @@ class WebhookResponseBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -61,7 +63,7 @@ class WebhookResponseBuilder
     }
 
     /**
-     * Initializes a new webhook response object.
+     * Initializes a new Webhook Response object.
      */
     public function build(): WebhookResponse
     {

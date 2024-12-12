@@ -31,7 +31,7 @@ class InvoiceRefundBuilder
     }
 
     /**
-     * Initializes a new invoice refund Builder object.
+     * Initializes a new Invoice Refund Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class InvoiceRefundBuilder
 
     /**
      * Sets transaction id field.
+     *
+     * @param int|null $value
      */
     public function transactionId(?int $value): self
     {
@@ -49,6 +51,8 @@ class InvoiceRefundBuilder
 
     /**
      * Sets payment id field.
+     *
+     * @param int|null $value
      */
     public function paymentId(?int $value): self
     {
@@ -58,6 +62,8 @@ class InvoiceRefundBuilder
 
     /**
      * Sets memo field.
+     *
+     * @param string|null $value
      */
     public function memo(?string $value): self
     {
@@ -67,6 +73,8 @@ class InvoiceRefundBuilder
 
     /**
      * Sets original amount field.
+     *
+     * @param string|null $value
      */
     public function originalAmount(?string $value): self
     {
@@ -76,6 +84,8 @@ class InvoiceRefundBuilder
 
     /**
      * Sets applied amount field.
+     *
+     * @param string|null $value
      */
     public function appliedAmount(?string $value): self
     {
@@ -85,6 +95,8 @@ class InvoiceRefundBuilder
 
     /**
      * Sets gateway transaction id field.
+     *
+     * @param string|null $value
      */
     public function gatewayTransactionId(?string $value): self
     {
@@ -103,6 +115,8 @@ class InvoiceRefundBuilder
 
     /**
      * Sets gateway used field.
+     *
+     * @param string|null $value
      */
     public function gatewayUsed(?string $value): self
     {
@@ -112,6 +126,8 @@ class InvoiceRefundBuilder
 
     /**
      * Sets gateway handle field.
+     *
+     * @param string|null $value
      */
     public function gatewayHandle(?string $value): self
     {
@@ -130,6 +146,8 @@ class InvoiceRefundBuilder
 
     /**
      * Sets ach late reject field.
+     *
+     * @param bool|null $value
      */
     public function achLateReject(?bool $value): self
     {
@@ -149,8 +167,8 @@ class InvoiceRefundBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -159,7 +177,7 @@ class InvoiceRefundBuilder
     }
 
     /**
-     * Initializes a new invoice refund object.
+     * Initializes a new Invoice Refund object.
      */
     public function build(): InvoiceRefund
     {

@@ -31,7 +31,7 @@ class SaleRepSettingsBuilder
     }
 
     /**
-     * Initializes a new sale rep settings Builder object.
+     * Initializes a new Sale Rep Settings Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class SaleRepSettingsBuilder
 
     /**
      * Sets customer name field.
+     *
+     * @param string|null $value
      */
     public function customerName(?string $value): self
     {
@@ -49,6 +51,8 @@ class SaleRepSettingsBuilder
 
     /**
      * Sets subscription id field.
+     *
+     * @param int|null $value
      */
     public function subscriptionId(?int $value): self
     {
@@ -58,6 +62,8 @@ class SaleRepSettingsBuilder
 
     /**
      * Sets site link field.
+     *
+     * @param string|null $value
      */
     public function siteLink(?string $value): self
     {
@@ -67,6 +73,8 @@ class SaleRepSettingsBuilder
 
     /**
      * Sets site name field.
+     *
+     * @param string|null $value
      */
     public function siteName(?string $value): self
     {
@@ -76,6 +84,8 @@ class SaleRepSettingsBuilder
 
     /**
      * Sets subscription mrr field.
+     *
+     * @param string|null $value
      */
     public function subscriptionMrr(?string $value): self
     {
@@ -85,6 +95,8 @@ class SaleRepSettingsBuilder
 
     /**
      * Sets sales rep id field.
+     *
+     * @param int|null $value
      */
     public function salesRepId(?int $value): self
     {
@@ -94,6 +106,8 @@ class SaleRepSettingsBuilder
 
     /**
      * Sets sales rep name field.
+     *
+     * @param string|null $value
      */
     public function salesRepName(?string $value): self
     {
@@ -104,8 +118,8 @@ class SaleRepSettingsBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -114,7 +128,7 @@ class SaleRepSettingsBuilder
     }
 
     /**
-     * Initializes a new sale rep settings object.
+     * Initializes a new Sale Rep Settings object.
      */
     public function build(): SaleRepSettings
     {

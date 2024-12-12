@@ -31,7 +31,7 @@ class AllocationSettingsBuilder
     }
 
     /**
-     * Initializes a new allocation settings Builder object.
+     * Initializes a new Allocation Settings Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class AllocationSettingsBuilder
 
     /**
      * Sets upgrade charge field.
+     *
+     * @param string|null $value
      */
     public function upgradeCharge(?string $value): self
     {
@@ -58,6 +60,8 @@ class AllocationSettingsBuilder
 
     /**
      * Sets downgrade credit field.
+     *
+     * @param string|null $value
      */
     public function downgradeCredit(?string $value): self
     {
@@ -76,6 +80,8 @@ class AllocationSettingsBuilder
 
     /**
      * Sets accrue charge field.
+     *
+     * @param string|null $value
      */
     public function accrueCharge(?string $value): self
     {
@@ -86,8 +92,8 @@ class AllocationSettingsBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -96,7 +102,7 @@ class AllocationSettingsBuilder
     }
 
     /**
-     * Initializes a new allocation settings object.
+     * Initializes a new Allocation Settings object.
      */
     public function build(): AllocationSettings
     {

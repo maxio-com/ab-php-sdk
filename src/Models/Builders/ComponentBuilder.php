@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace AdvancedBillingLib\Models\Builders;
 
 use AdvancedBillingLib\Models\Component;
+use AdvancedBillingLib\Models\ComponentPrice;
 use Core\Utils\CoreHelper;
 
 /**
@@ -31,7 +32,7 @@ class ComponentBuilder
     }
 
     /**
-     * Initializes a new component Builder object.
+     * Initializes a new Component Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +41,8 @@ class ComponentBuilder
 
     /**
      * Sets id field.
+     *
+     * @param int|null $value
      */
     public function id(?int $value): self
     {
@@ -49,6 +52,8 @@ class ComponentBuilder
 
     /**
      * Sets name field.
+     *
+     * @param string|null $value
      */
     public function name(?string $value): self
     {
@@ -58,6 +63,8 @@ class ComponentBuilder
 
     /**
      * Sets handle field.
+     *
+     * @param string|null $value
      */
     public function handle(?string $value): self
     {
@@ -76,6 +83,8 @@ class ComponentBuilder
 
     /**
      * Sets pricing scheme field.
+     *
+     * @param string|null $value
      */
     public function pricingScheme(?string $value): self
     {
@@ -94,6 +103,8 @@ class ComponentBuilder
 
     /**
      * Sets unit name field.
+     *
+     * @param string|null $value
      */
     public function unitName(?string $value): self
     {
@@ -103,6 +114,8 @@ class ComponentBuilder
 
     /**
      * Sets unit price field.
+     *
+     * @param string|null $value
      */
     public function unitPrice(?string $value): self
     {
@@ -121,6 +134,8 @@ class ComponentBuilder
 
     /**
      * Sets product family id field.
+     *
+     * @param int|null $value
      */
     public function productFamilyId(?int $value): self
     {
@@ -130,6 +145,8 @@ class ComponentBuilder
 
     /**
      * Sets product family name field.
+     *
+     * @param string|null $value
      */
     public function productFamilyName(?string $value): self
     {
@@ -139,6 +156,8 @@ class ComponentBuilder
 
     /**
      * Sets price per unit in cents field.
+     *
+     * @param int|null $value
      */
     public function pricePerUnitInCents(?int $value): self
     {
@@ -157,6 +176,8 @@ class ComponentBuilder
 
     /**
      * Sets kind field.
+     *
+     * @param string|null $value
      */
     public function kind(?string $value): self
     {
@@ -166,6 +187,8 @@ class ComponentBuilder
 
     /**
      * Sets archived field.
+     *
+     * @param bool|null $value
      */
     public function archived(?bool $value): self
     {
@@ -175,6 +198,8 @@ class ComponentBuilder
 
     /**
      * Sets taxable field.
+     *
+     * @param bool|null $value
      */
     public function taxable(?bool $value): self
     {
@@ -184,6 +209,8 @@ class ComponentBuilder
 
     /**
      * Sets description field.
+     *
+     * @param string|null $value
      */
     public function description(?string $value): self
     {
@@ -202,6 +229,8 @@ class ComponentBuilder
 
     /**
      * Sets default price point id field.
+     *
+     * @param int|null $value
      */
     public function defaultPricePointId(?int $value): self
     {
@@ -220,6 +249,8 @@ class ComponentBuilder
 
     /**
      * Sets overage prices field.
+     *
+     * @param ComponentPrice[]|null $value
      */
     public function overagePrices(?array $value): self
     {
@@ -238,6 +269,8 @@ class ComponentBuilder
 
     /**
      * Sets prices field.
+     *
+     * @param ComponentPrice[]|null $value
      */
     public function prices(?array $value): self
     {
@@ -256,6 +289,8 @@ class ComponentBuilder
 
     /**
      * Sets price point count field.
+     *
+     * @param int|null $value
      */
     public function pricePointCount(?int $value): self
     {
@@ -265,6 +300,8 @@ class ComponentBuilder
 
     /**
      * Sets price points url field.
+     *
+     * @param string|null $value
      */
     public function pricePointsUrl(?string $value): self
     {
@@ -283,6 +320,8 @@ class ComponentBuilder
 
     /**
      * Sets default price point name field.
+     *
+     * @param string|null $value
      */
     public function defaultPricePointName(?string $value): self
     {
@@ -292,6 +331,8 @@ class ComponentBuilder
 
     /**
      * Sets tax code field.
+     *
+     * @param string|null $value
      */
     public function taxCode(?string $value): self
     {
@@ -310,6 +351,8 @@ class ComponentBuilder
 
     /**
      * Sets recurring field.
+     *
+     * @param bool|null $value
      */
     public function recurring(?bool $value): self
     {
@@ -319,6 +362,8 @@ class ComponentBuilder
 
     /**
      * Sets upgrade charge field.
+     *
+     * @param string|null $value
      */
     public function upgradeCharge(?string $value): self
     {
@@ -337,6 +382,8 @@ class ComponentBuilder
 
     /**
      * Sets downgrade credit field.
+     *
+     * @param string|null $value
      */
     public function downgradeCredit(?string $value): self
     {
@@ -355,6 +402,8 @@ class ComponentBuilder
 
     /**
      * Sets created at field.
+     *
+     * @param \DateTime|null $value
      */
     public function createdAt(?\DateTime $value): self
     {
@@ -364,6 +413,8 @@ class ComponentBuilder
 
     /**
      * Sets updated at field.
+     *
+     * @param \DateTime|null $value
      */
     public function updatedAt(?\DateTime $value): self
     {
@@ -373,6 +424,8 @@ class ComponentBuilder
 
     /**
      * Sets archived at field.
+     *
+     * @param \DateTime|null $value
      */
     public function archivedAt(?\DateTime $value): self
     {
@@ -391,6 +444,8 @@ class ComponentBuilder
 
     /**
      * Sets hide date range on invoice field.
+     *
+     * @param bool|null $value
      */
     public function hideDateRangeOnInvoice(?bool $value): self
     {
@@ -400,6 +455,8 @@ class ComponentBuilder
 
     /**
      * Sets allow fractional quantities field.
+     *
+     * @param bool|null $value
      */
     public function allowFractionalQuantities(?bool $value): self
     {
@@ -409,6 +466,8 @@ class ComponentBuilder
 
     /**
      * Sets item category field.
+     *
+     * @param string|null $value
      */
     public function itemCategory(?string $value): self
     {
@@ -427,6 +486,8 @@ class ComponentBuilder
 
     /**
      * Sets use site exchange rate field.
+     *
+     * @param bool|null $value
      */
     public function useSiteExchangeRate(?bool $value): self
     {
@@ -445,6 +506,8 @@ class ComponentBuilder
 
     /**
      * Sets accounting code field.
+     *
+     * @param string|null $value
      */
     public function accountingCode(?string $value): self
     {
@@ -463,6 +526,8 @@ class ComponentBuilder
 
     /**
      * Sets event based billing metric id field.
+     *
+     * @param int|null $value
      */
     public function eventBasedBillingMetricId(?int $value): self
     {
@@ -472,6 +537,8 @@ class ComponentBuilder
 
     /**
      * Sets interval field.
+     *
+     * @param int|null $value
      */
     public function interval(?int $value): self
     {
@@ -481,6 +548,8 @@ class ComponentBuilder
 
     /**
      * Sets interval unit field.
+     *
+     * @param string|null $value
      */
     public function intervalUnit(?string $value): self
     {
@@ -500,8 +569,8 @@ class ComponentBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -510,7 +579,7 @@ class ComponentBuilder
     }
 
     /**
-     * Initializes a new component object.
+     * Initializes a new Component object.
      */
     public function build(): Component
     {

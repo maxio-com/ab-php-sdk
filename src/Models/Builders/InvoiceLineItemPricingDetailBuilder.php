@@ -31,7 +31,7 @@ class InvoiceLineItemPricingDetailBuilder
     }
 
     /**
-     * Initializes a new invoice line item pricing detail Builder object.
+     * Initializes a new Invoice Line Item Pricing Detail Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class InvoiceLineItemPricingDetailBuilder
 
     /**
      * Sets label field.
+     *
+     * @param string|null $value
      */
     public function label(?string $value): self
     {
@@ -49,6 +51,8 @@ class InvoiceLineItemPricingDetailBuilder
 
     /**
      * Sets amount field.
+     *
+     * @param string|null $value
      */
     public function amount(?string $value): self
     {
@@ -59,8 +63,8 @@ class InvoiceLineItemPricingDetailBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -69,7 +73,7 @@ class InvoiceLineItemPricingDetailBuilder
     }
 
     /**
-     * Initializes a new invoice line item pricing detail object.
+     * Initializes a new Invoice Line Item Pricing Detail object.
      */
     public function build(): InvoiceLineItemPricingDetail
     {

@@ -31,7 +31,7 @@ class CreateMetadataBuilder
     }
 
     /**
-     * Initializes a new create metadata Builder object.
+     * Initializes a new Create Metadata Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class CreateMetadataBuilder
 
     /**
      * Sets name field.
+     *
+     * @param string|null $value
      */
     public function name(?string $value): self
     {
@@ -49,6 +51,8 @@ class CreateMetadataBuilder
 
     /**
      * Sets value field.
+     *
+     * @param string|null $value
      */
     public function value(?string $value): self
     {
@@ -59,8 +63,8 @@ class CreateMetadataBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -69,7 +73,7 @@ class CreateMetadataBuilder
     }
 
     /**
-     * Initializes a new create metadata object.
+     * Initializes a new Create Metadata object.
      */
     public function build(): CreateMetadata
     {

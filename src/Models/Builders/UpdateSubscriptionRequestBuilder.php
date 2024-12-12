@@ -32,7 +32,9 @@ class UpdateSubscriptionRequestBuilder
     }
 
     /**
-     * Initializes a new update subscription request Builder object.
+     * Initializes a new Update Subscription Request Builder object.
+     *
+     * @param UpdateSubscription $subscription
      */
     public static function init(UpdateSubscription $subscription): self
     {
@@ -42,8 +44,8 @@ class UpdateSubscriptionRequestBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -52,7 +54,7 @@ class UpdateSubscriptionRequestBuilder
     }
 
     /**
-     * Initializes a new update subscription request object.
+     * Initializes a new Update Subscription Request object.
      */
     public function build(): UpdateSubscriptionRequest
     {

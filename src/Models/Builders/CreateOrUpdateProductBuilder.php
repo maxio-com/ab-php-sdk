@@ -31,7 +31,13 @@ class CreateOrUpdateProductBuilder
     }
 
     /**
-     * Initializes a new create or update product Builder object.
+     * Initializes a new Create Or Update Product Builder object.
+     *
+     * @param string $name
+     * @param string $description
+     * @param int $priceInCents
+     * @param int $interval
+     * @param string $intervalUnit
      */
     public static function init(
         string $name,
@@ -45,6 +51,8 @@ class CreateOrUpdateProductBuilder
 
     /**
      * Sets handle field.
+     *
+     * @param string|null $value
      */
     public function handle(?string $value): self
     {
@@ -54,6 +62,8 @@ class CreateOrUpdateProductBuilder
 
     /**
      * Sets accounting code field.
+     *
+     * @param string|null $value
      */
     public function accountingCode(?string $value): self
     {
@@ -63,6 +73,8 @@ class CreateOrUpdateProductBuilder
 
     /**
      * Sets require credit card field.
+     *
+     * @param bool|null $value
      */
     public function requireCreditCard(?bool $value): self
     {
@@ -72,6 +84,8 @@ class CreateOrUpdateProductBuilder
 
     /**
      * Sets trial price in cents field.
+     *
+     * @param int|null $value
      */
     public function trialPriceInCents(?int $value): self
     {
@@ -81,6 +95,8 @@ class CreateOrUpdateProductBuilder
 
     /**
      * Sets trial interval field.
+     *
+     * @param int|null $value
      */
     public function trialInterval(?int $value): self
     {
@@ -90,6 +106,8 @@ class CreateOrUpdateProductBuilder
 
     /**
      * Sets trial interval unit field.
+     *
+     * @param string|null $value
      */
     public function trialIntervalUnit(?string $value): self
     {
@@ -108,6 +126,8 @@ class CreateOrUpdateProductBuilder
 
     /**
      * Sets trial type field.
+     *
+     * @param string|null $value
      */
     public function trialType(?string $value): self
     {
@@ -117,6 +137,8 @@ class CreateOrUpdateProductBuilder
 
     /**
      * Sets expiration interval field.
+     *
+     * @param int|null $value
      */
     public function expirationInterval(?int $value): self
     {
@@ -126,6 +148,8 @@ class CreateOrUpdateProductBuilder
 
     /**
      * Sets expiration interval unit field.
+     *
+     * @param string|null $value
      */
     public function expirationIntervalUnit(?string $value): self
     {
@@ -144,6 +168,8 @@ class CreateOrUpdateProductBuilder
 
     /**
      * Sets auto create signup page field.
+     *
+     * @param bool|null $value
      */
     public function autoCreateSignupPage(?bool $value): self
     {
@@ -153,6 +179,8 @@ class CreateOrUpdateProductBuilder
 
     /**
      * Sets tax code field.
+     *
+     * @param string|null $value
      */
     public function taxCode(?string $value): self
     {
@@ -163,8 +191,8 @@ class CreateOrUpdateProductBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -173,7 +201,7 @@ class CreateOrUpdateProductBuilder
     }
 
     /**
-     * Initializes a new create or update product object.
+     * Initializes a new Create Or Update Product object.
      */
     public function build(): CreateOrUpdateProduct
     {

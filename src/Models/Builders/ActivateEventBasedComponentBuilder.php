@@ -33,7 +33,7 @@ class ActivateEventBasedComponentBuilder
     }
 
     /**
-     * Initializes a new activate event based component Builder object.
+     * Initializes a new Activate Event Based Component Builder object.
      */
     public static function init(): self
     {
@@ -42,6 +42,8 @@ class ActivateEventBasedComponentBuilder
 
     /**
      * Sets price point id field.
+     *
+     * @param int|null $value
      */
     public function pricePointId(?int $value): self
     {
@@ -51,6 +53,8 @@ class ActivateEventBasedComponentBuilder
 
     /**
      * Sets billing schedule field.
+     *
+     * @param BillingSchedule|null $value
      */
     public function billingSchedule(?BillingSchedule $value): self
     {
@@ -60,6 +64,8 @@ class ActivateEventBasedComponentBuilder
 
     /**
      * Sets custom price field.
+     *
+     * @param ComponentCustomPrice|null $value
      */
     public function customPrice(?ComponentCustomPrice $value): self
     {
@@ -70,8 +76,8 @@ class ActivateEventBasedComponentBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -80,7 +86,7 @@ class ActivateEventBasedComponentBuilder
     }
 
     /**
-     * Initializes a new activate event based component object.
+     * Initializes a new Activate Event Based Component object.
      */
     public function build(): ActivateEventBasedComponent
     {

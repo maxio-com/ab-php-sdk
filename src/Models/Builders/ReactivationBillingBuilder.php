@@ -31,7 +31,7 @@ class ReactivationBillingBuilder
     }
 
     /**
-     * Initializes a new reactivation billing Builder object.
+     * Initializes a new Reactivation Billing Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class ReactivationBillingBuilder
 
     /**
      * Sets reactivation charge field.
+     *
+     * @param string|null $value
      */
     public function reactivationCharge(?string $value): self
     {
@@ -50,8 +52,8 @@ class ReactivationBillingBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -60,7 +62,7 @@ class ReactivationBillingBuilder
     }
 
     /**
-     * Initializes a new reactivation billing object.
+     * Initializes a new Reactivation Billing object.
      */
     public function build(): ReactivationBilling
     {

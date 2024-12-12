@@ -31,7 +31,15 @@ class PrepaymentBuilder
     }
 
     /**
-     * Initializes a new prepayment Builder object.
+     * Initializes a new Prepayment Builder object.
+     *
+     * @param int $id
+     * @param int $subscriptionId
+     * @param int $amountInCents
+     * @param int $remainingAmountInCents
+     * @param bool $external
+     * @param string $memo
+     * @param \DateTime $createdAt
      */
     public static function init(
         int $id,
@@ -57,6 +65,8 @@ class PrepaymentBuilder
 
     /**
      * Sets refunded amount in cents field.
+     *
+     * @param int|null $value
      */
     public function refundedAmountInCents(?int $value): self
     {
@@ -66,6 +76,8 @@ class PrepaymentBuilder
 
     /**
      * Sets details field.
+     *
+     * @param string|null $value
      */
     public function details(?string $value): self
     {
@@ -75,6 +87,8 @@ class PrepaymentBuilder
 
     /**
      * Sets payment type field.
+     *
+     * @param string|null $value
      */
     public function paymentType(?string $value): self
     {
@@ -85,8 +99,8 @@ class PrepaymentBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -95,7 +109,7 @@ class PrepaymentBuilder
     }
 
     /**
-     * Initializes a new prepayment object.
+     * Initializes a new Prepayment object.
      */
     public function build(): Prepayment
     {

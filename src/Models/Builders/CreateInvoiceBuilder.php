@@ -12,6 +12,8 @@ namespace AdvancedBillingLib\Models\Builders;
 
 use AdvancedBillingLib\Models\CreateInvoice;
 use AdvancedBillingLib\Models\CreateInvoiceAddress;
+use AdvancedBillingLib\Models\CreateInvoiceCoupon;
+use AdvancedBillingLib\Models\CreateInvoiceItem;
 use Core\Utils\CoreHelper;
 
 /**
@@ -32,7 +34,7 @@ class CreateInvoiceBuilder
     }
 
     /**
-     * Initializes a new create invoice Builder object.
+     * Initializes a new Create Invoice Builder object.
      */
     public static function init(): self
     {
@@ -41,6 +43,8 @@ class CreateInvoiceBuilder
 
     /**
      * Sets line items field.
+     *
+     * @param CreateInvoiceItem[]|null $value
      */
     public function lineItems(?array $value): self
     {
@@ -50,6 +54,8 @@ class CreateInvoiceBuilder
 
     /**
      * Sets issue date field.
+     *
+     * @param \DateTime|null $value
      */
     public function issueDate(?\DateTime $value): self
     {
@@ -59,6 +65,8 @@ class CreateInvoiceBuilder
 
     /**
      * Sets net terms field.
+     *
+     * @param int|null $value
      */
     public function netTerms(?int $value): self
     {
@@ -68,6 +76,8 @@ class CreateInvoiceBuilder
 
     /**
      * Sets payment instructions field.
+     *
+     * @param string|null $value
      */
     public function paymentInstructions(?string $value): self
     {
@@ -77,6 +87,8 @@ class CreateInvoiceBuilder
 
     /**
      * Sets memo field.
+     *
+     * @param string|null $value
      */
     public function memo(?string $value): self
     {
@@ -86,6 +98,8 @@ class CreateInvoiceBuilder
 
     /**
      * Sets seller address field.
+     *
+     * @param CreateInvoiceAddress|null $value
      */
     public function sellerAddress(?CreateInvoiceAddress $value): self
     {
@@ -95,6 +109,8 @@ class CreateInvoiceBuilder
 
     /**
      * Sets billing address field.
+     *
+     * @param CreateInvoiceAddress|null $value
      */
     public function billingAddress(?CreateInvoiceAddress $value): self
     {
@@ -104,6 +120,8 @@ class CreateInvoiceBuilder
 
     /**
      * Sets shipping address field.
+     *
+     * @param CreateInvoiceAddress|null $value
      */
     public function shippingAddress(?CreateInvoiceAddress $value): self
     {
@@ -113,6 +131,8 @@ class CreateInvoiceBuilder
 
     /**
      * Sets coupons field.
+     *
+     * @param CreateInvoiceCoupon[]|null $value
      */
     public function coupons(?array $value): self
     {
@@ -122,6 +142,8 @@ class CreateInvoiceBuilder
 
     /**
      * Sets status field.
+     *
+     * @param string|null $value
      */
     public function status(?string $value): self
     {
@@ -132,8 +154,8 @@ class CreateInvoiceBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -142,7 +164,7 @@ class CreateInvoiceBuilder
     }
 
     /**
-     * Initializes a new create invoice object.
+     * Initializes a new Create Invoice object.
      */
     public function build(): CreateInvoice
     {

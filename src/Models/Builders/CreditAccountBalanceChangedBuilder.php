@@ -31,7 +31,13 @@ class CreditAccountBalanceChangedBuilder
     }
 
     /**
-     * Initializes a new credit account balance changed Builder object.
+     * Initializes a new Credit Account Balance Changed Builder object.
+     *
+     * @param string $reason
+     * @param int $serviceCreditAccountBalanceInCents
+     * @param int $serviceCreditBalanceChangeInCents
+     * @param string $currencyCode
+     * @param \DateTime $atTime
      */
     public static function init(
         string $reason,
@@ -52,8 +58,8 @@ class CreditAccountBalanceChangedBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -62,7 +68,7 @@ class CreditAccountBalanceChangedBuilder
     }
 
     /**
-     * Initializes a new credit account balance changed object.
+     * Initializes a new Credit Account Balance Changed object.
      */
     public function build(): CreditAccountBalanceChanged
     {

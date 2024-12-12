@@ -32,7 +32,9 @@ class CreateOrUpdateProductRequestBuilder
     }
 
     /**
-     * Initializes a new create or update product request Builder object.
+     * Initializes a new Create Or Update Product Request Builder object.
+     *
+     * @param CreateOrUpdateProduct $product
      */
     public static function init(CreateOrUpdateProduct $product): self
     {
@@ -42,8 +44,8 @@ class CreateOrUpdateProductRequestBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -52,7 +54,7 @@ class CreateOrUpdateProductRequestBuilder
     }
 
     /**
-     * Initializes a new create or update product request object.
+     * Initializes a new Create Or Update Product Request object.
      */
     public function build(): CreateOrUpdateProductRequest
     {

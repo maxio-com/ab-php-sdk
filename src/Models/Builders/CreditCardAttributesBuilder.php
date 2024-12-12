@@ -31,7 +31,7 @@ class CreditCardAttributesBuilder
     }
 
     /**
-     * Initializes a new credit card attributes Builder object.
+     * Initializes a new Credit Card Attributes Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class CreditCardAttributesBuilder
 
     /**
      * Sets full number field.
+     *
+     * @param string|null $value
      */
     public function fullNumber(?string $value): self
     {
@@ -49,6 +51,8 @@ class CreditCardAttributesBuilder
 
     /**
      * Sets expiration month field.
+     *
+     * @param string|null $value
      */
     public function expirationMonth(?string $value): self
     {
@@ -58,6 +62,8 @@ class CreditCardAttributesBuilder
 
     /**
      * Sets expiration year field.
+     *
+     * @param string|null $value
      */
     public function expirationYear(?string $value): self
     {
@@ -68,8 +74,8 @@ class CreditCardAttributesBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -78,7 +84,7 @@ class CreditCardAttributesBuilder
     }
 
     /**
-     * Initializes a new credit card attributes object.
+     * Initializes a new Credit Card Attributes object.
      */
     public function build(): CreditCardAttributes
     {

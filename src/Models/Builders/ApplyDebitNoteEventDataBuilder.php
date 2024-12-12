@@ -31,7 +31,12 @@ class ApplyDebitNoteEventDataBuilder
     }
 
     /**
-     * Initializes a new apply debit note event data Builder object.
+     * Initializes a new Apply Debit Note Event Data Builder object.
+     *
+     * @param string $debitNoteNumber
+     * @param string $debitNoteUid
+     * @param string $originalAmount
+     * @param string $appliedAmount
      */
     public static function init(
         string $debitNoteNumber,
@@ -46,6 +51,8 @@ class ApplyDebitNoteEventDataBuilder
 
     /**
      * Sets memo field.
+     *
+     * @param string|null $value
      */
     public function memo(?string $value): self
     {
@@ -64,6 +71,8 @@ class ApplyDebitNoteEventDataBuilder
 
     /**
      * Sets transaction time field.
+     *
+     * @param \DateTime|null $value
      */
     public function transactionTime(?\DateTime $value): self
     {
@@ -83,8 +92,8 @@ class ApplyDebitNoteEventDataBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -93,7 +102,7 @@ class ApplyDebitNoteEventDataBuilder
     }
 
     /**
-     * Initializes a new apply debit note event data object.
+     * Initializes a new Apply Debit Note Event Data object.
      */
     public function build(): ApplyDebitNoteEventData
     {

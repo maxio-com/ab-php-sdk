@@ -31,7 +31,7 @@ class ListPublicKeysMetaBuilder
     }
 
     /**
-     * Initializes a new list public keys meta Builder object.
+     * Initializes a new List Public Keys Meta Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class ListPublicKeysMetaBuilder
 
     /**
      * Sets total count field.
+     *
+     * @param int|null $value
      */
     public function totalCount(?int $value): self
     {
@@ -49,6 +51,8 @@ class ListPublicKeysMetaBuilder
 
     /**
      * Sets current page field.
+     *
+     * @param int|null $value
      */
     public function currentPage(?int $value): self
     {
@@ -58,6 +62,8 @@ class ListPublicKeysMetaBuilder
 
     /**
      * Sets total pages field.
+     *
+     * @param int|null $value
      */
     public function totalPages(?int $value): self
     {
@@ -67,6 +73,8 @@ class ListPublicKeysMetaBuilder
 
     /**
      * Sets per page field.
+     *
+     * @param int|null $value
      */
     public function perPage(?int $value): self
     {
@@ -77,8 +85,8 @@ class ListPublicKeysMetaBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -87,7 +95,7 @@ class ListPublicKeysMetaBuilder
     }
 
     /**
-     * Initializes a new list public keys meta object.
+     * Initializes a new List Public Keys Meta object.
      */
     public function build(): ListPublicKeysMeta
     {

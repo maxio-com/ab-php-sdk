@@ -31,7 +31,7 @@ class BankAccountVerificationBuilder
     }
 
     /**
-     * Initializes a new bank account verification Builder object.
+     * Initializes a new Bank Account Verification Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class BankAccountVerificationBuilder
 
     /**
      * Sets deposit 1 in cents field.
+     *
+     * @param int|null $value
      */
     public function deposit1InCents(?int $value): self
     {
@@ -49,6 +51,8 @@ class BankAccountVerificationBuilder
 
     /**
      * Sets deposit 2 in cents field.
+     *
+     * @param int|null $value
      */
     public function deposit2InCents(?int $value): self
     {
@@ -59,8 +63,8 @@ class BankAccountVerificationBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -69,7 +73,7 @@ class BankAccountVerificationBuilder
     }
 
     /**
-     * Initializes a new bank account verification object.
+     * Initializes a new Bank Account Verification object.
      */
     public function build(): BankAccountVerification
     {

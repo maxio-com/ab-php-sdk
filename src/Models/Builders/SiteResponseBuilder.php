@@ -32,7 +32,9 @@ class SiteResponseBuilder
     }
 
     /**
-     * Initializes a new site response Builder object.
+     * Initializes a new Site Response Builder object.
+     *
+     * @param Site $site
      */
     public static function init(Site $site): self
     {
@@ -42,8 +44,8 @@ class SiteResponseBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -52,7 +54,7 @@ class SiteResponseBuilder
     }
 
     /**
-     * Initializes a new site response object.
+     * Initializes a new Site Response object.
      */
     public function build(): SiteResponse
     {

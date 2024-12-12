@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models\Builders;
 
+use AdvancedBillingLib\Models\RenewalPreviewComponent;
 use AdvancedBillingLib\Models\RenewalPreviewRequest;
 use Core\Utils\CoreHelper;
 
@@ -31,7 +32,7 @@ class RenewalPreviewRequestBuilder
     }
 
     /**
-     * Initializes a new renewal preview request Builder object.
+     * Initializes a new Renewal Preview Request Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +41,8 @@ class RenewalPreviewRequestBuilder
 
     /**
      * Sets components field.
+     *
+     * @param RenewalPreviewComponent[]|null $value
      */
     public function components(?array $value): self
     {
@@ -50,8 +53,8 @@ class RenewalPreviewRequestBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -60,7 +63,7 @@ class RenewalPreviewRequestBuilder
     }
 
     /**
-     * Initializes a new renewal preview request object.
+     * Initializes a new Renewal Preview Request object.
      */
     public function build(): RenewalPreviewRequest
     {

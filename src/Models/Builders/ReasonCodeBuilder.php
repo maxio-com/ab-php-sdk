@@ -31,7 +31,7 @@ class ReasonCodeBuilder
     }
 
     /**
-     * Initializes a new reason code Builder object.
+     * Initializes a new Reason Code Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class ReasonCodeBuilder
 
     /**
      * Sets id field.
+     *
+     * @param int|null $value
      */
     public function id(?int $value): self
     {
@@ -49,6 +51,8 @@ class ReasonCodeBuilder
 
     /**
      * Sets site id field.
+     *
+     * @param int|null $value
      */
     public function siteId(?int $value): self
     {
@@ -58,6 +62,8 @@ class ReasonCodeBuilder
 
     /**
      * Sets code field.
+     *
+     * @param string|null $value
      */
     public function code(?string $value): self
     {
@@ -67,6 +73,8 @@ class ReasonCodeBuilder
 
     /**
      * Sets description field.
+     *
+     * @param string|null $value
      */
     public function description(?string $value): self
     {
@@ -76,6 +84,8 @@ class ReasonCodeBuilder
 
     /**
      * Sets position field.
+     *
+     * @param int|null $value
      */
     public function position(?int $value): self
     {
@@ -85,6 +95,8 @@ class ReasonCodeBuilder
 
     /**
      * Sets created at field.
+     *
+     * @param \DateTime|null $value
      */
     public function createdAt(?\DateTime $value): self
     {
@@ -94,6 +106,8 @@ class ReasonCodeBuilder
 
     /**
      * Sets updated at field.
+     *
+     * @param \DateTime|null $value
      */
     public function updatedAt(?\DateTime $value): self
     {
@@ -104,8 +118,8 @@ class ReasonCodeBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -114,7 +128,7 @@ class ReasonCodeBuilder
     }
 
     /**
-     * Initializes a new reason code object.
+     * Initializes a new Reason Code object.
      */
     public function build(): ReasonCode
     {

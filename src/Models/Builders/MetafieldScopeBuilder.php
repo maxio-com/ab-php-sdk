@@ -31,7 +31,7 @@ class MetafieldScopeBuilder
     }
 
     /**
-     * Initializes a new metafield scope Builder object.
+     * Initializes a new Metafield Scope Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class MetafieldScopeBuilder
 
     /**
      * Sets csv field.
+     *
+     * @param string|null $value
      */
     public function csv(?string $value): self
     {
@@ -49,6 +51,8 @@ class MetafieldScopeBuilder
 
     /**
      * Sets invoices field.
+     *
+     * @param string|null $value
      */
     public function invoices(?string $value): self
     {
@@ -58,6 +62,8 @@ class MetafieldScopeBuilder
 
     /**
      * Sets statements field.
+     *
+     * @param string|null $value
      */
     public function statements(?string $value): self
     {
@@ -67,6 +73,8 @@ class MetafieldScopeBuilder
 
     /**
      * Sets portal field.
+     *
+     * @param string|null $value
      */
     public function portal(?string $value): self
     {
@@ -76,6 +84,8 @@ class MetafieldScopeBuilder
 
     /**
      * Sets public show field.
+     *
+     * @param string|null $value
      */
     public function publicShow(?string $value): self
     {
@@ -85,6 +95,8 @@ class MetafieldScopeBuilder
 
     /**
      * Sets public edit field.
+     *
+     * @param string|null $value
      */
     public function publicEdit(?string $value): self
     {
@@ -94,6 +106,8 @@ class MetafieldScopeBuilder
 
     /**
      * Sets hosted field.
+     *
+     * @param string[]|null $value
      */
     public function hosted(?array $value): self
     {
@@ -104,8 +118,8 @@ class MetafieldScopeBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -114,7 +128,7 @@ class MetafieldScopeBuilder
     }
 
     /**
-     * Initializes a new metafield scope object.
+     * Initializes a new Metafield Scope object.
      */
     public function build(): MetafieldScope
     {

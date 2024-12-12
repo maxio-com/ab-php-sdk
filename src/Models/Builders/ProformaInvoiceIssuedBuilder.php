@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models\Builders;
 
+use AdvancedBillingLib\Models\InvoiceLineItemEventData;
 use AdvancedBillingLib\Models\ProformaInvoiceIssued;
 use Core\Utils\CoreHelper;
 
@@ -31,7 +32,19 @@ class ProformaInvoiceIssuedBuilder
     }
 
     /**
-     * Initializes a new proforma invoice issued Builder object.
+     * Initializes a new Proforma Invoice Issued Builder object.
+     *
+     * @param string $uid
+     * @param string $number
+     * @param string $role
+     * @param \DateTime $deliveryDate
+     * @param \DateTime $createdAt
+     * @param string $dueAmount
+     * @param string $paidAmount
+     * @param string $taxAmount
+     * @param string $totalAmount
+     * @param string $productName
+     * @param InvoiceLineItemEventData[] $lineItems
      */
     public static function init(
         string $uid,
@@ -64,8 +77,8 @@ class ProformaInvoiceIssuedBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -74,7 +87,7 @@ class ProformaInvoiceIssuedBuilder
     }
 
     /**
-     * Initializes a new proforma invoice issued object.
+     * Initializes a new Proforma Invoice Issued object.
      */
     public function build(): ProformaInvoiceIssued
     {

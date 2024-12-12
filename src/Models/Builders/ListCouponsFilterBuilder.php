@@ -31,7 +31,7 @@ class ListCouponsFilterBuilder
     }
 
     /**
-     * Initializes a new list coupons filter Builder object.
+     * Initializes a new List Coupons Filter Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class ListCouponsFilterBuilder
 
     /**
      * Sets date field field.
+     *
+     * @param string|null $value
      */
     public function dateField(?string $value): self
     {
@@ -49,6 +51,8 @@ class ListCouponsFilterBuilder
 
     /**
      * Sets start date field.
+     *
+     * @param \DateTime|null $value
      */
     public function startDate(?\DateTime $value): self
     {
@@ -58,6 +62,8 @@ class ListCouponsFilterBuilder
 
     /**
      * Sets end date field.
+     *
+     * @param \DateTime|null $value
      */
     public function endDate(?\DateTime $value): self
     {
@@ -67,6 +73,8 @@ class ListCouponsFilterBuilder
 
     /**
      * Sets start datetime field.
+     *
+     * @param \DateTime|null $value
      */
     public function startDatetime(?\DateTime $value): self
     {
@@ -76,6 +84,8 @@ class ListCouponsFilterBuilder
 
     /**
      * Sets end datetime field.
+     *
+     * @param \DateTime|null $value
      */
     public function endDatetime(?\DateTime $value): self
     {
@@ -85,6 +95,8 @@ class ListCouponsFilterBuilder
 
     /**
      * Sets ids field.
+     *
+     * @param int[]|null $value
      */
     public function ids(?array $value): self
     {
@@ -94,6 +106,8 @@ class ListCouponsFilterBuilder
 
     /**
      * Sets codes field.
+     *
+     * @param string[]|null $value
      */
     public function codes(?array $value): self
     {
@@ -103,6 +117,8 @@ class ListCouponsFilterBuilder
 
     /**
      * Sets use site exchange rate field.
+     *
+     * @param bool|null $value
      */
     public function useSiteExchangeRate(?bool $value): self
     {
@@ -113,8 +129,8 @@ class ListCouponsFilterBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -123,7 +139,7 @@ class ListCouponsFilterBuilder
     }
 
     /**
-     * Initializes a new list coupons filter object.
+     * Initializes a new List Coupons Filter object.
      */
     public function build(): ListCouponsFilter
     {
