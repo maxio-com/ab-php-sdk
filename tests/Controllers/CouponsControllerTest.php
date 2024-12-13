@@ -27,7 +27,7 @@ final class CouponsControllerTest extends TestCase
             ->getCouponsController()
             ->createCoupon(
                 $productFamily->getId(),
-                $this->testData->getCreatePercentageCouponRequest((string) $productFamily->getId())
+                $this->testData->getCouponRequest((string) $productFamily->getId())
             )
             ->getCoupon();
 

@@ -78,8 +78,7 @@ final class TestComponentRequestFactory
 
     private function createOnOffComponent(string $name): OnOffComponent
     {
-        return OnOffComponentBuilder::init($name)
-            ->unitPrice(ComponentTestData::ON_OFF_COMPONENT_UNIT_PRICE)
+        return OnOffComponentBuilder::init($name, ComponentTestData::ON_OFF_COMPONENT_UNIT_PRICE)
             ->build();
     }
 
@@ -93,8 +92,7 @@ final class TestComponentRequestFactory
 
     private function createOnOffComponentWithAllowedFractionalQuantitiesAndCustomPricePoint(string $name): OnOffComponent
     {
-        return OnOffComponentBuilder::init($name)
-            ->unitPrice(ComponentTestData::ON_OFF_COMPONENT_UNIT_PRICE)
+        return OnOffComponentBuilder::init($name, ComponentTestData::ON_OFF_COMPONENT_UNIT_PRICE)
             ->allowFractionalQuantities(true)
             ->pricePoints([$this->createCustomPricePoint()])
             ->build();
