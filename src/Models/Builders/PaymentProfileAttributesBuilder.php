@@ -31,7 +31,7 @@ class PaymentProfileAttributesBuilder
     }
 
     /**
-     * Initializes a new payment profile attributes Builder object.
+     * Initializes a new Payment Profile Attributes Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class PaymentProfileAttributesBuilder
 
     /**
      * Sets chargify token field.
+     *
+     * @param string|null $value
      */
     public function chargifyToken(?string $value): self
     {
@@ -49,6 +51,8 @@ class PaymentProfileAttributesBuilder
 
     /**
      * Sets id field.
+     *
+     * @param int|null $value
      */
     public function id(?int $value): self
     {
@@ -58,6 +62,8 @@ class PaymentProfileAttributesBuilder
 
     /**
      * Sets payment type field.
+     *
+     * @param string|null $value
      */
     public function paymentType(?string $value): self
     {
@@ -67,6 +73,8 @@ class PaymentProfileAttributesBuilder
 
     /**
      * Sets first name field.
+     *
+     * @param string|null $value
      */
     public function firstName(?string $value): self
     {
@@ -76,6 +84,8 @@ class PaymentProfileAttributesBuilder
 
     /**
      * Sets last name field.
+     *
+     * @param string|null $value
      */
     public function lastName(?string $value): self
     {
@@ -85,6 +95,8 @@ class PaymentProfileAttributesBuilder
 
     /**
      * Sets masked card number field.
+     *
+     * @param string|null $value
      */
     public function maskedCardNumber(?string $value): self
     {
@@ -94,6 +106,8 @@ class PaymentProfileAttributesBuilder
 
     /**
      * Sets full number field.
+     *
+     * @param string|null $value
      */
     public function fullNumber(?string $value): self
     {
@@ -103,6 +117,8 @@ class PaymentProfileAttributesBuilder
 
     /**
      * Sets card type field.
+     *
+     * @param string|null $value
      */
     public function cardType(?string $value): self
     {
@@ -112,6 +128,8 @@ class PaymentProfileAttributesBuilder
 
     /**
      * Sets expiration month field.
+     *
+     * @param int|string|null $value
      */
     public function expirationMonth($value): self
     {
@@ -121,6 +139,8 @@ class PaymentProfileAttributesBuilder
 
     /**
      * Sets expiration year field.
+     *
+     * @param int|string|null $value
      */
     public function expirationYear($value): self
     {
@@ -130,6 +150,8 @@ class PaymentProfileAttributesBuilder
 
     /**
      * Sets billing address field.
+     *
+     * @param string|null $value
      */
     public function billingAddress(?string $value): self
     {
@@ -139,6 +161,8 @@ class PaymentProfileAttributesBuilder
 
     /**
      * Sets billing address 2 field.
+     *
+     * @param string|null $value
      */
     public function billingAddress2(?string $value): self
     {
@@ -157,6 +181,8 @@ class PaymentProfileAttributesBuilder
 
     /**
      * Sets billing city field.
+     *
+     * @param string|null $value
      */
     public function billingCity(?string $value): self
     {
@@ -166,6 +192,8 @@ class PaymentProfileAttributesBuilder
 
     /**
      * Sets billing state field.
+     *
+     * @param string|null $value
      */
     public function billingState(?string $value): self
     {
@@ -175,6 +203,8 @@ class PaymentProfileAttributesBuilder
 
     /**
      * Sets billing country field.
+     *
+     * @param string|null $value
      */
     public function billingCountry(?string $value): self
     {
@@ -184,6 +214,8 @@ class PaymentProfileAttributesBuilder
 
     /**
      * Sets billing zip field.
+     *
+     * @param string|null $value
      */
     public function billingZip(?string $value): self
     {
@@ -193,6 +225,8 @@ class PaymentProfileAttributesBuilder
 
     /**
      * Sets current vault field.
+     *
+     * @param string|null $value
      */
     public function currentVault(?string $value): self
     {
@@ -202,6 +236,8 @@ class PaymentProfileAttributesBuilder
 
     /**
      * Sets vault token field.
+     *
+     * @param string|null $value
      */
     public function vaultToken(?string $value): self
     {
@@ -211,6 +247,8 @@ class PaymentProfileAttributesBuilder
 
     /**
      * Sets customer vault token field.
+     *
+     * @param string|null $value
      */
     public function customerVaultToken(?string $value): self
     {
@@ -220,6 +258,8 @@ class PaymentProfileAttributesBuilder
 
     /**
      * Sets customer id field.
+     *
+     * @param int|null $value
      */
     public function customerId(?int $value): self
     {
@@ -229,6 +269,8 @@ class PaymentProfileAttributesBuilder
 
     /**
      * Sets paypal email field.
+     *
+     * @param string|null $value
      */
     public function paypalEmail(?string $value): self
     {
@@ -238,6 +280,8 @@ class PaymentProfileAttributesBuilder
 
     /**
      * Sets payment method nonce field.
+     *
+     * @param string|null $value
      */
     public function paymentMethodNonce(?string $value): self
     {
@@ -247,6 +291,8 @@ class PaymentProfileAttributesBuilder
 
     /**
      * Sets gateway handle field.
+     *
+     * @param string|null $value
      */
     public function gatewayHandle(?string $value): self
     {
@@ -256,6 +302,8 @@ class PaymentProfileAttributesBuilder
 
     /**
      * Sets cvv field.
+     *
+     * @param string|null $value
      */
     public function cvv(?string $value): self
     {
@@ -265,6 +313,8 @@ class PaymentProfileAttributesBuilder
 
     /**
      * Sets last four field.
+     *
+     * @param string|null $value
      */
     public function lastFour(?string $value): self
     {
@@ -275,8 +325,8 @@ class PaymentProfileAttributesBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -285,7 +335,7 @@ class PaymentProfileAttributesBuilder
     }
 
     /**
-     * Initializes a new payment profile attributes object.
+     * Initializes a new Payment Profile Attributes object.
      */
     public function build(): PaymentProfileAttributes
     {

@@ -32,7 +32,7 @@ class CouponResponseBuilder
     }
 
     /**
-     * Initializes a new coupon response Builder object.
+     * Initializes a new Coupon Response Builder object.
      */
     public static function init(): self
     {
@@ -41,6 +41,8 @@ class CouponResponseBuilder
 
     /**
      * Sets coupon field.
+     *
+     * @param Coupon|null $value
      */
     public function coupon(?Coupon $value): self
     {
@@ -51,8 +53,8 @@ class CouponResponseBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -61,7 +63,7 @@ class CouponResponseBuilder
     }
 
     /**
-     * Initializes a new coupon response object.
+     * Initializes a new Coupon Response object.
      */
     public function build(): CouponResponse
     {

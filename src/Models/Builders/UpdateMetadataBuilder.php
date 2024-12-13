@@ -31,7 +31,7 @@ class UpdateMetadataBuilder
     }
 
     /**
-     * Initializes a new update metadata Builder object.
+     * Initializes a new Update Metadata Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class UpdateMetadataBuilder
 
     /**
      * Sets current name field.
+     *
+     * @param string|null $value
      */
     public function currentName(?string $value): self
     {
@@ -49,6 +51,8 @@ class UpdateMetadataBuilder
 
     /**
      * Sets name field.
+     *
+     * @param string|null $value
      */
     public function name(?string $value): self
     {
@@ -58,6 +62,8 @@ class UpdateMetadataBuilder
 
     /**
      * Sets value field.
+     *
+     * @param string|null $value
      */
     public function value(?string $value): self
     {
@@ -68,8 +74,8 @@ class UpdateMetadataBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -78,7 +84,7 @@ class UpdateMetadataBuilder
     }
 
     /**
-     * Initializes a new update metadata object.
+     * Initializes a new Update Metadata object.
      */
     public function build(): UpdateMetadata
     {

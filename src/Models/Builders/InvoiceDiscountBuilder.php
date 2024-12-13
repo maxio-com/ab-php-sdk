@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace AdvancedBillingLib\Models\Builders;
 
 use AdvancedBillingLib\Models\InvoiceDiscount;
+use AdvancedBillingLib\Models\InvoiceDiscountBreakout;
 use Core\Utils\CoreHelper;
 
 /**
@@ -31,7 +32,7 @@ class InvoiceDiscountBuilder
     }
 
     /**
-     * Initializes a new invoice discount Builder object.
+     * Initializes a new Invoice Discount Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +41,8 @@ class InvoiceDiscountBuilder
 
     /**
      * Sets uid field.
+     *
+     * @param string|null $value
      */
     public function uid(?string $value): self
     {
@@ -49,6 +52,8 @@ class InvoiceDiscountBuilder
 
     /**
      * Sets title field.
+     *
+     * @param string|null $value
      */
     public function title(?string $value): self
     {
@@ -58,6 +63,8 @@ class InvoiceDiscountBuilder
 
     /**
      * Sets description field.
+     *
+     * @param string|null $value
      */
     public function description(?string $value): self
     {
@@ -76,6 +83,8 @@ class InvoiceDiscountBuilder
 
     /**
      * Sets code field.
+     *
+     * @param string|null $value
      */
     public function code(?string $value): self
     {
@@ -85,6 +94,8 @@ class InvoiceDiscountBuilder
 
     /**
      * Sets source type field.
+     *
+     * @param string|null $value
      */
     public function sourceType(?string $value): self
     {
@@ -94,6 +105,8 @@ class InvoiceDiscountBuilder
 
     /**
      * Sets source id field.
+     *
+     * @param int|null $value
      */
     public function sourceId(?int $value): self
     {
@@ -103,6 +116,8 @@ class InvoiceDiscountBuilder
 
     /**
      * Sets discount type field.
+     *
+     * @param string|null $value
      */
     public function discountType(?string $value): self
     {
@@ -112,6 +127,8 @@ class InvoiceDiscountBuilder
 
     /**
      * Sets percentage field.
+     *
+     * @param string|null $value
      */
     public function percentage(?string $value): self
     {
@@ -121,6 +138,8 @@ class InvoiceDiscountBuilder
 
     /**
      * Sets eligible amount field.
+     *
+     * @param string|null $value
      */
     public function eligibleAmount(?string $value): self
     {
@@ -130,6 +149,8 @@ class InvoiceDiscountBuilder
 
     /**
      * Sets discount amount field.
+     *
+     * @param string|null $value
      */
     public function discountAmount(?string $value): self
     {
@@ -139,6 +160,8 @@ class InvoiceDiscountBuilder
 
     /**
      * Sets transaction id field.
+     *
+     * @param int|null $value
      */
     public function transactionId(?int $value): self
     {
@@ -148,6 +171,8 @@ class InvoiceDiscountBuilder
 
     /**
      * Sets line item breakouts field.
+     *
+     * @param InvoiceDiscountBreakout[]|null $value
      */
     public function lineItemBreakouts(?array $value): self
     {
@@ -158,8 +183,8 @@ class InvoiceDiscountBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -168,7 +193,7 @@ class InvoiceDiscountBuilder
     }
 
     /**
-     * Initializes a new invoice discount object.
+     * Initializes a new Invoice Discount object.
      */
     public function build(): InvoiceDiscount
     {

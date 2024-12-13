@@ -92,9 +92,9 @@ class UpdateSubscription implements \JsonSerializable
     private $components;
 
     /**
-     * @var array
+     * @var bool|null
      */
-    private $dunningCommunicationDelayEnabled = [];
+    private $dunningCommunicationDelayEnabled;
 
     /**
      * @var array
@@ -419,10 +419,7 @@ class UpdateSubscription implements \JsonSerializable
      */
     public function getDunningCommunicationDelayEnabled(): ?bool
     {
-        if (count($this->dunningCommunicationDelayEnabled) == 0) {
-            return null;
-        }
-        return $this->dunningCommunicationDelayEnabled['value'];
+        return $this->dunningCommunicationDelayEnabled;
     }
 
     /**
@@ -435,18 +432,7 @@ class UpdateSubscription implements \JsonSerializable
      */
     public function setDunningCommunicationDelayEnabled(?bool $dunningCommunicationDelayEnabled): void
     {
-        $this->dunningCommunicationDelayEnabled['value'] = $dunningCommunicationDelayEnabled;
-    }
-
-    /**
-     * Unsets Dunning Communication Delay Enabled.
-     * Enable Communication Delay feature, making sure no communication (email or SMS) is sent to the
-     * Customer between 9PM and 8AM in time zone set by the `dunning_communication_delay_time_zone`
-     * attribute.
-     */
-    public function unsetDunningCommunicationDelayEnabled(): void
-    {
-        $this->dunningCommunicationDelayEnabled = [];
+        $this->dunningCommunicationDelayEnabled = $dunningCommunicationDelayEnabled;
     }
 
     /**
@@ -526,12 +512,27 @@ class UpdateSubscription implements \JsonSerializable
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function addAdditionalProperty(string $name, $value)
     {
         $this->additionalProperties[$name] = $value;
+    }
+
+    /**
+     * Find an additional property by name in this model or false if property does not exist.
+     *
+     * @param string $name Name of property.
+     *
+     * @return mixed|false Value of the property.
+     */
+    public function findAdditionalProperty(string $name)
+    {
+        if (isset($this->additionalProperties[$name])) {
+            return $this->additionalProperties[$name];
+        }
+        return false;
     }
 
     /**
@@ -602,8 +603,8 @@ class UpdateSubscription implements \JsonSerializable
         if (isset($this->components)) {
             $json['components']                            = $this->components;
         }
-        if (!empty($this->dunningCommunicationDelayEnabled)) {
-            $json['dunning_communication_delay_enabled']   = $this->dunningCommunicationDelayEnabled['value'];
+        if (isset($this->dunningCommunicationDelayEnabled)) {
+            $json['dunning_communication_delay_enabled']   = $this->dunningCommunicationDelayEnabled;
         }
         if (!empty($this->dunningCommunicationDelayTimeZone)) {
             $json['dunning_communication_delay_time_zone'] = $this->dunningCommunicationDelayTimeZone['value'];

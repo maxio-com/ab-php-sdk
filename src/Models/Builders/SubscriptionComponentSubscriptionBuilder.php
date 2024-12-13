@@ -31,7 +31,7 @@ class SubscriptionComponentSubscriptionBuilder
     }
 
     /**
-     * Initializes a new subscription component subscription Builder object.
+     * Initializes a new Subscription Component Subscription Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class SubscriptionComponentSubscriptionBuilder
 
     /**
      * Sets state field.
+     *
+     * @param string|null $value
      */
     public function state(?string $value): self
     {
@@ -49,6 +51,8 @@ class SubscriptionComponentSubscriptionBuilder
 
     /**
      * Sets updated at field.
+     *
+     * @param \DateTime|null $value
      */
     public function updatedAt(?\DateTime $value): self
     {
@@ -59,8 +63,8 @@ class SubscriptionComponentSubscriptionBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -69,7 +73,7 @@ class SubscriptionComponentSubscriptionBuilder
     }
 
     /**
-     * Initializes a new subscription component subscription object.
+     * Initializes a new Subscription Component Subscription object.
      */
     public function build(): SubscriptionComponentSubscription
     {

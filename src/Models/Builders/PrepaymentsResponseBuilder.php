@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models\Builders;
 
+use AdvancedBillingLib\Models\Prepayment;
 use AdvancedBillingLib\Models\PrepaymentsResponse;
 use Core\Utils\CoreHelper;
 
@@ -31,7 +32,7 @@ class PrepaymentsResponseBuilder
     }
 
     /**
-     * Initializes a new prepayments response Builder object.
+     * Initializes a new Prepayments Response Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +41,8 @@ class PrepaymentsResponseBuilder
 
     /**
      * Sets prepayments field.
+     *
+     * @param Prepayment[]|null $value
      */
     public function prepayments(?array $value): self
     {
@@ -50,8 +53,8 @@ class PrepaymentsResponseBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -60,7 +63,7 @@ class PrepaymentsResponseBuilder
     }
 
     /**
-     * Initializes a new prepayments response object.
+     * Initializes a new Prepayments Response object.
      */
     public function build(): PrepaymentsResponse
     {

@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models\Builders;
 
+use AdvancedBillingLib\Models\InvoiceTaxBreakout;
 use AdvancedBillingLib\Models\ProformaInvoiceTax;
 use Core\Utils\CoreHelper;
 
@@ -31,7 +32,7 @@ class ProformaInvoiceTaxBuilder
     }
 
     /**
-     * Initializes a new proforma invoice tax Builder object.
+     * Initializes a new Proforma Invoice Tax Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +41,8 @@ class ProformaInvoiceTaxBuilder
 
     /**
      * Sets uid field.
+     *
+     * @param string|null $value
      */
     public function uid(?string $value): self
     {
@@ -49,6 +52,8 @@ class ProformaInvoiceTaxBuilder
 
     /**
      * Sets title field.
+     *
+     * @param string|null $value
      */
     public function title(?string $value): self
     {
@@ -58,6 +63,8 @@ class ProformaInvoiceTaxBuilder
 
     /**
      * Sets source type field.
+     *
+     * @param string|null $value
      */
     public function sourceType(?string $value): self
     {
@@ -67,6 +74,8 @@ class ProformaInvoiceTaxBuilder
 
     /**
      * Sets percentage field.
+     *
+     * @param string|null $value
      */
     public function percentage(?string $value): self
     {
@@ -76,6 +85,8 @@ class ProformaInvoiceTaxBuilder
 
     /**
      * Sets taxable amount field.
+     *
+     * @param string|null $value
      */
     public function taxableAmount(?string $value): self
     {
@@ -85,6 +96,8 @@ class ProformaInvoiceTaxBuilder
 
     /**
      * Sets tax amount field.
+     *
+     * @param string|null $value
      */
     public function taxAmount(?string $value): self
     {
@@ -94,6 +107,8 @@ class ProformaInvoiceTaxBuilder
 
     /**
      * Sets line item breakouts field.
+     *
+     * @param InvoiceTaxBreakout[]|null $value
      */
     public function lineItemBreakouts(?array $value): self
     {
@@ -104,8 +119,8 @@ class ProformaInvoiceTaxBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -114,7 +129,7 @@ class ProformaInvoiceTaxBuilder
     }
 
     /**
-     * Initializes a new proforma invoice tax object.
+     * Initializes a new Proforma Invoice Tax object.
      */
     public function build(): ProformaInvoiceTax
     {

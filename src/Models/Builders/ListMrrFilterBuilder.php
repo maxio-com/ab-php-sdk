@@ -31,7 +31,7 @@ class ListMrrFilterBuilder
     }
 
     /**
-     * Initializes a new list mrr filter Builder object.
+     * Initializes a new List Mrr Filter Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class ListMrrFilterBuilder
 
     /**
      * Sets subscription ids field.
+     *
+     * @param int[]|null $value
      */
     public function subscriptionIds(?array $value): self
     {
@@ -50,8 +52,8 @@ class ListMrrFilterBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -60,7 +62,7 @@ class ListMrrFilterBuilder
     }
 
     /**
-     * Initializes a new list mrr filter object.
+     * Initializes a new List Mrr Filter object.
      */
     public function build(): ListMrrFilter
     {

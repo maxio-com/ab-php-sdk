@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models\Builders;
 
+use AdvancedBillingLib\Models\InvoiceDiscountBreakout;
 use AdvancedBillingLib\Models\ProformaInvoiceDiscount;
 use Core\Utils\CoreHelper;
 
@@ -31,7 +32,7 @@ class ProformaInvoiceDiscountBuilder
     }
 
     /**
-     * Initializes a new proforma invoice discount Builder object.
+     * Initializes a new Proforma Invoice Discount Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +41,8 @@ class ProformaInvoiceDiscountBuilder
 
     /**
      * Sets uid field.
+     *
+     * @param string|null $value
      */
     public function uid(?string $value): self
     {
@@ -49,6 +52,8 @@ class ProformaInvoiceDiscountBuilder
 
     /**
      * Sets title field.
+     *
+     * @param string|null $value
      */
     public function title(?string $value): self
     {
@@ -58,6 +63,8 @@ class ProformaInvoiceDiscountBuilder
 
     /**
      * Sets code field.
+     *
+     * @param string|null $value
      */
     public function code(?string $value): self
     {
@@ -67,6 +74,8 @@ class ProformaInvoiceDiscountBuilder
 
     /**
      * Sets source type field.
+     *
+     * @param string|null $value
      */
     public function sourceType(?string $value): self
     {
@@ -76,6 +85,8 @@ class ProformaInvoiceDiscountBuilder
 
     /**
      * Sets discount type field.
+     *
+     * @param string|null $value
      */
     public function discountType(?string $value): self
     {
@@ -85,6 +96,8 @@ class ProformaInvoiceDiscountBuilder
 
     /**
      * Sets eligible amount field.
+     *
+     * @param string|null $value
      */
     public function eligibleAmount(?string $value): self
     {
@@ -94,6 +107,8 @@ class ProformaInvoiceDiscountBuilder
 
     /**
      * Sets discount amount field.
+     *
+     * @param string|null $value
      */
     public function discountAmount(?string $value): self
     {
@@ -103,6 +118,8 @@ class ProformaInvoiceDiscountBuilder
 
     /**
      * Sets line item breakouts field.
+     *
+     * @param InvoiceDiscountBreakout[]|null $value
      */
     public function lineItemBreakouts(?array $value): self
     {
@@ -113,8 +130,8 @@ class ProformaInvoiceDiscountBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -123,7 +140,7 @@ class ProformaInvoiceDiscountBuilder
     }
 
     /**
-     * Initializes a new proforma invoice discount object.
+     * Initializes a new Proforma Invoice Discount object.
      */
     public function build(): ProformaInvoiceDiscount
     {

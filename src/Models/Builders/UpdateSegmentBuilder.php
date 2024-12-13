@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models\Builders;
 
+use AdvancedBillingLib\Models\CreateOrUpdateSegmentPrice;
 use AdvancedBillingLib\Models\UpdateSegment;
 use Core\Utils\CoreHelper;
 
@@ -31,7 +32,9 @@ class UpdateSegmentBuilder
     }
 
     /**
-     * Initializes a new update segment Builder object.
+     * Initializes a new Update Segment Builder object.
+     *
+     * @param string $pricingScheme
      */
     public static function init(string $pricingScheme): self
     {
@@ -40,6 +43,8 @@ class UpdateSegmentBuilder
 
     /**
      * Sets prices field.
+     *
+     * @param CreateOrUpdateSegmentPrice[]|null $value
      */
     public function prices(?array $value): self
     {
@@ -50,8 +55,8 @@ class UpdateSegmentBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -60,7 +65,7 @@ class UpdateSegmentBuilder
     }
 
     /**
-     * Initializes a new update segment object.
+     * Initializes a new Update Segment object.
      */
     public function build(): UpdateSegment
     {

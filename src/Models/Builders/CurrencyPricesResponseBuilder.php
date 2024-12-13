@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models\Builders;
 
+use AdvancedBillingLib\Models\CurrencyPrice;
 use AdvancedBillingLib\Models\CurrencyPricesResponse;
 use Core\Utils\CoreHelper;
 
@@ -31,7 +32,9 @@ class CurrencyPricesResponseBuilder
     }
 
     /**
-     * Initializes a new currency prices response Builder object.
+     * Initializes a new Currency Prices Response Builder object.
+     *
+     * @param CurrencyPrice[] $currencyPrices
      */
     public static function init(array $currencyPrices): self
     {
@@ -41,8 +44,8 @@ class CurrencyPricesResponseBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -51,7 +54,7 @@ class CurrencyPricesResponseBuilder
     }
 
     /**
-     * Initializes a new currency prices response object.
+     * Initializes a new Currency Prices Response object.
      */
     public function build(): CurrencyPricesResponse
     {

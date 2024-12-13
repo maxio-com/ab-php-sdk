@@ -12,14 +12,15 @@ namespace AdvancedBillingLib\Controllers;
 
 use AdvancedBillingLib\Exceptions\ApiException;
 use AdvancedBillingLib\Exceptions\ErrorListResponseException;
+use AdvancedBillingLib\Exceptions\ErrorStringMapResponseException;
 use AdvancedBillingLib\Exceptions\SingleStringErrorResponseException;
 use AdvancedBillingLib\Models\CouponCurrencyRequest;
 use AdvancedBillingLib\Models\CouponCurrencyResponse;
+use AdvancedBillingLib\Models\CouponRequest;
 use AdvancedBillingLib\Models\CouponResponse;
 use AdvancedBillingLib\Models\CouponSubcodes;
 use AdvancedBillingLib\Models\CouponSubcodesResponse;
 use AdvancedBillingLib\Models\CouponUsage;
-use AdvancedBillingLib\Models\CreateOrUpdateCoupon;
 use Core\Request\Parameters\BodyParam;
 use Core\Request\Parameters\HeaderParam;
 use Core\Request\Parameters\QueryParam;
@@ -44,23 +45,22 @@ class CouponsController extends BaseController
      *
      * This request will create a coupon, based on the provided information.
      *
-     * When creating a coupon, you must specify a product family using the `product_family_id`. If no
-     * `product_family_id` is passed, the first product family available is used. You will also need to
-     * formulate your URL to cite the Product Family ID in your request.
+     * You can create either a flat amount coupon, by specyfing `amount_in_cents`, or percentage coupon by
+     * specyfing `percentage`.
      *
      * You can restrict a coupon to only apply to specific products / components by optionally passing in
-     * hashes of `restricted_products` and/or `restricted_components` in the format:
-     * `{ "<product/component_id>": boolean_value }`
+     * `restricted_products` and/or `restricted_components` objects in the format:
+     * `{ "<product_id/component_id>": boolean_value }`
      *
      * @param int $productFamilyId The Advanced Billing id of the product family to which the coupon
      *        belongs
-     * @param CreateOrUpdateCoupon|null $body
+     * @param CouponRequest|null $body
      *
      * @return CouponResponse Response from the API call
      *
      * @throws ApiException Thrown if API call fails
      */
-    public function createCoupon(int $productFamilyId, ?CreateOrUpdateCoupon $body = null): CouponResponse
+    public function createCoupon(int $productFamilyId, ?CouponRequest $body = null): CouponResponse
     {
         $_reqBuilder = $this->requestBuilder(
             RequestMethod::POST,
@@ -130,18 +130,25 @@ class CouponsController extends BaseController
      * @param int|null $productFamilyId The Advanced Billing id of the product family to which the
      *        coupon belongs
      * @param string|null $code The code of the coupon
+     * @param bool|null $currencyPrices When fetching coupons, if you have defined multiple
+     *        currencies at the site level, you can optionally pass the `?currency_prices=true`
+     *        query param to include an array of currency price data in the response.
      *
      * @return CouponResponse Response from the API call
      *
      * @throws ApiException Thrown if API call fails
      */
-    public function findCoupon(?int $productFamilyId = null, ?string $code = null): CouponResponse
-    {
+    public function findCoupon(
+        ?int $productFamilyId = null,
+        ?string $code = null,
+        ?bool $currencyPrices = null
+    ): CouponResponse {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/coupons/find.json')
             ->auth('BasicAuth')
             ->parameters(
                 QueryParam::init('product_family_id', $productFamilyId)->commaSeparated(),
-                QueryParam::init('code', $code)->commaSeparated()
+                QueryParam::init('code', $code)->commaSeparated(),
+                QueryParam::init('currency_prices', $currencyPrices)->commaSeparated()
             );
 
         $_resHandler = $this->responseHandler()->type(CouponResponse::class);
@@ -165,12 +172,15 @@ class CouponsController extends BaseController
      * @param int $productFamilyId The Advanced Billing id of the product family to which the coupon
      *        belongs
      * @param int $couponId The Advanced Billing id of the coupon
+     * @param bool|null $currencyPrices When fetching coupons, if you have defined multiple
+     *        currencies at the site level, you can optionally pass the `?currency_prices=true`
+     *        query param to include an array of currency price data in the response.
      *
      * @return CouponResponse Response from the API call
      *
      * @throws ApiException Thrown if API call fails
      */
-    public function readCoupon(int $productFamilyId, int $couponId): CouponResponse
+    public function readCoupon(int $productFamilyId, int $couponId, ?bool $currencyPrices = null): CouponResponse
     {
         $_reqBuilder = $this->requestBuilder(
             RequestMethod::GET,
@@ -179,7 +189,8 @@ class CouponsController extends BaseController
             ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('product_family_id', $productFamilyId)->required(),
-                TemplateParam::init('coupon_id', $couponId)->required()
+                TemplateParam::init('coupon_id', $couponId)->required(),
+                QueryParam::init('currency_prices', $currencyPrices)->commaSeparated()
             );
 
         $_resHandler = $this->responseHandler()->type(CouponResponse::class);
@@ -199,17 +210,14 @@ class CouponsController extends BaseController
      * @param int $productFamilyId The Advanced Billing id of the product family to which the coupon
      *        belongs
      * @param int $couponId The Advanced Billing id of the coupon
-     * @param CreateOrUpdateCoupon|null $body
+     * @param CouponRequest|null $body
      *
      * @return CouponResponse Response from the API call
      *
      * @throws ApiException Thrown if API call fails
      */
-    public function updateCoupon(
-        int $productFamilyId,
-        int $couponId,
-        ?CreateOrUpdateCoupon $body = null
-    ): CouponResponse {
+    public function updateCoupon(int $productFamilyId, int $couponId, ?CouponRequest $body = null): CouponResponse
+    {
         $_reqBuilder = $this->requestBuilder(
             RequestMethod::PUT,
             '/product_families/{product_family_id}/coupons/{coupon_id}.json'
@@ -222,7 +230,15 @@ class CouponsController extends BaseController
                 BodyParam::init($body)
             );
 
-        $_resHandler = $this->responseHandler()->type(CouponResponse::class);
+        $_resHandler = $this->responseHandler()
+            ->throwErrorOn(
+                '422',
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
+            )
+            ->type(CouponResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
     }
@@ -398,7 +414,15 @@ class CouponsController extends BaseController
                 BodyParam::init($body)
             );
 
-        $_resHandler = $this->responseHandler()->type(CouponCurrencyResponse::class);
+        $_resHandler = $this->responseHandler()
+            ->throwErrorOn(
+                '422',
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorStringMapResponseException::class
+                )
+            )
+            ->type(CouponCurrencyResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
     }

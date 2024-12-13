@@ -32,7 +32,9 @@ class CreateInvoiceRequestBuilder
     }
 
     /**
-     * Initializes a new create invoice request Builder object.
+     * Initializes a new Create Invoice Request Builder object.
+     *
+     * @param CreateInvoice $invoice
      */
     public static function init(CreateInvoice $invoice): self
     {
@@ -42,8 +44,8 @@ class CreateInvoiceRequestBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -52,7 +54,7 @@ class CreateInvoiceRequestBuilder
     }
 
     /**
-     * Initializes a new create invoice request object.
+     * Initializes a new Create Invoice Request object.
      */
     public function build(): CreateInvoiceRequest
     {

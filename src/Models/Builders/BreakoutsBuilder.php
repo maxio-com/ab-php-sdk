@@ -31,7 +31,7 @@ class BreakoutsBuilder
     }
 
     /**
-     * Initializes a new breakouts Builder object.
+     * Initializes a new Breakouts Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class BreakoutsBuilder
 
     /**
      * Sets plan amount in cents field.
+     *
+     * @param int|null $value
      */
     public function planAmountInCents(?int $value): self
     {
@@ -49,6 +51,8 @@ class BreakoutsBuilder
 
     /**
      * Sets plan amount formatted field.
+     *
+     * @param string|null $value
      */
     public function planAmountFormatted(?string $value): self
     {
@@ -58,6 +62,8 @@ class BreakoutsBuilder
 
     /**
      * Sets usage amount in cents field.
+     *
+     * @param int|null $value
      */
     public function usageAmountInCents(?int $value): self
     {
@@ -67,6 +73,8 @@ class BreakoutsBuilder
 
     /**
      * Sets usage amount formatted field.
+     *
+     * @param string|null $value
      */
     public function usageAmountFormatted(?string $value): self
     {
@@ -77,8 +85,8 @@ class BreakoutsBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -87,7 +95,7 @@ class BreakoutsBuilder
     }
 
     /**
-     * Initializes a new breakouts object.
+     * Initializes a new Breakouts object.
      */
     public function build(): Breakouts
     {

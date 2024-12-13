@@ -32,7 +32,9 @@ class GetOneTimeTokenRequestBuilder
     }
 
     /**
-     * Initializes a new get one time token request Builder object.
+     * Initializes a new Get One Time Token Request Builder object.
+     *
+     * @param GetOneTimeTokenPaymentProfile $paymentProfile
      */
     public static function init(GetOneTimeTokenPaymentProfile $paymentProfile): self
     {
@@ -42,8 +44,8 @@ class GetOneTimeTokenRequestBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -52,7 +54,7 @@ class GetOneTimeTokenRequestBuilder
     }
 
     /**
-     * Initializes a new get one time token request object.
+     * Initializes a new Get One Time Token Request object.
      */
     public function build(): GetOneTimeTokenRequest
     {

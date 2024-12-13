@@ -31,7 +31,7 @@ class ReactivateSubscriptionGroupResponseBuilder
     }
 
     /**
-     * Initializes a new reactivate subscription group response Builder object.
+     * Initializes a new Reactivate Subscription Group Response Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class ReactivateSubscriptionGroupResponseBuilder
 
     /**
      * Sets uid field.
+     *
+     * @param string|null $value
      */
     public function uid(?string $value): self
     {
@@ -49,6 +51,8 @@ class ReactivateSubscriptionGroupResponseBuilder
 
     /**
      * Sets scheme field.
+     *
+     * @param int|null $value
      */
     public function scheme(?int $value): self
     {
@@ -58,6 +62,8 @@ class ReactivateSubscriptionGroupResponseBuilder
 
     /**
      * Sets customer id field.
+     *
+     * @param int|null $value
      */
     public function customerId(?int $value): self
     {
@@ -67,6 +73,8 @@ class ReactivateSubscriptionGroupResponseBuilder
 
     /**
      * Sets payment profile id field.
+     *
+     * @param int|null $value
      */
     public function paymentProfileId(?int $value): self
     {
@@ -76,6 +84,8 @@ class ReactivateSubscriptionGroupResponseBuilder
 
     /**
      * Sets subscription ids field.
+     *
+     * @param int[]|null $value
      */
     public function subscriptionIds(?array $value): self
     {
@@ -85,6 +95,8 @@ class ReactivateSubscriptionGroupResponseBuilder
 
     /**
      * Sets primary subscription id field.
+     *
+     * @param int|null $value
      */
     public function primarySubscriptionId(?int $value): self
     {
@@ -94,6 +106,8 @@ class ReactivateSubscriptionGroupResponseBuilder
 
     /**
      * Sets next assessment at field.
+     *
+     * @param \DateTime|null $value
      */
     public function nextAssessmentAt(?\DateTime $value): self
     {
@@ -103,6 +117,8 @@ class ReactivateSubscriptionGroupResponseBuilder
 
     /**
      * Sets state field.
+     *
+     * @param string|null $value
      */
     public function state(?string $value): self
     {
@@ -112,6 +128,8 @@ class ReactivateSubscriptionGroupResponseBuilder
 
     /**
      * Sets cancel at end of period field.
+     *
+     * @param bool|null $value
      */
     public function cancelAtEndOfPeriod(?bool $value): self
     {
@@ -122,8 +140,8 @@ class ReactivateSubscriptionGroupResponseBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -132,7 +150,7 @@ class ReactivateSubscriptionGroupResponseBuilder
     }
 
     /**
-     * Initializes a new reactivate subscription group response object.
+     * Initializes a new Reactivate Subscription Group Response object.
      */
     public function build(): ReactivateSubscriptionGroupResponse
     {

@@ -33,7 +33,13 @@ class VoidRemainderEventBuilder
     }
 
     /**
-     * Initializes a new void remainder event Builder object.
+     * Initializes a new Void Remainder Event Builder object.
+     *
+     * @param int $id
+     * @param \DateTime $timestamp
+     * @param Invoice $invoice
+     * @param string $eventType
+     * @param VoidRemainderEventData $eventData
      */
     public static function init(
         int $id,
@@ -48,8 +54,8 @@ class VoidRemainderEventBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -58,7 +64,7 @@ class VoidRemainderEventBuilder
     }
 
     /**
-     * Initializes a new void remainder event object.
+     * Initializes a new Void Remainder Event object.
      */
     public function build(): VoidRemainderEvent
     {

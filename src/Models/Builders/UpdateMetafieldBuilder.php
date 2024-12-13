@@ -32,7 +32,7 @@ class UpdateMetafieldBuilder
     }
 
     /**
-     * Initializes a new update metafield Builder object.
+     * Initializes a new Update Metafield Builder object.
      */
     public static function init(): self
     {
@@ -41,6 +41,8 @@ class UpdateMetafieldBuilder
 
     /**
      * Sets current name field.
+     *
+     * @param string|null $value
      */
     public function currentName(?string $value): self
     {
@@ -50,6 +52,8 @@ class UpdateMetafieldBuilder
 
     /**
      * Sets name field.
+     *
+     * @param string|null $value
      */
     public function name(?string $value): self
     {
@@ -59,6 +63,8 @@ class UpdateMetafieldBuilder
 
     /**
      * Sets scope field.
+     *
+     * @param MetafieldScope|null $value
      */
     public function scope(?MetafieldScope $value): self
     {
@@ -68,6 +74,8 @@ class UpdateMetafieldBuilder
 
     /**
      * Sets input type field.
+     *
+     * @param string|null $value
      */
     public function inputType(?string $value): self
     {
@@ -77,6 +85,8 @@ class UpdateMetafieldBuilder
 
     /**
      * Sets enum field.
+     *
+     * @param string[]|null $value
      */
     public function enum(?array $value): self
     {
@@ -87,8 +97,8 @@ class UpdateMetafieldBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -97,7 +107,7 @@ class UpdateMetafieldBuilder
     }
 
     /**
-     * Initializes a new update metafield object.
+     * Initializes a new Update Metafield object.
      */
     public function build(): UpdateMetafield
     {

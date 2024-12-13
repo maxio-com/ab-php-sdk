@@ -31,7 +31,7 @@ class PaymentForAllocationBuilder
     }
 
     /**
-     * Initializes a new payment for allocation Builder object.
+     * Initializes a new Payment For Allocation Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class PaymentForAllocationBuilder
 
     /**
      * Sets id field.
+     *
+     * @param int|null $value
      */
     public function id(?int $value): self
     {
@@ -49,6 +51,8 @@ class PaymentForAllocationBuilder
 
     /**
      * Sets amount in cents field.
+     *
+     * @param int|null $value
      */
     public function amountInCents(?int $value): self
     {
@@ -58,6 +62,8 @@ class PaymentForAllocationBuilder
 
     /**
      * Sets success field.
+     *
+     * @param bool|null $value
      */
     public function success(?bool $value): self
     {
@@ -67,6 +73,8 @@ class PaymentForAllocationBuilder
 
     /**
      * Sets memo field.
+     *
+     * @param string|null $value
      */
     public function memo(?string $value): self
     {
@@ -77,8 +85,8 @@ class PaymentForAllocationBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -87,7 +95,7 @@ class PaymentForAllocationBuilder
     }
 
     /**
-     * Initializes a new payment for allocation object.
+     * Initializes a new Payment For Allocation object.
      */
     public function build(): PaymentForAllocation
     {

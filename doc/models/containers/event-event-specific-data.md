@@ -3,7 +3,7 @@
 
 ## Data Type
 
-`SubscriptionProductChange|SubscriptionStateChange|PaymentRelatedEvents|RefundSuccess|ComponentAllocationChange|MeteredUsage|PrepaidUsage|DunningStepReached|InvoiceIssued|PendingCancellationChange|PrepaidSubscriptionBalanceChanged|ProformaInvoiceIssued|SubscriptionGroupSignupSuccess|SubscriptionGroupSignupFailure|CreditAccountBalanceChanged|PrepaymentAccountBalanceChanged|PaymentCollectionMethodChanged|ItemPricePointChanged|CustomFieldValueChange`
+`SubscriptionProductChange|SubscriptionStateChange|PaymentRelatedEvents|RefundSuccess|ComponentAllocationChange|MeteredUsage|PrepaidUsage|DunningStepReached|InvoiceIssued|PendingCancellationChange|PrepaidSubscriptionBalanceChanged|ProformaInvoiceIssued|SubscriptionGroupSignupEventData|CreditAccountBalanceChanged|PrepaymentAccountBalanceChanged|PaymentCollectionMethodChanged|ItemPricePointChanged|CustomFieldValueChange`
 
 ## Cases
 
@@ -21,8 +21,7 @@
 | [`PendingCancellationChange`](../../../doc/models/pending-cancellation-change.md) |
 | [`PrepaidSubscriptionBalanceChanged`](../../../doc/models/prepaid-subscription-balance-changed.md) |
 | [`ProformaInvoiceIssued`](../../../doc/models/proforma-invoice-issued.md) |
-| [`SubscriptionGroupSignupSuccess`](../../../doc/models/subscription-group-signup-success.md) |
-| [`SubscriptionGroupSignupFailure`](../../../doc/models/subscription-group-signup-failure.md) |
+| [`SubscriptionGroupSignupEventData`](../../../doc/models/subscription-group-signup-event-data.md) |
 | [`CreditAccountBalanceChanged`](../../../doc/models/credit-account-balance-changed.md) |
 | [`PrepaymentAccountBalanceChanged`](../../../doc/models/prepayment-account-balance-changed.md) |
 | [`PaymentCollectionMethodChanged`](../../../doc/models/payment-collection-method-changed.md) |

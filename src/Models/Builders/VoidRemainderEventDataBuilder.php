@@ -32,7 +32,12 @@ class VoidRemainderEventDataBuilder
     }
 
     /**
-     * Initializes a new void remainder event data Builder object.
+     * Initializes a new Void Remainder Event Data Builder object.
+     *
+     * @param CreditNote $creditNoteAttributes
+     * @param string $memo
+     * @param string $appliedAmount
+     * @param \DateTime $transactionTime
      */
     public static function init(
         CreditNote $creditNoteAttributes,
@@ -46,8 +51,8 @@ class VoidRemainderEventDataBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -56,7 +61,7 @@ class VoidRemainderEventDataBuilder
     }
 
     /**
-     * Initializes a new void remainder event data object.
+     * Initializes a new Void Remainder Event Data object.
      */
     public function build(): VoidRemainderEventData
     {

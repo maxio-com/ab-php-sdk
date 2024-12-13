@@ -31,7 +31,7 @@ class InvoiceBalanceItemBuilder
     }
 
     /**
-     * Initializes a new invoice balance item Builder object.
+     * Initializes a new Invoice Balance Item Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class InvoiceBalanceItemBuilder
 
     /**
      * Sets uid field.
+     *
+     * @param string|null $value
      */
     public function uid(?string $value): self
     {
@@ -49,6 +51,8 @@ class InvoiceBalanceItemBuilder
 
     /**
      * Sets number field.
+     *
+     * @param string|null $value
      */
     public function number(?string $value): self
     {
@@ -58,6 +62,8 @@ class InvoiceBalanceItemBuilder
 
     /**
      * Sets outstanding amount field.
+     *
+     * @param string|null $value
      */
     public function outstandingAmount(?string $value): self
     {
@@ -68,8 +74,8 @@ class InvoiceBalanceItemBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -78,7 +84,7 @@ class InvoiceBalanceItemBuilder
     }
 
     /**
-     * Initializes a new invoice balance item object.
+     * Initializes a new Invoice Balance Item object.
      */
     public function build(): InvoiceBalanceItem
     {

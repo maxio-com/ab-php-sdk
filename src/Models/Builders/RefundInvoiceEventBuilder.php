@@ -33,7 +33,13 @@ class RefundInvoiceEventBuilder
     }
 
     /**
-     * Initializes a new refund invoice event Builder object.
+     * Initializes a new Refund Invoice Event Builder object.
+     *
+     * @param int $id
+     * @param \DateTime $timestamp
+     * @param Invoice $invoice
+     * @param string $eventType
+     * @param RefundInvoiceEventData $eventData
      */
     public static function init(
         int $id,
@@ -48,8 +54,8 @@ class RefundInvoiceEventBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -58,7 +64,7 @@ class RefundInvoiceEventBuilder
     }
 
     /**
-     * Initializes a new refund invoice event object.
+     * Initializes a new Refund Invoice Event object.
      */
     public function build(): RefundInvoiceEvent
     {

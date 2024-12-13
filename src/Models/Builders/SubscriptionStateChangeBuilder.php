@@ -31,7 +31,10 @@ class SubscriptionStateChangeBuilder
     }
 
     /**
-     * Initializes a new subscription state change Builder object.
+     * Initializes a new Subscription State Change Builder object.
+     *
+     * @param string $previousSubscriptionState
+     * @param string $newSubscriptionState
      */
     public static function init(string $previousSubscriptionState, string $newSubscriptionState): self
     {
@@ -41,8 +44,8 @@ class SubscriptionStateChangeBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -51,7 +54,7 @@ class SubscriptionStateChangeBuilder
     }
 
     /**
-     * Initializes a new subscription state change object.
+     * Initializes a new Subscription State Change object.
      */
     public function build(): SubscriptionStateChange
     {

@@ -32,7 +32,10 @@ class VoidInvoiceEventDataBuilder
     }
 
     /**
-     * Initializes a new void invoice event data Builder object.
+     * Initializes a new Void Invoice Event Data Builder object.
+     *
+     * @param bool $isAdvanceInvoice
+     * @param string $reason
      */
     public static function init(bool $isAdvanceInvoice, string $reason): self
     {
@@ -41,6 +44,8 @@ class VoidInvoiceEventDataBuilder
 
     /**
      * Sets credit note attributes field.
+     *
+     * @param CreditNote|null $value
      */
     public function creditNoteAttributes(?CreditNote $value): self
     {
@@ -50,6 +55,8 @@ class VoidInvoiceEventDataBuilder
 
     /**
      * Sets memo field.
+     *
+     * @param string|null $value
      */
     public function memo(?string $value): self
     {
@@ -59,6 +66,8 @@ class VoidInvoiceEventDataBuilder
 
     /**
      * Sets applied amount field.
+     *
+     * @param string|null $value
      */
     public function appliedAmount(?string $value): self
     {
@@ -68,6 +77,8 @@ class VoidInvoiceEventDataBuilder
 
     /**
      * Sets transaction time field.
+     *
+     * @param \DateTime|null $value
      */
     public function transactionTime(?\DateTime $value): self
     {
@@ -78,8 +89,8 @@ class VoidInvoiceEventDataBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -88,7 +99,7 @@ class VoidInvoiceEventDataBuilder
     }
 
     /**
-     * Initializes a new void invoice event data object.
+     * Initializes a new Void Invoice Event Data object.
      */
     public function build(): VoidInvoiceEventData
     {

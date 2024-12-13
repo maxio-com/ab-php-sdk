@@ -31,7 +31,10 @@ class BankAccountPaymentProfileBuilder
     }
 
     /**
-     * Initializes a new bank account payment profile Builder object.
+     * Initializes a new Bank Account Payment Profile Builder object.
+     *
+     * @param string $maskedBankAccountNumber
+     * @param string $paymentType
      */
     public static function init(string $maskedBankAccountNumber, string $paymentType): self
     {
@@ -40,6 +43,8 @@ class BankAccountPaymentProfileBuilder
 
     /**
      * Sets id field.
+     *
+     * @param int|null $value
      */
     public function id(?int $value): self
     {
@@ -49,6 +54,8 @@ class BankAccountPaymentProfileBuilder
 
     /**
      * Sets first name field.
+     *
+     * @param string|null $value
      */
     public function firstName(?string $value): self
     {
@@ -58,6 +65,8 @@ class BankAccountPaymentProfileBuilder
 
     /**
      * Sets last name field.
+     *
+     * @param string|null $value
      */
     public function lastName(?string $value): self
     {
@@ -67,6 +76,8 @@ class BankAccountPaymentProfileBuilder
 
     /**
      * Sets customer id field.
+     *
+     * @param int|null $value
      */
     public function customerId(?int $value): self
     {
@@ -76,6 +87,8 @@ class BankAccountPaymentProfileBuilder
 
     /**
      * Sets current vault field.
+     *
+     * @param string|null $value
      */
     public function currentVault(?string $value): self
     {
@@ -85,6 +98,8 @@ class BankAccountPaymentProfileBuilder
 
     /**
      * Sets vault token field.
+     *
+     * @param string|null $value
      */
     public function vaultToken(?string $value): self
     {
@@ -94,6 +109,8 @@ class BankAccountPaymentProfileBuilder
 
     /**
      * Sets billing address field.
+     *
+     * @param string|null $value
      */
     public function billingAddress(?string $value): self
     {
@@ -112,6 +129,8 @@ class BankAccountPaymentProfileBuilder
 
     /**
      * Sets billing city field.
+     *
+     * @param string|null $value
      */
     public function billingCity(?string $value): self
     {
@@ -130,6 +149,8 @@ class BankAccountPaymentProfileBuilder
 
     /**
      * Sets billing state field.
+     *
+     * @param string|null $value
      */
     public function billingState(?string $value): self
     {
@@ -148,6 +169,8 @@ class BankAccountPaymentProfileBuilder
 
     /**
      * Sets billing zip field.
+     *
+     * @param string|null $value
      */
     public function billingZip(?string $value): self
     {
@@ -166,6 +189,8 @@ class BankAccountPaymentProfileBuilder
 
     /**
      * Sets billing country field.
+     *
+     * @param string|null $value
      */
     public function billingCountry(?string $value): self
     {
@@ -184,6 +209,8 @@ class BankAccountPaymentProfileBuilder
 
     /**
      * Sets customer vault token field.
+     *
+     * @param string|null $value
      */
     public function customerVaultToken(?string $value): self
     {
@@ -202,6 +229,8 @@ class BankAccountPaymentProfileBuilder
 
     /**
      * Sets billing address 2 field.
+     *
+     * @param string|null $value
      */
     public function billingAddress2(?string $value): self
     {
@@ -220,6 +249,8 @@ class BankAccountPaymentProfileBuilder
 
     /**
      * Sets bank name field.
+     *
+     * @param string|null $value
      */
     public function bankName(?string $value): self
     {
@@ -229,6 +260,8 @@ class BankAccountPaymentProfileBuilder
 
     /**
      * Sets masked bank routing number field.
+     *
+     * @param string|null $value
      */
     public function maskedBankRoutingNumber(?string $value): self
     {
@@ -238,6 +271,8 @@ class BankAccountPaymentProfileBuilder
 
     /**
      * Sets bank account type field.
+     *
+     * @param string|null $value
      */
     public function bankAccountType(?string $value): self
     {
@@ -247,6 +282,8 @@ class BankAccountPaymentProfileBuilder
 
     /**
      * Sets bank account holder type field.
+     *
+     * @param string|null $value
      */
     public function bankAccountHolderType(?string $value): self
     {
@@ -256,6 +293,8 @@ class BankAccountPaymentProfileBuilder
 
     /**
      * Sets verified field.
+     *
+     * @param bool|null $value
      */
     public function verified(?bool $value): self
     {
@@ -265,6 +304,8 @@ class BankAccountPaymentProfileBuilder
 
     /**
      * Sets site gateway setting id field.
+     *
+     * @param int|null $value
      */
     public function siteGatewaySettingId(?int $value): self
     {
@@ -283,6 +324,8 @@ class BankAccountPaymentProfileBuilder
 
     /**
      * Sets gateway handle field.
+     *
+     * @param string|null $value
      */
     public function gatewayHandle(?string $value): self
     {
@@ -302,8 +345,8 @@ class BankAccountPaymentProfileBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -312,7 +355,7 @@ class BankAccountPaymentProfileBuilder
     }
 
     /**
-     * Initializes a new bank account payment profile object.
+     * Initializes a new Bank Account Payment Profile object.
      */
     public function build(): BankAccountPaymentProfile
     {

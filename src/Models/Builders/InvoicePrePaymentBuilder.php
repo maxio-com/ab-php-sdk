@@ -31,7 +31,7 @@ class InvoicePrePaymentBuilder
     }
 
     /**
-     * Initializes a new invoice pre payment Builder object.
+     * Initializes a new Invoice Pre Payment Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class InvoicePrePaymentBuilder
 
     /**
      * Sets subscription id field.
+     *
+     * @param int|null $value
      */
     public function subscriptionId(?int $value): self
     {
@@ -49,6 +51,8 @@ class InvoicePrePaymentBuilder
 
     /**
      * Sets amount in cents field.
+     *
+     * @param int|null $value
      */
     public function amountInCents(?int $value): self
     {
@@ -58,6 +62,8 @@ class InvoicePrePaymentBuilder
 
     /**
      * Sets ending balance in cents field.
+     *
+     * @param int|null $value
      */
     public function endingBalanceInCents(?int $value): self
     {
@@ -68,8 +74,8 @@ class InvoicePrePaymentBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -78,7 +84,7 @@ class InvoicePrePaymentBuilder
     }
 
     /**
-     * Initializes a new invoice pre payment object.
+     * Initializes a new Invoice Pre Payment object.
      */
     public function build(): InvoicePrePayment
     {

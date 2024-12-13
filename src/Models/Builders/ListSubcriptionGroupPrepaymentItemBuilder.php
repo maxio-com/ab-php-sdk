@@ -31,7 +31,7 @@ class ListSubcriptionGroupPrepaymentItemBuilder
     }
 
     /**
-     * Initializes a new list subcription group prepayment item Builder object.
+     * Initializes a new List Subcription Group Prepayment Item Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class ListSubcriptionGroupPrepaymentItemBuilder
 
     /**
      * Sets id field.
+     *
+     * @param int|null $value
      */
     public function id(?int $value): self
     {
@@ -49,6 +51,8 @@ class ListSubcriptionGroupPrepaymentItemBuilder
 
     /**
      * Sets subscription group uid field.
+     *
+     * @param string|null $value
      */
     public function subscriptionGroupUid(?string $value): self
     {
@@ -58,6 +62,8 @@ class ListSubcriptionGroupPrepaymentItemBuilder
 
     /**
      * Sets amount in cents field.
+     *
+     * @param int|null $value
      */
     public function amountInCents(?int $value): self
     {
@@ -67,6 +73,8 @@ class ListSubcriptionGroupPrepaymentItemBuilder
 
     /**
      * Sets remaining amount in cents field.
+     *
+     * @param int|null $value
      */
     public function remainingAmountInCents(?int $value): self
     {
@@ -76,6 +84,8 @@ class ListSubcriptionGroupPrepaymentItemBuilder
 
     /**
      * Sets details field.
+     *
+     * @param string|null $value
      */
     public function details(?string $value): self
     {
@@ -85,6 +95,8 @@ class ListSubcriptionGroupPrepaymentItemBuilder
 
     /**
      * Sets external field.
+     *
+     * @param bool|null $value
      */
     public function external(?bool $value): self
     {
@@ -94,6 +106,8 @@ class ListSubcriptionGroupPrepaymentItemBuilder
 
     /**
      * Sets memo field.
+     *
+     * @param string|null $value
      */
     public function memo(?string $value): self
     {
@@ -103,6 +117,8 @@ class ListSubcriptionGroupPrepaymentItemBuilder
 
     /**
      * Sets payment type field.
+     *
+     * @param string|null $value
      */
     public function paymentType(?string $value): self
     {
@@ -112,6 +128,8 @@ class ListSubcriptionGroupPrepaymentItemBuilder
 
     /**
      * Sets created at field.
+     *
+     * @param \DateTime|null $value
      */
     public function createdAt(?\DateTime $value): self
     {
@@ -122,8 +140,8 @@ class ListSubcriptionGroupPrepaymentItemBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -132,7 +150,7 @@ class ListSubcriptionGroupPrepaymentItemBuilder
     }
 
     /**
-     * Initializes a new list subcription group prepayment item object.
+     * Initializes a new List Subcription Group Prepayment Item object.
      */
     public function build(): ListSubcriptionGroupPrepaymentItem
     {

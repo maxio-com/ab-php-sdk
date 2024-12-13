@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models\Builders;
 
+use AdvancedBillingLib\Models\UpdateMetafield;
 use AdvancedBillingLib\Models\UpdateMetafieldsRequest;
 use Core\Utils\CoreHelper;
 
@@ -31,7 +32,7 @@ class UpdateMetafieldsRequestBuilder
     }
 
     /**
-     * Initializes a new update metafields request Builder object.
+     * Initializes a new Update Metafields Request Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +41,8 @@ class UpdateMetafieldsRequestBuilder
 
     /**
      * Sets metafields field.
+     *
+     * @param UpdateMetafield|UpdateMetafield[]|null $value
      */
     public function metafields($value): self
     {
@@ -50,8 +53,8 @@ class UpdateMetafieldsRequestBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -60,7 +63,7 @@ class UpdateMetafieldsRequestBuilder
     }
 
     /**
-     * Initializes a new update metafields request object.
+     * Initializes a new Update Metafields Request object.
      */
     public function build(): UpdateMetafieldsRequest
     {

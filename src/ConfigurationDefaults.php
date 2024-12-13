@@ -33,11 +33,9 @@ class ConfigurationDefaults
 
     public const HTTP_METHODS_TO_RETRY = ['GET', 'PUT'];
 
-    public const ENVIRONMENT = Environment::PRODUCTION;
+    public const ENVIRONMENT = Environment::US;
 
-    public const SUBDOMAIN = 'subdomain';
-
-    public const DOMAIN = 'chargify.com';
+    public const SITE = 'subdomain';
 
     public const BASIC_AUTH_USER_NAME = '';
 
@@ -57,8 +55,7 @@ class ConfigurationDefaults
         'httpStatusCodesToRetry' => self::HTTP_STATUS_CODES_TO_RETRY,
         'httpMethodsToRetry' => self::HTTP_METHODS_TO_RETRY,
         'environment' => self::ENVIRONMENT,
-        'subdomain' => self::SUBDOMAIN,
-        'domain' => self::DOMAIN,
+        'site' => self::SITE,
         'basicAuthUserName' => self::BASIC_AUTH_USER_NAME,
         'basicAuthPassword' => self::BASIC_AUTH_PASSWORD
     ];

@@ -11,6 +11,8 @@ declare(strict_types=1);
 namespace AdvancedBillingLib\Models\Builders;
 
 use AdvancedBillingLib\Models\Coupon;
+use AdvancedBillingLib\Models\CouponCurrency;
+use AdvancedBillingLib\Models\CouponRestriction;
 use Core\Utils\CoreHelper;
 
 /**
@@ -31,7 +33,7 @@ class CouponBuilder
     }
 
     /**
-     * Initializes a new coupon Builder object.
+     * Initializes a new Coupon Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +42,8 @@ class CouponBuilder
 
     /**
      * Sets id field.
+     *
+     * @param int|null $value
      */
     public function id(?int $value): self
     {
@@ -49,6 +53,8 @@ class CouponBuilder
 
     /**
      * Sets name field.
+     *
+     * @param string|null $value
      */
     public function name(?string $value): self
     {
@@ -58,6 +64,8 @@ class CouponBuilder
 
     /**
      * Sets code field.
+     *
+     * @param string|null $value
      */
     public function code(?string $value): self
     {
@@ -67,6 +75,8 @@ class CouponBuilder
 
     /**
      * Sets description field.
+     *
+     * @param string|null $value
      */
     public function description(?string $value): self
     {
@@ -76,6 +86,8 @@ class CouponBuilder
 
     /**
      * Sets amount field.
+     *
+     * @param float|null $value
      */
     public function amount(?float $value): self
     {
@@ -94,6 +106,8 @@ class CouponBuilder
 
     /**
      * Sets amount in cents field.
+     *
+     * @param int|null $value
      */
     public function amountInCents(?int $value): self
     {
@@ -112,6 +126,8 @@ class CouponBuilder
 
     /**
      * Sets product family id field.
+     *
+     * @param int|null $value
      */
     public function productFamilyId(?int $value): self
     {
@@ -121,6 +137,8 @@ class CouponBuilder
 
     /**
      * Sets product family name field.
+     *
+     * @param string|null $value
      */
     public function productFamilyName(?string $value): self
     {
@@ -139,6 +157,8 @@ class CouponBuilder
 
     /**
      * Sets start date field.
+     *
+     * @param \DateTime|null $value
      */
     public function startDate(?\DateTime $value): self
     {
@@ -148,6 +168,8 @@ class CouponBuilder
 
     /**
      * Sets end date field.
+     *
+     * @param \DateTime|null $value
      */
     public function endDate(?\DateTime $value): self
     {
@@ -166,6 +188,8 @@ class CouponBuilder
 
     /**
      * Sets percentage field.
+     *
+     * @param string|null $value
      */
     public function percentage(?string $value): self
     {
@@ -184,6 +208,8 @@ class CouponBuilder
 
     /**
      * Sets recurring field.
+     *
+     * @param bool|null $value
      */
     public function recurring(?bool $value): self
     {
@@ -193,6 +219,8 @@ class CouponBuilder
 
     /**
      * Sets recurring scheme field.
+     *
+     * @param string|null $value
      */
     public function recurringScheme(?string $value): self
     {
@@ -202,6 +230,8 @@ class CouponBuilder
 
     /**
      * Sets duration period count field.
+     *
+     * @param int|null $value
      */
     public function durationPeriodCount(?int $value): self
     {
@@ -220,6 +250,8 @@ class CouponBuilder
 
     /**
      * Sets duration interval field.
+     *
+     * @param int|null $value
      */
     public function durationInterval(?int $value): self
     {
@@ -238,6 +270,8 @@ class CouponBuilder
 
     /**
      * Sets duration interval unit field.
+     *
+     * @param string|null $value
      */
     public function durationIntervalUnit(?string $value): self
     {
@@ -256,6 +290,8 @@ class CouponBuilder
 
     /**
      * Sets duration interval span field.
+     *
+     * @param string|null $value
      */
     public function durationIntervalSpan(?string $value): self
     {
@@ -274,6 +310,8 @@ class CouponBuilder
 
     /**
      * Sets allow negative balance field.
+     *
+     * @param bool|null $value
      */
     public function allowNegativeBalance(?bool $value): self
     {
@@ -283,6 +321,8 @@ class CouponBuilder
 
     /**
      * Sets archived at field.
+     *
+     * @param \DateTime|null $value
      */
     public function archivedAt(?\DateTime $value): self
     {
@@ -301,6 +341,8 @@ class CouponBuilder
 
     /**
      * Sets conversion limit field.
+     *
+     * @param string|null $value
      */
     public function conversionLimit(?string $value): self
     {
@@ -319,6 +361,8 @@ class CouponBuilder
 
     /**
      * Sets stackable field.
+     *
+     * @param bool|null $value
      */
     public function stackable(?bool $value): self
     {
@@ -328,6 +372,8 @@ class CouponBuilder
 
     /**
      * Sets compounding strategy field.
+     *
+     * @param string|null $value
      */
     public function compoundingStrategy(?string $value): self
     {
@@ -346,6 +392,8 @@ class CouponBuilder
 
     /**
      * Sets use site exchange rate field.
+     *
+     * @param bool|null $value
      */
     public function useSiteExchangeRate(?bool $value): self
     {
@@ -355,6 +403,8 @@ class CouponBuilder
 
     /**
      * Sets created at field.
+     *
+     * @param \DateTime|null $value
      */
     public function createdAt(?\DateTime $value): self
     {
@@ -364,6 +414,8 @@ class CouponBuilder
 
     /**
      * Sets updated at field.
+     *
+     * @param \DateTime|null $value
      */
     public function updatedAt(?\DateTime $value): self
     {
@@ -373,6 +425,8 @@ class CouponBuilder
 
     /**
      * Sets discount type field.
+     *
+     * @param string|null $value
      */
     public function discountType(?string $value): self
     {
@@ -382,6 +436,8 @@ class CouponBuilder
 
     /**
      * Sets exclude mid period allocations field.
+     *
+     * @param bool|null $value
      */
     public function excludeMidPeriodAllocations(?bool $value): self
     {
@@ -391,6 +447,8 @@ class CouponBuilder
 
     /**
      * Sets apply on cancel at end of period field.
+     *
+     * @param bool|null $value
      */
     public function applyOnCancelAtEndOfPeriod(?bool $value): self
     {
@@ -400,6 +458,8 @@ class CouponBuilder
 
     /**
      * Sets apply on subscription expiration field.
+     *
+     * @param bool|null $value
      */
     public function applyOnSubscriptionExpiration(?bool $value): self
     {
@@ -409,6 +469,8 @@ class CouponBuilder
 
     /**
      * Sets coupon restrictions field.
+     *
+     * @param CouponRestriction[]|null $value
      */
     public function couponRestrictions(?array $value): self
     {
@@ -417,10 +479,21 @@ class CouponBuilder
     }
 
     /**
+     * Sets currency prices field.
+     *
+     * @param CouponCurrency[]|null $value
+     */
+    public function currencyPrices(?array $value): self
+    {
+        $this->instance->setCurrencyPrices($value);
+        return $this;
+    }
+
+    /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -429,7 +502,7 @@ class CouponBuilder
     }
 
     /**
-     * Initializes a new coupon object.
+     * Initializes a new Coupon object.
      */
     public function build(): Coupon
     {

@@ -32,7 +32,7 @@ class RefundPrepaymentBaseRefundErrorBuilder
     }
 
     /**
-     * Initializes a new refund prepayment base refund error Builder object.
+     * Initializes a new Refund Prepayment Base Refund Error Builder object.
      */
     public static function init(): self
     {
@@ -41,6 +41,8 @@ class RefundPrepaymentBaseRefundErrorBuilder
 
     /**
      * Sets refund field.
+     *
+     * @param BaseRefundError|null $value
      */
     public function refund(?BaseRefundError $value): self
     {
@@ -51,8 +53,8 @@ class RefundPrepaymentBaseRefundErrorBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -61,7 +63,7 @@ class RefundPrepaymentBaseRefundErrorBuilder
     }
 
     /**
-     * Initializes a new refund prepayment base refund error object.
+     * Initializes a new Refund Prepayment Base Refund Error object.
      */
     public function build(): RefundPrepaymentBaseRefundError
     {

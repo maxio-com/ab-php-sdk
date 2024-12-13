@@ -31,7 +31,7 @@ class CreateInvoiceCouponBuilder
     }
 
     /**
-     * Initializes a new create invoice coupon Builder object.
+     * Initializes a new Create Invoice Coupon Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class CreateInvoiceCouponBuilder
 
     /**
      * Sets code field.
+     *
+     * @param string|null $value
      */
     public function code(?string $value): self
     {
@@ -49,6 +51,8 @@ class CreateInvoiceCouponBuilder
 
     /**
      * Sets percentage field.
+     *
+     * @param string|float|null $value
      */
     public function percentage($value): self
     {
@@ -58,6 +62,8 @@ class CreateInvoiceCouponBuilder
 
     /**
      * Sets amount field.
+     *
+     * @param string|float|null $value
      */
     public function amount($value): self
     {
@@ -67,6 +73,8 @@ class CreateInvoiceCouponBuilder
 
     /**
      * Sets description field.
+     *
+     * @param string|null $value
      */
     public function description(?string $value): self
     {
@@ -76,6 +84,8 @@ class CreateInvoiceCouponBuilder
 
     /**
      * Sets product family id field.
+     *
+     * @param string|int|null $value
      */
     public function productFamilyId($value): self
     {
@@ -85,6 +95,8 @@ class CreateInvoiceCouponBuilder
 
     /**
      * Sets compounding strategy field.
+     *
+     * @param string|null $value
      */
     public function compoundingStrategy(?string $value): self
     {
@@ -95,8 +107,8 @@ class CreateInvoiceCouponBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -105,7 +117,7 @@ class CreateInvoiceCouponBuilder
     }
 
     /**
-     * Initializes a new create invoice coupon object.
+     * Initializes a new Create Invoice Coupon object.
      */
     public function build(): CreateInvoiceCoupon
     {

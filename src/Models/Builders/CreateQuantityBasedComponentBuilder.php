@@ -32,7 +32,9 @@ class CreateQuantityBasedComponentBuilder
     }
 
     /**
-     * Initializes a new create quantity based component Builder object.
+     * Initializes a new Create Quantity Based Component Builder object.
+     *
+     * @param QuantityBasedComponent $quantityBasedComponent
      */
     public static function init(QuantityBasedComponent $quantityBasedComponent): self
     {
@@ -42,8 +44,8 @@ class CreateQuantityBasedComponentBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -52,7 +54,7 @@ class CreateQuantityBasedComponentBuilder
     }
 
     /**
-     * Initializes a new create quantity based component object.
+     * Initializes a new Create Quantity Based Component object.
      */
     public function build(): CreateQuantityBasedComponent
     {

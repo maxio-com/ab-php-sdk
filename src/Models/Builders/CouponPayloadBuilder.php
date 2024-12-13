@@ -10,36 +10,60 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models\Builders;
 
-use AdvancedBillingLib\Models\CreateOrUpdateFlatAmountCoupon;
+use AdvancedBillingLib\Models\CouponPayload;
 use Core\Utils\CoreHelper;
 
 /**
- * Builder for model CreateOrUpdateFlatAmountCoupon
+ * Builder for model CouponPayload
  *
- * @see CreateOrUpdateFlatAmountCoupon
+ * @see CouponPayload
  */
-class CreateOrUpdateFlatAmountCouponBuilder
+class CouponPayloadBuilder
 {
     /**
-     * @var CreateOrUpdateFlatAmountCoupon
+     * @var CouponPayload
      */
     private $instance;
 
-    private function __construct(CreateOrUpdateFlatAmountCoupon $instance)
+    private function __construct(CouponPayload $instance)
     {
         $this->instance = $instance;
     }
 
     /**
-     * Initializes a new create or update flat amount coupon Builder object.
+     * Initializes a new Coupon Payload Builder object.
      */
-    public static function init(string $name, string $code, int $amountInCents): self
+    public static function init(): self
     {
-        return new self(new CreateOrUpdateFlatAmountCoupon($name, $code, $amountInCents));
+        return new self(new CouponPayload());
+    }
+
+    /**
+     * Sets name field.
+     *
+     * @param string|null $value
+     */
+    public function name(?string $value): self
+    {
+        $this->instance->setName($value);
+        return $this;
+    }
+
+    /**
+     * Sets code field.
+     *
+     * @param string|null $value
+     */
+    public function code(?string $value): self
+    {
+        $this->instance->setCode($value);
+        return $this;
     }
 
     /**
      * Sets description field.
+     *
+     * @param string|null $value
      */
     public function description(?string $value): self
     {
@@ -48,7 +72,31 @@ class CreateOrUpdateFlatAmountCouponBuilder
     }
 
     /**
+     * Sets percentage field.
+     *
+     * @param string|float|null $value
+     */
+    public function percentage($value): self
+    {
+        $this->instance->setPercentage($value);
+        return $this;
+    }
+
+    /**
+     * Sets amount in cents field.
+     *
+     * @param int|null $value
+     */
+    public function amountInCents(?int $value): self
+    {
+        $this->instance->setAmountInCents($value);
+        return $this;
+    }
+
+    /**
      * Sets allow negative balance field.
+     *
+     * @param bool|null $value
      */
     public function allowNegativeBalance(?bool $value): self
     {
@@ -58,6 +106,8 @@ class CreateOrUpdateFlatAmountCouponBuilder
 
     /**
      * Sets recurring field.
+     *
+     * @param bool|null $value
      */
     public function recurring(?bool $value): self
     {
@@ -67,6 +117,8 @@ class CreateOrUpdateFlatAmountCouponBuilder
 
     /**
      * Sets end date field.
+     *
+     * @param \DateTime|null $value
      */
     public function endDate(?\DateTime $value): self
     {
@@ -76,6 +128,8 @@ class CreateOrUpdateFlatAmountCouponBuilder
 
     /**
      * Sets product family id field.
+     *
+     * @param string|null $value
      */
     public function productFamilyId(?string $value): self
     {
@@ -85,6 +139,8 @@ class CreateOrUpdateFlatAmountCouponBuilder
 
     /**
      * Sets stackable field.
+     *
+     * @param bool|null $value
      */
     public function stackable(?bool $value): self
     {
@@ -94,6 +150,8 @@ class CreateOrUpdateFlatAmountCouponBuilder
 
     /**
      * Sets compounding strategy field.
+     *
+     * @param string|null $value
      */
     public function compoundingStrategy(?string $value): self
     {
@@ -103,6 +161,8 @@ class CreateOrUpdateFlatAmountCouponBuilder
 
     /**
      * Sets exclude mid period allocations field.
+     *
+     * @param bool|null $value
      */
     public function excludeMidPeriodAllocations(?bool $value): self
     {
@@ -112,6 +172,8 @@ class CreateOrUpdateFlatAmountCouponBuilder
 
     /**
      * Sets apply on cancel at end of period field.
+     *
+     * @param bool|null $value
      */
     public function applyOnCancelAtEndOfPeriod(?bool $value): self
     {
@@ -121,6 +183,8 @@ class CreateOrUpdateFlatAmountCouponBuilder
 
     /**
      * Sets apply on subscription expiration field.
+     *
+     * @param bool|null $value
      */
     public function applyOnSubscriptionExpiration(?bool $value): self
     {
@@ -131,8 +195,8 @@ class CreateOrUpdateFlatAmountCouponBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -141,9 +205,9 @@ class CreateOrUpdateFlatAmountCouponBuilder
     }
 
     /**
-     * Initializes a new create or update flat amount coupon object.
+     * Initializes a new Coupon Payload object.
      */
-    public function build(): CreateOrUpdateFlatAmountCoupon
+    public function build(): CouponPayload
     {
         return CoreHelper::clone($this->instance);
     }

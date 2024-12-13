@@ -15,5 +15,7 @@ namespace AdvancedBillingLib;
  */
 class Server
 {
-    public const DEFAULT_ = 'default';
+    public const PRODUCTION = 'production';
+
+    public const EBB = 'ebb';
 }

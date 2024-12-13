@@ -31,7 +31,7 @@ class RevokedInvitationBuilder
     }
 
     /**
-     * Initializes a new revoked invitation Builder object.
+     * Initializes a new Revoked Invitation Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class RevokedInvitationBuilder
 
     /**
      * Sets last sent at field.
+     *
+     * @param string|null $value
      */
     public function lastSentAt(?string $value): self
     {
@@ -49,6 +51,8 @@ class RevokedInvitationBuilder
 
     /**
      * Sets last accepted at field.
+     *
+     * @param string|null $value
      */
     public function lastAcceptedAt(?string $value): self
     {
@@ -58,6 +62,8 @@ class RevokedInvitationBuilder
 
     /**
      * Sets uninvited count field.
+     *
+     * @param int|null $value
      */
     public function uninvitedCount(?int $value): self
     {
@@ -68,8 +74,8 @@ class RevokedInvitationBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -78,7 +84,7 @@ class RevokedInvitationBuilder
     }
 
     /**
-     * Initializes a new revoked invitation object.
+     * Initializes a new Revoked Invitation object.
      */
     public function build(): RevokedInvitation
     {

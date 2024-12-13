@@ -33,7 +33,13 @@ class ApplyPaymentEventBuilder
     }
 
     /**
-     * Initializes a new apply payment event Builder object.
+     * Initializes a new Apply Payment Event Builder object.
+     *
+     * @param int $id
+     * @param \DateTime $timestamp
+     * @param Invoice $invoice
+     * @param string $eventType
+     * @param ApplyPaymentEventData $eventData
      */
     public static function init(
         int $id,
@@ -48,8 +54,8 @@ class ApplyPaymentEventBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -58,7 +64,7 @@ class ApplyPaymentEventBuilder
     }
 
     /**
-     * Initializes a new apply payment event object.
+     * Initializes a new Apply Payment Event object.
      */
     public function build(): ApplyPaymentEvent
     {

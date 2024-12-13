@@ -31,7 +31,24 @@ class GetOneTimeTokenPaymentProfileBuilder
     }
 
     /**
-     * Initializes a new get one time token payment profile Builder object.
+     * Initializes a new Get One Time Token Payment Profile Builder object.
+     *
+     * @param string $firstName
+     * @param string $lastName
+     * @param string $maskedCardNumber
+     * @param string $cardType
+     * @param float $expirationMonth
+     * @param float $expirationYear
+     * @param string $currentVault
+     * @param string $vaultToken
+     * @param string $billingAddress
+     * @param string $billingCity
+     * @param string $billingCountry
+     * @param string $billingState
+     * @param string $billingZip
+     * @param string $paymentType
+     * @param bool $disabled
+     * @param int $siteGatewaySettingId
      */
     public static function init(
         string $firstName,
@@ -73,6 +90,8 @@ class GetOneTimeTokenPaymentProfileBuilder
 
     /**
      * Sets id field.
+     *
+     * @param string|null $value
      */
     public function id(?string $value): self
     {
@@ -91,6 +110,8 @@ class GetOneTimeTokenPaymentProfileBuilder
 
     /**
      * Sets customer id field.
+     *
+     * @param string|null $value
      */
     public function customerId(?string $value): self
     {
@@ -109,6 +130,8 @@ class GetOneTimeTokenPaymentProfileBuilder
 
     /**
      * Sets billing address 2 field.
+     *
+     * @param string|null $value
      */
     public function billingAddress2(?string $value): self
     {
@@ -118,6 +141,8 @@ class GetOneTimeTokenPaymentProfileBuilder
 
     /**
      * Sets customer vault token field.
+     *
+     * @param string|null $value
      */
     public function customerVaultToken(?string $value): self
     {
@@ -136,6 +161,8 @@ class GetOneTimeTokenPaymentProfileBuilder
 
     /**
      * Sets gateway handle field.
+     *
+     * @param string|null $value
      */
     public function gatewayHandle(?string $value): self
     {
@@ -155,8 +182,8 @@ class GetOneTimeTokenPaymentProfileBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -165,7 +192,7 @@ class GetOneTimeTokenPaymentProfileBuilder
     }
 
     /**
-     * Initializes a new get one time token payment profile object.
+     * Initializes a new Get One Time Token Payment Profile object.
      */
     public function build(): GetOneTimeTokenPaymentProfile
     {

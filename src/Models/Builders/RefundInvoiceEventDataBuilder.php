@@ -32,7 +32,14 @@ class RefundInvoiceEventDataBuilder
     }
 
     /**
-     * Initializes a new refund invoice event data Builder object.
+     * Initializes a new Refund Invoice Event Data Builder object.
+     *
+     * @param bool $applyCredit
+     * @param CreditNote $creditNoteAttributes
+     * @param int $paymentId
+     * @param string $refundAmount
+     * @param int $refundId
+     * @param \DateTime $transactionTime
      */
     public static function init(
         bool $applyCredit,
@@ -54,6 +61,8 @@ class RefundInvoiceEventDataBuilder
 
     /**
      * Sets consolidation level field.
+     *
+     * @param string|null $value
      */
     public function consolidationLevel(?string $value): self
     {
@@ -63,6 +72,8 @@ class RefundInvoiceEventDataBuilder
 
     /**
      * Sets memo field.
+     *
+     * @param string|null $value
      */
     public function memo(?string $value): self
     {
@@ -72,6 +83,8 @@ class RefundInvoiceEventDataBuilder
 
     /**
      * Sets original amount field.
+     *
+     * @param string|null $value
      */
     public function originalAmount(?string $value): self
     {
@@ -82,8 +95,8 @@ class RefundInvoiceEventDataBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -92,7 +105,7 @@ class RefundInvoiceEventDataBuilder
     }
 
     /**
-     * Initializes a new refund invoice event data object.
+     * Initializes a new Refund Invoice Event Data object.
      */
     public function build(): RefundInvoiceEventData
     {

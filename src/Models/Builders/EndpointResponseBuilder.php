@@ -32,7 +32,7 @@ class EndpointResponseBuilder
     }
 
     /**
-     * Initializes a new endpoint response Builder object.
+     * Initializes a new Endpoint Response Builder object.
      */
     public static function init(): self
     {
@@ -41,6 +41,8 @@ class EndpointResponseBuilder
 
     /**
      * Sets endpoint field.
+     *
+     * @param Endpoint|null $value
      */
     public function endpoint(?Endpoint $value): self
     {
@@ -51,8 +53,8 @@ class EndpointResponseBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -61,7 +63,7 @@ class EndpointResponseBuilder
     }
 
     /**
-     * Initializes a new endpoint response object.
+     * Initializes a new Endpoint Response object.
      */
     public function build(): EndpointResponse
     {

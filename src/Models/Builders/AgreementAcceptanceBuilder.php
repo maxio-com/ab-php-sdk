@@ -31,7 +31,7 @@ class AgreementAcceptanceBuilder
     }
 
     /**
-     * Initializes a new agreement acceptance Builder object.
+     * Initializes a new Agreement Acceptance Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class AgreementAcceptanceBuilder
 
     /**
      * Sets ip address field.
+     *
+     * @param string|null $value
      */
     public function ipAddress(?string $value): self
     {
@@ -49,6 +51,8 @@ class AgreementAcceptanceBuilder
 
     /**
      * Sets terms url field.
+     *
+     * @param string|null $value
      */
     public function termsUrl(?string $value): self
     {
@@ -58,6 +62,8 @@ class AgreementAcceptanceBuilder
 
     /**
      * Sets privacy policy url field.
+     *
+     * @param string|null $value
      */
     public function privacyPolicyUrl(?string $value): self
     {
@@ -67,6 +73,8 @@ class AgreementAcceptanceBuilder
 
     /**
      * Sets return refund policy url field.
+     *
+     * @param string|null $value
      */
     public function returnRefundPolicyUrl(?string $value): self
     {
@@ -76,6 +84,8 @@ class AgreementAcceptanceBuilder
 
     /**
      * Sets delivery policy url field.
+     *
+     * @param string|null $value
      */
     public function deliveryPolicyUrl(?string $value): self
     {
@@ -85,6 +95,8 @@ class AgreementAcceptanceBuilder
 
     /**
      * Sets secure checkout policy url field.
+     *
+     * @param string|null $value
      */
     public function secureCheckoutPolicyUrl(?string $value): self
     {
@@ -95,8 +107,8 @@ class AgreementAcceptanceBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -105,7 +117,7 @@ class AgreementAcceptanceBuilder
     }
 
     /**
-     * Initializes a new agreement acceptance object.
+     * Initializes a new Agreement Acceptance object.
      */
     public function build(): AgreementAcceptance
     {

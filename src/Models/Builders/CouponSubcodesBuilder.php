@@ -31,7 +31,7 @@ class CouponSubcodesBuilder
     }
 
     /**
-     * Initializes a new coupon subcodes Builder object.
+     * Initializes a new Coupon Subcodes Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class CouponSubcodesBuilder
 
     /**
      * Sets codes field.
+     *
+     * @param string[]|null $value
      */
     public function codes(?array $value): self
     {
@@ -50,8 +52,8 @@ class CouponSubcodesBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -60,7 +62,7 @@ class CouponSubcodesBuilder
     }
 
     /**
-     * Initializes a new coupon subcodes object.
+     * Initializes a new Coupon Subcodes object.
      */
     public function build(): CouponSubcodes
     {

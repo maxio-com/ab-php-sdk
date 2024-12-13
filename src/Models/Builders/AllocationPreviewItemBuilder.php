@@ -31,7 +31,7 @@ class AllocationPreviewItemBuilder
     }
 
     /**
-     * Initializes a new allocation preview item Builder object.
+     * Initializes a new Allocation Preview Item Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class AllocationPreviewItemBuilder
 
     /**
      * Sets component id field.
+     *
+     * @param int|null $value
      */
     public function componentId(?int $value): self
     {
@@ -49,6 +51,8 @@ class AllocationPreviewItemBuilder
 
     /**
      * Sets subscription id field.
+     *
+     * @param int|null $value
      */
     public function subscriptionId(?int $value): self
     {
@@ -58,6 +62,8 @@ class AllocationPreviewItemBuilder
 
     /**
      * Sets quantity field.
+     *
+     * @param int|string|null $value
      */
     public function quantity($value): self
     {
@@ -67,6 +73,8 @@ class AllocationPreviewItemBuilder
 
     /**
      * Sets previous quantity field.
+     *
+     * @param int|string|null $value
      */
     public function previousQuantity($value): self
     {
@@ -76,6 +84,8 @@ class AllocationPreviewItemBuilder
 
     /**
      * Sets memo field.
+     *
+     * @param string|null $value
      */
     public function memo(?string $value): self
     {
@@ -94,6 +104,8 @@ class AllocationPreviewItemBuilder
 
     /**
      * Sets timestamp field.
+     *
+     * @param string|null $value
      */
     public function timestamp(?string $value): self
     {
@@ -112,6 +124,8 @@ class AllocationPreviewItemBuilder
 
     /**
      * Sets proration upgrade scheme field.
+     *
+     * @param string|null $value
      */
     public function prorationUpgradeScheme(?string $value): self
     {
@@ -121,6 +135,8 @@ class AllocationPreviewItemBuilder
 
     /**
      * Sets proration downgrade scheme field.
+     *
+     * @param string|null $value
      */
     public function prorationDowngradeScheme(?string $value): self
     {
@@ -130,6 +146,8 @@ class AllocationPreviewItemBuilder
 
     /**
      * Sets accrue charge field.
+     *
+     * @param bool|null $value
      */
     public function accrueCharge(?bool $value): self
     {
@@ -139,6 +157,8 @@ class AllocationPreviewItemBuilder
 
     /**
      * Sets upgrade charge field.
+     *
+     * @param string|null $value
      */
     public function upgradeCharge(?string $value): self
     {
@@ -157,6 +177,8 @@ class AllocationPreviewItemBuilder
 
     /**
      * Sets downgrade credit field.
+     *
+     * @param string|null $value
      */
     public function downgradeCredit(?string $value): self
     {
@@ -175,6 +197,8 @@ class AllocationPreviewItemBuilder
 
     /**
      * Sets price point id field.
+     *
+     * @param int|null $value
      */
     public function pricePointId(?int $value): self
     {
@@ -184,6 +208,8 @@ class AllocationPreviewItemBuilder
 
     /**
      * Sets interval field.
+     *
+     * @param int|null $value
      */
     public function interval(?int $value): self
     {
@@ -193,6 +219,8 @@ class AllocationPreviewItemBuilder
 
     /**
      * Sets interval unit field.
+     *
+     * @param string|null $value
      */
     public function intervalUnit(?string $value): self
     {
@@ -211,6 +239,8 @@ class AllocationPreviewItemBuilder
 
     /**
      * Sets previous price point id field.
+     *
+     * @param int|null $value
      */
     public function previousPricePointId(?int $value): self
     {
@@ -220,6 +250,8 @@ class AllocationPreviewItemBuilder
 
     /**
      * Sets price point handle field.
+     *
+     * @param string|null $value
      */
     public function pricePointHandle(?string $value): self
     {
@@ -229,6 +261,8 @@ class AllocationPreviewItemBuilder
 
     /**
      * Sets price point name field.
+     *
+     * @param string|null $value
      */
     public function pricePointName(?string $value): self
     {
@@ -238,6 +272,8 @@ class AllocationPreviewItemBuilder
 
     /**
      * Sets component handle field.
+     *
+     * @param string|null $value
      */
     public function componentHandle(?string $value): self
     {
@@ -257,8 +293,8 @@ class AllocationPreviewItemBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -267,7 +303,7 @@ class AllocationPreviewItemBuilder
     }
 
     /**
-     * Initializes a new allocation preview item object.
+     * Initializes a new Allocation Preview Item object.
      */
     public function build(): AllocationPreviewItem
     {

@@ -31,7 +31,7 @@ class InvoiceCreditBuilder
     }
 
     /**
-     * Initializes a new invoice credit Builder object.
+     * Initializes a new Invoice Credit Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class InvoiceCreditBuilder
 
     /**
      * Sets uid field.
+     *
+     * @param string|null $value
      */
     public function uid(?string $value): self
     {
@@ -49,6 +51,8 @@ class InvoiceCreditBuilder
 
     /**
      * Sets credit note number field.
+     *
+     * @param string|null $value
      */
     public function creditNoteNumber(?string $value): self
     {
@@ -58,6 +62,8 @@ class InvoiceCreditBuilder
 
     /**
      * Sets credit note uid field.
+     *
+     * @param string|null $value
      */
     public function creditNoteUid(?string $value): self
     {
@@ -67,6 +73,8 @@ class InvoiceCreditBuilder
 
     /**
      * Sets transaction time field.
+     *
+     * @param \DateTime|null $value
      */
     public function transactionTime(?\DateTime $value): self
     {
@@ -76,6 +84,8 @@ class InvoiceCreditBuilder
 
     /**
      * Sets memo field.
+     *
+     * @param string|null $value
      */
     public function memo(?string $value): self
     {
@@ -85,6 +95,8 @@ class InvoiceCreditBuilder
 
     /**
      * Sets original amount field.
+     *
+     * @param string|null $value
      */
     public function originalAmount(?string $value): self
     {
@@ -94,6 +106,8 @@ class InvoiceCreditBuilder
 
     /**
      * Sets applied amount field.
+     *
+     * @param string|null $value
      */
     public function appliedAmount(?string $value): self
     {
@@ -104,8 +118,8 @@ class InvoiceCreditBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -114,7 +128,7 @@ class InvoiceCreditBuilder
     }
 
     /**
-     * Initializes a new invoice credit object.
+     * Initializes a new Invoice Credit object.
      */
     public function build(): InvoiceCredit
     {

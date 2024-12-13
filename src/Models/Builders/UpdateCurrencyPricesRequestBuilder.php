@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models\Builders;
 
+use AdvancedBillingLib\Models\UpdateCurrencyPrice;
 use AdvancedBillingLib\Models\UpdateCurrencyPricesRequest;
 use Core\Utils\CoreHelper;
 
@@ -31,7 +32,9 @@ class UpdateCurrencyPricesRequestBuilder
     }
 
     /**
-     * Initializes a new update currency prices request Builder object.
+     * Initializes a new Update Currency Prices Request Builder object.
+     *
+     * @param UpdateCurrencyPrice[] $currencyPrices
      */
     public static function init(array $currencyPrices): self
     {
@@ -41,8 +44,8 @@ class UpdateCurrencyPricesRequestBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -51,7 +54,7 @@ class UpdateCurrencyPricesRequestBuilder
     }
 
     /**
-     * Initializes a new update currency prices request object.
+     * Initializes a new Update Currency Prices Request object.
      */
     public function build(): UpdateCurrencyPricesRequest
     {

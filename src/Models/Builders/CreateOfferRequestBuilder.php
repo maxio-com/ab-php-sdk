@@ -32,7 +32,9 @@ class CreateOfferRequestBuilder
     }
 
     /**
-     * Initializes a new create offer request Builder object.
+     * Initializes a new Create Offer Request Builder object.
+     *
+     * @param CreateOffer $offer
      */
     public static function init(CreateOffer $offer): self
     {
@@ -42,8 +44,8 @@ class CreateOfferRequestBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -52,7 +54,7 @@ class CreateOfferRequestBuilder
     }
 
     /**
-     * Initializes a new create offer request object.
+     * Initializes a new Create Offer Request object.
      */
     public function build(): CreateOfferRequest
     {

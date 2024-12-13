@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace AdvancedBillingLib\Models\Builders;
 
 use AdvancedBillingLib\Models\ComponentCustomPrice;
+use AdvancedBillingLib\Models\Price;
 use Core\Utils\CoreHelper;
 
 /**
@@ -31,7 +32,9 @@ class ComponentCustomPriceBuilder
     }
 
     /**
-     * Initializes a new component custom price Builder object.
+     * Initializes a new Component Custom Price Builder object.
+     *
+     * @param Price[] $prices
      */
     public static function init(array $prices): self
     {
@@ -40,6 +43,8 @@ class ComponentCustomPriceBuilder
 
     /**
      * Sets tax included field.
+     *
+     * @param bool|null $value
      */
     public function taxIncluded(?bool $value): self
     {
@@ -49,6 +54,8 @@ class ComponentCustomPriceBuilder
 
     /**
      * Sets pricing scheme field.
+     *
+     * @param string|null $value
      */
     public function pricingScheme(?string $value): self
     {
@@ -58,6 +65,8 @@ class ComponentCustomPriceBuilder
 
     /**
      * Sets interval field.
+     *
+     * @param int|null $value
      */
     public function interval(?int $value): self
     {
@@ -67,6 +76,8 @@ class ComponentCustomPriceBuilder
 
     /**
      * Sets interval unit field.
+     *
+     * @param string|null $value
      */
     public function intervalUnit(?string $value): self
     {
@@ -86,8 +97,8 @@ class ComponentCustomPriceBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -96,7 +107,7 @@ class ComponentCustomPriceBuilder
     }
 
     /**
-     * Initializes a new component custom price object.
+     * Initializes a new Component Custom Price object.
      */
     public function build(): ComponentCustomPrice
     {

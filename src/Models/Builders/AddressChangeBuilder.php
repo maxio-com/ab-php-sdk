@@ -32,7 +32,10 @@ class AddressChangeBuilder
     }
 
     /**
-     * Initializes a new address change Builder object.
+     * Initializes a new Address Change Builder object.
+     *
+     * @param InvoiceAddress $before
+     * @param InvoiceAddress $after
      */
     public static function init(InvoiceAddress $before, InvoiceAddress $after): self
     {
@@ -42,8 +45,8 @@ class AddressChangeBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -52,7 +55,7 @@ class AddressChangeBuilder
     }
 
     /**
-     * Initializes a new address change object.
+     * Initializes a new Address Change object.
      */
     public function build(): AddressChange
     {

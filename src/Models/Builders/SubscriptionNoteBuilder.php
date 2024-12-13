@@ -31,7 +31,7 @@ class SubscriptionNoteBuilder
     }
 
     /**
-     * Initializes a new subscription note Builder object.
+     * Initializes a new Subscription Note Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class SubscriptionNoteBuilder
 
     /**
      * Sets id field.
+     *
+     * @param int|null $value
      */
     public function id(?int $value): self
     {
@@ -49,6 +51,8 @@ class SubscriptionNoteBuilder
 
     /**
      * Sets body field.
+     *
+     * @param string|null $value
      */
     public function body(?string $value): self
     {
@@ -58,6 +62,8 @@ class SubscriptionNoteBuilder
 
     /**
      * Sets subscription id field.
+     *
+     * @param int|null $value
      */
     public function subscriptionId(?int $value): self
     {
@@ -67,6 +73,8 @@ class SubscriptionNoteBuilder
 
     /**
      * Sets created at field.
+     *
+     * @param \DateTime|null $value
      */
     public function createdAt(?\DateTime $value): self
     {
@@ -76,6 +84,8 @@ class SubscriptionNoteBuilder
 
     /**
      * Sets updated at field.
+     *
+     * @param \DateTime|null $value
      */
     public function updatedAt(?\DateTime $value): self
     {
@@ -85,6 +95,8 @@ class SubscriptionNoteBuilder
 
     /**
      * Sets sticky field.
+     *
+     * @param bool|null $value
      */
     public function sticky(?bool $value): self
     {
@@ -95,8 +107,8 @@ class SubscriptionNoteBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -105,7 +117,7 @@ class SubscriptionNoteBuilder
     }
 
     /**
-     * Initializes a new subscription note object.
+     * Initializes a new Subscription Note object.
      */
     public function build(): SubscriptionNote
     {

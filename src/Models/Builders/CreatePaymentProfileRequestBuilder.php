@@ -32,7 +32,9 @@ class CreatePaymentProfileRequestBuilder
     }
 
     /**
-     * Initializes a new create payment profile request Builder object.
+     * Initializes a new Create Payment Profile Request Builder object.
+     *
+     * @param CreatePaymentProfile $paymentProfile
      */
     public static function init(CreatePaymentProfile $paymentProfile): self
     {
@@ -42,8 +44,8 @@ class CreatePaymentProfileRequestBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -52,7 +54,7 @@ class CreatePaymentProfileRequestBuilder
     }
 
     /**
-     * Initializes a new create payment profile request object.
+     * Initializes a new Create Payment Profile Request object.
      */
     public function build(): CreatePaymentProfileRequest
     {

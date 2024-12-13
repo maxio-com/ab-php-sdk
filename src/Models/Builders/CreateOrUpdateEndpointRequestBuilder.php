@@ -32,7 +32,9 @@ class CreateOrUpdateEndpointRequestBuilder
     }
 
     /**
-     * Initializes a new create or update endpoint request Builder object.
+     * Initializes a new Create Or Update Endpoint Request Builder object.
+     *
+     * @param CreateOrUpdateEndpoint $endpoint
      */
     public static function init(CreateOrUpdateEndpoint $endpoint): self
     {
@@ -42,8 +44,8 @@ class CreateOrUpdateEndpointRequestBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -52,7 +54,7 @@ class CreateOrUpdateEndpointRequestBuilder
     }
 
     /**
-     * Initializes a new create or update endpoint request object.
+     * Initializes a new Create Or Update Endpoint Request object.
      */
     public function build(): CreateOrUpdateEndpointRequest
     {

@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace AdvancedBillingLib\Models\Builders;
 
 use AdvancedBillingLib\Models\ListProductPricePointsResponse;
+use AdvancedBillingLib\Models\ProductPricePoint;
 use Core\Utils\CoreHelper;
 
 /**
@@ -31,7 +32,9 @@ class ListProductPricePointsResponseBuilder
     }
 
     /**
-     * Initializes a new list product price points response Builder object.
+     * Initializes a new List Product Price Points Response Builder object.
+     *
+     * @param ProductPricePoint[] $pricePoints
      */
     public static function init(array $pricePoints): self
     {
@@ -41,8 +44,8 @@ class ListProductPricePointsResponseBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -51,7 +54,7 @@ class ListProductPricePointsResponseBuilder
     }
 
     /**
-     * Initializes a new list product price points response object.
+     * Initializes a new List Product Price Points Response object.
      */
     public function build(): ListProductPricePointsResponse
     {

@@ -31,7 +31,12 @@ class PrepaymentAccountBalanceChangedBuilder
     }
 
     /**
-     * Initializes a new prepayment account balance changed Builder object.
+     * Initializes a new Prepayment Account Balance Changed Builder object.
+     *
+     * @param string $reason
+     * @param int $prepaymentAccountBalanceInCents
+     * @param int $prepaymentBalanceChangeInCents
+     * @param string $currencyCode
      */
     public static function init(
         string $reason,
@@ -50,8 +55,8 @@ class PrepaymentAccountBalanceChangedBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -60,7 +65,7 @@ class PrepaymentAccountBalanceChangedBuilder
     }
 
     /**
-     * Initializes a new prepayment account balance changed object.
+     * Initializes a new Prepayment Account Balance Changed object.
      */
     public function build(): PrepaymentAccountBalanceChanged
     {

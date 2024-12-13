@@ -461,6 +461,13 @@ class SubscriptionStatusController extends BaseController
 
         $_resHandler = $this->responseHandler()
             ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
+            ->throwErrorOn(
+                '422',
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
+            )
             ->type(DelayedCancellationResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
@@ -511,7 +518,15 @@ class SubscriptionStatusController extends BaseController
             '/subscriptions/{subscription_id}/cancel_dunning.json'
         )->auth('BasicAuth')->parameters(TemplateParam::init('subscription_id', $subscriptionId)->required());
 
-        $_resHandler = $this->responseHandler()->type(SubscriptionResponse::class);
+        $_resHandler = $this->responseHandler()
+            ->throwErrorOn(
+                '422',
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
+            )
+            ->type(SubscriptionResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
     }

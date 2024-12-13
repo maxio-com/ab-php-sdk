@@ -33,7 +33,13 @@ class CreateDebitNoteEventBuilder
     }
 
     /**
-     * Initializes a new create debit note event Builder object.
+     * Initializes a new Create Debit Note Event Builder object.
+     *
+     * @param int $id
+     * @param \DateTime $timestamp
+     * @param Invoice $invoice
+     * @param string $eventType
+     * @param DebitNote $eventData
      */
     public static function init(
         int $id,
@@ -48,8 +54,8 @@ class CreateDebitNoteEventBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -58,7 +64,7 @@ class CreateDebitNoteEventBuilder
     }
 
     /**
-     * Initializes a new create debit note event object.
+     * Initializes a new Create Debit Note Event object.
      */
     public function build(): CreateDebitNoteEvent
     {

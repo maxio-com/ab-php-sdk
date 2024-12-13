@@ -32,7 +32,7 @@ class SubscriptionPreviewBuilder
     }
 
     /**
-     * Initializes a new subscription preview Builder object.
+     * Initializes a new Subscription Preview Builder object.
      */
     public static function init(): self
     {
@@ -41,6 +41,8 @@ class SubscriptionPreviewBuilder
 
     /**
      * Sets current billing manifest field.
+     *
+     * @param BillingManifest|null $value
      */
     public function currentBillingManifest(?BillingManifest $value): self
     {
@@ -50,6 +52,8 @@ class SubscriptionPreviewBuilder
 
     /**
      * Sets next billing manifest field.
+     *
+     * @param BillingManifest|null $value
      */
     public function nextBillingManifest(?BillingManifest $value): self
     {
@@ -60,8 +64,8 @@ class SubscriptionPreviewBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -70,7 +74,7 @@ class SubscriptionPreviewBuilder
     }
 
     /**
-     * Initializes a new subscription preview object.
+     * Initializes a new Subscription Preview object.
      */
     public function build(): SubscriptionPreview
     {

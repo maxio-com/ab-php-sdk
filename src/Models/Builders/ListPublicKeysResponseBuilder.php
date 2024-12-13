@@ -12,6 +12,7 @@ namespace AdvancedBillingLib\Models\Builders;
 
 use AdvancedBillingLib\Models\ListPublicKeysMeta;
 use AdvancedBillingLib\Models\ListPublicKeysResponse;
+use AdvancedBillingLib\Models\PublicKey;
 use Core\Utils\CoreHelper;
 
 /**
@@ -32,7 +33,7 @@ class ListPublicKeysResponseBuilder
     }
 
     /**
-     * Initializes a new list public keys response Builder object.
+     * Initializes a new List Public Keys Response Builder object.
      */
     public static function init(): self
     {
@@ -41,6 +42,8 @@ class ListPublicKeysResponseBuilder
 
     /**
      * Sets chargify js keys field.
+     *
+     * @param PublicKey[]|null $value
      */
     public function chargifyJsKeys(?array $value): self
     {
@@ -50,6 +53,8 @@ class ListPublicKeysResponseBuilder
 
     /**
      * Sets meta field.
+     *
+     * @param ListPublicKeysMeta|null $value
      */
     public function meta(?ListPublicKeysMeta $value): self
     {
@@ -60,8 +65,8 @@ class ListPublicKeysResponseBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -70,7 +75,7 @@ class ListPublicKeysResponseBuilder
     }
 
     /**
-     * Initializes a new list public keys response object.
+     * Initializes a new List Public Keys Response object.
      */
     public function build(): ListPublicKeysResponse
     {

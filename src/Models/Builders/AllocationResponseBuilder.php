@@ -32,7 +32,7 @@ class AllocationResponseBuilder
     }
 
     /**
-     * Initializes a new allocation response Builder object.
+     * Initializes a new Allocation Response Builder object.
      */
     public static function init(): self
     {
@@ -41,6 +41,8 @@ class AllocationResponseBuilder
 
     /**
      * Sets allocation field.
+     *
+     * @param Allocation|null $value
      */
     public function allocation(?Allocation $value): self
     {
@@ -51,8 +53,8 @@ class AllocationResponseBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -61,7 +63,7 @@ class AllocationResponseBuilder
     }
 
     /**
-     * Initializes a new allocation response object.
+     * Initializes a new Allocation Response object.
      */
     public function build(): AllocationResponse
     {

@@ -35,6 +35,7 @@ use AdvancedBillingLib\Models\SubscriptionListDateField;
 use AdvancedBillingLib\Models\SubscriptionResponse;
 use AdvancedBillingLib\Models\UpdateAllocationExpirationDate;
 use AdvancedBillingLib\Models\UsageResponse;
+use AdvancedBillingLib\Server;
 use AdvancedBillingLib\Utils\DateTimeHelper;
 use Core\Request\Parameters\BodyParam;
 use Core\Request\Parameters\HeaderParam;
@@ -848,7 +849,6 @@ class SubscriptionComponentsController extends BaseController
      * https://events.chargify.com/my-site-subdomain/events/my-stream-api-handle
      * ```
      *
-     * @param string $subdomain Your site's subdomain
      * @param string $apiHandle Identifies the Stream for which the event should be published.
      * @param string|null $storeUid If you've attached your own Keen project as an Advanced Billing
      *        event data-store, use this parameter to indicate the data-store.
@@ -858,16 +858,12 @@ class SubscriptionComponentsController extends BaseController
      *
      * @throws ApiException Thrown if API call fails
      */
-    public function recordEvent(
-        string $subdomain,
-        string $apiHandle,
-        ?string $storeUid = null,
-        ?EBBEvent $body = null
-    ): void {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/{subdomain}/events/{api_handle}.json')
+    public function recordEvent(string $apiHandle, ?string $storeUid = null, ?EBBEvent $body = null): void
+    {
+        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/events/{api_handle}.json')
+            ->server(Server::EBB)
             ->auth('BasicAuth')
             ->parameters(
-                TemplateParam::init('subdomain', $subdomain)->required(),
                 TemplateParam::init('api_handle', $apiHandle)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
                 QueryParam::init('store_uid', $storeUid)->commaSeparated(),
@@ -886,7 +882,6 @@ class SubscriptionComponentsController extends BaseController
      * A maximum of 1000 events can be published in a single request. A 422 will be returned if this limit
      * is exceeded.
      *
-     * @param string $subdomain Your site's subdomain
      * @param string $apiHandle Identifies the Stream for which the events should be published.
      * @param string|null $storeUid If you've attached your own Keen project as an Advanced Billing
      *        event data-store, use this parameter to indicate the data-store.
@@ -896,16 +891,12 @@ class SubscriptionComponentsController extends BaseController
      *
      * @throws ApiException Thrown if API call fails
      */
-    public function bulkRecordEvents(
-        string $subdomain,
-        string $apiHandle,
-        ?string $storeUid = null,
-        ?array $body = null
-    ): void {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/{subdomain}/events/{api_handle}/bulk.json')
+    public function bulkRecordEvents(string $apiHandle, ?string $storeUid = null, ?array $body = null): void
+    {
+        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/events/{api_handle}/bulk.json')
+            ->server(Server::EBB)
             ->auth('BasicAuth')
             ->parameters(
-                TemplateParam::init('subdomain', $subdomain)->required(),
                 TemplateParam::init('api_handle', $apiHandle)->required(),
                 HeaderParam::init('Content-Type', 'application/json'),
                 QueryParam::init('store_uid', $storeUid)->commaSeparated(),

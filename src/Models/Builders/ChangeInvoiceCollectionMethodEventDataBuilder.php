@@ -31,7 +31,10 @@ class ChangeInvoiceCollectionMethodEventDataBuilder
     }
 
     /**
-     * Initializes a new change invoice collection method event data Builder object.
+     * Initializes a new Change Invoice Collection Method Event Data Builder object.
+     *
+     * @param string $fromCollectionMethod
+     * @param string $toCollectionMethod
      */
     public static function init(string $fromCollectionMethod, string $toCollectionMethod): self
     {
@@ -41,8 +44,8 @@ class ChangeInvoiceCollectionMethodEventDataBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -51,7 +54,7 @@ class ChangeInvoiceCollectionMethodEventDataBuilder
     }
 
     /**
-     * Initializes a new change invoice collection method event data object.
+     * Initializes a new Change Invoice Collection Method Event Data object.
      */
     public function build(): ChangeInvoiceCollectionMethodEventData
     {

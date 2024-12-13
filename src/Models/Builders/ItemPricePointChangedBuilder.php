@@ -32,7 +32,14 @@ class ItemPricePointChangedBuilder
     }
 
     /**
-     * Initializes a new item price point changed Builder object.
+     * Initializes a new Item Price Point Changed Builder object.
+     *
+     * @param int $itemId
+     * @param string $itemType
+     * @param string $itemHandle
+     * @param string $itemName
+     * @param ItemPricePointData $previousPricePoint
+     * @param ItemPricePointData $currentPricePoint
      */
     public static function init(
         int $itemId,
@@ -55,8 +62,8 @@ class ItemPricePointChangedBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -65,7 +72,7 @@ class ItemPricePointChangedBuilder
     }
 
     /**
-     * Initializes a new item price point changed object.
+     * Initializes a new Item Price Point Changed object.
      */
     public function build(): ItemPricePointChanged
     {

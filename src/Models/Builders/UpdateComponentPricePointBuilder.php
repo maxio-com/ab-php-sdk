@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace AdvancedBillingLib\Models\Builders;
 
 use AdvancedBillingLib\Models\UpdateComponentPricePoint;
+use AdvancedBillingLib\Models\UpdatePrice;
 use Core\Utils\CoreHelper;
 
 /**
@@ -31,7 +32,7 @@ class UpdateComponentPricePointBuilder
     }
 
     /**
-     * Initializes a new update component price point Builder object.
+     * Initializes a new Update Component Price Point Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +41,8 @@ class UpdateComponentPricePointBuilder
 
     /**
      * Sets name field.
+     *
+     * @param string|null $value
      */
     public function name(?string $value): self
     {
@@ -49,6 +52,8 @@ class UpdateComponentPricePointBuilder
 
     /**
      * Sets handle field.
+     *
+     * @param string|null $value
      */
     public function handle(?string $value): self
     {
@@ -58,6 +63,8 @@ class UpdateComponentPricePointBuilder
 
     /**
      * Sets pricing scheme field.
+     *
+     * @param string|null $value
      */
     public function pricingScheme(?string $value): self
     {
@@ -67,6 +74,8 @@ class UpdateComponentPricePointBuilder
 
     /**
      * Sets use site exchange rate field.
+     *
+     * @param bool|null $value
      */
     public function useSiteExchangeRate(?bool $value): self
     {
@@ -76,6 +85,8 @@ class UpdateComponentPricePointBuilder
 
     /**
      * Sets tax included field.
+     *
+     * @param bool|null $value
      */
     public function taxIncluded(?bool $value): self
     {
@@ -85,6 +96,8 @@ class UpdateComponentPricePointBuilder
 
     /**
      * Sets interval field.
+     *
+     * @param int|null $value
      */
     public function interval(?int $value): self
     {
@@ -94,6 +107,8 @@ class UpdateComponentPricePointBuilder
 
     /**
      * Sets interval unit field.
+     *
+     * @param string|null $value
      */
     public function intervalUnit(?string $value): self
     {
@@ -112,6 +127,8 @@ class UpdateComponentPricePointBuilder
 
     /**
      * Sets prices field.
+     *
+     * @param UpdatePrice[]|null $value
      */
     public function prices(?array $value): self
     {
@@ -122,8 +139,8 @@ class UpdateComponentPricePointBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -132,7 +149,7 @@ class UpdateComponentPricePointBuilder
     }
 
     /**
-     * Initializes a new update component price point object.
+     * Initializes a new Update Component Price Point object.
      */
     public function build(): UpdateComponentPricePoint
     {

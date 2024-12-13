@@ -32,7 +32,9 @@ class RefundPrepaymentRequestBuilder
     }
 
     /**
-     * Initializes a new refund prepayment request Builder object.
+     * Initializes a new Refund Prepayment Request Builder object.
+     *
+     * @param RefundPrepayment $refund
      */
     public static function init(RefundPrepayment $refund): self
     {
@@ -42,8 +44,8 @@ class RefundPrepaymentRequestBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -52,7 +54,7 @@ class RefundPrepaymentRequestBuilder
     }
 
     /**
-     * Initializes a new refund prepayment request object.
+     * Initializes a new Refund Prepayment Request object.
      */
     public function build(): RefundPrepaymentRequest
     {

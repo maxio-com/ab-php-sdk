@@ -31,7 +31,7 @@ class CreateInvoicePaymentBuilder
     }
 
     /**
-     * Initializes a new create invoice payment Builder object.
+     * Initializes a new Create Invoice Payment Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class CreateInvoicePaymentBuilder
 
     /**
      * Sets amount field.
+     *
+     * @param string|float|null $value
      */
     public function amount($value): self
     {
@@ -49,6 +51,8 @@ class CreateInvoicePaymentBuilder
 
     /**
      * Sets memo field.
+     *
+     * @param string|null $value
      */
     public function memo(?string $value): self
     {
@@ -58,6 +62,8 @@ class CreateInvoicePaymentBuilder
 
     /**
      * Sets method field.
+     *
+     * @param string|null $value
      */
     public function method(?string $value): self
     {
@@ -67,6 +73,8 @@ class CreateInvoicePaymentBuilder
 
     /**
      * Sets details field.
+     *
+     * @param string|null $value
      */
     public function details(?string $value): self
     {
@@ -76,6 +84,8 @@ class CreateInvoicePaymentBuilder
 
     /**
      * Sets payment profile id field.
+     *
+     * @param int|null $value
      */
     public function paymentProfileId(?int $value): self
     {
@@ -85,6 +95,8 @@ class CreateInvoicePaymentBuilder
 
     /**
      * Sets received on field.
+     *
+     * @param \DateTime|null $value
      */
     public function receivedOn(?\DateTime $value): self
     {
@@ -95,8 +107,8 @@ class CreateInvoicePaymentBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -105,7 +117,7 @@ class CreateInvoicePaymentBuilder
     }
 
     /**
-     * Initializes a new create invoice payment object.
+     * Initializes a new Create Invoice Payment object.
      */
     public function build(): CreateInvoicePayment
     {

@@ -32,7 +32,7 @@ class SubscriptionComponentResponseBuilder
     }
 
     /**
-     * Initializes a new subscription component response Builder object.
+     * Initializes a new Subscription Component Response Builder object.
      */
     public static function init(): self
     {
@@ -41,6 +41,8 @@ class SubscriptionComponentResponseBuilder
 
     /**
      * Sets component field.
+     *
+     * @param SubscriptionComponent|null $value
      */
     public function component(?SubscriptionComponent $value): self
     {
@@ -51,8 +53,8 @@ class SubscriptionComponentResponseBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -61,7 +63,7 @@ class SubscriptionComponentResponseBuilder
     }
 
     /**
-     * Initializes a new subscription component response object.
+     * Initializes a new Subscription Component Response object.
      */
     public function build(): SubscriptionComponentResponse
     {

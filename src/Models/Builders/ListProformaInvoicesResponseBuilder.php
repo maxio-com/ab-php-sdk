@@ -12,6 +12,7 @@ namespace AdvancedBillingLib\Models\Builders;
 
 use AdvancedBillingLib\Models\ListProformaInvoicesMeta;
 use AdvancedBillingLib\Models\ListProformaInvoicesResponse;
+use AdvancedBillingLib\Models\ProformaInvoice;
 use Core\Utils\CoreHelper;
 
 /**
@@ -32,7 +33,7 @@ class ListProformaInvoicesResponseBuilder
     }
 
     /**
-     * Initializes a new list proforma invoices response Builder object.
+     * Initializes a new List Proforma Invoices Response Builder object.
      */
     public static function init(): self
     {
@@ -41,6 +42,8 @@ class ListProformaInvoicesResponseBuilder
 
     /**
      * Sets proforma invoices field.
+     *
+     * @param ProformaInvoice[]|null $value
      */
     public function proformaInvoices(?array $value): self
     {
@@ -50,6 +53,8 @@ class ListProformaInvoicesResponseBuilder
 
     /**
      * Sets meta field.
+     *
+     * @param ListProformaInvoicesMeta|null $value
      */
     public function meta(?ListProformaInvoicesMeta $value): self
     {
@@ -60,8 +65,8 @@ class ListProformaInvoicesResponseBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -70,7 +75,7 @@ class ListProformaInvoicesResponseBuilder
     }
 
     /**
-     * Initializes a new list proforma invoices response object.
+     * Initializes a new List Proforma Invoices Response object.
      */
     public function build(): ListProformaInvoicesResponse
     {

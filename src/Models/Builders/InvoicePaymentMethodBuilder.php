@@ -31,7 +31,7 @@ class InvoicePaymentMethodBuilder
     }
 
     /**
-     * Initializes a new invoice payment method Builder object.
+     * Initializes a new Invoice Payment Method Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class InvoicePaymentMethodBuilder
 
     /**
      * Sets details field.
+     *
+     * @param string|null $value
      */
     public function details(?string $value): self
     {
@@ -49,6 +51,8 @@ class InvoicePaymentMethodBuilder
 
     /**
      * Sets kind field.
+     *
+     * @param string|null $value
      */
     public function kind(?string $value): self
     {
@@ -58,6 +62,8 @@ class InvoicePaymentMethodBuilder
 
     /**
      * Sets memo field.
+     *
+     * @param string|null $value
      */
     public function memo(?string $value): self
     {
@@ -67,6 +73,8 @@ class InvoicePaymentMethodBuilder
 
     /**
      * Sets type field.
+     *
+     * @param string|null $value
      */
     public function type(?string $value): self
     {
@@ -76,6 +84,8 @@ class InvoicePaymentMethodBuilder
 
     /**
      * Sets card brand field.
+     *
+     * @param string|null $value
      */
     public function cardBrand(?string $value): self
     {
@@ -85,6 +95,8 @@ class InvoicePaymentMethodBuilder
 
     /**
      * Sets card expiration field.
+     *
+     * @param string|null $value
      */
     public function cardExpiration(?string $value): self
     {
@@ -94,6 +106,8 @@ class InvoicePaymentMethodBuilder
 
     /**
      * Sets last four field.
+     *
+     * @param string|null $value
      */
     public function lastFour(?string $value): self
     {
@@ -112,6 +126,8 @@ class InvoicePaymentMethodBuilder
 
     /**
      * Sets masked card number field.
+     *
+     * @param string|null $value
      */
     public function maskedCardNumber(?string $value): self
     {
@@ -122,8 +138,8 @@ class InvoicePaymentMethodBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -132,7 +148,7 @@ class InvoicePaymentMethodBuilder
     }
 
     /**
-     * Initializes a new invoice payment method object.
+     * Initializes a new Invoice Payment Method object.
      */
     public function build(): InvoicePaymentMethod
     {

@@ -31,7 +31,9 @@ class PaymentMethodApplePayBuilder
     }
 
     /**
-     * Initializes a new payment method apple pay Builder object.
+     * Initializes a new Payment Method Apple Pay Builder object.
+     *
+     * @param string $type
      */
     public static function init(string $type): self
     {
@@ -41,8 +43,8 @@ class PaymentMethodApplePayBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -51,7 +53,7 @@ class PaymentMethodApplePayBuilder
     }
 
     /**
-     * Initializes a new payment method apple pay object.
+     * Initializes a new Payment Method Apple Pay object.
      */
     public function build(): PaymentMethodApplePay
     {

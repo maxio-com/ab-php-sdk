@@ -31,7 +31,10 @@ class PaymentMethodExternalBuilder
     }
 
     /**
-     * Initializes a new payment method external Builder object.
+     * Initializes a new Payment Method External Builder object.
+     *
+     * @param string $kind
+     * @param string $type
      */
     public static function init(string $kind, string $type): self
     {
@@ -40,6 +43,8 @@ class PaymentMethodExternalBuilder
 
     /**
      * Sets details field.
+     *
+     * @param string|null $value
      */
     public function details(?string $value): self
     {
@@ -49,6 +54,8 @@ class PaymentMethodExternalBuilder
 
     /**
      * Sets memo field.
+     *
+     * @param string|null $value
      */
     public function memo(?string $value): self
     {
@@ -59,8 +66,8 @@ class PaymentMethodExternalBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -69,7 +76,7 @@ class PaymentMethodExternalBuilder
     }
 
     /**
-     * Initializes a new payment method external object.
+     * Initializes a new Payment Method External object.
      */
     public function build(): PaymentMethodExternal
     {

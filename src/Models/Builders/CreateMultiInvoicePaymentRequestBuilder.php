@@ -32,7 +32,9 @@ class CreateMultiInvoicePaymentRequestBuilder
     }
 
     /**
-     * Initializes a new create multi invoice payment request Builder object.
+     * Initializes a new Create Multi Invoice Payment Request Builder object.
+     *
+     * @param CreateMultiInvoicePayment $payment
      */
     public static function init(CreateMultiInvoicePayment $payment): self
     {
@@ -42,8 +44,8 @@ class CreateMultiInvoicePaymentRequestBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -52,7 +54,7 @@ class CreateMultiInvoicePaymentRequestBuilder
     }
 
     /**
-     * Initializes a new create multi invoice payment request object.
+     * Initializes a new Create Multi Invoice Payment Request object.
      */
     public function build(): CreateMultiInvoicePaymentRequest
     {

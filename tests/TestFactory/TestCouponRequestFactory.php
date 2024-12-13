@@ -4,75 +4,54 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Tests\TestFactory;
 
+use AdvancedBillingLib\Models\Builders\CouponPayloadBuilder;
+use AdvancedBillingLib\Models\Builders\CouponRequestBuilder;
 use AdvancedBillingLib\Models\Builders\CouponSubcodesBuilder;
-use AdvancedBillingLib\Models\Builders\CreateOrUpdateCouponBuilder;
-use AdvancedBillingLib\Models\Builders\CreateOrUpdatePercentageCouponBuilder;
+use AdvancedBillingLib\Models\CouponRequest;
 use AdvancedBillingLib\Models\CouponSubcodes;
-use AdvancedBillingLib\Models\CreateOrUpdateCoupon;
-use AdvancedBillingLib\Models\CreateOrUpdatePercentageCoupon;
 use AdvancedBillingLib\Tests\TestData\CouponTestData;
 
 final class TestCouponRequestFactory
 {
-    public function createCreateOrUpdatePercentageCouponRequest(
+    public function createPercentageCouponRequest(
         string $productFamilyId,
         string $couponCode
-    ): CreateOrUpdateCoupon
+    ): CouponRequest
     {
-        return CreateOrUpdateCouponBuilder::init()
-            ->coupon($this->createCreateOrUpdatePercentageCoupon($productFamilyId, $couponCode))
+        return CouponRequestBuilder::init()
+            ->coupon(CouponPayloadBuilder::init()
+                ->name(CouponTestData::NAME)
+                ->code($couponCode)
+                ->percentage(CouponTestData::PERCENTAGE)
+                ->productFamilyId($productFamilyId)
+                ->description(CouponTestData::DESCRIPTION)
+                ->recurring(false)
+                ->stackable(true)
+                ->compoundingStrategy(CouponTestData::COMPOUNDING_STRATEGY)
+                ->build())
             ->build();
     }
 
-    private function createCreateOrUpdatePercentageCoupon(
-        string $productFamilyId,
-        string $couponCode
-    ): CreateOrUpdatePercentageCoupon
-    {
-        return CreateOrUpdatePercentageCouponBuilder::init(
-            CouponTestData::NAME,
-            $couponCode,
-            CouponTestData::PERCENTAGE
-        )
-            ->productFamilyId($productFamilyId)
-            ->description(CouponTestData::DESCRIPTION)
-            ->recurring(false)
-            ->stackable(true)
-            ->compoundingStrategy(CouponTestData::COMPOUNDING_STRATEGY)
-            ->build();
-    }
-
-    public function createCreateOrUpdatePercentageCouponRequestWithCustomValues(
+    public function createCouponRequestWithCustomValues(
         string $productFamilyId,
         string $name,
         string $code,
         string $percentage
-    ): CreateOrUpdateCoupon
+    ): CouponRequest
     {
-        return CreateOrUpdateCouponBuilder::init()
+        return CouponRequestBuilder::init()
             ->coupon(
-                $this->createCreateOrUpdatePercentageCouponWithCustomValues($productFamilyId, $name, $code, $percentage)
+                CouponPayloadBuilder::init()
+                    ->name($name)
+                    ->code($code)
+                    ->percentage($percentage)
+                    ->productFamilyId($productFamilyId)
+                    ->description(CouponTestData::DESCRIPTION)
+                    ->recurring(false)
+                    ->stackable(true)
+                    ->compoundingStrategy(CouponTestData::COMPOUNDING_STRATEGY)
+                    ->build()
             )
-            ->build();
-    }
-
-    private function createCreateOrUpdatePercentageCouponWithCustomValues(
-        string $productFamilyId,
-        string $name,
-        string $code,
-        string $percentage
-    ): CreateOrUpdatePercentageCoupon
-    {
-        return CreateOrUpdatePercentageCouponBuilder::init(
-            $name,
-            $code,
-            $percentage
-        )
-            ->productFamilyId($productFamilyId)
-            ->description(CouponTestData::DESCRIPTION)
-            ->recurring(false)
-            ->stackable(true)
-            ->compoundingStrategy(CouponTestData::COMPOUNDING_STRATEGY)
             ->build();
     }
 

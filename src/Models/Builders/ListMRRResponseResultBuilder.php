@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace AdvancedBillingLib\Models\Builders;
 
 use AdvancedBillingLib\Models\ListMRRResponseResult;
+use AdvancedBillingLib\Models\Movement;
 use Core\Utils\CoreHelper;
 
 /**
@@ -31,7 +32,7 @@ class ListMRRResponseResultBuilder
     }
 
     /**
-     * Initializes a new list mrrresponse result Builder object.
+     * Initializes a new List MRR Response Result Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +41,8 @@ class ListMRRResponseResultBuilder
 
     /**
      * Sets page field.
+     *
+     * @param int|null $value
      */
     public function page(?int $value): self
     {
@@ -49,6 +52,8 @@ class ListMRRResponseResultBuilder
 
     /**
      * Sets per page field.
+     *
+     * @param int|null $value
      */
     public function perPage(?int $value): self
     {
@@ -58,6 +63,8 @@ class ListMRRResponseResultBuilder
 
     /**
      * Sets total pages field.
+     *
+     * @param int|null $value
      */
     public function totalPages(?int $value): self
     {
@@ -67,6 +74,8 @@ class ListMRRResponseResultBuilder
 
     /**
      * Sets total entries field.
+     *
+     * @param int|null $value
      */
     public function totalEntries(?int $value): self
     {
@@ -76,6 +85,8 @@ class ListMRRResponseResultBuilder
 
     /**
      * Sets currency field.
+     *
+     * @param string|null $value
      */
     public function currency(?string $value): self
     {
@@ -85,6 +96,8 @@ class ListMRRResponseResultBuilder
 
     /**
      * Sets currency symbol field.
+     *
+     * @param string|null $value
      */
     public function currencySymbol(?string $value): self
     {
@@ -94,6 +107,8 @@ class ListMRRResponseResultBuilder
 
     /**
      * Sets movements field.
+     *
+     * @param Movement[]|null $value
      */
     public function movements(?array $value): self
     {
@@ -104,8 +119,8 @@ class ListMRRResponseResultBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -114,7 +129,7 @@ class ListMRRResponseResultBuilder
     }
 
     /**
-     * Initializes a new list mrrresponse result object.
+     * Initializes a new List MRR Response Result object.
      */
     public function build(): ListMRRResponseResult
     {

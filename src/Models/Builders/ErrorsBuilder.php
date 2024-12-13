@@ -31,7 +31,7 @@ class ErrorsBuilder
     }
 
     /**
-     * Initializes a new errors Builder object.
+     * Initializes a new Errors Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class ErrorsBuilder
 
     /**
      * Sets per page field.
+     *
+     * @param string[]|null $value
      */
     public function perPage(?array $value): self
     {
@@ -49,6 +51,8 @@ class ErrorsBuilder
 
     /**
      * Sets price point field.
+     *
+     * @param string[]|null $value
      */
     public function pricePoint(?array $value): self
     {
@@ -59,8 +63,8 @@ class ErrorsBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -69,7 +73,7 @@ class ErrorsBuilder
     }
 
     /**
-     * Initializes a new errors object.
+     * Initializes a new Errors object.
      */
     public function build(): Errors
     {

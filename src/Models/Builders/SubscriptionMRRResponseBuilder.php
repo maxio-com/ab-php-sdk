@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models\Builders;
 
+use AdvancedBillingLib\Models\SubscriptionMRR;
 use AdvancedBillingLib\Models\SubscriptionMRRResponse;
 use Core\Utils\CoreHelper;
 
@@ -31,7 +32,9 @@ class SubscriptionMRRResponseBuilder
     }
 
     /**
-     * Initializes a new subscription mrrresponse Builder object.
+     * Initializes a new Subscription MRR Response Builder object.
+     *
+     * @param SubscriptionMRR[] $subscriptionsMrr
      */
     public static function init(array $subscriptionsMrr): self
     {
@@ -41,8 +44,8 @@ class SubscriptionMRRResponseBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -51,7 +54,7 @@ class SubscriptionMRRResponseBuilder
     }
 
     /**
-     * Initializes a new subscription mrrresponse object.
+     * Initializes a new Subscription MRR Response object.
      */
     public function build(): SubscriptionMRRResponse
     {

@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace AdvancedBillingLib\Models\Builders;
 
 use AdvancedBillingLib\Models\MovementLineItem;
+use AdvancedBillingLib\Models\MRRMovement;
 use Core\Utils\CoreHelper;
 
 /**
@@ -31,7 +32,7 @@ class MovementLineItemBuilder
     }
 
     /**
-     * Initializes a new movement line item Builder object.
+     * Initializes a new Movement Line Item Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +41,8 @@ class MovementLineItemBuilder
 
     /**
      * Sets product id field.
+     *
+     * @param int|null $value
      */
     public function productId(?int $value): self
     {
@@ -49,6 +52,8 @@ class MovementLineItemBuilder
 
     /**
      * Sets component id field.
+     *
+     * @param int|null $value
      */
     public function componentId(?int $value): self
     {
@@ -58,6 +63,8 @@ class MovementLineItemBuilder
 
     /**
      * Sets price point id field.
+     *
+     * @param int|null $value
      */
     public function pricePointId(?int $value): self
     {
@@ -67,6 +74,8 @@ class MovementLineItemBuilder
 
     /**
      * Sets name field.
+     *
+     * @param string|null $value
      */
     public function name(?string $value): self
     {
@@ -76,6 +85,8 @@ class MovementLineItemBuilder
 
     /**
      * Sets mrr field.
+     *
+     * @param int|null $value
      */
     public function mrr(?int $value): self
     {
@@ -85,6 +96,8 @@ class MovementLineItemBuilder
 
     /**
      * Sets mrr movements field.
+     *
+     * @param MRRMovement[]|null $value
      */
     public function mrrMovements(?array $value): self
     {
@@ -94,6 +107,8 @@ class MovementLineItemBuilder
 
     /**
      * Sets quantity field.
+     *
+     * @param int|null $value
      */
     public function quantity(?int $value): self
     {
@@ -103,6 +118,8 @@ class MovementLineItemBuilder
 
     /**
      * Sets prev quantity field.
+     *
+     * @param int|null $value
      */
     public function prevQuantity(?int $value): self
     {
@@ -112,6 +129,8 @@ class MovementLineItemBuilder
 
     /**
      * Sets recurring field.
+     *
+     * @param bool|null $value
      */
     public function recurring(?bool $value): self
     {
@@ -122,8 +141,8 @@ class MovementLineItemBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -132,7 +151,7 @@ class MovementLineItemBuilder
     }
 
     /**
-     * Initializes a new movement line item object.
+     * Initializes a new Movement Line Item object.
      */
     public function build(): MovementLineItem
     {

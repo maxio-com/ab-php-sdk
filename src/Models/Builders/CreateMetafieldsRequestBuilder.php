@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models\Builders;
 
+use AdvancedBillingLib\Models\CreateMetafield;
 use AdvancedBillingLib\Models\CreateMetafieldsRequest;
 use Core\Utils\CoreHelper;
 
@@ -31,7 +32,9 @@ class CreateMetafieldsRequestBuilder
     }
 
     /**
-     * Initializes a new create metafields request Builder object.
+     * Initializes a new Create Metafields Request Builder object.
+     *
+     * @param CreateMetafield|CreateMetafield[] $metafields
      */
     public static function init($metafields): self
     {
@@ -41,8 +44,8 @@ class CreateMetafieldsRequestBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -51,7 +54,7 @@ class CreateMetafieldsRequestBuilder
     }
 
     /**
-     * Initializes a new create metafields request object.
+     * Initializes a new Create Metafields Request object.
      */
     public function build(): CreateMetafieldsRequest
     {

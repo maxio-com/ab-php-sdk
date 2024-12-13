@@ -31,7 +31,7 @@ class AllocationPreviewLineItemBuilder
     }
 
     /**
-     * Initializes a new allocation preview line item Builder object.
+     * Initializes a new Allocation Preview Line Item Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class AllocationPreviewLineItemBuilder
 
     /**
      * Sets transaction type field.
+     *
+     * @param string|null $value
      */
     public function transactionType(?string $value): self
     {
@@ -49,6 +51,8 @@ class AllocationPreviewLineItemBuilder
 
     /**
      * Sets kind field.
+     *
+     * @param string|null $value
      */
     public function kind(?string $value): self
     {
@@ -58,6 +62,8 @@ class AllocationPreviewLineItemBuilder
 
     /**
      * Sets amount in cents field.
+     *
+     * @param int|null $value
      */
     public function amountInCents(?int $value): self
     {
@@ -67,6 +73,8 @@ class AllocationPreviewLineItemBuilder
 
     /**
      * Sets memo field.
+     *
+     * @param string|null $value
      */
     public function memo(?string $value): self
     {
@@ -76,6 +84,8 @@ class AllocationPreviewLineItemBuilder
 
     /**
      * Sets discount amount in cents field.
+     *
+     * @param int|null $value
      */
     public function discountAmountInCents(?int $value): self
     {
@@ -85,6 +95,8 @@ class AllocationPreviewLineItemBuilder
 
     /**
      * Sets taxable amount in cents field.
+     *
+     * @param int|null $value
      */
     public function taxableAmountInCents(?int $value): self
     {
@@ -94,6 +106,8 @@ class AllocationPreviewLineItemBuilder
 
     /**
      * Sets component id field.
+     *
+     * @param int|null $value
      */
     public function componentId(?int $value): self
     {
@@ -103,6 +117,8 @@ class AllocationPreviewLineItemBuilder
 
     /**
      * Sets component handle field.
+     *
+     * @param string|null $value
      */
     public function componentHandle(?string $value): self
     {
@@ -112,6 +128,8 @@ class AllocationPreviewLineItemBuilder
 
     /**
      * Sets direction field.
+     *
+     * @param string|null $value
      */
     public function direction(?string $value): self
     {
@@ -122,8 +140,8 @@ class AllocationPreviewLineItemBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -132,7 +150,7 @@ class AllocationPreviewLineItemBuilder
     }
 
     /**
-     * Initializes a new allocation preview line item object.
+     * Initializes a new Allocation Preview Line Item object.
      */
     public function build(): AllocationPreviewLineItem
     {

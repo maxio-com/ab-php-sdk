@@ -31,7 +31,7 @@ class CustomerBuilder
     }
 
     /**
-     * Initializes a new customer Builder object.
+     * Initializes a new Customer Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class CustomerBuilder
 
     /**
      * Sets first name field.
+     *
+     * @param string|null $value
      */
     public function firstName(?string $value): self
     {
@@ -49,6 +51,8 @@ class CustomerBuilder
 
     /**
      * Sets last name field.
+     *
+     * @param string|null $value
      */
     public function lastName(?string $value): self
     {
@@ -58,6 +62,8 @@ class CustomerBuilder
 
     /**
      * Sets email field.
+     *
+     * @param string|null $value
      */
     public function email(?string $value): self
     {
@@ -67,6 +73,8 @@ class CustomerBuilder
 
     /**
      * Sets cc emails field.
+     *
+     * @param string|null $value
      */
     public function ccEmails(?string $value): self
     {
@@ -85,6 +93,8 @@ class CustomerBuilder
 
     /**
      * Sets organization field.
+     *
+     * @param string|null $value
      */
     public function organization(?string $value): self
     {
@@ -103,6 +113,8 @@ class CustomerBuilder
 
     /**
      * Sets reference field.
+     *
+     * @param string|null $value
      */
     public function reference(?string $value): self
     {
@@ -121,6 +133,8 @@ class CustomerBuilder
 
     /**
      * Sets id field.
+     *
+     * @param int|null $value
      */
     public function id(?int $value): self
     {
@@ -130,6 +144,8 @@ class CustomerBuilder
 
     /**
      * Sets created at field.
+     *
+     * @param \DateTime|null $value
      */
     public function createdAt(?\DateTime $value): self
     {
@@ -139,6 +155,8 @@ class CustomerBuilder
 
     /**
      * Sets updated at field.
+     *
+     * @param \DateTime|null $value
      */
     public function updatedAt(?\DateTime $value): self
     {
@@ -148,6 +166,8 @@ class CustomerBuilder
 
     /**
      * Sets address field.
+     *
+     * @param string|null $value
      */
     public function address(?string $value): self
     {
@@ -166,6 +186,8 @@ class CustomerBuilder
 
     /**
      * Sets address 2 field.
+     *
+     * @param string|null $value
      */
     public function address2(?string $value): self
     {
@@ -184,6 +206,8 @@ class CustomerBuilder
 
     /**
      * Sets city field.
+     *
+     * @param string|null $value
      */
     public function city(?string $value): self
     {
@@ -202,6 +226,8 @@ class CustomerBuilder
 
     /**
      * Sets state field.
+     *
+     * @param string|null $value
      */
     public function state(?string $value): self
     {
@@ -220,6 +246,8 @@ class CustomerBuilder
 
     /**
      * Sets state name field.
+     *
+     * @param string|null $value
      */
     public function stateName(?string $value): self
     {
@@ -238,6 +266,8 @@ class CustomerBuilder
 
     /**
      * Sets zip field.
+     *
+     * @param string|null $value
      */
     public function zip(?string $value): self
     {
@@ -256,6 +286,8 @@ class CustomerBuilder
 
     /**
      * Sets country field.
+     *
+     * @param string|null $value
      */
     public function country(?string $value): self
     {
@@ -274,6 +306,8 @@ class CustomerBuilder
 
     /**
      * Sets country name field.
+     *
+     * @param string|null $value
      */
     public function countryName(?string $value): self
     {
@@ -292,6 +326,8 @@ class CustomerBuilder
 
     /**
      * Sets phone field.
+     *
+     * @param string|null $value
      */
     public function phone(?string $value): self
     {
@@ -310,6 +346,8 @@ class CustomerBuilder
 
     /**
      * Sets verified field.
+     *
+     * @param bool|null $value
      */
     public function verified(?bool $value): self
     {
@@ -328,6 +366,8 @@ class CustomerBuilder
 
     /**
      * Sets portal customer created at field.
+     *
+     * @param \DateTime|null $value
      */
     public function portalCustomerCreatedAt(?\DateTime $value): self
     {
@@ -346,6 +386,8 @@ class CustomerBuilder
 
     /**
      * Sets portal invite last sent at field.
+     *
+     * @param \DateTime|null $value
      */
     public function portalInviteLastSentAt(?\DateTime $value): self
     {
@@ -364,6 +406,8 @@ class CustomerBuilder
 
     /**
      * Sets portal invite last accepted at field.
+     *
+     * @param \DateTime|null $value
      */
     public function portalInviteLastAcceptedAt(?\DateTime $value): self
     {
@@ -382,6 +426,8 @@ class CustomerBuilder
 
     /**
      * Sets tax exempt field.
+     *
+     * @param bool|null $value
      */
     public function taxExempt(?bool $value): self
     {
@@ -391,6 +437,8 @@ class CustomerBuilder
 
     /**
      * Sets vat number field.
+     *
+     * @param string|null $value
      */
     public function vatNumber(?string $value): self
     {
@@ -409,6 +457,8 @@ class CustomerBuilder
 
     /**
      * Sets parent id field.
+     *
+     * @param int|null $value
      */
     public function parentId(?int $value): self
     {
@@ -427,6 +477,8 @@ class CustomerBuilder
 
     /**
      * Sets locale field.
+     *
+     * @param string|null $value
      */
     public function locale(?string $value): self
     {
@@ -445,6 +497,8 @@ class CustomerBuilder
 
     /**
      * Sets default subscription group uid field.
+     *
+     * @param string|null $value
      */
     public function defaultSubscriptionGroupUid(?string $value): self
     {
@@ -463,6 +517,8 @@ class CustomerBuilder
 
     /**
      * Sets salesforce id field.
+     *
+     * @param string|null $value
      */
     public function salesforceId(?string $value): self
     {
@@ -481,6 +537,8 @@ class CustomerBuilder
 
     /**
      * Sets tax exempt reason field.
+     *
+     * @param string|null $value
      */
     public function taxExemptReason(?string $value): self
     {
@@ -499,6 +557,8 @@ class CustomerBuilder
 
     /**
      * Sets default auto renewal profile id field.
+     *
+     * @param int|null $value
      */
     public function defaultAutoRenewalProfileId(?int $value): self
     {
@@ -518,8 +578,8 @@ class CustomerBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -528,7 +588,7 @@ class CustomerBuilder
     }
 
     /**
-     * Initializes a new customer object.
+     * Initializes a new Customer object.
      */
     public function build(): Customer
     {

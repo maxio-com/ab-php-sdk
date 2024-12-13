@@ -33,7 +33,11 @@ class DunningStepReachedBuilder
     }
 
     /**
-     * Initializes a new dunning step reached Builder object.
+     * Initializes a new Dunning Step Reached Builder object.
+     *
+     * @param DunnerData $dunner
+     * @param DunningStepData $currentStep
+     * @param DunningStepData $nextStep
      */
     public static function init(DunnerData $dunner, DunningStepData $currentStep, DunningStepData $nextStep): self
     {
@@ -43,8 +47,8 @@ class DunningStepReachedBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -53,7 +57,7 @@ class DunningStepReachedBuilder
     }
 
     /**
-     * Initializes a new dunning step reached object.
+     * Initializes a new Dunning Step Reached object.
      */
     public function build(): DunningStepReached
     {

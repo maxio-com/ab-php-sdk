@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models\Builders;
 
+use AdvancedBillingLib\Models\CurrencyPrice;
 use AdvancedBillingLib\Models\ProductPricePoint;
 use Core\Utils\CoreHelper;
 
@@ -31,7 +32,7 @@ class ProductPricePointBuilder
     }
 
     /**
-     * Initializes a new product price point Builder object.
+     * Initializes a new Product Price Point Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +41,8 @@ class ProductPricePointBuilder
 
     /**
      * Sets id field.
+     *
+     * @param int|null $value
      */
     public function id(?int $value): self
     {
@@ -49,6 +52,8 @@ class ProductPricePointBuilder
 
     /**
      * Sets name field.
+     *
+     * @param string|null $value
      */
     public function name(?string $value): self
     {
@@ -58,6 +63,8 @@ class ProductPricePointBuilder
 
     /**
      * Sets handle field.
+     *
+     * @param string|null $value
      */
     public function handle(?string $value): self
     {
@@ -76,6 +83,8 @@ class ProductPricePointBuilder
 
     /**
      * Sets price in cents field.
+     *
+     * @param int|null $value
      */
     public function priceInCents(?int $value): self
     {
@@ -85,6 +94,8 @@ class ProductPricePointBuilder
 
     /**
      * Sets interval field.
+     *
+     * @param int|null $value
      */
     public function interval(?int $value): self
     {
@@ -94,6 +105,8 @@ class ProductPricePointBuilder
 
     /**
      * Sets interval unit field.
+     *
+     * @param string|null $value
      */
     public function intervalUnit(?string $value): self
     {
@@ -103,6 +116,8 @@ class ProductPricePointBuilder
 
     /**
      * Sets trial price in cents field.
+     *
+     * @param int|null $value
      */
     public function trialPriceInCents(?int $value): self
     {
@@ -121,6 +136,8 @@ class ProductPricePointBuilder
 
     /**
      * Sets trial interval field.
+     *
+     * @param int|null $value
      */
     public function trialInterval(?int $value): self
     {
@@ -139,6 +156,8 @@ class ProductPricePointBuilder
 
     /**
      * Sets trial interval unit field.
+     *
+     * @param string|null $value
      */
     public function trialIntervalUnit(?string $value): self
     {
@@ -157,6 +176,8 @@ class ProductPricePointBuilder
 
     /**
      * Sets trial type field.
+     *
+     * @param string|null $value
      */
     public function trialType(?string $value): self
     {
@@ -166,6 +187,8 @@ class ProductPricePointBuilder
 
     /**
      * Sets introductory offer field.
+     *
+     * @param bool|null $value
      */
     public function introductoryOffer(?bool $value): self
     {
@@ -184,6 +207,8 @@ class ProductPricePointBuilder
 
     /**
      * Sets initial charge in cents field.
+     *
+     * @param int|null $value
      */
     public function initialChargeInCents(?int $value): self
     {
@@ -202,6 +227,8 @@ class ProductPricePointBuilder
 
     /**
      * Sets initial charge after trial field.
+     *
+     * @param bool|null $value
      */
     public function initialChargeAfterTrial(?bool $value): self
     {
@@ -220,6 +247,8 @@ class ProductPricePointBuilder
 
     /**
      * Sets expiration interval field.
+     *
+     * @param int|null $value
      */
     public function expirationInterval(?int $value): self
     {
@@ -238,6 +267,8 @@ class ProductPricePointBuilder
 
     /**
      * Sets expiration interval unit field.
+     *
+     * @param string|null $value
      */
     public function expirationIntervalUnit(?string $value): self
     {
@@ -256,6 +287,8 @@ class ProductPricePointBuilder
 
     /**
      * Sets product id field.
+     *
+     * @param int|null $value
      */
     public function productId(?int $value): self
     {
@@ -265,6 +298,8 @@ class ProductPricePointBuilder
 
     /**
      * Sets archived at field.
+     *
+     * @param \DateTime|null $value
      */
     public function archivedAt(?\DateTime $value): self
     {
@@ -283,6 +318,8 @@ class ProductPricePointBuilder
 
     /**
      * Sets created at field.
+     *
+     * @param \DateTime|null $value
      */
     public function createdAt(?\DateTime $value): self
     {
@@ -292,6 +329,8 @@ class ProductPricePointBuilder
 
     /**
      * Sets updated at field.
+     *
+     * @param \DateTime|null $value
      */
     public function updatedAt(?\DateTime $value): self
     {
@@ -301,6 +340,8 @@ class ProductPricePointBuilder
 
     /**
      * Sets use site exchange rate field.
+     *
+     * @param bool|null $value
      */
     public function useSiteExchangeRate(?bool $value): self
     {
@@ -310,6 +351,8 @@ class ProductPricePointBuilder
 
     /**
      * Sets type field.
+     *
+     * @param string|null $value
      */
     public function type(?string $value): self
     {
@@ -319,6 +362,8 @@ class ProductPricePointBuilder
 
     /**
      * Sets tax included field.
+     *
+     * @param bool|null $value
      */
     public function taxIncluded(?bool $value): self
     {
@@ -328,6 +373,8 @@ class ProductPricePointBuilder
 
     /**
      * Sets subscription id field.
+     *
+     * @param int|null $value
      */
     public function subscriptionId(?int $value): self
     {
@@ -346,6 +393,8 @@ class ProductPricePointBuilder
 
     /**
      * Sets currency prices field.
+     *
+     * @param CurrencyPrice[]|null $value
      */
     public function currencyPrices(?array $value): self
     {
@@ -356,8 +405,8 @@ class ProductPricePointBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -366,7 +415,7 @@ class ProductPricePointBuilder
     }
 
     /**
-     * Initializes a new product price point object.
+     * Initializes a new Product Price Point object.
      */
     public function build(): ProductPricePoint
     {

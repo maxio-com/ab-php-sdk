@@ -294,18 +294,11 @@ $productFamilyId = 'product_family_id4';
 
 $body = CreateOnOffComponentBuilder::init(
     OnOffComponentBuilder::init(
-        'Annual Support Services'
+        'Annual Support Services',
+        '100.00'
     )
         ->description('Prepay for support services')
         ->taxable(true)
-        ->prices(
-            [
-                PriceBuilder::init(
-                    '0',
-                    '100.00'
-                )->build()
-            ]
-        )
         ->displayOnHostedPage(true)
         ->publicSignupPageIds(
             [
@@ -400,33 +393,31 @@ $productFamilyId = 'product_family_id4';
 
 $body = CreatePrepaidComponentBuilder::init(
     PrepaidUsageComponentBuilder::init(
-        'Minutes'
+        'Minutes',
+        'minutes',
+        PricingScheme::PER_UNIT,
+        OveragePricingBuilder::init(
+            PricingScheme::STAIRSTEP
+        )
+            ->prices(
+                [
+                    PriceBuilder::init(
+                        1,
+                        3
+                    )
+                        ->endingQuantity(
+                            100
+                        )
+                        ->build(),
+                    PriceBuilder::init(
+                        101,
+                        5
+                    )->build()
+                ]
+            )->build()
     )
-        ->unitName('minutes')
-        ->pricingScheme(PricingScheme::PER_UNIT)
         ->unitPrice(
             2
-        )
-        ->overagePricing(
-            OveragePricingBuilder::init(
-                PricingScheme::STAIRSTEP
-            )
-                ->prices(
-                    [
-                        PriceBuilder::init(
-                            1,
-                            3
-                        )
-                            ->endingQuantity(
-                                100
-                            )
-                            ->build(),
-                        PriceBuilder::init(
-                            101,
-                            5
-                        )->build()
-                    ]
-                )->build()
         )
         ->rolloverPrepaidRemainder(true)
         ->renewPrepaidAllocation(true)

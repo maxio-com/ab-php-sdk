@@ -33,7 +33,13 @@ class FailedPaymentEventBuilder
     }
 
     /**
-     * Initializes a new failed payment event Builder object.
+     * Initializes a new Failed Payment Event Builder object.
+     *
+     * @param int $id
+     * @param \DateTime $timestamp
+     * @param Invoice $invoice
+     * @param string $eventType
+     * @param FailedPaymentEventData $eventData
      */
     public static function init(
         int $id,
@@ -48,8 +54,8 @@ class FailedPaymentEventBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -58,7 +64,7 @@ class FailedPaymentEventBuilder
     }
 
     /**
-     * Initializes a new failed payment event object.
+     * Initializes a new Failed Payment Event object.
      */
     public function build(): FailedPaymentEvent
     {

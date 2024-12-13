@@ -12,11 +12,20 @@ namespace AdvancedBillingLib\Models\Builders;
 
 use AdvancedBillingLib\Models\Invoice;
 use AdvancedBillingLib\Models\InvoiceAddress;
+use AdvancedBillingLib\Models\InvoiceAvataxDetails;
+use AdvancedBillingLib\Models\InvoiceCredit;
 use AdvancedBillingLib\Models\InvoiceCustomer;
+use AdvancedBillingLib\Models\InvoiceCustomField;
+use AdvancedBillingLib\Models\InvoiceDebit;
+use AdvancedBillingLib\Models\InvoiceDiscount;
 use AdvancedBillingLib\Models\InvoiceDisplaySettings;
+use AdvancedBillingLib\Models\InvoiceLineItem;
 use AdvancedBillingLib\Models\InvoicePayer;
+use AdvancedBillingLib\Models\InvoicePayment;
 use AdvancedBillingLib\Models\InvoicePreviousBalance;
+use AdvancedBillingLib\Models\InvoiceRefund;
 use AdvancedBillingLib\Models\InvoiceSeller;
+use AdvancedBillingLib\Models\InvoiceTax;
 use Core\Utils\CoreHelper;
 
 /**
@@ -37,7 +46,7 @@ class InvoiceBuilder
     }
 
     /**
-     * Initializes a new invoice Builder object.
+     * Initializes a new Invoice Builder object.
      */
     public static function init(): self
     {
@@ -46,6 +55,8 @@ class InvoiceBuilder
 
     /**
      * Sets id field.
+     *
+     * @param int|null $value
      */
     public function id(?int $value): self
     {
@@ -55,6 +66,8 @@ class InvoiceBuilder
 
     /**
      * Sets uid field.
+     *
+     * @param string|null $value
      */
     public function uid(?string $value): self
     {
@@ -64,6 +77,8 @@ class InvoiceBuilder
 
     /**
      * Sets site id field.
+     *
+     * @param int|null $value
      */
     public function siteId(?int $value): self
     {
@@ -73,6 +88,8 @@ class InvoiceBuilder
 
     /**
      * Sets customer id field.
+     *
+     * @param int|null $value
      */
     public function customerId(?int $value): self
     {
@@ -82,6 +99,8 @@ class InvoiceBuilder
 
     /**
      * Sets subscription id field.
+     *
+     * @param int|null $value
      */
     public function subscriptionId(?int $value): self
     {
@@ -91,6 +110,8 @@ class InvoiceBuilder
 
     /**
      * Sets number field.
+     *
+     * @param string|null $value
      */
     public function number(?string $value): self
     {
@@ -100,6 +121,8 @@ class InvoiceBuilder
 
     /**
      * Sets sequence number field.
+     *
+     * @param int|null $value
      */
     public function sequenceNumber(?int $value): self
     {
@@ -109,6 +132,8 @@ class InvoiceBuilder
 
     /**
      * Sets transaction time field.
+     *
+     * @param \DateTime|null $value
      */
     public function transactionTime(?\DateTime $value): self
     {
@@ -118,6 +143,8 @@ class InvoiceBuilder
 
     /**
      * Sets created at field.
+     *
+     * @param \DateTime|null $value
      */
     public function createdAt(?\DateTime $value): self
     {
@@ -127,6 +154,8 @@ class InvoiceBuilder
 
     /**
      * Sets updated at field.
+     *
+     * @param \DateTime|null $value
      */
     public function updatedAt(?\DateTime $value): self
     {
@@ -136,6 +165,8 @@ class InvoiceBuilder
 
     /**
      * Sets issue date field.
+     *
+     * @param \DateTime|null $value
      */
     public function issueDate(?\DateTime $value): self
     {
@@ -145,6 +176,8 @@ class InvoiceBuilder
 
     /**
      * Sets due date field.
+     *
+     * @param \DateTime|null $value
      */
     public function dueDate(?\DateTime $value): self
     {
@@ -154,6 +187,8 @@ class InvoiceBuilder
 
     /**
      * Sets paid date field.
+     *
+     * @param \DateTime|null $value
      */
     public function paidDate(?\DateTime $value): self
     {
@@ -172,6 +207,8 @@ class InvoiceBuilder
 
     /**
      * Sets status field.
+     *
+     * @param string|null $value
      */
     public function status(?string $value): self
     {
@@ -181,6 +218,8 @@ class InvoiceBuilder
 
     /**
      * Sets role field.
+     *
+     * @param string|null $value
      */
     public function role(?string $value): self
     {
@@ -190,6 +229,8 @@ class InvoiceBuilder
 
     /**
      * Sets parent invoice id field.
+     *
+     * @param int|null $value
      */
     public function parentInvoiceId(?int $value): self
     {
@@ -208,6 +249,8 @@ class InvoiceBuilder
 
     /**
      * Sets collection method field.
+     *
+     * @param string|null $value
      */
     public function collectionMethod(?string $value): self
     {
@@ -217,6 +260,8 @@ class InvoiceBuilder
 
     /**
      * Sets payment instructions field.
+     *
+     * @param string|null $value
      */
     public function paymentInstructions(?string $value): self
     {
@@ -226,6 +271,8 @@ class InvoiceBuilder
 
     /**
      * Sets currency field.
+     *
+     * @param string|null $value
      */
     public function currency(?string $value): self
     {
@@ -235,6 +282,8 @@ class InvoiceBuilder
 
     /**
      * Sets consolidation level field.
+     *
+     * @param string|null $value
      */
     public function consolidationLevel(?string $value): self
     {
@@ -244,6 +293,8 @@ class InvoiceBuilder
 
     /**
      * Sets parent invoice uid field.
+     *
+     * @param string|null $value
      */
     public function parentInvoiceUid(?string $value): self
     {
@@ -262,6 +313,8 @@ class InvoiceBuilder
 
     /**
      * Sets subscription group id field.
+     *
+     * @param int|null $value
      */
     public function subscriptionGroupId(?int $value): self
     {
@@ -280,6 +333,8 @@ class InvoiceBuilder
 
     /**
      * Sets parent invoice number field.
+     *
+     * @param int|null $value
      */
     public function parentInvoiceNumber(?int $value): self
     {
@@ -298,6 +353,8 @@ class InvoiceBuilder
 
     /**
      * Sets group primary subscription id field.
+     *
+     * @param int|null $value
      */
     public function groupPrimarySubscriptionId(?int $value): self
     {
@@ -316,6 +373,8 @@ class InvoiceBuilder
 
     /**
      * Sets product name field.
+     *
+     * @param string|null $value
      */
     public function productName(?string $value): self
     {
@@ -325,6 +384,8 @@ class InvoiceBuilder
 
     /**
      * Sets product family name field.
+     *
+     * @param string|null $value
      */
     public function productFamilyName(?string $value): self
     {
@@ -334,6 +395,8 @@ class InvoiceBuilder
 
     /**
      * Sets seller field.
+     *
+     * @param InvoiceSeller|null $value
      */
     public function seller(?InvoiceSeller $value): self
     {
@@ -343,6 +406,8 @@ class InvoiceBuilder
 
     /**
      * Sets customer field.
+     *
+     * @param InvoiceCustomer|null $value
      */
     public function customer(?InvoiceCustomer $value): self
     {
@@ -352,6 +417,8 @@ class InvoiceBuilder
 
     /**
      * Sets payer field.
+     *
+     * @param InvoicePayer|null $value
      */
     public function payer(?InvoicePayer $value): self
     {
@@ -361,6 +428,8 @@ class InvoiceBuilder
 
     /**
      * Sets recipient emails field.
+     *
+     * @param string[]|null $value
      */
     public function recipientEmails(?array $value): self
     {
@@ -370,6 +439,8 @@ class InvoiceBuilder
 
     /**
      * Sets net terms field.
+     *
+     * @param int|null $value
      */
     public function netTerms(?int $value): self
     {
@@ -379,6 +450,8 @@ class InvoiceBuilder
 
     /**
      * Sets memo field.
+     *
+     * @param string|null $value
      */
     public function memo(?string $value): self
     {
@@ -388,6 +461,8 @@ class InvoiceBuilder
 
     /**
      * Sets billing address field.
+     *
+     * @param InvoiceAddress|null $value
      */
     public function billingAddress(?InvoiceAddress $value): self
     {
@@ -397,6 +472,8 @@ class InvoiceBuilder
 
     /**
      * Sets shipping address field.
+     *
+     * @param InvoiceAddress|null $value
      */
     public function shippingAddress(?InvoiceAddress $value): self
     {
@@ -406,6 +483,8 @@ class InvoiceBuilder
 
     /**
      * Sets subtotal amount field.
+     *
+     * @param string|null $value
      */
     public function subtotalAmount(?string $value): self
     {
@@ -415,6 +494,8 @@ class InvoiceBuilder
 
     /**
      * Sets discount amount field.
+     *
+     * @param string|null $value
      */
     public function discountAmount(?string $value): self
     {
@@ -424,6 +505,8 @@ class InvoiceBuilder
 
     /**
      * Sets tax amount field.
+     *
+     * @param string|null $value
      */
     public function taxAmount(?string $value): self
     {
@@ -433,6 +516,8 @@ class InvoiceBuilder
 
     /**
      * Sets total amount field.
+     *
+     * @param string|null $value
      */
     public function totalAmount(?string $value): self
     {
@@ -442,6 +527,8 @@ class InvoiceBuilder
 
     /**
      * Sets credit amount field.
+     *
+     * @param string|null $value
      */
     public function creditAmount(?string $value): self
     {
@@ -450,7 +537,20 @@ class InvoiceBuilder
     }
 
     /**
+     * Sets debit amount field.
+     *
+     * @param string|null $value
+     */
+    public function debitAmount(?string $value): self
+    {
+        $this->instance->setDebitAmount($value);
+        return $this;
+    }
+
+    /**
      * Sets refund amount field.
+     *
+     * @param string|null $value
      */
     public function refundAmount(?string $value): self
     {
@@ -460,6 +560,8 @@ class InvoiceBuilder
 
     /**
      * Sets paid amount field.
+     *
+     * @param string|null $value
      */
     public function paidAmount(?string $value): self
     {
@@ -469,6 +571,8 @@ class InvoiceBuilder
 
     /**
      * Sets due amount field.
+     *
+     * @param string|null $value
      */
     public function dueAmount(?string $value): self
     {
@@ -478,6 +582,8 @@ class InvoiceBuilder
 
     /**
      * Sets line items field.
+     *
+     * @param InvoiceLineItem[]|null $value
      */
     public function lineItems(?array $value): self
     {
@@ -487,6 +593,8 @@ class InvoiceBuilder
 
     /**
      * Sets discounts field.
+     *
+     * @param InvoiceDiscount[]|null $value
      */
     public function discounts(?array $value): self
     {
@@ -496,6 +604,8 @@ class InvoiceBuilder
 
     /**
      * Sets taxes field.
+     *
+     * @param InvoiceTax[]|null $value
      */
     public function taxes(?array $value): self
     {
@@ -505,6 +615,8 @@ class InvoiceBuilder
 
     /**
      * Sets credits field.
+     *
+     * @param InvoiceCredit[]|null $value
      */
     public function credits(?array $value): self
     {
@@ -513,7 +625,20 @@ class InvoiceBuilder
     }
 
     /**
+     * Sets debits field.
+     *
+     * @param InvoiceDebit[]|null $value
+     */
+    public function debits(?array $value): self
+    {
+        $this->instance->setDebits($value);
+        return $this;
+    }
+
+    /**
      * Sets refunds field.
+     *
+     * @param InvoiceRefund[]|null $value
      */
     public function refunds(?array $value): self
     {
@@ -523,6 +648,8 @@ class InvoiceBuilder
 
     /**
      * Sets payments field.
+     *
+     * @param InvoicePayment[]|null $value
      */
     public function payments(?array $value): self
     {
@@ -532,6 +659,8 @@ class InvoiceBuilder
 
     /**
      * Sets custom fields field.
+     *
+     * @param InvoiceCustomField[]|null $value
      */
     public function customFields(?array $value): self
     {
@@ -541,6 +670,8 @@ class InvoiceBuilder
 
     /**
      * Sets display settings field.
+     *
+     * @param InvoiceDisplaySettings|null $value
      */
     public function displaySettings(?InvoiceDisplaySettings $value): self
     {
@@ -549,7 +680,20 @@ class InvoiceBuilder
     }
 
     /**
+     * Sets avatax details field.
+     *
+     * @param InvoiceAvataxDetails|null $value
+     */
+    public function avataxDetails(?InvoiceAvataxDetails $value): self
+    {
+        $this->instance->setAvataxDetails($value);
+        return $this;
+    }
+
+    /**
      * Sets public url field.
+     *
+     * @param string|null $value
      */
     public function publicUrl(?string $value): self
     {
@@ -559,6 +703,8 @@ class InvoiceBuilder
 
     /**
      * Sets previous balance data field.
+     *
+     * @param InvoicePreviousBalance|null $value
      */
     public function previousBalanceData(?InvoicePreviousBalance $value): self
     {
@@ -568,6 +714,8 @@ class InvoiceBuilder
 
     /**
      * Sets public url expires on field.
+     *
+     * @param \DateTime|null $value
      */
     public function publicUrlExpiresOn(?\DateTime $value): self
     {
@@ -578,8 +726,8 @@ class InvoiceBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -588,7 +736,7 @@ class InvoiceBuilder
     }
 
     /**
-     * Initializes a new invoice object.
+     * Initializes a new Invoice object.
      */
     public function build(): Invoice
     {

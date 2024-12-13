@@ -31,7 +31,7 @@ class CustomerAttributesBuilder
     }
 
     /**
-     * Initializes a new customer attributes Builder object.
+     * Initializes a new Customer Attributes Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class CustomerAttributesBuilder
 
     /**
      * Sets first name field.
+     *
+     * @param string|null $value
      */
     public function firstName(?string $value): self
     {
@@ -49,6 +51,8 @@ class CustomerAttributesBuilder
 
     /**
      * Sets last name field.
+     *
+     * @param string|null $value
      */
     public function lastName(?string $value): self
     {
@@ -58,6 +62,8 @@ class CustomerAttributesBuilder
 
     /**
      * Sets email field.
+     *
+     * @param string|null $value
      */
     public function email(?string $value): self
     {
@@ -67,6 +73,8 @@ class CustomerAttributesBuilder
 
     /**
      * Sets cc emails field.
+     *
+     * @param string|null $value
      */
     public function ccEmails(?string $value): self
     {
@@ -76,6 +84,8 @@ class CustomerAttributesBuilder
 
     /**
      * Sets organization field.
+     *
+     * @param string|null $value
      */
     public function organization(?string $value): self
     {
@@ -85,6 +95,8 @@ class CustomerAttributesBuilder
 
     /**
      * Sets reference field.
+     *
+     * @param string|null $value
      */
     public function reference(?string $value): self
     {
@@ -94,6 +106,8 @@ class CustomerAttributesBuilder
 
     /**
      * Sets address field.
+     *
+     * @param string|null $value
      */
     public function address(?string $value): self
     {
@@ -103,6 +117,8 @@ class CustomerAttributesBuilder
 
     /**
      * Sets address 2 field.
+     *
+     * @param string|null $value
      */
     public function address2(?string $value): self
     {
@@ -121,6 +137,8 @@ class CustomerAttributesBuilder
 
     /**
      * Sets city field.
+     *
+     * @param string|null $value
      */
     public function city(?string $value): self
     {
@@ -130,6 +148,8 @@ class CustomerAttributesBuilder
 
     /**
      * Sets state field.
+     *
+     * @param string|null $value
      */
     public function state(?string $value): self
     {
@@ -139,6 +159,8 @@ class CustomerAttributesBuilder
 
     /**
      * Sets zip field.
+     *
+     * @param string|null $value
      */
     public function zip(?string $value): self
     {
@@ -148,6 +170,8 @@ class CustomerAttributesBuilder
 
     /**
      * Sets country field.
+     *
+     * @param string|null $value
      */
     public function country(?string $value): self
     {
@@ -157,6 +181,8 @@ class CustomerAttributesBuilder
 
     /**
      * Sets phone field.
+     *
+     * @param string|null $value
      */
     public function phone(?string $value): self
     {
@@ -166,6 +192,8 @@ class CustomerAttributesBuilder
 
     /**
      * Sets verified field.
+     *
+     * @param bool|null $value
      */
     public function verified(?bool $value): self
     {
@@ -175,6 +203,8 @@ class CustomerAttributesBuilder
 
     /**
      * Sets tax exempt field.
+     *
+     * @param bool|null $value
      */
     public function taxExempt(?bool $value): self
     {
@@ -184,6 +214,8 @@ class CustomerAttributesBuilder
 
     /**
      * Sets vat number field.
+     *
+     * @param string|null $value
      */
     public function vatNumber(?string $value): self
     {
@@ -193,6 +225,8 @@ class CustomerAttributesBuilder
 
     /**
      * Sets metafields field.
+     *
+     * @param array<string,string>|null $value
      */
     public function metafields(?array $value): self
     {
@@ -202,6 +236,8 @@ class CustomerAttributesBuilder
 
     /**
      * Sets parent id field.
+     *
+     * @param int|null $value
      */
     public function parentId(?int $value): self
     {
@@ -220,6 +256,8 @@ class CustomerAttributesBuilder
 
     /**
      * Sets salesforce id field.
+     *
+     * @param string|null $value
      */
     public function salesforceId(?string $value): self
     {
@@ -238,6 +276,8 @@ class CustomerAttributesBuilder
 
     /**
      * Sets default auto renewal profile id field.
+     *
+     * @param int|null $value
      */
     public function defaultAutoRenewalProfileId(?int $value): self
     {
@@ -257,8 +297,8 @@ class CustomerAttributesBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -267,7 +307,7 @@ class CustomerAttributesBuilder
     }
 
     /**
-     * Initializes a new customer attributes object.
+     * Initializes a new Customer Attributes object.
      */
     public function build(): CustomerAttributes
     {

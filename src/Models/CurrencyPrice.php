@@ -37,6 +37,16 @@ class CurrencyPrice implements \JsonSerializable
     /**
      * @var int|null
      */
+    private $priceId;
+
+    /**
+     * @var int|null
+     */
+    private $pricePointId;
+
+    /**
+     * @var int|null
+     */
     private $productPricePointId;
 
     /**
@@ -117,6 +127,42 @@ class CurrencyPrice implements \JsonSerializable
     }
 
     /**
+     * Returns Price Id.
+     */
+    public function getPriceId(): ?int
+    {
+        return $this->priceId;
+    }
+
+    /**
+     * Sets Price Id.
+     *
+     * @maps price_id
+     */
+    public function setPriceId(?int $priceId): void
+    {
+        $this->priceId = $priceId;
+    }
+
+    /**
+     * Returns Price Point Id.
+     */
+    public function getPricePointId(): ?int
+    {
+        return $this->pricePointId;
+    }
+
+    /**
+     * Sets Price Point Id.
+     *
+     * @maps price_point_id
+     */
+    public function setPricePointId(?int $pricePointId): void
+    {
+        $this->pricePointId = $pricePointId;
+    }
+
+    /**
      * Returns Product Price Point Id.
      */
     public function getProductPricePointId(): ?int
@@ -160,12 +206,27 @@ class CurrencyPrice implements \JsonSerializable
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function addAdditionalProperty(string $name, $value)
     {
         $this->additionalProperties[$name] = $value;
+    }
+
+    /**
+     * Find an additional property by name in this model or false if property does not exist.
+     *
+     * @param string $name Name of property.
+     *
+     * @return mixed|false Value of the property.
+     */
+    public function findAdditionalProperty(string $name)
+    {
+        if (isset($this->additionalProperties[$name])) {
+            return $this->additionalProperties[$name];
+        }
+        return false;
     }
 
     /**
@@ -191,6 +252,12 @@ class CurrencyPrice implements \JsonSerializable
         }
         if (isset($this->formattedPrice)) {
             $json['formatted_price']        = $this->formattedPrice;
+        }
+        if (isset($this->priceId)) {
+            $json['price_id']               = $this->priceId;
+        }
+        if (isset($this->pricePointId)) {
+            $json['price_point_id']         = $this->pricePointId;
         }
         if (isset($this->productPricePointId)) {
             $json['product_price_point_id'] = $this->productPricePointId;

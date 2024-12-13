@@ -31,7 +31,7 @@ class SendInvoiceRequestBuilder
     }
 
     /**
-     * Initializes a new send invoice request Builder object.
+     * Initializes a new Send Invoice Request Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class SendInvoiceRequestBuilder
 
     /**
      * Sets recipient emails field.
+     *
+     * @param string[]|null $value
      */
     public function recipientEmails(?array $value): self
     {
@@ -49,6 +51,8 @@ class SendInvoiceRequestBuilder
 
     /**
      * Sets cc recipient emails field.
+     *
+     * @param string[]|null $value
      */
     public function ccRecipientEmails(?array $value): self
     {
@@ -58,6 +62,8 @@ class SendInvoiceRequestBuilder
 
     /**
      * Sets bcc recipient emails field.
+     *
+     * @param string[]|null $value
      */
     public function bccRecipientEmails(?array $value): self
     {
@@ -68,8 +74,8 @@ class SendInvoiceRequestBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -78,7 +84,7 @@ class SendInvoiceRequestBuilder
     }
 
     /**
-     * Initializes a new send invoice request object.
+     * Initializes a new Send Invoice Request object.
      */
     public function build(): SendInvoiceRequest
     {

@@ -31,7 +31,7 @@ class SiteStatisticsBuilder
     }
 
     /**
-     * Initializes a new site statistics Builder object.
+     * Initializes a new Site Statistics Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class SiteStatisticsBuilder
 
     /**
      * Sets total subscriptions field.
+     *
+     * @param int|null $value
      */
     public function totalSubscriptions(?int $value): self
     {
@@ -49,6 +51,8 @@ class SiteStatisticsBuilder
 
     /**
      * Sets subscriptions today field.
+     *
+     * @param int|null $value
      */
     public function subscriptionsToday(?int $value): self
     {
@@ -58,6 +62,8 @@ class SiteStatisticsBuilder
 
     /**
      * Sets total revenue field.
+     *
+     * @param string|null $value
      */
     public function totalRevenue(?string $value): self
     {
@@ -67,6 +73,8 @@ class SiteStatisticsBuilder
 
     /**
      * Sets revenue today field.
+     *
+     * @param string|null $value
      */
     public function revenueToday(?string $value): self
     {
@@ -76,6 +84,8 @@ class SiteStatisticsBuilder
 
     /**
      * Sets revenue this month field.
+     *
+     * @param string|null $value
      */
     public function revenueThisMonth(?string $value): self
     {
@@ -85,6 +95,8 @@ class SiteStatisticsBuilder
 
     /**
      * Sets revenue this year field.
+     *
+     * @param string|null $value
      */
     public function revenueThisYear(?string $value): self
     {
@@ -94,6 +106,8 @@ class SiteStatisticsBuilder
 
     /**
      * Sets total canceled subscriptions field.
+     *
+     * @param int|null $value
      */
     public function totalCanceledSubscriptions(?int $value): self
     {
@@ -103,6 +117,8 @@ class SiteStatisticsBuilder
 
     /**
      * Sets total active subscriptions field.
+     *
+     * @param int|null $value
      */
     public function totalActiveSubscriptions(?int $value): self
     {
@@ -112,6 +128,8 @@ class SiteStatisticsBuilder
 
     /**
      * Sets total past due subscriptions field.
+     *
+     * @param int|null $value
      */
     public function totalPastDueSubscriptions(?int $value): self
     {
@@ -121,6 +139,8 @@ class SiteStatisticsBuilder
 
     /**
      * Sets total unpaid subscriptions field.
+     *
+     * @param int|null $value
      */
     public function totalUnpaidSubscriptions(?int $value): self
     {
@@ -130,6 +150,8 @@ class SiteStatisticsBuilder
 
     /**
      * Sets total dunning subscriptions field.
+     *
+     * @param int|null $value
      */
     public function totalDunningSubscriptions(?int $value): self
     {
@@ -140,8 +162,8 @@ class SiteStatisticsBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -150,7 +172,7 @@ class SiteStatisticsBuilder
     }
 
     /**
-     * Initializes a new site statistics object.
+     * Initializes a new Site Statistics object.
      */
     public function build(): SiteStatistics
     {

@@ -12,6 +12,7 @@ namespace AdvancedBillingLib\Models\Builders;
 
 use AdvancedBillingLib\Models\PayerError;
 use AdvancedBillingLib\Models\SubscriptionGroupSignupError;
+use AdvancedBillingLib\Models\SubscriptionGroupSubscriptionError;
 use Core\Utils\CoreHelper;
 
 /**
@@ -32,7 +33,7 @@ class SubscriptionGroupSignupErrorBuilder
     }
 
     /**
-     * Initializes a new subscription group signup error Builder object.
+     * Initializes a new Subscription Group Signup Error Builder object.
      */
     public static function init(): self
     {
@@ -41,6 +42,8 @@ class SubscriptionGroupSignupErrorBuilder
 
     /**
      * Sets subscriptions field.
+     *
+     * @param array<string,SubscriptionGroupSubscriptionError>|null $value
      */
     public function subscriptions(?array $value): self
     {
@@ -50,6 +53,8 @@ class SubscriptionGroupSignupErrorBuilder
 
     /**
      * Sets payer reference field.
+     *
+     * @param string|null $value
      */
     public function payerReference(?string $value): self
     {
@@ -59,6 +64,8 @@ class SubscriptionGroupSignupErrorBuilder
 
     /**
      * Sets payer field.
+     *
+     * @param PayerError|null $value
      */
     public function payer(?PayerError $value): self
     {
@@ -68,6 +75,8 @@ class SubscriptionGroupSignupErrorBuilder
 
     /**
      * Sets subscription group field.
+     *
+     * @param string[]|null $value
      */
     public function subscriptionGroup(?array $value): self
     {
@@ -77,6 +86,8 @@ class SubscriptionGroupSignupErrorBuilder
 
     /**
      * Sets payment profile id field.
+     *
+     * @param string|null $value
      */
     public function paymentProfileId(?string $value): self
     {
@@ -86,6 +97,8 @@ class SubscriptionGroupSignupErrorBuilder
 
     /**
      * Sets payer id field.
+     *
+     * @param string|null $value
      */
     public function payerId(?string $value): self
     {
@@ -96,8 +109,8 @@ class SubscriptionGroupSignupErrorBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -106,7 +119,7 @@ class SubscriptionGroupSignupErrorBuilder
     }
 
     /**
-     * Initializes a new subscription group signup error object.
+     * Initializes a new Subscription Group Signup Error object.
      */
     public function build(): SubscriptionGroupSignupError
     {

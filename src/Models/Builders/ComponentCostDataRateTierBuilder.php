@@ -31,7 +31,7 @@ class ComponentCostDataRateTierBuilder
     }
 
     /**
-     * Initializes a new component cost data rate tier Builder object.
+     * Initializes a new Component Cost Data Rate Tier Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class ComponentCostDataRateTierBuilder
 
     /**
      * Sets starting quantity field.
+     *
+     * @param int|null $value
      */
     public function startingQuantity(?int $value): self
     {
@@ -49,6 +51,8 @@ class ComponentCostDataRateTierBuilder
 
     /**
      * Sets ending quantity field.
+     *
+     * @param int|null $value
      */
     public function endingQuantity(?int $value): self
     {
@@ -67,6 +71,8 @@ class ComponentCostDataRateTierBuilder
 
     /**
      * Sets quantity field.
+     *
+     * @param string|null $value
      */
     public function quantity(?string $value): self
     {
@@ -76,6 +82,8 @@ class ComponentCostDataRateTierBuilder
 
     /**
      * Sets unit price field.
+     *
+     * @param string|null $value
      */
     public function unitPrice(?string $value): self
     {
@@ -85,6 +93,8 @@ class ComponentCostDataRateTierBuilder
 
     /**
      * Sets amount field.
+     *
+     * @param string|null $value
      */
     public function amount(?string $value): self
     {
@@ -95,8 +105,8 @@ class ComponentCostDataRateTierBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -105,7 +115,7 @@ class ComponentCostDataRateTierBuilder
     }
 
     /**
-     * Initializes a new component cost data rate tier object.
+     * Initializes a new Component Cost Data Rate Tier object.
      */
     public function build(): ComponentCostDataRateTier
     {

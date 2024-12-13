@@ -31,7 +31,7 @@ class UpdateProductPricePointBuilder
     }
 
     /**
-     * Initializes a new update product price point Builder object.
+     * Initializes a new Update Product Price Point Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class UpdateProductPricePointBuilder
 
     /**
      * Sets handle field.
+     *
+     * @param string|null $value
      */
     public function handle(?string $value): self
     {
@@ -49,6 +51,8 @@ class UpdateProductPricePointBuilder
 
     /**
      * Sets price in cents field.
+     *
+     * @param int|null $value
      */
     public function priceInCents(?int $value): self
     {
@@ -59,8 +63,8 @@ class UpdateProductPricePointBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -69,7 +73,7 @@ class UpdateProductPricePointBuilder
     }
 
     /**
-     * Initializes a new update product price point object.
+     * Initializes a new Update Product Price Point object.
      */
     public function build(): UpdateProductPricePoint
     {

@@ -31,7 +31,10 @@ class PendingCancellationChangeBuilder
     }
 
     /**
-     * Initializes a new pending cancellation change Builder object.
+     * Initializes a new Pending Cancellation Change Builder object.
+     *
+     * @param string $cancellationState
+     * @param \DateTime $cancelsAt
      */
     public static function init(string $cancellationState, \DateTime $cancelsAt): self
     {
@@ -41,8 +44,8 @@ class PendingCancellationChangeBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -51,7 +54,7 @@ class PendingCancellationChangeBuilder
     }
 
     /**
-     * Initializes a new pending cancellation change object.
+     * Initializes a new Pending Cancellation Change object.
      */
     public function build(): PendingCancellationChange
     {

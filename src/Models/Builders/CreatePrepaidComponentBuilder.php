@@ -32,7 +32,9 @@ class CreatePrepaidComponentBuilder
     }
 
     /**
-     * Initializes a new create prepaid component Builder object.
+     * Initializes a new Create Prepaid Component Builder object.
+     *
+     * @param PrepaidUsageComponent $prepaidUsageComponent
      */
     public static function init(PrepaidUsageComponent $prepaidUsageComponent): self
     {
@@ -42,8 +44,8 @@ class CreatePrepaidComponentBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -52,7 +54,7 @@ class CreatePrepaidComponentBuilder
     }
 
     /**
-     * Initializes a new create prepaid component object.
+     * Initializes a new Create Prepaid Component object.
      */
     public function build(): CreatePrepaidComponent
     {

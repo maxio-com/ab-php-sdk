@@ -31,7 +31,7 @@ class EnableWebhooksResponseBuilder
     }
 
     /**
-     * Initializes a new enable webhooks response Builder object.
+     * Initializes a new Enable Webhooks Response Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class EnableWebhooksResponseBuilder
 
     /**
      * Sets webhooks enabled field.
+     *
+     * @param bool|null $value
      */
     public function webhooksEnabled(?bool $value): self
     {
@@ -50,8 +52,8 @@ class EnableWebhooksResponseBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -60,7 +62,7 @@ class EnableWebhooksResponseBuilder
     }
 
     /**
-     * Initializes a new enable webhooks response object.
+     * Initializes a new Enable Webhooks Response object.
      */
     public function build(): EnableWebhooksResponse
     {

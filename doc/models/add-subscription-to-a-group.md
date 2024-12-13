@@ -9,7 +9,7 @@
 
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
-| `group` | [GroupSettings](../../doc/models/group-settings.md)\|bool\|null | Optional | This is a container for one-of cases. | getGroup(): | setGroup( group): void |
+| `group` | [`?GroupSettings`](../../doc/models/group-settings.md) | Optional | - | getGroup(): ?GroupSettings | setGroup(?GroupSettings group): void |
 
 ## Example (as JSON)
 

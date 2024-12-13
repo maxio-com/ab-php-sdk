@@ -51,16 +51,6 @@ class MeteredComponent implements \JsonSerializable
     private $prices;
 
     /**
-     * @var array
-     */
-    private $upgradeCharge = [];
-
-    /**
-     * @var array
-     */
-    private $downgradeCredit = [];
-
-    /**
      * @var ComponentPricePointItem[]|null
      */
     private $pricePoints;
@@ -79,11 +69,6 @@ class MeteredComponent implements \JsonSerializable
      * @var bool|null
      */
     private $hideDateRangeOnInvoice;
-
-    /**
-     * @var string|null
-     */
-    private $priceInCents;
 
     /**
      * @var bool|null
@@ -287,84 +272,6 @@ class MeteredComponent implements \JsonSerializable
     }
 
     /**
-     * Returns Upgrade Charge.
-     * The type of credit to be created when upgrading/downgrading. Defaults to the component and then site
-     * setting if one is not provided.
-     * Available values: `full`, `prorated`, `none`.
-     */
-    public function getUpgradeCharge(): ?string
-    {
-        if (count($this->upgradeCharge) == 0) {
-            return null;
-        }
-        return $this->upgradeCharge['value'];
-    }
-
-    /**
-     * Sets Upgrade Charge.
-     * The type of credit to be created when upgrading/downgrading. Defaults to the component and then site
-     * setting if one is not provided.
-     * Available values: `full`, `prorated`, `none`.
-     *
-     * @maps upgrade_charge
-     * @factory \AdvancedBillingLib\Models\CreditType::checkValue
-     */
-    public function setUpgradeCharge(?string $upgradeCharge): void
-    {
-        $this->upgradeCharge['value'] = $upgradeCharge;
-    }
-
-    /**
-     * Unsets Upgrade Charge.
-     * The type of credit to be created when upgrading/downgrading. Defaults to the component and then site
-     * setting if one is not provided.
-     * Available values: `full`, `prorated`, `none`.
-     */
-    public function unsetUpgradeCharge(): void
-    {
-        $this->upgradeCharge = [];
-    }
-
-    /**
-     * Returns Downgrade Credit.
-     * The type of credit to be created when upgrading/downgrading. Defaults to the component and then site
-     * setting if one is not provided.
-     * Available values: `full`, `prorated`, `none`.
-     */
-    public function getDowngradeCredit(): ?string
-    {
-        if (count($this->downgradeCredit) == 0) {
-            return null;
-        }
-        return $this->downgradeCredit['value'];
-    }
-
-    /**
-     * Sets Downgrade Credit.
-     * The type of credit to be created when upgrading/downgrading. Defaults to the component and then site
-     * setting if one is not provided.
-     * Available values: `full`, `prorated`, `none`.
-     *
-     * @maps downgrade_credit
-     * @factory \AdvancedBillingLib\Models\CreditType::checkValue
-     */
-    public function setDowngradeCredit(?string $downgradeCredit): void
-    {
-        $this->downgradeCredit['value'] = $downgradeCredit;
-    }
-
-    /**
-     * Unsets Downgrade Credit.
-     * The type of credit to be created when upgrading/downgrading. Defaults to the component and then site
-     * setting if one is not provided.
-     * Available values: `full`, `prorated`, `none`.
-     */
-    public function unsetDowngradeCredit(): void
-    {
-        $this->downgradeCredit = [];
-    }
-
-    /**
      * Returns Price Points.
      *
      * @return ComponentPricePointItem[]|null
@@ -457,26 +364,6 @@ class MeteredComponent implements \JsonSerializable
     public function setHideDateRangeOnInvoice(?bool $hideDateRangeOnInvoice): void
     {
         $this->hideDateRangeOnInvoice = $hideDateRangeOnInvoice;
-    }
-
-    /**
-     * Returns Price in Cents.
-     * deprecated May 2011 - use unit_price instead
-     */
-    public function getPriceInCents(): ?string
-    {
-        return $this->priceInCents;
-    }
-
-    /**
-     * Sets Price in Cents.
-     * deprecated May 2011 - use unit_price instead
-     *
-     * @maps price_in_cents
-     */
-    public function setPriceInCents(?string $priceInCents): void
-    {
-        $this->priceInCents = $priceInCents;
     }
 
     /**
@@ -602,12 +489,27 @@ class MeteredComponent implements \JsonSerializable
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function addAdditionalProperty(string $name, $value)
     {
         $this->additionalProperties[$name] = $value;
+    }
+
+    /**
+     * Find an additional property by name in this model or false if property does not exist.
+     *
+     * @param string $name Name of property.
+     *
+     * @return mixed|false Value of the property.
+     */
+    public function findAdditionalProperty(string $name)
+    {
+        if (isset($this->additionalProperties[$name])) {
+            return $this->additionalProperties[$name];
+        }
+        return false;
     }
 
     /**
@@ -637,12 +539,6 @@ class MeteredComponent implements \JsonSerializable
         if (isset($this->prices)) {
             $json['prices']                      = $this->prices;
         }
-        if (!empty($this->upgradeCharge)) {
-            $json['upgrade_charge']              = CreditType::checkValue($this->upgradeCharge['value']);
-        }
-        if (!empty($this->downgradeCredit)) {
-            $json['downgrade_credit']            = CreditType::checkValue($this->downgradeCredit['value']);
-        }
         if (isset($this->pricePoints)) {
             $json['price_points']                = $this->pricePoints;
         }
@@ -658,9 +554,6 @@ class MeteredComponent implements \JsonSerializable
         }
         if (isset($this->hideDateRangeOnInvoice)) {
             $json['hide_date_range_on_invoice']  = $this->hideDateRangeOnInvoice;
-        }
-        if (isset($this->priceInCents)) {
-            $json['price_in_cents']              = $this->priceInCents;
         }
         if (isset($this->displayOnHostedPage)) {
             $json['display_on_hosted_page']      = $this->displayOnHostedPage;

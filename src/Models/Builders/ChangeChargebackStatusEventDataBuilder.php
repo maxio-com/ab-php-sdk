@@ -31,7 +31,9 @@ class ChangeChargebackStatusEventDataBuilder
     }
 
     /**
-     * Initializes a new change chargeback status event data Builder object.
+     * Initializes a new Change Chargeback Status Event Data Builder object.
+     *
+     * @param string $chargebackStatus
      */
     public static function init(string $chargebackStatus): self
     {
@@ -41,8 +43,8 @@ class ChangeChargebackStatusEventDataBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -51,7 +53,7 @@ class ChangeChargebackStatusEventDataBuilder
     }
 
     /**
-     * Initializes a new change chargeback status event data object.
+     * Initializes a new Change Chargeback Status Event Data object.
      */
     public function build(): ChangeChargebackStatusEventData
     {

@@ -32,7 +32,7 @@ class ProductFamilyResponseBuilder
     }
 
     /**
-     * Initializes a new product family response Builder object.
+     * Initializes a new Product Family Response Builder object.
      */
     public static function init(): self
     {
@@ -41,6 +41,8 @@ class ProductFamilyResponseBuilder
 
     /**
      * Sets product family field.
+     *
+     * @param ProductFamily|null $value
      */
     public function productFamily(?ProductFamily $value): self
     {
@@ -51,8 +53,8 @@ class ProductFamilyResponseBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -61,7 +63,7 @@ class ProductFamilyResponseBuilder
     }
 
     /**
-     * Initializes a new product family response object.
+     * Initializes a new Product Family Response object.
      */
     public function build(): ProductFamilyResponse
     {

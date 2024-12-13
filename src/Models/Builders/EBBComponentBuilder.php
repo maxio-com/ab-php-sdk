@@ -10,7 +10,9 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models\Builders;
 
+use AdvancedBillingLib\Models\ComponentPricePointItem;
 use AdvancedBillingLib\Models\EBBComponent;
+use AdvancedBillingLib\Models\Price;
 use Core\Utils\CoreHelper;
 
 /**
@@ -31,7 +33,12 @@ class EBBComponentBuilder
     }
 
     /**
-     * Initializes a new ebbcomponent Builder object.
+     * Initializes a new EBB Component Builder object.
+     *
+     * @param string $name
+     * @param string $unitName
+     * @param string $pricingScheme
+     * @param int $eventBasedBillingMetricId
      */
     public static function init(
         string $name,
@@ -44,6 +51,8 @@ class EBBComponentBuilder
 
     /**
      * Sets description field.
+     *
+     * @param string|null $value
      */
     public function description(?string $value): self
     {
@@ -53,6 +62,8 @@ class EBBComponentBuilder
 
     /**
      * Sets handle field.
+     *
+     * @param string|null $value
      */
     public function handle(?string $value): self
     {
@@ -62,6 +73,8 @@ class EBBComponentBuilder
 
     /**
      * Sets taxable field.
+     *
+     * @param bool|null $value
      */
     public function taxable(?bool $value): self
     {
@@ -71,6 +84,8 @@ class EBBComponentBuilder
 
     /**
      * Sets prices field.
+     *
+     * @param Price[]|null $value
      */
     public function prices(?array $value): self
     {
@@ -79,43 +94,9 @@ class EBBComponentBuilder
     }
 
     /**
-     * Sets upgrade charge field.
-     */
-    public function upgradeCharge(?string $value): self
-    {
-        $this->instance->setUpgradeCharge($value);
-        return $this;
-    }
-
-    /**
-     * Unsets upgrade charge field.
-     */
-    public function unsetUpgradeCharge(): self
-    {
-        $this->instance->unsetUpgradeCharge();
-        return $this;
-    }
-
-    /**
-     * Sets downgrade credit field.
-     */
-    public function downgradeCredit(?string $value): self
-    {
-        $this->instance->setDowngradeCredit($value);
-        return $this;
-    }
-
-    /**
-     * Unsets downgrade credit field.
-     */
-    public function unsetDowngradeCredit(): self
-    {
-        $this->instance->unsetDowngradeCredit();
-        return $this;
-    }
-
-    /**
      * Sets price points field.
+     *
+     * @param ComponentPricePointItem[]|null $value
      */
     public function pricePoints(?array $value): self
     {
@@ -125,6 +106,8 @@ class EBBComponentBuilder
 
     /**
      * Sets unit price field.
+     *
+     * @param string|float|null $value
      */
     public function unitPrice($value): self
     {
@@ -134,6 +117,8 @@ class EBBComponentBuilder
 
     /**
      * Sets tax code field.
+     *
+     * @param string|null $value
      */
     public function taxCode(?string $value): self
     {
@@ -143,6 +128,8 @@ class EBBComponentBuilder
 
     /**
      * Sets hide date range on invoice field.
+     *
+     * @param bool|null $value
      */
     public function hideDateRangeOnInvoice(?bool $value): self
     {
@@ -151,16 +138,9 @@ class EBBComponentBuilder
     }
 
     /**
-     * Sets price in cents field.
-     */
-    public function priceInCents(?string $value): self
-    {
-        $this->instance->setPriceInCents($value);
-        return $this;
-    }
-
-    /**
      * Sets interval field.
+     *
+     * @param int|null $value
      */
     public function interval(?int $value): self
     {
@@ -170,6 +150,8 @@ class EBBComponentBuilder
 
     /**
      * Sets interval unit field.
+     *
+     * @param string|null $value
      */
     public function intervalUnit(?string $value): self
     {
@@ -189,8 +171,8 @@ class EBBComponentBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -199,7 +181,7 @@ class EBBComponentBuilder
     }
 
     /**
-     * Initializes a new ebbcomponent object.
+     * Initializes a new EBB Component object.
      */
     public function build(): EBBComponent
     {

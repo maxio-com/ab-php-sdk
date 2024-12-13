@@ -31,7 +31,7 @@ class ResentInvitationBuilder
     }
 
     /**
-     * Initializes a new resent invitation Builder object.
+     * Initializes a new Resent Invitation Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class ResentInvitationBuilder
 
     /**
      * Sets last sent at field.
+     *
+     * @param string|null $value
      */
     public function lastSentAt(?string $value): self
     {
@@ -49,6 +51,8 @@ class ResentInvitationBuilder
 
     /**
      * Sets last accepted at field.
+     *
+     * @param string|null $value
      */
     public function lastAcceptedAt(?string $value): self
     {
@@ -58,6 +62,8 @@ class ResentInvitationBuilder
 
     /**
      * Sets send invite link text field.
+     *
+     * @param string|null $value
      */
     public function sendInviteLinkText(?string $value): self
     {
@@ -67,6 +73,8 @@ class ResentInvitationBuilder
 
     /**
      * Sets uninvited count field.
+     *
+     * @param int|null $value
      */
     public function uninvitedCount(?int $value): self
     {
@@ -76,6 +84,8 @@ class ResentInvitationBuilder
 
     /**
      * Sets last invite sent at field.
+     *
+     * @param \DateTime|null $value
      */
     public function lastInviteSentAt(?\DateTime $value): self
     {
@@ -85,6 +95,8 @@ class ResentInvitationBuilder
 
     /**
      * Sets last invite accepted at field.
+     *
+     * @param \DateTime|null $value
      */
     public function lastInviteAcceptedAt(?\DateTime $value): self
     {
@@ -95,8 +107,8 @@ class ResentInvitationBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -105,7 +117,7 @@ class ResentInvitationBuilder
     }
 
     /**
-     * Initializes a new resent invitation object.
+     * Initializes a new Resent Invitation object.
      */
     public function build(): ResentInvitation
     {

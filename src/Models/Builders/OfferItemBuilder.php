@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models\Builders;
 
+use AdvancedBillingLib\Models\CurrencyPrice;
 use AdvancedBillingLib\Models\OfferItem;
 use Core\Utils\CoreHelper;
 
@@ -31,7 +32,7 @@ class OfferItemBuilder
     }
 
     /**
-     * Initializes a new offer item Builder object.
+     * Initializes a new Offer Item Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +41,8 @@ class OfferItemBuilder
 
     /**
      * Sets component id field.
+     *
+     * @param int|null $value
      */
     public function componentId(?int $value): self
     {
@@ -49,6 +52,8 @@ class OfferItemBuilder
 
     /**
      * Sets price point id field.
+     *
+     * @param int|null $value
      */
     public function pricePointId(?int $value): self
     {
@@ -58,6 +63,8 @@ class OfferItemBuilder
 
     /**
      * Sets starting quantity field.
+     *
+     * @param string|null $value
      */
     public function startingQuantity(?string $value): self
     {
@@ -67,6 +74,8 @@ class OfferItemBuilder
 
     /**
      * Sets editable field.
+     *
+     * @param bool|null $value
      */
     public function editable(?bool $value): self
     {
@@ -76,6 +85,8 @@ class OfferItemBuilder
 
     /**
      * Sets component unit price field.
+     *
+     * @param string|null $value
      */
     public function componentUnitPrice(?string $value): self
     {
@@ -85,6 +96,8 @@ class OfferItemBuilder
 
     /**
      * Sets component name field.
+     *
+     * @param string|null $value
      */
     public function componentName(?string $value): self
     {
@@ -94,6 +107,8 @@ class OfferItemBuilder
 
     /**
      * Sets price point name field.
+     *
+     * @param string|null $value
      */
     public function pricePointName(?string $value): self
     {
@@ -103,6 +118,8 @@ class OfferItemBuilder
 
     /**
      * Sets currency prices field.
+     *
+     * @param CurrencyPrice[]|null $value
      */
     public function currencyPrices(?array $value): self
     {
@@ -112,6 +129,8 @@ class OfferItemBuilder
 
     /**
      * Sets interval field.
+     *
+     * @param int|null $value
      */
     public function interval(?int $value): self
     {
@@ -121,6 +140,8 @@ class OfferItemBuilder
 
     /**
      * Sets interval unit field.
+     *
+     * @param string|null $value
      */
     public function intervalUnit(?string $value): self
     {
@@ -140,8 +161,8 @@ class OfferItemBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -150,7 +171,7 @@ class OfferItemBuilder
     }
 
     /**
-     * Initializes a new offer item object.
+     * Initializes a new Offer Item object.
      */
     public function build(): OfferItem
     {

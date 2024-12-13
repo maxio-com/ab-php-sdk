@@ -31,7 +31,12 @@ class CreatePaymentBuilder
     }
 
     /**
-     * Initializes a new create payment Builder object.
+     * Initializes a new Create Payment Builder object.
+     *
+     * @param string $amount
+     * @param string $memo
+     * @param string $paymentDetails
+     * @param string $paymentMethod
      */
     public static function init(string $amount, string $memo, string $paymentDetails, string $paymentMethod): self
     {
@@ -41,8 +46,8 @@ class CreatePaymentBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -51,7 +56,7 @@ class CreatePaymentBuilder
     }
 
     /**
-     * Initializes a new create payment object.
+     * Initializes a new Create Payment object.
      */
     public function build(): CreatePayment
     {

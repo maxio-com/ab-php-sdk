@@ -31,7 +31,7 @@ class CreateCurrencyPriceBuilder
     }
 
     /**
-     * Initializes a new create currency price Builder object.
+     * Initializes a new Create Currency Price Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class CreateCurrencyPriceBuilder
 
     /**
      * Sets currency field.
+     *
+     * @param string|null $value
      */
     public function currency(?string $value): self
     {
@@ -49,6 +51,8 @@ class CreateCurrencyPriceBuilder
 
     /**
      * Sets price field.
+     *
+     * @param float|null $value
      */
     public function price(?float $value): self
     {
@@ -58,6 +62,8 @@ class CreateCurrencyPriceBuilder
 
     /**
      * Sets price id field.
+     *
+     * @param int|null $value
      */
     public function priceId(?int $value): self
     {
@@ -68,8 +74,8 @@ class CreateCurrencyPriceBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -78,7 +84,7 @@ class CreateCurrencyPriceBuilder
     }
 
     /**
-     * Initializes a new create currency price object.
+     * Initializes a new Create Currency Price object.
      */
     public function build(): CreateCurrencyPrice
     {

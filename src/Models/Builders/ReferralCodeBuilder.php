@@ -31,7 +31,7 @@ class ReferralCodeBuilder
     }
 
     /**
-     * Initializes a new referral code Builder object.
+     * Initializes a new Referral Code Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class ReferralCodeBuilder
 
     /**
      * Sets id field.
+     *
+     * @param int|null $value
      */
     public function id(?int $value): self
     {
@@ -49,6 +51,8 @@ class ReferralCodeBuilder
 
     /**
      * Sets site id field.
+     *
+     * @param int|null $value
      */
     public function siteId(?int $value): self
     {
@@ -58,6 +62,8 @@ class ReferralCodeBuilder
 
     /**
      * Sets subscription id field.
+     *
+     * @param int|null $value
      */
     public function subscriptionId(?int $value): self
     {
@@ -67,6 +73,8 @@ class ReferralCodeBuilder
 
     /**
      * Sets code field.
+     *
+     * @param string|null $value
      */
     public function code(?string $value): self
     {
@@ -77,8 +85,8 @@ class ReferralCodeBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -87,7 +95,7 @@ class ReferralCodeBuilder
     }
 
     /**
-     * Initializes a new referral code object.
+     * Initializes a new Referral Code object.
      */
     public function build(): ReferralCode
     {

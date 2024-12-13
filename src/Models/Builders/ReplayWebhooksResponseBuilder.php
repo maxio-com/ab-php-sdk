@@ -31,7 +31,7 @@ class ReplayWebhooksResponseBuilder
     }
 
     /**
-     * Initializes a new replay webhooks response Builder object.
+     * Initializes a new Replay Webhooks Response Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class ReplayWebhooksResponseBuilder
 
     /**
      * Sets status field.
+     *
+     * @param string|null $value
      */
     public function status(?string $value): self
     {
@@ -50,8 +52,8 @@ class ReplayWebhooksResponseBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -60,7 +62,7 @@ class ReplayWebhooksResponseBuilder
     }
 
     /**
-     * Initializes a new replay webhooks response object.
+     * Initializes a new Replay Webhooks Response object.
      */
     public function build(): ReplayWebhooksResponse
     {

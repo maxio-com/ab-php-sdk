@@ -31,7 +31,7 @@ class ServiceCreditBuilder
     }
 
     /**
-     * Initializes a new service credit Builder object.
+     * Initializes a new Service Credit Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class ServiceCreditBuilder
 
     /**
      * Sets id field.
+     *
+     * @param int|null $value
      */
     public function id(?int $value): self
     {
@@ -49,6 +51,8 @@ class ServiceCreditBuilder
 
     /**
      * Sets amount in cents field.
+     *
+     * @param int|null $value
      */
     public function amountInCents(?int $value): self
     {
@@ -58,6 +62,8 @@ class ServiceCreditBuilder
 
     /**
      * Sets ending balance in cents field.
+     *
+     * @param int|null $value
      */
     public function endingBalanceInCents(?int $value): self
     {
@@ -67,6 +73,8 @@ class ServiceCreditBuilder
 
     /**
      * Sets entry type field.
+     *
+     * @param string|null $value
      */
     public function entryType(?string $value): self
     {
@@ -76,6 +84,8 @@ class ServiceCreditBuilder
 
     /**
      * Sets memo field.
+     *
+     * @param string|null $value
      */
     public function memo(?string $value): self
     {
@@ -86,8 +96,8 @@ class ServiceCreditBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -96,7 +106,7 @@ class ServiceCreditBuilder
     }
 
     /**
-     * Initializes a new service credit object.
+     * Initializes a new Service Credit object.
      */
     public function build(): ServiceCredit
     {

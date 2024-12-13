@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace AdvancedBillingLib\Tests\Controllers;
 
 use AdvancedBillingLib\Models\Coupon;
+use AdvancedBillingLib\Models\CouponPayload;
+use AdvancedBillingLib\Models\CouponRequest;
 use AdvancedBillingLib\Models\CouponSubcodes;
-use AdvancedBillingLib\Models\CreateOrUpdateCoupon;
 use AdvancedBillingLib\Models\Builders\ListCouponsFilterBuilder;
 use AdvancedBillingLib\Models\ProductFamily;
 use AdvancedBillingLib\Tests\DataLoader\TestCouponLoader;
@@ -27,9 +28,9 @@ final class CouponsControllerTestData
     {
     }
 
-    public function getCreatePercentageCouponRequest(string $productFamilyId): CreateOrUpdateCoupon
+    public function getCouponRequest(string $productFamilyId): CouponRequest
     {
-        return $this->couponRequestFactory->createCreateOrUpdatePercentageCouponRequest(
+        return $this->couponRequestFactory->createPercentageCouponRequest(
             $productFamilyId,
             CouponTestData::CODE_ONE
         );
@@ -76,9 +77,9 @@ final class CouponsControllerTestData
         string $name,
         string $code,
         string $percentage
-    ): CreateOrUpdateCoupon
+    ): CouponRequest
     {
-        return $this->couponRequestFactory->createCreateOrUpdatePercentageCouponRequestWithCustomValues(
+        return $this->couponRequestFactory->createCouponRequestWithCustomValues(
             $productFamilyId,
             $name,
             $code,

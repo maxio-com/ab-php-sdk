@@ -31,7 +31,10 @@ class CreateReasonCodeBuilder
     }
 
     /**
-     * Initializes a new create reason code Builder object.
+     * Initializes a new Create Reason Code Builder object.
+     *
+     * @param string $code
+     * @param string $description
      */
     public static function init(string $code, string $description): self
     {
@@ -40,6 +43,8 @@ class CreateReasonCodeBuilder
 
     /**
      * Sets position field.
+     *
+     * @param int|null $value
      */
     public function position(?int $value): self
     {
@@ -50,8 +55,8 @@ class CreateReasonCodeBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -60,7 +65,7 @@ class CreateReasonCodeBuilder
     }
 
     /**
-     * Initializes a new create reason code object.
+     * Initializes a new Create Reason Code object.
      */
     public function build(): CreateReasonCode
     {

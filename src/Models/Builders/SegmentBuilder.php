@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace AdvancedBillingLib\Models\Builders;
 
 use AdvancedBillingLib\Models\Segment;
+use AdvancedBillingLib\Models\SegmentPrice;
 use Core\Utils\CoreHelper;
 
 /**
@@ -31,7 +32,7 @@ class SegmentBuilder
     }
 
     /**
-     * Initializes a new segment Builder object.
+     * Initializes a new Segment Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +41,8 @@ class SegmentBuilder
 
     /**
      * Sets id field.
+     *
+     * @param int|null $value
      */
     public function id(?int $value): self
     {
@@ -49,6 +52,8 @@ class SegmentBuilder
 
     /**
      * Sets component id field.
+     *
+     * @param int|null $value
      */
     public function componentId(?int $value): self
     {
@@ -58,6 +63,8 @@ class SegmentBuilder
 
     /**
      * Sets price point id field.
+     *
+     * @param int|null $value
      */
     public function pricePointId(?int $value): self
     {
@@ -67,6 +74,8 @@ class SegmentBuilder
 
     /**
      * Sets event based billing metric id field.
+     *
+     * @param int|null $value
      */
     public function eventBasedBillingMetricId(?int $value): self
     {
@@ -76,6 +85,8 @@ class SegmentBuilder
 
     /**
      * Sets pricing scheme field.
+     *
+     * @param string|null $value
      */
     public function pricingScheme(?string $value): self
     {
@@ -85,6 +96,8 @@ class SegmentBuilder
 
     /**
      * Sets segment property 1 value field.
+     *
+     * @param string|float|int|bool|null $value
      */
     public function segmentProperty1Value($value): self
     {
@@ -94,6 +107,8 @@ class SegmentBuilder
 
     /**
      * Sets segment property 2 value field.
+     *
+     * @param string|float|int|bool|null $value
      */
     public function segmentProperty2Value($value): self
     {
@@ -103,6 +118,8 @@ class SegmentBuilder
 
     /**
      * Sets segment property 3 value field.
+     *
+     * @param string|float|int|bool|null $value
      */
     public function segmentProperty3Value($value): self
     {
@@ -112,6 +129,8 @@ class SegmentBuilder
 
     /**
      * Sets segment property 4 value field.
+     *
+     * @param string|float|int|bool|null $value
      */
     public function segmentProperty4Value($value): self
     {
@@ -121,6 +140,8 @@ class SegmentBuilder
 
     /**
      * Sets created at field.
+     *
+     * @param \DateTime|null $value
      */
     public function createdAt(?\DateTime $value): self
     {
@@ -130,6 +151,8 @@ class SegmentBuilder
 
     /**
      * Sets updated at field.
+     *
+     * @param \DateTime|null $value
      */
     public function updatedAt(?\DateTime $value): self
     {
@@ -139,6 +162,8 @@ class SegmentBuilder
 
     /**
      * Sets prices field.
+     *
+     * @param SegmentPrice[]|null $value
      */
     public function prices(?array $value): self
     {
@@ -149,8 +174,8 @@ class SegmentBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -159,7 +184,7 @@ class SegmentBuilder
     }
 
     /**
-     * Initializes a new segment object.
+     * Initializes a new Segment object.
      */
     public function build(): Segment
     {

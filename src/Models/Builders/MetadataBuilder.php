@@ -31,7 +31,7 @@ class MetadataBuilder
     }
 
     /**
-     * Initializes a new metadata Builder object.
+     * Initializes a new Metadata Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class MetadataBuilder
 
     /**
      * Sets id field.
+     *
+     * @param int|null $value
      */
     public function id(?int $value): self
     {
@@ -58,6 +60,8 @@ class MetadataBuilder
 
     /**
      * Sets value field.
+     *
+     * @param string|null $value
      */
     public function value(?string $value): self
     {
@@ -76,6 +80,8 @@ class MetadataBuilder
 
     /**
      * Sets resource id field.
+     *
+     * @param int|null $value
      */
     public function resourceId(?int $value): self
     {
@@ -94,6 +100,8 @@ class MetadataBuilder
 
     /**
      * Sets name field.
+     *
+     * @param string|null $value
      */
     public function name(?string $value): self
     {
@@ -103,6 +111,8 @@ class MetadataBuilder
 
     /**
      * Sets deleted at field.
+     *
+     * @param \DateTime|null $value
      */
     public function deletedAt(?\DateTime $value): self
     {
@@ -121,6 +131,8 @@ class MetadataBuilder
 
     /**
      * Sets metafield id field.
+     *
+     * @param int|null $value
      */
     public function metafieldId(?int $value): self
     {
@@ -140,8 +152,8 @@ class MetadataBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -150,7 +162,7 @@ class MetadataBuilder
     }
 
     /**
-     * Initializes a new metadata object.
+     * Initializes a new Metadata object.
      */
     public function build(): Metadata
     {

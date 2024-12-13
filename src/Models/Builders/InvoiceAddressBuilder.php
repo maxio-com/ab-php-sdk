@@ -31,7 +31,7 @@ class InvoiceAddressBuilder
     }
 
     /**
-     * Initializes a new invoice address Builder object.
+     * Initializes a new Invoice Address Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class InvoiceAddressBuilder
 
     /**
      * Sets street field.
+     *
+     * @param string|null $value
      */
     public function street(?string $value): self
     {
@@ -58,6 +60,8 @@ class InvoiceAddressBuilder
 
     /**
      * Sets line 2 field.
+     *
+     * @param string|null $value
      */
     public function line2(?string $value): self
     {
@@ -76,6 +80,8 @@ class InvoiceAddressBuilder
 
     /**
      * Sets city field.
+     *
+     * @param string|null $value
      */
     public function city(?string $value): self
     {
@@ -94,6 +100,8 @@ class InvoiceAddressBuilder
 
     /**
      * Sets state field.
+     *
+     * @param string|null $value
      */
     public function state(?string $value): self
     {
@@ -112,6 +120,8 @@ class InvoiceAddressBuilder
 
     /**
      * Sets zip field.
+     *
+     * @param string|null $value
      */
     public function zip(?string $value): self
     {
@@ -130,6 +140,8 @@ class InvoiceAddressBuilder
 
     /**
      * Sets country field.
+     *
+     * @param string|null $value
      */
     public function country(?string $value): self
     {
@@ -149,8 +161,8 @@ class InvoiceAddressBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -159,7 +171,7 @@ class InvoiceAddressBuilder
     }
 
     /**
-     * Initializes a new invoice address object.
+     * Initializes a new Invoice Address object.
      */
     public function build(): InvoiceAddress
     {

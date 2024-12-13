@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace AdvancedBillingLib\Models\Builders;
 
 use AdvancedBillingLib\Models\ListMetafieldsResponse;
+use AdvancedBillingLib\Models\Metafield;
 use Core\Utils\CoreHelper;
 
 /**
@@ -31,7 +32,7 @@ class ListMetafieldsResponseBuilder
     }
 
     /**
-     * Initializes a new list metafields response Builder object.
+     * Initializes a new List Metafields Response Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +41,8 @@ class ListMetafieldsResponseBuilder
 
     /**
      * Sets total count field.
+     *
+     * @param int|null $value
      */
     public function totalCount(?int $value): self
     {
@@ -49,6 +52,8 @@ class ListMetafieldsResponseBuilder
 
     /**
      * Sets current page field.
+     *
+     * @param int|null $value
      */
     public function currentPage(?int $value): self
     {
@@ -58,6 +63,8 @@ class ListMetafieldsResponseBuilder
 
     /**
      * Sets total pages field.
+     *
+     * @param int|null $value
      */
     public function totalPages(?int $value): self
     {
@@ -67,6 +74,8 @@ class ListMetafieldsResponseBuilder
 
     /**
      * Sets per page field.
+     *
+     * @param int|null $value
      */
     public function perPage(?int $value): self
     {
@@ -76,6 +85,8 @@ class ListMetafieldsResponseBuilder
 
     /**
      * Sets metafields field.
+     *
+     * @param Metafield[]|null $value
      */
     public function metafields(?array $value): self
     {
@@ -86,8 +97,8 @@ class ListMetafieldsResponseBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -96,7 +107,7 @@ class ListMetafieldsResponseBuilder
     }
 
     /**
-     * Initializes a new list metafields response object.
+     * Initializes a new List Metafields Response object.
      */
     public function build(): ListMetafieldsResponse
     {

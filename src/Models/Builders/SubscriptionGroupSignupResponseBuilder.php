@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models\Builders;
 
+use AdvancedBillingLib\Models\SubscriptionGroupItem;
 use AdvancedBillingLib\Models\SubscriptionGroupSignupResponse;
 use Core\Utils\CoreHelper;
 
@@ -31,7 +32,7 @@ class SubscriptionGroupSignupResponseBuilder
     }
 
     /**
-     * Initializes a new subscription group signup response Builder object.
+     * Initializes a new Subscription Group Signup Response Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +41,8 @@ class SubscriptionGroupSignupResponseBuilder
 
     /**
      * Sets uid field.
+     *
+     * @param string|null $value
      */
     public function uid(?string $value): self
     {
@@ -49,6 +52,8 @@ class SubscriptionGroupSignupResponseBuilder
 
     /**
      * Sets scheme field.
+     *
+     * @param int|null $value
      */
     public function scheme(?int $value): self
     {
@@ -58,6 +63,8 @@ class SubscriptionGroupSignupResponseBuilder
 
     /**
      * Sets customer id field.
+     *
+     * @param int|null $value
      */
     public function customerId(?int $value): self
     {
@@ -67,6 +74,8 @@ class SubscriptionGroupSignupResponseBuilder
 
     /**
      * Sets payment profile id field.
+     *
+     * @param int|null $value
      */
     public function paymentProfileId(?int $value): self
     {
@@ -76,6 +85,8 @@ class SubscriptionGroupSignupResponseBuilder
 
     /**
      * Sets subscription ids field.
+     *
+     * @param int[]|null $value
      */
     public function subscriptionIds(?array $value): self
     {
@@ -85,6 +96,8 @@ class SubscriptionGroupSignupResponseBuilder
 
     /**
      * Sets primary subscription id field.
+     *
+     * @param int|null $value
      */
     public function primarySubscriptionId(?int $value): self
     {
@@ -94,6 +107,8 @@ class SubscriptionGroupSignupResponseBuilder
 
     /**
      * Sets next assessment at field.
+     *
+     * @param \DateTime|null $value
      */
     public function nextAssessmentAt(?\DateTime $value): self
     {
@@ -103,6 +118,8 @@ class SubscriptionGroupSignupResponseBuilder
 
     /**
      * Sets state field.
+     *
+     * @param string|null $value
      */
     public function state(?string $value): self
     {
@@ -112,6 +129,8 @@ class SubscriptionGroupSignupResponseBuilder
 
     /**
      * Sets cancel at end of period field.
+     *
+     * @param bool|null $value
      */
     public function cancelAtEndOfPeriod(?bool $value): self
     {
@@ -121,6 +140,8 @@ class SubscriptionGroupSignupResponseBuilder
 
     /**
      * Sets subscriptions field.
+     *
+     * @param SubscriptionGroupItem[]|null $value
      */
     public function subscriptions(?array $value): self
     {
@@ -130,6 +151,8 @@ class SubscriptionGroupSignupResponseBuilder
 
     /**
      * Sets payment collection method field.
+     *
+     * @param string|null $value
      */
     public function paymentCollectionMethod(?string $value): self
     {
@@ -140,8 +163,8 @@ class SubscriptionGroupSignupResponseBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -150,7 +173,7 @@ class SubscriptionGroupSignupResponseBuilder
     }
 
     /**
-     * Initializes a new subscription group signup response object.
+     * Initializes a new Subscription Group Signup Response object.
      */
     public function build(): SubscriptionGroupSignupResponse
     {

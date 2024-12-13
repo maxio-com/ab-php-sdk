@@ -31,7 +31,7 @@ class CancelGroupedSubscriptionsRequestBuilder
     }
 
     /**
-     * Initializes a new cancel grouped subscriptions request Builder object.
+     * Initializes a new Cancel Grouped Subscriptions Request Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class CancelGroupedSubscriptionsRequestBuilder
 
     /**
      * Sets charge unbilled usage field.
+     *
+     * @param bool|null $value
      */
     public function chargeUnbilledUsage(?bool $value): self
     {
@@ -50,8 +52,8 @@ class CancelGroupedSubscriptionsRequestBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -60,7 +62,7 @@ class CancelGroupedSubscriptionsRequestBuilder
     }
 
     /**
-     * Initializes a new cancel grouped subscriptions request object.
+     * Initializes a new Cancel Grouped Subscriptions Request object.
      */
     public function build(): CancelGroupedSubscriptionsRequest
     {

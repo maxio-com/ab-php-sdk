@@ -10,36 +10,38 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models\Builders;
 
-use AdvancedBillingLib\Models\ReasonCodesJsonResponse;
+use AdvancedBillingLib\Models\OkResponse;
 use Core\Utils\CoreHelper;
 
 /**
- * Builder for model ReasonCodesJsonResponse
+ * Builder for model OkResponse
  *
- * @see ReasonCodesJsonResponse
+ * @see OkResponse
  */
-class ReasonCodesJsonResponseBuilder
+class OkResponseBuilder
 {
     /**
-     * @var ReasonCodesJsonResponse
+     * @var OkResponse
      */
     private $instance;
 
-    private function __construct(ReasonCodesJsonResponse $instance)
+    private function __construct(OkResponse $instance)
     {
         $this->instance = $instance;
     }
 
     /**
-     * Initializes a new reason codes json response Builder object.
+     * Initializes a new Ok Response Builder object.
      */
     public static function init(): self
     {
-        return new self(new ReasonCodesJsonResponse());
+        return new self(new OkResponse());
     }
 
     /**
      * Sets ok field.
+     *
+     * @param string|null $value
      */
     public function ok(?string $value): self
     {
@@ -50,8 +52,8 @@ class ReasonCodesJsonResponseBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -60,9 +62,9 @@ class ReasonCodesJsonResponseBuilder
     }
 
     /**
-     * Initializes a new reason codes json response object.
+     * Initializes a new Ok Response object.
      */
-    public function build(): ReasonCodesJsonResponse
+    public function build(): OkResponse
     {
         return CoreHelper::clone($this->instance);
     }

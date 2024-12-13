@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace AdvancedBillingLib\Models\Builders;
 
 use AdvancedBillingLib\Models\PrepaidUsage;
+use AdvancedBillingLib\Models\PrepaidUsageAllocationDetail;
 use Core\Utils\CoreHelper;
 
 /**
@@ -31,7 +32,18 @@ class PrepaidUsageBuilder
     }
 
     /**
-     * Initializes a new prepaid usage Builder object.
+     * Initializes a new Prepaid Usage Builder object.
+     *
+     * @param string $previousUnitBalance
+     * @param string $previousOverageUnitBalance
+     * @param int $newUnitBalance
+     * @param int $newOverageUnitBalance
+     * @param int $usageQuantity
+     * @param int $overageUsageQuantity
+     * @param int $componentId
+     * @param string $componentHandle
+     * @param string $memo
+     * @param PrepaidUsageAllocationDetail[] $allocationDetails
      */
     public static function init(
         string $previousUnitBalance,
@@ -62,8 +74,8 @@ class PrepaidUsageBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -72,7 +84,7 @@ class PrepaidUsageBuilder
     }
 
     /**
-     * Initializes a new prepaid usage object.
+     * Initializes a new Prepaid Usage object.
      */
     public function build(): PrepaidUsage
     {

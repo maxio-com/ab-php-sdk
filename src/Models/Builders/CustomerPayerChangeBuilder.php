@@ -32,7 +32,10 @@ class CustomerPayerChangeBuilder
     }
 
     /**
-     * Initializes a new customer payer change Builder object.
+     * Initializes a new Customer Payer Change Builder object.
+     *
+     * @param InvoicePayerChange $before
+     * @param InvoicePayerChange $after
      */
     public static function init(InvoicePayerChange $before, InvoicePayerChange $after): self
     {
@@ -42,8 +45,8 @@ class CustomerPayerChangeBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -52,7 +55,7 @@ class CustomerPayerChangeBuilder
     }
 
     /**
-     * Initializes a new customer payer change object.
+     * Initializes a new Customer Payer Change object.
      */
     public function build(): CustomerPayerChange
     {

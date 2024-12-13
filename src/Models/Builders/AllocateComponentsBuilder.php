@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace AdvancedBillingLib\Models\Builders;
 
 use AdvancedBillingLib\Models\AllocateComponents;
+use AdvancedBillingLib\Models\CreateAllocation;
 use Core\Utils\CoreHelper;
 
 /**
@@ -31,7 +32,7 @@ class AllocateComponentsBuilder
     }
 
     /**
-     * Initializes a new allocate components Builder object.
+     * Initializes a new Allocate Components Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +41,8 @@ class AllocateComponentsBuilder
 
     /**
      * Sets proration upgrade scheme field.
+     *
+     * @param string|null $value
      */
     public function prorationUpgradeScheme(?string $value): self
     {
@@ -49,6 +52,8 @@ class AllocateComponentsBuilder
 
     /**
      * Sets proration downgrade scheme field.
+     *
+     * @param string|null $value
      */
     public function prorationDowngradeScheme(?string $value): self
     {
@@ -58,6 +63,8 @@ class AllocateComponentsBuilder
 
     /**
      * Sets allocations field.
+     *
+     * @param CreateAllocation[]|null $value
      */
     public function allocations(?array $value): self
     {
@@ -67,6 +74,8 @@ class AllocateComponentsBuilder
 
     /**
      * Sets accrue charge field.
+     *
+     * @param bool|null $value
      */
     public function accrueCharge(?bool $value): self
     {
@@ -76,6 +85,8 @@ class AllocateComponentsBuilder
 
     /**
      * Sets upgrade charge field.
+     *
+     * @param string|null $value
      */
     public function upgradeCharge(?string $value): self
     {
@@ -94,6 +105,8 @@ class AllocateComponentsBuilder
 
     /**
      * Sets downgrade credit field.
+     *
+     * @param string|null $value
      */
     public function downgradeCredit(?string $value): self
     {
@@ -112,6 +125,8 @@ class AllocateComponentsBuilder
 
     /**
      * Sets payment collection method field.
+     *
+     * @param string|null $value
      */
     public function paymentCollectionMethod(?string $value): self
     {
@@ -121,6 +136,8 @@ class AllocateComponentsBuilder
 
     /**
      * Sets initiate dunning field.
+     *
+     * @param bool|null $value
      */
     public function initiateDunning(?bool $value): self
     {
@@ -131,8 +148,8 @@ class AllocateComponentsBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -141,7 +158,7 @@ class AllocateComponentsBuilder
     }
 
     /**
-     * Initializes a new allocate components object.
+     * Initializes a new Allocate Components object.
      */
     public function build(): AllocateComponents
     {

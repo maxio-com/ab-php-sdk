@@ -1371,19 +1371,13 @@ https://events.chargify.com/my-site-subdomain/events/my-stream-api-handle
 ```
 
 ```php
-function recordEvent(
-    string $subdomain,
-    string $apiHandle,
-    ?string $storeUid = null,
-    ?EBBEvent $body = null
-): void
+function recordEvent(string $apiHandle, ?string $storeUid = null, ?EBBEvent $body = null): void
 ```
 
 ## Parameters
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `subdomain` | `string` | Template, Required | Your site's subdomain |
 | `apiHandle` | `string` | Template, Required | Identifies the Stream for which the event should be published. |
 | `storeUid` | `?string` | Query, Optional | If you've attached your own Keen project as an Advanced Billing event data-store, use this parameter to indicate the data-store. |
 | `body` | [`?EBBEvent`](../../doc/models/ebb-event.md) | Body, Optional | - |
@@ -1395,8 +1389,6 @@ function recordEvent(
 ## Example Usage
 
 ```php
-$subdomain = 'subdomain4';
-
 $apiHandle = 'api_handle6';
 
 $body = EBBEventBuilder::init()
@@ -1409,7 +1401,6 @@ $body = EBBEventBuilder::init()
     ->build();
 
 $subscriptionComponentsController->recordEvent(
-    $subdomain,
     $apiHandle,
     null,
     $body
@@ -1426,19 +1417,13 @@ Use this endpoint to record a collection of events.
 A maximum of 1000 events can be published in a single request. A 422 will be returned if this limit is exceeded.
 
 ```php
-function bulkRecordEvents(
-    string $subdomain,
-    string $apiHandle,
-    ?string $storeUid = null,
-    ?array $body = null
-): void
+function bulkRecordEvents(string $apiHandle, ?string $storeUid = null, ?array $body = null): void
 ```
 
 ## Parameters
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `subdomain` | `string` | Template, Required | Your site's subdomain |
 | `apiHandle` | `string` | Template, Required | Identifies the Stream for which the events should be published. |
 | `storeUid` | `?string` | Query, Optional | If you've attached your own Keen project as an Advanced Billing event data-store, use this parameter to indicate the data-store. |
 | `body` | [`?(EBBEvent[])`](../../doc/models/ebb-event.md) | Body, Optional | - |
@@ -1450,8 +1435,6 @@ function bulkRecordEvents(
 ## Example Usage
 
 ```php
-$subdomain = 'subdomain4';
-
 $apiHandle = 'api_handle6';
 
 $body = [
@@ -1466,7 +1449,6 @@ $body = [
 ];
 
 $subscriptionComponentsController->bulkRecordEvents(
-    $subdomain,
     $apiHandle,
     null,
     $body

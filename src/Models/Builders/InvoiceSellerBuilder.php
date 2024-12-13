@@ -32,7 +32,7 @@ class InvoiceSellerBuilder
     }
 
     /**
-     * Initializes a new invoice seller Builder object.
+     * Initializes a new Invoice Seller Builder object.
      */
     public static function init(): self
     {
@@ -41,6 +41,8 @@ class InvoiceSellerBuilder
 
     /**
      * Sets name field.
+     *
+     * @param string|null $value
      */
     public function name(?string $value): self
     {
@@ -50,6 +52,8 @@ class InvoiceSellerBuilder
 
     /**
      * Sets address field.
+     *
+     * @param InvoiceAddress|null $value
      */
     public function address(?InvoiceAddress $value): self
     {
@@ -59,6 +63,8 @@ class InvoiceSellerBuilder
 
     /**
      * Sets phone field.
+     *
+     * @param string|null $value
      */
     public function phone(?string $value): self
     {
@@ -68,6 +74,8 @@ class InvoiceSellerBuilder
 
     /**
      * Sets logo url field.
+     *
+     * @param string|null $value
      */
     public function logoUrl(?string $value): self
     {
@@ -87,8 +95,8 @@ class InvoiceSellerBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -97,7 +105,7 @@ class InvoiceSellerBuilder
     }
 
     /**
-     * Initializes a new invoice seller object.
+     * Initializes a new Invoice Seller object.
      */
     public function build(): InvoiceSeller
     {

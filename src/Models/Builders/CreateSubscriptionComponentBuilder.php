@@ -32,7 +32,7 @@ class CreateSubscriptionComponentBuilder
     }
 
     /**
-     * Initializes a new create subscription component Builder object.
+     * Initializes a new Create Subscription Component Builder object.
      */
     public static function init(): self
     {
@@ -41,6 +41,8 @@ class CreateSubscriptionComponentBuilder
 
     /**
      * Sets component id field.
+     *
+     * @param int|string|null $value
      */
     public function componentId($value): self
     {
@@ -50,6 +52,8 @@ class CreateSubscriptionComponentBuilder
 
     /**
      * Sets enabled field.
+     *
+     * @param bool|null $value
      */
     public function enabled(?bool $value): self
     {
@@ -59,6 +63,8 @@ class CreateSubscriptionComponentBuilder
 
     /**
      * Sets unit balance field.
+     *
+     * @param int|null $value
      */
     public function unitBalance(?int $value): self
     {
@@ -68,6 +74,8 @@ class CreateSubscriptionComponentBuilder
 
     /**
      * Sets allocated quantity field.
+     *
+     * @param int|string|null $value
      */
     public function allocatedQuantity($value): self
     {
@@ -77,6 +85,8 @@ class CreateSubscriptionComponentBuilder
 
     /**
      * Sets quantity field.
+     *
+     * @param int|null $value
      */
     public function quantity(?int $value): self
     {
@@ -86,6 +96,8 @@ class CreateSubscriptionComponentBuilder
 
     /**
      * Sets price point id field.
+     *
+     * @param int|string|null $value
      */
     public function pricePointId($value): self
     {
@@ -95,6 +107,8 @@ class CreateSubscriptionComponentBuilder
 
     /**
      * Sets custom price field.
+     *
+     * @param ComponentCustomPrice|null $value
      */
     public function customPrice(?ComponentCustomPrice $value): self
     {
@@ -105,8 +119,8 @@ class CreateSubscriptionComponentBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -115,7 +129,7 @@ class CreateSubscriptionComponentBuilder
     }
 
     /**
-     * Initializes a new create subscription component object.
+     * Initializes a new Create Subscription Component object.
      */
     public function build(): CreateSubscriptionComponent
     {

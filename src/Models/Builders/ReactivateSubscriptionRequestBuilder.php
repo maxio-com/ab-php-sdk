@@ -12,6 +12,7 @@ namespace AdvancedBillingLib\Models\Builders;
 
 use AdvancedBillingLib\Models\ReactivateSubscriptionRequest;
 use AdvancedBillingLib\Models\ReactivationBilling;
+use AdvancedBillingLib\Models\ResumeOptions;
 use Core\Utils\CoreHelper;
 
 /**
@@ -32,7 +33,7 @@ class ReactivateSubscriptionRequestBuilder
     }
 
     /**
-     * Initializes a new reactivate subscription request Builder object.
+     * Initializes a new Reactivate Subscription Request Builder object.
      */
     public static function init(): self
     {
@@ -41,6 +42,8 @@ class ReactivateSubscriptionRequestBuilder
 
     /**
      * Sets calendar billing field.
+     *
+     * @param ReactivationBilling|null $value
      */
     public function calendarBilling(?ReactivationBilling $value): self
     {
@@ -50,6 +53,8 @@ class ReactivateSubscriptionRequestBuilder
 
     /**
      * Sets include trial field.
+     *
+     * @param bool|null $value
      */
     public function includeTrial(?bool $value): self
     {
@@ -59,6 +64,8 @@ class ReactivateSubscriptionRequestBuilder
 
     /**
      * Sets preserve balance field.
+     *
+     * @param bool|null $value
      */
     public function preserveBalance(?bool $value): self
     {
@@ -68,6 +75,8 @@ class ReactivateSubscriptionRequestBuilder
 
     /**
      * Sets coupon code field.
+     *
+     * @param string|null $value
      */
     public function couponCode(?string $value): self
     {
@@ -77,6 +86,8 @@ class ReactivateSubscriptionRequestBuilder
 
     /**
      * Sets use credits and prepayments field.
+     *
+     * @param bool|null $value
      */
     public function useCreditsAndPrepayments(?bool $value): self
     {
@@ -86,6 +97,8 @@ class ReactivateSubscriptionRequestBuilder
 
     /**
      * Sets resume field.
+     *
+     * @param bool|ResumeOptions|null $value
      */
     public function resume($value): self
     {
@@ -96,8 +109,8 @@ class ReactivateSubscriptionRequestBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -106,7 +119,7 @@ class ReactivateSubscriptionRequestBuilder
     }
 
     /**
-     * Initializes a new reactivate subscription request object.
+     * Initializes a new Reactivate Subscription Request object.
      */
     public function build(): ReactivateSubscriptionRequest
     {

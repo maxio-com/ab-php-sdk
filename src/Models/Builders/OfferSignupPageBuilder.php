@@ -31,7 +31,7 @@ class OfferSignupPageBuilder
     }
 
     /**
-     * Initializes a new offer signup page Builder object.
+     * Initializes a new Offer Signup Page Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class OfferSignupPageBuilder
 
     /**
      * Sets id field.
+     *
+     * @param int|null $value
      */
     public function id(?int $value): self
     {
@@ -49,6 +51,8 @@ class OfferSignupPageBuilder
 
     /**
      * Sets nickname field.
+     *
+     * @param string|null $value
      */
     public function nickname(?string $value): self
     {
@@ -58,6 +62,8 @@ class OfferSignupPageBuilder
 
     /**
      * Sets enabled field.
+     *
+     * @param bool|null $value
      */
     public function enabled(?bool $value): self
     {
@@ -67,6 +73,8 @@ class OfferSignupPageBuilder
 
     /**
      * Sets return url field.
+     *
+     * @param string|null $value
      */
     public function returnUrl(?string $value): self
     {
@@ -76,6 +84,8 @@ class OfferSignupPageBuilder
 
     /**
      * Sets return params field.
+     *
+     * @param string|null $value
      */
     public function returnParams(?string $value): self
     {
@@ -85,6 +95,8 @@ class OfferSignupPageBuilder
 
     /**
      * Sets url field.
+     *
+     * @param string|null $value
      */
     public function url(?string $value): self
     {
@@ -95,8 +107,8 @@ class OfferSignupPageBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -105,7 +117,7 @@ class OfferSignupPageBuilder
     }
 
     /**
-     * Initializes a new offer signup page object.
+     * Initializes a new Offer Signup Page object.
      */
     public function build(): OfferSignupPage
     {

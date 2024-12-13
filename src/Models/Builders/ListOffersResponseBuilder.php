@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace AdvancedBillingLib\Models\Builders;
 
 use AdvancedBillingLib\Models\ListOffersResponse;
+use AdvancedBillingLib\Models\Offer;
 use Core\Utils\CoreHelper;
 
 /**
@@ -31,7 +32,7 @@ class ListOffersResponseBuilder
     }
 
     /**
-     * Initializes a new list offers response Builder object.
+     * Initializes a new List Offers Response Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +41,8 @@ class ListOffersResponseBuilder
 
     /**
      * Sets offers field.
+     *
+     * @param Offer[]|null $value
      */
     public function offers(?array $value): self
     {
@@ -50,8 +53,8 @@ class ListOffersResponseBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -60,7 +63,7 @@ class ListOffersResponseBuilder
     }
 
     /**
-     * Initializes a new list offers response object.
+     * Initializes a new List Offers Response object.
      */
     public function build(): ListOffersResponse
     {

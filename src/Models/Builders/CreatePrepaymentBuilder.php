@@ -31,7 +31,12 @@ class CreatePrepaymentBuilder
     }
 
     /**
-     * Initializes a new create prepayment Builder object.
+     * Initializes a new Create Prepayment Builder object.
+     *
+     * @param float $amount
+     * @param string $details
+     * @param string $memo
+     * @param string $method
      */
     public static function init(float $amount, string $details, string $memo, string $method): self
     {
@@ -40,6 +45,8 @@ class CreatePrepaymentBuilder
 
     /**
      * Sets payment profile id field.
+     *
+     * @param int|null $value
      */
     public function paymentProfileId(?int $value): self
     {
@@ -50,8 +57,8 @@ class CreatePrepaymentBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -60,7 +67,7 @@ class CreatePrepaymentBuilder
     }
 
     /**
-     * Initializes a new create prepayment object.
+     * Initializes a new Create Prepayment object.
      */
     public function build(): CreatePrepayment
     {

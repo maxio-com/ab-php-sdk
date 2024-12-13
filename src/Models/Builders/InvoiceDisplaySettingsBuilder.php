@@ -31,7 +31,7 @@ class InvoiceDisplaySettingsBuilder
     }
 
     /**
-     * Initializes a new invoice display settings Builder object.
+     * Initializes a new Invoice Display Settings Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class InvoiceDisplaySettingsBuilder
 
     /**
      * Sets hide zero subtotal lines field.
+     *
+     * @param bool|null $value
      */
     public function hideZeroSubtotalLines(?bool $value): self
     {
@@ -49,6 +51,8 @@ class InvoiceDisplaySettingsBuilder
 
     /**
      * Sets include discounts on lines field.
+     *
+     * @param bool|null $value
      */
     public function includeDiscountsOnLines(?bool $value): self
     {
@@ -59,8 +63,8 @@ class InvoiceDisplaySettingsBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -69,7 +73,7 @@ class InvoiceDisplaySettingsBuilder
     }
 
     /**
-     * Initializes a new invoice display settings object.
+     * Initializes a new Invoice Display Settings object.
      */
     public function build(): InvoiceDisplaySettings
     {

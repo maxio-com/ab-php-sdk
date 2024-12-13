@@ -10,6 +10,8 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models\Builders;
 
+use AdvancedBillingLib\Models\ComponentPricePointItem;
+use AdvancedBillingLib\Models\Price;
 use AdvancedBillingLib\Models\QuantityBasedComponent;
 use Core\Utils\CoreHelper;
 
@@ -31,7 +33,11 @@ class QuantityBasedComponentBuilder
     }
 
     /**
-     * Initializes a new quantity based component Builder object.
+     * Initializes a new Quantity Based Component Builder object.
+     *
+     * @param string $name
+     * @param string $unitName
+     * @param string $pricingScheme
      */
     public static function init(string $name, string $unitName, string $pricingScheme): self
     {
@@ -40,6 +46,8 @@ class QuantityBasedComponentBuilder
 
     /**
      * Sets description field.
+     *
+     * @param string|null $value
      */
     public function description(?string $value): self
     {
@@ -49,6 +57,8 @@ class QuantityBasedComponentBuilder
 
     /**
      * Sets handle field.
+     *
+     * @param string|null $value
      */
     public function handle(?string $value): self
     {
@@ -58,6 +68,8 @@ class QuantityBasedComponentBuilder
 
     /**
      * Sets taxable field.
+     *
+     * @param bool|null $value
      */
     public function taxable(?bool $value): self
     {
@@ -67,6 +79,8 @@ class QuantityBasedComponentBuilder
 
     /**
      * Sets prices field.
+     *
+     * @param Price[]|null $value
      */
     public function prices(?array $value): self
     {
@@ -76,6 +90,8 @@ class QuantityBasedComponentBuilder
 
     /**
      * Sets upgrade charge field.
+     *
+     * @param string|null $value
      */
     public function upgradeCharge(?string $value): self
     {
@@ -94,6 +110,8 @@ class QuantityBasedComponentBuilder
 
     /**
      * Sets downgrade credit field.
+     *
+     * @param string|null $value
      */
     public function downgradeCredit(?string $value): self
     {
@@ -112,6 +130,8 @@ class QuantityBasedComponentBuilder
 
     /**
      * Sets price points field.
+     *
+     * @param ComponentPricePointItem[]|null $value
      */
     public function pricePoints(?array $value): self
     {
@@ -121,6 +141,8 @@ class QuantityBasedComponentBuilder
 
     /**
      * Sets unit price field.
+     *
+     * @param string|float|null $value
      */
     public function unitPrice($value): self
     {
@@ -130,6 +152,8 @@ class QuantityBasedComponentBuilder
 
     /**
      * Sets tax code field.
+     *
+     * @param string|null $value
      */
     public function taxCode(?string $value): self
     {
@@ -139,6 +163,8 @@ class QuantityBasedComponentBuilder
 
     /**
      * Sets hide date range on invoice field.
+     *
+     * @param bool|null $value
      */
     public function hideDateRangeOnInvoice(?bool $value): self
     {
@@ -147,16 +173,9 @@ class QuantityBasedComponentBuilder
     }
 
     /**
-     * Sets price in cents field.
-     */
-    public function priceInCents(?string $value): self
-    {
-        $this->instance->setPriceInCents($value);
-        return $this;
-    }
-
-    /**
      * Sets recurring field.
+     *
+     * @param bool|null $value
      */
     public function recurring(?bool $value): self
     {
@@ -166,6 +185,8 @@ class QuantityBasedComponentBuilder
 
     /**
      * Sets display on hosted page field.
+     *
+     * @param bool|null $value
      */
     public function displayOnHostedPage(?bool $value): self
     {
@@ -175,6 +196,8 @@ class QuantityBasedComponentBuilder
 
     /**
      * Sets allow fractional quantities field.
+     *
+     * @param bool|null $value
      */
     public function allowFractionalQuantities(?bool $value): self
     {
@@ -184,6 +207,8 @@ class QuantityBasedComponentBuilder
 
     /**
      * Sets public signup page ids field.
+     *
+     * @param int[]|null $value
      */
     public function publicSignupPageIds(?array $value): self
     {
@@ -193,6 +218,8 @@ class QuantityBasedComponentBuilder
 
     /**
      * Sets interval field.
+     *
+     * @param int|null $value
      */
     public function interval(?int $value): self
     {
@@ -202,6 +229,8 @@ class QuantityBasedComponentBuilder
 
     /**
      * Sets interval unit field.
+     *
+     * @param string|null $value
      */
     public function intervalUnit(?string $value): self
     {
@@ -221,8 +250,8 @@ class QuantityBasedComponentBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -231,7 +260,7 @@ class QuantityBasedComponentBuilder
     }
 
     /**
-     * Initializes a new quantity based component object.
+     * Initializes a new Quantity Based Component object.
      */
     public function build(): QuantityBasedComponent
     {

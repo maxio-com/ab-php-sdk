@@ -31,7 +31,7 @@ class TaxConfigurationBuilder
     }
 
     /**
-     * Initializes a new tax configuration Builder object.
+     * Initializes a new Tax Configuration Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class TaxConfigurationBuilder
 
     /**
      * Sets kind field.
+     *
+     * @param string|null $value
      */
     public function kind(?string $value): self
     {
@@ -49,6 +51,8 @@ class TaxConfigurationBuilder
 
     /**
      * Sets destination address field.
+     *
+     * @param string|null $value
      */
     public function destinationAddress(?string $value): self
     {
@@ -58,6 +62,8 @@ class TaxConfigurationBuilder
 
     /**
      * Sets fully configured field.
+     *
+     * @param bool|null $value
      */
     public function fullyConfigured(?bool $value): self
     {
@@ -68,8 +74,8 @@ class TaxConfigurationBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -78,7 +84,7 @@ class TaxConfigurationBuilder
     }
 
     /**
-     * Initializes a new tax configuration object.
+     * Initializes a new Tax Configuration object.
      */
     public function build(): TaxConfiguration
     {

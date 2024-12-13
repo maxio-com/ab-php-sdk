@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models\Builders;
 
+use AdvancedBillingLib\Models\CouponCurrency;
 use AdvancedBillingLib\Models\CouponCurrencyResponse;
 use Core\Utils\CoreHelper;
 
@@ -31,7 +32,7 @@ class CouponCurrencyResponseBuilder
     }
 
     /**
-     * Initializes a new coupon currency response Builder object.
+     * Initializes a new Coupon Currency Response Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +41,8 @@ class CouponCurrencyResponseBuilder
 
     /**
      * Sets currency prices field.
+     *
+     * @param CouponCurrency[]|null $value
      */
     public function currencyPrices(?array $value): self
     {
@@ -50,8 +53,8 @@ class CouponCurrencyResponseBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -60,7 +63,7 @@ class CouponCurrencyResponseBuilder
     }
 
     /**
-     * Initializes a new coupon currency response object.
+     * Initializes a new Coupon Currency Response object.
      */
     public function build(): CouponCurrencyResponse
     {

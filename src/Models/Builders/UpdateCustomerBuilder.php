@@ -31,7 +31,7 @@ class UpdateCustomerBuilder
     }
 
     /**
-     * Initializes a new update customer Builder object.
+     * Initializes a new Update Customer Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class UpdateCustomerBuilder
 
     /**
      * Sets first name field.
+     *
+     * @param string|null $value
      */
     public function firstName(?string $value): self
     {
@@ -49,6 +51,8 @@ class UpdateCustomerBuilder
 
     /**
      * Sets last name field.
+     *
+     * @param string|null $value
      */
     public function lastName(?string $value): self
     {
@@ -58,6 +62,8 @@ class UpdateCustomerBuilder
 
     /**
      * Sets email field.
+     *
+     * @param string|null $value
      */
     public function email(?string $value): self
     {
@@ -67,6 +73,8 @@ class UpdateCustomerBuilder
 
     /**
      * Sets cc emails field.
+     *
+     * @param string|null $value
      */
     public function ccEmails(?string $value): self
     {
@@ -76,6 +84,8 @@ class UpdateCustomerBuilder
 
     /**
      * Sets organization field.
+     *
+     * @param string|null $value
      */
     public function organization(?string $value): self
     {
@@ -85,6 +95,8 @@ class UpdateCustomerBuilder
 
     /**
      * Sets reference field.
+     *
+     * @param string|null $value
      */
     public function reference(?string $value): self
     {
@@ -94,6 +106,8 @@ class UpdateCustomerBuilder
 
     /**
      * Sets address field.
+     *
+     * @param string|null $value
      */
     public function address(?string $value): self
     {
@@ -103,6 +117,8 @@ class UpdateCustomerBuilder
 
     /**
      * Sets address 2 field.
+     *
+     * @param string|null $value
      */
     public function address2(?string $value): self
     {
@@ -112,6 +128,8 @@ class UpdateCustomerBuilder
 
     /**
      * Sets city field.
+     *
+     * @param string|null $value
      */
     public function city(?string $value): self
     {
@@ -121,6 +139,8 @@ class UpdateCustomerBuilder
 
     /**
      * Sets state field.
+     *
+     * @param string|null $value
      */
     public function state(?string $value): self
     {
@@ -130,6 +150,8 @@ class UpdateCustomerBuilder
 
     /**
      * Sets zip field.
+     *
+     * @param string|null $value
      */
     public function zip(?string $value): self
     {
@@ -139,6 +161,8 @@ class UpdateCustomerBuilder
 
     /**
      * Sets country field.
+     *
+     * @param string|null $value
      */
     public function country(?string $value): self
     {
@@ -148,6 +172,8 @@ class UpdateCustomerBuilder
 
     /**
      * Sets phone field.
+     *
+     * @param string|null $value
      */
     public function phone(?string $value): self
     {
@@ -157,6 +183,8 @@ class UpdateCustomerBuilder
 
     /**
      * Sets locale field.
+     *
+     * @param string|null $value
      */
     public function locale(?string $value): self
     {
@@ -166,6 +194,8 @@ class UpdateCustomerBuilder
 
     /**
      * Sets vat number field.
+     *
+     * @param string|null $value
      */
     public function vatNumber(?string $value): self
     {
@@ -175,6 +205,8 @@ class UpdateCustomerBuilder
 
     /**
      * Sets tax exempt field.
+     *
+     * @param bool|null $value
      */
     public function taxExempt(?bool $value): self
     {
@@ -184,6 +216,8 @@ class UpdateCustomerBuilder
 
     /**
      * Sets tax exempt reason field.
+     *
+     * @param string|null $value
      */
     public function taxExemptReason(?string $value): self
     {
@@ -193,6 +227,8 @@ class UpdateCustomerBuilder
 
     /**
      * Sets parent id field.
+     *
+     * @param int|null $value
      */
     public function parentId(?int $value): self
     {
@@ -211,6 +247,8 @@ class UpdateCustomerBuilder
 
     /**
      * Sets verified field.
+     *
+     * @param bool|null $value
      */
     public function verified(?bool $value): self
     {
@@ -229,6 +267,8 @@ class UpdateCustomerBuilder
 
     /**
      * Sets salesforce id field.
+     *
+     * @param string|null $value
      */
     public function salesforceId(?string $value): self
     {
@@ -248,8 +288,8 @@ class UpdateCustomerBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -258,7 +298,7 @@ class UpdateCustomerBuilder
     }
 
     /**
-     * Initializes a new update customer object.
+     * Initializes a new Update Customer object.
      */
     public function build(): UpdateCustomer
     {

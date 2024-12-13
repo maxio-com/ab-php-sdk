@@ -31,7 +31,9 @@ class SubscriptionGroupSingleErrorBuilder
     }
 
     /**
-     * Initializes a new subscription group single error Builder object.
+     * Initializes a new Subscription Group Single Error Builder object.
+     *
+     * @param string $subscriptionGroup
      */
     public static function init(string $subscriptionGroup): self
     {
@@ -41,8 +43,8 @@ class SubscriptionGroupSingleErrorBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -51,7 +53,7 @@ class SubscriptionGroupSingleErrorBuilder
     }
 
     /**
-     * Initializes a new subscription group single error object.
+     * Initializes a new Subscription Group Single Error object.
      */
     public function build(): SubscriptionGroupSingleError
     {

@@ -31,7 +31,7 @@ class SubscriptionGroupPaymentProfileBuilder
     }
 
     /**
-     * Initializes a new subscription group payment profile Builder object.
+     * Initializes a new Subscription Group Payment Profile Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class SubscriptionGroupPaymentProfileBuilder
 
     /**
      * Sets id field.
+     *
+     * @param int|null $value
      */
     public function id(?int $value): self
     {
@@ -49,6 +51,8 @@ class SubscriptionGroupPaymentProfileBuilder
 
     /**
      * Sets first name field.
+     *
+     * @param string|null $value
      */
     public function firstName(?string $value): self
     {
@@ -58,6 +62,8 @@ class SubscriptionGroupPaymentProfileBuilder
 
     /**
      * Sets last name field.
+     *
+     * @param string|null $value
      */
     public function lastName(?string $value): self
     {
@@ -67,6 +73,8 @@ class SubscriptionGroupPaymentProfileBuilder
 
     /**
      * Sets masked card number field.
+     *
+     * @param string|null $value
      */
     public function maskedCardNumber(?string $value): self
     {
@@ -77,8 +85,8 @@ class SubscriptionGroupPaymentProfileBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -87,7 +95,7 @@ class SubscriptionGroupPaymentProfileBuilder
     }
 
     /**
-     * Initializes a new subscription group payment profile object.
+     * Initializes a new Subscription Group Payment Profile object.
      */
     public function build(): SubscriptionGroupPaymentProfile
     {

@@ -141,6 +141,12 @@ $result = $reasonCodesController->listReasonCodes($collect);
 ]
 ```
 
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
+
 
 # Read Reason Code
 
@@ -207,6 +213,7 @@ $result = $reasonCodesController->updateReasonCode($reasonCodeId);
 | HTTP Status Code | Error Description | Exception Class |
 |  --- | --- | --- |
 | 404 | Not Found | `ApiException` |
+| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
 
 
 # Delete Reason Code
@@ -214,7 +221,7 @@ $result = $reasonCodesController->updateReasonCode($reasonCodeId);
 This method gives a merchant the option to delete one reason code from the Churn Reason Codes. This code will be immediately removed. This action is not reversable.
 
 ```php
-function deleteReasonCode(int $reasonCodeId): ReasonCodesJsonResponse
+function deleteReasonCode(int $reasonCodeId): OkResponse
 ```
 
 ## Parameters
@@ -225,7 +232,7 @@ function deleteReasonCode(int $reasonCodeId): ReasonCodesJsonResponse
 
 ## Response Type
 
-[`ReasonCodesJsonResponse`](../../doc/models/reason-codes-json-response.md)
+[`OkResponse`](../../doc/models/ok-response.md)
 
 ## Example Usage
 

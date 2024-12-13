@@ -32,7 +32,9 @@ class CreateOnOffComponentBuilder
     }
 
     /**
-     * Initializes a new create on off component Builder object.
+     * Initializes a new Create On Off Component Builder object.
+     *
+     * @param OnOffComponent $onOffComponent
      */
     public static function init(OnOffComponent $onOffComponent): self
     {
@@ -42,8 +44,8 @@ class CreateOnOffComponentBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -52,7 +54,7 @@ class CreateOnOffComponentBuilder
     }
 
     /**
-     * Initializes a new create on off component object.
+     * Initializes a new Create On Off Component object.
      */
     public function build(): CreateOnOffComponent
     {

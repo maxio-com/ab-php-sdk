@@ -31,7 +31,7 @@ class OverrideSubscriptionBuilder
     }
 
     /**
-     * Initializes a new override subscription Builder object.
+     * Initializes a new Override Subscription Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class OverrideSubscriptionBuilder
 
     /**
      * Sets activated at field.
+     *
+     * @param \DateTime|null $value
      */
     public function activatedAt(?\DateTime $value): self
     {
@@ -49,6 +51,8 @@ class OverrideSubscriptionBuilder
 
     /**
      * Sets canceled at field.
+     *
+     * @param \DateTime|null $value
      */
     public function canceledAt(?\DateTime $value): self
     {
@@ -58,6 +62,8 @@ class OverrideSubscriptionBuilder
 
     /**
      * Sets cancellation message field.
+     *
+     * @param string|null $value
      */
     public function cancellationMessage(?string $value): self
     {
@@ -67,6 +73,8 @@ class OverrideSubscriptionBuilder
 
     /**
      * Sets expires at field.
+     *
+     * @param \DateTime|null $value
      */
     public function expiresAt(?\DateTime $value): self
     {
@@ -76,6 +84,8 @@ class OverrideSubscriptionBuilder
 
     /**
      * Sets current period starts at field.
+     *
+     * @param \DateTime|null $value
      */
     public function currentPeriodStartsAt(?\DateTime $value): self
     {
@@ -86,8 +96,8 @@ class OverrideSubscriptionBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -96,7 +106,7 @@ class OverrideSubscriptionBuilder
     }
 
     /**
-     * Initializes a new override subscription object.
+     * Initializes a new Override Subscription object.
      */
     public function build(): OverrideSubscription
     {

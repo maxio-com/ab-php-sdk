@@ -32,7 +32,9 @@ class CreateSegmentRequestBuilder
     }
 
     /**
-     * Initializes a new create segment request Builder object.
+     * Initializes a new Create Segment Request Builder object.
+     *
+     * @param CreateSegment $segment
      */
     public static function init(CreateSegment $segment): self
     {
@@ -42,8 +44,8 @@ class CreateSegmentRequestBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -52,7 +54,7 @@ class CreateSegmentRequestBuilder
     }
 
     /**
-     * Initializes a new create segment request object.
+     * Initializes a new Create Segment Request object.
      */
     public function build(): CreateSegmentRequest
     {

@@ -31,7 +31,13 @@ class IssueInvoiceEventDataBuilder
     }
 
     /**
-     * Initializes a new issue invoice event data Builder object.
+     * Initializes a new Issue Invoice Event Data Builder object.
+     *
+     * @param string $consolidationLevel
+     * @param string $fromStatus
+     * @param string $toStatus
+     * @param string $dueAmount
+     * @param string $totalAmount
      */
     public static function init(
         string $consolidationLevel,
@@ -48,8 +54,8 @@ class IssueInvoiceEventDataBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -58,7 +64,7 @@ class IssueInvoiceEventDataBuilder
     }
 
     /**
-     * Initializes a new issue invoice event data object.
+     * Initializes a new Issue Invoice Event Data object.
      */
     public function build(): IssueInvoiceEventData
     {

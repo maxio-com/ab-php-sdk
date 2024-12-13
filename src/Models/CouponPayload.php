@@ -10,18 +10,19 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
-class CreateOrUpdateFlatAmountCoupon implements \JsonSerializable
+class CouponPayload implements \JsonSerializable
 {
     /**
-     * @var string
+     * @var string|null
      */
     private $name;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $code;
 
@@ -31,7 +32,12 @@ class CreateOrUpdateFlatAmountCoupon implements \JsonSerializable
     private $description;
 
     /**
-     * @var int
+     * @var string|float|null
+     */
+    private $percentage;
+
+    /**
+     * @var int|null
      */
     private $amountInCents;
 
@@ -81,63 +87,55 @@ class CreateOrUpdateFlatAmountCoupon implements \JsonSerializable
     private $applyOnSubscriptionExpiration;
 
     /**
-     * @param string $name
-     * @param string $code
-     * @param int $amountInCents
-     */
-    public function __construct(string $name, string $code, int $amountInCents)
-    {
-        $this->name = $name;
-        $this->code = $code;
-        $this->amountInCents = $amountInCents;
-    }
-
-    /**
      * Returns Name.
-     * the name of the coupon
+     * Required when creating a new coupon. This name is not displayed to customers and is limited to 255
+     * characters.
      */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
 
     /**
      * Sets Name.
-     * the name of the coupon
+     * Required when creating a new coupon. This name is not displayed to customers and is limited to 255
+     * characters.
      *
-     * @required
      * @maps name
      */
-    public function setName(string $name): void
+    public function setName(?string $name): void
     {
         $this->name = $name;
     }
 
     /**
      * Returns Code.
-     * may contain uppercase alphanumeric characters and these special characters (which allow for email
-     * addresses to be used): “%”, “@”, “+”, “-”, “_”, and “.”
+     * Required when creating a new coupon. The code is limited to 255 characters. May contain uppercase
+     * alphanumeric characters and these special characters (which allow for email addresses to be used):
+     * “%”, “@”, “+”, “-”, “_”, and “.”
      */
-    public function getCode(): string
+    public function getCode(): ?string
     {
         return $this->code;
     }
 
     /**
      * Sets Code.
-     * may contain uppercase alphanumeric characters and these special characters (which allow for email
-     * addresses to be used): “%”, “@”, “+”, “-”, “_”, and “.”
+     * Required when creating a new coupon. The code is limited to 255 characters. May contain uppercase
+     * alphanumeric characters and these special characters (which allow for email addresses to be used):
+     * “%”, “@”, “+”, “-”, “_”, and “.”
      *
-     * @required
      * @maps code
      */
-    public function setCode(string $code): void
+    public function setCode(?string $code): void
     {
         $this->code = $code;
     }
 
     /**
      * Returns Description.
+     * Required when creating a new coupon. A description of the coupon that can be displayed to customers
+     * in transactions and on statements. The description is limited to 255 characters.
      */
     public function getDescription(): ?string
     {
@@ -146,6 +144,8 @@ class CreateOrUpdateFlatAmountCoupon implements \JsonSerializable
 
     /**
      * Sets Description.
+     * Required when creating a new coupon. A description of the coupon that can be displayed to customers
+     * in transactions and on statements. The description is limited to 255 characters.
      *
      * @maps description
      */
@@ -155,26 +155,58 @@ class CreateOrUpdateFlatAmountCoupon implements \JsonSerializable
     }
 
     /**
-     * Returns Amount in Cents.
+     * Returns Percentage.
+     * Required when creating a new percentage coupon. Can't be used together with amount_in_cents.
+     * Percentage discount
+     *
+     * @return string|float|null
      */
-    public function getAmountInCents(): int
+    public function getPercentage()
+    {
+        return $this->percentage;
+    }
+
+    /**
+     * Sets Percentage.
+     * Required when creating a new percentage coupon. Can't be used together with amount_in_cents.
+     * Percentage discount
+     *
+     * @maps percentage
+     * @mapsBy anyOf(oneOf(string,float),null)
+     *
+     * @param string|float|null $percentage
+     */
+    public function setPercentage($percentage): void
+    {
+        $this->percentage = $percentage;
+    }
+
+    /**
+     * Returns Amount in Cents.
+     * Required when creating a new flat amount coupon. Can't be used together with percentage. Flat USD
+     * discount
+     */
+    public function getAmountInCents(): ?int
     {
         return $this->amountInCents;
     }
 
     /**
      * Sets Amount in Cents.
+     * Required when creating a new flat amount coupon. Can't be used together with percentage. Flat USD
+     * discount
      *
-     * @required
      * @maps amount_in_cents
      */
-    public function setAmountInCents(int $amountInCents): void
+    public function setAmountInCents(?int $amountInCents): void
     {
         $this->amountInCents = $amountInCents;
     }
 
     /**
      * Returns Allow Negative Balance.
+     * If set to true, discount is not limited (credits will carry forward to next billing). Can't be used
+     * together with restrictions.
      */
     public function getAllowNegativeBalance(): ?bool
     {
@@ -183,6 +215,8 @@ class CreateOrUpdateFlatAmountCoupon implements \JsonSerializable
 
     /**
      * Sets Allow Negative Balance.
+     * If set to true, discount is not limited (credits will carry forward to next billing). Can't be used
+     * together with restrictions.
      *
      * @maps allow_negative_balance
      */
@@ -211,6 +245,8 @@ class CreateOrUpdateFlatAmountCoupon implements \JsonSerializable
 
     /**
      * Returns End Date.
+     * After the end of the given day, this coupon code will be invalid for new signups. Recurring
+     * discounts started before this date will continue to recur even after this date.
      */
     public function getEndDate(): ?\DateTime
     {
@@ -219,9 +255,11 @@ class CreateOrUpdateFlatAmountCoupon implements \JsonSerializable
 
     /**
      * Sets End Date.
+     * After the end of the given day, this coupon code will be invalid for new signups. Recurring
+     * discounts started before this date will continue to recur even after this date.
      *
      * @maps end_date
-     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromSimpleDate
      */
     public function setEndDate(?\DateTime $endDate): void
     {
@@ -248,6 +286,7 @@ class CreateOrUpdateFlatAmountCoupon implements \JsonSerializable
 
     /**
      * Returns Stackable.
+     * A stackable coupon can be combined with other coupons on a Subscription.
      */
     public function getStackable(): ?bool
     {
@@ -256,6 +295,7 @@ class CreateOrUpdateFlatAmountCoupon implements \JsonSerializable
 
     /**
      * Sets Stackable.
+     * A stackable coupon can be combined with other coupons on a Subscription.
      *
      * @maps stackable
      */
@@ -266,6 +306,10 @@ class CreateOrUpdateFlatAmountCoupon implements \JsonSerializable
 
     /**
      * Returns Compounding Strategy.
+     * Applicable only to stackable coupons. For `compound`, Percentage-based discounts will be calculated
+     * against the remaining price, after prior discounts have been calculated. For `full-price`,
+     * Percentage-based discounts will always be calculated against the original item price, before other
+     * discounts are applied.
      */
     public function getCompoundingStrategy(): ?string
     {
@@ -274,6 +318,10 @@ class CreateOrUpdateFlatAmountCoupon implements \JsonSerializable
 
     /**
      * Sets Compounding Strategy.
+     * Applicable only to stackable coupons. For `compound`, Percentage-based discounts will be calculated
+     * against the remaining price, after prior discounts have been calculated. For `full-price`,
+     * Percentage-based discounts will always be calculated against the original item price, before other
+     * discounts are applied.
      *
      * @maps compounding_strategy
      * @factory \AdvancedBillingLib\Models\CompoundingStrategy::checkValue
@@ -342,12 +390,27 @@ class CreateOrUpdateFlatAmountCoupon implements \JsonSerializable
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function addAdditionalProperty(string $name, $value)
     {
         $this->additionalProperties[$name] = $value;
+    }
+
+    /**
+     * Find an additional property by name in this model or false if property does not exist.
+     *
+     * @param string $name Name of property.
+     *
+     * @return mixed|false Value of the property.
+     */
+    public function findAdditionalProperty(string $name)
+    {
+        if (isset($this->additionalProperties[$name])) {
+            return $this->additionalProperties[$name];
+        }
+        return false;
     }
 
     /**
@@ -362,12 +425,25 @@ class CreateOrUpdateFlatAmountCoupon implements \JsonSerializable
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
-        $json['name']                                 = $this->name;
-        $json['code']                                 = $this->code;
+        if (isset($this->name)) {
+            $json['name']                             = $this->name;
+        }
+        if (isset($this->code)) {
+            $json['code']                             = $this->code;
+        }
         if (isset($this->description)) {
             $json['description']                      = $this->description;
         }
-        $json['amount_in_cents']                      = $this->amountInCents;
+        if (isset($this->percentage)) {
+            $json['percentage']                       =
+                ApiHelper::getJsonHelper()->verifyTypes(
+                    $this->percentage,
+                    'anyOf(oneOf(string,float),null)'
+                );
+        }
+        if (isset($this->amountInCents)) {
+            $json['amount_in_cents']                  = $this->amountInCents;
+        }
         if (isset($this->allowNegativeBalance)) {
             $json['allow_negative_balance']           = $this->allowNegativeBalance;
         }
@@ -375,7 +451,7 @@ class CreateOrUpdateFlatAmountCoupon implements \JsonSerializable
             $json['recurring']                        = $this->recurring;
         }
         if (isset($this->endDate)) {
-            $json['end_date']                         = DateTimeHelper::toRfc3339DateTime($this->endDate);
+            $json['end_date']                         = DateTimeHelper::toSimpleDate($this->endDate);
         }
         if (isset($this->productFamilyId)) {
             $json['product_family_id']                = $this->productFamilyId;

@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace AdvancedBillingLib\Models\Builders;
 
 use AdvancedBillingLib\Models\InvoicePrePayment;
+use AdvancedBillingLib\Models\PaidInvoice;
 use AdvancedBillingLib\Models\RecordPaymentResponse;
 use Core\Utils\CoreHelper;
 
@@ -32,7 +33,7 @@ class RecordPaymentResponseBuilder
     }
 
     /**
-     * Initializes a new record payment response Builder object.
+     * Initializes a new Record Payment Response Builder object.
      */
     public static function init(): self
     {
@@ -41,6 +42,8 @@ class RecordPaymentResponseBuilder
 
     /**
      * Sets paid invoices field.
+     *
+     * @param PaidInvoice[]|null $value
      */
     public function paidInvoices(?array $value): self
     {
@@ -50,6 +53,8 @@ class RecordPaymentResponseBuilder
 
     /**
      * Sets prepayment field.
+     *
+     * @param InvoicePrePayment|null $value
      */
     public function prepayment(?InvoicePrePayment $value): self
     {
@@ -69,8 +74,8 @@ class RecordPaymentResponseBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -79,7 +84,7 @@ class RecordPaymentResponseBuilder
     }
 
     /**
-     * Initializes a new record payment response object.
+     * Initializes a new Record Payment Response object.
      */
     public function build(): RecordPaymentResponse
     {

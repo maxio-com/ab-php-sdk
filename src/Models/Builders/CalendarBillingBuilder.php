@@ -31,7 +31,7 @@ class CalendarBillingBuilder
     }
 
     /**
-     * Initializes a new calendar billing Builder object.
+     * Initializes a new Calendar Billing Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class CalendarBillingBuilder
 
     /**
      * Sets snap day field.
+     *
+     * @param int|string|null $value
      */
     public function snapDay($value): self
     {
@@ -49,6 +51,8 @@ class CalendarBillingBuilder
 
     /**
      * Sets calendar billing first charge field.
+     *
+     * @param string|null $value
      */
     public function calendarBillingFirstCharge(?string $value): self
     {
@@ -59,8 +63,8 @@ class CalendarBillingBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -69,7 +73,7 @@ class CalendarBillingBuilder
     }
 
     /**
-     * Initializes a new calendar billing object.
+     * Initializes a new Calendar Billing object.
      */
     public function build(): CalendarBilling
     {

@@ -31,7 +31,9 @@ class CreateSubscriptionGroupBuilder
     }
 
     /**
-     * Initializes a new create subscription group Builder object.
+     * Initializes a new Create Subscription Group Builder object.
+     *
+     * @param int $subscriptionId
      */
     public static function init(int $subscriptionId): self
     {
@@ -40,6 +42,8 @@ class CreateSubscriptionGroupBuilder
 
     /**
      * Sets member ids field.
+     *
+     * @param int[]|null $value
      */
     public function memberIds(?array $value): self
     {
@@ -50,8 +54,8 @@ class CreateSubscriptionGroupBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -60,7 +64,7 @@ class CreateSubscriptionGroupBuilder
     }
 
     /**
-     * Initializes a new create subscription group object.
+     * Initializes a new Create Subscription Group object.
      */
     public function build(): CreateSubscriptionGroup
     {

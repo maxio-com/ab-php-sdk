@@ -32,7 +32,9 @@ class UsageResponseBuilder
     }
 
     /**
-     * Initializes a new usage response Builder object.
+     * Initializes a new Usage Response Builder object.
+     *
+     * @param Usage $usage
      */
     public static function init(Usage $usage): self
     {
@@ -42,8 +44,8 @@ class UsageResponseBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -52,7 +54,7 @@ class UsageResponseBuilder
     }
 
     /**
-     * Initializes a new usage response object.
+     * Initializes a new Usage Response object.
      */
     public function build(): UsageResponse
     {

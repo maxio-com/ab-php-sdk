@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace AdvancedBillingLib\Models\Builders;
 
 use AdvancedBillingLib\Models\CustomerCustomFieldsChange;
+use AdvancedBillingLib\Models\InvoiceCustomField;
 use Core\Utils\CoreHelper;
 
 /**
@@ -31,7 +32,10 @@ class CustomerCustomFieldsChangeBuilder
     }
 
     /**
-     * Initializes a new customer custom fields change Builder object.
+     * Initializes a new Customer Custom Fields Change Builder object.
+     *
+     * @param InvoiceCustomField[] $before
+     * @param InvoiceCustomField[] $after
      */
     public static function init(array $before, array $after): self
     {
@@ -41,8 +45,8 @@ class CustomerCustomFieldsChangeBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -51,7 +55,7 @@ class CustomerCustomFieldsChangeBuilder
     }
 
     /**
-     * Initializes a new customer custom fields change object.
+     * Initializes a new Customer Custom Fields Change object.
      */
     public function build(): CustomerCustomFieldsChange
     {

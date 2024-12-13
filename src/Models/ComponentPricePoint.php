@@ -101,6 +101,36 @@ class ComponentPricePoint implements \JsonSerializable
     private $currencyPrices;
 
     /**
+     * @var ComponentPrice[]|null
+     */
+    private $overagePrices;
+
+    /**
+     * @var string|null
+     */
+    private $overagePricingScheme;
+
+    /**
+     * @var bool|null
+     */
+    private $renewPrepaidAllocation;
+
+    /**
+     * @var bool|null
+     */
+    private $rolloverPrepaidRemainder;
+
+    /**
+     * @var array
+     */
+    private $expirationInterval = [];
+
+    /**
+     * @var array
+     */
+    private $expirationIntervalUnit = [];
+
+    /**
      * Returns Id.
      */
     public function getId(): ?int
@@ -509,17 +539,192 @@ class ComponentPricePoint implements \JsonSerializable
         $this->currencyPrices = $currencyPrices;
     }
 
+    /**
+     * Returns Overage Prices.
+     * Applicable only to prepaid usage components. An array of overage price brackets.
+     *
+     * @return ComponentPrice[]|null
+     */
+    public function getOveragePrices(): ?array
+    {
+        return $this->overagePrices;
+    }
+
+    /**
+     * Sets Overage Prices.
+     * Applicable only to prepaid usage components. An array of overage price brackets.
+     *
+     * @maps overage_prices
+     *
+     * @param ComponentPrice[]|null $overagePrices
+     */
+    public function setOveragePrices(?array $overagePrices): void
+    {
+        $this->overagePrices = $overagePrices;
+    }
+
+    /**
+     * Returns Overage Pricing Scheme.
+     * Applicable only to prepaid usage components. Pricing scheme for overage pricing.
+     */
+    public function getOveragePricingScheme(): ?string
+    {
+        return $this->overagePricingScheme;
+    }
+
+    /**
+     * Sets Overage Pricing Scheme.
+     * Applicable only to prepaid usage components. Pricing scheme for overage pricing.
+     *
+     * @maps overage_pricing_scheme
+     * @factory \AdvancedBillingLib\Models\PricingScheme::checkValue
+     */
+    public function setOveragePricingScheme(?string $overagePricingScheme): void
+    {
+        $this->overagePricingScheme = $overagePricingScheme;
+    }
+
+    /**
+     * Returns Renew Prepaid Allocation.
+     * Applicable only to prepaid usage components. Boolean which controls whether or not the allocated
+     * quantity should be renewed at the beginning of each period.
+     */
+    public function getRenewPrepaidAllocation(): ?bool
+    {
+        return $this->renewPrepaidAllocation;
+    }
+
+    /**
+     * Sets Renew Prepaid Allocation.
+     * Applicable only to prepaid usage components. Boolean which controls whether or not the allocated
+     * quantity should be renewed at the beginning of each period.
+     *
+     * @maps renew_prepaid_allocation
+     */
+    public function setRenewPrepaidAllocation(?bool $renewPrepaidAllocation): void
+    {
+        $this->renewPrepaidAllocation = $renewPrepaidAllocation;
+    }
+
+    /**
+     * Returns Rollover Prepaid Remainder.
+     * Applicable only to prepaid usage components. Boolean which controls whether or not remaining units
+     * should be rolled over to the next period.
+     */
+    public function getRolloverPrepaidRemainder(): ?bool
+    {
+        return $this->rolloverPrepaidRemainder;
+    }
+
+    /**
+     * Sets Rollover Prepaid Remainder.
+     * Applicable only to prepaid usage components. Boolean which controls whether or not remaining units
+     * should be rolled over to the next period.
+     *
+     * @maps rollover_prepaid_remainder
+     */
+    public function setRolloverPrepaidRemainder(?bool $rolloverPrepaidRemainder): void
+    {
+        $this->rolloverPrepaidRemainder = $rolloverPrepaidRemainder;
+    }
+
+    /**
+     * Returns Expiration Interval.
+     * Applicable only to prepaid usage components where rollover_prepaid_remainder is true. The number of
+     * `expiration_interval_unit`s after which rollover amounts should expire.
+     */
+    public function getExpirationInterval(): ?int
+    {
+        if (count($this->expirationInterval) == 0) {
+            return null;
+        }
+        return $this->expirationInterval['value'];
+    }
+
+    /**
+     * Sets Expiration Interval.
+     * Applicable only to prepaid usage components where rollover_prepaid_remainder is true. The number of
+     * `expiration_interval_unit`s after which rollover amounts should expire.
+     *
+     * @maps expiration_interval
+     */
+    public function setExpirationInterval(?int $expirationInterval): void
+    {
+        $this->expirationInterval['value'] = $expirationInterval;
+    }
+
+    /**
+     * Unsets Expiration Interval.
+     * Applicable only to prepaid usage components where rollover_prepaid_remainder is true. The number of
+     * `expiration_interval_unit`s after which rollover amounts should expire.
+     */
+    public function unsetExpirationInterval(): void
+    {
+        $this->expirationInterval = [];
+    }
+
+    /**
+     * Returns Expiration Interval Unit.
+     * Applicable only to prepaid usage components where rollover_prepaid_remainder is true. A string
+     * representing the expiration interval unit for this component, either month or day.
+     */
+    public function getExpirationIntervalUnit(): ?string
+    {
+        if (count($this->expirationIntervalUnit) == 0) {
+            return null;
+        }
+        return $this->expirationIntervalUnit['value'];
+    }
+
+    /**
+     * Sets Expiration Interval Unit.
+     * Applicable only to prepaid usage components where rollover_prepaid_remainder is true. A string
+     * representing the expiration interval unit for this component, either month or day.
+     *
+     * @maps expiration_interval_unit
+     * @factory \AdvancedBillingLib\Models\ExpirationIntervalUnit::checkValue
+     */
+    public function setExpirationIntervalUnit(?string $expirationIntervalUnit): void
+    {
+        $this->expirationIntervalUnit['value'] = $expirationIntervalUnit;
+    }
+
+    /**
+     * Unsets Expiration Interval Unit.
+     * Applicable only to prepaid usage components where rollover_prepaid_remainder is true. A string
+     * representing the expiration interval unit for this component, either month or day.
+     */
+    public function unsetExpirationIntervalUnit(): void
+    {
+        $this->expirationIntervalUnit = [];
+    }
+
     private $additionalProperties = [];
 
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function addAdditionalProperty(string $name, $value)
     {
         $this->additionalProperties[$name] = $value;
+    }
+
+    /**
+     * Find an additional property by name in this model or false if property does not exist.
+     *
+     * @param string $name Name of property.
+     *
+     * @return mixed|false Value of the property.
+     */
+    public function findAdditionalProperty(string $name)
+    {
+        if (isset($this->additionalProperties[$name])) {
+            return $this->additionalProperties[$name];
+        }
+        return false;
     }
 
     /**
@@ -535,55 +740,76 @@ class ComponentPricePoint implements \JsonSerializable
     {
         $json = [];
         if (isset($this->id)) {
-            $json['id']                     = $this->id;
+            $json['id']                         = $this->id;
         }
         if (isset($this->type)) {
-            $json['type']                   = PricePointType::checkValue($this->type);
+            $json['type']                       = PricePointType::checkValue($this->type);
         }
         if (isset($this->default)) {
-            $json['default']                = $this->default;
+            $json['default']                    = $this->default;
         }
         if (isset($this->name)) {
-            $json['name']                   = $this->name;
+            $json['name']                       = $this->name;
         }
         if (isset($this->pricingScheme)) {
-            $json['pricing_scheme']         = PricingScheme::checkValue($this->pricingScheme);
+            $json['pricing_scheme']             = PricingScheme::checkValue($this->pricingScheme);
         }
         if (isset($this->componentId)) {
-            $json['component_id']           = $this->componentId;
+            $json['component_id']               = $this->componentId;
         }
         if (!empty($this->handle)) {
-            $json['handle']                 = $this->handle['value'];
+            $json['handle']                     = $this->handle['value'];
         }
         if (!empty($this->archivedAt)) {
-            $json['archived_at']            = DateTimeHelper::toRfc3339DateTime($this->archivedAt['value']);
+            $json['archived_at']                = DateTimeHelper::toRfc3339DateTime($this->archivedAt['value']);
         }
         if (isset($this->createdAt)) {
-            $json['created_at']             = DateTimeHelper::toRfc3339DateTime($this->createdAt);
+            $json['created_at']                 = DateTimeHelper::toRfc3339DateTime($this->createdAt);
         }
         if (isset($this->updatedAt)) {
-            $json['updated_at']             = DateTimeHelper::toRfc3339DateTime($this->updatedAt);
+            $json['updated_at']                 = DateTimeHelper::toRfc3339DateTime($this->updatedAt);
         }
         if (isset($this->prices)) {
-            $json['prices']                 = $this->prices;
+            $json['prices']                     = $this->prices;
         }
         if (isset($this->useSiteExchangeRate)) {
-            $json['use_site_exchange_rate'] = $this->useSiteExchangeRate;
+            $json['use_site_exchange_rate']     = $this->useSiteExchangeRate;
         }
         if (isset($this->subscriptionId)) {
-            $json['subscription_id']        = $this->subscriptionId;
+            $json['subscription_id']            = $this->subscriptionId;
         }
         if (isset($this->taxIncluded)) {
-            $json['tax_included']           = $this->taxIncluded;
+            $json['tax_included']               = $this->taxIncluded;
         }
         if (!empty($this->interval)) {
-            $json['interval']               = $this->interval['value'];
+            $json['interval']                   = $this->interval['value'];
         }
         if (!empty($this->intervalUnit)) {
-            $json['interval_unit']          = IntervalUnit::checkValue($this->intervalUnit['value']);
+            $json['interval_unit']              = IntervalUnit::checkValue($this->intervalUnit['value']);
         }
         if (isset($this->currencyPrices)) {
-            $json['currency_prices']        = $this->currencyPrices;
+            $json['currency_prices']            = $this->currencyPrices;
+        }
+        if (isset($this->overagePrices)) {
+            $json['overage_prices']             = $this->overagePrices;
+        }
+        if (isset($this->overagePricingScheme)) {
+            $json['overage_pricing_scheme']     = PricingScheme::checkValue($this->overagePricingScheme);
+        }
+        if (isset($this->renewPrepaidAllocation)) {
+            $json['renew_prepaid_allocation']   = $this->renewPrepaidAllocation;
+        }
+        if (isset($this->rolloverPrepaidRemainder)) {
+            $json['rollover_prepaid_remainder'] = $this->rolloverPrepaidRemainder;
+        }
+        if (!empty($this->expirationInterval)) {
+            $json['expiration_interval']        = $this->expirationInterval['value'];
+        }
+        if (!empty($this->expirationIntervalUnit)) {
+            $json['expiration_interval_unit']   =
+                ExpirationIntervalUnit::checkValue(
+                    $this->expirationIntervalUnit['value']
+                );
         }
         $json = array_merge($json, $this->additionalProperties);
 

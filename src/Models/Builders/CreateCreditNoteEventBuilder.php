@@ -33,7 +33,13 @@ class CreateCreditNoteEventBuilder
     }
 
     /**
-     * Initializes a new create credit note event Builder object.
+     * Initializes a new Create Credit Note Event Builder object.
+     *
+     * @param int $id
+     * @param \DateTime $timestamp
+     * @param Invoice $invoice
+     * @param string $eventType
+     * @param CreditNote $eventData
      */
     public static function init(
         int $id,
@@ -48,8 +54,8 @@ class CreateCreditNoteEventBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -58,7 +64,7 @@ class CreateCreditNoteEventBuilder
     }
 
     /**
-     * Initializes a new create credit note event object.
+     * Initializes a new Create Credit Note Event object.
      */
     public function build(): CreateCreditNoteEvent
     {

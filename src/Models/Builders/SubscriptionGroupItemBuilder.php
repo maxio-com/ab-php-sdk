@@ -31,7 +31,7 @@ class SubscriptionGroupItemBuilder
     }
 
     /**
-     * Initializes a new subscription group item Builder object.
+     * Initializes a new Subscription Group Item Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class SubscriptionGroupItemBuilder
 
     /**
      * Sets id field.
+     *
+     * @param int|null $value
      */
     public function id(?int $value): self
     {
@@ -49,6 +51,8 @@ class SubscriptionGroupItemBuilder
 
     /**
      * Sets reference field.
+     *
+     * @param string|null $value
      */
     public function reference(?string $value): self
     {
@@ -67,6 +71,8 @@ class SubscriptionGroupItemBuilder
 
     /**
      * Sets product id field.
+     *
+     * @param int|null $value
      */
     public function productId(?int $value): self
     {
@@ -76,6 +82,8 @@ class SubscriptionGroupItemBuilder
 
     /**
      * Sets product handle field.
+     *
+     * @param string|null $value
      */
     public function productHandle(?string $value): self
     {
@@ -94,6 +102,8 @@ class SubscriptionGroupItemBuilder
 
     /**
      * Sets product price point id field.
+     *
+     * @param int|null $value
      */
     public function productPricePointId(?int $value): self
     {
@@ -103,6 +113,8 @@ class SubscriptionGroupItemBuilder
 
     /**
      * Sets product price point handle field.
+     *
+     * @param string|null $value
      */
     public function productPricePointHandle(?string $value): self
     {
@@ -112,6 +124,8 @@ class SubscriptionGroupItemBuilder
 
     /**
      * Sets currency field.
+     *
+     * @param string|null $value
      */
     public function currency(?string $value): self
     {
@@ -121,6 +135,8 @@ class SubscriptionGroupItemBuilder
 
     /**
      * Sets coupon code field.
+     *
+     * @param string|null $value
      */
     public function couponCode(?string $value): self
     {
@@ -139,6 +155,8 @@ class SubscriptionGroupItemBuilder
 
     /**
      * Sets total revenue in cents field.
+     *
+     * @param int|null $value
      */
     public function totalRevenueInCents(?int $value): self
     {
@@ -148,6 +166,8 @@ class SubscriptionGroupItemBuilder
 
     /**
      * Sets balance in cents field.
+     *
+     * @param int|null $value
      */
     public function balanceInCents(?int $value): self
     {
@@ -158,8 +178,8 @@ class SubscriptionGroupItemBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -168,7 +188,7 @@ class SubscriptionGroupItemBuilder
     }
 
     /**
-     * Initializes a new subscription group item object.
+     * Initializes a new Subscription Group Item object.
      */
     public function build(): SubscriptionGroupItem
     {

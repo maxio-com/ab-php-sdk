@@ -31,7 +31,7 @@ class ComponentPriceBuilder
     }
 
     /**
-     * Initializes a new component price Builder object.
+     * Initializes a new Component Price Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class ComponentPriceBuilder
 
     /**
      * Sets id field.
+     *
+     * @param int|null $value
      */
     public function id(?int $value): self
     {
@@ -49,6 +51,8 @@ class ComponentPriceBuilder
 
     /**
      * Sets component id field.
+     *
+     * @param int|null $value
      */
     public function componentId(?int $value): self
     {
@@ -58,6 +62,8 @@ class ComponentPriceBuilder
 
     /**
      * Sets starting quantity field.
+     *
+     * @param int|null $value
      */
     public function startingQuantity(?int $value): self
     {
@@ -67,6 +73,8 @@ class ComponentPriceBuilder
 
     /**
      * Sets ending quantity field.
+     *
+     * @param int|null $value
      */
     public function endingQuantity(?int $value): self
     {
@@ -85,6 +93,8 @@ class ComponentPriceBuilder
 
     /**
      * Sets unit price field.
+     *
+     * @param string|null $value
      */
     public function unitPrice(?string $value): self
     {
@@ -94,6 +104,8 @@ class ComponentPriceBuilder
 
     /**
      * Sets price point id field.
+     *
+     * @param int|null $value
      */
     public function pricePointId(?int $value): self
     {
@@ -103,6 +115,8 @@ class ComponentPriceBuilder
 
     /**
      * Sets formatted unit price field.
+     *
+     * @param string|null $value
      */
     public function formattedUnitPrice(?string $value): self
     {
@@ -112,6 +126,8 @@ class ComponentPriceBuilder
 
     /**
      * Sets segment id field.
+     *
+     * @param int|null $value
      */
     public function segmentId(?int $value): self
     {
@@ -131,8 +147,8 @@ class ComponentPriceBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -141,7 +157,7 @@ class ComponentPriceBuilder
     }
 
     /**
-     * Initializes a new component price object.
+     * Initializes a new Component Price object.
      */
     public function build(): ComponentPrice
     {

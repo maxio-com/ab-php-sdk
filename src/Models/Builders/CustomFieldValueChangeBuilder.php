@@ -31,7 +31,13 @@ class CustomFieldValueChangeBuilder
     }
 
     /**
-     * Initializes a new custom field value change Builder object.
+     * Initializes a new Custom Field Value Change Builder object.
+     *
+     * @param string $eventType
+     * @param string $metafieldName
+     * @param int $metafieldId
+     * @param string $resourceType
+     * @param int $resourceId
      */
     public static function init(
         string $eventType,
@@ -47,6 +53,8 @@ class CustomFieldValueChangeBuilder
 
     /**
      * Sets old value field.
+     *
+     * @param string|null $value
      */
     public function oldValue(?string $value): self
     {
@@ -56,6 +64,8 @@ class CustomFieldValueChangeBuilder
 
     /**
      * Sets new value field.
+     *
+     * @param string|null $value
      */
     public function newValue(?string $value): self
     {
@@ -66,8 +76,8 @@ class CustomFieldValueChangeBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -76,7 +86,7 @@ class CustomFieldValueChangeBuilder
     }
 
     /**
-     * Initializes a new custom field value change object.
+     * Initializes a new Custom Field Value Change object.
      */
     public function build(): CustomFieldValueChange
     {

@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models\Builders;
 
+use AdvancedBillingLib\Models\CreditNote;
 use AdvancedBillingLib\Models\ListCreditNotesResponse;
 use Core\Utils\CoreHelper;
 
@@ -31,7 +32,9 @@ class ListCreditNotesResponseBuilder
     }
 
     /**
-     * Initializes a new list credit notes response Builder object.
+     * Initializes a new List Credit Notes Response Builder object.
+     *
+     * @param CreditNote[] $creditNotes
      */
     public static function init(array $creditNotes): self
     {
@@ -41,8 +44,8 @@ class ListCreditNotesResponseBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -51,7 +54,7 @@ class ListCreditNotesResponseBuilder
     }
 
     /**
-     * Initializes a new list credit notes response object.
+     * Initializes a new List Credit Notes Response object.
      */
     public function build(): ListCreditNotesResponse
     {

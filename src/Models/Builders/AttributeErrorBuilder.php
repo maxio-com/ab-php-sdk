@@ -31,7 +31,9 @@ class AttributeErrorBuilder
     }
 
     /**
-     * Initializes a new attribute error Builder object.
+     * Initializes a new Attribute Error Builder object.
+     *
+     * @param string[] $attribute
      */
     public static function init(array $attribute): self
     {
@@ -41,8 +43,8 @@ class AttributeErrorBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -51,7 +53,7 @@ class AttributeErrorBuilder
     }
 
     /**
-     * Initializes a new attribute error object.
+     * Initializes a new Attribute Error object.
      */
     public function build(): AttributeError
     {

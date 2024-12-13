@@ -10,7 +10,11 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models\Builders;
 
+use AdvancedBillingLib\Models\ApplePayPaymentProfile;
+use AdvancedBillingLib\Models\BankAccountPaymentProfile;
+use AdvancedBillingLib\Models\CreditCardPaymentProfile;
 use AdvancedBillingLib\Models\PaymentProfileResponse;
+use AdvancedBillingLib\Models\PaypalPaymentProfile;
 use Core\Utils\CoreHelper;
 
 /**
@@ -31,7 +35,9 @@ class PaymentProfileResponseBuilder
     }
 
     /**
-     * Initializes a new payment profile response Builder object.
+     * Initializes a new Payment Profile Response Builder object.
+     *
+     * @param ApplePayPaymentProfile|BankAccountPaymentProfile|CreditCardPaymentProfile|PaypalPaymentProfile $paymentProfile
      */
     public static function init($paymentProfile): self
     {
@@ -41,8 +47,8 @@ class PaymentProfileResponseBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -51,7 +57,7 @@ class PaymentProfileResponseBuilder
     }
 
     /**
-     * Initializes a new payment profile response object.
+     * Initializes a new Payment Profile Response object.
      */
     public function build(): PaymentProfileResponse
     {

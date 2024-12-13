@@ -32,7 +32,9 @@ class InvoiceResponseBuilder
     }
 
     /**
-     * Initializes a new invoice response Builder object.
+     * Initializes a new Invoice Response Builder object.
+     *
+     * @param Invoice $invoice
      */
     public static function init(Invoice $invoice): self
     {
@@ -42,8 +44,8 @@ class InvoiceResponseBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -52,7 +54,7 @@ class InvoiceResponseBuilder
     }
 
     /**
-     * Initializes a new invoice response object.
+     * Initializes a new Invoice Response object.
      */
     public function build(): InvoiceResponse
     {

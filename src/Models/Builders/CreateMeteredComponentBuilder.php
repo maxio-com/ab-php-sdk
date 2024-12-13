@@ -32,7 +32,9 @@ class CreateMeteredComponentBuilder
     }
 
     /**
-     * Initializes a new create metered component Builder object.
+     * Initializes a new Create Metered Component Builder object.
+     *
+     * @param MeteredComponent $meteredComponent
      */
     public static function init(MeteredComponent $meteredComponent): self
     {
@@ -42,8 +44,8 @@ class CreateMeteredComponentBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -52,7 +54,7 @@ class CreateMeteredComponentBuilder
     }
 
     /**
-     * Initializes a new create metered component object.
+     * Initializes a new Create Metered Component object.
      */
     public function build(): CreateMeteredComponent
     {

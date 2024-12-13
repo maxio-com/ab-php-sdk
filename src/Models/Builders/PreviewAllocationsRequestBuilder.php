@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models\Builders;
 
+use AdvancedBillingLib\Models\CreateAllocation;
 use AdvancedBillingLib\Models\PreviewAllocationsRequest;
 use Core\Utils\CoreHelper;
 
@@ -31,7 +32,9 @@ class PreviewAllocationsRequestBuilder
     }
 
     /**
-     * Initializes a new preview allocations request Builder object.
+     * Initializes a new Preview Allocations Request Builder object.
+     *
+     * @param CreateAllocation[] $allocations
      */
     public static function init(array $allocations): self
     {
@@ -40,6 +43,8 @@ class PreviewAllocationsRequestBuilder
 
     /**
      * Sets effective proration date field.
+     *
+     * @param \DateTime|null $value
      */
     public function effectiveProrationDate(?\DateTime $value): self
     {
@@ -49,6 +54,8 @@ class PreviewAllocationsRequestBuilder
 
     /**
      * Sets upgrade charge field.
+     *
+     * @param string|null $value
      */
     public function upgradeCharge(?string $value): self
     {
@@ -67,6 +74,8 @@ class PreviewAllocationsRequestBuilder
 
     /**
      * Sets downgrade credit field.
+     *
+     * @param string|null $value
      */
     public function downgradeCredit(?string $value): self
     {
@@ -86,8 +95,8 @@ class PreviewAllocationsRequestBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -96,7 +105,7 @@ class PreviewAllocationsRequestBuilder
     }
 
     /**
-     * Initializes a new preview allocations request object.
+     * Initializes a new Preview Allocations Request object.
      */
     public function build(): PreviewAllocationsRequest
     {

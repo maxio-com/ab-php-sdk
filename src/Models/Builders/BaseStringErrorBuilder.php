@@ -31,7 +31,7 @@ class BaseStringErrorBuilder
     }
 
     /**
-     * Initializes a new base string error Builder object.
+     * Initializes a new Base String Error Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class BaseStringErrorBuilder
 
     /**
      * Sets base field.
+     *
+     * @param string[]|null $value
      */
     public function base(?array $value): self
     {
@@ -50,8 +52,8 @@ class BaseStringErrorBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -60,7 +62,7 @@ class BaseStringErrorBuilder
     }
 
     /**
-     * Initializes a new base string error object.
+     * Initializes a new Base String Error object.
      */
     public function build(): BaseStringError
     {

@@ -32,7 +32,9 @@ class DeductServiceCreditRequestBuilder
     }
 
     /**
-     * Initializes a new deduct service credit request Builder object.
+     * Initializes a new Deduct Service Credit Request Builder object.
+     *
+     * @param DeductServiceCredit $deduction
      */
     public static function init(DeductServiceCredit $deduction): self
     {
@@ -42,8 +44,8 @@ class DeductServiceCreditRequestBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -52,7 +54,7 @@ class DeductServiceCreditRequestBuilder
     }
 
     /**
-     * Initializes a new deduct service credit request object.
+     * Initializes a new Deduct Service Credit Request object.
      */
     public function build(): DeductServiceCreditRequest
     {

@@ -23,7 +23,7 @@
 | `taxable` | `?bool` | Optional | Boolean flag describing whether a component is taxable or not. | getTaxable(): ?bool | setTaxable(?bool taxable): void |
 | `description` | `?string` | Optional | The description of the component. | getDescription(): ?string | setDescription(?string description): void |
 | `defaultPricePointId` | `?int` | Optional | - | getDefaultPricePointId(): ?int | setDefaultPricePointId(?int defaultPricePointId): void |
-| `overagePrices` | [`?(ComponentPrice[])`](../../doc/models/component-price.md) | Optional | An array of price brackets. If the component uses the ‘per_unit’ pricing scheme, this array will be empty. | getOveragePrices(): ?array | setOveragePrices(?array overagePrices): void |
+| `overagePrices` | [`?(ComponentPrice[])`](../../doc/models/component-price.md) | Optional | Applicable only to prepaid usage components. An array of overage price brackets. | getOveragePrices(): ?array | setOveragePrices(?array overagePrices): void |
 | `prices` | [`?(ComponentPrice[])`](../../doc/models/component-price.md) | Optional | An array of price brackets. If the component uses the ‘per_unit’ pricing scheme, this array will be empty. | getPrices(): ?array | setPrices(?array prices): void |
 | `pricePointCount` | `?int` | Optional | Count for the number of price points associated with the component | getPricePointCount(): ?int | setPricePointCount(?int pricePointCount): void |
 | `pricePointsUrl` | `?string` | Optional | URL that points to the location to read the existing price points via GET request | getPricePointsUrl(): ?string | setPricePointsUrl(?string pricePointsUrl): void |

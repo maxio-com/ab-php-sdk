@@ -31,7 +31,10 @@ class SubscriptionMRRBreakoutBuilder
     }
 
     /**
-     * Initializes a new subscription mrrbreakout Builder object.
+     * Initializes a new Subscription MRR Breakout Builder object.
+     *
+     * @param int $planAmountInCents
+     * @param int $usageAmountInCents
      */
     public static function init(int $planAmountInCents, int $usageAmountInCents): self
     {
@@ -41,8 +44,8 @@ class SubscriptionMRRBreakoutBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -51,7 +54,7 @@ class SubscriptionMRRBreakoutBuilder
     }
 
     /**
-     * Initializes a new subscription mrrbreakout object.
+     * Initializes a new Subscription MRR Breakout object.
      */
     public function build(): SubscriptionMRRBreakout
     {

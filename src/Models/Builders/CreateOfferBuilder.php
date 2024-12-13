@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace AdvancedBillingLib\Models\Builders;
 
 use AdvancedBillingLib\Models\CreateOffer;
+use AdvancedBillingLib\Models\CreateOfferComponent;
 use Core\Utils\CoreHelper;
 
 /**
@@ -31,7 +32,11 @@ class CreateOfferBuilder
     }
 
     /**
-     * Initializes a new create offer Builder object.
+     * Initializes a new Create Offer Builder object.
+     *
+     * @param string $name
+     * @param string $handle
+     * @param int $productId
      */
     public static function init(string $name, string $handle, int $productId): self
     {
@@ -40,6 +45,8 @@ class CreateOfferBuilder
 
     /**
      * Sets description field.
+     *
+     * @param string|null $value
      */
     public function description(?string $value): self
     {
@@ -49,6 +56,8 @@ class CreateOfferBuilder
 
     /**
      * Sets product price point id field.
+     *
+     * @param int|null $value
      */
     public function productPricePointId(?int $value): self
     {
@@ -58,6 +67,8 @@ class CreateOfferBuilder
 
     /**
      * Sets components field.
+     *
+     * @param CreateOfferComponent[]|null $value
      */
     public function components(?array $value): self
     {
@@ -67,6 +78,8 @@ class CreateOfferBuilder
 
     /**
      * Sets coupons field.
+     *
+     * @param string[]|null $value
      */
     public function coupons(?array $value): self
     {
@@ -77,8 +90,8 @@ class CreateOfferBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -87,7 +100,7 @@ class CreateOfferBuilder
     }
 
     /**
-     * Initializes a new create offer object.
+     * Initializes a new Create Offer object.
      */
     public function build(): CreateOffer
     {

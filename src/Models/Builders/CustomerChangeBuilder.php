@@ -34,7 +34,7 @@ class CustomerChangeBuilder
     }
 
     /**
-     * Initializes a new customer change Builder object.
+     * Initializes a new Customer Change Builder object.
      */
     public static function init(): self
     {
@@ -43,6 +43,8 @@ class CustomerChangeBuilder
 
     /**
      * Sets payer field.
+     *
+     * @param CustomerPayerChange|null $value
      */
     public function payer(?CustomerPayerChange $value): self
     {
@@ -61,6 +63,8 @@ class CustomerChangeBuilder
 
     /**
      * Sets shipping address field.
+     *
+     * @param AddressChange|null $value
      */
     public function shippingAddress(?AddressChange $value): self
     {
@@ -79,6 +83,8 @@ class CustomerChangeBuilder
 
     /**
      * Sets billing address field.
+     *
+     * @param AddressChange|null $value
      */
     public function billingAddress(?AddressChange $value): self
     {
@@ -97,6 +103,8 @@ class CustomerChangeBuilder
 
     /**
      * Sets custom fields field.
+     *
+     * @param CustomerCustomFieldsChange|null $value
      */
     public function customFields(?CustomerCustomFieldsChange $value): self
     {
@@ -116,8 +124,8 @@ class CustomerChangeBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -126,7 +134,7 @@ class CustomerChangeBuilder
     }
 
     /**
-     * Initializes a new customer change object.
+     * Initializes a new Customer Change object.
      */
     public function build(): CustomerChange
     {

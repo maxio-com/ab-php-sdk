@@ -14,6 +14,7 @@ use AdvancedBillingLib\Models\PayerAttributes;
 use AdvancedBillingLib\Models\SubscriptionGroupBankAccount;
 use AdvancedBillingLib\Models\SubscriptionGroupCreditCard;
 use AdvancedBillingLib\Models\SubscriptionGroupSignupFailureData;
+use AdvancedBillingLib\Models\SubscriptionGroupSignupItem;
 use Core\Utils\CoreHelper;
 
 /**
@@ -34,7 +35,7 @@ class SubscriptionGroupSignupFailureDataBuilder
     }
 
     /**
-     * Initializes a new subscription group signup failure data Builder object.
+     * Initializes a new Subscription Group Signup Failure Data Builder object.
      */
     public static function init(): self
     {
@@ -43,6 +44,8 @@ class SubscriptionGroupSignupFailureDataBuilder
 
     /**
      * Sets payer id field.
+     *
+     * @param int|null $value
      */
     public function payerId(?int $value): self
     {
@@ -52,6 +55,8 @@ class SubscriptionGroupSignupFailureDataBuilder
 
     /**
      * Sets payer reference field.
+     *
+     * @param string|null $value
      */
     public function payerReference(?string $value): self
     {
@@ -61,6 +66,8 @@ class SubscriptionGroupSignupFailureDataBuilder
 
     /**
      * Sets payment profile id field.
+     *
+     * @param int|null $value
      */
     public function paymentProfileId(?int $value): self
     {
@@ -70,6 +77,8 @@ class SubscriptionGroupSignupFailureDataBuilder
 
     /**
      * Sets payment collection method field.
+     *
+     * @param string|null $value
      */
     public function paymentCollectionMethod(?string $value): self
     {
@@ -79,6 +88,8 @@ class SubscriptionGroupSignupFailureDataBuilder
 
     /**
      * Sets payer attributes field.
+     *
+     * @param PayerAttributes|null $value
      */
     public function payerAttributes(?PayerAttributes $value): self
     {
@@ -88,6 +99,8 @@ class SubscriptionGroupSignupFailureDataBuilder
 
     /**
      * Sets credit card attributes field.
+     *
+     * @param SubscriptionGroupCreditCard|null $value
      */
     public function creditCardAttributes(?SubscriptionGroupCreditCard $value): self
     {
@@ -97,6 +110,8 @@ class SubscriptionGroupSignupFailureDataBuilder
 
     /**
      * Sets bank account attributes field.
+     *
+     * @param SubscriptionGroupBankAccount|null $value
      */
     public function bankAccountAttributes(?SubscriptionGroupBankAccount $value): self
     {
@@ -106,6 +121,8 @@ class SubscriptionGroupSignupFailureDataBuilder
 
     /**
      * Sets subscriptions field.
+     *
+     * @param SubscriptionGroupSignupItem[]|null $value
      */
     public function subscriptions(?array $value): self
     {
@@ -116,8 +133,8 @@ class SubscriptionGroupSignupFailureDataBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -126,7 +143,7 @@ class SubscriptionGroupSignupFailureDataBuilder
     }
 
     /**
-     * Initializes a new subscription group signup failure data object.
+     * Initializes a new Subscription Group Signup Failure Data object.
      */
     public function build(): SubscriptionGroupSignupFailureData
     {

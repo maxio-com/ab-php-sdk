@@ -31,7 +31,7 @@ class CouponSubcodesResponseBuilder
     }
 
     /**
-     * Initializes a new coupon subcodes response Builder object.
+     * Initializes a new Coupon Subcodes Response Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class CouponSubcodesResponseBuilder
 
     /**
      * Sets created codes field.
+     *
+     * @param string[]|null $value
      */
     public function createdCodes(?array $value): self
     {
@@ -49,6 +51,8 @@ class CouponSubcodesResponseBuilder
 
     /**
      * Sets duplicate codes field.
+     *
+     * @param string[]|null $value
      */
     public function duplicateCodes(?array $value): self
     {
@@ -58,6 +62,8 @@ class CouponSubcodesResponseBuilder
 
     /**
      * Sets invalid codes field.
+     *
+     * @param string[]|null $value
      */
     public function invalidCodes(?array $value): self
     {
@@ -68,8 +74,8 @@ class CouponSubcodesResponseBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -78,7 +84,7 @@ class CouponSubcodesResponseBuilder
     }
 
     /**
-     * Initializes a new coupon subcodes response object.
+     * Initializes a new Coupon Subcodes Response object.
      */
     public function build(): CouponSubcodesResponse
     {

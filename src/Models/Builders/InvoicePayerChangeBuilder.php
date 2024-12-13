@@ -31,7 +31,7 @@ class InvoicePayerChangeBuilder
     }
 
     /**
-     * Initializes a new invoice payer change Builder object.
+     * Initializes a new Invoice Payer Change Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class InvoicePayerChangeBuilder
 
     /**
      * Sets first name field.
+     *
+     * @param string|null $value
      */
     public function firstName(?string $value): self
     {
@@ -49,6 +51,8 @@ class InvoicePayerChangeBuilder
 
     /**
      * Sets last name field.
+     *
+     * @param string|null $value
      */
     public function lastName(?string $value): self
     {
@@ -58,6 +62,8 @@ class InvoicePayerChangeBuilder
 
     /**
      * Sets organization field.
+     *
+     * @param string|null $value
      */
     public function organization(?string $value): self
     {
@@ -67,6 +73,8 @@ class InvoicePayerChangeBuilder
 
     /**
      * Sets email field.
+     *
+     * @param string|null $value
      */
     public function email(?string $value): self
     {
@@ -77,8 +85,8 @@ class InvoicePayerChangeBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -87,7 +95,7 @@ class InvoicePayerChangeBuilder
     }
 
     /**
-     * Initializes a new invoice payer change object.
+     * Initializes a new Invoice Payer Change object.
      */
     public function build(): InvoicePayerChange
     {

@@ -36,11 +36,6 @@ class OnOffComponent implements \JsonSerializable
     private $taxable;
 
     /**
-     * @var Price[]|null
-     */
-    private $prices;
-
-    /**
      * @var array
      */
     private $upgradeCharge = [];
@@ -56,7 +51,7 @@ class OnOffComponent implements \JsonSerializable
     private $pricePoints;
 
     /**
-     * @var string|float|null
+     * @var string|float
      */
     private $unitPrice;
 
@@ -69,11 +64,6 @@ class OnOffComponent implements \JsonSerializable
      * @var bool|null
      */
     private $hideDateRangeOnInvoice;
-
-    /**
-     * @var string|null
-     */
-    private $priceInCents;
 
     /**
      * @var bool|null
@@ -102,10 +92,12 @@ class OnOffComponent implements \JsonSerializable
 
     /**
      * @param string $name
+     * @param string|float $unitPrice
      */
-    public function __construct(string $name)
+    public function __construct(string $name, $unitPrice)
     {
         $this->name = $name;
+        $this->unitPrice = $unitPrice;
     }
 
     /**
@@ -193,34 +185,6 @@ class OnOffComponent implements \JsonSerializable
     public function setTaxable(?bool $taxable): void
     {
         $this->taxable = $taxable;
-    }
-
-    /**
-     * Returns Prices.
-     * (Not required for ‘per_unit’ pricing schemes) One or more price brackets. See [Price Bracket
-     * Rules](https://maxio.zendesk.com/hc/en-us/articles/24261191737101-Price-Points-Components) for an
-     * overview of how price brackets work for different pricing schemes.
-     *
-     * @return Price[]|null
-     */
-    public function getPrices(): ?array
-    {
-        return $this->prices;
-    }
-
-    /**
-     * Sets Prices.
-     * (Not required for ‘per_unit’ pricing schemes) One or more price brackets. See [Price Bracket
-     * Rules](https://maxio.zendesk.com/hc/en-us/articles/24261191737101-Price-Points-Components) for an
-     * overview of how price brackets work for different pricing schemes.
-     *
-     * @maps prices
-     *
-     * @param Price[]|null $prices
-     */
-    public function setPrices(?array $prices): void
-    {
-        $this->prices = $prices;
     }
 
     /**
@@ -325,11 +289,10 @@ class OnOffComponent implements \JsonSerializable
 
     /**
      * Returns Unit Price.
-     * The amount the customer will be charged per unit when the pricing scheme is “per_unit”. For On/Off
-     * Components, this is the amount that the customer will be charged when they turn the component on for
-     * the subscription. The price can contain up to 8 decimal places. i.e. 1.00 or 0.0012 or 0.00000065
+     * This is the amount that the customer will be charged when they turn the component on for the
+     * subscription. The price can contain up to 8 decimal places. i.e. 1.00 or 0.0012 or 0.00000065
      *
-     * @return string|float|null
+     * @return string|float
      */
     public function getUnitPrice()
     {
@@ -338,14 +301,14 @@ class OnOffComponent implements \JsonSerializable
 
     /**
      * Sets Unit Price.
-     * The amount the customer will be charged per unit when the pricing scheme is “per_unit”. For On/Off
-     * Components, this is the amount that the customer will be charged when they turn the component on for
-     * the subscription. The price can contain up to 8 decimal places. i.e. 1.00 or 0.0012 or 0.00000065
+     * This is the amount that the customer will be charged when they turn the component on for the
+     * subscription. The price can contain up to 8 decimal places. i.e. 1.00 or 0.0012 or 0.00000065
      *
+     * @required
      * @maps unit_price
-     * @mapsBy anyOf(oneOf(string,float),null)
+     * @mapsBy oneOf(string,float)
      *
-     * @param string|float|null $unitPrice
+     * @param string|float $unitPrice
      */
     public function setUnitPrice($unitPrice): void
     {
@@ -394,26 +357,6 @@ class OnOffComponent implements \JsonSerializable
     public function setHideDateRangeOnInvoice(?bool $hideDateRangeOnInvoice): void
     {
         $this->hideDateRangeOnInvoice = $hideDateRangeOnInvoice;
-    }
-
-    /**
-     * Returns Price in Cents.
-     * deprecated May 2011 - use unit_price instead
-     */
-    public function getPriceInCents(): ?string
-    {
-        return $this->priceInCents;
-    }
-
-    /**
-     * Sets Price in Cents.
-     * deprecated May 2011 - use unit_price instead
-     *
-     * @maps price_in_cents
-     */
-    public function setPriceInCents(?string $priceInCents): void
-    {
-        $this->priceInCents = $priceInCents;
     }
 
     /**
@@ -539,12 +482,27 @@ class OnOffComponent implements \JsonSerializable
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function addAdditionalProperty(string $name, $value)
     {
         $this->additionalProperties[$name] = $value;
+    }
+
+    /**
+     * Find an additional property by name in this model or false if property does not exist.
+     *
+     * @param string $name Name of property.
+     *
+     * @return mixed|false Value of the property.
+     */
+    public function findAdditionalProperty(string $name)
+    {
+        if (isset($this->additionalProperties[$name])) {
+            return $this->additionalProperties[$name];
+        }
+        return false;
     }
 
     /**
@@ -569,9 +527,6 @@ class OnOffComponent implements \JsonSerializable
         if (isset($this->taxable)) {
             $json['taxable']                     = $this->taxable;
         }
-        if (isset($this->prices)) {
-            $json['prices']                      = $this->prices;
-        }
         if (!empty($this->upgradeCharge)) {
             $json['upgrade_charge']              = CreditType::checkValue($this->upgradeCharge['value']);
         }
@@ -581,21 +536,16 @@ class OnOffComponent implements \JsonSerializable
         if (isset($this->pricePoints)) {
             $json['price_points']                = $this->pricePoints;
         }
-        if (isset($this->unitPrice)) {
-            $json['unit_price']                  =
-                ApiHelper::getJsonHelper()->verifyTypes(
-                    $this->unitPrice,
-                    'anyOf(oneOf(string,float),null)'
-                );
-        }
+        $json['unit_price']                      =
+            ApiHelper::getJsonHelper()->verifyTypes(
+                $this->unitPrice,
+                'oneOf(string,float)'
+            );
         if (isset($this->taxCode)) {
             $json['tax_code']                    = $this->taxCode;
         }
         if (isset($this->hideDateRangeOnInvoice)) {
             $json['hide_date_range_on_invoice']  = $this->hideDateRangeOnInvoice;
-        }
-        if (isset($this->priceInCents)) {
-            $json['price_in_cents']              = $this->priceInCents;
         }
         if (isset($this->displayOnHostedPage)) {
             $json['display_on_hosted_page']      = $this->displayOnHostedPage;

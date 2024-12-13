@@ -31,7 +31,10 @@ class UpdateCouponCurrencyBuilder
     }
 
     /**
-     * Initializes a new update coupon currency Builder object.
+     * Initializes a new Update Coupon Currency Builder object.
+     *
+     * @param string $currency
+     * @param int $price
      */
     public static function init(string $currency, int $price): self
     {
@@ -41,8 +44,8 @@ class UpdateCouponCurrencyBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -51,7 +54,7 @@ class UpdateCouponCurrencyBuilder
     }
 
     /**
-     * Initializes a new update coupon currency object.
+     * Initializes a new Update Coupon Currency object.
      */
     public function build(): UpdateCouponCurrency
     {

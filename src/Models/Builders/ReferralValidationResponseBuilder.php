@@ -32,7 +32,7 @@ class ReferralValidationResponseBuilder
     }
 
     /**
-     * Initializes a new referral validation response Builder object.
+     * Initializes a new Referral Validation Response Builder object.
      */
     public static function init(): self
     {
@@ -41,6 +41,8 @@ class ReferralValidationResponseBuilder
 
     /**
      * Sets referral code field.
+     *
+     * @param ReferralCode|null $value
      */
     public function referralCode(?ReferralCode $value): self
     {
@@ -51,8 +53,8 @@ class ReferralValidationResponseBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -61,7 +63,7 @@ class ReferralValidationResponseBuilder
     }
 
     /**
-     * Initializes a new referral validation response object.
+     * Initializes a new Referral Validation Response object.
      */
     public function build(): ReferralValidationResponse
     {

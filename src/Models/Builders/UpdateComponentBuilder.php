@@ -31,7 +31,7 @@ class UpdateComponentBuilder
     }
 
     /**
-     * Initializes a new update component Builder object.
+     * Initializes a new Update Component Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class UpdateComponentBuilder
 
     /**
      * Sets handle field.
+     *
+     * @param string|null $value
      */
     public function handle(?string $value): self
     {
@@ -49,6 +51,8 @@ class UpdateComponentBuilder
 
     /**
      * Sets name field.
+     *
+     * @param string|null $value
      */
     public function name(?string $value): self
     {
@@ -58,6 +62,8 @@ class UpdateComponentBuilder
 
     /**
      * Sets description field.
+     *
+     * @param string|null $value
      */
     public function description(?string $value): self
     {
@@ -76,6 +82,8 @@ class UpdateComponentBuilder
 
     /**
      * Sets accounting code field.
+     *
+     * @param string|null $value
      */
     public function accountingCode(?string $value): self
     {
@@ -94,6 +102,8 @@ class UpdateComponentBuilder
 
     /**
      * Sets taxable field.
+     *
+     * @param bool|null $value
      */
     public function taxable(?bool $value): self
     {
@@ -103,6 +113,8 @@ class UpdateComponentBuilder
 
     /**
      * Sets tax code field.
+     *
+     * @param string|null $value
      */
     public function taxCode(?string $value): self
     {
@@ -121,6 +133,8 @@ class UpdateComponentBuilder
 
     /**
      * Sets item category field.
+     *
+     * @param string|null $value
      */
     public function itemCategory(?string $value): self
     {
@@ -139,6 +153,8 @@ class UpdateComponentBuilder
 
     /**
      * Sets display on hosted page field.
+     *
+     * @param bool|null $value
      */
     public function displayOnHostedPage(?bool $value): self
     {
@@ -148,6 +164,8 @@ class UpdateComponentBuilder
 
     /**
      * Sets upgrade charge field.
+     *
+     * @param string|null $value
      */
     public function upgradeCharge(?string $value): self
     {
@@ -167,8 +185,8 @@ class UpdateComponentBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -177,7 +195,7 @@ class UpdateComponentBuilder
     }
 
     /**
-     * Initializes a new update component object.
+     * Initializes a new Update Component object.
      */
     public function build(): UpdateComponent
     {

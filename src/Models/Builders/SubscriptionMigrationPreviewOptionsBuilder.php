@@ -32,7 +32,7 @@ class SubscriptionMigrationPreviewOptionsBuilder
     }
 
     /**
-     * Initializes a new subscription migration preview options Builder object.
+     * Initializes a new Subscription Migration Preview Options Builder object.
      */
     public static function init(): self
     {
@@ -41,6 +41,8 @@ class SubscriptionMigrationPreviewOptionsBuilder
 
     /**
      * Sets product id field.
+     *
+     * @param int|null $value
      */
     public function productId(?int $value): self
     {
@@ -50,6 +52,8 @@ class SubscriptionMigrationPreviewOptionsBuilder
 
     /**
      * Sets product price point id field.
+     *
+     * @param int|null $value
      */
     public function productPricePointId(?int $value): self
     {
@@ -59,6 +63,8 @@ class SubscriptionMigrationPreviewOptionsBuilder
 
     /**
      * Sets include trial field.
+     *
+     * @param bool|null $value
      */
     public function includeTrial(?bool $value): self
     {
@@ -68,6 +74,8 @@ class SubscriptionMigrationPreviewOptionsBuilder
 
     /**
      * Sets include initial charge field.
+     *
+     * @param bool|null $value
      */
     public function includeInitialCharge(?bool $value): self
     {
@@ -77,6 +85,8 @@ class SubscriptionMigrationPreviewOptionsBuilder
 
     /**
      * Sets include coupons field.
+     *
+     * @param bool|null $value
      */
     public function includeCoupons(?bool $value): self
     {
@@ -86,6 +96,8 @@ class SubscriptionMigrationPreviewOptionsBuilder
 
     /**
      * Sets preserve period field.
+     *
+     * @param bool|null $value
      */
     public function preservePeriod(?bool $value): self
     {
@@ -95,6 +107,8 @@ class SubscriptionMigrationPreviewOptionsBuilder
 
     /**
      * Sets product handle field.
+     *
+     * @param string|null $value
      */
     public function productHandle(?string $value): self
     {
@@ -104,6 +118,8 @@ class SubscriptionMigrationPreviewOptionsBuilder
 
     /**
      * Sets product price point handle field.
+     *
+     * @param string|null $value
      */
     public function productPricePointHandle(?string $value): self
     {
@@ -113,6 +129,8 @@ class SubscriptionMigrationPreviewOptionsBuilder
 
     /**
      * Sets proration field.
+     *
+     * @param Proration|null $value
      */
     public function proration(?Proration $value): self
     {
@@ -122,6 +140,8 @@ class SubscriptionMigrationPreviewOptionsBuilder
 
     /**
      * Sets proration date field.
+     *
+     * @param \DateTime|null $value
      */
     public function prorationDate(?\DateTime $value): self
     {
@@ -132,8 +152,8 @@ class SubscriptionMigrationPreviewOptionsBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -142,7 +162,7 @@ class SubscriptionMigrationPreviewOptionsBuilder
     }
 
     /**
-     * Initializes a new subscription migration preview options object.
+     * Initializes a new Subscription Migration Preview Options object.
      */
     public function build(): SubscriptionMigrationPreviewOptions
     {

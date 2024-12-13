@@ -10,13 +10,12 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
-use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
-class CreateOrUpdateCoupon implements \JsonSerializable
+class CouponRequest implements \JsonSerializable
 {
     /**
-     * @var CreateOrUpdatePercentageCoupon|CreateOrUpdateFlatAmountCoupon|null
+     * @var CouponPayload|null
      */
     private $coupon;
 
@@ -32,10 +31,8 @@ class CreateOrUpdateCoupon implements \JsonSerializable
 
     /**
      * Returns Coupon.
-     *
-     * @return CreateOrUpdatePercentageCoupon|CreateOrUpdateFlatAmountCoupon|null
      */
-    public function getCoupon()
+    public function getCoupon(): ?CouponPayload
     {
         return $this->coupon;
     }
@@ -44,11 +41,8 @@ class CreateOrUpdateCoupon implements \JsonSerializable
      * Sets Coupon.
      *
      * @maps coupon
-     * @mapsBy anyOf(oneOf(CreateOrUpdatePercentageCoupon,CreateOrUpdateFlatAmountCoupon),null)
-     *
-     * @param CreateOrUpdatePercentageCoupon|CreateOrUpdateFlatAmountCoupon|null $coupon
      */
-    public function setCoupon($coupon): void
+    public function setCoupon(?CouponPayload $coupon): void
     {
         $this->coupon = $coupon;
     }
@@ -110,12 +104,27 @@ class CreateOrUpdateCoupon implements \JsonSerializable
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function addAdditionalProperty(string $name, $value)
     {
         $this->additionalProperties[$name] = $value;
+    }
+
+    /**
+     * Find an additional property by name in this model or false if property does not exist.
+     *
+     * @param string $name Name of property.
+     *
+     * @return mixed|false Value of the property.
+     */
+    public function findAdditionalProperty(string $name)
+    {
+        if (isset($this->additionalProperties[$name])) {
+            return $this->additionalProperties[$name];
+        }
+        return false;
     }
 
     /**
@@ -131,11 +140,7 @@ class CreateOrUpdateCoupon implements \JsonSerializable
     {
         $json = [];
         if (isset($this->coupon)) {
-            $json['coupon']                =
-                ApiHelper::getJsonHelper()->verifyTypes(
-                    $this->coupon,
-                    'anyOf(oneOf(CreateOrUpdatePercentageCoupon,CreateOrUpdateFlatAmountCoupon),null)'
-                );
+            $json['coupon']                = $this->coupon;
         }
         if (isset($this->restrictedProducts)) {
             $json['restricted_products']   = $this->restrictedProducts;

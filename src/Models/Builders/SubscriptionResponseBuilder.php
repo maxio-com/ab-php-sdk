@@ -32,7 +32,7 @@ class SubscriptionResponseBuilder
     }
 
     /**
-     * Initializes a new subscription response Builder object.
+     * Initializes a new Subscription Response Builder object.
      */
     public static function init(): self
     {
@@ -41,6 +41,8 @@ class SubscriptionResponseBuilder
 
     /**
      * Sets subscription field.
+     *
+     * @param Subscription|null $value
      */
     public function subscription(?Subscription $value): self
     {
@@ -51,8 +53,8 @@ class SubscriptionResponseBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -61,7 +63,7 @@ class SubscriptionResponseBuilder
     }
 
     /**
-     * Initializes a new subscription response object.
+     * Initializes a new Subscription Response object.
      */
     public function build(): SubscriptionResponse
     {

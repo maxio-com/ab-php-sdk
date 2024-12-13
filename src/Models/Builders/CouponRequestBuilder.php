@@ -10,38 +10,41 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models\Builders;
 
-use AdvancedBillingLib\Models\CreateOrUpdateCoupon;
+use AdvancedBillingLib\Models\CouponPayload;
+use AdvancedBillingLib\Models\CouponRequest;
 use Core\Utils\CoreHelper;
 
 /**
- * Builder for model CreateOrUpdateCoupon
+ * Builder for model CouponRequest
  *
- * @see CreateOrUpdateCoupon
+ * @see CouponRequest
  */
-class CreateOrUpdateCouponBuilder
+class CouponRequestBuilder
 {
     /**
-     * @var CreateOrUpdateCoupon
+     * @var CouponRequest
      */
     private $instance;
 
-    private function __construct(CreateOrUpdateCoupon $instance)
+    private function __construct(CouponRequest $instance)
     {
         $this->instance = $instance;
     }
 
     /**
-     * Initializes a new create or update coupon Builder object.
+     * Initializes a new Coupon Request Builder object.
      */
     public static function init(): self
     {
-        return new self(new CreateOrUpdateCoupon());
+        return new self(new CouponRequest());
     }
 
     /**
      * Sets coupon field.
+     *
+     * @param CouponPayload|null $value
      */
-    public function coupon($value): self
+    public function coupon(?CouponPayload $value): self
     {
         $this->instance->setCoupon($value);
         return $this;
@@ -49,6 +52,8 @@ class CreateOrUpdateCouponBuilder
 
     /**
      * Sets restricted products field.
+     *
+     * @param array<string,bool>|null $value
      */
     public function restrictedProducts(?array $value): self
     {
@@ -58,6 +63,8 @@ class CreateOrUpdateCouponBuilder
 
     /**
      * Sets restricted components field.
+     *
+     * @param array<string,bool>|null $value
      */
     public function restrictedComponents(?array $value): self
     {
@@ -68,8 +75,8 @@ class CreateOrUpdateCouponBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -78,9 +85,9 @@ class CreateOrUpdateCouponBuilder
     }
 
     /**
-     * Initializes a new create or update coupon object.
+     * Initializes a new Coupon Request object.
      */
-    public function build(): CreateOrUpdateCoupon
+    public function build(): CouponRequest
     {
         return CoreHelper::clone($this->instance);
     }

@@ -101,6 +101,11 @@ class InvoiceLineItem implements \JsonSerializable
     private $pricePointId = [];
 
     /**
+     * @var array
+     */
+    private $billingScheduleItemId = [];
+
+    /**
      * @var bool|null
      */
     private $hide;
@@ -601,6 +606,35 @@ class InvoiceLineItem implements \JsonSerializable
     }
 
     /**
+     * Returns Billing Schedule Item Id.
+     */
+    public function getBillingScheduleItemId(): ?int
+    {
+        if (count($this->billingScheduleItemId) == 0) {
+            return null;
+        }
+        return $this->billingScheduleItemId['value'];
+    }
+
+    /**
+     * Sets Billing Schedule Item Id.
+     *
+     * @maps billing_schedule_item_id
+     */
+    public function setBillingScheduleItemId(?int $billingScheduleItemId): void
+    {
+        $this->billingScheduleItemId['value'] = $billingScheduleItemId;
+    }
+
+    /**
+     * Unsets Billing Schedule Item Id.
+     */
+    public function unsetBillingScheduleItemId(): void
+    {
+        $this->billingScheduleItemId = [];
+    }
+
+    /**
      * Returns Hide.
      */
     public function getHide(): ?bool
@@ -720,12 +754,27 @@ class InvoiceLineItem implements \JsonSerializable
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function addAdditionalProperty(string $name, $value)
     {
         $this->additionalProperties[$name] = $value;
+    }
+
+    /**
+     * Find an additional property by name in this model or false if property does not exist.
+     *
+     * @param string $name Name of property.
+     *
+     * @return mixed|false Value of the property.
+     */
+    public function findAdditionalProperty(string $name)
+    {
+        if (isset($this->additionalProperties[$name])) {
+            return $this->additionalProperties[$name];
+        }
+        return false;
     }
 
     /**
@@ -741,70 +790,73 @@ class InvoiceLineItem implements \JsonSerializable
     {
         $json = [];
         if (isset($this->uid)) {
-            $json['uid']                    = $this->uid;
+            $json['uid']                      = $this->uid;
         }
         if (isset($this->title)) {
-            $json['title']                  = $this->title;
+            $json['title']                    = $this->title;
         }
         if (isset($this->description)) {
-            $json['description']            = $this->description;
+            $json['description']              = $this->description;
         }
         if (isset($this->quantity)) {
-            $json['quantity']               = $this->quantity;
+            $json['quantity']                 = $this->quantity;
         }
         if (isset($this->unitPrice)) {
-            $json['unit_price']             = $this->unitPrice;
+            $json['unit_price']               = $this->unitPrice;
         }
         if (isset($this->subtotalAmount)) {
-            $json['subtotal_amount']        = $this->subtotalAmount;
+            $json['subtotal_amount']          = $this->subtotalAmount;
         }
         if (isset($this->discountAmount)) {
-            $json['discount_amount']        = $this->discountAmount;
+            $json['discount_amount']          = $this->discountAmount;
         }
         if (isset($this->taxAmount)) {
-            $json['tax_amount']             = $this->taxAmount;
+            $json['tax_amount']               = $this->taxAmount;
         }
         if (isset($this->totalAmount)) {
-            $json['total_amount']           = $this->totalAmount;
+            $json['total_amount']             = $this->totalAmount;
         }
         if (isset($this->tieredUnitPrice)) {
-            $json['tiered_unit_price']      = $this->tieredUnitPrice;
+            $json['tiered_unit_price']        = $this->tieredUnitPrice;
         }
         if (isset($this->periodRangeStart)) {
-            $json['period_range_start']     = DateTimeHelper::toSimpleDate($this->periodRangeStart);
+            $json['period_range_start']       = DateTimeHelper::toSimpleDate($this->periodRangeStart);
         }
         if (isset($this->periodRangeEnd)) {
-            $json['period_range_end']       = DateTimeHelper::toSimpleDate($this->periodRangeEnd);
+            $json['period_range_end']         = DateTimeHelper::toSimpleDate($this->periodRangeEnd);
         }
         if (isset($this->transactionId)) {
-            $json['transaction_id']         = $this->transactionId;
+            $json['transaction_id']           = $this->transactionId;
         }
         if (!empty($this->productId)) {
-            $json['product_id']             = $this->productId['value'];
+            $json['product_id']               = $this->productId['value'];
         }
         if (!empty($this->productVersion)) {
-            $json['product_version']        = $this->productVersion['value'];
+            $json['product_version']          = $this->productVersion['value'];
         }
         if (!empty($this->componentId)) {
-            $json['component_id']           = $this->componentId['value'];
+            $json['component_id']             = $this->componentId['value'];
         }
         if (!empty($this->pricePointId)) {
-            $json['price_point_id']         = $this->pricePointId['value'];
+            $json['price_point_id']           = $this->pricePointId['value'];
+        }
+        if (!empty($this->billingScheduleItemId)) {
+            $json['billing_schedule_item_id'] = $this->billingScheduleItemId['value'];
         }
         if (isset($this->hide)) {
-            $json['hide']                   = $this->hide;
+            $json['hide']                     = $this->hide;
         }
         if (!empty($this->componentCostData)) {
-            $json['component_cost_data']    = $this->componentCostData['value'];
+            $json['component_cost_data']      = $this->componentCostData['value'];
         }
         if (!empty($this->productPricePointId)) {
-            $json['product_price_point_id'] = $this->productPricePointId['value'];
+            $json['product_price_point_id']   = $this->productPricePointId['value'];
         }
         if (isset($this->customItem)) {
-            $json['custom_item']            = $this->customItem;
+            $json['custom_item']              = $this->customItem;
         }
         if (isset($this->kind)) {
-            $json['kind']                   = $this->kind;
+            $json['kind']                     = $this->kind;
         }
         $json = array_merge($json, $this->additionalProperties);
 

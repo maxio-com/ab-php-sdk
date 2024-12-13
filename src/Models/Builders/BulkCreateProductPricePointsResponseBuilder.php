@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace AdvancedBillingLib\Models\Builders;
 
 use AdvancedBillingLib\Models\BulkCreateProductPricePointsResponse;
+use AdvancedBillingLib\Models\ProductPricePoint;
 use Core\Utils\CoreHelper;
 
 /**
@@ -31,7 +32,7 @@ class BulkCreateProductPricePointsResponseBuilder
     }
 
     /**
-     * Initializes a new bulk create product price points response Builder object.
+     * Initializes a new Bulk Create Product Price Points Response Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +41,8 @@ class BulkCreateProductPricePointsResponseBuilder
 
     /**
      * Sets price points field.
+     *
+     * @param ProductPricePoint[]|null $value
      */
     public function pricePoints(?array $value): self
     {
@@ -50,8 +53,8 @@ class BulkCreateProductPricePointsResponseBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -60,7 +63,7 @@ class BulkCreateProductPricePointsResponseBuilder
     }
 
     /**
-     * Initializes a new bulk create product price points response object.
+     * Initializes a new Bulk Create Product Price Points Response object.
      */
     public function build(): BulkCreateProductPricePointsResponse
     {

@@ -32,7 +32,9 @@ class CreatePrepaymentRequestBuilder
     }
 
     /**
-     * Initializes a new create prepayment request Builder object.
+     * Initializes a new Create Prepayment Request Builder object.
+     *
+     * @param CreatePrepayment $prepayment
      */
     public static function init(CreatePrepayment $prepayment): self
     {
@@ -42,8 +44,8 @@ class CreatePrepaymentRequestBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -52,7 +54,7 @@ class CreatePrepaymentRequestBuilder
     }
 
     /**
-     * Initializes a new create prepayment request object.
+     * Initializes a new Create Prepayment Request object.
      */
     public function build(): CreatePrepaymentRequest
     {

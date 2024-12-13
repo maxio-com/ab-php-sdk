@@ -31,7 +31,7 @@ class SubscriptionMigrationPreviewBuilder
     }
 
     /**
-     * Initializes a new subscription migration preview Builder object.
+     * Initializes a new Subscription Migration Preview Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class SubscriptionMigrationPreviewBuilder
 
     /**
      * Sets prorated adjustment in cents field.
+     *
+     * @param int|null $value
      */
     public function proratedAdjustmentInCents(?int $value): self
     {
@@ -49,6 +51,8 @@ class SubscriptionMigrationPreviewBuilder
 
     /**
      * Sets charge in cents field.
+     *
+     * @param int|null $value
      */
     public function chargeInCents(?int $value): self
     {
@@ -58,6 +62,8 @@ class SubscriptionMigrationPreviewBuilder
 
     /**
      * Sets payment due in cents field.
+     *
+     * @param int|null $value
      */
     public function paymentDueInCents(?int $value): self
     {
@@ -67,6 +73,8 @@ class SubscriptionMigrationPreviewBuilder
 
     /**
      * Sets credit applied in cents field.
+     *
+     * @param int|null $value
      */
     public function creditAppliedInCents(?int $value): self
     {
@@ -77,8 +85,8 @@ class SubscriptionMigrationPreviewBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -87,7 +95,7 @@ class SubscriptionMigrationPreviewBuilder
     }
 
     /**
-     * Initializes a new subscription migration preview object.
+     * Initializes a new Subscription Migration Preview object.
      */
     public function build(): SubscriptionMigrationPreview
     {

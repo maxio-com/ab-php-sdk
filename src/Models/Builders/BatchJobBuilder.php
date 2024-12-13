@@ -31,7 +31,7 @@ class BatchJobBuilder
     }
 
     /**
-     * Initializes a new batch job Builder object.
+     * Initializes a new Batch Job Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class BatchJobBuilder
 
     /**
      * Sets id field.
+     *
+     * @param int|null $value
      */
     public function id(?int $value): self
     {
@@ -49,6 +51,8 @@ class BatchJobBuilder
 
     /**
      * Sets finished at field.
+     *
+     * @param \DateTime|null $value
      */
     public function finishedAt(?\DateTime $value): self
     {
@@ -67,6 +71,8 @@ class BatchJobBuilder
 
     /**
      * Sets row count field.
+     *
+     * @param int|null $value
      */
     public function rowCount(?int $value): self
     {
@@ -85,6 +91,8 @@ class BatchJobBuilder
 
     /**
      * Sets created at field.
+     *
+     * @param \DateTime|null $value
      */
     public function createdAt(?\DateTime $value): self
     {
@@ -103,6 +111,8 @@ class BatchJobBuilder
 
     /**
      * Sets completed field.
+     *
+     * @param string|null $value
      */
     public function completed(?string $value): self
     {
@@ -113,8 +123,8 @@ class BatchJobBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -123,7 +133,7 @@ class BatchJobBuilder
     }
 
     /**
-     * Initializes a new batch job object.
+     * Initializes a new Batch Job object.
      */
     public function build(): BatchJob
     {

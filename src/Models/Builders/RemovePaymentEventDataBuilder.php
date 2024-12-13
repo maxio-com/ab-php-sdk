@@ -10,6 +10,11 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models\Builders;
 
+use AdvancedBillingLib\Models\PaymentMethodApplePay;
+use AdvancedBillingLib\Models\PaymentMethodBankAccount;
+use AdvancedBillingLib\Models\PaymentMethodCreditCard;
+use AdvancedBillingLib\Models\PaymentMethodExternal;
+use AdvancedBillingLib\Models\PaymentMethodPaypal;
 use AdvancedBillingLib\Models\RemovePaymentEventData;
 use Core\Utils\CoreHelper;
 
@@ -31,7 +36,14 @@ class RemovePaymentEventDataBuilder
     }
 
     /**
-     * Initializes a new remove payment event data Builder object.
+     * Initializes a new Remove Payment Event Data Builder object.
+     *
+     * @param int $transactionId
+     * @param string $memo
+     * @param string $appliedAmount
+     * @param \DateTime $transactionTime
+     * @param PaymentMethodApplePay|PaymentMethodBankAccount|PaymentMethodCreditCard|PaymentMethodExternal|PaymentMethodPaypal $paymentMethod
+     * @param bool $prepayment
      */
     public static function init(
         int $transactionId,
@@ -53,6 +65,8 @@ class RemovePaymentEventDataBuilder
 
     /**
      * Sets original amount field.
+     *
+     * @param string|null $value
      */
     public function originalAmount(?string $value): self
     {
@@ -63,8 +77,8 @@ class RemovePaymentEventDataBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -73,7 +87,7 @@ class RemovePaymentEventDataBuilder
     }
 
     /**
-     * Initializes a new remove payment event data object.
+     * Initializes a new Remove Payment Event Data object.
      */
     public function build(): RemovePaymentEventData
     {

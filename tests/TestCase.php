@@ -35,9 +35,7 @@ class TestCase extends PhpUnitTestCase
                     $configuration->getBasicAuthPassword()
                 )
             )
-            ->environment($configuration->getEnvironment())
-            ->subdomain($configuration->getSubDomain())
-            ->domain($configuration->getDomain())
+            ->site($configuration->getSubDomain())
             ->build();
     }
 

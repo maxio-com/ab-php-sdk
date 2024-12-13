@@ -32,7 +32,7 @@ class UpdateMetadataRequestBuilder
     }
 
     /**
-     * Initializes a new update metadata request Builder object.
+     * Initializes a new Update Metadata Request Builder object.
      */
     public static function init(): self
     {
@@ -41,6 +41,8 @@ class UpdateMetadataRequestBuilder
 
     /**
      * Sets metadata field.
+     *
+     * @param UpdateMetadata|null $value
      */
     public function metadata(?UpdateMetadata $value): self
     {
@@ -51,8 +53,8 @@ class UpdateMetadataRequestBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -61,7 +63,7 @@ class UpdateMetadataRequestBuilder
     }
 
     /**
-     * Initializes a new update metadata request object.
+     * Initializes a new Update Metadata Request object.
      */
     public function build(): UpdateMetadataRequest
     {

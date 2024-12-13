@@ -32,7 +32,9 @@ class ProductPricePointResponseBuilder
     }
 
     /**
-     * Initializes a new product price point response Builder object.
+     * Initializes a new Product Price Point Response Builder object.
+     *
+     * @param ProductPricePoint $pricePoint
      */
     public static function init(ProductPricePoint $pricePoint): self
     {
@@ -42,8 +44,8 @@ class ProductPricePointResponseBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -52,7 +54,7 @@ class ProductPricePointResponseBuilder
     }
 
     /**
-     * Initializes a new product price point response object.
+     * Initializes a new Product Price Point Response object.
      */
     public function build(): ProductPricePointResponse
     {

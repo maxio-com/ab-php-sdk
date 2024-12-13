@@ -31,7 +31,7 @@ class CouponUsageBuilder
     }
 
     /**
-     * Initializes a new coupon usage Builder object.
+     * Initializes a new Coupon Usage Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class CouponUsageBuilder
 
     /**
      * Sets id field.
+     *
+     * @param int|null $value
      */
     public function id(?int $value): self
     {
@@ -49,6 +51,8 @@ class CouponUsageBuilder
 
     /**
      * Sets name field.
+     *
+     * @param string|null $value
      */
     public function name(?string $value): self
     {
@@ -58,6 +62,8 @@ class CouponUsageBuilder
 
     /**
      * Sets signups field.
+     *
+     * @param int|null $value
      */
     public function signups(?int $value): self
     {
@@ -67,6 +73,8 @@ class CouponUsageBuilder
 
     /**
      * Sets savings field.
+     *
+     * @param int|null $value
      */
     public function savings(?int $value): self
     {
@@ -85,6 +93,8 @@ class CouponUsageBuilder
 
     /**
      * Sets savings in cents field.
+     *
+     * @param int|null $value
      */
     public function savingsInCents(?int $value): self
     {
@@ -103,6 +113,8 @@ class CouponUsageBuilder
 
     /**
      * Sets revenue field.
+     *
+     * @param int|null $value
      */
     public function revenue(?int $value): self
     {
@@ -121,6 +133,8 @@ class CouponUsageBuilder
 
     /**
      * Sets revenue in cents field.
+     *
+     * @param int|null $value
      */
     public function revenueInCents(?int $value): self
     {
@@ -131,8 +145,8 @@ class CouponUsageBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -141,7 +155,7 @@ class CouponUsageBuilder
     }
 
     /**
-     * Initializes a new coupon usage object.
+     * Initializes a new Coupon Usage object.
      */
     public function build(): CouponUsage
     {

@@ -138,10 +138,10 @@ class AdvancedBillingClient implements ConfigurationInterface
             ->converter(new CompatibilityConverter())
             ->jsonHelper(ApiHelper::getJsonHelper())
             ->apiCallback($this->config['httpCallback'] ?? null)
-            ->userAgent('AB SDK PHP:5.2.0 on OS {os-info}')
+            ->userAgent('AB SDK PHP:6.0.0 on OS {os-info}')
             ->globalConfig($this->getGlobalConfiguration())
             ->globalErrors($this->getGlobalErrors())
-            ->serverUrls(self::ENVIRONMENT_MAP[$this->getEnvironment()], Server::DEFAULT_)
+            ->serverUrls(self::ENVIRONMENT_MAP[$this->getEnvironment()], Server::PRODUCTION)
             ->authManagers(['BasicAuth' => $this->basicAuthManager])
             ->build();
     }
@@ -164,8 +164,7 @@ class AdvancedBillingClient implements ConfigurationInterface
             ->httpStatusCodesToRetry($this->getHttpStatusCodesToRetry())
             ->httpMethodsToRetry($this->getHttpMethodsToRetry())
             ->environment($this->getEnvironment())
-            ->subdomain($this->getSubdomain())
-            ->domain($this->getDomain())
+            ->site($this->getSite())
             ->httpCallback($this->config['httpCallback'] ?? null);
 
         $basicAuth = $this->getBasicAuthCredentialsBuilder();
@@ -225,14 +224,9 @@ class AdvancedBillingClient implements ConfigurationInterface
         return $this->config['environment'] ?? ConfigurationDefaults::ENVIRONMENT;
     }
 
-    public function getSubdomain(): string
+    public function getSite(): string
     {
-        return $this->config['subdomain'] ?? ConfigurationDefaults::SUBDOMAIN;
-    }
-
-    public function getDomain(): string
-    {
-        return $this->config['domain'] ?? ConfigurationDefaults::DOMAIN;
+        return $this->config['site'] ?? ConfigurationDefaults::SITE;
     }
 
     public function getBasicAuthCredentials(): BasicAuthCredentials
@@ -281,7 +275,7 @@ class AdvancedBillingClient implements ConfigurationInterface
      *
      * @return string Base URI
      */
-    public function getBaseUri(string $server = Server::DEFAULT_): string
+    public function getBaseUri(string $server = Server::PRODUCTION): string
     {
         return $this->client->getGlobalRequest($server)->getQueryUrl();
     }
@@ -643,10 +637,7 @@ class AdvancedBillingClient implements ConfigurationInterface
      */
     private function getGlobalConfiguration(): array
     {
-        return [
-            TemplateParam::init('subdomain', $this->getSubdomain())->dontEncode(),
-            TemplateParam::init('domain', $this->getDomain())->dontEncode()
-        ];
+        return [TemplateParam::init('site', $this->getSite())->dontEncode()];
     }
 
     /**
@@ -668,7 +659,13 @@ class AdvancedBillingClient implements ConfigurationInterface
      * @var array
      */
     private const ENVIRONMENT_MAP = [
-        Environment::PRODUCTION => [Server::DEFAULT_ => 'https://{subdomain}.{domain}'],
-        Environment::ENVIRONMENT2 => [Server::DEFAULT_ => 'https://events.chargify.com']
+        Environment::US => [
+            Server::PRODUCTION => 'https://{site}.chargify.com',
+            Server::EBB => 'https://events.chargify.com/{site}'
+        ],
+        Environment::EU => [
+            Server::PRODUCTION => 'https://{site}.ebilling.maxio.com',
+            Server::EBB => 'https://events.chargify.com/{site}'
+        ]
     ];
 }

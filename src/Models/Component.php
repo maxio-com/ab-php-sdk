@@ -540,8 +540,7 @@ class Component implements \JsonSerializable
 
     /**
      * Returns Overage Prices.
-     * An array of price brackets. If the component uses the ‘per_unit’ pricing scheme, this array will be
-     * empty.
+     * Applicable only to prepaid usage components. An array of overage price brackets.
      *
      * @return ComponentPrice[]|null
      */
@@ -555,8 +554,7 @@ class Component implements \JsonSerializable
 
     /**
      * Sets Overage Prices.
-     * An array of price brackets. If the component uses the ‘per_unit’ pricing scheme, this array will be
-     * empty.
+     * Applicable only to prepaid usage components. An array of overage price brackets.
      *
      * @maps overage_prices
      *
@@ -569,8 +567,7 @@ class Component implements \JsonSerializable
 
     /**
      * Unsets Overage Prices.
-     * An array of price brackets. If the component uses the ‘per_unit’ pricing scheme, this array will be
-     * empty.
+     * Applicable only to prepaid usage components. An array of overage price brackets.
      */
     public function unsetOveragePrices(): void
     {
@@ -1113,12 +1110,27 @@ class Component implements \JsonSerializable
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function addAdditionalProperty(string $name, $value)
     {
         $this->additionalProperties[$name] = $value;
+    }
+
+    /**
+     * Find an additional property by name in this model or false if property does not exist.
+     *
+     * @param string $name Name of property.
+     *
+     * @return mixed|false Value of the property.
+     */
+    public function findAdditionalProperty(string $name)
+    {
+        if (isset($this->additionalProperties[$name])) {
+            return $this->additionalProperties[$name];
+        }
+        return false;
     }
 
     /**

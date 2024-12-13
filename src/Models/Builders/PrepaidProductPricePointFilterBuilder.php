@@ -31,7 +31,7 @@ class PrepaidProductPricePointFilterBuilder
     }
 
     /**
-     * Initializes a new prepaid product price point filter Builder object.
+     * Initializes a new Prepaid Product Price Point Filter Builder object.
      */
     public static function init(): self
     {
@@ -41,8 +41,8 @@ class PrepaidProductPricePointFilterBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -51,7 +51,7 @@ class PrepaidProductPricePointFilterBuilder
     }
 
     /**
-     * Initializes a new prepaid product price point filter object.
+     * Initializes a new Prepaid Product Price Point Filter object.
      */
     public function build(): PrepaidProductPricePointFilter
     {

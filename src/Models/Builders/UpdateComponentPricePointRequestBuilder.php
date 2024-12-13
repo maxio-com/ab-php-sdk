@@ -32,7 +32,7 @@ class UpdateComponentPricePointRequestBuilder
     }
 
     /**
-     * Initializes a new update component price point request Builder object.
+     * Initializes a new Update Component Price Point Request Builder object.
      */
     public static function init(): self
     {
@@ -41,6 +41,8 @@ class UpdateComponentPricePointRequestBuilder
 
     /**
      * Sets price point field.
+     *
+     * @param UpdateComponentPricePoint|null $value
      */
     public function pricePoint(?UpdateComponentPricePoint $value): self
     {
@@ -51,8 +53,8 @@ class UpdateComponentPricePointRequestBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -61,7 +63,7 @@ class UpdateComponentPricePointRequestBuilder
     }
 
     /**
-     * Initializes a new update component price point request object.
+     * Initializes a new Update Component Price Point Request object.
      */
     public function build(): UpdateComponentPricePointRequest
     {

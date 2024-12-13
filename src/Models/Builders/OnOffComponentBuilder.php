@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models\Builders;
 
+use AdvancedBillingLib\Models\ComponentPricePointItem;
 use AdvancedBillingLib\Models\OnOffComponent;
 use Core\Utils\CoreHelper;
 
@@ -31,15 +32,20 @@ class OnOffComponentBuilder
     }
 
     /**
-     * Initializes a new on off component Builder object.
+     * Initializes a new On Off Component Builder object.
+     *
+     * @param string $name
+     * @param string|float $unitPrice
      */
-    public static function init(string $name): self
+    public static function init(string $name, $unitPrice): self
     {
-        return new self(new OnOffComponent($name));
+        return new self(new OnOffComponent($name, $unitPrice));
     }
 
     /**
      * Sets description field.
+     *
+     * @param string|null $value
      */
     public function description(?string $value): self
     {
@@ -49,6 +55,8 @@ class OnOffComponentBuilder
 
     /**
      * Sets handle field.
+     *
+     * @param string|null $value
      */
     public function handle(?string $value): self
     {
@@ -58,6 +66,8 @@ class OnOffComponentBuilder
 
     /**
      * Sets taxable field.
+     *
+     * @param bool|null $value
      */
     public function taxable(?bool $value): self
     {
@@ -66,16 +76,9 @@ class OnOffComponentBuilder
     }
 
     /**
-     * Sets prices field.
-     */
-    public function prices(?array $value): self
-    {
-        $this->instance->setPrices($value);
-        return $this;
-    }
-
-    /**
      * Sets upgrade charge field.
+     *
+     * @param string|null $value
      */
     public function upgradeCharge(?string $value): self
     {
@@ -94,6 +97,8 @@ class OnOffComponentBuilder
 
     /**
      * Sets downgrade credit field.
+     *
+     * @param string|null $value
      */
     public function downgradeCredit(?string $value): self
     {
@@ -112,6 +117,8 @@ class OnOffComponentBuilder
 
     /**
      * Sets price points field.
+     *
+     * @param ComponentPricePointItem[]|null $value
      */
     public function pricePoints(?array $value): self
     {
@@ -120,16 +127,9 @@ class OnOffComponentBuilder
     }
 
     /**
-     * Sets unit price field.
-     */
-    public function unitPrice($value): self
-    {
-        $this->instance->setUnitPrice($value);
-        return $this;
-    }
-
-    /**
      * Sets tax code field.
+     *
+     * @param string|null $value
      */
     public function taxCode(?string $value): self
     {
@@ -139,6 +139,8 @@ class OnOffComponentBuilder
 
     /**
      * Sets hide date range on invoice field.
+     *
+     * @param bool|null $value
      */
     public function hideDateRangeOnInvoice(?bool $value): self
     {
@@ -147,16 +149,9 @@ class OnOffComponentBuilder
     }
 
     /**
-     * Sets price in cents field.
-     */
-    public function priceInCents(?string $value): self
-    {
-        $this->instance->setPriceInCents($value);
-        return $this;
-    }
-
-    /**
      * Sets display on hosted page field.
+     *
+     * @param bool|null $value
      */
     public function displayOnHostedPage(?bool $value): self
     {
@@ -166,6 +161,8 @@ class OnOffComponentBuilder
 
     /**
      * Sets allow fractional quantities field.
+     *
+     * @param bool|null $value
      */
     public function allowFractionalQuantities(?bool $value): self
     {
@@ -175,6 +172,8 @@ class OnOffComponentBuilder
 
     /**
      * Sets public signup page ids field.
+     *
+     * @param int[]|null $value
      */
     public function publicSignupPageIds(?array $value): self
     {
@@ -184,6 +183,8 @@ class OnOffComponentBuilder
 
     /**
      * Sets interval field.
+     *
+     * @param int|null $value
      */
     public function interval(?int $value): self
     {
@@ -193,6 +194,8 @@ class OnOffComponentBuilder
 
     /**
      * Sets interval unit field.
+     *
+     * @param string|null $value
      */
     public function intervalUnit(?string $value): self
     {
@@ -212,8 +215,8 @@ class OnOffComponentBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -222,7 +225,7 @@ class OnOffComponentBuilder
     }
 
     /**
-     * Initializes a new on off component object.
+     * Initializes a new On Off Component object.
      */
     public function build(): OnOffComponent
     {

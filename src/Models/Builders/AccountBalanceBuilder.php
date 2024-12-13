@@ -31,7 +31,7 @@ class AccountBalanceBuilder
     }
 
     /**
-     * Initializes a new account balance Builder object.
+     * Initializes a new Account Balance Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class AccountBalanceBuilder
 
     /**
      * Sets balance in cents field.
+     *
+     * @param int|null $value
      */
     public function balanceInCents(?int $value): self
     {
@@ -49,6 +51,8 @@ class AccountBalanceBuilder
 
     /**
      * Sets automatic balance in cents field.
+     *
+     * @param int|null $value
      */
     public function automaticBalanceInCents(?int $value): self
     {
@@ -67,6 +71,8 @@ class AccountBalanceBuilder
 
     /**
      * Sets remittance balance in cents field.
+     *
+     * @param int|null $value
      */
     public function remittanceBalanceInCents(?int $value): self
     {
@@ -86,8 +92,8 @@ class AccountBalanceBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -96,7 +102,7 @@ class AccountBalanceBuilder
     }
 
     /**
-     * Initializes a new account balance object.
+     * Initializes a new Account Balance object.
      */
     public function build(): AccountBalance
     {

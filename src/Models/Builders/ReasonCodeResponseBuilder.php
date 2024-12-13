@@ -32,7 +32,9 @@ class ReasonCodeResponseBuilder
     }
 
     /**
-     * Initializes a new reason code response Builder object.
+     * Initializes a new Reason Code Response Builder object.
+     *
+     * @param ReasonCode $reasonCode
      */
     public static function init(ReasonCode $reasonCode): self
     {
@@ -42,8 +44,8 @@ class ReasonCodeResponseBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -52,7 +54,7 @@ class ReasonCodeResponseBuilder
     }
 
     /**
-     * Initializes a new reason code response object.
+     * Initializes a new Reason Code Response object.
      */
     public function build(): ReasonCodeResponse
     {

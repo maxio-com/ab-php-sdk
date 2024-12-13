@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models\Builders;
 
+use AdvancedBillingLib\Models\AppliedCreditNoteData;
 use AdvancedBillingLib\Models\ApplyCreditNoteEventData;
 use Core\Utils\CoreHelper;
 
@@ -31,7 +32,13 @@ class ApplyCreditNoteEventDataBuilder
     }
 
     /**
-     * Initializes a new apply credit note event data Builder object.
+     * Initializes a new Apply Credit Note Event Data Builder object.
+     *
+     * @param string $uid
+     * @param string $creditNoteNumber
+     * @param string $creditNoteUid
+     * @param string $originalAmount
+     * @param string $appliedAmount
      */
     public static function init(
         string $uid,
@@ -47,6 +54,8 @@ class ApplyCreditNoteEventDataBuilder
 
     /**
      * Sets transaction time field.
+     *
+     * @param \DateTime|null $value
      */
     public function transactionTime(?\DateTime $value): self
     {
@@ -56,6 +65,8 @@ class ApplyCreditNoteEventDataBuilder
 
     /**
      * Sets memo field.
+     *
+     * @param string|null $value
      */
     public function memo(?string $value): self
     {
@@ -74,6 +85,8 @@ class ApplyCreditNoteEventDataBuilder
 
     /**
      * Sets role field.
+     *
+     * @param string|null $value
      */
     public function role(?string $value): self
     {
@@ -83,6 +96,8 @@ class ApplyCreditNoteEventDataBuilder
 
     /**
      * Sets consolidated invoice field.
+     *
+     * @param bool|null $value
      */
     public function consolidatedInvoice(?bool $value): self
     {
@@ -92,6 +107,8 @@ class ApplyCreditNoteEventDataBuilder
 
     /**
      * Sets applied credit notes field.
+     *
+     * @param AppliedCreditNoteData[]|null $value
      */
     public function appliedCreditNotes(?array $value): self
     {
@@ -102,8 +119,8 @@ class ApplyCreditNoteEventDataBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -112,7 +129,7 @@ class ApplyCreditNoteEventDataBuilder
     }
 
     /**
-     * Initializes a new apply credit note event data object.
+     * Initializes a new Apply Credit Note Event Data object.
      */
     public function build(): ApplyCreditNoteEventData
     {

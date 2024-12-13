@@ -31,7 +31,10 @@ class PriceBuilder
     }
 
     /**
-     * Initializes a new price Builder object.
+     * Initializes a new Price Builder object.
+     *
+     * @param int|string $startingQuantity
+     * @param float|string $unitPrice
      */
     public static function init($startingQuantity, $unitPrice): self
     {
@@ -40,6 +43,8 @@ class PriceBuilder
 
     /**
      * Sets ending quantity field.
+     *
+     * @param int|string|null $value
      */
     public function endingQuantity($value): self
     {
@@ -59,8 +64,8 @@ class PriceBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -69,7 +74,7 @@ class PriceBuilder
     }
 
     /**
-     * Initializes a new price object.
+     * Initializes a new Price object.
      */
     public function build(): Price
     {

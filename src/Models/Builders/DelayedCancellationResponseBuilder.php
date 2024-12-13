@@ -31,7 +31,7 @@ class DelayedCancellationResponseBuilder
     }
 
     /**
-     * Initializes a new delayed cancellation response Builder object.
+     * Initializes a new Delayed Cancellation Response Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class DelayedCancellationResponseBuilder
 
     /**
      * Sets message field.
+     *
+     * @param string|null $value
      */
     public function message(?string $value): self
     {
@@ -50,8 +52,8 @@ class DelayedCancellationResponseBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -60,7 +62,7 @@ class DelayedCancellationResponseBuilder
     }
 
     /**
-     * Initializes a new delayed cancellation response object.
+     * Initializes a new Delayed Cancellation Response object.
      */
     public function build(): DelayedCancellationResponse
     {

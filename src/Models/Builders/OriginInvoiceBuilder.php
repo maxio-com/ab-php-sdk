@@ -31,7 +31,7 @@ class OriginInvoiceBuilder
     }
 
     /**
-     * Initializes a new origin invoice Builder object.
+     * Initializes a new Origin Invoice Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class OriginInvoiceBuilder
 
     /**
      * Sets uid field.
+     *
+     * @param string|null $value
      */
     public function uid(?string $value): self
     {
@@ -49,6 +51,8 @@ class OriginInvoiceBuilder
 
     /**
      * Sets number field.
+     *
+     * @param string|null $value
      */
     public function number(?string $value): self
     {
@@ -59,8 +63,8 @@ class OriginInvoiceBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -69,7 +73,7 @@ class OriginInvoiceBuilder
     }
 
     /**
-     * Initializes a new origin invoice object.
+     * Initializes a new Origin Invoice object.
      */
     public function build(): OriginInvoice
     {

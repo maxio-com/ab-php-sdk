@@ -32,7 +32,9 @@ class SubscriptionProductMigrationRequestBuilder
     }
 
     /**
-     * Initializes a new subscription product migration request Builder object.
+     * Initializes a new Subscription Product Migration Request Builder object.
+     *
+     * @param SubscriptionProductMigration $migration
      */
     public static function init(SubscriptionProductMigration $migration): self
     {
@@ -42,8 +44,8 @@ class SubscriptionProductMigrationRequestBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -52,7 +54,7 @@ class SubscriptionProductMigrationRequestBuilder
     }
 
     /**
-     * Initializes a new subscription product migration request object.
+     * Initializes a new Subscription Product Migration Request object.
      */
     public function build(): SubscriptionProductMigrationRequest
     {

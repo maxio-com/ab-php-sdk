@@ -31,7 +31,7 @@ class InvoiceDiscountBreakoutBuilder
     }
 
     /**
-     * Initializes a new invoice discount breakout Builder object.
+     * Initializes a new Invoice Discount Breakout Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class InvoiceDiscountBreakoutBuilder
 
     /**
      * Sets uid field.
+     *
+     * @param string|null $value
      */
     public function uid(?string $value): self
     {
@@ -49,6 +51,8 @@ class InvoiceDiscountBreakoutBuilder
 
     /**
      * Sets eligible amount field.
+     *
+     * @param string|null $value
      */
     public function eligibleAmount(?string $value): self
     {
@@ -58,6 +62,8 @@ class InvoiceDiscountBreakoutBuilder
 
     /**
      * Sets discount amount field.
+     *
+     * @param string|null $value
      */
     public function discountAmount(?string $value): self
     {
@@ -68,8 +74,8 @@ class InvoiceDiscountBreakoutBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -78,7 +84,7 @@ class InvoiceDiscountBreakoutBuilder
     }
 
     /**
-     * Initializes a new invoice discount breakout object.
+     * Initializes a new Invoice Discount Breakout object.
      */
     public function build(): InvoiceDiscountBreakout
     {

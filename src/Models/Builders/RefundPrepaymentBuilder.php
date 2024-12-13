@@ -31,7 +31,10 @@ class RefundPrepaymentBuilder
     }
 
     /**
-     * Initializes a new refund prepayment Builder object.
+     * Initializes a new Refund Prepayment Builder object.
+     *
+     * @param string|float $amount
+     * @param string $memo
      */
     public static function init($amount, string $memo): self
     {
@@ -40,6 +43,8 @@ class RefundPrepaymentBuilder
 
     /**
      * Sets amount in cents field.
+     *
+     * @param int|null $value
      */
     public function amountInCents(?int $value): self
     {
@@ -49,6 +54,8 @@ class RefundPrepaymentBuilder
 
     /**
      * Sets external field.
+     *
+     * @param bool|null $value
      */
     public function external(?bool $value): self
     {
@@ -59,8 +66,8 @@ class RefundPrepaymentBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -69,7 +76,7 @@ class RefundPrepaymentBuilder
     }
 
     /**
-     * Initializes a new refund prepayment object.
+     * Initializes a new Refund Prepayment object.
      */
     public function build(): RefundPrepayment
     {

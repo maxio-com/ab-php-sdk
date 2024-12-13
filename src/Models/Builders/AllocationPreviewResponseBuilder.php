@@ -32,7 +32,9 @@ class AllocationPreviewResponseBuilder
     }
 
     /**
-     * Initializes a new allocation preview response Builder object.
+     * Initializes a new Allocation Preview Response Builder object.
+     *
+     * @param AllocationPreview $allocationPreview
      */
     public static function init(AllocationPreview $allocationPreview): self
     {
@@ -42,8 +44,8 @@ class AllocationPreviewResponseBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -52,7 +54,7 @@ class AllocationPreviewResponseBuilder
     }
 
     /**
-     * Initializes a new allocation preview response object.
+     * Initializes a new Allocation Preview Response object.
      */
     public function build(): AllocationPreviewResponse
     {

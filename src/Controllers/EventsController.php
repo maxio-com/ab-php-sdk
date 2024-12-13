@@ -13,8 +13,8 @@ namespace AdvancedBillingLib\Controllers;
 use AdvancedBillingLib\Exceptions\ApiException;
 use AdvancedBillingLib\Models\CountResponse;
 use AdvancedBillingLib\Models\Direction;
+use AdvancedBillingLib\Models\EventKey;
 use AdvancedBillingLib\Models\EventResponse;
-use AdvancedBillingLib\Models\EventType;
 use AdvancedBillingLib\Models\ListEventsDateField;
 use Core\Request\Parameters\QueryParam;
 use Core\Request\Parameters\TemplateParam;
@@ -49,12 +49,17 @@ class EventsController extends BaseController
      * + `zferral_revenue_post_failure` - (Specific to the deprecated Zferral integration)
      * + `zferral_revenue_post_success` - (Specific to the deprecated Zferral integration)
      *
+     * ## Event Key
+     * The event type is identified by the key property. You can check supported keys
+     * [here]($m/Event%20Key).
+     *
      * ## Event Specific Data
      *
-     * Event Specific Data
+     * Different event types may include additional data in `event_specific_data` property.
+     * While some events share the same schema for `event_specific_data`, others may not include it at all.
+     * For precise mappings from key to event_specific_data, refer to [Event]($m/Event).
      *
-     * Each event type has its own `event_specific_data` specified.
-     *
+     * ### Example
      * Here’s an example event for the `subscription_product_change` event:
      *
      * ```
@@ -113,7 +118,7 @@ class EventsController extends BaseController
                 QueryParam::init('filter', $options)
                     ->commaSeparated()
                     ->extract('filter')
-                    ->serializeBy([EventType::class, 'checkValue']),
+                    ->serializeBy([EventKey::class, 'checkValue']),
                 QueryParam::init('date_field', $options)
                     ->commaSeparated()
                     ->extract('dateField')
@@ -132,7 +137,15 @@ class EventsController extends BaseController
     /**
      * The following request will return a list of events for a subscription.
      *
-     * Each event type has its own `event_specific_data` specified.
+     * ## Event Key
+     * The event type is identified by the key property. You can check supported keys
+     * [here]($m/Event%20Key).
+     *
+     * ## Event Specific Data
+     *
+     * Different event types may include additional data in `event_specific_data` property.
+     * While some events share the same schema for `event_specific_data`, others may not include it at all.
+     * For precise mappings from key to event_specific_data, refer to [Event]($m/Event).
      *
      * @param array $options Array with all options for search
      *
@@ -157,7 +170,7 @@ class EventsController extends BaseController
                 QueryParam::init('filter', $options)
                     ->commaSeparated()
                     ->extract('filter')
-                    ->serializeBy([EventType::class, 'checkValue'])
+                    ->serializeBy([EventKey::class, 'checkValue'])
             );
 
         $_resHandler = $this->responseHandler()->type(EventResponse::class, 1);
@@ -190,7 +203,7 @@ class EventsController extends BaseController
                 QueryParam::init('filter', $options)
                     ->commaSeparated()
                     ->extract('filter')
-                    ->serializeBy([EventType::class, 'checkValue'])
+                    ->serializeBy([EventKey::class, 'checkValue'])
             );
 
         $_resHandler = $this->responseHandler()->type(CountResponse::class);

@@ -31,7 +31,7 @@ class PayerErrorBuilder
     }
 
     /**
-     * Initializes a new payer error Builder object.
+     * Initializes a new Payer Error Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class PayerErrorBuilder
 
     /**
      * Sets last name field.
+     *
+     * @param string[]|null $value
      */
     public function lastName(?array $value): self
     {
@@ -49,6 +51,8 @@ class PayerErrorBuilder
 
     /**
      * Sets first name field.
+     *
+     * @param string[]|null $value
      */
     public function firstName(?array $value): self
     {
@@ -58,6 +62,8 @@ class PayerErrorBuilder
 
     /**
      * Sets email field.
+     *
+     * @param string[]|null $value
      */
     public function email(?array $value): self
     {
@@ -68,8 +74,8 @@ class PayerErrorBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -78,7 +84,7 @@ class PayerErrorBuilder
     }
 
     /**
-     * Initializes a new payer error object.
+     * Initializes a new Payer Error object.
      */
     public function build(): PayerError
     {

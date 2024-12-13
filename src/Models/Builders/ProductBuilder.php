@@ -12,6 +12,7 @@ namespace AdvancedBillingLib\Models\Builders;
 
 use AdvancedBillingLib\Models\Product;
 use AdvancedBillingLib\Models\ProductFamily;
+use AdvancedBillingLib\Models\PublicSignupPage;
 use Core\Utils\CoreHelper;
 
 /**
@@ -32,7 +33,7 @@ class ProductBuilder
     }
 
     /**
-     * Initializes a new product Builder object.
+     * Initializes a new Product Builder object.
      */
     public static function init(): self
     {
@@ -41,6 +42,8 @@ class ProductBuilder
 
     /**
      * Sets id field.
+     *
+     * @param int|null $value
      */
     public function id(?int $value): self
     {
@@ -50,6 +53,8 @@ class ProductBuilder
 
     /**
      * Sets name field.
+     *
+     * @param string|null $value
      */
     public function name(?string $value): self
     {
@@ -59,6 +64,8 @@ class ProductBuilder
 
     /**
      * Sets handle field.
+     *
+     * @param string|null $value
      */
     public function handle(?string $value): self
     {
@@ -77,6 +84,8 @@ class ProductBuilder
 
     /**
      * Sets description field.
+     *
+     * @param string|null $value
      */
     public function description(?string $value): self
     {
@@ -95,6 +104,8 @@ class ProductBuilder
 
     /**
      * Sets accounting code field.
+     *
+     * @param string|null $value
      */
     public function accountingCode(?string $value): self
     {
@@ -113,6 +124,8 @@ class ProductBuilder
 
     /**
      * Sets request credit card field.
+     *
+     * @param bool|null $value
      */
     public function requestCreditCard(?bool $value): self
     {
@@ -122,6 +135,8 @@ class ProductBuilder
 
     /**
      * Sets expiration interval field.
+     *
+     * @param int|null $value
      */
     public function expirationInterval(?int $value): self
     {
@@ -140,6 +155,8 @@ class ProductBuilder
 
     /**
      * Sets expiration interval unit field.
+     *
+     * @param string|null $value
      */
     public function expirationIntervalUnit(?string $value): self
     {
@@ -158,6 +175,8 @@ class ProductBuilder
 
     /**
      * Sets created at field.
+     *
+     * @param \DateTime|null $value
      */
     public function createdAt(?\DateTime $value): self
     {
@@ -167,6 +186,8 @@ class ProductBuilder
 
     /**
      * Sets updated at field.
+     *
+     * @param \DateTime|null $value
      */
     public function updatedAt(?\DateTime $value): self
     {
@@ -176,6 +197,8 @@ class ProductBuilder
 
     /**
      * Sets price in cents field.
+     *
+     * @param int|null $value
      */
     public function priceInCents(?int $value): self
     {
@@ -185,6 +208,8 @@ class ProductBuilder
 
     /**
      * Sets interval field.
+     *
+     * @param int|null $value
      */
     public function interval(?int $value): self
     {
@@ -194,6 +219,8 @@ class ProductBuilder
 
     /**
      * Sets interval unit field.
+     *
+     * @param string|null $value
      */
     public function intervalUnit(?string $value): self
     {
@@ -203,6 +230,8 @@ class ProductBuilder
 
     /**
      * Sets initial charge in cents field.
+     *
+     * @param int|null $value
      */
     public function initialChargeInCents(?int $value): self
     {
@@ -221,6 +250,8 @@ class ProductBuilder
 
     /**
      * Sets trial price in cents field.
+     *
+     * @param int|null $value
      */
     public function trialPriceInCents(?int $value): self
     {
@@ -239,6 +270,8 @@ class ProductBuilder
 
     /**
      * Sets trial interval field.
+     *
+     * @param int|null $value
      */
     public function trialInterval(?int $value): self
     {
@@ -257,6 +290,8 @@ class ProductBuilder
 
     /**
      * Sets trial interval unit field.
+     *
+     * @param string|null $value
      */
     public function trialIntervalUnit(?string $value): self
     {
@@ -275,6 +310,8 @@ class ProductBuilder
 
     /**
      * Sets archived at field.
+     *
+     * @param \DateTime|null $value
      */
     public function archivedAt(?\DateTime $value): self
     {
@@ -293,6 +330,8 @@ class ProductBuilder
 
     /**
      * Sets require credit card field.
+     *
+     * @param bool|null $value
      */
     public function requireCreditCard(?bool $value): self
     {
@@ -302,6 +341,8 @@ class ProductBuilder
 
     /**
      * Sets return params field.
+     *
+     * @param string|null $value
      */
     public function returnParams(?string $value): self
     {
@@ -320,6 +361,8 @@ class ProductBuilder
 
     /**
      * Sets taxable field.
+     *
+     * @param bool|null $value
      */
     public function taxable(?bool $value): self
     {
@@ -329,6 +372,8 @@ class ProductBuilder
 
     /**
      * Sets update return url field.
+     *
+     * @param string|null $value
      */
     public function updateReturnUrl(?string $value): self
     {
@@ -347,6 +392,8 @@ class ProductBuilder
 
     /**
      * Sets initial charge after trial field.
+     *
+     * @param bool|null $value
      */
     public function initialChargeAfterTrial(?bool $value): self
     {
@@ -365,6 +412,8 @@ class ProductBuilder
 
     /**
      * Sets version number field.
+     *
+     * @param int|null $value
      */
     public function versionNumber(?int $value): self
     {
@@ -374,6 +423,8 @@ class ProductBuilder
 
     /**
      * Sets update return params field.
+     *
+     * @param string|null $value
      */
     public function updateReturnParams(?string $value): self
     {
@@ -392,6 +443,8 @@ class ProductBuilder
 
     /**
      * Sets product family field.
+     *
+     * @param ProductFamily|null $value
      */
     public function productFamily(?ProductFamily $value): self
     {
@@ -401,6 +454,8 @@ class ProductBuilder
 
     /**
      * Sets public signup pages field.
+     *
+     * @param PublicSignupPage[]|null $value
      */
     public function publicSignupPages(?array $value): self
     {
@@ -410,6 +465,8 @@ class ProductBuilder
 
     /**
      * Sets product price point name field.
+     *
+     * @param string|null $value
      */
     public function productPricePointName(?string $value): self
     {
@@ -419,6 +476,8 @@ class ProductBuilder
 
     /**
      * Sets request billing address field.
+     *
+     * @param bool|null $value
      */
     public function requestBillingAddress(?bool $value): self
     {
@@ -428,6 +487,8 @@ class ProductBuilder
 
     /**
      * Sets require billing address field.
+     *
+     * @param bool|null $value
      */
     public function requireBillingAddress(?bool $value): self
     {
@@ -437,6 +498,8 @@ class ProductBuilder
 
     /**
      * Sets require shipping address field.
+     *
+     * @param bool|null $value
      */
     public function requireShippingAddress(?bool $value): self
     {
@@ -446,6 +509,8 @@ class ProductBuilder
 
     /**
      * Sets tax code field.
+     *
+     * @param string|null $value
      */
     public function taxCode(?string $value): self
     {
@@ -464,6 +529,8 @@ class ProductBuilder
 
     /**
      * Sets default product price point id field.
+     *
+     * @param int|null $value
      */
     public function defaultProductPricePointId(?int $value): self
     {
@@ -473,6 +540,8 @@ class ProductBuilder
 
     /**
      * Sets use site exchange rate field.
+     *
+     * @param bool|null $value
      */
     public function useSiteExchangeRate(?bool $value): self
     {
@@ -491,6 +560,8 @@ class ProductBuilder
 
     /**
      * Sets item category field.
+     *
+     * @param string|null $value
      */
     public function itemCategory(?string $value): self
     {
@@ -509,6 +580,8 @@ class ProductBuilder
 
     /**
      * Sets product price point id field.
+     *
+     * @param int|null $value
      */
     public function productPricePointId(?int $value): self
     {
@@ -518,6 +591,8 @@ class ProductBuilder
 
     /**
      * Sets product price point handle field.
+     *
+     * @param string|null $value
      */
     public function productPricePointHandle(?string $value): self
     {
@@ -537,8 +612,8 @@ class ProductBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -547,7 +622,7 @@ class ProductBuilder
     }
 
     /**
-     * Initializes a new product object.
+     * Initializes a new Product object.
      */
     public function build(): Product
     {

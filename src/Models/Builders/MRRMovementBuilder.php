@@ -31,7 +31,7 @@ class MRRMovementBuilder
     }
 
     /**
-     * Initializes a new mrrmovement Builder object.
+     * Initializes a new MRR Movement Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class MRRMovementBuilder
 
     /**
      * Sets amount field.
+     *
+     * @param int|null $value
      */
     public function amount(?int $value): self
     {
@@ -49,6 +51,8 @@ class MRRMovementBuilder
 
     /**
      * Sets category field.
+     *
+     * @param string|null $value
      */
     public function category(?string $value): self
     {
@@ -58,6 +62,8 @@ class MRRMovementBuilder
 
     /**
      * Sets subscriber delta field.
+     *
+     * @param int|null $value
      */
     public function subscriberDelta(?int $value): self
     {
@@ -67,6 +73,8 @@ class MRRMovementBuilder
 
     /**
      * Sets lead delta field.
+     *
+     * @param int|null $value
      */
     public function leadDelta(?int $value): self
     {
@@ -77,8 +85,8 @@ class MRRMovementBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -87,7 +95,7 @@ class MRRMovementBuilder
     }
 
     /**
-     * Initializes a new mrrmovement object.
+     * Initializes a new MRR Movement object.
      */
     public function build(): MRRMovement
     {

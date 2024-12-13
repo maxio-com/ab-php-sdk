@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace AdvancedBillingLib\Models\Builders;
 
 use AdvancedBillingLib\Models\AddSubscriptionToAGroup;
+use AdvancedBillingLib\Models\GroupSettings;
 use Core\Utils\CoreHelper;
 
 /**
@@ -31,7 +32,7 @@ class AddSubscriptionToAGroupBuilder
     }
 
     /**
-     * Initializes a new add subscription to agroup Builder object.
+     * Initializes a new Add Subscription To A Group Builder object.
      */
     public static function init(): self
     {
@@ -40,8 +41,10 @@ class AddSubscriptionToAGroupBuilder
 
     /**
      * Sets group field.
+     *
+     * @param GroupSettings|null $value
      */
-    public function group($value): self
+    public function group(?GroupSettings $value): self
     {
         $this->instance->setGroup($value);
         return $this;
@@ -50,8 +53,8 @@ class AddSubscriptionToAGroupBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -60,7 +63,7 @@ class AddSubscriptionToAGroupBuilder
     }
 
     /**
-     * Initializes a new add subscription to agroup object.
+     * Initializes a new Add Subscription To A Group object.
      */
     public function build(): AddSubscriptionToAGroup
     {

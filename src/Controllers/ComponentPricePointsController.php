@@ -92,7 +92,15 @@ class ComponentPricePointsController extends BaseController
                 BodyParam::init($body)
             );
 
-        $_resHandler = $this->responseHandler()->type(ComponentPricePointResponse::class);
+        $_resHandler = $this->responseHandler()
+            ->throwErrorOn(
+                '422',
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorArrayMapResponseException::class
+                )
+            )
+            ->type(ComponentPricePointResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
     }
@@ -162,7 +170,15 @@ class ComponentPricePointsController extends BaseController
                 BodyParam::init($body)
             );
 
-        $_resHandler = $this->responseHandler()->type(ComponentPricePointsResponse::class);
+        $_resHandler = $this->responseHandler()
+            ->throwErrorOn(
+                '422',
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
+            )
+            ->type(ComponentPricePointsResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
     }
@@ -230,13 +246,17 @@ class ComponentPricePointsController extends BaseController
      * @param int|string $pricePointId The id or handle of the price point. When using the handle,
      *        it must be prefixed with `handle:`. Example: `123` for an integer ID, or `handle:
      *        example-price_point-handle` for a string handle.
+     * @param bool|null $currencyPrices Include an array of currency price data
      *
      * @return ComponentPricePointResponse Response from the API call
      *
      * @throws ApiException Thrown if API call fails
      */
-    public function readComponentPricePoint($componentId, $pricePointId): ComponentPricePointResponse
-    {
+    public function readComponentPricePoint(
+        $componentId,
+        $pricePointId,
+        ?bool $currencyPrices = null
+    ): ComponentPricePointResponse {
         $_reqBuilder = $this->requestBuilder(
             RequestMethod::GET,
             '/components/{component_id}/price_points/{price_point_id}.json'
@@ -244,7 +264,8 @@ class ComponentPricePointsController extends BaseController
             ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('component_id', $componentId)->required()->strictType('oneOf(int,string)'),
-                TemplateParam::init('price_point_id', $pricePointId)->required()->strictType('oneOf(int,string)')
+                TemplateParam::init('price_point_id', $pricePointId)->required()->strictType('oneOf(int,string)'),
+                QueryParam::init('currency_prices', $currencyPrices)->commaSeparated()
             );
 
         $_resHandler = $this->responseHandler()->type(ComponentPricePointResponse::class);
@@ -355,7 +376,10 @@ class ComponentPricePointsController extends BaseController
         $_resHandler = $this->responseHandler()
             ->throwErrorOn(
                 '422',
-                ErrorType::init('Unprocessable Entity (WebDAV)', ErrorArrayMapResponseException::class)
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorArrayMapResponseException::class
+                )
             )
             ->type(ComponentCurrencyPricesResponse::class);
 
@@ -393,7 +417,10 @@ class ComponentPricePointsController extends BaseController
         $_resHandler = $this->responseHandler()
             ->throwErrorOn(
                 '422',
-                ErrorType::init('Unprocessable Entity (WebDAV)', ErrorArrayMapResponseException::class)
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorArrayMapResponseException::class
+                )
             )
             ->type(ComponentCurrencyPricesResponse::class);
 

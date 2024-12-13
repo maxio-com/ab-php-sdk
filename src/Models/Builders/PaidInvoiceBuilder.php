@@ -31,7 +31,7 @@ class PaidInvoiceBuilder
     }
 
     /**
-     * Initializes a new paid invoice Builder object.
+     * Initializes a new Paid Invoice Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class PaidInvoiceBuilder
 
     /**
      * Sets invoice id field.
+     *
+     * @param string|null $value
      */
     public function invoiceId(?string $value): self
     {
@@ -49,6 +51,8 @@ class PaidInvoiceBuilder
 
     /**
      * Sets status field.
+     *
+     * @param string|null $value
      */
     public function status(?string $value): self
     {
@@ -58,6 +62,8 @@ class PaidInvoiceBuilder
 
     /**
      * Sets due amount field.
+     *
+     * @param string|null $value
      */
     public function dueAmount(?string $value): self
     {
@@ -67,6 +73,8 @@ class PaidInvoiceBuilder
 
     /**
      * Sets paid amount field.
+     *
+     * @param string|null $value
      */
     public function paidAmount(?string $value): self
     {
@@ -77,8 +85,8 @@ class PaidInvoiceBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -87,7 +95,7 @@ class PaidInvoiceBuilder
     }
 
     /**
-     * Initializes a new paid invoice object.
+     * Initializes a new Paid Invoice object.
      */
     public function build(): PaidInvoice
     {

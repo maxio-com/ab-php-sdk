@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models\Builders;
 
+use AdvancedBillingLib\Models\Invoice;
 use AdvancedBillingLib\Models\ListInvoicesResponse;
 use Core\Utils\CoreHelper;
 
@@ -31,7 +32,9 @@ class ListInvoicesResponseBuilder
     }
 
     /**
-     * Initializes a new list invoices response Builder object.
+     * Initializes a new List Invoices Response Builder object.
+     *
+     * @param Invoice[] $invoices
      */
     public static function init(array $invoices): self
     {
@@ -41,8 +44,8 @@ class ListInvoicesResponseBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -51,7 +54,7 @@ class ListInvoicesResponseBuilder
     }
 
     /**
-     * Initializes a new list invoices response object.
+     * Initializes a new List Invoices Response object.
      */
     public function build(): ListInvoicesResponse
     {

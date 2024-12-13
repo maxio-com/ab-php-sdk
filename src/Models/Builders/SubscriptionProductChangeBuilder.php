@@ -31,7 +31,10 @@ class SubscriptionProductChangeBuilder
     }
 
     /**
-     * Initializes a new subscription product change Builder object.
+     * Initializes a new Subscription Product Change Builder object.
+     *
+     * @param int $previousProductId
+     * @param int $newProductId
      */
     public static function init(int $previousProductId, int $newProductId): self
     {
@@ -41,8 +44,8 @@ class SubscriptionProductChangeBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -51,7 +54,7 @@ class SubscriptionProductChangeBuilder
     }
 
     /**
-     * Initializes a new subscription product change object.
+     * Initializes a new Subscription Product Change object.
      */
     public function build(): SubscriptionProductChange
     {

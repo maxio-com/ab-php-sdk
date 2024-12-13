@@ -32,7 +32,9 @@ class CreateAllocationBuilder
     }
 
     /**
-     * Initializes a new create allocation Builder object.
+     * Initializes a new Create Allocation Builder object.
+     *
+     * @param float $quantity
      */
     public static function init(float $quantity): self
     {
@@ -41,6 +43,8 @@ class CreateAllocationBuilder
 
     /**
      * Sets component id field.
+     *
+     * @param int|null $value
      */
     public function componentId(?int $value): self
     {
@@ -50,6 +54,8 @@ class CreateAllocationBuilder
 
     /**
      * Sets memo field.
+     *
+     * @param string|null $value
      */
     public function memo(?string $value): self
     {
@@ -59,6 +65,8 @@ class CreateAllocationBuilder
 
     /**
      * Sets proration downgrade scheme field.
+     *
+     * @param string|null $value
      */
     public function prorationDowngradeScheme(?string $value): self
     {
@@ -68,6 +76,8 @@ class CreateAllocationBuilder
 
     /**
      * Sets proration upgrade scheme field.
+     *
+     * @param string|null $value
      */
     public function prorationUpgradeScheme(?string $value): self
     {
@@ -77,6 +87,8 @@ class CreateAllocationBuilder
 
     /**
      * Sets accrue charge field.
+     *
+     * @param bool|null $value
      */
     public function accrueCharge(?bool $value): self
     {
@@ -86,6 +98,8 @@ class CreateAllocationBuilder
 
     /**
      * Sets downgrade credit field.
+     *
+     * @param string|null $value
      */
     public function downgradeCredit(?string $value): self
     {
@@ -104,6 +118,8 @@ class CreateAllocationBuilder
 
     /**
      * Sets upgrade charge field.
+     *
+     * @param string|null $value
      */
     public function upgradeCharge(?string $value): self
     {
@@ -122,6 +138,8 @@ class CreateAllocationBuilder
 
     /**
      * Sets initiate dunning field.
+     *
+     * @param bool|null $value
      */
     public function initiateDunning(?bool $value): self
     {
@@ -131,6 +149,8 @@ class CreateAllocationBuilder
 
     /**
      * Sets price point id field.
+     *
+     * @param string|int|null $value
      */
     public function pricePointId($value): self
     {
@@ -149,6 +169,8 @@ class CreateAllocationBuilder
 
     /**
      * Sets billing schedule field.
+     *
+     * @param BillingSchedule|null $value
      */
     public function billingSchedule(?BillingSchedule $value): self
     {
@@ -159,8 +181,8 @@ class CreateAllocationBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -169,7 +191,7 @@ class CreateAllocationBuilder
     }
 
     /**
-     * Initializes a new create allocation object.
+     * Initializes a new Create Allocation object.
      */
     public function build(): CreateAllocation
     {

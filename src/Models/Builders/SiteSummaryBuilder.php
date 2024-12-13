@@ -32,7 +32,7 @@ class SiteSummaryBuilder
     }
 
     /**
-     * Initializes a new site summary Builder object.
+     * Initializes a new Site Summary Builder object.
      */
     public static function init(): self
     {
@@ -41,6 +41,8 @@ class SiteSummaryBuilder
 
     /**
      * Sets seller name field.
+     *
+     * @param string|null $value
      */
     public function sellerName(?string $value): self
     {
@@ -50,6 +52,8 @@ class SiteSummaryBuilder
 
     /**
      * Sets site name field.
+     *
+     * @param string|null $value
      */
     public function siteName(?string $value): self
     {
@@ -59,6 +63,8 @@ class SiteSummaryBuilder
 
     /**
      * Sets site id field.
+     *
+     * @param int|null $value
      */
     public function siteId(?int $value): self
     {
@@ -68,6 +74,8 @@ class SiteSummaryBuilder
 
     /**
      * Sets site currency field.
+     *
+     * @param string|null $value
      */
     public function siteCurrency(?string $value): self
     {
@@ -77,6 +85,8 @@ class SiteSummaryBuilder
 
     /**
      * Sets stats field.
+     *
+     * @param SiteStatistics|null $value
      */
     public function stats(?SiteStatistics $value): self
     {
@@ -87,8 +97,8 @@ class SiteSummaryBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -97,7 +107,7 @@ class SiteSummaryBuilder
     }
 
     /**
-     * Initializes a new site summary object.
+     * Initializes a new Site Summary object.
      */
     public function build(): SiteSummary
     {

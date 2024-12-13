@@ -23,7 +23,7 @@ final class TestCouponLoader
             ->getCouponsController()
             ->createCoupon(
                 $productFamilyId,
-                $this->couponRequestFactory->createCreateOrUpdatePercentageCouponRequest(
+                $this->couponRequestFactory->createPercentageCouponRequest(
                     (string) $productFamilyId,
                     $couponCode
                 )

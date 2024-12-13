@@ -21,7 +21,7 @@ class PrepaidUsageComponent implements \JsonSerializable
     private $name;
 
     /**
-     * @var string|null
+     * @var string
      */
     private $unitName;
 
@@ -41,7 +41,7 @@ class PrepaidUsageComponent implements \JsonSerializable
     private $taxable;
 
     /**
-     * @var string|null
+     * @var string
      */
     private $pricingScheme;
 
@@ -61,7 +61,7 @@ class PrepaidUsageComponent implements \JsonSerializable
     private $downgradeCredit = [];
 
     /**
-     * @var PrepaidComponentPricePoint[]|null
+     * @var CreatePrepaidUsageComponentPricePoint[]|null
      */
     private $pricePoints;
 
@@ -81,12 +81,7 @@ class PrepaidUsageComponent implements \JsonSerializable
     private $hideDateRangeOnInvoice;
 
     /**
-     * @var string|null
-     */
-    private $priceInCents;
-
-    /**
-     * @var OveragePricing|null
+     * @var OveragePricing
      */
     private $overagePricing;
 
@@ -127,10 +122,16 @@ class PrepaidUsageComponent implements \JsonSerializable
 
     /**
      * @param string $name
+     * @param string $unitName
+     * @param string $pricingScheme
+     * @param OveragePricing $overagePricing
      */
-    public function __construct(string $name)
+    public function __construct(string $name, string $unitName, string $pricingScheme, OveragePricing $overagePricing)
     {
         $this->name = $name;
+        $this->unitName = $unitName;
+        $this->pricingScheme = $pricingScheme;
+        $this->overagePricing = $overagePricing;
     }
 
     /**
@@ -162,7 +163,7 @@ class PrepaidUsageComponent implements \JsonSerializable
      * automatically pluralized when necessary. i.e. “message”, which may then be shown as “5 messages” on
      * a subscription’s component line-item
      */
-    public function getUnitName(): ?string
+    public function getUnitName(): string
     {
         return $this->unitName;
     }
@@ -173,9 +174,10 @@ class PrepaidUsageComponent implements \JsonSerializable
      * automatically pluralized when necessary. i.e. “message”, which may then be shown as “5 messages” on
      * a subscription’s component line-item
      *
+     * @required
      * @maps unit_name
      */
-    public function setUnitName(?string $unitName): void
+    public function setUnitName(string $unitName): void
     {
         $this->unitName = $unitName;
     }
@@ -249,7 +251,7 @@ class PrepaidUsageComponent implements \JsonSerializable
      * The identifier for the pricing scheme. See [Product Components](https://help.chargify.
      * com/products/product-components.html) for an overview of pricing schemes.
      */
-    public function getPricingScheme(): ?string
+    public function getPricingScheme(): string
     {
         return $this->pricingScheme;
     }
@@ -259,10 +261,11 @@ class PrepaidUsageComponent implements \JsonSerializable
      * The identifier for the pricing scheme. See [Product Components](https://help.chargify.
      * com/products/product-components.html) for an overview of pricing schemes.
      *
+     * @required
      * @maps pricing_scheme
      * @factory \AdvancedBillingLib\Models\PricingScheme::checkValue
      */
-    public function setPricingScheme(?string $pricingScheme): void
+    public function setPricingScheme(string $pricingScheme): void
     {
         $this->pricingScheme = $pricingScheme;
     }
@@ -376,7 +379,7 @@ class PrepaidUsageComponent implements \JsonSerializable
     /**
      * Returns Price Points.
      *
-     * @return PrepaidComponentPricePoint[]|null
+     * @return CreatePrepaidUsageComponentPricePoint[]|null
      */
     public function getPricePoints(): ?array
     {
@@ -388,7 +391,7 @@ class PrepaidUsageComponent implements \JsonSerializable
      *
      * @maps price_points
      *
-     * @param PrepaidComponentPricePoint[]|null $pricePoints
+     * @param CreatePrepaidUsageComponentPricePoint[]|null $pricePoints
      */
     public function setPricePoints(?array $pricePoints): void
     {
@@ -469,29 +472,9 @@ class PrepaidUsageComponent implements \JsonSerializable
     }
 
     /**
-     * Returns Price in Cents.
-     * deprecated May 2011 - use unit_price instead
-     */
-    public function getPriceInCents(): ?string
-    {
-        return $this->priceInCents;
-    }
-
-    /**
-     * Sets Price in Cents.
-     * deprecated May 2011 - use unit_price instead
-     *
-     * @maps price_in_cents
-     */
-    public function setPriceInCents(?string $priceInCents): void
-    {
-        $this->priceInCents = $priceInCents;
-    }
-
-    /**
      * Returns Overage Pricing.
      */
-    public function getOveragePricing(): ?OveragePricing
+    public function getOveragePricing(): OveragePricing
     {
         return $this->overagePricing;
     }
@@ -499,9 +482,10 @@ class PrepaidUsageComponent implements \JsonSerializable
     /**
      * Sets Overage Pricing.
      *
+     * @required
      * @maps overage_pricing
      */
-    public function setOveragePricing(?OveragePricing $overagePricing): void
+    public function setOveragePricing(OveragePricing $overagePricing): void
     {
         $this->overagePricing = $overagePricing;
     }
@@ -663,12 +647,27 @@ class PrepaidUsageComponent implements \JsonSerializable
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function addAdditionalProperty(string $name, $value)
     {
         $this->additionalProperties[$name] = $value;
+    }
+
+    /**
+     * Find an additional property by name in this model or false if property does not exist.
+     *
+     * @param string $name Name of property.
+     *
+     * @return mixed|false Value of the property.
+     */
+    public function findAdditionalProperty(string $name)
+    {
+        if (isset($this->additionalProperties[$name])) {
+            return $this->additionalProperties[$name];
+        }
+        return false;
     }
 
     /**
@@ -684,9 +683,7 @@ class PrepaidUsageComponent implements \JsonSerializable
     {
         $json = [];
         $json['name']                            = $this->name;
-        if (isset($this->unitName)) {
-            $json['unit_name']                   = $this->unitName;
-        }
+        $json['unit_name']                       = $this->unitName;
         if (isset($this->description)) {
             $json['description']                 = $this->description;
         }
@@ -696,9 +693,7 @@ class PrepaidUsageComponent implements \JsonSerializable
         if (isset($this->taxable)) {
             $json['taxable']                     = $this->taxable;
         }
-        if (isset($this->pricingScheme)) {
-            $json['pricing_scheme']              = PricingScheme::checkValue($this->pricingScheme);
-        }
+        $json['pricing_scheme']                  = PricingScheme::checkValue($this->pricingScheme);
         if (isset($this->prices)) {
             $json['prices']                      = $this->prices;
         }
@@ -724,12 +719,7 @@ class PrepaidUsageComponent implements \JsonSerializable
         if (isset($this->hideDateRangeOnInvoice)) {
             $json['hide_date_range_on_invoice']  = $this->hideDateRangeOnInvoice;
         }
-        if (isset($this->priceInCents)) {
-            $json['price_in_cents']              = $this->priceInCents;
-        }
-        if (isset($this->overagePricing)) {
-            $json['overage_pricing']             = $this->overagePricing;
-        }
+        $json['overage_pricing']                 = $this->overagePricing;
         if (isset($this->rolloverPrepaidRemainder)) {
             $json['rollover_prepaid_remainder']  = $this->rolloverPrepaidRemainder;
         }

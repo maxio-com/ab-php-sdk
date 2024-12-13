@@ -38,13 +38,13 @@ Additionally, for documentation on how to apply a coupon to a subscription withi
 
 This request will create a coupon, based on the provided information.
 
-When creating a coupon, you must specify a product family using the `product_family_id`. If no `product_family_id` is passed, the first product family available is used. You will also need to formulate your URL to cite the Product Family ID in your request.
+You can create either a flat amount coupon, by specyfing `amount_in_cents`, or percentage coupon by specyfing `percentage`.
 
-You can restrict a coupon to only apply to specific products / components by optionally passing in hashes of `restricted_products` and/or `restricted_components` in the format:
-`{ "<product/component_id>": boolean_value }`
+You can restrict a coupon to only apply to specific products / components by optionally passing in `restricted_products` and/or `restricted_components` objects in the format:
+`{ "<product_id/component_id>": boolean_value }`
 
 ```php
-function createCoupon(int $productFamilyId, ?CreateOrUpdateCoupon $body = null): CouponResponse
+function createCoupon(int $productFamilyId, ?CouponRequest $body = null): CouponResponse
 ```
 
 ## Parameters
@@ -52,7 +52,7 @@ function createCoupon(int $productFamilyId, ?CreateOrUpdateCoupon $body = null):
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `productFamilyId` | `int` | Template, Required | The Advanced Billing id of the product family to which the coupon belongs |
-| `body` | [`?CreateOrUpdateCoupon`](../../doc/models/create-or-update-coupon.md) | Body, Optional | - |
+| `body` | [`?CouponRequest`](../../doc/models/coupon-request.md) | Body, Optional | - |
 
 ## Response Type
 
@@ -63,17 +63,18 @@ function createCoupon(int $productFamilyId, ?CreateOrUpdateCoupon $body = null):
 ```php
 $productFamilyId = 140;
 
-$body = CreateOrUpdateCouponBuilder::init()
+$body = CouponRequestBuilder::init()
     ->coupon(
-        CreateOrUpdatePercentageCouponBuilder::init(
-            '15% off',
-            '15OFF',
-            15
-        )
+        CouponPayloadBuilder::init()
+            ->name('15% off')
+            ->code('15OFF')
             ->description('15% off for life')
+            ->percentage(
+                15
+            )
             ->allowNegativeBalance(false)
             ->recurring(false)
-            ->endDate(DateTimeHelper::fromRfc3339DateTime('2012-08-29T12:00:00-04:00'))
+            ->endDate(DateTimeHelper::fromSimpleDate('2012-08-29'))
             ->productFamilyId('2')
             ->stackable(true)
             ->compoundingStrategy(CompoundingStrategy::COMPOUND)
@@ -262,7 +263,11 @@ You can search for a coupon via the API with the find method. By passing a code 
 If you have more than one product family and if the coupon you are trying to find does not belong to the default product family in your site, then you will need to specify (either in the url or as a query string param) the product family id.
 
 ```php
-function findCoupon(?int $productFamilyId = null, ?string $code = null): CouponResponse
+function findCoupon(
+    ?int $productFamilyId = null,
+    ?string $code = null,
+    ?bool $currencyPrices = null
+): CouponResponse
 ```
 
 ## Parameters
@@ -271,6 +276,7 @@ function findCoupon(?int $productFamilyId = null, ?string $code = null): CouponR
 |  --- | --- | --- | --- |
 | `productFamilyId` | `?int` | Query, Optional | The Advanced Billing id of the product family to which the coupon belongs |
 | `code` | `?string` | Query, Optional | The code of the coupon |
+| `currencyPrices` | `?bool` | Query, Optional | When fetching coupons, if you have defined multiple currencies at the site level, you can optionally pass the `?currency_prices=true` query param to include an array of currency price data in the response. |
 
 ## Response Type
 
@@ -279,7 +285,13 @@ function findCoupon(?int $productFamilyId = null, ?string $code = null): CouponR
 ## Example Usage
 
 ```php
-$result = $couponsController->findCoupon();
+$currencyPrices = true;
+
+$result = $couponsController->findCoupon(
+    null,
+    null,
+    $currencyPrices
+);
 ```
 
 
@@ -293,7 +305,7 @@ When fetching a coupon, if you have defined multiple currencies at the site leve
 If the coupon is set to `use_site_exchange_rate: true`, it will return pricing based on the current exchange rate. If the flag is set to false, it will return all of the defined prices for each currency.
 
 ```php
-function readCoupon(int $productFamilyId, int $couponId): CouponResponse
+function readCoupon(int $productFamilyId, int $couponId, ?bool $currencyPrices = null): CouponResponse
 ```
 
 ## Parameters
@@ -302,6 +314,7 @@ function readCoupon(int $productFamilyId, int $couponId): CouponResponse
 |  --- | --- | --- | --- |
 | `productFamilyId` | `int` | Template, Required | The Advanced Billing id of the product family to which the coupon belongs |
 | `couponId` | `int` | Template, Required | The Advanced Billing id of the coupon |
+| `currencyPrices` | `?bool` | Query, Optional | When fetching coupons, if you have defined multiple currencies at the site level, you can optionally pass the `?currency_prices=true` query param to include an array of currency price data in the response. |
 
 ## Response Type
 
@@ -314,9 +327,12 @@ $productFamilyId = 140;
 
 $couponId = 162;
 
+$currencyPrices = true;
+
 $result = $couponsController->readCoupon(
     $productFamilyId,
-    $couponId
+    $couponId,
+    $currencyPrices
 );
 ```
 
@@ -360,7 +376,7 @@ You can restrict a coupon to only apply to specific products / components by opt
 `{ "<product/component_id>": boolean_value }`
 
 ```php
-function updateCoupon(int $productFamilyId, int $couponId, ?CreateOrUpdateCoupon $body = null): CouponResponse
+function updateCoupon(int $productFamilyId, int $couponId, ?CouponRequest $body = null): CouponResponse
 ```
 
 ## Parameters
@@ -369,7 +385,7 @@ function updateCoupon(int $productFamilyId, int $couponId, ?CreateOrUpdateCoupon
 |  --- | --- | --- | --- |
 | `productFamilyId` | `int` | Template, Required | The Advanced Billing id of the product family to which the coupon belongs |
 | `couponId` | `int` | Template, Required | The Advanced Billing id of the coupon |
-| `body` | [`?CreateOrUpdateCoupon`](../../doc/models/create-or-update-coupon.md) | Body, Optional | - |
+| `body` | [`?CouponRequest`](../../doc/models/coupon-request.md) | Body, Optional | - |
 
 ## Response Type
 
@@ -382,17 +398,18 @@ $productFamilyId = 140;
 
 $couponId = 162;
 
-$body = CreateOrUpdateCouponBuilder::init()
+$body = CouponRequestBuilder::init()
     ->coupon(
-        CreateOrUpdatePercentageCouponBuilder::init(
-            '15% off',
-            '15OFF',
-            15
-        )
+        CouponPayloadBuilder::init()
+            ->name('15% off')
+            ->code('15OFF')
             ->description('15% off for life')
+            ->percentage(
+                15
+            )
             ->allowNegativeBalance(false)
             ->recurring(false)
-            ->endDate(DateTimeHelper::fromRfc3339DateTime('2012-08-29T12:00:00-04:00'))
+            ->endDate(DateTimeHelper::fromSimpleDate('2012-08-29'))
             ->productFamilyId('2')
             ->stackable(true)
             ->compoundingStrategy(CompoundingStrategy::COMPOUND)
@@ -446,6 +463,12 @@ $result = $couponsController->updateCoupon(
   }
 }
 ```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
 
 
 # Archive Coupon
@@ -812,6 +835,12 @@ $result = $couponsController->createOrUpdateCouponCurrencyPrices(
     $body
 );
 ```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 422 | Unprocessable Entity (WebDAV) | [`ErrorStringMapResponseException`](../../doc/models/error-string-map-response-exception.md) |
 
 
 # Create Coupon Subcodes

@@ -31,7 +31,7 @@ class CreateOfferComponentBuilder
     }
 
     /**
-     * Initializes a new create offer component Builder object.
+     * Initializes a new Create Offer Component Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class CreateOfferComponentBuilder
 
     /**
      * Sets component id field.
+     *
+     * @param int|null $value
      */
     public function componentId(?int $value): self
     {
@@ -49,6 +51,8 @@ class CreateOfferComponentBuilder
 
     /**
      * Sets price point id field.
+     *
+     * @param int|null $value
      */
     public function pricePointId(?int $value): self
     {
@@ -58,6 +62,8 @@ class CreateOfferComponentBuilder
 
     /**
      * Sets starting quantity field.
+     *
+     * @param int|null $value
      */
     public function startingQuantity(?int $value): self
     {
@@ -68,8 +74,8 @@ class CreateOfferComponentBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -78,7 +84,7 @@ class CreateOfferComponentBuilder
     }
 
     /**
-     * Initializes a new create offer component object.
+     * Initializes a new Create Offer Component object.
      */
     public function build(): CreateOfferComponent
     {

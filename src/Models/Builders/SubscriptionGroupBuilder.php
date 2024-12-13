@@ -32,7 +32,7 @@ class SubscriptionGroupBuilder
     }
 
     /**
-     * Initializes a new subscription group Builder object.
+     * Initializes a new Subscription Group Builder object.
      */
     public static function init(): self
     {
@@ -41,6 +41,8 @@ class SubscriptionGroupBuilder
 
     /**
      * Sets customer id field.
+     *
+     * @param int|null $value
      */
     public function customerId(?int $value): self
     {
@@ -50,6 +52,8 @@ class SubscriptionGroupBuilder
 
     /**
      * Sets payment profile field.
+     *
+     * @param SubscriptionGroupPaymentProfile|null $value
      */
     public function paymentProfile(?SubscriptionGroupPaymentProfile $value): self
     {
@@ -59,6 +63,8 @@ class SubscriptionGroupBuilder
 
     /**
      * Sets payment collection method field.
+     *
+     * @param string|null $value
      */
     public function paymentCollectionMethod(?string $value): self
     {
@@ -68,6 +74,8 @@ class SubscriptionGroupBuilder
 
     /**
      * Sets subscription ids field.
+     *
+     * @param int[]|null $value
      */
     public function subscriptionIds(?array $value): self
     {
@@ -77,6 +85,8 @@ class SubscriptionGroupBuilder
 
     /**
      * Sets created at field.
+     *
+     * @param \DateTime|null $value
      */
     public function createdAt(?\DateTime $value): self
     {
@@ -87,8 +97,8 @@ class SubscriptionGroupBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -97,7 +107,7 @@ class SubscriptionGroupBuilder
     }
 
     /**
-     * Initializes a new subscription group object.
+     * Initializes a new Subscription Group object.
      */
     public function build(): SubscriptionGroup
     {

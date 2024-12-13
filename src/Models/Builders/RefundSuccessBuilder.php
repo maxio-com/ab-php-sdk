@@ -31,7 +31,11 @@ class RefundSuccessBuilder
     }
 
     /**
-     * Initializes a new refund success Builder object.
+     * Initializes a new Refund Success Builder object.
+     *
+     * @param int $refundId
+     * @param int $gatewayTransactionId
+     * @param int $productId
      */
     public static function init(int $refundId, int $gatewayTransactionId, int $productId): self
     {
@@ -41,8 +45,8 @@ class RefundSuccessBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -51,7 +55,7 @@ class RefundSuccessBuilder
     }
 
     /**
-     * Initializes a new refund success object.
+     * Initializes a new Refund Success object.
      */
     public function build(): RefundSuccess
     {

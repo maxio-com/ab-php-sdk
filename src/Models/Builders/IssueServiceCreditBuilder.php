@@ -31,7 +31,9 @@ class IssueServiceCreditBuilder
     }
 
     /**
-     * Initializes a new issue service credit Builder object.
+     * Initializes a new Issue Service Credit Builder object.
+     *
+     * @param float|string $amount
      */
     public static function init($amount): self
     {
@@ -40,6 +42,8 @@ class IssueServiceCreditBuilder
 
     /**
      * Sets memo field.
+     *
+     * @param string|null $value
      */
     public function memo(?string $value): self
     {
@@ -50,8 +54,8 @@ class IssueServiceCreditBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -60,7 +64,7 @@ class IssueServiceCreditBuilder
     }
 
     /**
-     * Initializes a new issue service credit object.
+     * Initializes a new Issue Service Credit object.
      */
     public function build(): IssueServiceCredit
     {

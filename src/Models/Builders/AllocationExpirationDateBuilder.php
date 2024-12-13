@@ -31,7 +31,7 @@ class AllocationExpirationDateBuilder
     }
 
     /**
-     * Initializes a new allocation expiration date Builder object.
+     * Initializes a new Allocation Expiration Date Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class AllocationExpirationDateBuilder
 
     /**
      * Sets expires at field.
+     *
+     * @param \DateTime|null $value
      */
     public function expiresAt(?\DateTime $value): self
     {
@@ -50,8 +52,8 @@ class AllocationExpirationDateBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -60,7 +62,7 @@ class AllocationExpirationDateBuilder
     }
 
     /**
-     * Initializes a new allocation expiration date object.
+     * Initializes a new Allocation Expiration Date object.
      */
     public function build(): AllocationExpirationDate
     {

@@ -31,7 +31,7 @@ class ACHAgreementBuilder
     }
 
     /**
-     * Initializes a new achagreement Builder object.
+     * Initializes a new ACH Agreement Builder object.
      */
     public static function init(): self
     {
@@ -40,6 +40,8 @@ class ACHAgreementBuilder
 
     /**
      * Sets agreement terms field.
+     *
+     * @param string|null $value
      */
     public function agreementTerms(?string $value): self
     {
@@ -49,6 +51,8 @@ class ACHAgreementBuilder
 
     /**
      * Sets authorizer first name field.
+     *
+     * @param string|null $value
      */
     public function authorizerFirstName(?string $value): self
     {
@@ -58,6 +62,8 @@ class ACHAgreementBuilder
 
     /**
      * Sets authorizer last name field.
+     *
+     * @param string|null $value
      */
     public function authorizerLastName(?string $value): self
     {
@@ -67,6 +73,8 @@ class ACHAgreementBuilder
 
     /**
      * Sets ip address field.
+     *
+     * @param string|null $value
      */
     public function ipAddress(?string $value): self
     {
@@ -77,8 +85,8 @@ class ACHAgreementBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -87,7 +95,7 @@ class ACHAgreementBuilder
     }
 
     /**
-     * Initializes a new achagreement object.
+     * Initializes a new ACH Agreement object.
      */
     public function build(): ACHAgreement
     {

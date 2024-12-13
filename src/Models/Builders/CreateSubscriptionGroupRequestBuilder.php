@@ -32,7 +32,9 @@ class CreateSubscriptionGroupRequestBuilder
     }
 
     /**
-     * Initializes a new create subscription group request Builder object.
+     * Initializes a new Create Subscription Group Request Builder object.
+     *
+     * @param CreateSubscriptionGroup $subscriptionGroup
      */
     public static function init(CreateSubscriptionGroup $subscriptionGroup): self
     {
@@ -42,8 +44,8 @@ class CreateSubscriptionGroupRequestBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -52,7 +54,7 @@ class CreateSubscriptionGroupRequestBuilder
     }
 
     /**
-     * Initializes a new create subscription group request object.
+     * Initializes a new Create Subscription Group Request object.
      */
     public function build(): CreateSubscriptionGroupRequest
     {

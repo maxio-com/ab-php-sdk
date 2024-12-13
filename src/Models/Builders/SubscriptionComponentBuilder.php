@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models\Builders;
 
+use AdvancedBillingLib\Models\HistoricUsage;
 use AdvancedBillingLib\Models\SubscriptionComponent;
 use AdvancedBillingLib\Models\SubscriptionComponentSubscription;
 use Core\Utils\CoreHelper;
@@ -32,7 +33,7 @@ class SubscriptionComponentBuilder
     }
 
     /**
-     * Initializes a new subscription component Builder object.
+     * Initializes a new Subscription Component Builder object.
      */
     public static function init(): self
     {
@@ -41,6 +42,8 @@ class SubscriptionComponentBuilder
 
     /**
      * Sets id field.
+     *
+     * @param int|null $value
      */
     public function id(?int $value): self
     {
@@ -50,6 +53,8 @@ class SubscriptionComponentBuilder
 
     /**
      * Sets name field.
+     *
+     * @param string|null $value
      */
     public function name(?string $value): self
     {
@@ -59,6 +64,8 @@ class SubscriptionComponentBuilder
 
     /**
      * Sets kind field.
+     *
+     * @param string|null $value
      */
     public function kind(?string $value): self
     {
@@ -68,6 +75,8 @@ class SubscriptionComponentBuilder
 
     /**
      * Sets unit name field.
+     *
+     * @param string|null $value
      */
     public function unitName(?string $value): self
     {
@@ -77,6 +86,8 @@ class SubscriptionComponentBuilder
 
     /**
      * Sets enabled field.
+     *
+     * @param bool|null $value
      */
     public function enabled(?bool $value): self
     {
@@ -86,6 +97,8 @@ class SubscriptionComponentBuilder
 
     /**
      * Sets unit balance field.
+     *
+     * @param int|null $value
      */
     public function unitBalance(?int $value): self
     {
@@ -95,6 +108,8 @@ class SubscriptionComponentBuilder
 
     /**
      * Sets currency field.
+     *
+     * @param string|null $value
      */
     public function currency(?string $value): self
     {
@@ -104,6 +119,8 @@ class SubscriptionComponentBuilder
 
     /**
      * Sets allocated quantity field.
+     *
+     * @param int|string|null $value
      */
     public function allocatedQuantity($value): self
     {
@@ -113,6 +130,8 @@ class SubscriptionComponentBuilder
 
     /**
      * Sets pricing scheme field.
+     *
+     * @param string|null $value
      */
     public function pricingScheme(?string $value): self
     {
@@ -131,6 +150,8 @@ class SubscriptionComponentBuilder
 
     /**
      * Sets component id field.
+     *
+     * @param int|null $value
      */
     public function componentId(?int $value): self
     {
@@ -140,6 +161,8 @@ class SubscriptionComponentBuilder
 
     /**
      * Sets component handle field.
+     *
+     * @param string|null $value
      */
     public function componentHandle(?string $value): self
     {
@@ -158,6 +181,8 @@ class SubscriptionComponentBuilder
 
     /**
      * Sets subscription id field.
+     *
+     * @param int|null $value
      */
     public function subscriptionId(?int $value): self
     {
@@ -167,6 +192,8 @@ class SubscriptionComponentBuilder
 
     /**
      * Sets recurring field.
+     *
+     * @param bool|null $value
      */
     public function recurring(?bool $value): self
     {
@@ -176,6 +203,8 @@ class SubscriptionComponentBuilder
 
     /**
      * Sets upgrade charge field.
+     *
+     * @param string|null $value
      */
     public function upgradeCharge(?string $value): self
     {
@@ -194,6 +223,8 @@ class SubscriptionComponentBuilder
 
     /**
      * Sets downgrade credit field.
+     *
+     * @param string|null $value
      */
     public function downgradeCredit(?string $value): self
     {
@@ -212,6 +243,8 @@ class SubscriptionComponentBuilder
 
     /**
      * Sets archived at field.
+     *
+     * @param \DateTime|null $value
      */
     public function archivedAt(?\DateTime $value): self
     {
@@ -230,6 +263,8 @@ class SubscriptionComponentBuilder
 
     /**
      * Sets price point id field.
+     *
+     * @param int|null $value
      */
     public function pricePointId(?int $value): self
     {
@@ -248,6 +283,8 @@ class SubscriptionComponentBuilder
 
     /**
      * Sets price point handle field.
+     *
+     * @param string|null $value
      */
     public function pricePointHandle(?string $value): self
     {
@@ -266,6 +303,8 @@ class SubscriptionComponentBuilder
 
     /**
      * Sets price point type field.
+     *
+     * @param string|null $value
      */
     public function pricePointType(?string $value): self
     {
@@ -284,6 +323,8 @@ class SubscriptionComponentBuilder
 
     /**
      * Sets price point name field.
+     *
+     * @param string|null $value
      */
     public function pricePointName(?string $value): self
     {
@@ -302,6 +343,8 @@ class SubscriptionComponentBuilder
 
     /**
      * Sets product family id field.
+     *
+     * @param int|null $value
      */
     public function productFamilyId(?int $value): self
     {
@@ -311,6 +354,8 @@ class SubscriptionComponentBuilder
 
     /**
      * Sets product family handle field.
+     *
+     * @param string|null $value
      */
     public function productFamilyHandle(?string $value): self
     {
@@ -320,6 +365,8 @@ class SubscriptionComponentBuilder
 
     /**
      * Sets created at field.
+     *
+     * @param \DateTime|null $value
      */
     public function createdAt(?\DateTime $value): self
     {
@@ -329,6 +376,8 @@ class SubscriptionComponentBuilder
 
     /**
      * Sets updated at field.
+     *
+     * @param \DateTime|null $value
      */
     public function updatedAt(?\DateTime $value): self
     {
@@ -338,6 +387,8 @@ class SubscriptionComponentBuilder
 
     /**
      * Sets use site exchange rate field.
+     *
+     * @param bool|null $value
      */
     public function useSiteExchangeRate(?bool $value): self
     {
@@ -356,6 +407,8 @@ class SubscriptionComponentBuilder
 
     /**
      * Sets description field.
+     *
+     * @param string|null $value
      */
     public function description(?string $value): self
     {
@@ -374,6 +427,8 @@ class SubscriptionComponentBuilder
 
     /**
      * Sets allow fractional quantities field.
+     *
+     * @param bool|null $value
      */
     public function allowFractionalQuantities(?bool $value): self
     {
@@ -383,6 +438,8 @@ class SubscriptionComponentBuilder
 
     /**
      * Sets subscription field.
+     *
+     * @param SubscriptionComponentSubscription|null $value
      */
     public function subscription(?SubscriptionComponentSubscription $value): self
     {
@@ -392,6 +449,8 @@ class SubscriptionComponentBuilder
 
     /**
      * Sets historic usages field.
+     *
+     * @param HistoricUsage[]|null $value
      */
     public function historicUsages(?array $value): self
     {
@@ -401,6 +460,8 @@ class SubscriptionComponentBuilder
 
     /**
      * Sets display on hosted page field.
+     *
+     * @param bool|null $value
      */
     public function displayOnHostedPage(?bool $value): self
     {
@@ -410,6 +471,8 @@ class SubscriptionComponentBuilder
 
     /**
      * Sets interval field.
+     *
+     * @param int|null $value
      */
     public function interval(?int $value): self
     {
@@ -419,6 +482,8 @@ class SubscriptionComponentBuilder
 
     /**
      * Sets interval unit field.
+     *
+     * @param string|null $value
      */
     public function intervalUnit(?string $value): self
     {
@@ -438,8 +503,8 @@ class SubscriptionComponentBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -448,7 +513,7 @@ class SubscriptionComponentBuilder
     }
 
     /**
-     * Initializes a new subscription component object.
+     * Initializes a new Subscription Component object.
      */
     public function build(): SubscriptionComponent
     {

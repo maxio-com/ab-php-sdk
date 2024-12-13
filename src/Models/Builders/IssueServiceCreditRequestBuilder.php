@@ -32,7 +32,9 @@ class IssueServiceCreditRequestBuilder
     }
 
     /**
-     * Initializes a new issue service credit request Builder object.
+     * Initializes a new Issue Service Credit Request Builder object.
+     *
+     * @param IssueServiceCredit $serviceCredit
      */
     public static function init(IssueServiceCredit $serviceCredit): self
     {
@@ -42,8 +44,8 @@ class IssueServiceCreditRequestBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -52,7 +54,7 @@ class IssueServiceCreditRequestBuilder
     }
 
     /**
-     * Initializes a new issue service credit request object.
+     * Initializes a new Issue Service Credit Request object.
      */
     public function build(): IssueServiceCreditRequest
     {

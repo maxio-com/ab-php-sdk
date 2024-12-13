@@ -31,7 +31,9 @@ class EventBasedBillingSegmentErrorBuilder
     }
 
     /**
-     * Initializes a new event based billing segment error Builder object.
+     * Initializes a new Event Based Billing Segment Error Builder object.
+     *
+     * @param array $segments
      */
     public static function init(array $segments): self
     {
@@ -41,8 +43,8 @@ class EventBasedBillingSegmentErrorBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -51,7 +53,7 @@ class EventBasedBillingSegmentErrorBuilder
     }
 
     /**
-     * Initializes a new event based billing segment error object.
+     * Initializes a new Event Based Billing Segment Error object.
      */
     public function build(): EventBasedBillingSegmentError
     {

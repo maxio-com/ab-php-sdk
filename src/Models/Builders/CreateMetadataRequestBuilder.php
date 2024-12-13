@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models\Builders;
 
+use AdvancedBillingLib\Models\CreateMetadata;
 use AdvancedBillingLib\Models\CreateMetadataRequest;
 use Core\Utils\CoreHelper;
 
@@ -31,7 +32,9 @@ class CreateMetadataRequestBuilder
     }
 
     /**
-     * Initializes a new create metadata request Builder object.
+     * Initializes a new Create Metadata Request Builder object.
+     *
+     * @param CreateMetadata[] $metadata
      */
     public static function init(array $metadata): self
     {
@@ -41,8 +44,8 @@ class CreateMetadataRequestBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -51,7 +54,7 @@ class CreateMetadataRequestBuilder
     }
 
     /**
-     * Initializes a new create metadata request object.
+     * Initializes a new Create Metadata Request object.
      */
     public function build(): CreateMetadataRequest
     {

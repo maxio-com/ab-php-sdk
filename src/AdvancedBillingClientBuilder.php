@@ -108,15 +108,9 @@ class AdvancedBillingClientBuilder
         return $this;
     }
 
-    public function subdomain(string $subdomain): self
+    public function site(string $site): self
     {
-        $this->config['subdomain'] = $subdomain;
-        return $this;
-    }
-
-    public function domain(string $domain): self
-    {
-        $this->config['domain'] = $domain;
+        $this->config['site'] = $site;
         return $this;
     }
 

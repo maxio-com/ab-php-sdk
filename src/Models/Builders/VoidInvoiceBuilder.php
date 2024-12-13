@@ -31,7 +31,9 @@ class VoidInvoiceBuilder
     }
 
     /**
-     * Initializes a new void invoice Builder object.
+     * Initializes a new Void Invoice Builder object.
+     *
+     * @param string $reason
      */
     public static function init(string $reason): self
     {
@@ -41,8 +43,8 @@ class VoidInvoiceBuilder
     /**
      * Add an additional property to this model.
      *
-     * @param string $name Name of property
-     * @param mixed $value Value of property
+     * @param string $name Name of property.
+     * @param mixed $value Value of property.
      */
     public function additionalProperty(string $name, $value): self
     {
@@ -51,7 +53,7 @@ class VoidInvoiceBuilder
     }
 
     /**
-     * Initializes a new void invoice object.
+     * Initializes a new Void Invoice object.
      */
     public function build(): VoidInvoice
     {
