@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class CouponRestriction implements \JsonSerializable
@@ -139,6 +140,26 @@ class CouponRestriction implements \JsonSerializable
     public function unsetHandle(): void
     {
         $this->handle = [];
+    }
+
+    /**
+     * Converts the CouponRestriction object to a human-readable string representation.
+     *
+     * @return string The string representation of the CouponRestriction object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'CouponRestriction',
+            [
+                'id' => $this->id,
+                'itemType' => $this->itemType,
+                'itemId' => $this->itemId,
+                'name' => $this->name,
+                'handle' => $this->getHandle(),
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

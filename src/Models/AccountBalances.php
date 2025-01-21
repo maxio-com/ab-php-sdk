@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class AccountBalances implements \JsonSerializable
@@ -137,6 +138,26 @@ class AccountBalances implements \JsonSerializable
     public function setPrepayments(?AccountBalance $prepayments): void
     {
         $this->prepayments = $prepayments;
+    }
+
+    /**
+     * Converts the AccountBalances object to a human-readable string representation.
+     *
+     * @return string The string representation of the AccountBalances object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'AccountBalances',
+            [
+                'openInvoices' => $this->openInvoices,
+                'pendingInvoices' => $this->pendingInvoices,
+                'pendingDiscounts' => $this->pendingDiscounts,
+                'serviceCredits' => $this->serviceCredits,
+                'prepayments' => $this->prepayments,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

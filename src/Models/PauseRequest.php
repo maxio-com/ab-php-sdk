@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 /**
@@ -38,6 +39,19 @@ class PauseRequest implements \JsonSerializable
     public function setHold(?AutoResume $hold): void
     {
         $this->hold = $hold;
+    }
+
+    /**
+     * Converts the PauseRequest object to a human-readable string representation.
+     *
+     * @return string The string representation of the PauseRequest object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'PauseRequest',
+            ['hold' => $this->hold, 'additionalProperties' => $this->additionalProperties]
+        );
     }
 
     private $additionalProperties = [];

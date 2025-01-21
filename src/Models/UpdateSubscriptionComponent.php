@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class UpdateSubscriptionComponent implements \JsonSerializable
@@ -60,6 +61,23 @@ class UpdateSubscriptionComponent implements \JsonSerializable
     public function setCustomPrice(?ComponentCustomPrice $customPrice): void
     {
         $this->customPrice = $customPrice;
+    }
+
+    /**
+     * Converts the UpdateSubscriptionComponent object to a human-readable string representation.
+     *
+     * @return string The string representation of the UpdateSubscriptionComponent object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'UpdateSubscriptionComponent',
+            [
+                'componentId' => $this->componentId,
+                'customPrice' => $this->customPrice,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

@@ -52,6 +52,19 @@ class CreateComponentPricePointsRequest implements \JsonSerializable
         $this->pricePoints = $pricePoints;
     }
 
+    /**
+     * Converts the CreateComponentPricePointsRequest object to a human-readable string representation.
+     *
+     * @return string The string representation of the CreateComponentPricePointsRequest object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'CreateComponentPricePointsRequest',
+            ['pricePoints' => $this->pricePoints, 'additionalProperties' => $this->additionalProperties]
+        );
+    }
+
     private $additionalProperties = [];
 
     /**

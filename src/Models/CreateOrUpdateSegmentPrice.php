@@ -100,6 +100,24 @@ class CreateOrUpdateSegmentPrice implements \JsonSerializable
         $this->unitPrice = $unitPrice;
     }
 
+    /**
+     * Converts the CreateOrUpdateSegmentPrice object to a human-readable string representation.
+     *
+     * @return string The string representation of the CreateOrUpdateSegmentPrice object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'CreateOrUpdateSegmentPrice',
+            [
+                'startingQuantity' => $this->startingQuantity,
+                'endingQuantity' => $this->endingQuantity,
+                'unitPrice' => $this->unitPrice,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
+    }
+
     private $additionalProperties = [];
 
     /**

@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class CreateProductPricePoint implements \JsonSerializable
@@ -402,6 +403,35 @@ class CreateProductPricePoint implements \JsonSerializable
     public function setUseSiteExchangeRate(?bool $useSiteExchangeRate): void
     {
         $this->useSiteExchangeRate = $useSiteExchangeRate;
+    }
+
+    /**
+     * Converts the CreateProductPricePoint object to a human-readable string representation.
+     *
+     * @return string The string representation of the CreateProductPricePoint object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'CreateProductPricePoint',
+            [
+                'name' => $this->name,
+                'handle' => $this->handle,
+                'priceInCents' => $this->priceInCents,
+                'interval' => $this->interval,
+                'intervalUnit' => $this->intervalUnit,
+                'trialPriceInCents' => $this->trialPriceInCents,
+                'trialInterval' => $this->trialInterval,
+                'trialIntervalUnit' => $this->trialIntervalUnit,
+                'trialType' => $this->trialType,
+                'initialChargeInCents' => $this->initialChargeInCents,
+                'initialChargeAfterTrial' => $this->initialChargeAfterTrial,
+                'expirationInterval' => $this->expirationInterval,
+                'expirationIntervalUnit' => $this->getExpirationIntervalUnit(),
+                'useSiteExchangeRate' => $this->useSiteExchangeRate,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

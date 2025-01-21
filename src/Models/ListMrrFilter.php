@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class ListMrrFilter implements \JsonSerializable
@@ -41,6 +42,19 @@ class ListMrrFilter implements \JsonSerializable
     public function setSubscriptionIds(?array $subscriptionIds): void
     {
         $this->subscriptionIds = $subscriptionIds;
+    }
+
+    /**
+     * Converts the ListMrrFilter object to a human-readable string representation.
+     *
+     * @return string The string representation of the ListMrrFilter object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'ListMrrFilter',
+            ['subscriptionIds' => $this->subscriptionIds, 'additionalProperties' => $this->additionalProperties]
+        );
     }
 
     private $additionalProperties = [];

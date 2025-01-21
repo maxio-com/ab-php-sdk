@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class PrepaidProductPricePointFilter implements \JsonSerializable
@@ -37,6 +38,22 @@ class PrepaidProductPricePointFilter implements \JsonSerializable
     public function setProductPricePointId(string $productPricePointId): void
     {
         $this->productPricePointId = $productPricePointId;
+    }
+
+    /**
+     * Converts the PrepaidProductPricePointFilter object to a human-readable string representation.
+     *
+     * @return string The string representation of the PrepaidProductPricePointFilter object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'PrepaidProductPricePointFilter',
+            [
+                'productPricePointId' => $this->productPricePointId,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

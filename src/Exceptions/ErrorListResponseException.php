@@ -10,6 +10,8 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Exceptions;
 
+use AdvancedBillingLib\ApiHelper;
+
 /**
  * Error which contains list of messages.
  */
@@ -57,6 +59,20 @@ class ErrorListResponseException extends ApiException
     public function setErrors(array $errors): void
     {
         $this->errors = $errors;
+    }
+
+    /**
+     * Converts the ErrorListResponseException object to a human-readable string representation.
+     *
+     * @return string The string representation of the ErrorListResponseException object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'ErrorListResponseException',
+            ['errors' => $this->errors, 'additionalProperties' => $this->additionalProperties],
+            parent::__toString()
+        );
     }
 
     private $additionalProperties = [];

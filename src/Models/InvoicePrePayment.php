@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class InvoicePrePayment implements \JsonSerializable
@@ -87,6 +88,24 @@ class InvoicePrePayment implements \JsonSerializable
     public function setEndingBalanceInCents(?int $endingBalanceInCents): void
     {
         $this->endingBalanceInCents = $endingBalanceInCents;
+    }
+
+    /**
+     * Converts the InvoicePrePayment object to a human-readable string representation.
+     *
+     * @return string The string representation of the InvoicePrePayment object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'InvoicePrePayment',
+            [
+                'subscriptionId' => $this->subscriptionId,
+                'amountInCents' => $this->amountInCents,
+                'endingBalanceInCents' => $this->endingBalanceInCents,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

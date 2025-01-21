@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class SegmentResponse implements \JsonSerializable
@@ -35,6 +36,19 @@ class SegmentResponse implements \JsonSerializable
     public function setSegment(?Segment $segment): void
     {
         $this->segment = $segment;
+    }
+
+    /**
+     * Converts the SegmentResponse object to a human-readable string representation.
+     *
+     * @return string The string representation of the SegmentResponse object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'SegmentResponse',
+            ['segment' => $this->segment, 'additionalProperties' => $this->additionalProperties]
+        );
     }
 
     private $additionalProperties = [];

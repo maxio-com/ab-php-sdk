@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class CouponSubcodesResponse implements \JsonSerializable
@@ -93,6 +94,24 @@ class CouponSubcodesResponse implements \JsonSerializable
     public function setInvalidCodes(?array $invalidCodes): void
     {
         $this->invalidCodes = $invalidCodes;
+    }
+
+    /**
+     * Converts the CouponSubcodesResponse object to a human-readable string representation.
+     *
+     * @return string The string representation of the CouponSubcodesResponse object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'CouponSubcodesResponse',
+            [
+                'createdCodes' => $this->createdCodes,
+                'duplicateCodes' => $this->duplicateCodes,
+                'invalidCodes' => $this->invalidCodes,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

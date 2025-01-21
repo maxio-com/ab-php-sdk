@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class CreateInvoiceRequest implements \JsonSerializable
@@ -44,6 +45,19 @@ class CreateInvoiceRequest implements \JsonSerializable
     public function setInvoice(CreateInvoice $invoice): void
     {
         $this->invoice = $invoice;
+    }
+
+    /**
+     * Converts the CreateInvoiceRequest object to a human-readable string representation.
+     *
+     * @return string The string representation of the CreateInvoiceRequest object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'CreateInvoiceRequest',
+            ['invoice' => $this->invoice, 'additionalProperties' => $this->additionalProperties]
+        );
     }
 
     private $additionalProperties = [];

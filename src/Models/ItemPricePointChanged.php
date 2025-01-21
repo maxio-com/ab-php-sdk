@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class ItemPricePointChanged implements \JsonSerializable
@@ -180,6 +181,27 @@ class ItemPricePointChanged implements \JsonSerializable
     public function setCurrentPricePoint(ItemPricePointData $currentPricePoint): void
     {
         $this->currentPricePoint = $currentPricePoint;
+    }
+
+    /**
+     * Converts the ItemPricePointChanged object to a human-readable string representation.
+     *
+     * @return string The string representation of the ItemPricePointChanged object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'ItemPricePointChanged',
+            [
+                'itemId' => $this->itemId,
+                'itemType' => $this->itemType,
+                'itemHandle' => $this->itemHandle,
+                'itemName' => $this->itemName,
+                'previousPricePoint' => $this->previousPricePoint,
+                'currentPricePoint' => $this->currentPricePoint,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

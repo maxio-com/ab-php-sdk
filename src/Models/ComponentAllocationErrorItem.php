@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class ComponentAllocationErrorItem implements \JsonSerializable
@@ -104,6 +105,25 @@ class ComponentAllocationErrorItem implements \JsonSerializable
     public function setOn(?string $on): void
     {
         $this->on = $on;
+    }
+
+    /**
+     * Converts the ComponentAllocationErrorItem object to a human-readable string representation.
+     *
+     * @return string The string representation of the ComponentAllocationErrorItem object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'ComponentAllocationErrorItem',
+            [
+                'componentId' => $this->componentId,
+                'message' => $this->message,
+                'kind' => $this->kind,
+                'on' => $this->on,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

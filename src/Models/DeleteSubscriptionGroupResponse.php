@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class DeleteSubscriptionGroupResponse implements \JsonSerializable
@@ -58,6 +59,23 @@ class DeleteSubscriptionGroupResponse implements \JsonSerializable
     public function setDeleted(?bool $deleted): void
     {
         $this->deleted = $deleted;
+    }
+
+    /**
+     * Converts the DeleteSubscriptionGroupResponse object to a human-readable string representation.
+     *
+     * @return string The string representation of the DeleteSubscriptionGroupResponse object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'DeleteSubscriptionGroupResponse',
+            [
+                'uid' => $this->uid,
+                'deleted' => $this->deleted,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

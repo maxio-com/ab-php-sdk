@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class SubscriptionGroupItem implements \JsonSerializable
@@ -275,6 +276,31 @@ class SubscriptionGroupItem implements \JsonSerializable
     public function setBalanceInCents(?int $balanceInCents): void
     {
         $this->balanceInCents = $balanceInCents;
+    }
+
+    /**
+     * Converts the SubscriptionGroupItem object to a human-readable string representation.
+     *
+     * @return string The string representation of the SubscriptionGroupItem object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'SubscriptionGroupItem',
+            [
+                'id' => $this->id,
+                'reference' => $this->getReference(),
+                'productId' => $this->productId,
+                'productHandle' => $this->getProductHandle(),
+                'productPricePointId' => $this->productPricePointId,
+                'productPricePointHandle' => $this->productPricePointHandle,
+                'currency' => $this->currency,
+                'couponCode' => $this->getCouponCode(),
+                'totalRevenueInCents' => $this->totalRevenueInCents,
+                'balanceInCents' => $this->balanceInCents,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

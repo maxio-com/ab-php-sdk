@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
@@ -401,6 +402,33 @@ class FullSubscriptionGroupResponse implements \JsonSerializable
     public function setAccountBalances(?SubscriptionGroupBalances $accountBalances): void
     {
         $this->accountBalances = $accountBalances;
+    }
+
+    /**
+     * Converts the FullSubscriptionGroupResponse object to a human-readable string representation.
+     *
+     * @return string The string representation of the FullSubscriptionGroupResponse object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'FullSubscriptionGroupResponse',
+            [
+                'uid' => $this->uid,
+                'scheme' => $this->scheme,
+                'customerId' => $this->customerId,
+                'paymentProfileId' => $this->paymentProfileId,
+                'subscriptionIds' => $this->subscriptionIds,
+                'primarySubscriptionId' => $this->primarySubscriptionId,
+                'nextAssessmentAt' => $this->nextAssessmentAt,
+                'state' => $this->state,
+                'cancelAtEndOfPeriod' => $this->cancelAtEndOfPeriod,
+                'currentBillingAmountInCents' => $this->currentBillingAmountInCents,
+                'customer' => $this->customer,
+                'accountBalances' => $this->accountBalances,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

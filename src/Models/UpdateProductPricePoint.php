@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class UpdateProductPricePoint implements \JsonSerializable
@@ -58,6 +59,23 @@ class UpdateProductPricePoint implements \JsonSerializable
     public function setPriceInCents(?int $priceInCents): void
     {
         $this->priceInCents = $priceInCents;
+    }
+
+    /**
+     * Converts the UpdateProductPricePoint object to a human-readable string representation.
+     *
+     * @return string The string representation of the UpdateProductPricePoint object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'UpdateProductPricePoint',
+            [
+                'handle' => $this->handle,
+                'priceInCents' => $this->priceInCents,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

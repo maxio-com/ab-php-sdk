@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
@@ -222,6 +223,30 @@ class ListSubcriptionGroupPrepaymentItem implements \JsonSerializable
     public function setCreatedAt(?\DateTime $createdAt): void
     {
         $this->createdAt = $createdAt;
+    }
+
+    /**
+     * Converts the ListSubcriptionGroupPrepaymentItem object to a human-readable string representation.
+     *
+     * @return string The string representation of the ListSubcriptionGroupPrepaymentItem object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'ListSubcriptionGroupPrepaymentItem',
+            [
+                'id' => $this->id,
+                'subscriptionGroupUid' => $this->subscriptionGroupUid,
+                'amountInCents' => $this->amountInCents,
+                'remainingAmountInCents' => $this->remainingAmountInCents,
+                'details' => $this->details,
+                'external' => $this->external,
+                'memo' => $this->memo,
+                'paymentType' => $this->paymentType,
+                'createdAt' => $this->createdAt,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

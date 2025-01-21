@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class SubscriptionProductChange implements \JsonSerializable
@@ -70,6 +71,23 @@ class SubscriptionProductChange implements \JsonSerializable
     public function setNewProductId(int $newProductId): void
     {
         $this->newProductId = $newProductId;
+    }
+
+    /**
+     * Converts the SubscriptionProductChange object to a human-readable string representation.
+     *
+     * @return string The string representation of the SubscriptionProductChange object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'SubscriptionProductChange',
+            [
+                'previousProductId' => $this->previousProductId,
+                'newProductId' => $this->newProductId,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

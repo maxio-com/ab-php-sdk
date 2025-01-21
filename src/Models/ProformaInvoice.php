@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
@@ -962,6 +963,57 @@ class ProformaInvoice implements \JsonSerializable
     public function unsetPublicUrl(): void
     {
         $this->publicUrl = [];
+    }
+
+    /**
+     * Converts the ProformaInvoice object to a human-readable string representation.
+     *
+     * @return string The string representation of the ProformaInvoice object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'ProformaInvoice',
+            [
+                'uid' => $this->uid,
+                'siteId' => $this->siteId,
+                'customerId' => $this->getCustomerId(),
+                'subscriptionId' => $this->getSubscriptionId(),
+                'number' => $this->getNumber(),
+                'sequenceNumber' => $this->getSequenceNumber(),
+                'createdAt' => $this->createdAt,
+                'deliveryDate' => $this->deliveryDate,
+                'status' => $this->status,
+                'collectionMethod' => $this->collectionMethod,
+                'paymentInstructions' => $this->paymentInstructions,
+                'currency' => $this->currency,
+                'consolidationLevel' => $this->consolidationLevel,
+                'productName' => $this->productName,
+                'productFamilyName' => $this->productFamilyName,
+                'role' => $this->role,
+                'seller' => $this->seller,
+                'customer' => $this->customer,
+                'memo' => $this->memo,
+                'billingAddress' => $this->billingAddress,
+                'shippingAddress' => $this->shippingAddress,
+                'subtotalAmount' => $this->subtotalAmount,
+                'discountAmount' => $this->discountAmount,
+                'taxAmount' => $this->taxAmount,
+                'totalAmount' => $this->totalAmount,
+                'creditAmount' => $this->creditAmount,
+                'paidAmount' => $this->paidAmount,
+                'refundAmount' => $this->refundAmount,
+                'dueAmount' => $this->dueAmount,
+                'lineItems' => $this->lineItems,
+                'discounts' => $this->discounts,
+                'taxes' => $this->taxes,
+                'credits' => $this->credits,
+                'payments' => $this->payments,
+                'customFields' => $this->customFields,
+                'publicUrl' => $this->getPublicUrl(),
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

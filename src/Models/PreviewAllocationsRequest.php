@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
@@ -165,6 +166,25 @@ class PreviewAllocationsRequest implements \JsonSerializable
     public function unsetDowngradeCredit(): void
     {
         $this->downgradeCredit = [];
+    }
+
+    /**
+     * Converts the PreviewAllocationsRequest object to a human-readable string representation.
+     *
+     * @return string The string representation of the PreviewAllocationsRequest object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'PreviewAllocationsRequest',
+            [
+                'allocations' => $this->allocations,
+                'effectiveProrationDate' => $this->effectiveProrationDate,
+                'upgradeCharge' => $this->getUpgradeCharge(),
+                'downgradeCredit' => $this->getDowngradeCredit(),
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

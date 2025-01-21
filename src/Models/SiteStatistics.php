@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class SiteStatistics implements \JsonSerializable
@@ -265,6 +266,32 @@ class SiteStatistics implements \JsonSerializable
     public function setTotalDunningSubscriptions(?int $totalDunningSubscriptions): void
     {
         $this->totalDunningSubscriptions = $totalDunningSubscriptions;
+    }
+
+    /**
+     * Converts the SiteStatistics object to a human-readable string representation.
+     *
+     * @return string The string representation of the SiteStatistics object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'SiteStatistics',
+            [
+                'totalSubscriptions' => $this->totalSubscriptions,
+                'subscriptionsToday' => $this->subscriptionsToday,
+                'totalRevenue' => $this->totalRevenue,
+                'revenueToday' => $this->revenueToday,
+                'revenueThisMonth' => $this->revenueThisMonth,
+                'revenueThisYear' => $this->revenueThisYear,
+                'totalCanceledSubscriptions' => $this->totalCanceledSubscriptions,
+                'totalActiveSubscriptions' => $this->totalActiveSubscriptions,
+                'totalPastDueSubscriptions' => $this->totalPastDueSubscriptions,
+                'totalUnpaidSubscriptions' => $this->totalUnpaidSubscriptions,
+                'totalDunningSubscriptions' => $this->totalDunningSubscriptions,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

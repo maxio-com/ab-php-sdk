@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class AllocationSettings implements \JsonSerializable
@@ -125,6 +126,24 @@ class AllocationSettings implements \JsonSerializable
     public function setAccrueCharge(?string $accrueCharge): void
     {
         $this->accrueCharge = $accrueCharge;
+    }
+
+    /**
+     * Converts the AllocationSettings object to a human-readable string representation.
+     *
+     * @return string The string representation of the AllocationSettings object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'AllocationSettings',
+            [
+                'upgradeCharge' => $this->getUpgradeCharge(),
+                'downgradeCredit' => $this->getDowngradeCredit(),
+                'accrueCharge' => $this->accrueCharge,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

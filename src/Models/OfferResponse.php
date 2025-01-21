@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class OfferResponse implements \JsonSerializable
@@ -35,6 +36,19 @@ class OfferResponse implements \JsonSerializable
     public function setOffer(?Offer $offer): void
     {
         $this->offer = $offer;
+    }
+
+    /**
+     * Converts the OfferResponse object to a human-readable string representation.
+     *
+     * @return string The string representation of the OfferResponse object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'OfferResponse',
+            ['offer' => $this->offer, 'additionalProperties' => $this->additionalProperties]
+        );
     }
 
     private $additionalProperties = [];

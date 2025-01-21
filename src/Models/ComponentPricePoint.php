@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
@@ -697,6 +698,44 @@ class ComponentPricePoint implements \JsonSerializable
     public function unsetExpirationIntervalUnit(): void
     {
         $this->expirationIntervalUnit = [];
+    }
+
+    /**
+     * Converts the ComponentPricePoint object to a human-readable string representation.
+     *
+     * @return string The string representation of the ComponentPricePoint object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'ComponentPricePoint',
+            [
+                'id' => $this->id,
+                'type' => $this->type,
+                'default' => $this->default,
+                'name' => $this->name,
+                'pricingScheme' => $this->pricingScheme,
+                'componentId' => $this->componentId,
+                'handle' => $this->getHandle(),
+                'archivedAt' => $this->getArchivedAt(),
+                'createdAt' => $this->createdAt,
+                'updatedAt' => $this->updatedAt,
+                'prices' => $this->prices,
+                'useSiteExchangeRate' => $this->useSiteExchangeRate,
+                'subscriptionId' => $this->subscriptionId,
+                'taxIncluded' => $this->taxIncluded,
+                'interval' => $this->getInterval(),
+                'intervalUnit' => $this->getIntervalUnit(),
+                'currencyPrices' => $this->currencyPrices,
+                'overagePrices' => $this->overagePrices,
+                'overagePricingScheme' => $this->overagePricingScheme,
+                'renewPrepaidAllocation' => $this->renewPrepaidAllocation,
+                'rolloverPrepaidRemainder' => $this->rolloverPrepaidRemainder,
+                'expirationInterval' => $this->getExpirationInterval(),
+                'expirationIntervalUnit' => $this->getExpirationIntervalUnit(),
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

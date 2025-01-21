@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
@@ -170,6 +171,23 @@ class SubscriptionComponentSubscription implements \JsonSerializable
     public function setUpdatedAt(?\DateTime $updatedAt): void
     {
         $this->updatedAt = $updatedAt;
+    }
+
+    /**
+     * Converts the SubscriptionComponentSubscription object to a human-readable string representation.
+     *
+     * @return string The string representation of the SubscriptionComponentSubscription object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'SubscriptionComponentSubscription',
+            [
+                'state' => $this->state,
+                'updatedAt' => $this->updatedAt,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

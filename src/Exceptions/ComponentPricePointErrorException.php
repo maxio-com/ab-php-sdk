@@ -10,6 +10,8 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Exceptions;
 
+use AdvancedBillingLib\ApiHelper;
+
 class ComponentPricePointErrorException extends ApiException
 {
     /**
@@ -37,6 +39,20 @@ class ComponentPricePointErrorException extends ApiException
     public function setErrors(?array $errors): void
     {
         $this->errors = $errors;
+    }
+
+    /**
+     * Converts the ComponentPricePointErrorException object to a human-readable string representation.
+     *
+     * @return string The string representation of the ComponentPricePointErrorException object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'ComponentPricePointErrorException',
+            ['errors' => $this->errors, 'additionalProperties' => $this->additionalProperties],
+            parent::__toString()
+        );
     }
 
     private $additionalProperties = [];

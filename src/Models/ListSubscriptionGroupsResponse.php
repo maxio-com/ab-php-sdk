@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class ListSubscriptionGroupsResponse implements \JsonSerializable
@@ -62,6 +63,23 @@ class ListSubscriptionGroupsResponse implements \JsonSerializable
     public function setMeta(?ListSubscriptionGroupsMeta $meta): void
     {
         $this->meta = $meta;
+    }
+
+    /**
+     * Converts the ListSubscriptionGroupsResponse object to a human-readable string representation.
+     *
+     * @return string The string representation of the ListSubscriptionGroupsResponse object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'ListSubscriptionGroupsResponse',
+            [
+                'subscriptionGroups' => $this->subscriptionGroups,
+                'meta' => $this->meta,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

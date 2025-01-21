@@ -353,6 +353,32 @@ class ApplyPaymentEventData implements \JsonSerializable
         $this->external = $external;
     }
 
+    /**
+     * Converts the ApplyPaymentEventData object to a human-readable string representation.
+     *
+     * @return string The string representation of the ApplyPaymentEventData object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'ApplyPaymentEventData',
+            [
+                'consolidationLevel' => $this->consolidationLevel,
+                'memo' => $this->memo,
+                'originalAmount' => $this->originalAmount,
+                'appliedAmount' => $this->appliedAmount,
+                'transactionTime' => $this->transactionTime,
+                'paymentMethod' => $this->paymentMethod,
+                'transactionId' => $this->transactionId,
+                'parentInvoiceNumber' => $this->getParentInvoiceNumber(),
+                'remainingPrepaymentAmount' => $this->getRemainingPrepaymentAmount(),
+                'prepayment' => $this->prepayment,
+                'external' => $this->external,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
+    }
+
     private $additionalProperties = [];
 
     /**

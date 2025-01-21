@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 /**
@@ -49,6 +50,19 @@ class CreateOrUpdateEndpointRequest implements \JsonSerializable
     public function setEndpoint(CreateOrUpdateEndpoint $endpoint): void
     {
         $this->endpoint = $endpoint;
+    }
+
+    /**
+     * Converts the CreateOrUpdateEndpointRequest object to a human-readable string representation.
+     *
+     * @return string The string representation of the CreateOrUpdateEndpointRequest object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'CreateOrUpdateEndpointRequest',
+            ['endpoint' => $this->endpoint, 'additionalProperties' => $this->additionalProperties]
+        );
     }
 
     private $additionalProperties = [];

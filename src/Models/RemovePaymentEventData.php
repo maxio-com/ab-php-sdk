@@ -230,6 +230,28 @@ class RemovePaymentEventData implements \JsonSerializable
         $this->prepayment = $prepayment;
     }
 
+    /**
+     * Converts the RemovePaymentEventData object to a human-readable string representation.
+     *
+     * @return string The string representation of the RemovePaymentEventData object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'RemovePaymentEventData',
+            [
+                'transactionId' => $this->transactionId,
+                'memo' => $this->memo,
+                'originalAmount' => $this->originalAmount,
+                'appliedAmount' => $this->appliedAmount,
+                'transactionTime' => $this->transactionTime,
+                'paymentMethod' => $this->paymentMethod,
+                'prepayment' => $this->prepayment,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
+    }
+
     private $additionalProperties = [];
 
     /**

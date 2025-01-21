@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class CouponRequest implements \JsonSerializable
@@ -97,6 +98,24 @@ class CouponRequest implements \JsonSerializable
     public function setRestrictedComponents(?array $restrictedComponents): void
     {
         $this->restrictedComponents = $restrictedComponents;
+    }
+
+    /**
+     * Converts the CouponRequest object to a human-readable string representation.
+     *
+     * @return string The string representation of the CouponRequest object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'CouponRequest',
+            [
+                'coupon' => $this->coupon,
+                'restrictedProducts' => $this->restrictedProducts,
+                'restrictedComponents' => $this->restrictedComponents,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class SiteSummary implements \JsonSerializable
@@ -127,6 +128,26 @@ class SiteSummary implements \JsonSerializable
     public function setStats(?SiteStatistics $stats): void
     {
         $this->stats = $stats;
+    }
+
+    /**
+     * Converts the SiteSummary object to a human-readable string representation.
+     *
+     * @return string The string representation of the SiteSummary object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'SiteSummary',
+            [
+                'sellerName' => $this->sellerName,
+                'siteName' => $this->siteName,
+                'siteId' => $this->siteId,
+                'siteCurrency' => $this->siteCurrency,
+                'stats' => $this->stats,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

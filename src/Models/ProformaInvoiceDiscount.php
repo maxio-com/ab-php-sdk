@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class ProformaInvoiceDiscount implements \JsonSerializable
@@ -202,6 +203,29 @@ class ProformaInvoiceDiscount implements \JsonSerializable
     public function setLineItemBreakouts(?array $lineItemBreakouts): void
     {
         $this->lineItemBreakouts = $lineItemBreakouts;
+    }
+
+    /**
+     * Converts the ProformaInvoiceDiscount object to a human-readable string representation.
+     *
+     * @return string The string representation of the ProformaInvoiceDiscount object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'ProformaInvoiceDiscount',
+            [
+                'uid' => $this->uid,
+                'title' => $this->title,
+                'code' => $this->code,
+                'sourceType' => $this->sourceType,
+                'discountType' => $this->discountType,
+                'eligibleAmount' => $this->eligibleAmount,
+                'discountAmount' => $this->discountAmount,
+                'lineItemBreakouts' => $this->lineItemBreakouts,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

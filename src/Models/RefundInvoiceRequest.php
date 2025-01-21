@@ -52,6 +52,19 @@ class RefundInvoiceRequest implements \JsonSerializable
         $this->refund = $refund;
     }
 
+    /**
+     * Converts the RefundInvoiceRequest object to a human-readable string representation.
+     *
+     * @return string The string representation of the RefundInvoiceRequest object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'RefundInvoiceRequest',
+            ['refund' => $this->refund, 'additionalProperties' => $this->additionalProperties]
+        );
+    }
+
     private $additionalProperties = [];
 
     /**

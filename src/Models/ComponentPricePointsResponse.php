@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class ComponentPricePointsResponse implements \JsonSerializable
@@ -62,6 +63,23 @@ class ComponentPricePointsResponse implements \JsonSerializable
     public function setMeta(?ListPublicKeysMeta $meta): void
     {
         $this->meta = $meta;
+    }
+
+    /**
+     * Converts the ComponentPricePointsResponse object to a human-readable string representation.
+     *
+     * @return string The string representation of the ComponentPricePointsResponse object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'ComponentPricePointsResponse',
+            [
+                'pricePoints' => $this->pricePoints,
+                'meta' => $this->meta,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

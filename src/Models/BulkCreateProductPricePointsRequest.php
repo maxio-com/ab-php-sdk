@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class BulkCreateProductPricePointsRequest implements \JsonSerializable
@@ -48,6 +49,19 @@ class BulkCreateProductPricePointsRequest implements \JsonSerializable
     public function setPricePoints(array $pricePoints): void
     {
         $this->pricePoints = $pricePoints;
+    }
+
+    /**
+     * Converts the BulkCreateProductPricePointsRequest object to a human-readable string representation.
+     *
+     * @return string The string representation of the BulkCreateProductPricePointsRequest object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'BulkCreateProductPricePointsRequest',
+            ['pricePoints' => $this->pricePoints, 'additionalProperties' => $this->additionalProperties]
+        );
     }
 
     private $additionalProperties = [];

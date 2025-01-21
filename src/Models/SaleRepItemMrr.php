@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class SaleRepItemMrr implements \JsonSerializable
@@ -81,6 +82,24 @@ class SaleRepItemMrr implements \JsonSerializable
     public function setRecurring(?string $recurring): void
     {
         $this->recurring = $recurring;
+    }
+
+    /**
+     * Converts the SaleRepItemMrr object to a human-readable string representation.
+     *
+     * @return string The string representation of the SaleRepItemMrr object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'SaleRepItemMrr',
+            [
+                'mrr' => $this->mrr,
+                'usage' => $this->usage,
+                'recurring' => $this->recurring,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

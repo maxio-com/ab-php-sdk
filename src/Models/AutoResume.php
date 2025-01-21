@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
@@ -48,6 +49,22 @@ class AutoResume implements \JsonSerializable
     public function unsetAutomaticallyResumeAt(): void
     {
         $this->automaticallyResumeAt = [];
+    }
+
+    /**
+     * Converts the AutoResume object to a human-readable string representation.
+     *
+     * @return string The string representation of the AutoResume object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'AutoResume',
+            [
+                'automaticallyResumeAt' => $this->getAutomaticallyResumeAt(),
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

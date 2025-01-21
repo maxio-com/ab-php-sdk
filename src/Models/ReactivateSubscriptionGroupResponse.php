@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
@@ -225,6 +226,30 @@ class ReactivateSubscriptionGroupResponse implements \JsonSerializable
     public function setCancelAtEndOfPeriod(?bool $cancelAtEndOfPeriod): void
     {
         $this->cancelAtEndOfPeriod = $cancelAtEndOfPeriod;
+    }
+
+    /**
+     * Converts the ReactivateSubscriptionGroupResponse object to a human-readable string representation.
+     *
+     * @return string The string representation of the ReactivateSubscriptionGroupResponse object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'ReactivateSubscriptionGroupResponse',
+            [
+                'uid' => $this->uid,
+                'scheme' => $this->scheme,
+                'customerId' => $this->customerId,
+                'paymentProfileId' => $this->paymentProfileId,
+                'subscriptionIds' => $this->subscriptionIds,
+                'primarySubscriptionId' => $this->primarySubscriptionId,
+                'nextAssessmentAt' => $this->nextAssessmentAt,
+                'state' => $this->state,
+                'cancelAtEndOfPeriod' => $this->cancelAtEndOfPeriod,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

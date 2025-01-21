@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class DelayedCancellationResponse implements \JsonSerializable
@@ -35,6 +36,19 @@ class DelayedCancellationResponse implements \JsonSerializable
     public function setMessage(?string $message): void
     {
         $this->message = $message;
+    }
+
+    /**
+     * Converts the DelayedCancellationResponse object to a human-readable string representation.
+     *
+     * @return string The string representation of the DelayedCancellationResponse object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'DelayedCancellationResponse',
+            ['message' => $this->message, 'additionalProperties' => $this->additionalProperties]
+        );
     }
 
     private $additionalProperties = [];

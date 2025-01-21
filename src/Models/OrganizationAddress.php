@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class OrganizationAddress implements \JsonSerializable
@@ -284,6 +285,29 @@ class OrganizationAddress implements \JsonSerializable
     public function unsetPhone(): void
     {
         $this->phone = [];
+    }
+
+    /**
+     * Converts the OrganizationAddress object to a human-readable string representation.
+     *
+     * @return string The string representation of the OrganizationAddress object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'OrganizationAddress',
+            [
+                'street' => $this->getStreet(),
+                'line2' => $this->getLine2(),
+                'city' => $this->getCity(),
+                'state' => $this->getState(),
+                'zip' => $this->getZip(),
+                'country' => $this->getCountry(),
+                'name' => $this->getName(),
+                'phone' => $this->getPhone(),
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

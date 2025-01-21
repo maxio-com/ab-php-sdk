@@ -437,6 +437,35 @@ class EBBComponent implements \JsonSerializable
         $this->intervalUnit = [];
     }
 
+    /**
+     * Converts the EBBComponent object to a human-readable string representation.
+     *
+     * @return string The string representation of the EBBComponent object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'EBBComponent',
+            [
+                'name' => $this->name,
+                'unitName' => $this->unitName,
+                'description' => $this->description,
+                'handle' => $this->handle,
+                'taxable' => $this->taxable,
+                'pricingScheme' => $this->pricingScheme,
+                'prices' => $this->prices,
+                'pricePoints' => $this->pricePoints,
+                'unitPrice' => $this->unitPrice,
+                'taxCode' => $this->taxCode,
+                'hideDateRangeOnInvoice' => $this->hideDateRangeOnInvoice,
+                'eventBasedBillingMetricId' => $this->eventBasedBillingMetricId,
+                'interval' => $this->interval,
+                'intervalUnit' => $this->getIntervalUnit(),
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
+    }
+
     private $additionalProperties = [];
 
     /**

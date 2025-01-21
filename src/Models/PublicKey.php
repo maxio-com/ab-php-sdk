@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
@@ -83,6 +84,24 @@ class PublicKey implements \JsonSerializable
     public function setCreatedAt(?\DateTime $createdAt): void
     {
         $this->createdAt = $createdAt;
+    }
+
+    /**
+     * Converts the PublicKey object to a human-readable string representation.
+     *
+     * @return string The string representation of the PublicKey object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'PublicKey',
+            [
+                'publicKey' => $this->publicKey,
+                'requiresSecurityToken' => $this->requiresSecurityToken,
+                'createdAt' => $this->createdAt,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

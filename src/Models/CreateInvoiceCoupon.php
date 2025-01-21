@@ -177,6 +177,27 @@ class CreateInvoiceCoupon implements \JsonSerializable
         $this->compoundingStrategy = $compoundingStrategy;
     }
 
+    /**
+     * Converts the CreateInvoiceCoupon object to a human-readable string representation.
+     *
+     * @return string The string representation of the CreateInvoiceCoupon object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'CreateInvoiceCoupon',
+            [
+                'code' => $this->code,
+                'percentage' => $this->percentage,
+                'amount' => $this->amount,
+                'description' => $this->description,
+                'productFamilyId' => $this->productFamilyId,
+                'compoundingStrategy' => $this->compoundingStrategy,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
+    }
+
     private $additionalProperties = [];
 
     /**

@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class MRRMovement implements \JsonSerializable
@@ -104,6 +105,25 @@ class MRRMovement implements \JsonSerializable
     public function setLeadDelta(?int $leadDelta): void
     {
         $this->leadDelta = $leadDelta;
+    }
+
+    /**
+     * Converts the MRRMovement object to a human-readable string representation.
+     *
+     * @return string The string representation of the MRRMovement object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'MRRMovement',
+            [
+                'amount' => $this->amount,
+                'category' => $this->category,
+                'subscriberDelta' => $this->subscriberDelta,
+                'leadDelta' => $this->leadDelta,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

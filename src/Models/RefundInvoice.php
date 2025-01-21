@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 /**
@@ -184,6 +185,27 @@ class RefundInvoice implements \JsonSerializable
     public function setVoidInvoice(?bool $voidInvoice): void
     {
         $this->voidInvoice = $voidInvoice;
+    }
+
+    /**
+     * Converts the RefundInvoice object to a human-readable string representation.
+     *
+     * @return string The string representation of the RefundInvoice object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'RefundInvoice',
+            [
+                'amount' => $this->amount,
+                'memo' => $this->memo,
+                'paymentId' => $this->paymentId,
+                'external' => $this->external,
+                'applyCredit' => $this->applyCredit,
+                'voidInvoice' => $this->voidInvoice,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

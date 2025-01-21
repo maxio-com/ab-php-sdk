@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class MovementLineItem implements \JsonSerializable
@@ -229,6 +230,30 @@ class MovementLineItem implements \JsonSerializable
     public function setRecurring(?bool $recurring): void
     {
         $this->recurring = $recurring;
+    }
+
+    /**
+     * Converts the MovementLineItem object to a human-readable string representation.
+     *
+     * @return string The string representation of the MovementLineItem object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'MovementLineItem',
+            [
+                'productId' => $this->productId,
+                'componentId' => $this->componentId,
+                'pricePointId' => $this->pricePointId,
+                'name' => $this->name,
+                'mrr' => $this->mrr,
+                'mrrMovements' => $this->mrrMovements,
+                'quantity' => $this->quantity,
+                'prevQuantity' => $this->prevQuantity,
+                'recurring' => $this->recurring,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

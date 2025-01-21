@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 /**
@@ -195,6 +196,26 @@ class IssueInvoiceEventData implements \JsonSerializable
     public function setTotalAmount(string $totalAmount): void
     {
         $this->totalAmount = $totalAmount;
+    }
+
+    /**
+     * Converts the IssueInvoiceEventData object to a human-readable string representation.
+     *
+     * @return string The string representation of the IssueInvoiceEventData object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'IssueInvoiceEventData',
+            [
+                'consolidationLevel' => $this->consolidationLevel,
+                'fromStatus' => $this->fromStatus,
+                'toStatus' => $this->toStatus,
+                'dueAmount' => $this->dueAmount,
+                'totalAmount' => $this->totalAmount,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

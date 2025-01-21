@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
@@ -313,6 +314,31 @@ class ApplyCreditNoteEventData implements \JsonSerializable
     public function setAppliedCreditNotes(?array $appliedCreditNotes): void
     {
         $this->appliedCreditNotes = $appliedCreditNotes;
+    }
+
+    /**
+     * Converts the ApplyCreditNoteEventData object to a human-readable string representation.
+     *
+     * @return string The string representation of the ApplyCreditNoteEventData object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'ApplyCreditNoteEventData',
+            [
+                'uid' => $this->uid,
+                'creditNoteNumber' => $this->creditNoteNumber,
+                'creditNoteUid' => $this->creditNoteUid,
+                'originalAmount' => $this->originalAmount,
+                'appliedAmount' => $this->appliedAmount,
+                'transactionTime' => $this->transactionTime,
+                'memo' => $this->getMemo(),
+                'role' => $this->role,
+                'consolidatedInvoice' => $this->consolidatedInvoice,
+                'appliedCreditNotes' => $this->appliedCreditNotes,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

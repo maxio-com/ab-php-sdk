@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class SignupProformaPreviewResponse implements \JsonSerializable
@@ -44,6 +45,22 @@ class SignupProformaPreviewResponse implements \JsonSerializable
     public function setProformaInvoicePreview(SignupProformaPreview $proformaInvoicePreview): void
     {
         $this->proformaInvoicePreview = $proformaInvoicePreview;
+    }
+
+    /**
+     * Converts the SignupProformaPreviewResponse object to a human-readable string representation.
+     *
+     * @return string The string representation of the SignupProformaPreviewResponse object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'SignupProformaPreviewResponse',
+            [
+                'proformaInvoicePreview' => $this->proformaInvoicePreview,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

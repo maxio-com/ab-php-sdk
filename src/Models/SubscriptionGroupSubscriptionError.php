@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 /**
@@ -231,6 +232,29 @@ class SubscriptionGroupSubscriptionError implements \JsonSerializable
     public function setPaymentProfileFullNumber(?array $paymentProfileFullNumber): void
     {
         $this->paymentProfileFullNumber = $paymentProfileFullNumber;
+    }
+
+    /**
+     * Converts the SubscriptionGroupSubscriptionError object to a human-readable string representation.
+     *
+     * @return string The string representation of the SubscriptionGroupSubscriptionError object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'SubscriptionGroupSubscriptionError',
+            [
+                'product' => $this->product,
+                'productPricePointId' => $this->productPricePointId,
+                'paymentProfile' => $this->paymentProfile,
+                'paymentProfileChargifyToken' => $this->paymentProfileChargifyToken,
+                'base' => $this->base,
+                'paymentProfileExpirationMonth' => $this->paymentProfileExpirationMonth,
+                'paymentProfileExpirationYear' => $this->paymentProfileExpirationYear,
+                'paymentProfileFullNumber' => $this->paymentProfileFullNumber,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

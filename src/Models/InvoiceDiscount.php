@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class InvoiceDiscount implements \JsonSerializable
@@ -305,6 +306,33 @@ class InvoiceDiscount implements \JsonSerializable
     public function setLineItemBreakouts(?array $lineItemBreakouts): void
     {
         $this->lineItemBreakouts = $lineItemBreakouts;
+    }
+
+    /**
+     * Converts the InvoiceDiscount object to a human-readable string representation.
+     *
+     * @return string The string representation of the InvoiceDiscount object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'InvoiceDiscount',
+            [
+                'uid' => $this->uid,
+                'title' => $this->title,
+                'description' => $this->getDescription(),
+                'code' => $this->code,
+                'sourceType' => $this->sourceType,
+                'sourceId' => $this->sourceId,
+                'discountType' => $this->discountType,
+                'percentage' => $this->percentage,
+                'eligibleAmount' => $this->eligibleAmount,
+                'discountAmount' => $this->discountAmount,
+                'transactionId' => $this->transactionId,
+                'lineItemBreakouts' => $this->lineItemBreakouts,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

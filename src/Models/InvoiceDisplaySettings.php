@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class InvoiceDisplaySettings implements \JsonSerializable
@@ -58,6 +59,23 @@ class InvoiceDisplaySettings implements \JsonSerializable
     public function setIncludeDiscountsOnLines(?bool $includeDiscountsOnLines): void
     {
         $this->includeDiscountsOnLines = $includeDiscountsOnLines;
+    }
+
+    /**
+     * Converts the InvoiceDisplaySettings object to a human-readable string representation.
+     *
+     * @return string The string representation of the InvoiceDisplaySettings object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'InvoiceDisplaySettings',
+            [
+                'hideZeroSubtotalLines' => $this->hideZeroSubtotalLines,
+                'includeDiscountsOnLines' => $this->includeDiscountsOnLines,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

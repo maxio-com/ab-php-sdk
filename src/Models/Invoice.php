@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
@@ -1564,6 +1565,77 @@ class Invoice implements \JsonSerializable
     public function setPublicUrlExpiresOn(?\DateTime $publicUrlExpiresOn): void
     {
         $this->publicUrlExpiresOn = $publicUrlExpiresOn;
+    }
+
+    /**
+     * Converts the Invoice object to a human-readable string representation.
+     *
+     * @return string The string representation of the Invoice object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'Invoice',
+            [
+                'id' => $this->id,
+                'uid' => $this->uid,
+                'siteId' => $this->siteId,
+                'customerId' => $this->customerId,
+                'subscriptionId' => $this->subscriptionId,
+                'number' => $this->number,
+                'sequenceNumber' => $this->sequenceNumber,
+                'transactionTime' => $this->transactionTime,
+                'createdAt' => $this->createdAt,
+                'updatedAt' => $this->updatedAt,
+                'issueDate' => $this->issueDate,
+                'dueDate' => $this->dueDate,
+                'paidDate' => $this->getPaidDate(),
+                'status' => $this->status,
+                'role' => $this->role,
+                'parentInvoiceId' => $this->getParentInvoiceId(),
+                'collectionMethod' => $this->collectionMethod,
+                'paymentInstructions' => $this->paymentInstructions,
+                'currency' => $this->currency,
+                'consolidationLevel' => $this->consolidationLevel,
+                'parentInvoiceUid' => $this->getParentInvoiceUid(),
+                'subscriptionGroupId' => $this->getSubscriptionGroupId(),
+                'parentInvoiceNumber' => $this->getParentInvoiceNumber(),
+                'groupPrimarySubscriptionId' => $this->getGroupPrimarySubscriptionId(),
+                'productName' => $this->productName,
+                'productFamilyName' => $this->productFamilyName,
+                'seller' => $this->seller,
+                'customer' => $this->customer,
+                'payer' => $this->payer,
+                'recipientEmails' => $this->recipientEmails,
+                'netTerms' => $this->netTerms,
+                'memo' => $this->memo,
+                'billingAddress' => $this->billingAddress,
+                'shippingAddress' => $this->shippingAddress,
+                'subtotalAmount' => $this->subtotalAmount,
+                'discountAmount' => $this->discountAmount,
+                'taxAmount' => $this->taxAmount,
+                'totalAmount' => $this->totalAmount,
+                'creditAmount' => $this->creditAmount,
+                'debitAmount' => $this->debitAmount,
+                'refundAmount' => $this->refundAmount,
+                'paidAmount' => $this->paidAmount,
+                'dueAmount' => $this->dueAmount,
+                'lineItems' => $this->lineItems,
+                'discounts' => $this->discounts,
+                'taxes' => $this->taxes,
+                'credits' => $this->credits,
+                'debits' => $this->debits,
+                'refunds' => $this->refunds,
+                'payments' => $this->payments,
+                'customFields' => $this->customFields,
+                'displaySettings' => $this->displaySettings,
+                'avataxDetails' => $this->avataxDetails,
+                'publicUrl' => $this->publicUrl,
+                'previousBalanceData' => $this->previousBalanceData,
+                'publicUrlExpiresOn' => $this->publicUrlExpiresOn,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

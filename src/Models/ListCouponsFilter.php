@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
@@ -252,6 +253,29 @@ class ListCouponsFilter implements \JsonSerializable
     public function setUseSiteExchangeRate(?bool $useSiteExchangeRate): void
     {
         $this->useSiteExchangeRate = $useSiteExchangeRate;
+    }
+
+    /**
+     * Converts the ListCouponsFilter object to a human-readable string representation.
+     *
+     * @return string The string representation of the ListCouponsFilter object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'ListCouponsFilter',
+            [
+                'dateField' => $this->dateField,
+                'startDate' => $this->startDate,
+                'endDate' => $this->endDate,
+                'startDatetime' => $this->startDatetime,
+                'endDatetime' => $this->endDatetime,
+                'ids' => $this->ids,
+                'codes' => $this->codes,
+                'useSiteExchangeRate' => $this->useSiteExchangeRate,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

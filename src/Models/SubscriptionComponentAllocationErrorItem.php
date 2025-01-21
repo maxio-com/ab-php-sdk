@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class SubscriptionComponentAllocationErrorItem implements \JsonSerializable
@@ -58,6 +59,24 @@ class SubscriptionComponentAllocationErrorItem implements \JsonSerializable
     public function setMessage(?string $message): void
     {
         $this->message = $message;
+    }
+
+    /**
+     * Converts the SubscriptionComponentAllocationErrorItem object to a human-readable string
+     * representation.
+     *
+     * @return string The string representation of the SubscriptionComponentAllocationErrorItem object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'SubscriptionComponentAllocationErrorItem',
+            [
+                'kind' => $this->kind,
+                'message' => $this->message,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

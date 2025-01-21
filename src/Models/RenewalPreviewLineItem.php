@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class RenewalPreviewLineItem implements \JsonSerializable
@@ -340,6 +341,35 @@ class RenewalPreviewLineItem implements \JsonSerializable
     public function setPeriodRangeEnd(?string $periodRangeEnd): void
     {
         $this->periodRangeEnd = $periodRangeEnd;
+    }
+
+    /**
+     * Converts the RenewalPreviewLineItem object to a human-readable string representation.
+     *
+     * @return string The string representation of the RenewalPreviewLineItem object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'RenewalPreviewLineItem',
+            [
+                'transactionType' => $this->transactionType,
+                'kind' => $this->kind,
+                'amountInCents' => $this->amountInCents,
+                'memo' => $this->memo,
+                'discountAmountInCents' => $this->discountAmountInCents,
+                'taxableAmountInCents' => $this->taxableAmountInCents,
+                'productId' => $this->productId,
+                'productName' => $this->productName,
+                'componentId' => $this->componentId,
+                'componentHandle' => $this->componentHandle,
+                'componentName' => $this->componentName,
+                'productHandle' => $this->productHandle,
+                'periodRangeStart' => $this->periodRangeStart,
+                'periodRangeEnd' => $this->periodRangeEnd,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

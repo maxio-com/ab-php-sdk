@@ -10,6 +10,8 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Exceptions;
 
+use AdvancedBillingLib\ApiHelper;
+
 class ErrorStringMapResponseException extends ApiException
 {
     /**
@@ -37,6 +39,20 @@ class ErrorStringMapResponseException extends ApiException
     public function setErrors(?array $errors): void
     {
         $this->errors = $errors;
+    }
+
+    /**
+     * Converts the ErrorStringMapResponseException object to a human-readable string representation.
+     *
+     * @return string The string representation of the ErrorStringMapResponseException object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'ErrorStringMapResponseException',
+            ['errors' => $this->errors, 'additionalProperties' => $this->additionalProperties],
+            parent::__toString()
+        );
     }
 
     private $additionalProperties = [];

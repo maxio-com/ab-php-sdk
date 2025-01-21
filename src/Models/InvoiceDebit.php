@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
@@ -201,6 +202,29 @@ class InvoiceDebit implements \JsonSerializable
     public function setAppliedAmount(?string $appliedAmount): void
     {
         $this->appliedAmount = $appliedAmount;
+    }
+
+    /**
+     * Converts the InvoiceDebit object to a human-readable string representation.
+     *
+     * @return string The string representation of the InvoiceDebit object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'InvoiceDebit',
+            [
+                'uid' => $this->uid,
+                'debitNoteNumber' => $this->debitNoteNumber,
+                'debitNoteUid' => $this->debitNoteUid,
+                'role' => $this->role,
+                'transactionTime' => $this->transactionTime,
+                'memo' => $this->memo,
+                'originalAmount' => $this->originalAmount,
+                'appliedAmount' => $this->appliedAmount,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

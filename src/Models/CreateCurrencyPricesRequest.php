@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class CreateCurrencyPricesRequest implements \JsonSerializable
@@ -48,6 +49,19 @@ class CreateCurrencyPricesRequest implements \JsonSerializable
     public function setCurrencyPrices(array $currencyPrices): void
     {
         $this->currencyPrices = $currencyPrices;
+    }
+
+    /**
+     * Converts the CreateCurrencyPricesRequest object to a human-readable string representation.
+     *
+     * @return string The string representation of the CreateCurrencyPricesRequest object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'CreateCurrencyPricesRequest',
+            ['currencyPrices' => $this->currencyPrices, 'additionalProperties' => $this->additionalProperties]
+        );
     }
 
     private $additionalProperties = [];

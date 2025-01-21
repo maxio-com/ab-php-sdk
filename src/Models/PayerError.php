@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class PayerError implements \JsonSerializable
@@ -93,6 +94,24 @@ class PayerError implements \JsonSerializable
     public function setEmail(?array $email): void
     {
         $this->email = $email;
+    }
+
+    /**
+     * Converts the PayerError object to a human-readable string representation.
+     *
+     * @return string The string representation of the PayerError object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'PayerError',
+            [
+                'lastName' => $this->lastName,
+                'firstName' => $this->firstName,
+                'email' => $this->email,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

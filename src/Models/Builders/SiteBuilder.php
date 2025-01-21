@@ -120,6 +120,17 @@ class SiteBuilder
     }
 
     /**
+     * Sets schedule subscription cancellation enabled field.
+     *
+     * @param bool|null $value
+     */
+    public function scheduleSubscriptionCancellationEnabled(?bool $value): self
+    {
+        $this->instance->setScheduleSubscriptionCancellationEnabled($value);
+        return $this;
+    }
+
+    /**
      * Sets customer hierarchy enabled field.
      *
      * @param bool|null $value

@@ -385,6 +385,35 @@ class CouponPayload implements \JsonSerializable
         $this->applyOnSubscriptionExpiration = $applyOnSubscriptionExpiration;
     }
 
+    /**
+     * Converts the CouponPayload object to a human-readable string representation.
+     *
+     * @return string The string representation of the CouponPayload object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'CouponPayload',
+            [
+                'name' => $this->name,
+                'code' => $this->code,
+                'description' => $this->description,
+                'percentage' => $this->percentage,
+                'amountInCents' => $this->amountInCents,
+                'allowNegativeBalance' => $this->allowNegativeBalance,
+                'recurring' => $this->recurring,
+                'endDate' => $this->endDate,
+                'productFamilyId' => $this->productFamilyId,
+                'stackable' => $this->stackable,
+                'compoundingStrategy' => $this->compoundingStrategy,
+                'excludeMidPeriodAllocations' => $this->excludeMidPeriodAllocations,
+                'applyOnCancelAtEndOfPeriod' => $this->applyOnCancelAtEndOfPeriod,
+                'applyOnSubscriptionExpiration' => $this->applyOnSubscriptionExpiration,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
+    }
+
     private $additionalProperties = [];
 
     /**

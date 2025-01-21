@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class Endpoint implements \JsonSerializable
@@ -131,6 +132,26 @@ class Endpoint implements \JsonSerializable
     public function setWebhookSubscriptions(?array $webhookSubscriptions): void
     {
         $this->webhookSubscriptions = $webhookSubscriptions;
+    }
+
+    /**
+     * Converts the Endpoint object to a human-readable string representation.
+     *
+     * @return string The string representation of the Endpoint object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'Endpoint',
+            [
+                'id' => $this->id,
+                'url' => $this->url,
+                'siteId' => $this->siteId,
+                'status' => $this->status,
+                'webhookSubscriptions' => $this->webhookSubscriptions,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

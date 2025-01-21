@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class SiteResponse implements \JsonSerializable
@@ -44,6 +45,19 @@ class SiteResponse implements \JsonSerializable
     public function setSite(Site $site): void
     {
         $this->site = $site;
+    }
+
+    /**
+     * Converts the SiteResponse object to a human-readable string representation.
+     *
+     * @return string The string representation of the SiteResponse object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'SiteResponse',
+            ['site' => $this->site, 'additionalProperties' => $this->additionalProperties]
+        );
     }
 
     private $additionalProperties = [];

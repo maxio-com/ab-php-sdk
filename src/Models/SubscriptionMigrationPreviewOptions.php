@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
@@ -284,6 +285,31 @@ class SubscriptionMigrationPreviewOptions implements \JsonSerializable
     public function setProrationDate(?\DateTime $prorationDate): void
     {
         $this->prorationDate = $prorationDate;
+    }
+
+    /**
+     * Converts the SubscriptionMigrationPreviewOptions object to a human-readable string representation.
+     *
+     * @return string The string representation of the SubscriptionMigrationPreviewOptions object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'SubscriptionMigrationPreviewOptions',
+            [
+                'productId' => $this->productId,
+                'productPricePointId' => $this->productPricePointId,
+                'includeTrial' => $this->includeTrial,
+                'includeInitialCharge' => $this->includeInitialCharge,
+                'includeCoupons' => $this->includeCoupons,
+                'preservePeriod' => $this->preservePeriod,
+                'productHandle' => $this->productHandle,
+                'productPricePointHandle' => $this->productPricePointHandle,
+                'proration' => $this->proration,
+                'prorationDate' => $this->prorationDate,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

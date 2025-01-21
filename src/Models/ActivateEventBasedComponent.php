@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class ActivateEventBasedComponent implements \JsonSerializable
@@ -91,6 +92,24 @@ class ActivateEventBasedComponent implements \JsonSerializable
     public function setCustomPrice(?ComponentCustomPrice $customPrice): void
     {
         $this->customPrice = $customPrice;
+    }
+
+    /**
+     * Converts the ActivateEventBasedComponent object to a human-readable string representation.
+     *
+     * @return string The string representation of the ActivateEventBasedComponent object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'ActivateEventBasedComponent',
+            [
+                'pricePointId' => $this->pricePointId,
+                'billingSchedule' => $this->billingSchedule,
+                'customPrice' => $this->customPrice,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

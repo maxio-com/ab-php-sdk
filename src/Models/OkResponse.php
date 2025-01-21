@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class OkResponse implements \JsonSerializable
@@ -35,6 +36,19 @@ class OkResponse implements \JsonSerializable
     public function setOk(?string $ok): void
     {
         $this->ok = $ok;
+    }
+
+    /**
+     * Converts the OkResponse object to a human-readable string representation.
+     *
+     * @return string The string representation of the OkResponse object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'OkResponse',
+            ['ok' => $this->ok, 'additionalProperties' => $this->additionalProperties]
+        );
     }
 
     private $additionalProperties = [];

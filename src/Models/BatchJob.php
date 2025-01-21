@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
@@ -163,6 +164,26 @@ class BatchJob implements \JsonSerializable
     public function setCompleted(?string $completed): void
     {
         $this->completed = $completed;
+    }
+
+    /**
+     * Converts the BatchJob object to a human-readable string representation.
+     *
+     * @return string The string representation of the BatchJob object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'BatchJob',
+            [
+                'id' => $this->id,
+                'finishedAt' => $this->getFinishedAt(),
+                'rowCount' => $this->getRowCount(),
+                'createdAt' => $this->getCreatedAt(),
+                'completed' => $this->completed,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

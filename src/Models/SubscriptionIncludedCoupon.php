@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class SubscriptionIncludedCoupon implements \JsonSerializable
@@ -206,6 +207,28 @@ class SubscriptionIncludedCoupon implements \JsonSerializable
     public function unsetPercentage(): void
     {
         $this->percentage = [];
+    }
+
+    /**
+     * Converts the SubscriptionIncludedCoupon object to a human-readable string representation.
+     *
+     * @return string The string representation of the SubscriptionIncludedCoupon object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'SubscriptionIncludedCoupon',
+            [
+                'code' => $this->code,
+                'useCount' => $this->useCount,
+                'usesAllowed' => $this->usesAllowed,
+                'expiresAt' => $this->getExpiresAt(),
+                'recurring' => $this->recurring,
+                'amountInCents' => $this->getAmountInCents(),
+                'percentage' => $this->getPercentage(),
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

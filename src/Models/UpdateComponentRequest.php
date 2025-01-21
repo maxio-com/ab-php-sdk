@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class UpdateComponentRequest implements \JsonSerializable
@@ -44,6 +45,19 @@ class UpdateComponentRequest implements \JsonSerializable
     public function setComponent(UpdateComponent $component): void
     {
         $this->component = $component;
+    }
+
+    /**
+     * Converts the UpdateComponentRequest object to a human-readable string representation.
+     *
+     * @return string The string representation of the UpdateComponentRequest object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'UpdateComponentRequest',
+            ['component' => $this->component, 'additionalProperties' => $this->additionalProperties]
+        );
     }
 
     private $additionalProperties = [];

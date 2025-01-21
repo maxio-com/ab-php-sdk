@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
@@ -487,6 +488,40 @@ class Offer implements \JsonSerializable
     public function setOfferSignupPages(?array $offerSignupPages): void
     {
         $this->offerSignupPages = $offerSignupPages;
+    }
+
+    /**
+     * Converts the Offer object to a human-readable string representation.
+     *
+     * @return string The string representation of the Offer object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'Offer',
+            [
+                'id' => $this->id,
+                'siteId' => $this->siteId,
+                'productFamilyId' => $this->productFamilyId,
+                'productId' => $this->productId,
+                'productPricePointId' => $this->productPricePointId,
+                'productRevisableNumber' => $this->productRevisableNumber,
+                'name' => $this->name,
+                'handle' => $this->handle,
+                'description' => $this->getDescription(),
+                'createdAt' => $this->createdAt,
+                'updatedAt' => $this->updatedAt,
+                'archivedAt' => $this->getArchivedAt(),
+                'offerItems' => $this->offerItems,
+                'offerDiscounts' => $this->offerDiscounts,
+                'productFamilyName' => $this->productFamilyName,
+                'productName' => $this->productName,
+                'productPricePointName' => $this->productPricePointName,
+                'productPriceInCents' => $this->productPriceInCents,
+                'offerSignupPages' => $this->offerSignupPages,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

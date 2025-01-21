@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
@@ -272,6 +273,32 @@ class ListSubscriptionGroupsItem implements \JsonSerializable
     public function setGroupType(?string $groupType): void
     {
         $this->groupType = $groupType;
+    }
+
+    /**
+     * Converts the ListSubscriptionGroupsItem object to a human-readable string representation.
+     *
+     * @return string The string representation of the ListSubscriptionGroupsItem object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'ListSubscriptionGroupsItem',
+            [
+                'uid' => $this->uid,
+                'scheme' => $this->scheme,
+                'customerId' => $this->customerId,
+                'paymentProfileId' => $this->paymentProfileId,
+                'subscriptionIds' => $this->subscriptionIds,
+                'primarySubscriptionId' => $this->primarySubscriptionId,
+                'nextAssessmentAt' => $this->nextAssessmentAt,
+                'state' => $this->state,
+                'cancelAtEndOfPeriod' => $this->cancelAtEndOfPeriod,
+                'accountBalances' => $this->accountBalances,
+                'groupType' => $this->groupType,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

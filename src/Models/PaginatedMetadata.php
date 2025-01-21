@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class PaginatedMetadata implements \JsonSerializable
@@ -131,6 +132,26 @@ class PaginatedMetadata implements \JsonSerializable
     public function setMetadata(?array $metadata): void
     {
         $this->metadata = $metadata;
+    }
+
+    /**
+     * Converts the PaginatedMetadata object to a human-readable string representation.
+     *
+     * @return string The string representation of the PaginatedMetadata object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'PaginatedMetadata',
+            [
+                'totalCount' => $this->totalCount,
+                'currentPage' => $this->currentPage,
+                'totalPages' => $this->totalPages,
+                'perPage' => $this->perPage,
+                'metadata' => $this->metadata,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class PaymentMethodCreditCard implements \JsonSerializable
@@ -154,6 +155,26 @@ class PaymentMethodCreditCard implements \JsonSerializable
     public function setType(string $type): void
     {
         $this->type = $type;
+    }
+
+    /**
+     * Converts the PaymentMethodCreditCard object to a human-readable string representation.
+     *
+     * @return string The string representation of the PaymentMethodCreditCard object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'PaymentMethodCreditCard',
+            [
+                'cardBrand' => $this->cardBrand,
+                'cardExpiration' => $this->cardExpiration,
+                'lastFour' => $this->getLastFour(),
+                'maskedCardNumber' => $this->maskedCardNumber,
+                'type' => $this->type,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

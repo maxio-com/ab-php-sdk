@@ -147,6 +147,26 @@ class UpdatePrice implements \JsonSerializable
         $this->startingQuantity = $startingQuantity;
     }
 
+    /**
+     * Converts the UpdatePrice object to a human-readable string representation.
+     *
+     * @return string The string representation of the UpdatePrice object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'UpdatePrice',
+            [
+                'id' => $this->id,
+                'endingQuantity' => $this->endingQuantity,
+                'unitPrice' => $this->unitPrice,
+                'destroy' => $this->destroy,
+                'startingQuantity' => $this->startingQuantity,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
+    }
+
     private $additionalProperties = [];
 
     /**

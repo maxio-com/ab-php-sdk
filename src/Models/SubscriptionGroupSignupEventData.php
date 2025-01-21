@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class SubscriptionGroupSignupEventData implements \JsonSerializable
@@ -67,6 +68,23 @@ class SubscriptionGroupSignupEventData implements \JsonSerializable
     public function setCustomer(?Customer $customer): void
     {
         $this->customer = $customer;
+    }
+
+    /**
+     * Converts the SubscriptionGroupSignupEventData object to a human-readable string representation.
+     *
+     * @return string The string representation of the SubscriptionGroupSignupEventData object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'SubscriptionGroupSignupEventData',
+            [
+                'subscriptionGroup' => $this->subscriptionGroup,
+                'customer' => $this->customer,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

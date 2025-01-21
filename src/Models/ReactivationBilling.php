@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 /**
@@ -47,6 +48,22 @@ class ReactivationBilling implements \JsonSerializable
     public function setReactivationCharge(?string $reactivationCharge): void
     {
         $this->reactivationCharge = $reactivationCharge;
+    }
+
+    /**
+     * Converts the ReactivationBilling object to a human-readable string representation.
+     *
+     * @return string The string representation of the ReactivationBilling object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'ReactivationBilling',
+            [
+                'reactivationCharge' => $this->reactivationCharge,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

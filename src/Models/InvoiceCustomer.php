@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 /**
@@ -220,6 +221,28 @@ class InvoiceCustomer implements \JsonSerializable
     public function unsetReference(): void
     {
         $this->reference = [];
+    }
+
+    /**
+     * Converts the InvoiceCustomer object to a human-readable string representation.
+     *
+     * @return string The string representation of the InvoiceCustomer object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'InvoiceCustomer',
+            [
+                'chargifyId' => $this->getChargifyId(),
+                'firstName' => $this->firstName,
+                'lastName' => $this->lastName,
+                'organization' => $this->getOrganization(),
+                'email' => $this->email,
+                'vatNumber' => $this->getVatNumber(),
+                'reference' => $this->getReference(),
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

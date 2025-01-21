@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class CancellationOptions implements \JsonSerializable
@@ -64,6 +65,23 @@ class CancellationOptions implements \JsonSerializable
     public function setReasonCode(?string $reasonCode): void
     {
         $this->reasonCode = $reasonCode;
+    }
+
+    /**
+     * Converts the CancellationOptions object to a human-readable string representation.
+     *
+     * @return string The string representation of the CancellationOptions object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'CancellationOptions',
+            [
+                'cancellationMessage' => $this->cancellationMessage,
+                'reasonCode' => $this->reasonCode,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

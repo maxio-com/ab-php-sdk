@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class InvoiceLineItemEventData implements \JsonSerializable
@@ -564,6 +565,41 @@ class InvoiceLineItemEventData implements \JsonSerializable
     public function unsetCustomItem(): void
     {
         $this->customItem = [];
+    }
+
+    /**
+     * Converts the InvoiceLineItemEventData object to a human-readable string representation.
+     *
+     * @return string The string representation of the InvoiceLineItemEventData object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'InvoiceLineItemEventData',
+            [
+                'uid' => $this->uid,
+                'title' => $this->title,
+                'description' => $this->description,
+                'quantity' => $this->quantity,
+                'quantityDelta' => $this->getQuantityDelta(),
+                'unitPrice' => $this->unitPrice,
+                'periodRangeStart' => $this->periodRangeStart,
+                'periodRangeEnd' => $this->periodRangeEnd,
+                'amount' => $this->amount,
+                'lineReferences' => $this->lineReferences,
+                'pricingDetailsIndex' => $this->getPricingDetailsIndex(),
+                'pricingDetails' => $this->pricingDetails,
+                'taxCode' => $this->getTaxCode(),
+                'taxAmount' => $this->taxAmount,
+                'productId' => $this->productId,
+                'productPricePointId' => $this->getProductPricePointId(),
+                'pricePointId' => $this->getPricePointId(),
+                'componentId' => $this->getComponentId(),
+                'billingScheduleItemId' => $this->getBillingScheduleItemId(),
+                'customItem' => $this->getCustomItem(),
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

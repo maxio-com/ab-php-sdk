@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class SubscriptionPreviewResponse implements \JsonSerializable
@@ -44,6 +45,22 @@ class SubscriptionPreviewResponse implements \JsonSerializable
     public function setSubscriptionPreview(SubscriptionPreview $subscriptionPreview): void
     {
         $this->subscriptionPreview = $subscriptionPreview;
+    }
+
+    /**
+     * Converts the SubscriptionPreviewResponse object to a human-readable string representation.
+     *
+     * @return string The string representation of the SubscriptionPreviewResponse object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'SubscriptionPreviewResponse',
+            [
+                'subscriptionPreview' => $this->subscriptionPreview,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

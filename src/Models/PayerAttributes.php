@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class PayerAttributes implements \JsonSerializable
@@ -434,6 +435,39 @@ class PayerAttributes implements \JsonSerializable
     public function setMetafields(?array $metafields): void
     {
         $this->metafields = $metafields;
+    }
+
+    /**
+     * Converts the PayerAttributes object to a human-readable string representation.
+     *
+     * @return string The string representation of the PayerAttributes object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'PayerAttributes',
+            [
+                'firstName' => $this->firstName,
+                'lastName' => $this->lastName,
+                'email' => $this->email,
+                'ccEmails' => $this->ccEmails,
+                'organization' => $this->organization,
+                'reference' => $this->reference,
+                'address' => $this->address,
+                'address2' => $this->address2,
+                'city' => $this->city,
+                'state' => $this->state,
+                'zip' => $this->zip,
+                'country' => $this->country,
+                'phone' => $this->phone,
+                'locale' => $this->locale,
+                'vatNumber' => $this->vatNumber,
+                'taxExempt' => $this->taxExempt,
+                'taxExemptReason' => $this->taxExemptReason,
+                'metafields' => $this->metafields,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

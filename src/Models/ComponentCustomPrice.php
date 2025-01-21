@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 /**
@@ -174,6 +175,26 @@ class ComponentCustomPrice implements \JsonSerializable
     public function setPrices(array $prices): void
     {
         $this->prices = $prices;
+    }
+
+    /**
+     * Converts the ComponentCustomPrice object to a human-readable string representation.
+     *
+     * @return string The string representation of the ComponentCustomPrice object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'ComponentCustomPrice',
+            [
+                'taxIncluded' => $this->taxIncluded,
+                'pricingScheme' => $this->pricingScheme,
+                'interval' => $this->interval,
+                'intervalUnit' => $this->getIntervalUnit(),
+                'prices' => $this->prices,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

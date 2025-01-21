@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class BillingManifestItem implements \JsonSerializable
@@ -340,6 +341,35 @@ class BillingManifestItem implements \JsonSerializable
     public function setPeriodRangeEnd(?string $periodRangeEnd): void
     {
         $this->periodRangeEnd = $periodRangeEnd;
+    }
+
+    /**
+     * Converts the BillingManifestItem object to a human-readable string representation.
+     *
+     * @return string The string representation of the BillingManifestItem object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'BillingManifestItem',
+            [
+                'transactionType' => $this->transactionType,
+                'kind' => $this->kind,
+                'amountInCents' => $this->amountInCents,
+                'memo' => $this->memo,
+                'discountAmountInCents' => $this->discountAmountInCents,
+                'taxableAmountInCents' => $this->taxableAmountInCents,
+                'componentId' => $this->componentId,
+                'componentHandle' => $this->componentHandle,
+                'componentName' => $this->componentName,
+                'productId' => $this->productId,
+                'productHandle' => $this->productHandle,
+                'productName' => $this->productName,
+                'periodRangeStart' => $this->periodRangeStart,
+                'periodRangeEnd' => $this->periodRangeEnd,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

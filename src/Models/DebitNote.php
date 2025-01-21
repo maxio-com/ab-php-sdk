@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
@@ -627,6 +628,44 @@ class DebitNote implements \JsonSerializable
     public function setRefunds(?array $refunds): void
     {
         $this->refunds = $refunds;
+    }
+
+    /**
+     * Converts the DebitNote object to a human-readable string representation.
+     *
+     * @return string The string representation of the DebitNote object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'DebitNote',
+            [
+                'uid' => $this->uid,
+                'siteId' => $this->siteId,
+                'customerId' => $this->customerId,
+                'subscriptionId' => $this->subscriptionId,
+                'number' => $this->number,
+                'sequenceNumber' => $this->sequenceNumber,
+                'originCreditNoteUid' => $this->originCreditNoteUid,
+                'originCreditNoteNumber' => $this->originCreditNoteNumber,
+                'issueDate' => $this->issueDate,
+                'appliedDate' => $this->appliedDate,
+                'dueDate' => $this->dueDate,
+                'status' => $this->status,
+                'memo' => $this->memo,
+                'role' => $this->role,
+                'currency' => $this->currency,
+                'seller' => $this->seller,
+                'customer' => $this->customer,
+                'billingAddress' => $this->billingAddress,
+                'shippingAddress' => $this->shippingAddress,
+                'lineItems' => $this->lineItems,
+                'discounts' => $this->discounts,
+                'taxes' => $this->taxes,
+                'refunds' => $this->refunds,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

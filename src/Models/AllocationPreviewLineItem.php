@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class AllocationPreviewLineItem implements \JsonSerializable
@@ -228,6 +229,30 @@ class AllocationPreviewLineItem implements \JsonSerializable
     public function setDirection(?string $direction): void
     {
         $this->direction = $direction;
+    }
+
+    /**
+     * Converts the AllocationPreviewLineItem object to a human-readable string representation.
+     *
+     * @return string The string representation of the AllocationPreviewLineItem object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'AllocationPreviewLineItem',
+            [
+                'transactionType' => $this->transactionType,
+                'kind' => $this->kind,
+                'amountInCents' => $this->amountInCents,
+                'memo' => $this->memo,
+                'discountAmountInCents' => $this->discountAmountInCents,
+                'taxableAmountInCents' => $this->taxableAmountInCents,
+                'componentId' => $this->componentId,
+                'componentHandle' => $this->componentHandle,
+                'direction' => $this->direction,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

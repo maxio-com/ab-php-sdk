@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class AttributeError implements \JsonSerializable
@@ -48,6 +49,19 @@ class AttributeError implements \JsonSerializable
     public function setAttribute(array $attribute): void
     {
         $this->attribute = $attribute;
+    }
+
+    /**
+     * Converts the AttributeError object to a human-readable string representation.
+     *
+     * @return string The string representation of the AttributeError object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'AttributeError',
+            ['attribute' => $this->attribute, 'additionalProperties' => $this->additionalProperties]
+        );
     }
 
     private $additionalProperties = [];

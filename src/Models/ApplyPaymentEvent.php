@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
@@ -158,6 +159,26 @@ class ApplyPaymentEvent implements \JsonSerializable
     public function setEventData(ApplyPaymentEventData $eventData): void
     {
         $this->eventData = $eventData;
+    }
+
+    /**
+     * Converts the ApplyPaymentEvent object to a human-readable string representation.
+     *
+     * @return string The string representation of the ApplyPaymentEvent object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'ApplyPaymentEvent',
+            [
+                'id' => $this->id,
+                'timestamp' => $this->timestamp,
+                'invoice' => $this->invoice,
+                'eventType' => $this->eventType,
+                'eventData' => $this->eventData,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

@@ -10,6 +10,8 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Exceptions;
 
+use AdvancedBillingLib\ApiHelper;
+
 class SubscriptionAddCouponErrorException extends ApiException
 {
     /**
@@ -118,6 +120,26 @@ class SubscriptionAddCouponErrorException extends ApiException
     public function setSubscription(?array $subscription): void
     {
         $this->subscription = $subscription;
+    }
+
+    /**
+     * Converts the SubscriptionAddCouponErrorException object to a human-readable string representation.
+     *
+     * @return string The string representation of the SubscriptionAddCouponErrorException object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'SubscriptionAddCouponErrorException',
+            [
+                'codes' => $this->codes,
+                'couponCode' => $this->couponCode,
+                'couponCodes' => $this->couponCodes,
+                'subscription' => $this->subscription,
+                'additionalProperties' => $this->additionalProperties
+            ],
+            parent::__toString()
+        );
     }
 
     private $additionalProperties = [];

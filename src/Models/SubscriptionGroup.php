@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
@@ -140,6 +141,26 @@ class SubscriptionGroup implements \JsonSerializable
     public function setCreatedAt(?\DateTime $createdAt): void
     {
         $this->createdAt = $createdAt;
+    }
+
+    /**
+     * Converts the SubscriptionGroup object to a human-readable string representation.
+     *
+     * @return string The string representation of the SubscriptionGroup object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'SubscriptionGroup',
+            [
+                'customerId' => $this->customerId,
+                'paymentProfile' => $this->paymentProfile,
+                'paymentCollectionMethod' => $this->paymentCollectionMethod,
+                'subscriptionIds' => $this->subscriptionIds,
+                'createdAt' => $this->createdAt,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

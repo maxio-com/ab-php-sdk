@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 /**
@@ -96,6 +97,24 @@ class GroupBilling implements \JsonSerializable
     public function setProrate(?bool $prorate): void
     {
         $this->prorate = $prorate;
+    }
+
+    /**
+     * Converts the GroupBilling object to a human-readable string representation.
+     *
+     * @return string The string representation of the GroupBilling object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'GroupBilling',
+            [
+                'accrue' => $this->accrue,
+                'alignDate' => $this->alignDate,
+                'prorate' => $this->prorate,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

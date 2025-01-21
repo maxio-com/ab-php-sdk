@@ -185,6 +185,27 @@ class CreateMultiInvoicePayment implements \JsonSerializable
         $this->applications = $applications;
     }
 
+    /**
+     * Converts the CreateMultiInvoicePayment object to a human-readable string representation.
+     *
+     * @return string The string representation of the CreateMultiInvoicePayment object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'CreateMultiInvoicePayment',
+            [
+                'memo' => $this->memo,
+                'details' => $this->details,
+                'method' => $this->method,
+                'amount' => $this->amount,
+                'receivedOn' => $this->receivedOn,
+                'applications' => $this->applications,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
+    }
+
     private $additionalProperties = [];
 
     /**

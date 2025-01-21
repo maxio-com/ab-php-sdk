@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class AllocateComponents implements \JsonSerializable
@@ -251,6 +252,29 @@ class AllocateComponents implements \JsonSerializable
     public function setInitiateDunning(?bool $initiateDunning): void
     {
         $this->initiateDunning = $initiateDunning;
+    }
+
+    /**
+     * Converts the AllocateComponents object to a human-readable string representation.
+     *
+     * @return string The string representation of the AllocateComponents object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'AllocateComponents',
+            [
+                'prorationUpgradeScheme' => $this->prorationUpgradeScheme,
+                'prorationDowngradeScheme' => $this->prorationDowngradeScheme,
+                'allocations' => $this->allocations,
+                'accrueCharge' => $this->accrueCharge,
+                'upgradeCharge' => $this->getUpgradeCharge(),
+                'downgradeCredit' => $this->getDowngradeCredit(),
+                'paymentCollectionMethod' => $this->paymentCollectionMethod,
+                'initiateDunning' => $this->initiateDunning,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

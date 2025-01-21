@@ -180,6 +180,27 @@ class ReactivateSubscriptionRequest implements \JsonSerializable
         $this->resume = $resume;
     }
 
+    /**
+     * Converts the ReactivateSubscriptionRequest object to a human-readable string representation.
+     *
+     * @return string The string representation of the ReactivateSubscriptionRequest object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'ReactivateSubscriptionRequest',
+            [
+                'calendarBilling' => $this->calendarBilling,
+                'includeTrial' => $this->includeTrial,
+                'preserveBalance' => $this->preserveBalance,
+                'couponCode' => $this->couponCode,
+                'useCreditsAndPrepayments' => $this->useCreditsAndPrepayments,
+                'resume' => $this->resume,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
+    }
+
     private $additionalProperties = [];
 
     /**

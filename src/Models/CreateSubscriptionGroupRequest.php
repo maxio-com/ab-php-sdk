@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class CreateSubscriptionGroupRequest implements \JsonSerializable
@@ -44,6 +45,22 @@ class CreateSubscriptionGroupRequest implements \JsonSerializable
     public function setSubscriptionGroup(CreateSubscriptionGroup $subscriptionGroup): void
     {
         $this->subscriptionGroup = $subscriptionGroup;
+    }
+
+    /**
+     * Converts the CreateSubscriptionGroupRequest object to a human-readable string representation.
+     *
+     * @return string The string representation of the CreateSubscriptionGroupRequest object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'CreateSubscriptionGroupRequest',
+            [
+                'subscriptionGroup' => $this->subscriptionGroup,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

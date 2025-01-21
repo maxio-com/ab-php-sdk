@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class CustomFieldValueChange implements \JsonSerializable
@@ -199,6 +200,28 @@ class CustomFieldValueChange implements \JsonSerializable
     public function setResourceId(int $resourceId): void
     {
         $this->resourceId = $resourceId;
+    }
+
+    /**
+     * Converts the CustomFieldValueChange object to a human-readable string representation.
+     *
+     * @return string The string representation of the CustomFieldValueChange object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'CustomFieldValueChange',
+            [
+                'eventType' => $this->eventType,
+                'metafieldName' => $this->metafieldName,
+                'metafieldId' => $this->metafieldId,
+                'oldValue' => $this->oldValue,
+                'newValue' => $this->newValue,
+                'resourceType' => $this->resourceType,
+                'resourceId' => $this->resourceId,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

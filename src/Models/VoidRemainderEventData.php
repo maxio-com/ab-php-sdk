@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
@@ -137,6 +138,25 @@ class VoidRemainderEventData implements \JsonSerializable
     public function setTransactionTime(\DateTime $transactionTime): void
     {
         $this->transactionTime = $transactionTime;
+    }
+
+    /**
+     * Converts the VoidRemainderEventData object to a human-readable string representation.
+     *
+     * @return string The string representation of the VoidRemainderEventData object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'VoidRemainderEventData',
+            [
+                'creditNoteAttributes' => $this->creditNoteAttributes,
+                'memo' => $this->memo,
+                'appliedAmount' => $this->appliedAmount,
+                'transactionTime' => $this->transactionTime,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

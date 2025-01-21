@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class UpdateCustomer implements \JsonSerializable
@@ -513,6 +514,41 @@ class UpdateCustomer implements \JsonSerializable
     public function unsetSalesforceId(): void
     {
         $this->salesforceId = [];
+    }
+
+    /**
+     * Converts the UpdateCustomer object to a human-readable string representation.
+     *
+     * @return string The string representation of the UpdateCustomer object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'UpdateCustomer',
+            [
+                'firstName' => $this->firstName,
+                'lastName' => $this->lastName,
+                'email' => $this->email,
+                'ccEmails' => $this->ccEmails,
+                'organization' => $this->organization,
+                'reference' => $this->reference,
+                'address' => $this->address,
+                'address2' => $this->address2,
+                'city' => $this->city,
+                'state' => $this->state,
+                'zip' => $this->zip,
+                'country' => $this->country,
+                'phone' => $this->phone,
+                'locale' => $this->locale,
+                'vatNumber' => $this->vatNumber,
+                'taxExempt' => $this->taxExempt,
+                'taxExemptReason' => $this->taxExemptReason,
+                'parentId' => $this->getParentId(),
+                'verified' => $this->getVerified(),
+                'salesforceId' => $this->getSalesforceId(),
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

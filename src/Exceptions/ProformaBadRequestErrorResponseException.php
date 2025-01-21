@@ -10,6 +10,8 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Exceptions;
 
+use AdvancedBillingLib\ApiHelper;
+
 class ProformaBadRequestErrorResponseException extends ApiException
 {
     /**
@@ -33,6 +35,21 @@ class ProformaBadRequestErrorResponseException extends ApiException
     public function setErrors(?\AdvancedBillingLib\Models\ProformaError $errors): void
     {
         $this->errors = $errors;
+    }
+
+    /**
+     * Converts the ProformaBadRequestErrorResponseException object to a human-readable string
+     * representation.
+     *
+     * @return string The string representation of the ProformaBadRequestErrorResponseException object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'ProformaBadRequestErrorResponseException',
+            ['errors' => $this->errors, 'additionalProperties' => $this->additionalProperties],
+            parent::__toString()
+        );
     }
 
     private $additionalProperties = [];

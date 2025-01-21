@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 /**
@@ -77,6 +78,23 @@ class ChangeInvoiceCollectionMethodEventData implements \JsonSerializable
     public function setToCollectionMethod(string $toCollectionMethod): void
     {
         $this->toCollectionMethod = $toCollectionMethod;
+    }
+
+    /**
+     * Converts the ChangeInvoiceCollectionMethodEventData object to a human-readable string representation.
+     *
+     * @return string The string representation of the ChangeInvoiceCollectionMethodEventData object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'ChangeInvoiceCollectionMethodEventData',
+            [
+                'fromCollectionMethod' => $this->fromCollectionMethod,
+                'toCollectionMethod' => $this->toCollectionMethod,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

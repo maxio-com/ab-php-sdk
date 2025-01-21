@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class ResumeOptions implements \JsonSerializable
@@ -68,6 +69,23 @@ class ResumeOptions implements \JsonSerializable
     public function setForgiveBalance(?bool $forgiveBalance): void
     {
         $this->forgiveBalance = $forgiveBalance;
+    }
+
+    /**
+     * Converts the ResumeOptions object to a human-readable string representation.
+     *
+     * @return string The string representation of the ResumeOptions object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'ResumeOptions',
+            [
+                'requireResume' => $this->requireResume,
+                'forgiveBalance' => $this->forgiveBalance,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

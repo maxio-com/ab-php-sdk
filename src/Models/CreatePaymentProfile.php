@@ -886,6 +886,53 @@ class CreatePaymentProfile implements \JsonSerializable
         $this->lastFour = $lastFour;
     }
 
+    /**
+     * Converts the CreatePaymentProfile object to a human-readable string representation.
+     *
+     * @return string The string representation of the CreatePaymentProfile object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'CreatePaymentProfile',
+            [
+                'chargifyToken' => $this->chargifyToken,
+                'id' => $this->id,
+                'paymentType' => $this->paymentType,
+                'firstName' => $this->firstName,
+                'lastName' => $this->lastName,
+                'maskedCardNumber' => $this->maskedCardNumber,
+                'fullNumber' => $this->fullNumber,
+                'cardType' => $this->cardType,
+                'expirationMonth' => $this->expirationMonth,
+                'expirationYear' => $this->expirationYear,
+                'billingAddress' => $this->billingAddress,
+                'billingAddress2' => $this->getBillingAddress2(),
+                'billingCity' => $this->billingCity,
+                'billingState' => $this->billingState,
+                'billingCountry' => $this->billingCountry,
+                'billingZip' => $this->billingZip,
+                'currentVault' => $this->currentVault,
+                'vaultToken' => $this->vaultToken,
+                'customerVaultToken' => $this->customerVaultToken,
+                'customerId' => $this->customerId,
+                'paypalEmail' => $this->paypalEmail,
+                'paymentMethodNonce' => $this->paymentMethodNonce,
+                'gatewayHandle' => $this->gatewayHandle,
+                'cvv' => $this->cvv,
+                'bankName' => $this->bankName,
+                'bankIban' => $this->bankIban,
+                'bankRoutingNumber' => $this->bankRoutingNumber,
+                'bankAccountNumber' => $this->bankAccountNumber,
+                'bankBranchCode' => $this->bankBranchCode,
+                'bankAccountType' => $this->bankAccountType,
+                'bankAccountHolderType' => $this->bankAccountHolderType,
+                'lastFour' => $this->lastFour,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
+    }
+
     private $additionalProperties = [];
 
     /**

@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class MultiInvoicePaymentResponse implements \JsonSerializable
@@ -44,6 +45,19 @@ class MultiInvoicePaymentResponse implements \JsonSerializable
     public function setPayment(MultiInvoicePayment $payment): void
     {
         $this->payment = $payment;
+    }
+
+    /**
+     * Converts the MultiInvoicePaymentResponse object to a human-readable string representation.
+     *
+     * @return string The string representation of the MultiInvoicePaymentResponse object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'MultiInvoicePaymentResponse',
+            ['payment' => $this->payment, 'additionalProperties' => $this->additionalProperties]
+        );
     }
 
     private $additionalProperties = [];

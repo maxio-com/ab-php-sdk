@@ -207,6 +207,27 @@ class CreateSegment implements \JsonSerializable
         $this->prices = $prices;
     }
 
+    /**
+     * Converts the CreateSegment object to a human-readable string representation.
+     *
+     * @return string The string representation of the CreateSegment object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'CreateSegment',
+            [
+                'segmentProperty1Value' => $this->segmentProperty1Value,
+                'segmentProperty2Value' => $this->segmentProperty2Value,
+                'segmentProperty3Value' => $this->segmentProperty3Value,
+                'segmentProperty4Value' => $this->segmentProperty4Value,
+                'pricingScheme' => $this->pricingScheme,
+                'prices' => $this->prices,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
+    }
+
     private $additionalProperties = [];
 
     /**

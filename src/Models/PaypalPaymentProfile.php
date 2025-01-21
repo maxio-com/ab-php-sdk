@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class PaypalPaymentProfile implements \JsonSerializable
@@ -543,6 +544,38 @@ class PaypalPaymentProfile implements \JsonSerializable
     public function setPaypalEmail(?string $paypalEmail): void
     {
         $this->paypalEmail = $paypalEmail;
+    }
+
+    /**
+     * Converts the PaypalPaymentProfile object to a human-readable string representation.
+     *
+     * @return string The string representation of the PaypalPaymentProfile object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'PaypalPaymentProfile',
+            [
+                'id' => $this->id,
+                'firstName' => $this->firstName,
+                'lastName' => $this->lastName,
+                'customerId' => $this->customerId,
+                'currentVault' => $this->currentVault,
+                'vaultToken' => $this->vaultToken,
+                'billingAddress' => $this->getBillingAddress(),
+                'billingCity' => $this->getBillingCity(),
+                'billingState' => $this->getBillingState(),
+                'billingZip' => $this->getBillingZip(),
+                'billingCountry' => $this->getBillingCountry(),
+                'customerVaultToken' => $this->getCustomerVaultToken(),
+                'billingAddress2' => $this->getBillingAddress2(),
+                'paymentType' => $this->paymentType,
+                'siteGatewaySettingId' => $this->getSiteGatewaySettingId(),
+                'gatewayHandle' => $this->getGatewayHandle(),
+                'paypalEmail' => $this->paypalEmail,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

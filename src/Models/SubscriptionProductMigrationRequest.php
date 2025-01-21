@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class SubscriptionProductMigrationRequest implements \JsonSerializable
@@ -44,6 +45,19 @@ class SubscriptionProductMigrationRequest implements \JsonSerializable
     public function setMigration(SubscriptionProductMigration $migration): void
     {
         $this->migration = $migration;
+    }
+
+    /**
+     * Converts the SubscriptionProductMigrationRequest object to a human-readable string representation.
+     *
+     * @return string The string representation of the SubscriptionProductMigrationRequest object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'SubscriptionProductMigrationRequest',
+            ['migration' => $this->migration, 'additionalProperties' => $this->additionalProperties]
+        );
     }
 
     private $additionalProperties = [];

@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class PrepaidConfigurationResponse implements \JsonSerializable
@@ -44,6 +45,22 @@ class PrepaidConfigurationResponse implements \JsonSerializable
     public function setPrepaidConfiguration(PrepaidConfiguration $prepaidConfiguration): void
     {
         $this->prepaidConfiguration = $prepaidConfiguration;
+    }
+
+    /**
+     * Converts the PrepaidConfigurationResponse object to a human-readable string representation.
+     *
+     * @return string The string representation of the PrepaidConfigurationResponse object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'PrepaidConfigurationResponse',
+            [
+                'prepaidConfiguration' => $this->prepaidConfiguration,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

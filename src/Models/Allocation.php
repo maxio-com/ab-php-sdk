@@ -748,6 +748,46 @@ class Allocation implements \JsonSerializable
         $this->chargeId = $chargeId;
     }
 
+    /**
+     * Converts the Allocation object to a human-readable string representation.
+     *
+     * @return string The string representation of the Allocation object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'Allocation',
+            [
+                'allocationId' => $this->allocationId,
+                'componentId' => $this->componentId,
+                'componentHandle' => $this->getComponentHandle(),
+                'subscriptionId' => $this->subscriptionId,
+                'quantity' => $this->quantity,
+                'previousQuantity' => $this->previousQuantity,
+                'memo' => $this->getMemo(),
+                'timestamp' => $this->timestamp,
+                'createdAt' => $this->createdAt,
+                'prorationUpgradeScheme' => $this->prorationUpgradeScheme,
+                'prorationDowngradeScheme' => $this->prorationDowngradeScheme,
+                'pricePointId' => $this->pricePointId,
+                'pricePointName' => $this->pricePointName,
+                'pricePointHandle' => $this->pricePointHandle,
+                'interval' => $this->interval,
+                'intervalUnit' => $this->getIntervalUnit(),
+                'previousPricePointId' => $this->previousPricePointId,
+                'accrueCharge' => $this->accrueCharge,
+                'initiateDunning' => $this->initiateDunning,
+                'upgradeCharge' => $this->getUpgradeCharge(),
+                'downgradeCredit' => $this->getDowngradeCredit(),
+                'payment' => $this->getPayment(),
+                'expiresAt' => $this->expiresAt,
+                'usedQuantity' => $this->usedQuantity,
+                'chargeId' => $this->chargeId,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
+    }
+
     private $additionalProperties = [];
 
     /**

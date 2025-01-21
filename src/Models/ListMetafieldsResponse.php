@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class ListMetafieldsResponse implements \JsonSerializable
@@ -131,6 +132,26 @@ class ListMetafieldsResponse implements \JsonSerializable
     public function setMetafields(?array $metafields): void
     {
         $this->metafields = $metafields;
+    }
+
+    /**
+     * Converts the ListMetafieldsResponse object to a human-readable string representation.
+     *
+     * @return string The string representation of the ListMetafieldsResponse object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'ListMetafieldsResponse',
+            [
+                'totalCount' => $this->totalCount,
+                'currentPage' => $this->currentPage,
+                'totalPages' => $this->totalPages,
+                'perPage' => $this->perPage,
+                'metafields' => $this->metafields,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

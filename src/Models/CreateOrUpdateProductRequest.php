@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class CreateOrUpdateProductRequest implements \JsonSerializable
@@ -44,6 +45,19 @@ class CreateOrUpdateProductRequest implements \JsonSerializable
     public function setProduct(CreateOrUpdateProduct $product): void
     {
         $this->product = $product;
+    }
+
+    /**
+     * Converts the CreateOrUpdateProductRequest object to a human-readable string representation.
+     *
+     * @return string The string representation of the CreateOrUpdateProductRequest object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'CreateOrUpdateProductRequest',
+            ['product' => $this->product, 'additionalProperties' => $this->additionalProperties]
+        );
     }
 
     private $additionalProperties = [];

@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
@@ -48,6 +49,19 @@ class BillingSchedule implements \JsonSerializable
     public function setInitialBillingAt(?\DateTime $initialBillingAt): void
     {
         $this->initialBillingAt = $initialBillingAt;
+    }
+
+    /**
+     * Converts the BillingSchedule object to a human-readable string representation.
+     *
+     * @return string The string representation of the BillingSchedule object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'BillingSchedule',
+            ['initialBillingAt' => $this->initialBillingAt, 'additionalProperties' => $this->additionalProperties]
+        );
     }
 
     private $additionalProperties = [];

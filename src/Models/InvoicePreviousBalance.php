@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
@@ -64,6 +65,23 @@ class InvoicePreviousBalance implements \JsonSerializable
     public function setInvoices(?array $invoices): void
     {
         $this->invoices = $invoices;
+    }
+
+    /**
+     * Converts the InvoicePreviousBalance object to a human-readable string representation.
+     *
+     * @return string The string representation of the InvoicePreviousBalance object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'InvoicePreviousBalance',
+            [
+                'capturedAt' => $this->capturedAt,
+                'invoices' => $this->invoices,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

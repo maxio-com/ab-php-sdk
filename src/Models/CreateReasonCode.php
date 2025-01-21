@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class CreateReasonCode implements \JsonSerializable
@@ -99,6 +100,24 @@ class CreateReasonCode implements \JsonSerializable
     public function setPosition(?int $position): void
     {
         $this->position = $position;
+    }
+
+    /**
+     * Converts the CreateReasonCode object to a human-readable string representation.
+     *
+     * @return string The string representation of the CreateReasonCode object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'CreateReasonCode',
+            [
+                'code' => $this->code,
+                'description' => $this->description,
+                'position' => $this->position,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

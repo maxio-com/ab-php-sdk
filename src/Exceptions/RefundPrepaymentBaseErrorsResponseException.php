@@ -10,6 +10,8 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Exceptions;
 
+use AdvancedBillingLib\ApiHelper;
+
 /**
  * Errors returned on creating a refund prepayment when bad request
  */
@@ -36,6 +38,21 @@ class RefundPrepaymentBaseErrorsResponseException extends ApiException
     public function setErrors(?\AdvancedBillingLib\Models\RefundPrepaymentBaseRefundError $errors): void
     {
         $this->errors = $errors;
+    }
+
+    /**
+     * Converts the RefundPrepaymentBaseErrorsResponseException object to a human-readable string
+     * representation.
+     *
+     * @return string The string representation of the RefundPrepaymentBaseErrorsResponseException object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'RefundPrepaymentBaseErrorsResponseException',
+            ['errors' => $this->errors, 'additionalProperties' => $this->additionalProperties],
+            parent::__toString()
+        );
     }
 
     private $additionalProperties = [];

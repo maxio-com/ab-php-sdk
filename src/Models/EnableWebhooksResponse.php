@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class EnableWebhooksResponse implements \JsonSerializable
@@ -35,6 +36,19 @@ class EnableWebhooksResponse implements \JsonSerializable
     public function setWebhooksEnabled(?bool $webhooksEnabled): void
     {
         $this->webhooksEnabled = $webhooksEnabled;
+    }
+
+    /**
+     * Converts the EnableWebhooksResponse object to a human-readable string representation.
+     *
+     * @return string The string representation of the EnableWebhooksResponse object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'EnableWebhooksResponse',
+            ['webhooksEnabled' => $this->webhooksEnabled, 'additionalProperties' => $this->additionalProperties]
+        );
     }
 
     private $additionalProperties = [];

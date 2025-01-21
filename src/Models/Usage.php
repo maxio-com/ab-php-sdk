@@ -240,6 +240,30 @@ class Usage implements \JsonSerializable
         $this->subscriptionId = $subscriptionId;
     }
 
+    /**
+     * Converts the Usage object to a human-readable string representation.
+     *
+     * @return string The string representation of the Usage object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'Usage',
+            [
+                'id' => $this->id,
+                'memo' => $this->getMemo(),
+                'createdAt' => $this->createdAt,
+                'pricePointId' => $this->pricePointId,
+                'quantity' => $this->quantity,
+                'overageQuantity' => $this->overageQuantity,
+                'componentId' => $this->componentId,
+                'componentHandle' => $this->componentHandle,
+                'subscriptionId' => $this->subscriptionId,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
+    }
+
     private $additionalProperties = [];
 
     /**

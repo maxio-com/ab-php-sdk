@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class SubscriptionGroupSignup implements \JsonSerializable
@@ -216,6 +217,29 @@ class SubscriptionGroupSignup implements \JsonSerializable
     public function setSubscriptions(array $subscriptions): void
     {
         $this->subscriptions = $subscriptions;
+    }
+
+    /**
+     * Converts the SubscriptionGroupSignup object to a human-readable string representation.
+     *
+     * @return string The string representation of the SubscriptionGroupSignup object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'SubscriptionGroupSignup',
+            [
+                'paymentProfileId' => $this->paymentProfileId,
+                'payerId' => $this->payerId,
+                'payerReference' => $this->payerReference,
+                'paymentCollectionMethod' => $this->paymentCollectionMethod,
+                'payerAttributes' => $this->payerAttributes,
+                'creditCardAttributes' => $this->creditCardAttributes,
+                'bankAccountAttributes' => $this->bankAccountAttributes,
+                'subscriptions' => $this->subscriptions,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

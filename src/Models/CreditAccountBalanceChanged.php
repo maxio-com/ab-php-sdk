@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
@@ -155,6 +156,26 @@ class CreditAccountBalanceChanged implements \JsonSerializable
     public function setAtTime(\DateTime $atTime): void
     {
         $this->atTime = $atTime;
+    }
+
+    /**
+     * Converts the CreditAccountBalanceChanged object to a human-readable string representation.
+     *
+     * @return string The string representation of the CreditAccountBalanceChanged object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'CreditAccountBalanceChanged',
+            [
+                'reason' => $this->reason,
+                'serviceCreditAccountBalanceInCents' => $this->serviceCreditAccountBalanceInCents,
+                'serviceCreditBalanceChangeInCents' => $this->serviceCreditBalanceChangeInCents,
+                'currencyCode' => $this->currencyCode,
+                'atTime' => $this->atTime,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

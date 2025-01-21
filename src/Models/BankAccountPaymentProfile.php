@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class BankAccountPaymentProfile implements \JsonSerializable
@@ -691,6 +692,43 @@ class BankAccountPaymentProfile implements \JsonSerializable
     public function unsetGatewayHandle(): void
     {
         $this->gatewayHandle = [];
+    }
+
+    /**
+     * Converts the BankAccountPaymentProfile object to a human-readable string representation.
+     *
+     * @return string The string representation of the BankAccountPaymentProfile object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'BankAccountPaymentProfile',
+            [
+                'id' => $this->id,
+                'firstName' => $this->firstName,
+                'lastName' => $this->lastName,
+                'customerId' => $this->customerId,
+                'currentVault' => $this->currentVault,
+                'vaultToken' => $this->vaultToken,
+                'billingAddress' => $this->getBillingAddress(),
+                'billingCity' => $this->getBillingCity(),
+                'billingState' => $this->getBillingState(),
+                'billingZip' => $this->getBillingZip(),
+                'billingCountry' => $this->getBillingCountry(),
+                'customerVaultToken' => $this->getCustomerVaultToken(),
+                'billingAddress2' => $this->getBillingAddress2(),
+                'bankName' => $this->bankName,
+                'maskedBankRoutingNumber' => $this->maskedBankRoutingNumber,
+                'maskedBankAccountNumber' => $this->maskedBankAccountNumber,
+                'bankAccountType' => $this->bankAccountType,
+                'bankAccountHolderType' => $this->bankAccountHolderType,
+                'paymentType' => $this->paymentType,
+                'verified' => $this->verified,
+                'siteGatewaySettingId' => $this->getSiteGatewaySettingId(),
+                'gatewayHandle' => $this->getGatewayHandle(),
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

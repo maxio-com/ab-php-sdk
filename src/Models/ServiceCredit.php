@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class ServiceCredit implements \JsonSerializable
@@ -136,6 +137,26 @@ class ServiceCredit implements \JsonSerializable
     public function setMemo(?string $memo): void
     {
         $this->memo = $memo;
+    }
+
+    /**
+     * Converts the ServiceCredit object to a human-readable string representation.
+     *
+     * @return string The string representation of the ServiceCredit object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'ServiceCredit',
+            [
+                'id' => $this->id,
+                'amountInCents' => $this->amountInCents,
+                'endingBalanceInCents' => $this->endingBalanceInCents,
+                'entryType' => $this->entryType,
+                'memo' => $this->memo,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

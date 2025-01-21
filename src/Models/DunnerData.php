@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
@@ -183,6 +184,27 @@ class DunnerData implements \JsonSerializable
     public function setLastAttemptedAt(\DateTime $lastAttemptedAt): void
     {
         $this->lastAttemptedAt = $lastAttemptedAt;
+    }
+
+    /**
+     * Converts the DunnerData object to a human-readable string representation.
+     *
+     * @return string The string representation of the DunnerData object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'DunnerData',
+            [
+                'state' => $this->state,
+                'subscriptionId' => $this->subscriptionId,
+                'revenueAtRiskInCents' => $this->revenueAtRiskInCents,
+                'createdAt' => $this->createdAt,
+                'attempts' => $this->attempts,
+                'lastAttemptedAt' => $this->lastAttemptedAt,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

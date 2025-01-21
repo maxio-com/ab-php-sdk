@@ -10,6 +10,8 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Exceptions;
 
+use AdvancedBillingLib\ApiHelper;
+
 class SingleErrorResponseException extends ApiException
 {
     /**
@@ -50,6 +52,20 @@ class SingleErrorResponseException extends ApiException
     public function setError(string $error): void
     {
         $this->error = $error;
+    }
+
+    /**
+     * Converts the SingleErrorResponseException object to a human-readable string representation.
+     *
+     * @return string The string representation of the SingleErrorResponseException object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'SingleErrorResponseException',
+            ['error' => $this->error, 'additionalProperties' => $this->additionalProperties],
+            parent::__toString()
+        );
     }
 
     private $additionalProperties = [];

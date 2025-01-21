@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
@@ -766,6 +767,45 @@ class ProductPricePoint implements \JsonSerializable
     public function setCurrencyPrices(?array $currencyPrices): void
     {
         $this->currencyPrices = $currencyPrices;
+    }
+
+    /**
+     * Converts the ProductPricePoint object to a human-readable string representation.
+     *
+     * @return string The string representation of the ProductPricePoint object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'ProductPricePoint',
+            [
+                'id' => $this->id,
+                'name' => $this->name,
+                'handle' => $this->getHandle(),
+                'priceInCents' => $this->priceInCents,
+                'interval' => $this->interval,
+                'intervalUnit' => $this->intervalUnit,
+                'trialPriceInCents' => $this->getTrialPriceInCents(),
+                'trialInterval' => $this->getTrialInterval(),
+                'trialIntervalUnit' => $this->getTrialIntervalUnit(),
+                'trialType' => $this->trialType,
+                'introductoryOffer' => $this->getIntroductoryOffer(),
+                'initialChargeInCents' => $this->getInitialChargeInCents(),
+                'initialChargeAfterTrial' => $this->getInitialChargeAfterTrial(),
+                'expirationInterval' => $this->getExpirationInterval(),
+                'expirationIntervalUnit' => $this->getExpirationIntervalUnit(),
+                'productId' => $this->productId,
+                'archivedAt' => $this->getArchivedAt(),
+                'createdAt' => $this->createdAt,
+                'updatedAt' => $this->updatedAt,
+                'useSiteExchangeRate' => $this->useSiteExchangeRate,
+                'type' => $this->type,
+                'taxIncluded' => $this->taxIncluded,
+                'subscriptionId' => $this->getSubscriptionId(),
+                'currencyPrices' => $this->currencyPrices,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

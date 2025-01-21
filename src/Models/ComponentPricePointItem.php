@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class ComponentPricePointItem implements \JsonSerializable
@@ -183,6 +184,27 @@ class ComponentPricePointItem implements \JsonSerializable
     public function setPrices(?array $prices): void
     {
         $this->prices = $prices;
+    }
+
+    /**
+     * Converts the ComponentPricePointItem object to a human-readable string representation.
+     *
+     * @return string The string representation of the ComponentPricePointItem object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'ComponentPricePointItem',
+            [
+                'name' => $this->name,
+                'handle' => $this->handle,
+                'pricingScheme' => $this->pricingScheme,
+                'interval' => $this->interval,
+                'intervalUnit' => $this->getIntervalUnit(),
+                'prices' => $this->prices,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

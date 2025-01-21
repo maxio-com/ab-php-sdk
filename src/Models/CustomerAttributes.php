@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class CustomerAttributes implements \JsonSerializable
@@ -582,6 +583,41 @@ class CustomerAttributes implements \JsonSerializable
     public function unsetDefaultAutoRenewalProfileId(): void
     {
         $this->defaultAutoRenewalProfileId = [];
+    }
+
+    /**
+     * Converts the CustomerAttributes object to a human-readable string representation.
+     *
+     * @return string The string representation of the CustomerAttributes object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'CustomerAttributes',
+            [
+                'firstName' => $this->firstName,
+                'lastName' => $this->lastName,
+                'email' => $this->email,
+                'ccEmails' => $this->ccEmails,
+                'organization' => $this->organization,
+                'reference' => $this->reference,
+                'address' => $this->address,
+                'address2' => $this->getAddress2(),
+                'city' => $this->city,
+                'state' => $this->state,
+                'zip' => $this->zip,
+                'country' => $this->country,
+                'phone' => $this->phone,
+                'verified' => $this->verified,
+                'taxExempt' => $this->taxExempt,
+                'vatNumber' => $this->vatNumber,
+                'metafields' => $this->metafields,
+                'parentId' => $this->getParentId(),
+                'salesforceId' => $this->getSalesforceId(),
+                'defaultAutoRenewalProfileId' => $this->getDefaultAutoRenewalProfileId(),
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

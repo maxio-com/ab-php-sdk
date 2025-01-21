@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
@@ -166,6 +167,27 @@ class PortalManagementLink implements \JsonSerializable
     public function unsetLastInviteSentAt(): void
     {
         $this->lastInviteSentAt = [];
+    }
+
+    /**
+     * Converts the PortalManagementLink object to a human-readable string representation.
+     *
+     * @return string The string representation of the PortalManagementLink object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'PortalManagementLink',
+            [
+                'url' => $this->url,
+                'fetchCount' => $this->fetchCount,
+                'createdAt' => $this->createdAt,
+                'newLinkAvailableAt' => $this->newLinkAvailableAt,
+                'expiresAt' => $this->expiresAt,
+                'lastInviteSentAt' => $this->getLastInviteSentAt(),
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

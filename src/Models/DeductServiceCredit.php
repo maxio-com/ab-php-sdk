@@ -75,6 +75,23 @@ class DeductServiceCredit implements \JsonSerializable
         $this->memo = $memo;
     }
 
+    /**
+     * Converts the DeductServiceCredit object to a human-readable string representation.
+     *
+     * @return string The string representation of the DeductServiceCredit object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'DeductServiceCredit',
+            [
+                'amount' => $this->amount,
+                'memo' => $this->memo,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
+    }
+
     private $additionalProperties = [];
 
     /**

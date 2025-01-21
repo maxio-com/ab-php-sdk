@@ -484,6 +484,37 @@ class MeteredComponent implements \JsonSerializable
         $this->intervalUnit = [];
     }
 
+    /**
+     * Converts the MeteredComponent object to a human-readable string representation.
+     *
+     * @return string The string representation of the MeteredComponent object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'MeteredComponent',
+            [
+                'name' => $this->name,
+                'unitName' => $this->unitName,
+                'description' => $this->description,
+                'handle' => $this->handle,
+                'taxable' => $this->taxable,
+                'pricingScheme' => $this->pricingScheme,
+                'prices' => $this->prices,
+                'pricePoints' => $this->pricePoints,
+                'unitPrice' => $this->unitPrice,
+                'taxCode' => $this->taxCode,
+                'hideDateRangeOnInvoice' => $this->hideDateRangeOnInvoice,
+                'displayOnHostedPage' => $this->displayOnHostedPage,
+                'allowFractionalQuantities' => $this->allowFractionalQuantities,
+                'publicSignupPageIds' => $this->publicSignupPageIds,
+                'interval' => $this->interval,
+                'intervalUnit' => $this->getIntervalUnit(),
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
+    }
+
     private $additionalProperties = [];
 
     /**

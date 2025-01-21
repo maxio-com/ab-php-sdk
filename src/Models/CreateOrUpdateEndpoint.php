@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 /**
@@ -78,6 +79,23 @@ class CreateOrUpdateEndpoint implements \JsonSerializable
     public function setWebhookSubscriptions(array $webhookSubscriptions): void
     {
         $this->webhookSubscriptions = $webhookSubscriptions;
+    }
+
+    /**
+     * Converts the CreateOrUpdateEndpoint object to a human-readable string representation.
+     *
+     * @return string The string representation of the CreateOrUpdateEndpoint object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'CreateOrUpdateEndpoint',
+            [
+                'url' => $this->url,
+                'webhookSubscriptions' => $this->webhookSubscriptions,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class CustomerError implements \JsonSerializable
@@ -35,6 +36,19 @@ class CustomerError implements \JsonSerializable
     public function setCustomer(?string $customer): void
     {
         $this->customer = $customer;
+    }
+
+    /**
+     * Converts the CustomerError object to a human-readable string representation.
+     *
+     * @return string The string representation of the CustomerError object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'CustomerError',
+            ['customer' => $this->customer, 'additionalProperties' => $this->additionalProperties]
+        );
     }
 
     private $additionalProperties = [];

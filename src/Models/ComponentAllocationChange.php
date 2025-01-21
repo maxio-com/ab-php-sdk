@@ -211,6 +211,28 @@ class ComponentAllocationChange implements \JsonSerializable
         $this->allocatedQuantity = $allocatedQuantity;
     }
 
+    /**
+     * Converts the ComponentAllocationChange object to a human-readable string representation.
+     *
+     * @return string The string representation of the ComponentAllocationChange object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'ComponentAllocationChange',
+            [
+                'previousAllocation' => $this->previousAllocation,
+                'newAllocation' => $this->newAllocation,
+                'componentId' => $this->componentId,
+                'componentHandle' => $this->componentHandle,
+                'memo' => $this->memo,
+                'allocationId' => $this->allocationId,
+                'allocatedQuantity' => $this->allocatedQuantity,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
+    }
+
     private $additionalProperties = [];
 
     /**

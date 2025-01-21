@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class OverrideSubscriptionRequest implements \JsonSerializable
@@ -44,6 +45,19 @@ class OverrideSubscriptionRequest implements \JsonSerializable
     public function setSubscription(OverrideSubscription $subscription): void
     {
         $this->subscription = $subscription;
+    }
+
+    /**
+     * Converts the OverrideSubscriptionRequest object to a human-readable string representation.
+     *
+     * @return string The string representation of the OverrideSubscriptionRequest object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'OverrideSubscriptionRequest',
+            ['subscription' => $this->subscription, 'additionalProperties' => $this->additionalProperties]
+        );
     }
 
     private $additionalProperties = [];

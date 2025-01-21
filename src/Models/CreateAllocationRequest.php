@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class CreateAllocationRequest implements \JsonSerializable
@@ -44,6 +45,19 @@ class CreateAllocationRequest implements \JsonSerializable
     public function setAllocation(CreateAllocation $allocation): void
     {
         $this->allocation = $allocation;
+    }
+
+    /**
+     * Converts the CreateAllocationRequest object to a human-readable string representation.
+     *
+     * @return string The string representation of the CreateAllocationRequest object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'CreateAllocationRequest',
+            ['allocation' => $this->allocation, 'additionalProperties' => $this->additionalProperties]
+        );
     }
 
     private $additionalProperties = [];

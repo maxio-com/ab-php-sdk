@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class BulkComponentsPricePointAssignment implements \JsonSerializable
@@ -39,6 +40,19 @@ class BulkComponentsPricePointAssignment implements \JsonSerializable
     public function setComponents(?array $components): void
     {
         $this->components = $components;
+    }
+
+    /**
+     * Converts the BulkComponentsPricePointAssignment object to a human-readable string representation.
+     *
+     * @return string The string representation of the BulkComponentsPricePointAssignment object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'BulkComponentsPricePointAssignment',
+            ['components' => $this->components, 'additionalProperties' => $this->additionalProperties]
+        );
     }
 
     private $additionalProperties = [];

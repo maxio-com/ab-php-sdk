@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class SubscriptionGroupMembersArrayError implements \JsonSerializable
@@ -48,6 +49,19 @@ class SubscriptionGroupMembersArrayError implements \JsonSerializable
     public function setMembers(array $members): void
     {
         $this->members = $members;
+    }
+
+    /**
+     * Converts the SubscriptionGroupMembersArrayError object to a human-readable string representation.
+     *
+     * @return string The string representation of the SubscriptionGroupMembersArrayError object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'SubscriptionGroupMembersArrayError',
+            ['members' => $this->members, 'additionalProperties' => $this->additionalProperties]
+        );
     }
 
     private $additionalProperties = [];

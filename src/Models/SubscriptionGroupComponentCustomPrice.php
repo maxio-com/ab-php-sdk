@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 /**
@@ -98,6 +99,24 @@ class SubscriptionGroupComponentCustomPrice implements \JsonSerializable
     public function setOveragePricing(?array $overagePricing): void
     {
         $this->overagePricing = $overagePricing;
+    }
+
+    /**
+     * Converts the SubscriptionGroupComponentCustomPrice object to a human-readable string representation.
+     *
+     * @return string The string representation of the SubscriptionGroupComponentCustomPrice object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'SubscriptionGroupComponentCustomPrice',
+            [
+                'pricingScheme' => $this->pricingScheme,
+                'prices' => $this->prices,
+                'overagePricing' => $this->overagePricing,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

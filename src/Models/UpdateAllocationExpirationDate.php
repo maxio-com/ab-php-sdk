@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class UpdateAllocationExpirationDate implements \JsonSerializable
@@ -35,6 +36,19 @@ class UpdateAllocationExpirationDate implements \JsonSerializable
     public function setAllocation(?AllocationExpirationDate $allocation): void
     {
         $this->allocation = $allocation;
+    }
+
+    /**
+     * Converts the UpdateAllocationExpirationDate object to a human-readable string representation.
+     *
+     * @return string The string representation of the UpdateAllocationExpirationDate object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'UpdateAllocationExpirationDate',
+            ['allocation' => $this->allocation, 'additionalProperties' => $this->additionalProperties]
+        );
     }
 
     private $additionalProperties = [];

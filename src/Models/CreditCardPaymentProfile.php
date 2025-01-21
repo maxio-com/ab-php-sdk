@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class CreditCardPaymentProfile implements \JsonSerializable
@@ -698,6 +699,43 @@ class CreditCardPaymentProfile implements \JsonSerializable
     public function unsetGatewayHandle(): void
     {
         $this->gatewayHandle = [];
+    }
+
+    /**
+     * Converts the CreditCardPaymentProfile object to a human-readable string representation.
+     *
+     * @return string The string representation of the CreditCardPaymentProfile object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'CreditCardPaymentProfile',
+            [
+                'id' => $this->id,
+                'firstName' => $this->firstName,
+                'lastName' => $this->lastName,
+                'maskedCardNumber' => $this->maskedCardNumber,
+                'cardType' => $this->cardType,
+                'expirationMonth' => $this->expirationMonth,
+                'expirationYear' => $this->expirationYear,
+                'customerId' => $this->customerId,
+                'currentVault' => $this->currentVault,
+                'vaultToken' => $this->getVaultToken(),
+                'billingAddress' => $this->getBillingAddress(),
+                'billingCity' => $this->getBillingCity(),
+                'billingState' => $this->getBillingState(),
+                'billingZip' => $this->getBillingZip(),
+                'billingCountry' => $this->getBillingCountry(),
+                'customerVaultToken' => $this->getCustomerVaultToken(),
+                'billingAddress2' => $this->getBillingAddress2(),
+                'paymentType' => $this->paymentType,
+                'disabled' => $this->disabled,
+                'chargifyToken' => $this->chargifyToken,
+                'siteGatewaySettingId' => $this->getSiteGatewaySettingId(),
+                'gatewayHandle' => $this->getGatewayHandle(),
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

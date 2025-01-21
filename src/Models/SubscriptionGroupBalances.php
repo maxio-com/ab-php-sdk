@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class SubscriptionGroupBalances implements \JsonSerializable
@@ -104,6 +105,25 @@ class SubscriptionGroupBalances implements \JsonSerializable
     public function setPendingDiscounts(?AccountBalance $pendingDiscounts): void
     {
         $this->pendingDiscounts = $pendingDiscounts;
+    }
+
+    /**
+     * Converts the SubscriptionGroupBalances object to a human-readable string representation.
+     *
+     * @return string The string representation of the SubscriptionGroupBalances object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'SubscriptionGroupBalances',
+            [
+                'prepayments' => $this->prepayments,
+                'serviceCredits' => $this->serviceCredits,
+                'openInvoices' => $this->openInvoices,
+                'pendingDiscounts' => $this->pendingDiscounts,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

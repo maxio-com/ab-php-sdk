@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class ProformaInvoicePayment implements \JsonSerializable
@@ -104,6 +105,25 @@ class ProformaInvoicePayment implements \JsonSerializable
     public function setPrepayment(?bool $prepayment): void
     {
         $this->prepayment = $prepayment;
+    }
+
+    /**
+     * Converts the ProformaInvoicePayment object to a human-readable string representation.
+     *
+     * @return string The string representation of the ProformaInvoicePayment object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'ProformaInvoicePayment',
+            [
+                'memo' => $this->memo,
+                'originalAmount' => $this->originalAmount,
+                'appliedAmount' => $this->appliedAmount,
+                'prepayment' => $this->prepayment,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

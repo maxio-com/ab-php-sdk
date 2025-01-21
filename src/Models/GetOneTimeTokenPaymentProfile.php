@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class GetOneTimeTokenPaymentProfile implements \JsonSerializable
@@ -615,6 +616,42 @@ class GetOneTimeTokenPaymentProfile implements \JsonSerializable
     public function unsetGatewayHandle(): void
     {
         $this->gatewayHandle = [];
+    }
+
+    /**
+     * Converts the GetOneTimeTokenPaymentProfile object to a human-readable string representation.
+     *
+     * @return string The string representation of the GetOneTimeTokenPaymentProfile object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'GetOneTimeTokenPaymentProfile',
+            [
+                'id' => $this->getId(),
+                'firstName' => $this->firstName,
+                'lastName' => $this->lastName,
+                'maskedCardNumber' => $this->maskedCardNumber,
+                'cardType' => $this->cardType,
+                'expirationMonth' => $this->expirationMonth,
+                'expirationYear' => $this->expirationYear,
+                'customerId' => $this->getCustomerId(),
+                'currentVault' => $this->currentVault,
+                'vaultToken' => $this->vaultToken,
+                'billingAddress' => $this->billingAddress,
+                'billingAddress2' => $this->billingAddress2,
+                'billingCity' => $this->billingCity,
+                'billingCountry' => $this->billingCountry,
+                'billingState' => $this->billingState,
+                'billingZip' => $this->billingZip,
+                'paymentType' => $this->paymentType,
+                'disabled' => $this->disabled,
+                'siteGatewaySettingId' => $this->siteGatewaySettingId,
+                'customerVaultToken' => $this->getCustomerVaultToken(),
+                'gatewayHandle' => $this->getGatewayHandle(),
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

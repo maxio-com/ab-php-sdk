@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class SubscriptionStateChange implements \JsonSerializable
@@ -70,6 +71,23 @@ class SubscriptionStateChange implements \JsonSerializable
     public function setNewSubscriptionState(string $newSubscriptionState): void
     {
         $this->newSubscriptionState = $newSubscriptionState;
+    }
+
+    /**
+     * Converts the SubscriptionStateChange object to a human-readable string representation.
+     *
+     * @return string The string representation of the SubscriptionStateChange object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'SubscriptionStateChange',
+            [
+                'previousSubscriptionState' => $this->previousSubscriptionState,
+                'newSubscriptionState' => $this->newSubscriptionState,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

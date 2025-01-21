@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class UpdateMetafield implements \JsonSerializable
@@ -146,6 +147,26 @@ class UpdateMetafield implements \JsonSerializable
     public function setEnum(?array $enum): void
     {
         $this->enum = $enum;
+    }
+
+    /**
+     * Converts the UpdateMetafield object to a human-readable string representation.
+     *
+     * @return string The string representation of the UpdateMetafield object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'UpdateMetafield',
+            [
+                'currentName' => $this->currentName,
+                'name' => $this->name,
+                'scope' => $this->scope,
+                'inputType' => $this->inputType,
+                'enum' => $this->enum,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

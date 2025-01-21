@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class ComponentCostData implements \JsonSerializable
@@ -193,6 +194,28 @@ class ComponentCostData implements \JsonSerializable
     public function setTiers(?array $tiers): void
     {
         $this->tiers = $tiers;
+    }
+
+    /**
+     * Converts the ComponentCostData object to a human-readable string representation.
+     *
+     * @return string The string representation of the ComponentCostData object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'ComponentCostData',
+            [
+                'componentCodeId' => $this->getComponentCodeId(),
+                'pricePointId' => $this->pricePointId,
+                'productId' => $this->productId,
+                'quantity' => $this->quantity,
+                'amount' => $this->amount,
+                'pricingScheme' => $this->pricingScheme,
+                'tiers' => $this->tiers,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

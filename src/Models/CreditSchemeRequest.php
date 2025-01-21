@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class CreditSchemeRequest implements \JsonSerializable
@@ -45,6 +46,19 @@ class CreditSchemeRequest implements \JsonSerializable
     public function setCreditScheme(string $creditScheme): void
     {
         $this->creditScheme = $creditScheme;
+    }
+
+    /**
+     * Converts the CreditSchemeRequest object to a human-readable string representation.
+     *
+     * @return string The string representation of the CreditSchemeRequest object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'CreditSchemeRequest',
+            ['creditScheme' => $this->creditScheme, 'additionalProperties' => $this->additionalProperties]
+        );
     }
 
     private $additionalProperties = [];

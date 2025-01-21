@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class UpdateComponent implements \JsonSerializable
@@ -301,6 +302,30 @@ class UpdateComponent implements \JsonSerializable
     public function unsetUpgradeCharge(): void
     {
         $this->upgradeCharge = [];
+    }
+
+    /**
+     * Converts the UpdateComponent object to a human-readable string representation.
+     *
+     * @return string The string representation of the UpdateComponent object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'UpdateComponent',
+            [
+                'handle' => $this->handle,
+                'name' => $this->name,
+                'description' => $this->getDescription(),
+                'accountingCode' => $this->getAccountingCode(),
+                'taxable' => $this->taxable,
+                'taxCode' => $this->getTaxCode(),
+                'itemCategory' => $this->getItemCategory(),
+                'displayOnHostedPage' => $this->displayOnHostedPage,
+                'upgradeCharge' => $this->getUpgradeCharge(),
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

@@ -10,6 +10,8 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Exceptions;
 
+use AdvancedBillingLib\ApiHelper;
+
 class SubscriptionComponentAllocationErrorException extends ApiException
 {
     /**
@@ -37,6 +39,21 @@ class SubscriptionComponentAllocationErrorException extends ApiException
     public function setErrors(?array $errors): void
     {
         $this->errors = $errors;
+    }
+
+    /**
+     * Converts the SubscriptionComponentAllocationErrorException object to a human-readable string
+     * representation.
+     *
+     * @return string The string representation of the SubscriptionComponentAllocationErrorException object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'SubscriptionComponentAllocationErrorException',
+            ['errors' => $this->errors, 'additionalProperties' => $this->additionalProperties],
+            parent::__toString()
+        );
     }
 
     private $additionalProperties = [];

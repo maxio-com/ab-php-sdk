@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class PrepaymentResponse implements \JsonSerializable
@@ -44,6 +45,19 @@ class PrepaymentResponse implements \JsonSerializable
     public function setPrepayment(Prepayment $prepayment): void
     {
         $this->prepayment = $prepayment;
+    }
+
+    /**
+     * Converts the PrepaymentResponse object to a human-readable string representation.
+     *
+     * @return string The string representation of the PrepaymentResponse object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'PrepaymentResponse',
+            ['prepayment' => $this->prepayment, 'additionalProperties' => $this->additionalProperties]
+        );
     }
 
     private $additionalProperties = [];

@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class CreateOfferComponent implements \JsonSerializable
@@ -81,6 +82,24 @@ class CreateOfferComponent implements \JsonSerializable
     public function setStartingQuantity(?int $startingQuantity): void
     {
         $this->startingQuantity = $startingQuantity;
+    }
+
+    /**
+     * Converts the CreateOfferComponent object to a human-readable string representation.
+     *
+     * @return string The string representation of the CreateOfferComponent object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'CreateOfferComponent',
+            [
+                'componentId' => $this->componentId,
+                'pricePointId' => $this->pricePointId,
+                'startingQuantity' => $this->startingQuantity,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

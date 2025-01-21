@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
@@ -225,6 +226,30 @@ class Movement implements \JsonSerializable
     public function setSubscriberName(?string $subscriberName): void
     {
         $this->subscriberName = $subscriberName;
+    }
+
+    /**
+     * Converts the Movement object to a human-readable string representation.
+     *
+     * @return string The string representation of the Movement object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'Movement',
+            [
+                'timestamp' => $this->timestamp,
+                'amountInCents' => $this->amountInCents,
+                'amountFormatted' => $this->amountFormatted,
+                'description' => $this->description,
+                'category' => $this->category,
+                'breakouts' => $this->breakouts,
+                'lineItems' => $this->lineItems,
+                'subscriptionId' => $this->subscriptionId,
+                'subscriberName' => $this->subscriberName,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

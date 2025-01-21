@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class UpdatePaymentProfileRequest implements \JsonSerializable
@@ -44,6 +45,19 @@ class UpdatePaymentProfileRequest implements \JsonSerializable
     public function setPaymentProfile(UpdatePaymentProfile $paymentProfile): void
     {
         $this->paymentProfile = $paymentProfile;
+    }
+
+    /**
+     * Converts the UpdatePaymentProfileRequest object to a human-readable string representation.
+     *
+     * @return string The string representation of the UpdatePaymentProfileRequest object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'UpdatePaymentProfileRequest',
+            ['paymentProfile' => $this->paymentProfile, 'additionalProperties' => $this->additionalProperties]
+        );
     }
 
     private $additionalProperties = [];

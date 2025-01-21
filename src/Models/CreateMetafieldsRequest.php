@@ -52,6 +52,19 @@ class CreateMetafieldsRequest implements \JsonSerializable
         $this->metafields = $metafields;
     }
 
+    /**
+     * Converts the CreateMetafieldsRequest object to a human-readable string representation.
+     *
+     * @return string The string representation of the CreateMetafieldsRequest object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'CreateMetafieldsRequest',
+            ['metafields' => $this->metafields, 'additionalProperties' => $this->additionalProperties]
+        );
+    }
+
     private $additionalProperties = [];
 
     /**

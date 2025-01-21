@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class CancelGroupedSubscriptionsRequest implements \JsonSerializable
@@ -35,6 +36,22 @@ class CancelGroupedSubscriptionsRequest implements \JsonSerializable
     public function setChargeUnbilledUsage(?bool $chargeUnbilledUsage): void
     {
         $this->chargeUnbilledUsage = $chargeUnbilledUsage;
+    }
+
+    /**
+     * Converts the CancelGroupedSubscriptionsRequest object to a human-readable string representation.
+     *
+     * @return string The string representation of the CancelGroupedSubscriptionsRequest object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'CancelGroupedSubscriptionsRequest',
+            [
+                'chargeUnbilledUsage' => $this->chargeUnbilledUsage,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class VoidInvoice implements \JsonSerializable
@@ -44,6 +45,19 @@ class VoidInvoice implements \JsonSerializable
     public function setReason(string $reason): void
     {
         $this->reason = $reason;
+    }
+
+    /**
+     * Converts the VoidInvoice object to a human-readable string representation.
+     *
+     * @return string The string representation of the VoidInvoice object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'VoidInvoice',
+            ['reason' => $this->reason, 'additionalProperties' => $this->additionalProperties]
+        );
     }
 
     private $additionalProperties = [];

@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class CreatePrepaidUsageComponentPricePoint implements \JsonSerializable
@@ -303,6 +304,31 @@ class CreatePrepaidUsageComponentPricePoint implements \JsonSerializable
     public function unsetExpirationIntervalUnit(): void
     {
         $this->expirationIntervalUnit = [];
+    }
+
+    /**
+     * Converts the CreatePrepaidUsageComponentPricePoint object to a human-readable string representation.
+     *
+     * @return string The string representation of the CreatePrepaidUsageComponentPricePoint object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'CreatePrepaidUsageComponentPricePoint',
+            [
+                'name' => $this->name,
+                'handle' => $this->handle,
+                'pricingScheme' => $this->pricingScheme,
+                'prices' => $this->prices,
+                'overagePricing' => $this->overagePricing,
+                'useSiteExchangeRate' => $this->useSiteExchangeRate,
+                'rolloverPrepaidRemainder' => $this->rolloverPrepaidRemainder,
+                'renewPrepaidAllocation' => $this->renewPrepaidAllocation,
+                'expirationInterval' => $this->expirationInterval,
+                'expirationIntervalUnit' => $this->getExpirationIntervalUnit(),
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

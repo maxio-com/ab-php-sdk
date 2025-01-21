@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class ListMRRResponseResult implements \JsonSerializable
@@ -177,6 +178,28 @@ class ListMRRResponseResult implements \JsonSerializable
     public function setMovements(?array $movements): void
     {
         $this->movements = $movements;
+    }
+
+    /**
+     * Converts the ListMRRResponseResult object to a human-readable string representation.
+     *
+     * @return string The string representation of the ListMRRResponseResult object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'ListMRRResponseResult',
+            [
+                'page' => $this->page,
+                'perPage' => $this->perPage,
+                'totalPages' => $this->totalPages,
+                'totalEntries' => $this->totalEntries,
+                'currency' => $this->currency,
+                'currencySymbol' => $this->currencySymbol,
+                'movements' => $this->movements,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

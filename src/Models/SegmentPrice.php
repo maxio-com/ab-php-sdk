@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class SegmentPrice implements \JsonSerializable
@@ -207,6 +208,29 @@ class SegmentPrice implements \JsonSerializable
     public function setSegmentId(?int $segmentId): void
     {
         $this->segmentId = $segmentId;
+    }
+
+    /**
+     * Converts the SegmentPrice object to a human-readable string representation.
+     *
+     * @return string The string representation of the SegmentPrice object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'SegmentPrice',
+            [
+                'id' => $this->id,
+                'componentId' => $this->componentId,
+                'startingQuantity' => $this->startingQuantity,
+                'endingQuantity' => $this->getEndingQuantity(),
+                'unitPrice' => $this->unitPrice,
+                'pricePointId' => $this->pricePointId,
+                'formattedUnitPrice' => $this->formattedUnitPrice,
+                'segmentId' => $this->segmentId,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

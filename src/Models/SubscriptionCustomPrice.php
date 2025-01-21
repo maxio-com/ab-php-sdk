@@ -401,6 +401,34 @@ class SubscriptionCustomPrice implements \JsonSerializable
         $this->taxIncluded = $taxIncluded;
     }
 
+    /**
+     * Converts the SubscriptionCustomPrice object to a human-readable string representation.
+     *
+     * @return string The string representation of the SubscriptionCustomPrice object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'SubscriptionCustomPrice',
+            [
+                'name' => $this->name,
+                'handle' => $this->handle,
+                'priceInCents' => $this->priceInCents,
+                'interval' => $this->interval,
+                'intervalUnit' => $this->intervalUnit,
+                'trialPriceInCents' => $this->trialPriceInCents,
+                'trialInterval' => $this->trialInterval,
+                'trialIntervalUnit' => $this->trialIntervalUnit,
+                'initialChargeInCents' => $this->initialChargeInCents,
+                'initialChargeAfterTrial' => $this->initialChargeAfterTrial,
+                'expirationInterval' => $this->expirationInterval,
+                'expirationIntervalUnit' => $this->getExpirationIntervalUnit(),
+                'taxIncluded' => $this->taxIncluded,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
+    }
+
     private $additionalProperties = [];
 
     /**
