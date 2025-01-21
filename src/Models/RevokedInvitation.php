@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class RevokedInvitation implements \JsonSerializable
@@ -81,6 +82,24 @@ class RevokedInvitation implements \JsonSerializable
     public function setUninvitedCount(?int $uninvitedCount): void
     {
         $this->uninvitedCount = $uninvitedCount;
+    }
+
+    /**
+     * Converts the RevokedInvitation object to a human-readable string representation.
+     *
+     * @return string The string representation of the RevokedInvitation object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'RevokedInvitation',
+            [
+                'lastSentAt' => $this->lastSentAt,
+                'lastAcceptedAt' => $this->lastAcceptedAt,
+                'uninvitedCount' => $this->uninvitedCount,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

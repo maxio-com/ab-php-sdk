@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class BankAccountVerification implements \JsonSerializable
@@ -58,6 +59,23 @@ class BankAccountVerification implements \JsonSerializable
     public function setDeposit2InCents(?int $deposit2InCents): void
     {
         $this->deposit2InCents = $deposit2InCents;
+    }
+
+    /**
+     * Converts the BankAccountVerification object to a human-readable string representation.
+     *
+     * @return string The string representation of the BankAccountVerification object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'BankAccountVerification',
+            [
+                'deposit1InCents' => $this->deposit1InCents,
+                'deposit2InCents' => $this->deposit2InCents,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class BankAccountAttributes implements \JsonSerializable
@@ -322,6 +323,33 @@ class BankAccountAttributes implements \JsonSerializable
     public function setCustomerVaultToken(?string $customerVaultToken): void
     {
         $this->customerVaultToken = $customerVaultToken;
+    }
+
+    /**
+     * Converts the BankAccountAttributes object to a human-readable string representation.
+     *
+     * @return string The string representation of the BankAccountAttributes object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'BankAccountAttributes',
+            [
+                'chargifyToken' => $this->chargifyToken,
+                'bankName' => $this->bankName,
+                'bankRoutingNumber' => $this->bankRoutingNumber,
+                'bankAccountNumber' => $this->bankAccountNumber,
+                'bankAccountType' => $this->bankAccountType,
+                'bankBranchCode' => $this->bankBranchCode,
+                'bankIban' => $this->bankIban,
+                'bankAccountHolderType' => $this->bankAccountHolderType,
+                'paymentType' => $this->paymentType,
+                'currentVault' => $this->currentVault,
+                'vaultToken' => $this->vaultToken,
+                'customerVaultToken' => $this->customerVaultToken,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class PublicSignupPage implements \JsonSerializable
@@ -136,6 +137,25 @@ class PublicSignupPage implements \JsonSerializable
     public function setUrl(?string $url): void
     {
         $this->url = $url;
+    }
+
+    /**
+     * Converts the PublicSignupPage object to a human-readable string representation.
+     *
+     * @return string The string representation of the PublicSignupPage object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'PublicSignupPage',
+            [
+                'id' => $this->id,
+                'returnUrl' => $this->getReturnUrl(),
+                'returnParams' => $this->getReturnParams(),
+                'url' => $this->url,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

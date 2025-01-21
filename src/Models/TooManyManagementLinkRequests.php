@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
@@ -72,6 +73,23 @@ class TooManyManagementLinkRequests implements \JsonSerializable
     public function setNewLinkAvailableAt(\DateTime $newLinkAvailableAt): void
     {
         $this->newLinkAvailableAt = $newLinkAvailableAt;
+    }
+
+    /**
+     * Converts the TooManyManagementLinkRequests object to a human-readable string representation.
+     *
+     * @return string The string representation of the TooManyManagementLinkRequests object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'TooManyManagementLinkRequests',
+            [
+                'error' => $this->error,
+                'newLinkAvailableAt' => $this->newLinkAvailableAt,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

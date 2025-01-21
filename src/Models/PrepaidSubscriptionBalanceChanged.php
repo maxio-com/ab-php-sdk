@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class PrepaidSubscriptionBalanceChanged implements \JsonSerializable
@@ -126,6 +127,25 @@ class PrepaidSubscriptionBalanceChanged implements \JsonSerializable
     public function setCurrentUsageAmountInCents(int $currentUsageAmountInCents): void
     {
         $this->currentUsageAmountInCents = $currentUsageAmountInCents;
+    }
+
+    /**
+     * Converts the PrepaidSubscriptionBalanceChanged object to a human-readable string representation.
+     *
+     * @return string The string representation of the PrepaidSubscriptionBalanceChanged object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'PrepaidSubscriptionBalanceChanged',
+            [
+                'reason' => $this->reason,
+                'currentAccountBalanceInCents' => $this->currentAccountBalanceInCents,
+                'prepaymentAccountBalanceInCents' => $this->prepaymentAccountBalanceInCents,
+                'currentUsageAmountInCents' => $this->currentUsageAmountInCents,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
@@ -177,6 +178,27 @@ class VoidInvoiceEventData implements \JsonSerializable
     public function setReason(string $reason): void
     {
         $this->reason = $reason;
+    }
+
+    /**
+     * Converts the VoidInvoiceEventData object to a human-readable string representation.
+     *
+     * @return string The string representation of the VoidInvoiceEventData object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'VoidInvoiceEventData',
+            [
+                'creditNoteAttributes' => $this->creditNoteAttributes,
+                'memo' => $this->memo,
+                'appliedAmount' => $this->appliedAmount,
+                'transactionTime' => $this->transactionTime,
+                'isAdvanceInvoice' => $this->isAdvanceInvoice,
+                'reason' => $this->reason,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

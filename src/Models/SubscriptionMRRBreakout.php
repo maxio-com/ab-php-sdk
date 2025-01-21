@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class SubscriptionMRRBreakout implements \JsonSerializable
@@ -70,6 +71,23 @@ class SubscriptionMRRBreakout implements \JsonSerializable
     public function setUsageAmountInCents(int $usageAmountInCents): void
     {
         $this->usageAmountInCents = $usageAmountInCents;
+    }
+
+    /**
+     * Converts the SubscriptionMRRBreakout object to a human-readable string representation.
+     *
+     * @return string The string representation of the SubscriptionMRRBreakout object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'SubscriptionMRRBreakout',
+            [
+                'planAmountInCents' => $this->planAmountInCents,
+                'usageAmountInCents' => $this->usageAmountInCents,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

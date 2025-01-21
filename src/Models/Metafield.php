@@ -184,6 +184,27 @@ class Metafield implements \JsonSerializable
         $this->enum = [];
     }
 
+    /**
+     * Converts the Metafield object to a human-readable string representation.
+     *
+     * @return string The string representation of the Metafield object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'Metafield',
+            [
+                'id' => $this->id,
+                'name' => $this->name,
+                'scope' => $this->scope,
+                'dataCount' => $this->dataCount,
+                'inputType' => $this->inputType,
+                'enum' => $this->getEnum(),
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
+    }
+
     private $additionalProperties = [];
 
     /**

@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
@@ -153,6 +154,27 @@ class SubscriptionNote implements \JsonSerializable
     public function setSticky(?bool $sticky): void
     {
         $this->sticky = $sticky;
+    }
+
+    /**
+     * Converts the SubscriptionNote object to a human-readable string representation.
+     *
+     * @return string The string representation of the SubscriptionNote object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'SubscriptionNote',
+            [
+                'id' => $this->id,
+                'body' => $this->body,
+                'subscriptionId' => $this->subscriptionId,
+                'createdAt' => $this->createdAt,
+                'updatedAt' => $this->updatedAt,
+                'sticky' => $this->sticky,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

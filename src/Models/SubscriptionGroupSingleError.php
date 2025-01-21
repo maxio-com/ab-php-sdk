@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class SubscriptionGroupSingleError implements \JsonSerializable
@@ -44,6 +45,22 @@ class SubscriptionGroupSingleError implements \JsonSerializable
     public function setSubscriptionGroup(string $subscriptionGroup): void
     {
         $this->subscriptionGroup = $subscriptionGroup;
+    }
+
+    /**
+     * Converts the SubscriptionGroupSingleError object to a human-readable string representation.
+     *
+     * @return string The string representation of the SubscriptionGroupSingleError object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'SubscriptionGroupSingleError',
+            [
+                'subscriptionGroup' => $this->subscriptionGroup,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
@@ -558,6 +559,39 @@ class CreditNoteLineItem implements \JsonSerializable
     public function setCustomItem(?bool $customItem): void
     {
         $this->customItem = $customItem;
+    }
+
+    /**
+     * Converts the CreditNoteLineItem object to a human-readable string representation.
+     *
+     * @return string The string representation of the CreditNoteLineItem object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'CreditNoteLineItem',
+            [
+                'uid' => $this->uid,
+                'title' => $this->title,
+                'description' => $this->description,
+                'quantity' => $this->quantity,
+                'unitPrice' => $this->unitPrice,
+                'subtotalAmount' => $this->subtotalAmount,
+                'discountAmount' => $this->discountAmount,
+                'taxAmount' => $this->taxAmount,
+                'totalAmount' => $this->totalAmount,
+                'tieredUnitPrice' => $this->tieredUnitPrice,
+                'periodRangeStart' => $this->periodRangeStart,
+                'periodRangeEnd' => $this->periodRangeEnd,
+                'productId' => $this->productId,
+                'productVersion' => $this->productVersion,
+                'componentId' => $this->getComponentId(),
+                'pricePointId' => $this->getPricePointId(),
+                'billingScheduleItemId' => $this->getBillingScheduleItemId(),
+                'customItem' => $this->customItem,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

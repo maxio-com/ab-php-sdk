@@ -134,6 +134,25 @@ class RefundPrepayment implements \JsonSerializable
         $this->external = $external;
     }
 
+    /**
+     * Converts the RefundPrepayment object to a human-readable string representation.
+     *
+     * @return string The string representation of the RefundPrepayment object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'RefundPrepayment',
+            [
+                'amountInCents' => $this->amountInCents,
+                'amount' => $this->amount,
+                'memo' => $this->memo,
+                'external' => $this->external,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
+    }
+
     private $additionalProperties = [];
 
     /**

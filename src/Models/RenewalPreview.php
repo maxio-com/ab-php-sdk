@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
@@ -253,6 +254,30 @@ class RenewalPreview implements \JsonSerializable
     public function setLineItems(?array $lineItems): void
     {
         $this->lineItems = $lineItems;
+    }
+
+    /**
+     * Converts the RenewalPreview object to a human-readable string representation.
+     *
+     * @return string The string representation of the RenewalPreview object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'RenewalPreview',
+            [
+                'nextAssessmentAt' => $this->nextAssessmentAt,
+                'subtotalInCents' => $this->subtotalInCents,
+                'totalTaxInCents' => $this->totalTaxInCents,
+                'totalDiscountInCents' => $this->totalDiscountInCents,
+                'totalInCents' => $this->totalInCents,
+                'existingBalanceInCents' => $this->existingBalanceInCents,
+                'totalAmountDueInCents' => $this->totalAmountDueInCents,
+                'uncalculatedTaxes' => $this->uncalculatedTaxes,
+                'lineItems' => $this->lineItems,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

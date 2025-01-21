@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
@@ -1103,6 +1104,55 @@ class Component implements \JsonSerializable
     public function unsetIntervalUnit(): void
     {
         $this->intervalUnit = [];
+    }
+
+    /**
+     * Converts the Component object to a human-readable string representation.
+     *
+     * @return string The string representation of the Component object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'Component',
+            [
+                'id' => $this->id,
+                'name' => $this->name,
+                'handle' => $this->getHandle(),
+                'pricingScheme' => $this->getPricingScheme(),
+                'unitName' => $this->unitName,
+                'unitPrice' => $this->getUnitPrice(),
+                'productFamilyId' => $this->productFamilyId,
+                'productFamilyName' => $this->productFamilyName,
+                'pricePerUnitInCents' => $this->getPricePerUnitInCents(),
+                'kind' => $this->kind,
+                'archived' => $this->archived,
+                'taxable' => $this->taxable,
+                'description' => $this->getDescription(),
+                'defaultPricePointId' => $this->getDefaultPricePointId(),
+                'overagePrices' => $this->getOveragePrices(),
+                'prices' => $this->getPrices(),
+                'pricePointCount' => $this->pricePointCount,
+                'pricePointsUrl' => $this->getPricePointsUrl(),
+                'defaultPricePointName' => $this->defaultPricePointName,
+                'taxCode' => $this->getTaxCode(),
+                'recurring' => $this->recurring,
+                'upgradeCharge' => $this->getUpgradeCharge(),
+                'downgradeCredit' => $this->getDowngradeCredit(),
+                'createdAt' => $this->createdAt,
+                'updatedAt' => $this->updatedAt,
+                'archivedAt' => $this->getArchivedAt(),
+                'hideDateRangeOnInvoice' => $this->hideDateRangeOnInvoice,
+                'allowFractionalQuantities' => $this->allowFractionalQuantities,
+                'itemCategory' => $this->getItemCategory(),
+                'useSiteExchangeRate' => $this->getUseSiteExchangeRate(),
+                'accountingCode' => $this->getAccountingCode(),
+                'eventBasedBillingMetricId' => $this->eventBasedBillingMetricId,
+                'interval' => $this->interval,
+                'intervalUnit' => $this->getIntervalUnit(),
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

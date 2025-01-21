@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class AllocationPreviewResponse implements \JsonSerializable
@@ -44,6 +45,22 @@ class AllocationPreviewResponse implements \JsonSerializable
     public function setAllocationPreview(AllocationPreview $allocationPreview): void
     {
         $this->allocationPreview = $allocationPreview;
+    }
+
+    /**
+     * Converts the AllocationPreviewResponse object to a human-readable string representation.
+     *
+     * @return string The string representation of the AllocationPreviewResponse object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'AllocationPreviewResponse',
+            [
+                'allocationPreview' => $this->allocationPreview,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

@@ -10,6 +10,8 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Exceptions;
 
+use AdvancedBillingLib\ApiHelper;
+
 class ProductPricePointErrorResponseException extends ApiException
 {
     /**
@@ -50,6 +52,21 @@ class ProductPricePointErrorResponseException extends ApiException
     public function setErrors(\AdvancedBillingLib\Models\ProductPricePointErrors $errors): void
     {
         $this->errors = $errors;
+    }
+
+    /**
+     * Converts the ProductPricePointErrorResponseException object to a human-readable string
+     * representation.
+     *
+     * @return string The string representation of the ProductPricePointErrorResponseException object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'ProductPricePointErrorResponseException',
+            ['errors' => $this->errors, 'additionalProperties' => $this->additionalProperties],
+            parent::__toString()
+        );
     }
 
     private $additionalProperties = [];

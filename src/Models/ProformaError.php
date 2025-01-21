@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class ProformaError implements \JsonSerializable
@@ -37,6 +38,19 @@ class ProformaError implements \JsonSerializable
     public function setSubscription(?BaseStringError $subscription): void
     {
         $this->subscription = $subscription;
+    }
+
+    /**
+     * Converts the ProformaError object to a human-readable string representation.
+     *
+     * @return string The string representation of the ProformaError object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'ProformaError',
+            ['subscription' => $this->subscription, 'additionalProperties' => $this->additionalProperties]
+        );
     }
 
     private $additionalProperties = [];

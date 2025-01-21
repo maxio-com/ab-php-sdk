@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class PrepaymentAccountBalanceChanged implements \JsonSerializable
@@ -126,6 +127,25 @@ class PrepaymentAccountBalanceChanged implements \JsonSerializable
     public function setCurrencyCode(string $currencyCode): void
     {
         $this->currencyCode = $currencyCode;
+    }
+
+    /**
+     * Converts the PrepaymentAccountBalanceChanged object to a human-readable string representation.
+     *
+     * @return string The string representation of the PrepaymentAccountBalanceChanged object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'PrepaymentAccountBalanceChanged',
+            [
+                'reason' => $this->reason,
+                'prepaymentAccountBalanceInCents' => $this->prepaymentAccountBalanceInCents,
+                'prepaymentBalanceChangeInCents' => $this->prepaymentBalanceChangeInCents,
+                'currencyCode' => $this->currencyCode,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

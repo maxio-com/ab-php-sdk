@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class BulkUpdateSegmentsItem implements \JsonSerializable
@@ -107,6 +108,24 @@ class BulkUpdateSegmentsItem implements \JsonSerializable
     public function setPrices(array $prices): void
     {
         $this->prices = $prices;
+    }
+
+    /**
+     * Converts the BulkUpdateSegmentsItem object to a human-readable string representation.
+     *
+     * @return string The string representation of the BulkUpdateSegmentsItem object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'BulkUpdateSegmentsItem',
+            [
+                'id' => $this->id,
+                'pricingScheme' => $this->pricingScheme,
+                'prices' => $this->prices,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

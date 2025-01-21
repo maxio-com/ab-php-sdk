@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class PrepaidConfiguration implements \JsonSerializable
@@ -127,6 +128,26 @@ class PrepaidConfiguration implements \JsonSerializable
     public function setReplenishThresholdAmountInCents(?int $replenishThresholdAmountInCents): void
     {
         $this->replenishThresholdAmountInCents = $replenishThresholdAmountInCents;
+    }
+
+    /**
+     * Converts the PrepaidConfiguration object to a human-readable string representation.
+     *
+     * @return string The string representation of the PrepaidConfiguration object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'PrepaidConfiguration',
+            [
+                'id' => $this->id,
+                'initialFundingAmountInCents' => $this->initialFundingAmountInCents,
+                'replenishToAmountInCents' => $this->replenishToAmountInCents,
+                'autoReplenish' => $this->autoReplenish,
+                'replenishThresholdAmountInCents' => $this->replenishThresholdAmountInCents,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

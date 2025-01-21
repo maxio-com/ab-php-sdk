@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class SubscriptionPreview implements \JsonSerializable
@@ -58,6 +59,23 @@ class SubscriptionPreview implements \JsonSerializable
     public function setNextBillingManifest(?BillingManifest $nextBillingManifest): void
     {
         $this->nextBillingManifest = $nextBillingManifest;
+    }
+
+    /**
+     * Converts the SubscriptionPreview object to a human-readable string representation.
+     *
+     * @return string The string representation of the SubscriptionPreview object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'SubscriptionPreview',
+            [
+                'currentBillingManifest' => $this->currentBillingManifest,
+                'nextBillingManifest' => $this->nextBillingManifest,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

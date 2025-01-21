@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 /**
@@ -159,6 +160,26 @@ class ChangeInvoiceStatusEventData implements \JsonSerializable
     public function setConsolidationLevel(?string $consolidationLevel): void
     {
         $this->consolidationLevel = $consolidationLevel;
+    }
+
+    /**
+     * Converts the ChangeInvoiceStatusEventData object to a human-readable string representation.
+     *
+     * @return string The string representation of the ChangeInvoiceStatusEventData object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'ChangeInvoiceStatusEventData',
+            [
+                'gatewayTransId' => $this->gatewayTransId,
+                'amount' => $this->amount,
+                'fromStatus' => $this->fromStatus,
+                'toStatus' => $this->toStatus,
+                'consolidationLevel' => $this->consolidationLevel,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class SubscriptionMigrationPreview implements \JsonSerializable
@@ -114,6 +115,25 @@ class SubscriptionMigrationPreview implements \JsonSerializable
     public function setCreditAppliedInCents(?int $creditAppliedInCents): void
     {
         $this->creditAppliedInCents = $creditAppliedInCents;
+    }
+
+    /**
+     * Converts the SubscriptionMigrationPreview object to a human-readable string representation.
+     *
+     * @return string The string representation of the SubscriptionMigrationPreview object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'SubscriptionMigrationPreview',
+            [
+                'proratedAdjustmentInCents' => $this->proratedAdjustmentInCents,
+                'chargeInCents' => $this->chargeInCents,
+                'paymentDueInCents' => $this->paymentDueInCents,
+                'creditAppliedInCents' => $this->creditAppliedInCents,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

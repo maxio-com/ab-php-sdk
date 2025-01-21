@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class PaymentCollectionMethodChanged implements \JsonSerializable
@@ -70,6 +71,23 @@ class PaymentCollectionMethodChanged implements \JsonSerializable
     public function setCurrentValue(string $currentValue): void
     {
         $this->currentValue = $currentValue;
+    }
+
+    /**
+     * Converts the PaymentCollectionMethodChanged object to a human-readable string representation.
+     *
+     * @return string The string representation of the PaymentCollectionMethodChanged object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'PaymentCollectionMethodChanged',
+            [
+                'previousValue' => $this->previousValue,
+                'currentValue' => $this->currentValue,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

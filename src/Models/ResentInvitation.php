@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
@@ -153,6 +154,27 @@ class ResentInvitation implements \JsonSerializable
     public function setLastInviteAcceptedAt(?\DateTime $lastInviteAcceptedAt): void
     {
         $this->lastInviteAcceptedAt = $lastInviteAcceptedAt;
+    }
+
+    /**
+     * Converts the ResentInvitation object to a human-readable string representation.
+     *
+     * @return string The string representation of the ResentInvitation object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'ResentInvitation',
+            [
+                'lastSentAt' => $this->lastSentAt,
+                'lastAcceptedAt' => $this->lastAcceptedAt,
+                'sendInviteLinkText' => $this->sendInviteLinkText,
+                'uninvitedCount' => $this->uninvitedCount,
+                'lastInviteSentAt' => $this->lastInviteSentAt,
+                'lastInviteAcceptedAt' => $this->lastInviteAcceptedAt,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

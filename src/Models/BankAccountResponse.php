@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class BankAccountResponse implements \JsonSerializable
@@ -44,6 +45,19 @@ class BankAccountResponse implements \JsonSerializable
     public function setPaymentProfile(BankAccountPaymentProfile $paymentProfile): void
     {
         $this->paymentProfile = $paymentProfile;
+    }
+
+    /**
+     * Converts the BankAccountResponse object to a human-readable string representation.
+     *
+     * @return string The string representation of the BankAccountResponse object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'BankAccountResponse',
+            ['paymentProfile' => $this->paymentProfile, 'additionalProperties' => $this->additionalProperties]
+        );
     }
 
     private $additionalProperties = [];

@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class CreateEBBComponent implements \JsonSerializable
@@ -44,6 +45,22 @@ class CreateEBBComponent implements \JsonSerializable
     public function setEventBasedComponent(EBBComponent $eventBasedComponent): void
     {
         $this->eventBasedComponent = $eventBasedComponent;
+    }
+
+    /**
+     * Converts the CreateEBBComponent object to a human-readable string representation.
+     *
+     * @return string The string representation of the CreateEBBComponent object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'CreateEBBComponent',
+            [
+                'eventBasedComponent' => $this->eventBasedComponent,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

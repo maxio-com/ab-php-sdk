@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class CouponUsage implements \JsonSerializable
@@ -223,6 +224,28 @@ class CouponUsage implements \JsonSerializable
     public function setRevenueInCents(?int $revenueInCents): void
     {
         $this->revenueInCents = $revenueInCents;
+    }
+
+    /**
+     * Converts the CouponUsage object to a human-readable string representation.
+     *
+     * @return string The string representation of the CouponUsage object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'CouponUsage',
+            [
+                'id' => $this->id,
+                'name' => $this->name,
+                'signups' => $this->signups,
+                'savings' => $this->getSavings(),
+                'savingsInCents' => $this->getSavingsInCents(),
+                'revenue' => $this->getRevenue(),
+                'revenueInCents' => $this->revenueInCents,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

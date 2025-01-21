@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class AccountBalance implements \JsonSerializable
@@ -111,6 +112,24 @@ class AccountBalance implements \JsonSerializable
     public function unsetRemittanceBalanceInCents(): void
     {
         $this->remittanceBalanceInCents = [];
+    }
+
+    /**
+     * Converts the AccountBalance object to a human-readable string representation.
+     *
+     * @return string The string representation of the AccountBalance object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'AccountBalance',
+            [
+                'balanceInCents' => $this->balanceInCents,
+                'automaticBalanceInCents' => $this->getAutomaticBalanceInCents(),
+                'remittanceBalanceInCents' => $this->getRemittanceBalanceInCents(),
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

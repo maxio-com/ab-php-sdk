@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class CustomerChangesPreviewResponse implements \JsonSerializable
@@ -44,6 +45,19 @@ class CustomerChangesPreviewResponse implements \JsonSerializable
     public function setChanges(CustomerChange $changes): void
     {
         $this->changes = $changes;
+    }
+
+    /**
+     * Converts the CustomerChangesPreviewResponse object to a human-readable string representation.
+     *
+     * @return string The string representation of the CustomerChangesPreviewResponse object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'CustomerChangesPreviewResponse',
+            ['changes' => $this->changes, 'additionalProperties' => $this->additionalProperties]
+        );
     }
 
     private $additionalProperties = [];

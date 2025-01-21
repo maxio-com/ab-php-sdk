@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class CustomerPayerChange implements \JsonSerializable
@@ -70,6 +71,23 @@ class CustomerPayerChange implements \JsonSerializable
     public function setAfter(InvoicePayerChange $after): void
     {
         $this->after = $after;
+    }
+
+    /**
+     * Converts the CustomerPayerChange object to a human-readable string representation.
+     *
+     * @return string The string representation of the CustomerPayerChange object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'CustomerPayerChange',
+            [
+                'before' => $this->before,
+                'after' => $this->after,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

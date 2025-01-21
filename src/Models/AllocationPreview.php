@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
@@ -325,6 +326,34 @@ class AllocationPreview implements \JsonSerializable
     public function setExistingBalanceInCents(?int $existingBalanceInCents): void
     {
         $this->existingBalanceInCents = $existingBalanceInCents;
+    }
+
+    /**
+     * Converts the AllocationPreview object to a human-readable string representation.
+     *
+     * @return string The string representation of the AllocationPreview object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'AllocationPreview',
+            [
+                'startDate' => $this->startDate,
+                'endDate' => $this->endDate,
+                'subtotalInCents' => $this->subtotalInCents,
+                'totalTaxInCents' => $this->totalTaxInCents,
+                'totalDiscountInCents' => $this->totalDiscountInCents,
+                'totalInCents' => $this->totalInCents,
+                'direction' => $this->direction,
+                'prorationScheme' => $this->prorationScheme,
+                'lineItems' => $this->lineItems,
+                'accrueCharge' => $this->accrueCharge,
+                'allocations' => $this->allocations,
+                'periodType' => $this->periodType,
+                'existingBalanceInCents' => $this->existingBalanceInCents,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

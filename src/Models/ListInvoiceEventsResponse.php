@@ -112,6 +112,25 @@ class ListInvoiceEventsResponse implements \JsonSerializable
         $this->totalPages = $totalPages;
     }
 
+    /**
+     * Converts the ListInvoiceEventsResponse object to a human-readable string representation.
+     *
+     * @return string The string representation of the ListInvoiceEventsResponse object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'ListInvoiceEventsResponse',
+            [
+                'events' => $this->events,
+                'page' => $this->page,
+                'perPage' => $this->perPage,
+                'totalPages' => $this->totalPages,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
+    }
+
     private $additionalProperties = [];
 
     /**

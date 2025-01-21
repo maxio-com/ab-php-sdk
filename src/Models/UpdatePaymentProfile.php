@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class UpdatePaymentProfile implements \JsonSerializable
@@ -371,6 +372,34 @@ class UpdatePaymentProfile implements \JsonSerializable
     public function unsetBillingAddress2(): void
     {
         $this->billingAddress2 = [];
+    }
+
+    /**
+     * Converts the UpdatePaymentProfile object to a human-readable string representation.
+     *
+     * @return string The string representation of the UpdatePaymentProfile object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'UpdatePaymentProfile',
+            [
+                'firstName' => $this->firstName,
+                'lastName' => $this->lastName,
+                'fullNumber' => $this->fullNumber,
+                'cardType' => $this->cardType,
+                'expirationMonth' => $this->expirationMonth,
+                'expirationYear' => $this->expirationYear,
+                'currentVault' => $this->currentVault,
+                'billingAddress' => $this->billingAddress,
+                'billingCity' => $this->billingCity,
+                'billingState' => $this->billingState,
+                'billingZip' => $this->billingZip,
+                'billingCountry' => $this->billingCountry,
+                'billingAddress2' => $this->getBillingAddress2(),
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
@@ -293,6 +294,30 @@ class RefundInvoiceEventData implements \JsonSerializable
     public function setTransactionTime(\DateTime $transactionTime): void
     {
         $this->transactionTime = $transactionTime;
+    }
+
+    /**
+     * Converts the RefundInvoiceEventData object to a human-readable string representation.
+     *
+     * @return string The string representation of the RefundInvoiceEventData object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'RefundInvoiceEventData',
+            [
+                'applyCredit' => $this->applyCredit,
+                'consolidationLevel' => $this->consolidationLevel,
+                'creditNoteAttributes' => $this->creditNoteAttributes,
+                'memo' => $this->memo,
+                'originalAmount' => $this->originalAmount,
+                'paymentId' => $this->paymentId,
+                'refundAmount' => $this->refundAmount,
+                'refundId' => $this->refundId,
+                'transactionTime' => $this->transactionTime,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

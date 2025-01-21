@@ -10,6 +10,8 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Exceptions;
 
+use AdvancedBillingLib\ApiHelper;
+
 class SubscriptionsMrrErrorResponseException extends ApiException
 {
     /**
@@ -50,6 +52,20 @@ class SubscriptionsMrrErrorResponseException extends ApiException
     public function setErrors(\AdvancedBillingLib\Models\AttributeError $errors): void
     {
         $this->errors = $errors;
+    }
+
+    /**
+     * Converts the SubscriptionsMrrErrorResponseException object to a human-readable string representation.
+     *
+     * @return string The string representation of the SubscriptionsMrrErrorResponseException object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'SubscriptionsMrrErrorResponseException',
+            ['errors' => $this->errors, 'additionalProperties' => $this->additionalProperties],
+            parent::__toString()
+        );
     }
 
     private $additionalProperties = [];

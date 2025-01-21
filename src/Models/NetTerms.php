@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class NetTerms implements \JsonSerializable
@@ -127,6 +128,26 @@ class NetTerms implements \JsonSerializable
     public function setCustomNetTermsEnabled(?bool $customNetTermsEnabled): void
     {
         $this->customNetTermsEnabled = $customNetTermsEnabled;
+    }
+
+    /**
+     * Converts the NetTerms object to a human-readable string representation.
+     *
+     * @return string The string representation of the NetTerms object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'NetTerms',
+            [
+                'defaultNetTerms' => $this->defaultNetTerms,
+                'automaticNetTerms' => $this->automaticNetTerms,
+                'remittanceNetTerms' => $this->remittanceNetTerms,
+                'netTermsOnRemittanceSignupsEnabled' => $this->netTermsOnRemittanceSignupsEnabled,
+                'customNetTermsEnabled' => $this->customNetTermsEnabled,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

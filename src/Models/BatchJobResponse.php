@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class BatchJobResponse implements \JsonSerializable
@@ -44,6 +45,19 @@ class BatchJobResponse implements \JsonSerializable
     public function setBatchjob(BatchJob $batchjob): void
     {
         $this->batchjob = $batchjob;
+    }
+
+    /**
+     * Converts the BatchJobResponse object to a human-readable string representation.
+     *
+     * @return string The string representation of the BatchJobResponse object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'BatchJobResponse',
+            ['batchjob' => $this->batchjob, 'additionalProperties' => $this->additionalProperties]
+        );
     }
 
     private $additionalProperties = [];

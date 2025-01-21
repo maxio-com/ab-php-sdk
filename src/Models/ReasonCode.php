@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
@@ -176,6 +177,28 @@ class ReasonCode implements \JsonSerializable
     public function setUpdatedAt(?\DateTime $updatedAt): void
     {
         $this->updatedAt = $updatedAt;
+    }
+
+    /**
+     * Converts the ReasonCode object to a human-readable string representation.
+     *
+     * @return string The string representation of the ReasonCode object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'ReasonCode',
+            [
+                'id' => $this->id,
+                'siteId' => $this->siteId,
+                'code' => $this->code,
+                'description' => $this->description,
+                'position' => $this->position,
+                'createdAt' => $this->createdAt,
+                'updatedAt' => $this->updatedAt,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

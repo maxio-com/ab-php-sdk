@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
@@ -185,6 +186,27 @@ class ChargifyEBB implements \JsonSerializable
     public function setSubscriptionReference(?string $subscriptionReference): void
     {
         $this->subscriptionReference = $subscriptionReference;
+    }
+
+    /**
+     * Converts the ChargifyEBB object to a human-readable string representation.
+     *
+     * @return string The string representation of the ChargifyEBB object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'ChargifyEBB',
+            [
+                'timestamp' => $this->timestamp,
+                'id' => $this->id,
+                'createdAt' => $this->createdAt,
+                'uniquenessToken' => $this->uniquenessToken,
+                'subscriptionId' => $this->subscriptionId,
+                'subscriptionReference' => $this->subscriptionReference,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 /**
@@ -78,6 +79,19 @@ class GroupTarget implements \JsonSerializable
     public function setId(?int $id): void
     {
         $this->id = $id;
+    }
+
+    /**
+     * Converts the GroupTarget object to a human-readable string representation.
+     *
+     * @return string The string representation of the GroupTarget object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'GroupTarget',
+            ['type' => $this->type, 'id' => $this->id, 'additionalProperties' => $this->additionalProperties]
+        );
     }
 
     private $additionalProperties = [];

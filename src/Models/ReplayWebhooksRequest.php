@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class ReplayWebhooksRequest implements \JsonSerializable
@@ -48,6 +49,19 @@ class ReplayWebhooksRequest implements \JsonSerializable
     public function setIds(array $ids): void
     {
         $this->ids = $ids;
+    }
+
+    /**
+     * Converts the ReplayWebhooksRequest object to a human-readable string representation.
+     *
+     * @return string The string representation of the ReplayWebhooksRequest object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'ReplayWebhooksRequest',
+            ['ids' => $this->ids, 'additionalProperties' => $this->additionalProperties]
+        );
     }
 
     private $additionalProperties = [];

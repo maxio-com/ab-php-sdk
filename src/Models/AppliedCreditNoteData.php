@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class AppliedCreditNoteData implements \JsonSerializable
@@ -62,6 +63,19 @@ class AppliedCreditNoteData implements \JsonSerializable
     public function setNumber(?string $number): void
     {
         $this->number = $number;
+    }
+
+    /**
+     * Converts the AppliedCreditNoteData object to a human-readable string representation.
+     *
+     * @return string The string representation of the AppliedCreditNoteData object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'AppliedCreditNoteData',
+            ['uid' => $this->uid, 'number' => $this->number, 'additionalProperties' => $this->additionalProperties]
+        );
     }
 
     private $additionalProperties = [];

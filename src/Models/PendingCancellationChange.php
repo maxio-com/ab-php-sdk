@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
@@ -72,6 +73,23 @@ class PendingCancellationChange implements \JsonSerializable
     public function setCancelsAt(\DateTime $cancelsAt): void
     {
         $this->cancelsAt = $cancelsAt;
+    }
+
+    /**
+     * Converts the PendingCancellationChange object to a human-readable string representation.
+     *
+     * @return string The string representation of the PendingCancellationChange object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'PendingCancellationChange',
+            [
+                'cancellationState' => $this->cancellationState,
+                'cancelsAt' => $this->cancelsAt,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

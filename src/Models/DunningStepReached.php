@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class DunningStepReached implements \JsonSerializable
@@ -96,6 +97,24 @@ class DunningStepReached implements \JsonSerializable
     public function setNextStep(DunningStepData $nextStep): void
     {
         $this->nextStep = $nextStep;
+    }
+
+    /**
+     * Converts the DunningStepReached object to a human-readable string representation.
+     *
+     * @return string The string representation of the DunningStepReached object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'DunningStepReached',
+            [
+                'dunner' => $this->dunner,
+                'currentStep' => $this->currentStep,
+                'nextStep' => $this->nextStep,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

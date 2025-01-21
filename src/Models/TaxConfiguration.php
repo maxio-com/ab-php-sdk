@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class TaxConfiguration implements \JsonSerializable
@@ -89,6 +90,24 @@ class TaxConfiguration implements \JsonSerializable
     public function setFullyConfigured(?bool $fullyConfigured): void
     {
         $this->fullyConfigured = $fullyConfigured;
+    }
+
+    /**
+     * Converts the TaxConfiguration object to a human-readable string representation.
+     *
+     * @return string The string representation of the TaxConfiguration object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'TaxConfiguration',
+            [
+                'kind' => $this->kind,
+                'destinationAddress' => $this->destinationAddress,
+                'fullyConfigured' => $this->fullyConfigured,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

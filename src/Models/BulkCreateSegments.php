@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class BulkCreateSegments implements \JsonSerializable
@@ -39,6 +40,19 @@ class BulkCreateSegments implements \JsonSerializable
     public function setSegments(?array $segments): void
     {
         $this->segments = $segments;
+    }
+
+    /**
+     * Converts the BulkCreateSegments object to a human-readable string representation.
+     *
+     * @return string The string representation of the BulkCreateSegments object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'BulkCreateSegments',
+            ['segments' => $this->segments, 'additionalProperties' => $this->additionalProperties]
+        );
     }
 
     private $additionalProperties = [];

@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class Errors implements \JsonSerializable
@@ -66,6 +67,23 @@ class Errors implements \JsonSerializable
     public function setPricePoint(?array $pricePoint): void
     {
         $this->pricePoint = $pricePoint;
+    }
+
+    /**
+     * Converts the Errors object to a human-readable string representation.
+     *
+     * @return string The string representation of the Errors object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'Errors',
+            [
+                'perPage' => $this->perPage,
+                'pricePoint' => $this->pricePoint,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

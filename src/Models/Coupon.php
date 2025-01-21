@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
@@ -898,6 +899,52 @@ class Coupon implements \JsonSerializable
     public function setCurrencyPrices(?array $currencyPrices): void
     {
         $this->currencyPrices = $currencyPrices;
+    }
+
+    /**
+     * Converts the Coupon object to a human-readable string representation.
+     *
+     * @return string The string representation of the Coupon object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'Coupon',
+            [
+                'id' => $this->id,
+                'name' => $this->name,
+                'code' => $this->code,
+                'description' => $this->description,
+                'amount' => $this->getAmount(),
+                'amountInCents' => $this->getAmountInCents(),
+                'productFamilyId' => $this->productFamilyId,
+                'productFamilyName' => $this->getProductFamilyName(),
+                'startDate' => $this->startDate,
+                'endDate' => $this->getEndDate(),
+                'percentage' => $this->getPercentage(),
+                'recurring' => $this->recurring,
+                'recurringScheme' => $this->recurringScheme,
+                'durationPeriodCount' => $this->getDurationPeriodCount(),
+                'durationInterval' => $this->getDurationInterval(),
+                'durationIntervalUnit' => $this->getDurationIntervalUnit(),
+                'durationIntervalSpan' => $this->getDurationIntervalSpan(),
+                'allowNegativeBalance' => $this->allowNegativeBalance,
+                'archivedAt' => $this->getArchivedAt(),
+                'conversionLimit' => $this->getConversionLimit(),
+                'stackable' => $this->stackable,
+                'compoundingStrategy' => $this->getCompoundingStrategy(),
+                'useSiteExchangeRate' => $this->useSiteExchangeRate,
+                'createdAt' => $this->createdAt,
+                'updatedAt' => $this->updatedAt,
+                'discountType' => $this->discountType,
+                'excludeMidPeriodAllocations' => $this->excludeMidPeriodAllocations,
+                'applyOnCancelAtEndOfPeriod' => $this->applyOnCancelAtEndOfPeriod,
+                'applyOnSubscriptionExpiration' => $this->applyOnSubscriptionExpiration,
+                'couponRestrictions' => $this->couponRestrictions,
+                'currencyPrices' => $this->currencyPrices,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

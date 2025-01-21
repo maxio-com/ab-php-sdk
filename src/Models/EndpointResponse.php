@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class EndpointResponse implements \JsonSerializable
@@ -35,6 +36,19 @@ class EndpointResponse implements \JsonSerializable
     public function setEndpoint(?Endpoint $endpoint): void
     {
         $this->endpoint = $endpoint;
+    }
+
+    /**
+     * Converts the EndpointResponse object to a human-readable string representation.
+     *
+     * @return string The string representation of the EndpointResponse object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'EndpointResponse',
+            ['endpoint' => $this->endpoint, 'additionalProperties' => $this->additionalProperties]
+        );
     }
 
     private $additionalProperties = [];

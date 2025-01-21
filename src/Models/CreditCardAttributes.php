@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class CreditCardAttributes implements \JsonSerializable
@@ -81,6 +82,24 @@ class CreditCardAttributes implements \JsonSerializable
     public function setExpirationYear(?string $expirationYear): void
     {
         $this->expirationYear = $expirationYear;
+    }
+
+    /**
+     * Converts the CreditCardAttributes object to a human-readable string representation.
+     *
+     * @return string The string representation of the CreditCardAttributes object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'CreditCardAttributes',
+            [
+                'fullNumber' => $this->fullNumber,
+                'expirationMonth' => $this->expirationMonth,
+                'expirationYear' => $this->expirationYear,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

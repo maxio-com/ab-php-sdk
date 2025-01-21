@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class IssueInvoiceRequest implements \JsonSerializable
@@ -56,6 +57,19 @@ class IssueInvoiceRequest implements \JsonSerializable
     public function setOnFailedPayment(?string $onFailedPayment): void
     {
         $this->onFailedPayment = $onFailedPayment;
+    }
+
+    /**
+     * Converts the IssueInvoiceRequest object to a human-readable string representation.
+     *
+     * @return string The string representation of the IssueInvoiceRequest object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'IssueInvoiceRequest',
+            ['onFailedPayment' => $this->onFailedPayment, 'additionalProperties' => $this->additionalProperties]
+        );
     }
 
     private $additionalProperties = [];

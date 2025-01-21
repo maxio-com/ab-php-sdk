@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class Site implements \JsonSerializable
@@ -48,6 +49,11 @@ class Site implements \JsonSerializable
      * @var bool|null
      */
     private $relationshipInvoicingEnabled;
+
+    /**
+     * @var bool|null
+     */
+    private $scheduleSubscriptionCancellationEnabled;
 
     /**
      * @var bool|null
@@ -225,6 +231,24 @@ class Site implements \JsonSerializable
     }
 
     /**
+     * Returns Schedule Subscription Cancellation Enabled.
+     */
+    public function getScheduleSubscriptionCancellationEnabled(): ?bool
+    {
+        return $this->scheduleSubscriptionCancellationEnabled;
+    }
+
+    /**
+     * Sets Schedule Subscription Cancellation Enabled.
+     *
+     * @maps schedule_subscription_cancellation_enabled
+     */
+    public function setScheduleSubscriptionCancellationEnabled(?bool $scheduleSubscriptionCancellationEnabled): void
+    {
+        $this->scheduleSubscriptionCancellationEnabled = $scheduleSubscriptionCancellationEnabled;
+    }
+
+    /**
      * Returns Customer Hierarchy Enabled.
      */
     public function getCustomerHierarchyEnabled(): ?bool
@@ -386,6 +410,38 @@ class Site implements \JsonSerializable
         $this->test = $test;
     }
 
+    /**
+     * Converts the Site object to a human-readable string representation.
+     *
+     * @return string The string representation of the Site object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'Site',
+            [
+                'id' => $this->id,
+                'name' => $this->name,
+                'subdomain' => $this->subdomain,
+                'currency' => $this->currency,
+                'sellerId' => $this->sellerId,
+                'nonPrimaryCurrencies' => $this->nonPrimaryCurrencies,
+                'relationshipInvoicingEnabled' => $this->relationshipInvoicingEnabled,
+                'scheduleSubscriptionCancellationEnabled' => $this->scheduleSubscriptionCancellationEnabled,
+                'customerHierarchyEnabled' => $this->customerHierarchyEnabled,
+                'whopaysEnabled' => $this->whopaysEnabled,
+                'whopaysDefaultPayer' => $this->whopaysDefaultPayer,
+                'allocationSettings' => $this->allocationSettings,
+                'defaultPaymentCollectionMethod' => $this->defaultPaymentCollectionMethod,
+                'organizationAddress' => $this->organizationAddress,
+                'taxConfiguration' => $this->taxConfiguration,
+                'netTerms' => $this->netTerms,
+                'test' => $this->test,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
+    }
+
     private $additionalProperties = [];
 
     /**
@@ -427,52 +483,55 @@ class Site implements \JsonSerializable
     {
         $json = [];
         if (isset($this->id)) {
-            $json['id']                                = $this->id;
+            $json['id']                                         = $this->id;
         }
         if (isset($this->name)) {
-            $json['name']                              = $this->name;
+            $json['name']                                       = $this->name;
         }
         if (isset($this->subdomain)) {
-            $json['subdomain']                         = $this->subdomain;
+            $json['subdomain']                                  = $this->subdomain;
         }
         if (isset($this->currency)) {
-            $json['currency']                          = $this->currency;
+            $json['currency']                                   = $this->currency;
         }
         if (isset($this->sellerId)) {
-            $json['seller_id']                         = $this->sellerId;
+            $json['seller_id']                                  = $this->sellerId;
         }
         if (isset($this->nonPrimaryCurrencies)) {
-            $json['non_primary_currencies']            = $this->nonPrimaryCurrencies;
+            $json['non_primary_currencies']                     = $this->nonPrimaryCurrencies;
         }
         if (isset($this->relationshipInvoicingEnabled)) {
-            $json['relationship_invoicing_enabled']    = $this->relationshipInvoicingEnabled;
+            $json['relationship_invoicing_enabled']             = $this->relationshipInvoicingEnabled;
+        }
+        if (isset($this->scheduleSubscriptionCancellationEnabled)) {
+            $json['schedule_subscription_cancellation_enabled'] = $this->scheduleSubscriptionCancellationEnabled;
         }
         if (isset($this->customerHierarchyEnabled)) {
-            $json['customer_hierarchy_enabled']        = $this->customerHierarchyEnabled;
+            $json['customer_hierarchy_enabled']                 = $this->customerHierarchyEnabled;
         }
         if (isset($this->whopaysEnabled)) {
-            $json['whopays_enabled']                   = $this->whopaysEnabled;
+            $json['whopays_enabled']                            = $this->whopaysEnabled;
         }
         if (isset($this->whopaysDefaultPayer)) {
-            $json['whopays_default_payer']             = $this->whopaysDefaultPayer;
+            $json['whopays_default_payer']                      = $this->whopaysDefaultPayer;
         }
         if (isset($this->allocationSettings)) {
-            $json['allocation_settings']               = $this->allocationSettings;
+            $json['allocation_settings']                        = $this->allocationSettings;
         }
         if (isset($this->defaultPaymentCollectionMethod)) {
-            $json['default_payment_collection_method'] = $this->defaultPaymentCollectionMethod;
+            $json['default_payment_collection_method']          = $this->defaultPaymentCollectionMethod;
         }
         if (isset($this->organizationAddress)) {
-            $json['organization_address']              = $this->organizationAddress;
+            $json['organization_address']                       = $this->organizationAddress;
         }
         if (isset($this->taxConfiguration)) {
-            $json['tax_configuration']                 = $this->taxConfiguration;
+            $json['tax_configuration']                          = $this->taxConfiguration;
         }
         if (isset($this->netTerms)) {
-            $json['net_terms']                         = $this->netTerms;
+            $json['net_terms']                                  = $this->netTerms;
         }
         if (isset($this->test)) {
-            $json['test']                              = $this->test;
+            $json['test']                                       = $this->test;
         }
         $json = array_merge($json, $this->additionalProperties);
 

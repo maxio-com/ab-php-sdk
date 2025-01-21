@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
@@ -2166,6 +2167,83 @@ class Subscription implements \JsonSerializable
     public function setSelfServicePageToken(?string $selfServicePageToken): void
     {
         $this->selfServicePageToken = $selfServicePageToken;
+    }
+
+    /**
+     * Converts the Subscription object to a human-readable string representation.
+     *
+     * @return string The string representation of the Subscription object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'Subscription',
+            [
+                'id' => $this->id,
+                'state' => $this->state,
+                'balanceInCents' => $this->balanceInCents,
+                'totalRevenueInCents' => $this->totalRevenueInCents,
+                'productPriceInCents' => $this->productPriceInCents,
+                'productVersionNumber' => $this->productVersionNumber,
+                'currentPeriodEndsAt' => $this->getCurrentPeriodEndsAt(),
+                'nextAssessmentAt' => $this->getNextAssessmentAt(),
+                'trialStartedAt' => $this->getTrialStartedAt(),
+                'trialEndedAt' => $this->getTrialEndedAt(),
+                'activatedAt' => $this->getActivatedAt(),
+                'expiresAt' => $this->getExpiresAt(),
+                'createdAt' => $this->createdAt,
+                'updatedAt' => $this->updatedAt,
+                'cancellationMessage' => $this->getCancellationMessage(),
+                'cancellationMethod' => $this->getCancellationMethod(),
+                'cancelAtEndOfPeriod' => $this->getCancelAtEndOfPeriod(),
+                'canceledAt' => $this->getCanceledAt(),
+                'currentPeriodStartedAt' => $this->getCurrentPeriodStartedAt(),
+                'previousState' => $this->previousState,
+                'signupPaymentId' => $this->signupPaymentId,
+                'signupRevenue' => $this->signupRevenue,
+                'delayedCancelAt' => $this->getDelayedCancelAt(),
+                'couponCode' => $this->getCouponCode(),
+                'snapDay' => $this->getSnapDay(),
+                'paymentCollectionMethod' => $this->paymentCollectionMethod,
+                'customer' => $this->customer,
+                'product' => $this->product,
+                'creditCard' => $this->creditCard,
+                'group' => $this->getGroup(),
+                'bankAccount' => $this->bankAccount,
+                'paymentType' => $this->getPaymentType(),
+                'referralCode' => $this->getReferralCode(),
+                'nextProductId' => $this->getNextProductId(),
+                'nextProductHandle' => $this->getNextProductHandle(),
+                'couponUseCount' => $this->getCouponUseCount(),
+                'couponUsesAllowed' => $this->getCouponUsesAllowed(),
+                'reasonCode' => $this->getReasonCode(),
+                'automaticallyResumeAt' => $this->getAutomaticallyResumeAt(),
+                'couponCodes' => $this->couponCodes,
+                'offerId' => $this->getOfferId(),
+                'payerId' => $this->getPayerId(),
+                'currentBillingAmountInCents' => $this->currentBillingAmountInCents,
+                'productPricePointId' => $this->productPricePointId,
+                'productPricePointType' => $this->productPricePointType,
+                'nextProductPricePointId' => $this->getNextProductPricePointId(),
+                'netTerms' => $this->getNetTerms(),
+                'storedCredentialTransactionId' => $this->getStoredCredentialTransactionId(),
+                'reference' => $this->getReference(),
+                'onHoldAt' => $this->getOnHoldAt(),
+                'prepaidDunning' => $this->prepaidDunning,
+                'coupons' => $this->coupons,
+                'dunningCommunicationDelayEnabled' => $this->dunningCommunicationDelayEnabled,
+                'dunningCommunicationDelayTimeZone' => $this->getDunningCommunicationDelayTimeZone(),
+                'receivesInvoiceEmails' => $this->getReceivesInvoiceEmails(),
+                'locale' => $this->getLocale(),
+                'currency' => $this->currency,
+                'scheduledCancellationAt' => $this->getScheduledCancellationAt(),
+                'creditBalanceInCents' => $this->creditBalanceInCents,
+                'prepaymentBalanceInCents' => $this->prepaymentBalanceInCents,
+                'prepaidConfiguration' => $this->getPrepaidConfiguration(),
+                'selfServicePageToken' => $this->selfServicePageToken,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

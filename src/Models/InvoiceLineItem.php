@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
@@ -747,6 +748,44 @@ class InvoiceLineItem implements \JsonSerializable
     public function setKind(?string $kind): void
     {
         $this->kind = $kind;
+    }
+
+    /**
+     * Converts the InvoiceLineItem object to a human-readable string representation.
+     *
+     * @return string The string representation of the InvoiceLineItem object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'InvoiceLineItem',
+            [
+                'uid' => $this->uid,
+                'title' => $this->title,
+                'description' => $this->description,
+                'quantity' => $this->quantity,
+                'unitPrice' => $this->unitPrice,
+                'subtotalAmount' => $this->subtotalAmount,
+                'discountAmount' => $this->discountAmount,
+                'taxAmount' => $this->taxAmount,
+                'totalAmount' => $this->totalAmount,
+                'tieredUnitPrice' => $this->tieredUnitPrice,
+                'periodRangeStart' => $this->periodRangeStart,
+                'periodRangeEnd' => $this->periodRangeEnd,
+                'transactionId' => $this->transactionId,
+                'productId' => $this->getProductId(),
+                'productVersion' => $this->getProductVersion(),
+                'componentId' => $this->getComponentId(),
+                'pricePointId' => $this->getPricePointId(),
+                'billingScheduleItemId' => $this->getBillingScheduleItemId(),
+                'hide' => $this->hide,
+                'componentCostData' => $this->getComponentCostData(),
+                'productPricePointId' => $this->getProductPricePointId(),
+                'customItem' => $this->customItem,
+                'kind' => $this->kind,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

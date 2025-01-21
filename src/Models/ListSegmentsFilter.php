@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class ListSegmentsFilter implements \JsonSerializable
@@ -122,6 +123,25 @@ class ListSegmentsFilter implements \JsonSerializable
     public function setSegmentProperty4Value(?string $segmentProperty4Value): void
     {
         $this->segmentProperty4Value = $segmentProperty4Value;
+    }
+
+    /**
+     * Converts the ListSegmentsFilter object to a human-readable string representation.
+     *
+     * @return string The string representation of the ListSegmentsFilter object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'ListSegmentsFilter',
+            [
+                'segmentProperty1Value' => $this->segmentProperty1Value,
+                'segmentProperty2Value' => $this->segmentProperty2Value,
+                'segmentProperty3Value' => $this->segmentProperty3Value,
+                'segmentProperty4Value' => $this->segmentProperty4Value,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

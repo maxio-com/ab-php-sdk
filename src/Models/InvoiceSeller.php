@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 /**
@@ -118,6 +119,25 @@ class InvoiceSeller implements \JsonSerializable
     public function unsetLogoUrl(): void
     {
         $this->logoUrl = [];
+    }
+
+    /**
+     * Converts the InvoiceSeller object to a human-readable string representation.
+     *
+     * @return string The string representation of the InvoiceSeller object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'InvoiceSeller',
+            [
+                'name' => $this->name,
+                'address' => $this->address,
+                'phone' => $this->phone,
+                'logoUrl' => $this->getLogoUrl(),
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class SaleRepSubscription implements \JsonSerializable
@@ -253,6 +254,31 @@ class SaleRepSubscription implements \JsonSerializable
     public function unsetChurnDate(): void
     {
         $this->churnDate = [];
+    }
+
+    /**
+     * Converts the SaleRepSubscription object to a human-readable string representation.
+     *
+     * @return string The string representation of the SaleRepSubscription object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'SaleRepSubscription',
+            [
+                'id' => $this->id,
+                'siteName' => $this->siteName,
+                'subscriptionUrl' => $this->subscriptionUrl,
+                'customerName' => $this->customerName,
+                'createdAt' => $this->createdAt,
+                'mrr' => $this->mrr,
+                'usage' => $this->usage,
+                'recurring' => $this->recurring,
+                'lastPayment' => $this->lastPayment,
+                'churnDate' => $this->getChurnDate(),
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

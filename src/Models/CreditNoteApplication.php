@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
@@ -129,6 +130,26 @@ class CreditNoteApplication implements \JsonSerializable
     public function setAppliedAmount(?string $appliedAmount): void
     {
         $this->appliedAmount = $appliedAmount;
+    }
+
+    /**
+     * Converts the CreditNoteApplication object to a human-readable string representation.
+     *
+     * @return string The string representation of the CreditNoteApplication object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'CreditNoteApplication',
+            [
+                'uid' => $this->uid,
+                'transactionTime' => $this->transactionTime,
+                'invoiceUid' => $this->invoiceUid,
+                'memo' => $this->memo,
+                'appliedAmount' => $this->appliedAmount,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

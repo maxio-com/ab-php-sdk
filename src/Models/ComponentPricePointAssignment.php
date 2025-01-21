@@ -66,6 +66,23 @@ class ComponentPricePointAssignment implements \JsonSerializable
         $this->pricePoint = $pricePoint;
     }
 
+    /**
+     * Converts the ComponentPricePointAssignment object to a human-readable string representation.
+     *
+     * @return string The string representation of the ComponentPricePointAssignment object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'ComponentPricePointAssignment',
+            [
+                'componentId' => $this->componentId,
+                'pricePoint' => $this->pricePoint,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
+    }
+
     private $additionalProperties = [];
 
     /**

@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class OfferItem implements \JsonSerializable
@@ -270,6 +271,31 @@ class OfferItem implements \JsonSerializable
     public function unsetIntervalUnit(): void
     {
         $this->intervalUnit = [];
+    }
+
+    /**
+     * Converts the OfferItem object to a human-readable string representation.
+     *
+     * @return string The string representation of the OfferItem object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'OfferItem',
+            [
+                'componentId' => $this->componentId,
+                'pricePointId' => $this->pricePointId,
+                'startingQuantity' => $this->startingQuantity,
+                'editable' => $this->editable,
+                'componentUnitPrice' => $this->componentUnitPrice,
+                'componentName' => $this->componentName,
+                'pricePointName' => $this->pricePointName,
+                'currencyPrices' => $this->currencyPrices,
+                'interval' => $this->interval,
+                'intervalUnit' => $this->getIntervalUnit(),
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

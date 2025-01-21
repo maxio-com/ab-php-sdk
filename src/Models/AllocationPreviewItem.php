@@ -538,6 +538,39 @@ class AllocationPreviewItem implements \JsonSerializable
         $this->componentHandle = [];
     }
 
+    /**
+     * Converts the AllocationPreviewItem object to a human-readable string representation.
+     *
+     * @return string The string representation of the AllocationPreviewItem object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'AllocationPreviewItem',
+            [
+                'componentId' => $this->componentId,
+                'subscriptionId' => $this->subscriptionId,
+                'quantity' => $this->quantity,
+                'previousQuantity' => $this->previousQuantity,
+                'memo' => $this->getMemo(),
+                'timestamp' => $this->getTimestamp(),
+                'prorationUpgradeScheme' => $this->prorationUpgradeScheme,
+                'prorationDowngradeScheme' => $this->prorationDowngradeScheme,
+                'accrueCharge' => $this->accrueCharge,
+                'upgradeCharge' => $this->getUpgradeCharge(),
+                'downgradeCredit' => $this->getDowngradeCredit(),
+                'pricePointId' => $this->pricePointId,
+                'interval' => $this->interval,
+                'intervalUnit' => $this->getIntervalUnit(),
+                'previousPricePointId' => $this->previousPricePointId,
+                'pricePointHandle' => $this->pricePointHandle,
+                'pricePointName' => $this->pricePointName,
+                'componentHandle' => $this->getComponentHandle(),
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
+    }
+
     private $additionalProperties = [];
 
     /**

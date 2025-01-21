@@ -72,6 +72,23 @@ class CalendarBilling implements \JsonSerializable
         $this->calendarBillingFirstCharge = $calendarBillingFirstCharge;
     }
 
+    /**
+     * Converts the CalendarBilling object to a human-readable string representation.
+     *
+     * @return string The string representation of the CalendarBilling object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'CalendarBilling',
+            [
+                'snapDay' => $this->snapDay,
+                'calendarBillingFirstCharge' => $this->calendarBillingFirstCharge,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
+    }
+
     private $additionalProperties = [];
 
     /**

@@ -371,6 +371,32 @@ class CreateAllocation implements \JsonSerializable
         $this->billingSchedule = $billingSchedule;
     }
 
+    /**
+     * Converts the CreateAllocation object to a human-readable string representation.
+     *
+     * @return string The string representation of the CreateAllocation object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'CreateAllocation',
+            [
+                'quantity' => $this->quantity,
+                'componentId' => $this->componentId,
+                'memo' => $this->memo,
+                'prorationDowngradeScheme' => $this->prorationDowngradeScheme,
+                'prorationUpgradeScheme' => $this->prorationUpgradeScheme,
+                'accrueCharge' => $this->accrueCharge,
+                'downgradeCredit' => $this->getDowngradeCredit(),
+                'upgradeCharge' => $this->getUpgradeCharge(),
+                'initiateDunning' => $this->initiateDunning,
+                'pricePointId' => $this->getPricePointId(),
+                'billingSchedule' => $this->billingSchedule,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
+    }
+
     private $additionalProperties = [];
 
     /**

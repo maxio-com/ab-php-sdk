@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class SubscriptionProductMigration implements \JsonSerializable
@@ -257,6 +258,30 @@ class SubscriptionProductMigration implements \JsonSerializable
     public function setProration(?Proration $proration): void
     {
         $this->proration = $proration;
+    }
+
+    /**
+     * Converts the SubscriptionProductMigration object to a human-readable string representation.
+     *
+     * @return string The string representation of the SubscriptionProductMigration object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'SubscriptionProductMigration',
+            [
+                'productId' => $this->productId,
+                'productPricePointId' => $this->productPricePointId,
+                'includeTrial' => $this->includeTrial,
+                'includeInitialCharge' => $this->includeInitialCharge,
+                'includeCoupons' => $this->includeCoupons,
+                'preservePeriod' => $this->preservePeriod,
+                'productHandle' => $this->productHandle,
+                'productPricePointHandle' => $this->productPricePointHandle,
+                'proration' => $this->proration,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

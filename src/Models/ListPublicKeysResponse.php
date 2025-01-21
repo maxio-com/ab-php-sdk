@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class ListPublicKeysResponse implements \JsonSerializable
@@ -62,6 +63,23 @@ class ListPublicKeysResponse implements \JsonSerializable
     public function setMeta(?ListPublicKeysMeta $meta): void
     {
         $this->meta = $meta;
+    }
+
+    /**
+     * Converts the ListPublicKeysResponse object to a human-readable string representation.
+     *
+     * @return string The string representation of the ListPublicKeysResponse object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'ListPublicKeysResponse',
+            [
+                'chargifyJsKeys' => $this->chargifyJsKeys,
+                'meta' => $this->meta,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

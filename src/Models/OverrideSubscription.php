@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
@@ -156,6 +157,26 @@ class OverrideSubscription implements \JsonSerializable
     public function setCurrentPeriodStartsAt(?\DateTime $currentPeriodStartsAt): void
     {
         $this->currentPeriodStartsAt = $currentPeriodStartsAt;
+    }
+
+    /**
+     * Converts the OverrideSubscription object to a human-readable string representation.
+     *
+     * @return string The string representation of the OverrideSubscription object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'OverrideSubscription',
+            [
+                'activatedAt' => $this->activatedAt,
+                'canceledAt' => $this->canceledAt,
+                'cancellationMessage' => $this->cancellationMessage,
+                'expiresAt' => $this->expiresAt,
+                'currentPeriodStartsAt' => $this->currentPeriodStartsAt,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

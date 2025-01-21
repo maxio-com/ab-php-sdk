@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class CreateOrUpdateProduct implements \JsonSerializable
@@ -471,6 +472,37 @@ class CreateOrUpdateProduct implements \JsonSerializable
     public function setTaxCode(?string $taxCode): void
     {
         $this->taxCode = $taxCode;
+    }
+
+    /**
+     * Converts the CreateOrUpdateProduct object to a human-readable string representation.
+     *
+     * @return string The string representation of the CreateOrUpdateProduct object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'CreateOrUpdateProduct',
+            [
+                'name' => $this->name,
+                'handle' => $this->handle,
+                'description' => $this->description,
+                'accountingCode' => $this->accountingCode,
+                'requireCreditCard' => $this->requireCreditCard,
+                'priceInCents' => $this->priceInCents,
+                'interval' => $this->interval,
+                'intervalUnit' => $this->intervalUnit,
+                'trialPriceInCents' => $this->trialPriceInCents,
+                'trialInterval' => $this->trialInterval,
+                'trialIntervalUnit' => $this->getTrialIntervalUnit(),
+                'trialType' => $this->trialType,
+                'expirationInterval' => $this->expirationInterval,
+                'expirationIntervalUnit' => $this->getExpirationIntervalUnit(),
+                'autoCreateSignupPage' => $this->autoCreateSignupPage,
+                'taxCode' => $this->taxCode,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

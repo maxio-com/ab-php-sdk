@@ -323,6 +323,33 @@ class Segment implements \JsonSerializable
         $this->prices = $prices;
     }
 
+    /**
+     * Converts the Segment object to a human-readable string representation.
+     *
+     * @return string The string representation of the Segment object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'Segment',
+            [
+                'id' => $this->id,
+                'componentId' => $this->componentId,
+                'pricePointId' => $this->pricePointId,
+                'eventBasedBillingMetricId' => $this->eventBasedBillingMetricId,
+                'pricingScheme' => $this->pricingScheme,
+                'segmentProperty1Value' => $this->segmentProperty1Value,
+                'segmentProperty2Value' => $this->segmentProperty2Value,
+                'segmentProperty3Value' => $this->segmentProperty3Value,
+                'segmentProperty4Value' => $this->segmentProperty4Value,
+                'createdAt' => $this->createdAt,
+                'updatedAt' => $this->updatedAt,
+                'prices' => $this->prices,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
+    }
+
     private $additionalProperties = [];
 
     /**

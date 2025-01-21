@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class UpdateSegmentRequest implements \JsonSerializable
@@ -44,6 +45,19 @@ class UpdateSegmentRequest implements \JsonSerializable
     public function setSegment(UpdateSegment $segment): void
     {
         $this->segment = $segment;
+    }
+
+    /**
+     * Converts the UpdateSegmentRequest object to a human-readable string representation.
+     *
+     * @return string The string representation of the UpdateSegmentRequest object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'UpdateSegmentRequest',
+            ['segment' => $this->segment, 'additionalProperties' => $this->additionalProperties]
+        );
     }
 
     private $additionalProperties = [];

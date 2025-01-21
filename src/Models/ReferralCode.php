@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class ReferralCode implements \JsonSerializable
@@ -104,6 +105,25 @@ class ReferralCode implements \JsonSerializable
     public function setCode(?string $code): void
     {
         $this->code = $code;
+    }
+
+    /**
+     * Converts the ReferralCode object to a human-readable string representation.
+     *
+     * @return string The string representation of the ReferralCode object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'ReferralCode',
+            [
+                'id' => $this->id,
+                'siteId' => $this->siteId,
+                'subscriptionId' => $this->subscriptionId,
+                'code' => $this->code,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

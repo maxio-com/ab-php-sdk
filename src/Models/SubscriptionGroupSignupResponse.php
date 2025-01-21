@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
@@ -389,6 +390,32 @@ class SubscriptionGroupSignupResponse implements \JsonSerializable
     public function setPaymentCollectionMethod(?string $paymentCollectionMethod): void
     {
         $this->paymentCollectionMethod = $paymentCollectionMethod;
+    }
+
+    /**
+     * Converts the SubscriptionGroupSignupResponse object to a human-readable string representation.
+     *
+     * @return string The string representation of the SubscriptionGroupSignupResponse object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'SubscriptionGroupSignupResponse',
+            [
+                'uid' => $this->uid,
+                'scheme' => $this->scheme,
+                'customerId' => $this->customerId,
+                'paymentProfileId' => $this->paymentProfileId,
+                'subscriptionIds' => $this->subscriptionIds,
+                'primarySubscriptionId' => $this->primarySubscriptionId,
+                'nextAssessmentAt' => $this->nextAssessmentAt,
+                'state' => $this->state,
+                'cancelAtEndOfPeriod' => $this->cancelAtEndOfPeriod,
+                'subscriptions' => $this->subscriptions,
+                'paymentCollectionMethod' => $this->paymentCollectionMethod,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

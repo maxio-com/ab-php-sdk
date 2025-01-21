@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class BaseRefundError implements \JsonSerializable
@@ -39,6 +40,19 @@ class BaseRefundError implements \JsonSerializable
     public function setBase(?array $base): void
     {
         $this->base = $base;
+    }
+
+    /**
+     * Converts the BaseRefundError object to a human-readable string representation.
+     *
+     * @return string The string representation of the BaseRefundError object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'BaseRefundError',
+            ['base' => $this->base, 'additionalProperties' => $this->additionalProperties]
+        );
     }
 
     private $additionalProperties = [];

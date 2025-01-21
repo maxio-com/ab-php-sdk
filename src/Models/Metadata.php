@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
@@ -207,6 +208,27 @@ class Metadata implements \JsonSerializable
     public function unsetMetafieldId(): void
     {
         $this->metafieldId = [];
+    }
+
+    /**
+     * Converts the Metadata object to a human-readable string representation.
+     *
+     * @return string The string representation of the Metadata object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'Metadata',
+            [
+                'id' => $this->getId(),
+                'value' => $this->getValue(),
+                'resourceId' => $this->getResourceId(),
+                'name' => $this->name,
+                'deletedAt' => $this->getDeletedAt(),
+                'metafieldId' => $this->getMetafieldId(),
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

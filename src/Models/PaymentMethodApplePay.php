@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class PaymentMethodApplePay implements \JsonSerializable
@@ -45,6 +46,19 @@ class PaymentMethodApplePay implements \JsonSerializable
     public function setType(string $type): void
     {
         $this->type = $type;
+    }
+
+    /**
+     * Converts the PaymentMethodApplePay object to a human-readable string representation.
+     *
+     * @return string The string representation of the PaymentMethodApplePay object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'PaymentMethodApplePay',
+            ['type' => $this->type, 'additionalProperties' => $this->additionalProperties]
+        );
     }
 
     private $additionalProperties = [];

@@ -116,6 +116,24 @@ class RenewalPreviewComponent implements \JsonSerializable
         $this->pricePointId = $pricePointId;
     }
 
+    /**
+     * Converts the RenewalPreviewComponent object to a human-readable string representation.
+     *
+     * @return string The string representation of the RenewalPreviewComponent object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'RenewalPreviewComponent',
+            [
+                'componentId' => $this->componentId,
+                'quantity' => $this->quantity,
+                'pricePointId' => $this->pricePointId,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
+    }
+
     private $additionalProperties = [];
 
     /**

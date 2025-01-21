@@ -1387,6 +1387,70 @@ class CreateSubscription implements \JsonSerializable
         $this->skipBillingManifestTaxes = $skipBillingManifestTaxes;
     }
 
+    /**
+     * Converts the CreateSubscription object to a human-readable string representation.
+     *
+     * @return string The string representation of the CreateSubscription object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'CreateSubscription',
+            [
+                'productHandle' => $this->productHandle,
+                'productId' => $this->productId,
+                'productPricePointHandle' => $this->productPricePointHandle,
+                'productPricePointId' => $this->productPricePointId,
+                'customPrice' => $this->customPrice,
+                'couponCode' => $this->couponCode,
+                'couponCodes' => $this->couponCodes,
+                'paymentCollectionMethod' => $this->paymentCollectionMethod,
+                'receivesInvoiceEmails' => $this->receivesInvoiceEmails,
+                'netTerms' => $this->netTerms,
+                'customerId' => $this->customerId,
+                'nextBillingAt' => $this->nextBillingAt,
+                'initialBillingAt' => $this->initialBillingAt,
+                'storedCredentialTransactionId' => $this->storedCredentialTransactionId,
+                'salesRepId' => $this->salesRepId,
+                'paymentProfileId' => $this->paymentProfileId,
+                'reference' => $this->reference,
+                'customerAttributes' => $this->customerAttributes,
+                'paymentProfileAttributes' => $this->paymentProfileAttributes,
+                'creditCardAttributes' => $this->creditCardAttributes,
+                'bankAccountAttributes' => $this->bankAccountAttributes,
+                'components' => $this->components,
+                'calendarBilling' => $this->calendarBilling,
+                'metafields' => $this->metafields,
+                'customerReference' => $this->customerReference,
+                'group' => $this->group,
+                'ref' => $this->ref,
+                'cancellationMessage' => $this->cancellationMessage,
+                'cancellationMethod' => $this->cancellationMethod,
+                'currency' => $this->currency,
+                'expiresAt' => $this->expiresAt,
+                'expirationTracksNextBillingChange' => $this->expirationTracksNextBillingChange,
+                'agreementTerms' => $this->agreementTerms,
+                'authorizerFirstName' => $this->authorizerFirstName,
+                'authorizerLastName' => $this->authorizerLastName,
+                'calendarBillingFirstCharge' => $this->calendarBillingFirstCharge,
+                'reasonCode' => $this->reasonCode,
+                'productChangeDelayed' => $this->productChangeDelayed,
+                'offerId' => $this->offerId,
+                'prepaidConfiguration' => $this->prepaidConfiguration,
+                'previousBillingAt' => $this->previousBillingAt,
+                'importMrr' => $this->importMrr,
+                'canceledAt' => $this->canceledAt,
+                'activatedAt' => $this->activatedAt,
+                'agreementAcceptance' => $this->agreementAcceptance,
+                'achAgreement' => $this->achAgreement,
+                'dunningCommunicationDelayEnabled' => $this->dunningCommunicationDelayEnabled,
+                'dunningCommunicationDelayTimeZone' => $this->getDunningCommunicationDelayTimeZone(),
+                'skipBillingManifestTaxes' => $this->skipBillingManifestTaxes,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
+    }
+
     private $additionalProperties = [];
 
     /**

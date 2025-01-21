@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
@@ -215,6 +216,27 @@ class ApplyDebitNoteEventData implements \JsonSerializable
     public function unsetTransactionTime(): void
     {
         $this->transactionTime = [];
+    }
+
+    /**
+     * Converts the ApplyDebitNoteEventData object to a human-readable string representation.
+     *
+     * @return string The string representation of the ApplyDebitNoteEventData object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'ApplyDebitNoteEventData',
+            [
+                'debitNoteNumber' => $this->debitNoteNumber,
+                'debitNoteUid' => $this->debitNoteUid,
+                'originalAmount' => $this->originalAmount,
+                'appliedAmount' => $this->appliedAmount,
+                'memo' => $this->getMemo(),
+                'transactionTime' => $this->getTransactionTime(),
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

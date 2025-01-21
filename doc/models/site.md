@@ -16,6 +16,7 @@
 | `sellerId` | `?int` | Optional | - | getSellerId(): ?int | setSellerId(?int sellerId): void |
 | `nonPrimaryCurrencies` | `?(string[])` | Optional | - | getNonPrimaryCurrencies(): ?array | setNonPrimaryCurrencies(?array nonPrimaryCurrencies): void |
 | `relationshipInvoicingEnabled` | `?bool` | Optional | - | getRelationshipInvoicingEnabled(): ?bool | setRelationshipInvoicingEnabled(?bool relationshipInvoicingEnabled): void |
+| `scheduleSubscriptionCancellationEnabled` | `?bool` | Optional | - | getScheduleSubscriptionCancellationEnabled(): ?bool | setScheduleSubscriptionCancellationEnabled(?bool scheduleSubscriptionCancellationEnabled): void |
 | `customerHierarchyEnabled` | `?bool` | Optional | - | getCustomerHierarchyEnabled(): ?bool | setCustomerHierarchyEnabled(?bool customerHierarchyEnabled): void |
 | `whopaysEnabled` | `?bool` | Optional | - | getWhopaysEnabled(): ?bool | setWhopaysEnabled(?bool whopaysEnabled): void |
 | `whopaysDefaultPayer` | `?string` | Optional | - | getWhopaysDefaultPayer(): ?string | setWhopaysDefaultPayer(?string whopaysDefaultPayer): void |

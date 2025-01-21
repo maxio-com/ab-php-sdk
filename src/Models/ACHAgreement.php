@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 /**
@@ -121,6 +122,25 @@ class ACHAgreement implements \JsonSerializable
     public function setIpAddress(?string $ipAddress): void
     {
         $this->ipAddress = $ipAddress;
+    }
+
+    /**
+     * Converts the ACHAgreement object to a human-readable string representation.
+     *
+     * @return string The string representation of the ACHAgreement object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'ACHAgreement',
+            [
+                'agreementTerms' => $this->agreementTerms,
+                'authorizerFirstName' => $this->authorizerFirstName,
+                'authorizerLastName' => $this->authorizerLastName,
+                'ipAddress' => $this->ipAddress,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

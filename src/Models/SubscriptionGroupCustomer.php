@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class SubscriptionGroupCustomer implements \JsonSerializable
@@ -127,6 +128,26 @@ class SubscriptionGroupCustomer implements \JsonSerializable
     public function setReference(?string $reference): void
     {
         $this->reference = $reference;
+    }
+
+    /**
+     * Converts the SubscriptionGroupCustomer object to a human-readable string representation.
+     *
+     * @return string The string representation of the SubscriptionGroupCustomer object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'SubscriptionGroupCustomer',
+            [
+                'firstName' => $this->firstName,
+                'lastName' => $this->lastName,
+                'organization' => $this->organization,
+                'email' => $this->email,
+                'reference' => $this->reference,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

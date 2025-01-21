@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class NestedSubscriptionGroup implements \JsonSerializable
@@ -114,6 +115,25 @@ class NestedSubscriptionGroup implements \JsonSerializable
     public function setPrimary(?bool $primary): void
     {
         $this->primary = $primary;
+    }
+
+    /**
+     * Converts the NestedSubscriptionGroup object to a human-readable string representation.
+     *
+     * @return string The string representation of the NestedSubscriptionGroup object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'NestedSubscriptionGroup',
+            [
+                'uid' => $this->uid,
+                'scheme' => $this->scheme,
+                'primarySubscriptionId' => $this->primarySubscriptionId,
+                'primary' => $this->primary,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

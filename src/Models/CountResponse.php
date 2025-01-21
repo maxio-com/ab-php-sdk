@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class CountResponse implements \JsonSerializable
@@ -35,6 +36,19 @@ class CountResponse implements \JsonSerializable
     public function setCount(?int $count): void
     {
         $this->count = $count;
+    }
+
+    /**
+     * Converts the CountResponse object to a human-readable string representation.
+     *
+     * @return string The string representation of the CountResponse object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'CountResponse',
+            ['count' => $this->count, 'additionalProperties' => $this->additionalProperties]
+        );
     }
 
     private $additionalProperties = [];

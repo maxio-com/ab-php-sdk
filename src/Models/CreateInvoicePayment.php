@@ -179,6 +179,27 @@ class CreateInvoicePayment implements \JsonSerializable
         $this->receivedOn = $receivedOn;
     }
 
+    /**
+     * Converts the CreateInvoicePayment object to a human-readable string representation.
+     *
+     * @return string The string representation of the CreateInvoicePayment object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'CreateInvoicePayment',
+            [
+                'amount' => $this->amount,
+                'memo' => $this->memo,
+                'method' => $this->method,
+                'details' => $this->details,
+                'paymentProfileId' => $this->paymentProfileId,
+                'receivedOn' => $this->receivedOn,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
+    }
+
     private $additionalProperties = [];
 
     /**

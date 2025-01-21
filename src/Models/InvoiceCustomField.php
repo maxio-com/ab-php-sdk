@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class InvoiceCustomField implements \JsonSerializable
@@ -128,6 +129,26 @@ class InvoiceCustomField implements \JsonSerializable
     public function setMetadatumId(?int $metadatumId): void
     {
         $this->metadatumId = $metadatumId;
+    }
+
+    /**
+     * Converts the InvoiceCustomField object to a human-readable string representation.
+     *
+     * @return string The string representation of the InvoiceCustomField object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'InvoiceCustomField',
+            [
+                'ownerId' => $this->ownerId,
+                'ownerType' => $this->ownerType,
+                'name' => $this->name,
+                'value' => $this->value,
+                'metadatumId' => $this->metadatumId,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

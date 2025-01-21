@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class AllocationResponse implements \JsonSerializable
@@ -35,6 +36,19 @@ class AllocationResponse implements \JsonSerializable
     public function setAllocation(?Allocation $allocation): void
     {
         $this->allocation = $allocation;
+    }
+
+    /**
+     * Converts the AllocationResponse object to a human-readable string representation.
+     *
+     * @return string The string representation of the AllocationResponse object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'AllocationResponse',
+            ['allocation' => $this->allocation, 'additionalProperties' => $this->additionalProperties]
+        );
     }
 
     private $additionalProperties = [];

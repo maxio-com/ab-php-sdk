@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class WebhookResponse implements \JsonSerializable
@@ -35,6 +36,19 @@ class WebhookResponse implements \JsonSerializable
     public function setWebhook(?Webhook $webhook): void
     {
         $this->webhook = $webhook;
+    }
+
+    /**
+     * Converts the WebhookResponse object to a human-readable string representation.
+     *
+     * @return string The string representation of the WebhookResponse object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'WebhookResponse',
+            ['webhook' => $this->webhook, 'additionalProperties' => $this->additionalProperties]
+        );
     }
 
     private $additionalProperties = [];

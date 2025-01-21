@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class InvoiceTaxBreakout implements \JsonSerializable
@@ -104,6 +105,25 @@ class InvoiceTaxBreakout implements \JsonSerializable
     public function setTaxExemptAmount(?string $taxExemptAmount): void
     {
         $this->taxExemptAmount = $taxExemptAmount;
+    }
+
+    /**
+     * Converts the InvoiceTaxBreakout object to a human-readable string representation.
+     *
+     * @return string The string representation of the InvoiceTaxBreakout object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'InvoiceTaxBreakout',
+            [
+                'uid' => $this->uid,
+                'taxableAmount' => $this->taxableAmount,
+                'taxAmount' => $this->taxAmount,
+                'taxExemptAmount' => $this->taxExemptAmount,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

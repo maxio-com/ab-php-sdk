@@ -10,6 +10,8 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Exceptions;
 
+use AdvancedBillingLib\ApiHelper;
+
 class EventBasedBillingSegmentException extends ApiException
 {
     /**
@@ -50,6 +52,20 @@ class EventBasedBillingSegmentException extends ApiException
     public function setErrors(\AdvancedBillingLib\Models\EventBasedBillingSegmentError $errors): void
     {
         $this->errors = $errors;
+    }
+
+    /**
+     * Converts the EventBasedBillingSegmentException object to a human-readable string representation.
+     *
+     * @return string The string representation of the EventBasedBillingSegmentException object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'EventBasedBillingSegmentException',
+            ['errors' => $this->errors, 'additionalProperties' => $this->additionalProperties],
+            parent::__toString()
+        );
     }
 
     private $additionalProperties = [];

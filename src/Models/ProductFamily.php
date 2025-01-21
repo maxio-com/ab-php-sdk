@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
@@ -198,6 +199,28 @@ class ProductFamily implements \JsonSerializable
     public function setUpdatedAt(?\DateTime $updatedAt): void
     {
         $this->updatedAt = $updatedAt;
+    }
+
+    /**
+     * Converts the ProductFamily object to a human-readable string representation.
+     *
+     * @return string The string representation of the ProductFamily object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'ProductFamily',
+            [
+                'id' => $this->id,
+                'name' => $this->name,
+                'handle' => $this->handle,
+                'accountingCode' => $this->getAccountingCode(),
+                'description' => $this->getDescription(),
+                'createdAt' => $this->createdAt,
+                'updatedAt' => $this->updatedAt,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

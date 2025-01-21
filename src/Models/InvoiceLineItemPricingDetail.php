@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class InvoiceLineItemPricingDetail implements \JsonSerializable
@@ -58,6 +59,23 @@ class InvoiceLineItemPricingDetail implements \JsonSerializable
     public function setAmount(?string $amount): void
     {
         $this->amount = $amount;
+    }
+
+    /**
+     * Converts the InvoiceLineItemPricingDetail object to a human-readable string representation.
+     *
+     * @return string The string representation of the InvoiceLineItemPricingDetail object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'InvoiceLineItemPricingDetail',
+            [
+                'label' => $this->label,
+                'amount' => $this->amount,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

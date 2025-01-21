@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
@@ -94,6 +95,24 @@ class HistoricUsage implements \JsonSerializable
     public function setBillingPeriodEndsAt(?\DateTime $billingPeriodEndsAt): void
     {
         $this->billingPeriodEndsAt = $billingPeriodEndsAt;
+    }
+
+    /**
+     * Converts the HistoricUsage object to a human-readable string representation.
+     *
+     * @return string The string representation of the HistoricUsage object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'HistoricUsage',
+            [
+                'totalUsageQuantity' => $this->totalUsageQuantity,
+                'billingPeriodStartsAt' => $this->billingPeriodStartsAt,
+                'billingPeriodEndsAt' => $this->billingPeriodEndsAt,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

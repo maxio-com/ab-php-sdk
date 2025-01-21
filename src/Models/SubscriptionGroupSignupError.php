@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class SubscriptionGroupSignupError implements \JsonSerializable
@@ -162,6 +163,27 @@ class SubscriptionGroupSignupError implements \JsonSerializable
     public function setPayerId(?string $payerId): void
     {
         $this->payerId = $payerId;
+    }
+
+    /**
+     * Converts the SubscriptionGroupSignupError object to a human-readable string representation.
+     *
+     * @return string The string representation of the SubscriptionGroupSignupError object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'SubscriptionGroupSignupError',
+            [
+                'subscriptions' => $this->subscriptions,
+                'payerReference' => $this->payerReference,
+                'payer' => $this->payer,
+                'subscriptionGroup' => $this->subscriptionGroup,
+                'paymentProfileId' => $this->paymentProfileId,
+                'payerId' => $this->payerId,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

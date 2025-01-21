@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
@@ -259,6 +260,30 @@ class BillingManifest implements \JsonSerializable
     public function setExistingBalanceInCents(?int $existingBalanceInCents): void
     {
         $this->existingBalanceInCents = $existingBalanceInCents;
+    }
+
+    /**
+     * Converts the BillingManifest object to a human-readable string representation.
+     *
+     * @return string The string representation of the BillingManifest object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'BillingManifest',
+            [
+                'lineItems' => $this->lineItems,
+                'totalInCents' => $this->totalInCents,
+                'totalDiscountInCents' => $this->totalDiscountInCents,
+                'totalTaxInCents' => $this->totalTaxInCents,
+                'subtotalInCents' => $this->subtotalInCents,
+                'startDate' => $this->getStartDate(),
+                'endDate' => $this->getEndDate(),
+                'periodType' => $this->getPeriodType(),
+                'existingBalanceInCents' => $this->existingBalanceInCents,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

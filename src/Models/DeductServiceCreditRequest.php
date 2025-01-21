@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class DeductServiceCreditRequest implements \JsonSerializable
@@ -44,6 +45,19 @@ class DeductServiceCreditRequest implements \JsonSerializable
     public function setDeduction(DeductServiceCredit $deduction): void
     {
         $this->deduction = $deduction;
+    }
+
+    /**
+     * Converts the DeductServiceCreditRequest object to a human-readable string representation.
+     *
+     * @return string The string representation of the DeductServiceCreditRequest object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'DeductServiceCreditRequest',
+            ['deduction' => $this->deduction, 'additionalProperties' => $this->additionalProperties]
+        );
     }
 
     private $additionalProperties = [];

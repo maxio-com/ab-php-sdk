@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
@@ -342,6 +343,33 @@ class Webhook implements \JsonSerializable
     public function setSignatureHmacSha256(?string $signatureHmacSha256): void
     {
         $this->signatureHmacSha256 = $signatureHmacSha256;
+    }
+
+    /**
+     * Converts the Webhook object to a human-readable string representation.
+     *
+     * @return string The string representation of the Webhook object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'Webhook',
+            [
+                'event' => $this->event,
+                'id' => $this->id,
+                'createdAt' => $this->createdAt,
+                'lastError' => $this->lastError,
+                'lastErrorAt' => $this->lastErrorAt,
+                'acceptedAt' => $this->getAcceptedAt(),
+                'lastSentAt' => $this->lastSentAt,
+                'lastSentUrl' => $this->lastSentUrl,
+                'successful' => $this->successful,
+                'body' => $this->body,
+                'signature' => $this->signature,
+                'signatureHmacSha256' => $this->signatureHmacSha256,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

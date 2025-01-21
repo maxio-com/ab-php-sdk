@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class DunningStepData implements \JsonSerializable
@@ -250,6 +251,29 @@ class DunningStepData implements \JsonSerializable
     public function unsetSmsBody(): void
     {
         $this->smsBody = [];
+    }
+
+    /**
+     * Converts the DunningStepData object to a human-readable string representation.
+     *
+     * @return string The string representation of the DunningStepData object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'DunningStepData',
+            [
+                'dayThreshold' => $this->dayThreshold,
+                'action' => $this->action,
+                'emailBody' => $this->getEmailBody(),
+                'emailSubject' => $this->getEmailSubject(),
+                'sendEmail' => $this->sendEmail,
+                'sendBccEmail' => $this->sendBccEmail,
+                'sendSms' => $this->sendSms,
+                'smsBody' => $this->getSmsBody(),
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

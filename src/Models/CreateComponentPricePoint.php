@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class CreateComponentPricePoint implements \JsonSerializable
@@ -252,6 +253,29 @@ class CreateComponentPricePoint implements \JsonSerializable
     public function unsetIntervalUnit(): void
     {
         $this->intervalUnit = [];
+    }
+
+    /**
+     * Converts the CreateComponentPricePoint object to a human-readable string representation.
+     *
+     * @return string The string representation of the CreateComponentPricePoint object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'CreateComponentPricePoint',
+            [
+                'name' => $this->name,
+                'handle' => $this->handle,
+                'pricingScheme' => $this->pricingScheme,
+                'prices' => $this->prices,
+                'useSiteExchangeRate' => $this->useSiteExchangeRate,
+                'taxIncluded' => $this->taxIncluded,
+                'interval' => $this->interval,
+                'intervalUnit' => $this->getIntervalUnit(),
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

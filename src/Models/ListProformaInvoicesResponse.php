@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class ListProformaInvoicesResponse implements \JsonSerializable
@@ -62,6 +63,23 @@ class ListProformaInvoicesResponse implements \JsonSerializable
     public function setMeta(?ListProformaInvoicesMeta $meta): void
     {
         $this->meta = $meta;
+    }
+
+    /**
+     * Converts the ListProformaInvoicesResponse object to a human-readable string representation.
+     *
+     * @return string The string representation of the ListProformaInvoicesResponse object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'ListProformaInvoicesResponse',
+            [
+                'proformaInvoices' => $this->proformaInvoices,
+                'meta' => $this->meta,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

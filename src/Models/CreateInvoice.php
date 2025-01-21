@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
@@ -267,6 +268,31 @@ class CreateInvoice implements \JsonSerializable
     public function setStatus(?string $status): void
     {
         $this->status = $status;
+    }
+
+    /**
+     * Converts the CreateInvoice object to a human-readable string representation.
+     *
+     * @return string The string representation of the CreateInvoice object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'CreateInvoice',
+            [
+                'lineItems' => $this->lineItems,
+                'issueDate' => $this->issueDate,
+                'netTerms' => $this->netTerms,
+                'paymentInstructions' => $this->paymentInstructions,
+                'memo' => $this->memo,
+                'sellerAddress' => $this->sellerAddress,
+                'billingAddress' => $this->billingAddress,
+                'shippingAddress' => $this->shippingAddress,
+                'coupons' => $this->coupons,
+                'status' => $this->status,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

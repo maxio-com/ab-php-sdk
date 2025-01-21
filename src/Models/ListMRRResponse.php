@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class ListMRRResponse implements \JsonSerializable
@@ -44,6 +45,19 @@ class ListMRRResponse implements \JsonSerializable
     public function setMrr(ListMRRResponseResult $mrr): void
     {
         $this->mrr = $mrr;
+    }
+
+    /**
+     * Converts the ListMRRResponse object to a human-readable string representation.
+     *
+     * @return string The string representation of the ListMRRResponse object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'ListMRRResponse',
+            ['mrr' => $this->mrr, 'additionalProperties' => $this->additionalProperties]
+        );
     }
 
     private $additionalProperties = [];

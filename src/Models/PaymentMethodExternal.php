@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class PaymentMethodExternal implements \JsonSerializable
@@ -117,6 +118,25 @@ class PaymentMethodExternal implements \JsonSerializable
     public function setType(string $type): void
     {
         $this->type = $type;
+    }
+
+    /**
+     * Converts the PaymentMethodExternal object to a human-readable string representation.
+     *
+     * @return string The string representation of the PaymentMethodExternal object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'PaymentMethodExternal',
+            [
+                'details' => $this->details,
+                'kind' => $this->kind,
+                'memo' => $this->memo,
+                'type' => $this->type,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

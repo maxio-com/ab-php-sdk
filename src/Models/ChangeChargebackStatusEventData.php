@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 /**
@@ -48,6 +49,19 @@ class ChangeChargebackStatusEventData implements \JsonSerializable
     public function setChargebackStatus(string $chargebackStatus): void
     {
         $this->chargebackStatus = $chargebackStatus;
+    }
+
+    /**
+     * Converts the ChangeChargebackStatusEventData object to a human-readable string representation.
+     *
+     * @return string The string representation of the ChangeChargebackStatusEventData object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'ChangeChargebackStatusEventData',
+            ['chargebackStatus' => $this->chargebackStatus, 'additionalProperties' => $this->additionalProperties]
+        );
     }
 
     private $additionalProperties = [];

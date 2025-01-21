@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class ActivateSubscriptionRequest implements \JsonSerializable
@@ -58,6 +59,22 @@ class ActivateSubscriptionRequest implements \JsonSerializable
     public function unsetRevertOnFailure(): void
     {
         $this->revertOnFailure = [];
+    }
+
+    /**
+     * Converts the ActivateSubscriptionRequest object to a human-readable string representation.
+     *
+     * @return string The string representation of the ActivateSubscriptionRequest object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'ActivateSubscriptionRequest',
+            [
+                'revertOnFailure' => $this->getRevertOnFailure(),
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

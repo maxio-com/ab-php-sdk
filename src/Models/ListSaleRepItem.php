@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class ListSaleRepItem implements \JsonSerializable
@@ -131,6 +132,26 @@ class ListSaleRepItem implements \JsonSerializable
     public function setTestMode(?bool $testMode): void
     {
         $this->testMode = $testMode;
+    }
+
+    /**
+     * Converts the ListSaleRepItem object to a human-readable string representation.
+     *
+     * @return string The string representation of the ListSaleRepItem object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'ListSaleRepItem',
+            [
+                'id' => $this->id,
+                'fullName' => $this->fullName,
+                'subscriptionsCount' => $this->subscriptionsCount,
+                'mrrData' => $this->mrrData,
+                'testMode' => $this->testMode,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

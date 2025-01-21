@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class SendInvoiceRequest implements \JsonSerializable
@@ -93,6 +94,24 @@ class SendInvoiceRequest implements \JsonSerializable
     public function setBccRecipientEmails(?array $bccRecipientEmails): void
     {
         $this->bccRecipientEmails = $bccRecipientEmails;
+    }
+
+    /**
+     * Converts the SendInvoiceRequest object to a human-readable string representation.
+     *
+     * @return string The string representation of the SendInvoiceRequest object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'SendInvoiceRequest',
+            [
+                'recipientEmails' => $this->recipientEmails,
+                'ccRecipientEmails' => $this->ccRecipientEmails,
+                'bccRecipientEmails' => $this->bccRecipientEmails,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

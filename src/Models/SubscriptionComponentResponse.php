@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class SubscriptionComponentResponse implements \JsonSerializable
@@ -35,6 +36,19 @@ class SubscriptionComponentResponse implements \JsonSerializable
     public function setComponent(?SubscriptionComponent $component): void
     {
         $this->component = $component;
+    }
+
+    /**
+     * Converts the SubscriptionComponentResponse object to a human-readable string representation.
+     *
+     * @return string The string representation of the SubscriptionComponentResponse object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'SubscriptionComponentResponse',
+            ['component' => $this->component, 'additionalProperties' => $this->additionalProperties]
+        );
     }
 
     private $additionalProperties = [];

@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class ListSubscriptionComponentsFilter implements \JsonSerializable
@@ -70,6 +71,23 @@ class ListSubscriptionComponentsFilter implements \JsonSerializable
     public function setUseSiteExchangeRate(?bool $useSiteExchangeRate): void
     {
         $this->useSiteExchangeRate = $useSiteExchangeRate;
+    }
+
+    /**
+     * Converts the ListSubscriptionComponentsFilter object to a human-readable string representation.
+     *
+     * @return string The string representation of the ListSubscriptionComponentsFilter object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'ListSubscriptionComponentsFilter',
+            [
+                'currencies' => $this->currencies,
+                'useSiteExchangeRate' => $this->useSiteExchangeRate,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

@@ -43,6 +43,19 @@ class UpdateMetafieldsRequest implements \JsonSerializable
         $this->metafields = $metafields;
     }
 
+    /**
+     * Converts the UpdateMetafieldsRequest object to a human-readable string representation.
+     *
+     * @return string The string representation of the UpdateMetafieldsRequest object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'UpdateMetafieldsRequest',
+            ['metafields' => $this->metafields, 'additionalProperties' => $this->additionalProperties]
+        );
+    }
+
     private $additionalProperties = [];
 
     /**

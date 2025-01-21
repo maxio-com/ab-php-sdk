@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 /**
@@ -49,6 +50,19 @@ class UpdateSubscriptionNoteRequest implements \JsonSerializable
     public function setNote(UpdateSubscriptionNote $note): void
     {
         $this->note = $note;
+    }
+
+    /**
+     * Converts the UpdateSubscriptionNoteRequest object to a human-readable string representation.
+     *
+     * @return string The string representation of the UpdateSubscriptionNoteRequest object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'UpdateSubscriptionNoteRequest',
+            ['note' => $this->note, 'additionalProperties' => $this->additionalProperties]
+        );
     }
 
     private $additionalProperties = [];

@@ -201,6 +201,28 @@ class CreateSubscriptionComponent implements \JsonSerializable
         $this->customPrice = $customPrice;
     }
 
+    /**
+     * Converts the CreateSubscriptionComponent object to a human-readable string representation.
+     *
+     * @return string The string representation of the CreateSubscriptionComponent object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'CreateSubscriptionComponent',
+            [
+                'componentId' => $this->componentId,
+                'enabled' => $this->enabled,
+                'unitBalance' => $this->unitBalance,
+                'allocatedQuantity' => $this->allocatedQuantity,
+                'quantity' => $this->quantity,
+                'pricePointId' => $this->pricePointId,
+                'customPrice' => $this->customPrice,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
+    }
+
     private $additionalProperties = [];
 
     /**

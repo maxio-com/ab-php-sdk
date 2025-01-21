@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
@@ -37,6 +38,19 @@ class AllocationExpirationDate implements \JsonSerializable
     public function setExpiresAt(?\DateTime $expiresAt): void
     {
         $this->expiresAt = $expiresAt;
+    }
+
+    /**
+     * Converts the AllocationExpirationDate object to a human-readable string representation.
+     *
+     * @return string The string representation of the AllocationExpirationDate object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'AllocationExpirationDate',
+            ['expiresAt' => $this->expiresAt, 'additionalProperties' => $this->additionalProperties]
+        );
     }
 
     private $additionalProperties = [];

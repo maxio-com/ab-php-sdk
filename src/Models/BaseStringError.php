@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 /**
@@ -42,6 +43,19 @@ class BaseStringError implements \JsonSerializable
     public function setBase(?array $base): void
     {
         $this->base = $base;
+    }
+
+    /**
+     * Converts the BaseStringError object to a human-readable string representation.
+     *
+     * @return string The string representation of the BaseStringError object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'BaseStringError',
+            ['base' => $this->base, 'additionalProperties' => $this->additionalProperties]
+        );
     }
 
     private $additionalProperties = [];

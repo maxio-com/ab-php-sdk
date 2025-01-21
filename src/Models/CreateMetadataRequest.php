@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class CreateMetadataRequest implements \JsonSerializable
@@ -48,6 +49,19 @@ class CreateMetadataRequest implements \JsonSerializable
     public function setMetadata(array $metadata): void
     {
         $this->metadata = $metadata;
+    }
+
+    /**
+     * Converts the CreateMetadataRequest object to a human-readable string representation.
+     *
+     * @return string The string representation of the CreateMetadataRequest object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'CreateMetadataRequest',
+            ['metadata' => $this->metadata, 'additionalProperties' => $this->additionalProperties]
+        );
     }
 
     private $additionalProperties = [];

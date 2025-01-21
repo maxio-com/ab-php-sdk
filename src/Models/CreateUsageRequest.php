@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class CreateUsageRequest implements \JsonSerializable
@@ -44,6 +45,19 @@ class CreateUsageRequest implements \JsonSerializable
     public function setUsage(CreateUsage $usage): void
     {
         $this->usage = $usage;
+    }
+
+    /**
+     * Converts the CreateUsageRequest object to a human-readable string representation.
+     *
+     * @return string The string representation of the CreateUsageRequest object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'CreateUsageRequest',
+            ['usage' => $this->usage, 'additionalProperties' => $this->additionalProperties]
+        );
     }
 
     private $additionalProperties = [];

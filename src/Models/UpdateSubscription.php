@@ -507,6 +507,40 @@ class UpdateSubscription implements \JsonSerializable
         $this->productPricePointHandle = $productPricePointHandle;
     }
 
+    /**
+     * Converts the UpdateSubscription object to a human-readable string representation.
+     *
+     * @return string The string representation of the UpdateSubscription object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'UpdateSubscription',
+            [
+                'creditCardAttributes' => $this->creditCardAttributes,
+                'productHandle' => $this->productHandle,
+                'productId' => $this->productId,
+                'productChangeDelayed' => $this->productChangeDelayed,
+                'nextProductId' => $this->nextProductId,
+                'nextProductPricePointId' => $this->nextProductPricePointId,
+                'snapDay' => $this->snapDay,
+                'nextBillingAt' => $this->nextBillingAt,
+                'paymentCollectionMethod' => $this->paymentCollectionMethod,
+                'receivesInvoiceEmails' => $this->receivesInvoiceEmails,
+                'netTerms' => $this->netTerms,
+                'storedCredentialTransactionId' => $this->storedCredentialTransactionId,
+                'reference' => $this->reference,
+                'customPrice' => $this->customPrice,
+                'components' => $this->components,
+                'dunningCommunicationDelayEnabled' => $this->dunningCommunicationDelayEnabled,
+                'dunningCommunicationDelayTimeZone' => $this->getDunningCommunicationDelayTimeZone(),
+                'productPricePointId' => $this->productPricePointId,
+                'productPricePointHandle' => $this->productPricePointHandle,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
+    }
+
     private $additionalProperties = [];
 
     /**

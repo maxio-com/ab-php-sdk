@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class InvoiceBalanceItem implements \JsonSerializable
@@ -81,6 +82,24 @@ class InvoiceBalanceItem implements \JsonSerializable
     public function setOutstandingAmount(?string $outstandingAmount): void
     {
         $this->outstandingAmount = $outstandingAmount;
+    }
+
+    /**
+     * Converts the InvoiceBalanceItem object to a human-readable string representation.
+     *
+     * @return string The string representation of the InvoiceBalanceItem object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'InvoiceBalanceItem',
+            [
+                'uid' => $this->uid,
+                'number' => $this->number,
+                'outstandingAmount' => $this->outstandingAmount,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

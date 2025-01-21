@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class ProductPricePointErrors implements \JsonSerializable
@@ -170,6 +171,27 @@ class ProductPricePointErrors implements \JsonSerializable
     public function setPriceInCents(?array $priceInCents): void
     {
         $this->priceInCents = $priceInCents;
+    }
+
+    /**
+     * Converts the ProductPricePointErrors object to a human-readable string representation.
+     *
+     * @return string The string representation of the ProductPricePointErrors object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'ProductPricePointErrors',
+            [
+                'pricePoint' => $this->pricePoint,
+                'interval' => $this->interval,
+                'intervalUnit' => $this->intervalUnit,
+                'name' => $this->name,
+                'price' => $this->price,
+                'priceInCents' => $this->priceInCents,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

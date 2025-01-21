@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 /**
@@ -199,6 +200,28 @@ class MetafieldScope implements \JsonSerializable
     public function setHosted(?array $hosted): void
     {
         $this->hosted = $hosted;
+    }
+
+    /**
+     * Converts the MetafieldScope object to a human-readable string representation.
+     *
+     * @return string The string representation of the MetafieldScope object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'MetafieldScope',
+            [
+                'csv' => $this->csv,
+                'invoices' => $this->invoices,
+                'statements' => $this->statements,
+                'portal' => $this->portal,
+                'publicShow' => $this->publicShow,
+                'publicEdit' => $this->publicEdit,
+                'hosted' => $this->hosted,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class ListSubscriptionGroupsMeta implements \JsonSerializable
@@ -58,6 +59,23 @@ class ListSubscriptionGroupsMeta implements \JsonSerializable
     public function setTotalCount(?int $totalCount): void
     {
         $this->totalCount = $totalCount;
+    }
+
+    /**
+     * Converts the ListSubscriptionGroupsMeta object to a human-readable string representation.
+     *
+     * @return string The string representation of the ListSubscriptionGroupsMeta object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'ListSubscriptionGroupsMeta',
+            [
+                'currentPage' => $this->currentPage,
+                'totalCount' => $this->totalCount,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

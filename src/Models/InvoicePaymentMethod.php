@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class InvoicePaymentMethod implements \JsonSerializable
@@ -207,6 +208,29 @@ class InvoicePaymentMethod implements \JsonSerializable
     public function setMaskedCardNumber(?string $maskedCardNumber): void
     {
         $this->maskedCardNumber = $maskedCardNumber;
+    }
+
+    /**
+     * Converts the InvoicePaymentMethod object to a human-readable string representation.
+     *
+     * @return string The string representation of the InvoicePaymentMethod object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'InvoicePaymentMethod',
+            [
+                'details' => $this->details,
+                'kind' => $this->kind,
+                'memo' => $this->memo,
+                'type' => $this->type,
+                'cardBrand' => $this->cardBrand,
+                'cardExpiration' => $this->cardExpiration,
+                'lastFour' => $this->getLastFour(),
+                'maskedCardNumber' => $this->maskedCardNumber,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

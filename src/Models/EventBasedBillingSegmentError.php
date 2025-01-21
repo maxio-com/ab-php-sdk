@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class EventBasedBillingSegmentError implements \JsonSerializable
@@ -50,6 +51,19 @@ class EventBasedBillingSegmentError implements \JsonSerializable
     public function setSegments(array $segments): void
     {
         $this->segments = $segments;
+    }
+
+    /**
+     * Converts the EventBasedBillingSegmentError object to a human-readable string representation.
+     *
+     * @return string The string representation of the EventBasedBillingSegmentError object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'EventBasedBillingSegmentError',
+            ['segments' => $this->segments, 'additionalProperties' => $this->additionalProperties]
+        );
     }
 
     private $additionalProperties = [];

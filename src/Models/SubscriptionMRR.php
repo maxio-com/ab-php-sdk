@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class SubscriptionMRR implements \JsonSerializable
@@ -93,6 +94,24 @@ class SubscriptionMRR implements \JsonSerializable
     public function setBreakouts(?SubscriptionMRRBreakout $breakouts): void
     {
         $this->breakouts = $breakouts;
+    }
+
+    /**
+     * Converts the SubscriptionMRR object to a human-readable string representation.
+     *
+     * @return string The string representation of the SubscriptionMRR object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'SubscriptionMRR',
+            [
+                'subscriptionId' => $this->subscriptionId,
+                'mrrAmountInCents' => $this->mrrAmountInCents,
+                'breakouts' => $this->breakouts,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

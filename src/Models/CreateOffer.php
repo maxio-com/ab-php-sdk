@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class CreateOffer implements \JsonSerializable
@@ -196,6 +197,28 @@ class CreateOffer implements \JsonSerializable
     public function setCoupons(?array $coupons): void
     {
         $this->coupons = $coupons;
+    }
+
+    /**
+     * Converts the CreateOffer object to a human-readable string representation.
+     *
+     * @return string The string representation of the CreateOffer object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'CreateOffer',
+            [
+                'name' => $this->name,
+                'handle' => $this->handle,
+                'description' => $this->description,
+                'productId' => $this->productId,
+                'productPricePointId' => $this->productPricePointId,
+                'components' => $this->components,
+                'coupons' => $this->coupons,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

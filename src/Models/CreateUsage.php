@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class CreateUsage implements \JsonSerializable
@@ -112,6 +113,25 @@ class CreateUsage implements \JsonSerializable
     public function setBillingSchedule(?BillingSchedule $billingSchedule): void
     {
         $this->billingSchedule = $billingSchedule;
+    }
+
+    /**
+     * Converts the CreateUsage object to a human-readable string representation.
+     *
+     * @return string The string representation of the CreateUsage object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'CreateUsage',
+            [
+                'quantity' => $this->quantity,
+                'pricePointId' => $this->pricePointId,
+                'memo' => $this->memo,
+                'billingSchedule' => $this->billingSchedule,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

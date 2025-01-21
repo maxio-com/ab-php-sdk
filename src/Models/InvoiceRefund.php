@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class InvoiceRefund implements \JsonSerializable
@@ -255,6 +256,30 @@ class InvoiceRefund implements \JsonSerializable
     public function unsetAchLateReject(): void
     {
         $this->achLateReject = [];
+    }
+
+    /**
+     * Converts the InvoiceRefund object to a human-readable string representation.
+     *
+     * @return string The string representation of the InvoiceRefund object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'InvoiceRefund',
+            [
+                'transactionId' => $this->transactionId,
+                'paymentId' => $this->paymentId,
+                'memo' => $this->memo,
+                'originalAmount' => $this->originalAmount,
+                'appliedAmount' => $this->appliedAmount,
+                'gatewayTransactionId' => $this->getGatewayTransactionId(),
+                'gatewayUsed' => $this->gatewayUsed,
+                'gatewayHandle' => $this->getGatewayHandle(),
+                'achLateReject' => $this->getAchLateReject(),
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

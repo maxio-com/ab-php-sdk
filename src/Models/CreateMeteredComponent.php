@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class CreateMeteredComponent implements \JsonSerializable
@@ -44,6 +45,19 @@ class CreateMeteredComponent implements \JsonSerializable
     public function setMeteredComponent(MeteredComponent $meteredComponent): void
     {
         $this->meteredComponent = $meteredComponent;
+    }
+
+    /**
+     * Converts the CreateMeteredComponent object to a human-readable string representation.
+     *
+     * @return string The string representation of the CreateMeteredComponent object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'CreateMeteredComponent',
+            ['meteredComponent' => $this->meteredComponent, 'additionalProperties' => $this->additionalProperties]
+        );
     }
 
     private $additionalProperties = [];

@@ -496,6 +496,41 @@ class SubscriptionGroupCreditCard implements \JsonSerializable
         $this->paymentType = $paymentType;
     }
 
+    /**
+     * Converts the SubscriptionGroupCreditCard object to a human-readable string representation.
+     *
+     * @return string The string representation of the SubscriptionGroupCreditCard object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'SubscriptionGroupCreditCard',
+            [
+                'fullNumber' => $this->fullNumber,
+                'expirationMonth' => $this->expirationMonth,
+                'expirationYear' => $this->expirationYear,
+                'chargifyToken' => $this->chargifyToken,
+                'vaultToken' => $this->vaultToken,
+                'currentVault' => $this->currentVault,
+                'gatewayHandle' => $this->gatewayHandle,
+                'firstName' => $this->firstName,
+                'lastName' => $this->lastName,
+                'billingAddress' => $this->billingAddress,
+                'billingAddress2' => $this->billingAddress2,
+                'billingCity' => $this->billingCity,
+                'billingState' => $this->billingState,
+                'billingZip' => $this->billingZip,
+                'billingCountry' => $this->billingCountry,
+                'lastFour' => $this->lastFour,
+                'cardType' => $this->cardType,
+                'customerVaultToken' => $this->customerVaultToken,
+                'cvv' => $this->cvv,
+                'paymentType' => $this->paymentType,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
+    }
+
     private $additionalProperties = [];
 
     /**

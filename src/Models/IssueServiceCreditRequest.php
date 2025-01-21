@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class IssueServiceCreditRequest implements \JsonSerializable
@@ -44,6 +45,19 @@ class IssueServiceCreditRequest implements \JsonSerializable
     public function setServiceCredit(IssueServiceCredit $serviceCredit): void
     {
         $this->serviceCredit = $serviceCredit;
+    }
+
+    /**
+     * Converts the IssueServiceCreditRequest object to a human-readable string representation.
+     *
+     * @return string The string representation of the IssueServiceCreditRequest object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'IssueServiceCreditRequest',
+            ['serviceCredit' => $this->serviceCredit, 'additionalProperties' => $this->additionalProperties]
+        );
     }
 
     private $additionalProperties = [];

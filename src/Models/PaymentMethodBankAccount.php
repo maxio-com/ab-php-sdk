@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class PaymentMethodBankAccount implements \JsonSerializable
@@ -97,6 +98,24 @@ class PaymentMethodBankAccount implements \JsonSerializable
     public function setType(string $type): void
     {
         $this->type = $type;
+    }
+
+    /**
+     * Converts the PaymentMethodBankAccount object to a human-readable string representation.
+     *
+     * @return string The string representation of the PaymentMethodBankAccount object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'PaymentMethodBankAccount',
+            [
+                'maskedAccountNumber' => $this->maskedAccountNumber,
+                'maskedRoutingNumber' => $this->maskedRoutingNumber,
+                'type' => $this->type,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

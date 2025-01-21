@@ -345,6 +345,33 @@ class CreateInvoiceItem implements \JsonSerializable
         $this->description = $description;
     }
 
+    /**
+     * Converts the CreateInvoiceItem object to a human-readable string representation.
+     *
+     * @return string The string representation of the CreateInvoiceItem object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'CreateInvoiceItem',
+            [
+                'title' => $this->title,
+                'quantity' => $this->quantity,
+                'unitPrice' => $this->unitPrice,
+                'taxable' => $this->taxable,
+                'taxCode' => $this->taxCode,
+                'periodRangeStart' => $this->periodRangeStart,
+                'periodRangeEnd' => $this->periodRangeEnd,
+                'productId' => $this->productId,
+                'componentId' => $this->componentId,
+                'pricePointId' => $this->pricePointId,
+                'productPricePointId' => $this->productPricePointId,
+                'description' => $this->description,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
+    }
+
     private $additionalProperties = [];
 
     /**

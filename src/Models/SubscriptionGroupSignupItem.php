@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class SubscriptionGroupSignupItem implements \JsonSerializable
@@ -361,6 +362,34 @@ class SubscriptionGroupSignupItem implements \JsonSerializable
     public function setMetafields(?array $metafields): void
     {
         $this->metafields = $metafields;
+    }
+
+    /**
+     * Converts the SubscriptionGroupSignupItem object to a human-readable string representation.
+     *
+     * @return string The string representation of the SubscriptionGroupSignupItem object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'SubscriptionGroupSignupItem',
+            [
+                'productHandle' => $this->productHandle,
+                'productId' => $this->productId,
+                'productPricePointId' => $this->productPricePointId,
+                'productPricePointHandle' => $this->productPricePointHandle,
+                'offerId' => $this->offerId,
+                'reference' => $this->reference,
+                'primary' => $this->primary,
+                'currency' => $this->currency,
+                'couponCodes' => $this->couponCodes,
+                'components' => $this->components,
+                'customPrice' => $this->customPrice,
+                'calendarBilling' => $this->calendarBilling,
+                'metafields' => $this->metafields,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

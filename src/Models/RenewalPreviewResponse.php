@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class RenewalPreviewResponse implements \JsonSerializable
@@ -44,6 +45,19 @@ class RenewalPreviewResponse implements \JsonSerializable
     public function setRenewalPreview(RenewalPreview $renewalPreview): void
     {
         $this->renewalPreview = $renewalPreview;
+    }
+
+    /**
+     * Converts the RenewalPreviewResponse object to a human-readable string representation.
+     *
+     * @return string The string representation of the RenewalPreviewResponse object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'RenewalPreviewResponse',
+            ['renewalPreview' => $this->renewalPreview, 'additionalProperties' => $this->additionalProperties]
+        );
     }
 
     private $additionalProperties = [];

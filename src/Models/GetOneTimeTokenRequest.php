@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class GetOneTimeTokenRequest implements \JsonSerializable
@@ -44,6 +45,19 @@ class GetOneTimeTokenRequest implements \JsonSerializable
     public function setPaymentProfile(GetOneTimeTokenPaymentProfile $paymentProfile): void
     {
         $this->paymentProfile = $paymentProfile;
+    }
+
+    /**
+     * Converts the GetOneTimeTokenRequest object to a human-readable string representation.
+     *
+     * @return string The string representation of the GetOneTimeTokenRequest object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'GetOneTimeTokenRequest',
+            ['paymentProfile' => $this->paymentProfile, 'additionalProperties' => $this->additionalProperties]
+        );
     }
 
     private $additionalProperties = [];

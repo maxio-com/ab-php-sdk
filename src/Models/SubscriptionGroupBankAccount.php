@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class SubscriptionGroupBankAccount implements \JsonSerializable
@@ -410,6 +411,37 @@ class SubscriptionGroupBankAccount implements \JsonSerializable
     public function setGatewayHandle(?string $gatewayHandle): void
     {
         $this->gatewayHandle = $gatewayHandle;
+    }
+
+    /**
+     * Converts the SubscriptionGroupBankAccount object to a human-readable string representation.
+     *
+     * @return string The string representation of the SubscriptionGroupBankAccount object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'SubscriptionGroupBankAccount',
+            [
+                'bankName' => $this->bankName,
+                'bankAccountNumber' => $this->bankAccountNumber,
+                'bankRoutingNumber' => $this->bankRoutingNumber,
+                'bankIban' => $this->bankIban,
+                'bankBranchCode' => $this->bankBranchCode,
+                'bankAccountType' => $this->bankAccountType,
+                'bankAccountHolderType' => $this->bankAccountHolderType,
+                'paymentType' => $this->paymentType,
+                'billingAddress' => $this->billingAddress,
+                'billingCity' => $this->billingCity,
+                'billingState' => $this->billingState,
+                'billingZip' => $this->billingZip,
+                'billingCountry' => $this->billingCountry,
+                'chargifyToken' => $this->chargifyToken,
+                'currentVault' => $this->currentVault,
+                'gatewayHandle' => $this->gatewayHandle,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

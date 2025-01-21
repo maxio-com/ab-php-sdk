@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
@@ -1169,6 +1170,58 @@ class Product implements \JsonSerializable
     public function unsetProductPricePointHandle(): void
     {
         $this->productPricePointHandle = [];
+    }
+
+    /**
+     * Converts the Product object to a human-readable string representation.
+     *
+     * @return string The string representation of the Product object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'Product',
+            [
+                'id' => $this->id,
+                'name' => $this->name,
+                'handle' => $this->getHandle(),
+                'description' => $this->getDescription(),
+                'accountingCode' => $this->getAccountingCode(),
+                'requestCreditCard' => $this->requestCreditCard,
+                'expirationInterval' => $this->getExpirationInterval(),
+                'expirationIntervalUnit' => $this->getExpirationIntervalUnit(),
+                'createdAt' => $this->createdAt,
+                'updatedAt' => $this->updatedAt,
+                'priceInCents' => $this->priceInCents,
+                'interval' => $this->interval,
+                'intervalUnit' => $this->intervalUnit,
+                'initialChargeInCents' => $this->getInitialChargeInCents(),
+                'trialPriceInCents' => $this->getTrialPriceInCents(),
+                'trialInterval' => $this->getTrialInterval(),
+                'trialIntervalUnit' => $this->getTrialIntervalUnit(),
+                'archivedAt' => $this->getArchivedAt(),
+                'requireCreditCard' => $this->requireCreditCard,
+                'returnParams' => $this->getReturnParams(),
+                'taxable' => $this->taxable,
+                'updateReturnUrl' => $this->getUpdateReturnUrl(),
+                'initialChargeAfterTrial' => $this->getInitialChargeAfterTrial(),
+                'versionNumber' => $this->versionNumber,
+                'updateReturnParams' => $this->getUpdateReturnParams(),
+                'productFamily' => $this->productFamily,
+                'publicSignupPages' => $this->publicSignupPages,
+                'productPricePointName' => $this->productPricePointName,
+                'requestBillingAddress' => $this->requestBillingAddress,
+                'requireBillingAddress' => $this->requireBillingAddress,
+                'requireShippingAddress' => $this->requireShippingAddress,
+                'taxCode' => $this->getTaxCode(),
+                'defaultProductPricePointId' => $this->defaultProductPricePointId,
+                'useSiteExchangeRate' => $this->getUseSiteExchangeRate(),
+                'itemCategory' => $this->getItemCategory(),
+                'productPricePointId' => $this->productPricePointId,
+                'productPricePointHandle' => $this->getProductPricePointHandle(),
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

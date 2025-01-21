@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class PrepaidUsage implements \JsonSerializable
@@ -292,6 +293,31 @@ class PrepaidUsage implements \JsonSerializable
     public function setAllocationDetails(array $allocationDetails): void
     {
         $this->allocationDetails = $allocationDetails;
+    }
+
+    /**
+     * Converts the PrepaidUsage object to a human-readable string representation.
+     *
+     * @return string The string representation of the PrepaidUsage object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'PrepaidUsage',
+            [
+                'previousUnitBalance' => $this->previousUnitBalance,
+                'previousOverageUnitBalance' => $this->previousOverageUnitBalance,
+                'newUnitBalance' => $this->newUnitBalance,
+                'newOverageUnitBalance' => $this->newOverageUnitBalance,
+                'usageQuantity' => $this->usageQuantity,
+                'overageUsageQuantity' => $this->overageUsageQuantity,
+                'componentId' => $this->componentId,
+                'componentHandle' => $this->componentHandle,
+                'memo' => $this->memo,
+                'allocationDetails' => $this->allocationDetails,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 /**
@@ -169,6 +170,26 @@ class FailedPaymentEventData implements \JsonSerializable
     public function setTransactionId(int $transactionId): void
     {
         $this->transactionId = $transactionId;
+    }
+
+    /**
+     * Converts the FailedPaymentEventData object to a human-readable string representation.
+     *
+     * @return string The string representation of the FailedPaymentEventData object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'FailedPaymentEventData',
+            [
+                'amountInCents' => $this->amountInCents,
+                'appliedAmount' => $this->appliedAmount,
+                'memo' => $this->getMemo(),
+                'paymentMethod' => $this->paymentMethod,
+                'transactionId' => $this->transactionId,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

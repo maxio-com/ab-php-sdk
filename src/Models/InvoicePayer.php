@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class InvoicePayer implements \JsonSerializable
@@ -172,6 +173,27 @@ class InvoicePayer implements \JsonSerializable
     public function unsetVatNumber(): void
     {
         $this->vatNumber = [];
+    }
+
+    /**
+     * Converts the InvoicePayer object to a human-readable string representation.
+     *
+     * @return string The string representation of the InvoicePayer object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'InvoicePayer',
+            [
+                'chargifyId' => $this->chargifyId,
+                'firstName' => $this->firstName,
+                'lastName' => $this->lastName,
+                'organization' => $this->getOrganization(),
+                'email' => $this->email,
+                'vatNumber' => $this->getVatNumber(),
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

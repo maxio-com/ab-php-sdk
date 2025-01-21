@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 /**
@@ -107,6 +108,25 @@ class PaymentForAllocation implements \JsonSerializable
     public function setMemo(?string $memo): void
     {
         $this->memo = $memo;
+    }
+
+    /**
+     * Converts the PaymentForAllocation object to a human-readable string representation.
+     *
+     * @return string The string representation of the PaymentForAllocation object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'PaymentForAllocation',
+            [
+                'id' => $this->id,
+                'amountInCents' => $this->amountInCents,
+                'success' => $this->success,
+                'memo' => $this->memo,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

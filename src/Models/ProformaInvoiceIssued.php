@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
@@ -322,6 +323,32 @@ class ProformaInvoiceIssued implements \JsonSerializable
     public function setLineItems(array $lineItems): void
     {
         $this->lineItems = $lineItems;
+    }
+
+    /**
+     * Converts the ProformaInvoiceIssued object to a human-readable string representation.
+     *
+     * @return string The string representation of the ProformaInvoiceIssued object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'ProformaInvoiceIssued',
+            [
+                'uid' => $this->uid,
+                'number' => $this->number,
+                'role' => $this->role,
+                'deliveryDate' => $this->deliveryDate,
+                'createdAt' => $this->createdAt,
+                'dueAmount' => $this->dueAmount,
+                'paidAmount' => $this->paidAmount,
+                'taxAmount' => $this->taxAmount,
+                'totalAmount' => $this->totalAmount,
+                'productName' => $this->productName,
+                'lineItems' => $this->lineItems,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

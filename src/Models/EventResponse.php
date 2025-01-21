@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class EventResponse implements \JsonSerializable
@@ -44,6 +45,19 @@ class EventResponse implements \JsonSerializable
     public function setEvent(Event $event): void
     {
         $this->event = $event;
+    }
+
+    /**
+     * Converts the EventResponse object to a human-readable string representation.
+     *
+     * @return string The string representation of the EventResponse object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'EventResponse',
+            ['event' => $this->event, 'additionalProperties' => $this->additionalProperties]
+        );
     }
 
     private $additionalProperties = [];

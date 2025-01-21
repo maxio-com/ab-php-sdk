@@ -93,4 +93,19 @@ class ApiHelper
     {
         return CoreHelper::deserialize($json);
     }
+
+    /**
+     * Converts the properties to a human-readable string representation.
+     *
+     * Sample output:
+     *
+     * $prefix [$properties:key: $properties:value, $processedProperties]
+     */
+    public static function stringify(
+        string $prefix,
+        array $properties,
+        string $processedProperties = ''
+    ): string {
+        return CoreHelper::stringify($prefix, $properties, $processedProperties);
+    }
 }

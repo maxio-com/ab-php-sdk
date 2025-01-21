@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class GroupSettings implements \JsonSerializable
@@ -73,6 +74,23 @@ class GroupSettings implements \JsonSerializable
     public function setBilling(?GroupBilling $billing): void
     {
         $this->billing = $billing;
+    }
+
+    /**
+     * Converts the GroupSettings object to a human-readable string representation.
+     *
+     * @return string The string representation of the GroupSettings object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'GroupSettings',
+            [
+                'target' => $this->target,
+                'billing' => $this->billing,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

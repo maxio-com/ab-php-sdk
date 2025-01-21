@@ -10,6 +10,8 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Exceptions;
 
+use AdvancedBillingLib\ApiHelper;
+
 class SubscriptionResponseErrorException extends ApiException
 {
     /**
@@ -33,6 +35,20 @@ class SubscriptionResponseErrorException extends ApiException
     public function setSubscription(?\AdvancedBillingLib\Models\Subscription $subscription): void
     {
         $this->subscription = $subscription;
+    }
+
+    /**
+     * Converts the SubscriptionResponseErrorException object to a human-readable string representation.
+     *
+     * @return string The string representation of the SubscriptionResponseErrorException object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'SubscriptionResponseErrorException',
+            ['subscription' => $this->subscription, 'additionalProperties' => $this->additionalProperties],
+            parent::__toString()
+        );
     }
 
     private $additionalProperties = [];

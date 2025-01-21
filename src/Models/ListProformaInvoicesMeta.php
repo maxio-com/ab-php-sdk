@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class ListProformaInvoicesMeta implements \JsonSerializable
@@ -104,6 +105,25 @@ class ListProformaInvoicesMeta implements \JsonSerializable
     public function setStatusCode(?int $statusCode): void
     {
         $this->statusCode = $statusCode;
+    }
+
+    /**
+     * Converts the ListProformaInvoicesMeta object to a human-readable string representation.
+     *
+     * @return string The string representation of the ListProformaInvoicesMeta object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'ListProformaInvoicesMeta',
+            [
+                'totalCount' => $this->totalCount,
+                'currentPage' => $this->currentPage,
+                'totalPages' => $this->totalPages,
+                'statusCode' => $this->statusCode,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class ComponentPricePointErrorItem implements \JsonSerializable
@@ -81,6 +82,24 @@ class ComponentPricePointErrorItem implements \JsonSerializable
     public function setPricePoint(?int $pricePoint): void
     {
         $this->pricePoint = $pricePoint;
+    }
+
+    /**
+     * Converts the ComponentPricePointErrorItem object to a human-readable string representation.
+     *
+     * @return string The string representation of the ComponentPricePointErrorItem object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'ComponentPricePointErrorItem',
+            [
+                'componentId' => $this->componentId,
+                'message' => $this->message,
+                'pricePoint' => $this->pricePoint,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

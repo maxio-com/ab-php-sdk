@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class MeteredUsage implements \JsonSerializable
@@ -180,6 +181,27 @@ class MeteredUsage implements \JsonSerializable
     public function setMemo(string $memo): void
     {
         $this->memo = $memo;
+    }
+
+    /**
+     * Converts the MeteredUsage object to a human-readable string representation.
+     *
+     * @return string The string representation of the MeteredUsage object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'MeteredUsage',
+            [
+                'previousUnitBalance' => $this->previousUnitBalance,
+                'newUnitBalance' => $this->newUnitBalance,
+                'usageQuantity' => $this->usageQuantity,
+                'componentId' => $this->componentId,
+                'componentHandle' => $this->componentHandle,
+                'memo' => $this->memo,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

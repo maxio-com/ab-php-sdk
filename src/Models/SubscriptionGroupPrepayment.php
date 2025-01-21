@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class SubscriptionGroupPrepayment implements \JsonSerializable
@@ -123,6 +124,25 @@ class SubscriptionGroupPrepayment implements \JsonSerializable
     public function setMethod(string $method): void
     {
         $this->method = $method;
+    }
+
+    /**
+     * Converts the SubscriptionGroupPrepayment object to a human-readable string representation.
+     *
+     * @return string The string representation of the SubscriptionGroupPrepayment object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'SubscriptionGroupPrepayment',
+            [
+                'amount' => $this->amount,
+                'details' => $this->details,
+                'memo' => $this->memo,
+                'method' => $this->method,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

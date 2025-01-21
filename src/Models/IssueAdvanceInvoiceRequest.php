@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class IssueAdvanceInvoiceRequest implements \JsonSerializable
@@ -35,6 +36,19 @@ class IssueAdvanceInvoiceRequest implements \JsonSerializable
     public function setForce(?bool $force): void
     {
         $this->force = $force;
+    }
+
+    /**
+     * Converts the IssueAdvanceInvoiceRequest object to a human-readable string representation.
+     *
+     * @return string The string representation of the IssueAdvanceInvoiceRequest object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'IssueAdvanceInvoiceRequest',
+            ['force' => $this->force, 'additionalProperties' => $this->additionalProperties]
+        );
     }
 
     private $additionalProperties = [];

@@ -302,6 +302,28 @@ class Event implements \JsonSerializable
         $this->eventSpecificData = $eventSpecificData;
     }
 
+    /**
+     * Converts the Event object to a human-readable string representation.
+     *
+     * @return string The string representation of the Event object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'Event',
+            [
+                'id' => $this->id,
+                'key' => $this->key,
+                'message' => $this->message,
+                'subscriptionId' => $this->subscriptionId,
+                'customerId' => $this->customerId,
+                'createdAt' => $this->createdAt,
+                'eventSpecificData' => $this->eventSpecificData,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
+    }
+
     private $additionalProperties = [];
 
     /**

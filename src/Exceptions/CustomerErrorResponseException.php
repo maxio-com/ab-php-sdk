@@ -10,6 +10,8 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Exceptions;
 
+use AdvancedBillingLib\ApiHelper;
+
 class CustomerErrorResponseException extends ApiException
 {
     /**
@@ -38,6 +40,20 @@ class CustomerErrorResponseException extends ApiException
     public function setErrors($errors): void
     {
         $this->errors = $errors;
+    }
+
+    /**
+     * Converts the CustomerErrorResponseException object to a human-readable string representation.
+     *
+     * @return string The string representation of the CustomerErrorResponseException object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'CustomerErrorResponseException',
+            ['errors' => $this->errors, 'additionalProperties' => $this->additionalProperties],
+            parent::__toString()
+        );
     }
 
     private $additionalProperties = [];

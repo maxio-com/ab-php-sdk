@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
@@ -250,6 +251,29 @@ class ListPricePointsFilter implements \JsonSerializable
     public function setArchivedAt(?string $archivedAt): void
     {
         $this->archivedAt = $archivedAt;
+    }
+
+    /**
+     * Converts the ListPricePointsFilter object to a human-readable string representation.
+     *
+     * @return string The string representation of the ListPricePointsFilter object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'ListPricePointsFilter',
+            [
+                'dateField' => $this->dateField,
+                'startDate' => $this->startDate,
+                'endDate' => $this->endDate,
+                'startDatetime' => $this->startDatetime,
+                'endDatetime' => $this->endDatetime,
+                'type' => $this->type,
+                'ids' => $this->ids,
+                'archivedAt' => $this->archivedAt,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

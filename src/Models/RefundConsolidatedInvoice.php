@@ -192,6 +192,27 @@ class RefundConsolidatedInvoice implements \JsonSerializable
         $this->amount = $amount;
     }
 
+    /**
+     * Converts the RefundConsolidatedInvoice object to a human-readable string representation.
+     *
+     * @return string The string representation of the RefundConsolidatedInvoice object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'RefundConsolidatedInvoice',
+            [
+                'memo' => $this->memo,
+                'paymentId' => $this->paymentId,
+                'segmentUids' => $this->segmentUids,
+                'external' => $this->external,
+                'applyCredit' => $this->applyCredit,
+                'amount' => $this->amount,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
+    }
+
     private $additionalProperties = [];
 
     /**

@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
@@ -212,6 +213,27 @@ class SubscriptionFilter implements \JsonSerializable
     public function setEndDatetime(?\DateTime $endDatetime): void
     {
         $this->endDatetime = $endDatetime;
+    }
+
+    /**
+     * Converts the SubscriptionFilter object to a human-readable string representation.
+     *
+     * @return string The string representation of the SubscriptionFilter object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'SubscriptionFilter',
+            [
+                'states' => $this->states,
+                'dateField' => $this->dateField,
+                'startDate' => $this->startDate,
+                'endDate' => $this->endDate,
+                'startDatetime' => $this->startDatetime,
+                'endDatetime' => $this->endDatetime,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

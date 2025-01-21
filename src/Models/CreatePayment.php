@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class CreatePayment implements \JsonSerializable
@@ -125,6 +126,25 @@ class CreatePayment implements \JsonSerializable
     public function setPaymentMethod(string $paymentMethod): void
     {
         $this->paymentMethod = $paymentMethod;
+    }
+
+    /**
+     * Converts the CreatePayment object to a human-readable string representation.
+     *
+     * @return string The string representation of the CreatePayment object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'CreatePayment',
+            [
+                'amount' => $this->amount,
+                'memo' => $this->memo,
+                'paymentDetails' => $this->paymentDetails,
+                'paymentMethod' => $this->paymentMethod,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

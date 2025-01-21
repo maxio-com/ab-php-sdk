@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class Breakouts implements \JsonSerializable
@@ -104,6 +105,25 @@ class Breakouts implements \JsonSerializable
     public function setUsageAmountFormatted(?string $usageAmountFormatted): void
     {
         $this->usageAmountFormatted = $usageAmountFormatted;
+    }
+
+    /**
+     * Converts the Breakouts object to a human-readable string representation.
+     *
+     * @return string The string representation of the Breakouts object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'Breakouts',
+            [
+                'planAmountInCents' => $this->planAmountInCents,
+                'planAmountFormatted' => $this->planAmountFormatted,
+                'usageAmountInCents' => $this->usageAmountInCents,
+                'usageAmountFormatted' => $this->usageAmountFormatted,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

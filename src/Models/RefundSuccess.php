@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class RefundSuccess implements \JsonSerializable
@@ -96,6 +97,24 @@ class RefundSuccess implements \JsonSerializable
     public function setProductId(int $productId): void
     {
         $this->productId = $productId;
+    }
+
+    /**
+     * Converts the RefundSuccess object to a human-readable string representation.
+     *
+     * @return string The string representation of the RefundSuccess object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'RefundSuccess',
+            [
+                'refundId' => $this->refundId,
+                'gatewayTransactionId' => $this->gatewayTransactionId,
+                'productId' => $this->productId,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

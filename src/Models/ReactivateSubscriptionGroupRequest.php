@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class ReactivateSubscriptionGroupRequest implements \JsonSerializable
@@ -58,6 +59,23 @@ class ReactivateSubscriptionGroupRequest implements \JsonSerializable
     public function setResumeMembers(?bool $resumeMembers): void
     {
         $this->resumeMembers = $resumeMembers;
+    }
+
+    /**
+     * Converts the ReactivateSubscriptionGroupRequest object to a human-readable string representation.
+     *
+     * @return string The string representation of the ReactivateSubscriptionGroupRequest object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'ReactivateSubscriptionGroupRequest',
+            [
+                'resume' => $this->resume,
+                'resumeMembers' => $this->resumeMembers,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

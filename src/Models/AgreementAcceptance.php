@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 /**
@@ -159,6 +160,27 @@ class AgreementAcceptance implements \JsonSerializable
     public function setSecureCheckoutPolicyUrl(?string $secureCheckoutPolicyUrl): void
     {
         $this->secureCheckoutPolicyUrl = $secureCheckoutPolicyUrl;
+    }
+
+    /**
+     * Converts the AgreementAcceptance object to a human-readable string representation.
+     *
+     * @return string The string representation of the AgreementAcceptance object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'AgreementAcceptance',
+            [
+                'ipAddress' => $this->ipAddress,
+                'termsUrl' => $this->termsUrl,
+                'privacyPolicyUrl' => $this->privacyPolicyUrl,
+                'returnRefundPolicyUrl' => $this->returnRefundPolicyUrl,
+                'deliveryPolicyUrl' => $this->deliveryPolicyUrl,
+                'secureCheckoutPolicyUrl' => $this->secureCheckoutPolicyUrl,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

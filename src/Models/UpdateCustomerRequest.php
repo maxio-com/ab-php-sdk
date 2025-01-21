@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class UpdateCustomerRequest implements \JsonSerializable
@@ -44,6 +45,19 @@ class UpdateCustomerRequest implements \JsonSerializable
     public function setCustomer(UpdateCustomer $customer): void
     {
         $this->customer = $customer;
+    }
+
+    /**
+     * Converts the UpdateCustomerRequest object to a human-readable string representation.
+     *
+     * @return string The string representation of the UpdateCustomerRequest object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'UpdateCustomerRequest',
+            ['customer' => $this->customer, 'additionalProperties' => $this->additionalProperties]
+        );
     }
 
     private $additionalProperties = [];

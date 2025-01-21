@@ -595,6 +595,40 @@ class QuantityBasedComponent implements \JsonSerializable
         $this->intervalUnit = [];
     }
 
+    /**
+     * Converts the QuantityBasedComponent object to a human-readable string representation.
+     *
+     * @return string The string representation of the QuantityBasedComponent object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'QuantityBasedComponent',
+            [
+                'name' => $this->name,
+                'unitName' => $this->unitName,
+                'description' => $this->description,
+                'handle' => $this->handle,
+                'taxable' => $this->taxable,
+                'pricingScheme' => $this->pricingScheme,
+                'prices' => $this->prices,
+                'upgradeCharge' => $this->getUpgradeCharge(),
+                'downgradeCredit' => $this->getDowngradeCredit(),
+                'pricePoints' => $this->pricePoints,
+                'unitPrice' => $this->unitPrice,
+                'taxCode' => $this->taxCode,
+                'hideDateRangeOnInvoice' => $this->hideDateRangeOnInvoice,
+                'recurring' => $this->recurring,
+                'displayOnHostedPage' => $this->displayOnHostedPage,
+                'allowFractionalQuantities' => $this->allowFractionalQuantities,
+                'publicSignupPageIds' => $this->publicSignupPageIds,
+                'interval' => $this->interval,
+                'intervalUnit' => $this->getIntervalUnit(),
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
+    }
+
     private $additionalProperties = [];
 
     /**

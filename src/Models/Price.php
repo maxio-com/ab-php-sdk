@@ -124,6 +124,24 @@ class Price implements \JsonSerializable
         $this->unitPrice = $unitPrice;
     }
 
+    /**
+     * Converts the Price object to a human-readable string representation.
+     *
+     * @return string The string representation of the Price object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'Price',
+            [
+                'startingQuantity' => $this->startingQuantity,
+                'endingQuantity' => $this->getEndingQuantity(),
+                'unitPrice' => $this->unitPrice,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
+    }
+
     private $additionalProperties = [];
 
     /**

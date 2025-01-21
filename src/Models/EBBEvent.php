@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class EBBEvent implements \JsonSerializable
@@ -35,6 +36,19 @@ class EBBEvent implements \JsonSerializable
     public function setChargify(?ChargifyEBB $chargify): void
     {
         $this->chargify = $chargify;
+    }
+
+    /**
+     * Converts the EBBEvent object to a human-readable string representation.
+     *
+     * @return string The string representation of the EBBEvent object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'EBBEvent',
+            ['chargify' => $this->chargify, 'additionalProperties' => $this->additionalProperties]
+        );
     }
 
     private $additionalProperties = [];

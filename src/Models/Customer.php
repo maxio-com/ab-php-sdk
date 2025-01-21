@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
@@ -1058,6 +1059,51 @@ class Customer implements \JsonSerializable
     public function unsetDefaultAutoRenewalProfileId(): void
     {
         $this->defaultAutoRenewalProfileId = [];
+    }
+
+    /**
+     * Converts the Customer object to a human-readable string representation.
+     *
+     * @return string The string representation of the Customer object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'Customer',
+            [
+                'firstName' => $this->firstName,
+                'lastName' => $this->lastName,
+                'email' => $this->email,
+                'ccEmails' => $this->getCcEmails(),
+                'organization' => $this->getOrganization(),
+                'reference' => $this->getReference(),
+                'id' => $this->id,
+                'createdAt' => $this->createdAt,
+                'updatedAt' => $this->updatedAt,
+                'address' => $this->getAddress(),
+                'address2' => $this->getAddress2(),
+                'city' => $this->getCity(),
+                'state' => $this->getState(),
+                'stateName' => $this->getStateName(),
+                'zip' => $this->getZip(),
+                'country' => $this->getCountry(),
+                'countryName' => $this->getCountryName(),
+                'phone' => $this->getPhone(),
+                'verified' => $this->getVerified(),
+                'portalCustomerCreatedAt' => $this->getPortalCustomerCreatedAt(),
+                'portalInviteLastSentAt' => $this->getPortalInviteLastSentAt(),
+                'portalInviteLastAcceptedAt' => $this->getPortalInviteLastAcceptedAt(),
+                'taxExempt' => $this->taxExempt,
+                'vatNumber' => $this->getVatNumber(),
+                'parentId' => $this->getParentId(),
+                'locale' => $this->getLocale(),
+                'defaultSubscriptionGroupUid' => $this->getDefaultSubscriptionGroupUid(),
+                'salesforceId' => $this->getSalesforceId(),
+                'taxExemptReason' => $this->getTaxExemptReason(),
+                'defaultAutoRenewalProfileId' => $this->getDefaultAutoRenewalProfileId(),
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

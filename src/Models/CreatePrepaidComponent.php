@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class CreatePrepaidComponent implements \JsonSerializable
@@ -44,6 +45,22 @@ class CreatePrepaidComponent implements \JsonSerializable
     public function setPrepaidUsageComponent(PrepaidUsageComponent $prepaidUsageComponent): void
     {
         $this->prepaidUsageComponent = $prepaidUsageComponent;
+    }
+
+    /**
+     * Converts the CreatePrepaidComponent object to a human-readable string representation.
+     *
+     * @return string The string representation of the CreatePrepaidComponent object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'CreatePrepaidComponent',
+            [
+                'prepaidUsageComponent' => $this->prepaidUsageComponent,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

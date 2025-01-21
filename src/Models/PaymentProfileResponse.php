@@ -52,6 +52,19 @@ class PaymentProfileResponse implements \JsonSerializable
         $this->paymentProfile = $paymentProfile;
     }
 
+    /**
+     * Converts the PaymentProfileResponse object to a human-readable string representation.
+     *
+     * @return string The string representation of the PaymentProfileResponse object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'PaymentProfileResponse',
+            ['paymentProfile' => $this->paymentProfile, 'additionalProperties' => $this->additionalProperties]
+        );
+    }
+
     private $additionalProperties = [];
 
     /**

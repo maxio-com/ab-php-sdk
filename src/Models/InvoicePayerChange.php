@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class InvoicePayerChange implements \JsonSerializable
@@ -104,6 +105,25 @@ class InvoicePayerChange implements \JsonSerializable
     public function setEmail(?string $email): void
     {
         $this->email = $email;
+    }
+
+    /**
+     * Converts the InvoicePayerChange object to a human-readable string representation.
+     *
+     * @return string The string representation of the InvoicePayerChange object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'InvoicePayerChange',
+            [
+                'firstName' => $this->firstName,
+                'lastName' => $this->lastName,
+                'organization' => $this->organization,
+                'email' => $this->email,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

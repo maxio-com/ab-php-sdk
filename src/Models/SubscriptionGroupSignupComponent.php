@@ -156,6 +156,26 @@ class SubscriptionGroupSignupComponent implements \JsonSerializable
         $this->customPrice = $customPrice;
     }
 
+    /**
+     * Converts the SubscriptionGroupSignupComponent object to a human-readable string representation.
+     *
+     * @return string The string representation of the SubscriptionGroupSignupComponent object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'SubscriptionGroupSignupComponent',
+            [
+                'componentId' => $this->componentId,
+                'allocatedQuantity' => $this->allocatedQuantity,
+                'unitBalance' => $this->unitBalance,
+                'pricePointId' => $this->pricePointId,
+                'customPrice' => $this->customPrice,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
+    }
+
     private $additionalProperties = [];
 
     /**

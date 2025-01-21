@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class UpdateComponentPricePointRequest implements \JsonSerializable
@@ -35,6 +36,19 @@ class UpdateComponentPricePointRequest implements \JsonSerializable
     public function setPricePoint(?UpdateComponentPricePoint $pricePoint): void
     {
         $this->pricePoint = $pricePoint;
+    }
+
+    /**
+     * Converts the UpdateComponentPricePointRequest object to a human-readable string representation.
+     *
+     * @return string The string representation of the UpdateComponentPricePointRequest object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'UpdateComponentPricePointRequest',
+            ['pricePoint' => $this->pricePoint, 'additionalProperties' => $this->additionalProperties]
+        );
     }
 
     private $additionalProperties = [];

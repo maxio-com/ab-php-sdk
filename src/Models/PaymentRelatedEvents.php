@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class PaymentRelatedEvents implements \JsonSerializable
@@ -70,6 +71,23 @@ class PaymentRelatedEvents implements \JsonSerializable
     public function setAccountTransactionId(int $accountTransactionId): void
     {
         $this->accountTransactionId = $accountTransactionId;
+    }
+
+    /**
+     * Converts the PaymentRelatedEvents object to a human-readable string representation.
+     *
+     * @return string The string representation of the PaymentRelatedEvents object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'PaymentRelatedEvents',
+            [
+                'productId' => $this->productId,
+                'accountTransactionId' => $this->accountTransactionId,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

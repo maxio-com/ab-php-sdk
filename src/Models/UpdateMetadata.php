@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class UpdateMetadata implements \JsonSerializable
@@ -81,6 +82,24 @@ class UpdateMetadata implements \JsonSerializable
     public function setValue(?string $value): void
     {
         $this->value = $value;
+    }
+
+    /**
+     * Converts the UpdateMetadata object to a human-readable string representation.
+     *
+     * @return string The string representation of the UpdateMetadata object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'UpdateMetadata',
+            [
+                'currentName' => $this->currentName,
+                'name' => $this->name,
+                'value' => $this->value,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class ProformaInvoiceTax implements \JsonSerializable
@@ -178,6 +179,28 @@ class ProformaInvoiceTax implements \JsonSerializable
     public function setLineItemBreakouts(?array $lineItemBreakouts): void
     {
         $this->lineItemBreakouts = $lineItemBreakouts;
+    }
+
+    /**
+     * Converts the ProformaInvoiceTax object to a human-readable string representation.
+     *
+     * @return string The string representation of the ProformaInvoiceTax object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'ProformaInvoiceTax',
+            [
+                'uid' => $this->uid,
+                'title' => $this->title,
+                'sourceType' => $this->sourceType,
+                'percentage' => $this->percentage,
+                'taxableAmount' => $this->taxableAmount,
+                'taxAmount' => $this->taxAmount,
+                'lineItemBreakouts' => $this->lineItemBreakouts,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

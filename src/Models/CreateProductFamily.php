@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class CreateProductFamily implements \JsonSerializable
@@ -112,6 +113,24 @@ class CreateProductFamily implements \JsonSerializable
     public function unsetDescription(): void
     {
         $this->description = [];
+    }
+
+    /**
+     * Converts the CreateProductFamily object to a human-readable string representation.
+     *
+     * @return string The string representation of the CreateProductFamily object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'CreateProductFamily',
+            [
+                'name' => $this->name,
+                'handle' => $this->getHandle(),
+                'description' => $this->getDescription(),
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

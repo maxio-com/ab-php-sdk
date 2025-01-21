@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class CustomerCustomFieldsChange implements \JsonSerializable
@@ -78,6 +79,23 @@ class CustomerCustomFieldsChange implements \JsonSerializable
     public function setAfter(array $after): void
     {
         $this->after = $after;
+    }
+
+    /**
+     * Converts the CustomerCustomFieldsChange object to a human-readable string representation.
+     *
+     * @return string The string representation of the CustomerCustomFieldsChange object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'CustomerCustomFieldsChange',
+            [
+                'before' => $this->before,
+                'after' => $this->after,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

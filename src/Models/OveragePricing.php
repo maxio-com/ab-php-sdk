@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class OveragePricing implements \JsonSerializable
@@ -76,6 +77,23 @@ class OveragePricing implements \JsonSerializable
     public function setPrices(?array $prices): void
     {
         $this->prices = $prices;
+    }
+
+    /**
+     * Converts the OveragePricing object to a human-readable string representation.
+     *
+     * @return string The string representation of the OveragePricing object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'OveragePricing',
+            [
+                'pricingScheme' => $this->pricingScheme,
+                'prices' => $this->prices,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

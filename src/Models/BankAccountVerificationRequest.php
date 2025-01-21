@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class BankAccountVerificationRequest implements \JsonSerializable
@@ -44,6 +45,22 @@ class BankAccountVerificationRequest implements \JsonSerializable
     public function setBankAccountVerification(BankAccountVerification $bankAccountVerification): void
     {
         $this->bankAccountVerification = $bankAccountVerification;
+    }
+
+    /**
+     * Converts the BankAccountVerificationRequest object to a human-readable string representation.
+     *
+     * @return string The string representation of the BankAccountVerificationRequest object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'BankAccountVerificationRequest',
+            [
+                'bankAccountVerification' => $this->bankAccountVerification,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

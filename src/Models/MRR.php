@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
@@ -154,6 +155,27 @@ class MRR implements \JsonSerializable
     public function setAtTime(?\DateTime $atTime): void
     {
         $this->atTime = $atTime;
+    }
+
+    /**
+     * Converts the MRR object to a human-readable string representation.
+     *
+     * @return string The string representation of the MRR object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'MRR',
+            [
+                'amountInCents' => $this->amountInCents,
+                'amountFormatted' => $this->amountFormatted,
+                'currency' => $this->currency,
+                'currencySymbol' => $this->currencySymbol,
+                'breakouts' => $this->breakouts,
+                'atTime' => $this->atTime,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

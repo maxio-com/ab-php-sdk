@@ -942,6 +942,53 @@ class SubscriptionComponent implements \JsonSerializable
         $this->intervalUnit = [];
     }
 
+    /**
+     * Converts the SubscriptionComponent object to a human-readable string representation.
+     *
+     * @return string The string representation of the SubscriptionComponent object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'SubscriptionComponent',
+            [
+                'id' => $this->id,
+                'name' => $this->name,
+                'kind' => $this->kind,
+                'unitName' => $this->unitName,
+                'enabled' => $this->enabled,
+                'unitBalance' => $this->unitBalance,
+                'currency' => $this->currency,
+                'allocatedQuantity' => $this->allocatedQuantity,
+                'pricingScheme' => $this->getPricingScheme(),
+                'componentId' => $this->componentId,
+                'componentHandle' => $this->getComponentHandle(),
+                'subscriptionId' => $this->subscriptionId,
+                'recurring' => $this->recurring,
+                'upgradeCharge' => $this->getUpgradeCharge(),
+                'downgradeCredit' => $this->getDowngradeCredit(),
+                'archivedAt' => $this->getArchivedAt(),
+                'pricePointId' => $this->getPricePointId(),
+                'pricePointHandle' => $this->getPricePointHandle(),
+                'pricePointType' => $this->getPricePointType(),
+                'pricePointName' => $this->getPricePointName(),
+                'productFamilyId' => $this->productFamilyId,
+                'productFamilyHandle' => $this->productFamilyHandle,
+                'createdAt' => $this->createdAt,
+                'updatedAt' => $this->updatedAt,
+                'useSiteExchangeRate' => $this->getUseSiteExchangeRate(),
+                'description' => $this->getDescription(),
+                'allowFractionalQuantities' => $this->allowFractionalQuantities,
+                'subscription' => $this->subscription,
+                'historicUsages' => $this->historicUsages,
+                'displayOnHostedPage' => $this->displayOnHostedPage,
+                'interval' => $this->interval,
+                'intervalUnit' => $this->getIntervalUnit(),
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
+    }
+
     private $additionalProperties = [];
 
     /**

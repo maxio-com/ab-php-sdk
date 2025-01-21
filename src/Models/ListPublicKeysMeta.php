@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class ListPublicKeysMeta implements \JsonSerializable
@@ -104,6 +105,25 @@ class ListPublicKeysMeta implements \JsonSerializable
     public function setPerPage(?int $perPage): void
     {
         $this->perPage = $perPage;
+    }
+
+    /**
+     * Converts the ListPublicKeysMeta object to a human-readable string representation.
+     *
+     * @return string The string representation of the ListPublicKeysMeta object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'ListPublicKeysMeta',
+            [
+                'totalCount' => $this->totalCount,
+                'currentPage' => $this->currentPage,
+                'totalPages' => $this->totalPages,
+                'perPage' => $this->perPage,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

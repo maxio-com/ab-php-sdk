@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
@@ -103,6 +104,24 @@ class ListPrepaymentsFilter implements \JsonSerializable
     public function setEndDate(?\DateTime $endDate): void
     {
         $this->endDate = $endDate;
+    }
+
+    /**
+     * Converts the ListPrepaymentsFilter object to a human-readable string representation.
+     *
+     * @return string The string representation of the ListPrepaymentsFilter object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'ListPrepaymentsFilter',
+            [
+                'dateField' => $this->dateField,
+                'startDate' => $this->startDate,
+                'endDate' => $this->endDate,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

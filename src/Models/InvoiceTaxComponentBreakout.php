@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class InvoiceTaxComponentBreakout implements \JsonSerializable
@@ -334,6 +335,35 @@ class InvoiceTaxComponentBreakout implements \JsonSerializable
     public function setTaxSubType(?string $taxSubType): void
     {
         $this->taxSubType = $taxSubType;
+    }
+
+    /**
+     * Converts the InvoiceTaxComponentBreakout object to a human-readable string representation.
+     *
+     * @return string The string representation of the InvoiceTaxComponentBreakout object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'InvoiceTaxComponentBreakout',
+            [
+                'taxRuleId' => $this->taxRuleId,
+                'percentage' => $this->percentage,
+                'countryCode' => $this->countryCode,
+                'subdivisionCode' => $this->subdivisionCode,
+                'taxAmount' => $this->taxAmount,
+                'taxableAmount' => $this->taxableAmount,
+                'taxExemptAmount' => $this->taxExemptAmount,
+                'nonTaxableAmount' => $this->nonTaxableAmount,
+                'taxName' => $this->taxName,
+                'taxType' => $this->taxType,
+                'rateType' => $this->rateType,
+                'taxAuthorityType' => $this->taxAuthorityType,
+                'stateAssignedNo' => $this->stateAssignedNo,
+                'taxSubType' => $this->taxSubType,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

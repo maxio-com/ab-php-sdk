@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class SaleRep implements \JsonSerializable
@@ -131,6 +132,26 @@ class SaleRep implements \JsonSerializable
     public function setSubscriptions(?array $subscriptions): void
     {
         $this->subscriptions = $subscriptions;
+    }
+
+    /**
+     * Converts the SaleRep object to a human-readable string representation.
+     *
+     * @return string The string representation of the SaleRep object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'SaleRep',
+            [
+                'id' => $this->id,
+                'fullName' => $this->fullName,
+                'subscriptionsCount' => $this->subscriptionsCount,
+                'testMode' => $this->testMode,
+                'subscriptions' => $this->subscriptions,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

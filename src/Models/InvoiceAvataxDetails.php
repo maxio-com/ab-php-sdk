@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
@@ -185,6 +186,26 @@ class InvoiceAvataxDetails implements \JsonSerializable
     public function unsetModifyDate(): void
     {
         $this->modifyDate = [];
+    }
+
+    /**
+     * Converts the InvoiceAvataxDetails object to a human-readable string representation.
+     *
+     * @return string The string representation of the InvoiceAvataxDetails object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'InvoiceAvataxDetails',
+            [
+                'id' => $this->getId(),
+                'status' => $this->getStatus(),
+                'documentCode' => $this->getDocumentCode(),
+                'commitDate' => $this->getCommitDate(),
+                'modifyDate' => $this->getModifyDate(),
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class CreateOnOffComponent implements \JsonSerializable
@@ -44,6 +45,19 @@ class CreateOnOffComponent implements \JsonSerializable
     public function setOnOffComponent(OnOffComponent $onOffComponent): void
     {
         $this->onOffComponent = $onOffComponent;
+    }
+
+    /**
+     * Converts the CreateOnOffComponent object to a human-readable string representation.
+     *
+     * @return string The string representation of the CreateOnOffComponent object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'CreateOnOffComponent',
+            ['onOffComponent' => $this->onOffComponent, 'additionalProperties' => $this->additionalProperties]
+        );
     }
 
     private $additionalProperties = [];

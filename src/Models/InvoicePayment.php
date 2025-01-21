@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
@@ -336,6 +337,33 @@ class InvoicePayment implements \JsonSerializable
     public function setUid(?string $uid): void
     {
         $this->uid = $uid;
+    }
+
+    /**
+     * Converts the InvoicePayment object to a human-readable string representation.
+     *
+     * @return string The string representation of the InvoicePayment object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'InvoicePayment',
+            [
+                'transactionTime' => $this->transactionTime,
+                'memo' => $this->memo,
+                'originalAmount' => $this->originalAmount,
+                'appliedAmount' => $this->appliedAmount,
+                'paymentMethod' => $this->paymentMethod,
+                'transactionId' => $this->transactionId,
+                'prepayment' => $this->prepayment,
+                'gatewayHandle' => $this->getGatewayHandle(),
+                'gatewayUsed' => $this->gatewayUsed,
+                'gatewayTransactionId' => $this->getGatewayTransactionId(),
+                'receivedOn' => $this->getReceivedOn(),
+                'uid' => $this->uid,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

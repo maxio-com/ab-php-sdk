@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 class InvoiceAddress implements \JsonSerializable
@@ -216,6 +217,27 @@ class InvoiceAddress implements \JsonSerializable
     public function unsetCountry(): void
     {
         $this->country = [];
+    }
+
+    /**
+     * Converts the InvoiceAddress object to a human-readable string representation.
+     *
+     * @return string The string representation of the InvoiceAddress object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'InvoiceAddress',
+            [
+                'street' => $this->getStreet(),
+                'line2' => $this->getLine2(),
+                'city' => $this->getCity(),
+                'state' => $this->getState(),
+                'zip' => $this->getZip(),
+                'country' => $this->getCountry(),
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
@@ -757,6 +758,48 @@ class CreditNote implements \JsonSerializable
     public function setOriginInvoices(?array $originInvoices): void
     {
         $this->originInvoices = $originInvoices;
+    }
+
+    /**
+     * Converts the CreditNote object to a human-readable string representation.
+     *
+     * @return string The string representation of the CreditNote object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'CreditNote',
+            [
+                'uid' => $this->uid,
+                'siteId' => $this->siteId,
+                'customerId' => $this->customerId,
+                'subscriptionId' => $this->subscriptionId,
+                'number' => $this->number,
+                'sequenceNumber' => $this->sequenceNumber,
+                'issueDate' => $this->issueDate,
+                'appliedDate' => $this->appliedDate,
+                'status' => $this->status,
+                'currency' => $this->currency,
+                'memo' => $this->memo,
+                'seller' => $this->seller,
+                'customer' => $this->customer,
+                'billingAddress' => $this->billingAddress,
+                'shippingAddress' => $this->shippingAddress,
+                'subtotalAmount' => $this->subtotalAmount,
+                'discountAmount' => $this->discountAmount,
+                'taxAmount' => $this->taxAmount,
+                'totalAmount' => $this->totalAmount,
+                'appliedAmount' => $this->appliedAmount,
+                'remainingAmount' => $this->remainingAmount,
+                'lineItems' => $this->lineItems,
+                'discounts' => $this->discounts,
+                'taxes' => $this->taxes,
+                'applications' => $this->applications,
+                'refunds' => $this->refunds,
+                'originInvoices' => $this->originInvoices,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models;
 
+use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 /**
@@ -222,6 +223,30 @@ class CreateInvoiceAddress implements \JsonSerializable
     public function setCountry(?string $country): void
     {
         $this->country = $country;
+    }
+
+    /**
+     * Converts the CreateInvoiceAddress object to a human-readable string representation.
+     *
+     * @return string The string representation of the CreateInvoiceAddress object.
+     */
+    public function __toString(): string
+    {
+        return ApiHelper::stringify(
+            'CreateInvoiceAddress',
+            [
+                'firstName' => $this->firstName,
+                'lastName' => $this->lastName,
+                'phone' => $this->phone,
+                'address' => $this->address,
+                'address2' => $this->address2,
+                'city' => $this->city,
+                'state' => $this->state,
+                'zip' => $this->zip,
+                'country' => $this->country,
+                'additionalProperties' => $this->additionalProperties
+            ]
+        );
     }
 
     private $additionalProperties = [];

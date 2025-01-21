@@ -9,7 +9,7 @@ final class PaymentProfileTestData
     public const CARD_DISABLED = false;
     public const VAULT_TOKEN = '1';
     public const CURRENT_VAULT = 'bogus';
-    public const CARD_EXPIRATION_YEAR = 2024;
+    public const CARD_EXPIRATION_YEAR = 2050;
     public const CARD_EXPIRATION_MONTH = 12;
     public const CARD_TYPE = 'visa';
     public const MASKED_CARD_NUMBER = 'XXXX-XXXX-XXXX-1111';
