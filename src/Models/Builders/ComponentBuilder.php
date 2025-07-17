@@ -155,6 +155,17 @@ class ComponentBuilder
     }
 
     /**
+     * Sets product family handle field.
+     *
+     * @param string|null $value
+     */
+    public function productFamilyHandle(?string $value): self
+    {
+        $this->instance->setProductFamilyHandle($value);
+        return $this;
+    }
+
+    /**
      * Sets price per unit in cents field.
      *
      * @param int|null $value

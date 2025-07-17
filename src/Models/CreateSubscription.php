@@ -82,6 +82,11 @@ class CreateSubscription implements \JsonSerializable
     private $initialBillingAt;
 
     /**
+     * @var bool|null
+     */
+    private $deferSignup = false;
+
+    /**
      * @var int|null
      */
     private $storedCredentialTransactionId;
@@ -545,16 +550,16 @@ class CreateSubscription implements \JsonSerializable
 
     /**
      * Returns Initial Billing At.
-     * (Optional) Set this attribute to a future date/time to create a subscription in the "Awaiting
-     * Signup" state, rather than "Active" or "Trialing". See the notes on “Date/Time Format” in our
-     * [subscription import documentation](https://maxio.zendesk.com/hc/en-us/articles/24251489107213-
-     * Advanced-Billing-Subscription-Imports#date-format). In the "Awaiting Signup" state, a subscription
-     * behaves like any other. It can be canceled, allocated to, had its billing date changed. etc. When
-     * the initial_billing_at date hits, the subscription will transition to the expected state. If the
-     * product has a trial, the subscription will enter a trial, otherwise it will go active. Setup fees
-     * will be respected either before or after the trial, as configured on the price point. If the payment
-     * is due at the initial_billing_at and it fails the subscription will be immediately canceled. See
-     * further notes in the section on Delayed Signups.
+     * (Optional) Set this attribute to a future date/time to create a subscription in the Awaiting Signup
+     * state, rather than Active or Trialing. You can omit the initial_billing_at date to activate the
+     * subscription immediately. In the Awaiting Signup state, a subscription behaves like any other. It
+     * can be canceled, allocated to, or have its billing date changed. etc. When the initial_billing_at
+     * date hits, the subscription will transition to the expected state. If the product has a trial, the
+     * subscription will enter a trial, otherwise it will go active. Setup fees will be respected either
+     * before or after the trial, as configured on the price point. If the payment is due at the
+     * initial_billing_at and it fails the subscription will be immediately canceled. See the [subscription
+     * import](https://maxio.zendesk.com/hc/en-us/articles/24251489107213-Advanced-Billing-Subscription-
+     * Imports#date-format) documentation for more information about Date/Time Formats.
      */
     public function getInitialBillingAt(): ?\DateTime
     {
@@ -563,16 +568,16 @@ class CreateSubscription implements \JsonSerializable
 
     /**
      * Sets Initial Billing At.
-     * (Optional) Set this attribute to a future date/time to create a subscription in the "Awaiting
-     * Signup" state, rather than "Active" or "Trialing". See the notes on “Date/Time Format” in our
-     * [subscription import documentation](https://maxio.zendesk.com/hc/en-us/articles/24251489107213-
-     * Advanced-Billing-Subscription-Imports#date-format). In the "Awaiting Signup" state, a subscription
-     * behaves like any other. It can be canceled, allocated to, had its billing date changed. etc. When
-     * the initial_billing_at date hits, the subscription will transition to the expected state. If the
-     * product has a trial, the subscription will enter a trial, otherwise it will go active. Setup fees
-     * will be respected either before or after the trial, as configured on the price point. If the payment
-     * is due at the initial_billing_at and it fails the subscription will be immediately canceled. See
-     * further notes in the section on Delayed Signups.
+     * (Optional) Set this attribute to a future date/time to create a subscription in the Awaiting Signup
+     * state, rather than Active or Trialing. You can omit the initial_billing_at date to activate the
+     * subscription immediately. In the Awaiting Signup state, a subscription behaves like any other. It
+     * can be canceled, allocated to, or have its billing date changed. etc. When the initial_billing_at
+     * date hits, the subscription will transition to the expected state. If the product has a trial, the
+     * subscription will enter a trial, otherwise it will go active. Setup fees will be respected either
+     * before or after the trial, as configured on the price point. If the payment is due at the
+     * initial_billing_at and it fails the subscription will be immediately canceled. See the [subscription
+     * import](https://maxio.zendesk.com/hc/en-us/articles/24251489107213-Advanced-Billing-Subscription-
+     * Imports#date-format) documentation for more information about Date/Time Formats.
      *
      * @maps initial_billing_at
      * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
@@ -580,6 +585,38 @@ class CreateSubscription implements \JsonSerializable
     public function setInitialBillingAt(?\DateTime $initialBillingAt): void
     {
         $this->initialBillingAt = $initialBillingAt;
+    }
+
+    /**
+     * Returns Defer Signup.
+     * (Optional) Set this attribute to true to create the subscription in the Awaiting Signup Date state.
+     * Use this when you want to create a subscription that has an unknown first  billing date. When the
+     * first billing date is known, update a subscription and set the `initial_billing_at` date. The
+     * subscription moves to the Awaiting Signup state with a scheduled initial billing date. You can omit
+     * the initial_billing_at date to activate the subscription immediately. See [Subscription
+     * States](https://maxio-chargify.zendesk.com/hc/en-us/articles/5404222005773-Subscription-States) for
+     * more information.
+     */
+    public function getDeferSignup(): ?bool
+    {
+        return $this->deferSignup;
+    }
+
+    /**
+     * Sets Defer Signup.
+     * (Optional) Set this attribute to true to create the subscription in the Awaiting Signup Date state.
+     * Use this when you want to create a subscription that has an unknown first  billing date. When the
+     * first billing date is known, update a subscription and set the `initial_billing_at` date. The
+     * subscription moves to the Awaiting Signup state with a scheduled initial billing date. You can omit
+     * the initial_billing_at date to activate the subscription immediately. See [Subscription
+     * States](https://maxio-chargify.zendesk.com/hc/en-us/articles/5404222005773-Subscription-States) for
+     * more information.
+     *
+     * @maps defer_signup
+     */
+    public function setDeferSignup(?bool $deferSignup): void
+    {
+        $this->deferSignup = $deferSignup;
     }
 
     /**
@@ -654,7 +691,7 @@ class CreateSubscription implements \JsonSerializable
 
     /**
      * Returns Reference.
-     * The reference value (provided by your app) for the subscription itelf.
+     * The reference value (provided by your app) for the subscription itself.
      */
     public function getReference(): ?string
     {
@@ -663,7 +700,7 @@ class CreateSubscription implements \JsonSerializable
 
     /**
      * Sets Reference.
-     * The reference value (provided by your app) for the subscription itelf.
+     * The reference value (provided by your app) for the subscription itself.
      *
      * @maps reference
      */
@@ -1113,7 +1150,7 @@ class CreateSubscription implements \JsonSerializable
 
     /**
      * Returns Product Change Delayed.
-     * (Optional, used only for Delayed Product Change When set to true, indicates that a changed value for
+     * (Optional) used only for Delayed Product Change When set to true, indicates that a changed value for
      * product_handle should schedule the product change to the next subscription renewal.
      */
     public function getProductChangeDelayed(): ?bool
@@ -1123,7 +1160,7 @@ class CreateSubscription implements \JsonSerializable
 
     /**
      * Sets Product Change Delayed.
-     * (Optional, used only for Delayed Product Change When set to true, indicates that a changed value for
+     * (Optional) used only for Delayed Product Change When set to true, indicates that a changed value for
      * product_handle should schedule the product change to the next subscription renewal.
      *
      * @maps product_change_delayed
@@ -1410,6 +1447,7 @@ class CreateSubscription implements \JsonSerializable
                 'customerId' => $this->customerId,
                 'nextBillingAt' => $this->nextBillingAt,
                 'initialBillingAt' => $this->initialBillingAt,
+                'deferSignup' => $this->deferSignup,
                 'storedCredentialTransactionId' => $this->storedCredentialTransactionId,
                 'salesRepId' => $this->salesRepId,
                 'paymentProfileId' => $this->paymentProfileId,
@@ -1532,6 +1570,9 @@ class CreateSubscription implements \JsonSerializable
         }
         if (isset($this->initialBillingAt)) {
             $json['initial_billing_at']                    = DateTimeHelper::toRfc3339DateTime($this->initialBillingAt);
+        }
+        if (isset($this->deferSignup)) {
+            $json['defer_signup']                          = $this->deferSignup;
         }
         if (isset($this->storedCredentialTransactionId)) {
             $json['stored_credential_transaction_id']      = $this->storedCredentialTransactionId;

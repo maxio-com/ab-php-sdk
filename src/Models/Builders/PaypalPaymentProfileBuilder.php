@@ -298,6 +298,28 @@ class PaypalPaymentProfileBuilder
     }
 
     /**
+     * Sets created at field.
+     *
+     * @param \DateTime|null $value
+     */
+    public function createdAt(?\DateTime $value): self
+    {
+        $this->instance->setCreatedAt($value);
+        return $this;
+    }
+
+    /**
+     * Sets updated at field.
+     *
+     * @param \DateTime|null $value
+     */
+    public function updatedAt(?\DateTime $value): self
+    {
+        $this->instance->setUpdatedAt($value);
+        return $this;
+    }
+
+    /**
      * Add an additional property to this model.
      *
      * @param string $name Name of property.

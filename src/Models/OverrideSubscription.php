@@ -111,7 +111,8 @@ class OverrideSubscription implements \JsonSerializable
      * Returns Expires At.
      * Can be used to record an external expiration date. Chargify sets this field automatically when a
      * subscription expires (ceases billing) after a prescribed amount of time. Only ISO8601 format is
-     * supported.
+     * supported. This field is not supported when Multi-frequency is enabled for the Site. To change the
+     * Term End of a Subscription, use the Update Subscription endpoint.
      */
     public function getExpiresAt(): ?\DateTime
     {
@@ -122,7 +123,8 @@ class OverrideSubscription implements \JsonSerializable
      * Sets Expires At.
      * Can be used to record an external expiration date. Chargify sets this field automatically when a
      * subscription expires (ceases billing) after a prescribed amount of time. Only ISO8601 format is
-     * supported.
+     * supported. This field is not supported when Multi-frequency is enabled for the Site. To change the
+     * Term End of a Subscription, use the Update Subscription endpoint.
      *
      * @maps expires_at
      * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime

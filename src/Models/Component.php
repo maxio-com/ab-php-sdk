@@ -57,6 +57,11 @@ class Component implements \JsonSerializable
     private $productFamilyName;
 
     /**
+     * @var string|null
+     */
+    private $productFamilyHandle;
+
+    /**
      * @var array
      */
     private $pricePerUnitInCents = [];
@@ -383,6 +388,26 @@ class Component implements \JsonSerializable
     public function setProductFamilyName(?string $productFamilyName): void
     {
         $this->productFamilyName = $productFamilyName;
+    }
+
+    /**
+     * Returns Product Family Handle.
+     * The handle of the Product Family to which the Component belongs
+     */
+    public function getProductFamilyHandle(): ?string
+    {
+        return $this->productFamilyHandle;
+    }
+
+    /**
+     * Sets Product Family Handle.
+     * The handle of the Product Family to which the Component belongs
+     *
+     * @maps product_family_handle
+     */
+    public function setProductFamilyHandle(?string $productFamilyHandle): void
+    {
+        $this->productFamilyHandle = $productFamilyHandle;
     }
 
     /**
@@ -1124,6 +1149,7 @@ class Component implements \JsonSerializable
                 'unitPrice' => $this->getUnitPrice(),
                 'productFamilyId' => $this->productFamilyId,
                 'productFamilyName' => $this->productFamilyName,
+                'productFamilyHandle' => $this->productFamilyHandle,
                 'pricePerUnitInCents' => $this->getPricePerUnitInCents(),
                 'kind' => $this->kind,
                 'archived' => $this->archived,
@@ -1218,6 +1244,9 @@ class Component implements \JsonSerializable
         }
         if (isset($this->productFamilyName)) {
             $json['product_family_name']           = $this->productFamilyName;
+        }
+        if (isset($this->productFamilyHandle)) {
+            $json['product_family_handle']         = $this->productFamilyHandle;
         }
         if (!empty($this->pricePerUnitInCents)) {
             $json['price_per_unit_in_cents']       = $this->pricePerUnitInCents['value'];

@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace AdvancedBillingLib\Models;
 
 use AdvancedBillingLib\ApiHelper;
+use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
 class CreditCardPaymentProfile implements \JsonSerializable
@@ -124,6 +125,16 @@ class CreditCardPaymentProfile implements \JsonSerializable
      * @var array
      */
     private $gatewayHandle = [];
+
+    /**
+     * @var \DateTime|null
+     */
+    private $createdAt;
+
+    /**
+     * @var \DateTime|null
+     */
+    private $updatedAt;
 
     /**
      * @param string $paymentType
@@ -702,6 +713,48 @@ class CreditCardPaymentProfile implements \JsonSerializable
     }
 
     /**
+     * Returns Created At.
+     * A timestamp indicating when this payment profile was created
+     */
+    public function getCreatedAt(): ?\DateTime
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * Sets Created At.
+     * A timestamp indicating when this payment profile was created
+     *
+     * @maps created_at
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
+     */
+    public function setCreatedAt(?\DateTime $createdAt): void
+    {
+        $this->createdAt = $createdAt;
+    }
+
+    /**
+     * Returns Updated At.
+     * A timestamp indicating when this payment profile was last updated
+     */
+    public function getUpdatedAt(): ?\DateTime
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * Sets Updated At.
+     * A timestamp indicating when this payment profile was last updated
+     *
+     * @maps updated_at
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
+     */
+    public function setUpdatedAt(?\DateTime $updatedAt): void
+    {
+        $this->updatedAt = $updatedAt;
+    }
+
+    /**
      * Converts the CreditCardPaymentProfile object to a human-readable string representation.
      *
      * @return string The string representation of the CreditCardPaymentProfile object.
@@ -733,6 +786,8 @@ class CreditCardPaymentProfile implements \JsonSerializable
                 'chargifyToken' => $this->chargifyToken,
                 'siteGatewaySettingId' => $this->getSiteGatewaySettingId(),
                 'gatewayHandle' => $this->getGatewayHandle(),
+                'createdAt' => $this->createdAt,
+                'updatedAt' => $this->updatedAt,
                 'additionalProperties' => $this->additionalProperties
             ]
         );
@@ -841,6 +896,12 @@ class CreditCardPaymentProfile implements \JsonSerializable
         }
         if (!empty($this->gatewayHandle)) {
             $json['gateway_handle']          = $this->gatewayHandle['value'];
+        }
+        if (isset($this->createdAt)) {
+            $json['created_at']              = DateTimeHelper::toRfc3339DateTime($this->createdAt);
+        }
+        if (isset($this->updatedAt)) {
+            $json['updated_at']              = DateTimeHelper::toRfc3339DateTime($this->updatedAt);
         }
         $json = array_merge($json, $this->additionalProperties);
 

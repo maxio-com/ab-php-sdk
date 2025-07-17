@@ -31,6 +31,8 @@
 | `chargifyToken` | `?string` | Optional | Token received after sending billing information using chargify.js. This token will only be received if passed as a sole attribute of credit_card_attributes (i.e. tok_9g6hw85pnpt6knmskpwp4ttt) | getChargifyToken(): ?string | setChargifyToken(?string chargifyToken): void |
 | `siteGatewaySettingId` | `?int` | Optional | - | getSiteGatewaySettingId(): ?int | setSiteGatewaySettingId(?int siteGatewaySettingId): void |
 | `gatewayHandle` | `?string` | Optional | An identifier of connected gateway. | getGatewayHandle(): ?string | setGatewayHandle(?string gatewayHandle): void |
+| `createdAt` | `?DateTime` | Optional | A timestamp indicating when this payment profile was created | getCreatedAt(): ?\DateTime | setCreatedAt(?\DateTime createdAt): void |
+| `updatedAt` | `?DateTime` | Optional | A timestamp indicating when this payment profile was last updated | getUpdatedAt(): ?\DateTime | setUpdatedAt(?\DateTime updatedAt): void |
 
 ## Example (as JSON)
 

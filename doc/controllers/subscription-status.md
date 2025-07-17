@@ -386,7 +386,7 @@ function resumeSubscription(
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
-| `calendarBillingResumptionCharge` | [`?string(ResumptionCharge)`](../../doc/models/resumption-charge.md) | Query, Optional | (For calendar billing subscriptions only) The way that the resumed subscription's charge should be handled<br>**Default**: `ResumptionCharge::PRORATED` |
+| `calendarBillingResumptionCharge` | [`?string(ResumptionCharge)`](../../doc/models/resumption-charge.md) | Query, Optional | (For calendar billing subscriptions only) The way that the resumed subscription's charge should be handled<br><br>**Default**: `ResumptionCharge::PRORATED` |
 
 ## Response Type
 
@@ -397,7 +397,7 @@ function resumeSubscription(
 ```php
 $subscriptionId = 222;
 
-Liquid error: Value cannot be null. (Parameter 'key')$result = Liquid error: Value cannot be null. (Parameter 'key')$subscriptionStatusController->resumeSubscription($subscriptionId);
+Liquid error: Value cannot be null. (Parameter 'key')$result = $subscriptionStatusController->resumeSubscription(Liquid error: Value cannot be null. (Parameter 'key')$subscriptionId);
 ```
 
 ## Example Response *(as JSON)*

@@ -50,8 +50,8 @@ class CouponRequest implements \JsonSerializable
 
     /**
      * Returns Restricted Products.
-     * An object where the keys are product_ids and the values are booleans indicating if the coupon should
-     * be applicable to the product
+     * An object where the keys are product IDs or handles (prefixed with 'handle:'), and the values are
+     * booleans indicating if the coupon should be applicable to the product
      *
      * @return array<string,bool>|null
      */
@@ -62,8 +62,8 @@ class CouponRequest implements \JsonSerializable
 
     /**
      * Sets Restricted Products.
-     * An object where the keys are product_ids and the values are booleans indicating if the coupon should
-     * be applicable to the product
+     * An object where the keys are product IDs or handles (prefixed with 'handle:'), and the values are
+     * booleans indicating if the coupon should be applicable to the product
      *
      * @maps restricted_products
      *
@@ -76,8 +76,8 @@ class CouponRequest implements \JsonSerializable
 
     /**
      * Returns Restricted Components.
-     * An object where the keys are component_ids and the values are booleans indicating if the coupon
-     * should be applicable to the component
+     * An object where the keys are component IDs or handles (prefixed with 'handle:'), and the values are
+     * booleans indicating if the coupon should be applicable to the component
      *
      * @return array<string,bool>|null
      */
@@ -88,8 +88,8 @@ class CouponRequest implements \JsonSerializable
 
     /**
      * Sets Restricted Components.
-     * An object where the keys are component_ids and the values are booleans indicating if the coupon
-     * should be applicable to the component
+     * An object where the keys are component IDs or handles (prefixed with 'handle:'), and the values are
+     * booleans indicating if the coupon should be applicable to the component
      *
      * @maps restricted_components
      *

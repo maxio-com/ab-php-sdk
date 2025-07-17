@@ -9,9 +9,6 @@
 
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
-| `fullNumber` | string\|int\|null | Optional | This is a container for one-of cases. | getFullNumber(): | setFullNumber( fullNumber): void |
-| `expirationMonth` | string\|int\|null | Optional | This is a container for one-of cases. | getExpirationMonth(): | setExpirationMonth( expirationMonth): void |
-| `expirationYear` | string\|int\|null | Optional | This is a container for one-of cases. | getExpirationYear(): | setExpirationYear( expirationYear): void |
 | `chargifyToken` | `?string` | Optional | - | getChargifyToken(): ?string | setChargifyToken(?string chargifyToken): void |
 | `vaultToken` | `?string` | Optional | - | getVaultToken(): ?string | setVaultToken(?string vaultToken): void |
 | `currentVault` | [`?string(CreditCardVault)`](../../doc/models/credit-card-vault.md) | Optional | The vault that stores the payment profile with the provided `vault_token`. Use `bogus` for testing. | getCurrentVault(): ?string | setCurrentVault(?string currentVault): void |
@@ -24,6 +21,9 @@
 | `billingState` | `?string` | Optional | - | getBillingState(): ?string | setBillingState(?string billingState): void |
 | `billingZip` | `?string` | Optional | - | getBillingZip(): ?string | setBillingZip(?string billingZip): void |
 | `billingCountry` | `?string` | Optional | - | getBillingCountry(): ?string | setBillingCountry(?string billingCountry): void |
+| `fullNumber` | string\|int\|null | Optional | This is a container for one-of cases. | getFullNumber(): | setFullNumber( fullNumber): void |
+| `expirationMonth` | string\|int\|null | Optional | This is a container for one-of cases. | getExpirationMonth(): | setExpirationMonth( expirationMonth): void |
+| `expirationYear` | string\|int\|null | Optional | This is a container for one-of cases. | getExpirationYear(): | setExpirationYear( expirationYear): void |
 | `lastFour` | `?string` | Optional | - | getLastFour(): ?string | setLastFour(?string lastFour): void |
 | `cardType` | [`?string(CardType)`](../../doc/models/card-type.md) | Optional | The type of card used. | getCardType(): ?string | setCardType(?string cardType): void |
 | `customerVaultToken` | `?string` | Optional | - | getCustomerVaultToken(): ?string | setCustomerVaultToken(?string customerVaultToken): void |
@@ -34,11 +34,12 @@
 
 ```json
 {
-  "full_number": 4111111111111111,
   "chargify_token": "tok_592nf92ng0sjd4300p",
-  "expiration_month": "String1",
-  "expiration_year": "String5",
-  "vault_token": "vault_token6"
+  "full_number": 4111111111111111,
+  "vault_token": "vault_token6",
+  "current_vault": "braintree_blue",
+  "gateway_handle": "gateway_handle6",
+  "first_name": "first_name4"
 }
 ```
 

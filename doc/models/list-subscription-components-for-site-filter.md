@@ -9,7 +9,7 @@
 
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
-| `currencies` | `?(string[])` | Optional | Allows fetching components allocation with matching currency based on provided values. Use in query `filter[currencies]=USD,EUR`.<br>**Constraints**: *Minimum Items*: `1` | getCurrencies(): ?array | setCurrencies(?array currencies): void |
+| `currencies` | `?(string[])` | Optional | Allows fetching components allocation with matching currency based on provided values. Use in query `filter[currencies]=USD,EUR`.<br><br>**Constraints**: *Minimum Items*: `1` | getCurrencies(): ?array | setCurrencies(?array currencies): void |
 | `useSiteExchangeRate` | `?bool` | Optional | Allows fetching components allocation with matching use_site_exchange_rate based on provided value. Use in query `filter[use_site_exchange_rate]=true`. | getUseSiteExchangeRate(): ?bool | setUseSiteExchangeRate(?bool useSiteExchangeRate): void |
 | `subscription` | [`?SubscriptionFilter`](../../doc/models/subscription-filter.md) | Optional | Nested filter used for List Subscription Components For Site Filter | getSubscription(): ?SubscriptionFilter | setSubscription(?SubscriptionFilter subscription): void |
 

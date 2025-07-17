@@ -10,8 +10,8 @@
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
 | `coupon` | [`?CouponPayload`](../../doc/models/coupon-payload.md) | Optional | - | getCoupon(): ?CouponPayload | setCoupon(?CouponPayload coupon): void |
-| `restrictedProducts` | `?array<string,bool>` | Optional | An object where the keys are product_ids and the values are booleans indicating if the coupon should be applicable to the product | getRestrictedProducts(): ?array | setRestrictedProducts(?array restrictedProducts): void |
-| `restrictedComponents` | `?array<string,bool>` | Optional | An object where the keys are component_ids and the values are booleans indicating if the coupon should be applicable to the component | getRestrictedComponents(): ?array | setRestrictedComponents(?array restrictedComponents): void |
+| `restrictedProducts` | `?array<string,bool>` | Optional | An object where the keys are product IDs or handles (prefixed with 'handle:'), and the values are booleans indicating if the coupon should be applicable to the product | getRestrictedProducts(): ?array | setRestrictedProducts(?array restrictedProducts): void |
+| `restrictedComponents` | `?array<string,bool>` | Optional | An object where the keys are component IDs or handles (prefixed with 'handle:'), and the values are booleans indicating if the coupon should be applicable to the component | getRestrictedComponents(): ?array | setRestrictedComponents(?array restrictedComponents): void |
 
 ## Example (as JSON)
 

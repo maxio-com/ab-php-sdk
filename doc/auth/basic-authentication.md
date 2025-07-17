@@ -23,6 +23,9 @@ Documentation for accessing and setting credentials for BasicAuth.
 You must provide credentials in the client as shown in the following code snippet.
 
 ```php
+use AdvancedBillingLib\Authentication\BasicAuthCredentialsBuilder;
+use AdvancedBillingLib\AdvancedBillingClientBuilder;
+
 $client = AdvancedBillingClientBuilder::init()
     ->basicAuthCredentials(
         BasicAuthCredentialsBuilder::init(

@@ -381,7 +381,13 @@ class CouponsController extends BaseController
             );
 
         $_resHandler = $this->responseHandler()
-            ->throwErrorOn('404', ErrorType::init('Not Found', SingleStringErrorResponseException::class))
+            ->throwErrorOn(
+                '404',
+                ErrorType::initWithErrorTemplate(
+                    'Not Found: \'{$response.body}\'',
+                    SingleStringErrorResponseException::class
+                )
+            )
             ->type(CouponResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);

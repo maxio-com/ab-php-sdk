@@ -65,7 +65,7 @@ class CustomFieldsController extends BaseController
      *
      * ### Metafields "On-the-Fly"
      *
-     * It is possible to create Metafields “on the fly” when you create your Metadata – if a non-existant
+     * It is possible to create Metafields “on the fly” when you create your Metadata – if a non-existent
      * name is passed when creating Metadata, a Metafield for that key will be automatically created. The
      * Metafield API, however, gives you more control over your “keys”.
      *
