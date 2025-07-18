@@ -47,6 +47,8 @@ final class TestPaymentProfileFactory
             ->siteGatewaySettingId($paymentProfile->getSiteGatewaySettingId())
             ->gatewayHandle($paymentProfile->getGatewayHandle())
             ->billingCity($paymentProfile->getBillingCity())
+            ->createdAt($paymentProfile->getCreatedAt())
+            ->updatedAt($paymentProfile->getUpdatedAt())
             ->build();
     }
 
