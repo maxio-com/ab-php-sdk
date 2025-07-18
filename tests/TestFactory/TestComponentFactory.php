@@ -33,6 +33,7 @@ final class TestComponentFactory
             ->handle(ComponentTestData::HANDLE)
             ->productFamilyId($productFamily->getId())
             ->productFamilyName($productFamily->getName())
+            ->productFamilyHandle($productFamily->getHandle())
             ->pricePerUnitInCents(ComponentTestData::PRICE_PER_UNIT_IN_CENTS)
             ->kind(ComponentTestData::QUANTITY_BASED_COMPONENT_KIND)
             ->archived(ComponentTestData::ARCHIVED)

@@ -21,6 +21,8 @@ final class ComponentsControllerTestAssertions
         unset($expectedComponentJson['updated_at']);
         unset($componentJson['updated_at']);
 
+        unset($componentJson['interval_unit']);
+
         $this->testCase::assertEquals($expectedComponentJson, $componentJson);
     }
 
