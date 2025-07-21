@@ -22,7 +22,17 @@ final class PaymentProfilesControllerTestAssertions
         CreditCardPaymentProfile|BankAccountPaymentProfile $paymentProfile
     ): void
     {
-        $this->testCase::assertEquals($expectedPaymentProfile, $paymentProfile);
+        // Handle dynamic timestamp fields by comparing JSON and unsetting them
+        $expectedPaymentProfileJson = $expectedPaymentProfile->jsonSerialize();
+        $paymentProfileJson = $paymentProfile->jsonSerialize();
+
+        // Remove createdAt and updatedAt because they are dynamic timestamps
+        unset($expectedPaymentProfileJson['created_at']);
+        unset($paymentProfileJson['created_at']);
+        unset($expectedPaymentProfileJson['updated_at']);
+        unset($paymentProfileJson['updated_at']);
+
+        $this->testCase::assertEquals($expectedPaymentProfileJson, $paymentProfileJson);
     }
 
     /**
