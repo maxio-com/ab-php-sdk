@@ -2,6 +2,12 @@
 
 declare(strict_types=1);
 
+/*
+ * AdvancedBilling
+ *
+ * This file was automatically generated for Maxio by APIMATIC v3.0 ( https://www.apimatic.io ).
+ */
+
 namespace AdvancedBillingLib\Proxy;
 
 use AdvancedBillingLib\ConfigurationDefaults;
@@ -63,7 +69,7 @@ class ProxyConfigurationBuilder
     /**
      * Set proxy authentication method
      */
-    public function authMethod(string $authMethod): self
+    public function authMethod(int $authMethod): self
     {
         $this->authMethod = $authMethod;
         return $this;
