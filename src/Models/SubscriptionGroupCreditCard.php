@@ -16,21 +16,6 @@ use stdClass;
 class SubscriptionGroupCreditCard implements \JsonSerializable
 {
     /**
-     * @var string|int|null
-     */
-    private $fullNumber;
-
-    /**
-     * @var string|int|null
-     */
-    private $expirationMonth;
-
-    /**
-     * @var string|int|null
-     */
-    private $expirationYear;
-
-    /**
      * @var string|null
      */
     private $chargifyToken;
@@ -91,6 +76,21 @@ class SubscriptionGroupCreditCard implements \JsonSerializable
     private $billingCountry;
 
     /**
+     * @var string|int|null
+     */
+    private $fullNumber;
+
+    /**
+     * @var string|int|null
+     */
+    private $expirationMonth;
+
+    /**
+     * @var string|int|null
+     */
+    private $expirationYear;
+
+    /**
      * @var string|null
      */
     private $lastFour;
@@ -114,75 +114,6 @@ class SubscriptionGroupCreditCard implements \JsonSerializable
      * @var string|null
      */
     private $paymentType;
-
-    /**
-     * Returns Full Number.
-     *
-     * @return string|int|null
-     */
-    public function getFullNumber()
-    {
-        return $this->fullNumber;
-    }
-
-    /**
-     * Sets Full Number.
-     *
-     * @maps full_number
-     * @mapsBy anyOf(oneOf(string,int),null)
-     *
-     * @param string|int|null $fullNumber
-     */
-    public function setFullNumber($fullNumber): void
-    {
-        $this->fullNumber = $fullNumber;
-    }
-
-    /**
-     * Returns Expiration Month.
-     *
-     * @return string|int|null
-     */
-    public function getExpirationMonth()
-    {
-        return $this->expirationMonth;
-    }
-
-    /**
-     * Sets Expiration Month.
-     *
-     * @maps expiration_month
-     * @mapsBy anyOf(oneOf(string,int),null)
-     *
-     * @param string|int|null $expirationMonth
-     */
-    public function setExpirationMonth($expirationMonth): void
-    {
-        $this->expirationMonth = $expirationMonth;
-    }
-
-    /**
-     * Returns Expiration Year.
-     *
-     * @return string|int|null
-     */
-    public function getExpirationYear()
-    {
-        return $this->expirationYear;
-    }
-
-    /**
-     * Sets Expiration Year.
-     *
-     * @maps expiration_year
-     * @mapsBy anyOf(oneOf(string,int),null)
-     *
-     * @param string|int|null $expirationYear
-     */
-    public function setExpirationYear($expirationYear): void
-    {
-        $this->expirationYear = $expirationYear;
-    }
 
     /**
      * Returns Chargify Token.
@@ -404,6 +335,75 @@ class SubscriptionGroupCreditCard implements \JsonSerializable
     }
 
     /**
+     * Returns Full Number.
+     *
+     * @return string|int|null
+     */
+    public function getFullNumber()
+    {
+        return $this->fullNumber;
+    }
+
+    /**
+     * Sets Full Number.
+     *
+     * @maps full_number
+     * @mapsBy anyOf(oneOf(string,int),null)
+     *
+     * @param string|int|null $fullNumber
+     */
+    public function setFullNumber($fullNumber): void
+    {
+        $this->fullNumber = $fullNumber;
+    }
+
+    /**
+     * Returns Expiration Month.
+     *
+     * @return string|int|null
+     */
+    public function getExpirationMonth()
+    {
+        return $this->expirationMonth;
+    }
+
+    /**
+     * Sets Expiration Month.
+     *
+     * @maps expiration_month
+     * @mapsBy anyOf(oneOf(string,int),null)
+     *
+     * @param string|int|null $expirationMonth
+     */
+    public function setExpirationMonth($expirationMonth): void
+    {
+        $this->expirationMonth = $expirationMonth;
+    }
+
+    /**
+     * Returns Expiration Year.
+     *
+     * @return string|int|null
+     */
+    public function getExpirationYear()
+    {
+        return $this->expirationYear;
+    }
+
+    /**
+     * Sets Expiration Year.
+     *
+     * @maps expiration_year
+     * @mapsBy anyOf(oneOf(string,int),null)
+     *
+     * @param string|int|null $expirationYear
+     */
+    public function setExpirationYear($expirationYear): void
+    {
+        $this->expirationYear = $expirationYear;
+    }
+
+    /**
      * Returns Last Four.
      */
     public function getLastFour(): ?string
@@ -506,9 +506,6 @@ class SubscriptionGroupCreditCard implements \JsonSerializable
         return ApiHelper::stringify(
             'SubscriptionGroupCreditCard',
             [
-                'fullNumber' => $this->fullNumber,
-                'expirationMonth' => $this->expirationMonth,
-                'expirationYear' => $this->expirationYear,
                 'chargifyToken' => $this->chargifyToken,
                 'vaultToken' => $this->vaultToken,
                 'currentVault' => $this->currentVault,
@@ -521,6 +518,9 @@ class SubscriptionGroupCreditCard implements \JsonSerializable
                 'billingState' => $this->billingState,
                 'billingZip' => $this->billingZip,
                 'billingCountry' => $this->billingCountry,
+                'fullNumber' => $this->fullNumber,
+                'expirationMonth' => $this->expirationMonth,
+                'expirationYear' => $this->expirationYear,
                 'lastFour' => $this->lastFour,
                 'cardType' => $this->cardType,
                 'customerVaultToken' => $this->customerVaultToken,
@@ -571,27 +571,6 @@ class SubscriptionGroupCreditCard implements \JsonSerializable
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
-        if (isset($this->fullNumber)) {
-            $json['full_number']          =
-                ApiHelper::getJsonHelper()->verifyTypes(
-                    $this->fullNumber,
-                    'anyOf(oneOf(string,int),null)'
-                );
-        }
-        if (isset($this->expirationMonth)) {
-            $json['expiration_month']     =
-                ApiHelper::getJsonHelper()->verifyTypes(
-                    $this->expirationMonth,
-                    'anyOf(oneOf(string,int),null)'
-                );
-        }
-        if (isset($this->expirationYear)) {
-            $json['expiration_year']      =
-                ApiHelper::getJsonHelper()->verifyTypes(
-                    $this->expirationYear,
-                    'anyOf(oneOf(string,int),null)'
-                );
-        }
         if (isset($this->chargifyToken)) {
             $json['chargify_token']       = $this->chargifyToken;
         }
@@ -627,6 +606,27 @@ class SubscriptionGroupCreditCard implements \JsonSerializable
         }
         if (isset($this->billingCountry)) {
             $json['billing_country']      = $this->billingCountry;
+        }
+        if (isset($this->fullNumber)) {
+            $json['full_number']          =
+                ApiHelper::getJsonHelper()->verifyTypes(
+                    $this->fullNumber,
+                    'anyOf(oneOf(string,int),null)'
+                );
+        }
+        if (isset($this->expirationMonth)) {
+            $json['expiration_month']     =
+                ApiHelper::getJsonHelper()->verifyTypes(
+                    $this->expirationMonth,
+                    'anyOf(oneOf(string,int),null)'
+                );
+        }
+        if (isset($this->expirationYear)) {
+            $json['expiration_year']      =
+                ApiHelper::getJsonHelper()->verifyTypes(
+                    $this->expirationYear,
+                    'anyOf(oneOf(string,int),null)'
+                );
         }
         if (isset($this->lastFour)) {
             $json['last_four']            = $this->lastFour;

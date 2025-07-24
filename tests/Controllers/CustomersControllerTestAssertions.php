@@ -29,7 +29,16 @@ final class CustomersControllerTestAssertions
         // unsetting reference because of its random value
         $expectedCustomer->unsetReference();
         $customer->unsetReference();
-        $this->testCase::assertEquals($expectedCustomer->jsonSerialize(), $customer->jsonSerialize());
+
+        // Handle dynamic timestamp fields by comparing JSON and unsetting them
+        $expectedCustomerJson = $expectedCustomer->jsonSerialize();
+        $customerJson = $customer->jsonSerialize();
+
+        // Remove vat_validated_at because it's a dynamic timestamp
+        unset($expectedCustomerJson['vat_validated_at']);
+        unset($customerJson['vat_validated_at']);
+
+        $this->testCase::assertEquals($expectedCustomerJson, $customerJson);
     }
 
     public function assertExpectedCustomerWasReturned(Customer $expectedCustomer, Customer $customer): void

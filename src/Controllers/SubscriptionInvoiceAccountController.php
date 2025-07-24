@@ -11,16 +11,19 @@ declare(strict_types=1);
 namespace AdvancedBillingLib\Controllers;
 
 use AdvancedBillingLib\Exceptions\ApiException;
+use AdvancedBillingLib\Exceptions\ErrorListResponseException;
 use AdvancedBillingLib\Exceptions\RefundPrepaymentBaseErrorsResponseException;
 use AdvancedBillingLib\Models\AccountBalances;
 use AdvancedBillingLib\Models\CreatePrepaymentRequest;
 use AdvancedBillingLib\Models\CreatePrepaymentResponse;
 use AdvancedBillingLib\Models\DeductServiceCreditRequest;
 use AdvancedBillingLib\Models\IssueServiceCreditRequest;
+use AdvancedBillingLib\Models\ListServiceCreditsResponse;
 use AdvancedBillingLib\Models\PrepaymentResponse;
 use AdvancedBillingLib\Models\PrepaymentsResponse;
 use AdvancedBillingLib\Models\RefundPrepaymentRequest;
 use AdvancedBillingLib\Models\ServiceCredit;
+use AdvancedBillingLib\Models\SortingDirection;
 use Core\Request\Parameters\BodyParam;
 use Core\Request\Parameters\HeaderParam;
 use Core\Request\Parameters\QueryParam;
@@ -198,6 +201,61 @@ class SubscriptionInvoiceAccountController extends BaseController
             );
 
         $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
+     * This request will list a subscription's service credits.
+     *
+     * @param int $subscriptionId The Chargify id of the subscription
+     * @param int|null $page Result records are organized in pages. By default, the first page of
+     *        results is displayed. The page parameter specifies a page number of results to fetch.
+     *        You can start navigating through the pages to consume the results. You do this by
+     *        passing in a page parameter. Retrieve the next page by adding ?page=2 to the query
+     *        string. If there are no results to return, then an empty result set will be returned.
+     *        Use in query `page=1`.
+     * @param int|null $perPage This parameter indicates how many records to fetch in each request.
+     *        Default value is 20. The maximum allowed values is 200; any per_page value over 200
+     *        will be changed to 200.
+     *        Use in query `per_page=200`.
+     * @param string|null $direction Controls the order in which results are returned. Use in query
+     *        `direction=asc`.
+     *
+     * @return ListServiceCreditsResponse Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function listServiceCredits(
+        int $subscriptionId,
+        ?int $page = 1,
+        ?int $perPage = 20,
+        ?string $direction = null
+    ): ListServiceCreditsResponse {
+        $_reqBuilder = $this->requestBuilder(
+            RequestMethod::GET,
+            '/subscriptions/{subscription_id}/service_credits/list.json'
+        )
+            ->auth('BasicAuth')
+            ->parameters(
+                TemplateParam::init('subscription_id', $subscriptionId)->required(),
+                QueryParam::init('page', $page)->commaSeparated(),
+                QueryParam::init('per_page', $perPage)->commaSeparated(),
+                QueryParam::init('direction', $direction)
+                    ->commaSeparated()
+                    ->serializeBy([SortingDirection::class, 'checkValue'])
+            );
+
+        $_resHandler = $this->responseHandler()
+            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
+            ->throwErrorOn(
+                '422',
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
+            )
+            ->type(ListServiceCreditsResponse::class);
+
+        return $this->execute($_reqBuilder, $_resHandler);
     }
 
     /**

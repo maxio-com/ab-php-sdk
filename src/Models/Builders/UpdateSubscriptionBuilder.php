@@ -119,6 +119,28 @@ class UpdateSubscriptionBuilder
     }
 
     /**
+     * Sets initial billing at field.
+     *
+     * @param \DateTime|null $value
+     */
+    public function initialBillingAt(?\DateTime $value): self
+    {
+        $this->instance->setInitialBillingAt($value);
+        return $this;
+    }
+
+    /**
+     * Sets defer signup field.
+     *
+     * @param bool|null $value
+     */
+    public function deferSignup(?bool $value): self
+    {
+        $this->instance->setDeferSignup($value);
+        return $this;
+    }
+
+    /**
      * Sets next billing at field.
      *
      * @param \DateTime|null $value
@@ -126,6 +148,17 @@ class UpdateSubscriptionBuilder
     public function nextBillingAt(?\DateTime $value): self
     {
         $this->instance->setNextBillingAt($value);
+        return $this;
+    }
+
+    /**
+     * Sets expires at field.
+     *
+     * @param \DateTime|null $value
+     */
+    public function expiresAt(?\DateTime $value): self
+    {
+        $this->instance->setExpiresAt($value);
         return $this;
     }
 

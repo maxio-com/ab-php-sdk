@@ -51,6 +51,8 @@ final class TestCouponFactory
             ->applyOnCancelAtEndOfPeriod(CouponTestData::APPLY_ON_CANCEL_AT_END_OF_PERIOD)
             ->applyOnSubscriptionExpiration(CouponTestData::APPLY_ON_SUBSCRIPTION_EXPIRATION)
             ->couponRestrictions(CouponTestData::RESTRICTIONS)
+            ->additionalProperty('apply_on_setup_fee', true)
+            ->additionalProperty('apply_on_trial', true)
             ->build();
     }
 }

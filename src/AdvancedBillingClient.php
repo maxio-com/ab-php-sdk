@@ -44,6 +44,7 @@ use AdvancedBillingLib\Controllers\SubscriptionProductsController;
 use AdvancedBillingLib\Controllers\SubscriptionsController;
 use AdvancedBillingLib\Controllers\SubscriptionStatusController;
 use AdvancedBillingLib\Controllers\WebhooksController;
+use AdvancedBillingLib\Proxy\ProxyConfigurationBuilder;
 use AdvancedBillingLib\Utils\CompatibilityConverter;
 use Core\ClientBuilder;
 use Core\Request\Parameters\TemplateParam;
@@ -120,6 +121,8 @@ class AdvancedBillingClient implements ConfigurationInterface
 
     private $basicAuthManager;
 
+    private $proxyConfiguration;
+
     private $config;
 
     private $client;
@@ -134,11 +137,14 @@ class AdvancedBillingClient implements ConfigurationInterface
     {
         $this->config = array_merge(ConfigurationDefaults::_ALL, CoreHelper::clone($config));
         $this->basicAuthManager = new BasicAuthManager($this->config);
-        $this->client = ClientBuilder::init(new HttpClient(Configuration::init($this)))
+        $this->proxyConfiguration = $this->config['proxyConfiguration'] ?? ConfigurationDefaults::PROXY_CONFIGURATION;
+        $this->client = ClientBuilder::init(
+            new HttpClient(Configuration::init($this)->proxyConfiguration($this->proxyConfiguration))
+        )
             ->converter(new CompatibilityConverter())
             ->jsonHelper(ApiHelper::getJsonHelper())
             ->apiCallback($this->config['httpCallback'] ?? null)
-            ->userAgent('AB SDK PHP:6.1.0 on OS {os-info}')
+            ->userAgent('AB SDK PHP:7.0.0 on OS {os-info}')
             ->globalConfig($this->getGlobalConfiguration())
             ->globalErrors($this->getGlobalErrors())
             ->serverUrls(self::ENVIRONMENT_MAP[$this->getEnvironment()], Server::PRODUCTION)
@@ -165,7 +171,8 @@ class AdvancedBillingClient implements ConfigurationInterface
             ->httpMethodsToRetry($this->getHttpMethodsToRetry())
             ->environment($this->getEnvironment())
             ->site($this->getSite())
-            ->httpCallback($this->config['httpCallback'] ?? null);
+            ->httpCallback($this->config['httpCallback'] ?? null)
+            ->proxyConfiguration($this->getProxyConfigurationBuilder());
 
         $basicAuth = $this->getBasicAuthCredentialsBuilder();
         if ($basicAuth != null) {
@@ -246,6 +253,18 @@ class AdvancedBillingClient implements ConfigurationInterface
             $this->basicAuthManager->getBasicAuthUserName(),
             $this->basicAuthManager->getBasicAuthPassword()
         );
+    }
+
+    /**
+     * Get the proxy configuration builder
+     */
+    public function getProxyConfigurationBuilder(): ProxyConfigurationBuilder
+    {
+        return ProxyConfigurationBuilder::init($this->proxyConfiguration['address'])
+            ->port($this->proxyConfiguration['port'])
+            ->tunnel($this->proxyConfiguration['tunnel'])
+            ->auth($this->proxyConfiguration['auth']['user'], $this->proxyConfiguration['auth']['pass'])
+            ->authMethod($this->proxyConfiguration['auth']['method']);
     }
 
     /**

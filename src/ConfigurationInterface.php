@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace AdvancedBillingLib;
 
 use AdvancedBillingLib\Authentication\BasicAuthCredentialsBuilder;
+use AdvancedBillingLib\Proxy\ProxyConfigurationBuilder;
 use CoreInterfaces\Http\HttpConfigurations;
 
 /**
@@ -37,6 +38,11 @@ interface ConfigurationInterface extends HttpConfigurations
      * Get the credentials builder instance to update credentials for BasicAuth
      */
     public function getBasicAuthCredentialsBuilder(): ?BasicAuthCredentialsBuilder;
+
+    /**
+     * Represents the proxy configurations for API calls.
+     */
+    public function getProxyConfigurationBuilder(): ProxyConfigurationBuilder;
 
     /**
      * Get the base uri for a given server in the current environment.

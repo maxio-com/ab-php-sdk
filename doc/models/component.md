@@ -17,6 +17,7 @@
 | `unitPrice` | `?string` | Optional | The amount the customer will be charged per unit. This field is only populated for ‘per_unit’ pricing schemes, otherwise it may be null. | getUnitPrice(): ?string | setUnitPrice(?string unitPrice): void |
 | `productFamilyId` | `?int` | Optional | The id of the Product Family to which the Component belongs | getProductFamilyId(): ?int | setProductFamilyId(?int productFamilyId): void |
 | `productFamilyName` | `?string` | Optional | The name of the Product Family to which the Component belongs | getProductFamilyName(): ?string | setProductFamilyName(?string productFamilyName): void |
+| `productFamilyHandle` | `?string` | Optional | The handle of the Product Family to which the Component belongs | getProductFamilyHandle(): ?string | setProductFamilyHandle(?string productFamilyHandle): void |
 | `pricePerUnitInCents` | `?int` | Optional | deprecated - use unit_price instead | getPricePerUnitInCents(): ?int | setPricePerUnitInCents(?int pricePerUnitInCents): void |
 | `kind` | [`?string(ComponentKind)`](../../doc/models/component-kind.md) | Optional | A handle for the component type | getKind(): ?string | setKind(?string kind): void |
 | `archived` | `?bool` | Optional | Boolean flag describing whether a component is archived or not. | getArchived(): ?bool | setArchived(?bool archived): void |

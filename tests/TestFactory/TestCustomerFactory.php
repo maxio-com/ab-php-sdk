@@ -44,6 +44,9 @@ final class TestCustomerFactory
             ->salesforceId(null)
             ->defaultAutoRenewalProfileId(null)
             ->taxExemptReason(null)
+            ->additionalProperty('vat_country', null)
+            ->additionalProperty('vat_status', 'vat_invalid')
+            ->additionalProperty('business_type', null)
             ->build();
     }
 }

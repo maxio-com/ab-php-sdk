@@ -39,39 +39,6 @@ class SubscriptionGroupCreditCardBuilder
     }
 
     /**
-     * Sets full number field.
-     *
-     * @param string|int|null $value
-     */
-    public function fullNumber($value): self
-    {
-        $this->instance->setFullNumber($value);
-        return $this;
-    }
-
-    /**
-     * Sets expiration month field.
-     *
-     * @param string|int|null $value
-     */
-    public function expirationMonth($value): self
-    {
-        $this->instance->setExpirationMonth($value);
-        return $this;
-    }
-
-    /**
-     * Sets expiration year field.
-     *
-     * @param string|int|null $value
-     */
-    public function expirationYear($value): self
-    {
-        $this->instance->setExpirationYear($value);
-        return $this;
-    }
-
-    /**
      * Sets chargify token field.
      *
      * @param string|null $value
@@ -200,6 +167,39 @@ class SubscriptionGroupCreditCardBuilder
     public function billingCountry(?string $value): self
     {
         $this->instance->setBillingCountry($value);
+        return $this;
+    }
+
+    /**
+     * Sets full number field.
+     *
+     * @param string|int|null $value
+     */
+    public function fullNumber($value): self
+    {
+        $this->instance->setFullNumber($value);
+        return $this;
+    }
+
+    /**
+     * Sets expiration month field.
+     *
+     * @param string|int|null $value
+     */
+    public function expirationMonth($value): self
+    {
+        $this->instance->setExpirationMonth($value);
+        return $this;
+    }
+
+    /**
+     * Sets expiration year field.
+     *
+     * @param string|int|null $value
+     */
+    public function expirationYear($value): self
+    {
+        $this->instance->setExpirationYear($value);
         return $this;
     }
 

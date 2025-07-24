@@ -192,6 +192,17 @@ class CreateSubscriptionBuilder
     }
 
     /**
+     * Sets defer signup field.
+     *
+     * @param bool|null $value
+     */
+    public function deferSignup(?bool $value): self
+    {
+        $this->instance->setDeferSignup($value);
+        return $this;
+    }
+
+    /**
      * Sets stored credential transaction id field.
      *
      * @param int|null $value

@@ -33,7 +33,7 @@ class InsightsController extends BaseController
      *
      * There currently is not a complimentary matching set of documentation that compliments this endpoint.
      * However, each Site's dashboard will reflect the summary of information provided in the Stats
-     * reposnse.
+     * response.
      *
      * ```
      * https://subdomain.chargify.com/dashboard

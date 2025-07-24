@@ -76,7 +76,7 @@ class ProductFamiliesController extends BaseController
             );
 
         $_resHandler = $this->responseHandler()
-            ->throwErrorOn('404', ErrorType::init('Not Found'))
+            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
             ->type(ProductResponse::class, 1);
 
         return $this->execute($_reqBuilder, $_resHandler);
