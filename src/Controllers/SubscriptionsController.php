@@ -182,9 +182,10 @@ class SubscriptionsController extends BaseController
      *
      * ## Subscription with Chargify.js token
      *
-     * The `chargify_token` can be obtained using [Chargify.js](https://developers.chargify.
-     * com/docs/developer-docs/ZG9jOjE0NjAzNDI0-overview). The token represents payment profile attributes
-     * that were provided by the customer in their browser and stored at the payment gateway.
+     * The `chargify_token` can be obtained using [Chargify.js](https://docs.maxio.com/hc/en-
+     * us/articles/38163190843789-Chargify-js-Overview#chargify-js-overview-0-0). The token represents
+     * payment profile attributes that were provided by the customer in their browser and stored at the
+     * payment gateway.
      *
      * The `payment_type` attribute may either be `credit_card` or `bank_account`, depending on the type of
      * payment method being added. If a bank account is being passed, the payment attributes should be
@@ -321,12 +322,11 @@ class SubscriptionsController extends BaseController
      * + [Full documentation on GoCardless](https://maxio.zendesk.com/hc/en-us/articles/24176159136909-
      * GoCardless)
      *
-     * + [Using Chargify.js with GoCardless - minimal example](https://developers.chargify.
-     * com/docs/developer-docs/ZG9jOjE0NjAzNDIy-examples#minimal-example-with-direct-debit-gocardless-
-     * gateway)
+     * + [Using Chargify.js with GoCardless - minimal example](https://docs.maxio.com/hc/en-
+     * us/articles/38206331271693-Examples#h_01K0PJ15QQZKCER8CFK40MR6XJ)
      *
-     * + [Using Chargify.js with GoCardless - full example](https://developers.chargify.com/docs/developer-
-     * docs/ZG9jOjE0NjAzNDIy-examples#full-example-with-direct-debit-gocardless-gateway)
+     * + [Using Chargify.js with GoCardless - full example](https://docs.maxio.com/hc/en-
+     * us/articles/38206331271693-Examples#h_01K0PJ15QR09JVHWW0MCA7HVJV)
      *
      * ```json
      * {
@@ -387,13 +387,11 @@ class SubscriptionsController extends BaseController
      * + [Full documentation on Stripe Direct Debit](https://maxio.zendesk.com/hc/en-
      * us/articles/24176170430093-Stripe-SEPA-and-BECS-Direct-Debit)
      *
-     * + [Using Chargify.js with Stripe SEPA or BECS Direct Debit - minimal example](https://developers.
-     * chargify.com/docs/developer-docs/ZG9jOjE0NjAzNDIy-examples#minimal-example-with-sepa-or-becs-direct-
-     * debit-stripe-gateway)
+     * + [Using Chargify.js with Stripe SEPA or BECS Direct Debit - minimal example](https://docs.maxio.
+     * com/hc/en-us/articles/38206331271693-Examples#h_01K0PJ15QQFKKN8Z7B7DZ9AJS5)
      *
-     * + [Using Chargify.js with Stripe SEPA Direct Debit - full example](https://developers.chargify.
-     * com/docs/developer-docs/ZG9jOjE0NjAzNDIy-examples#full-example-with-sepa-direct-debit-stripe-
-     * gateway)
+     * + [Using Chargify.js with Stripe SEPA Direct Debit - full example](https://docs.maxio.com/hc/en-
+     * us/articles/38206331271693-Examples#h_01K0PJ15QR09JVHWW0MCA7HVJV)
      *
      *
      * ```json
@@ -423,11 +421,11 @@ class SubscriptionsController extends BaseController
      * + [Full documentation on Stripe Direct Debit](https://maxio.zendesk.com/hc/en-
      * us/articles/24176170430093-Stripe-SEPA-and-BECS-Direct-Debit)
      *
-     * + [Using Chargify.js with Stripe SEPA, BECS or BACS Direct Debit - minimal example](page:development-
-     * tools/chargify-js/examples#minimal-example-with-sepa-becs-or-bacs-direct-debit-stripe-gateway)
+     * + [Using Chargify.js with Stripe SEPA, BECS or BACS Direct Debit - minimal example](https://docs.
+     * maxio.com/hc/en-us/articles/38206331271693-Examples#h_01K0PJ15QQFKKN8Z7B7DZ9AJS5)
      *
-     * + [Using Chargify.js with Stripe BECS Direct Debit - full example](page:development-tools/chargify-
-     * js/examples#full-example-with-becs-direct-debit-stripe-gateway)
+     * + [Using Chargify.js with Stripe BECS Direct Debit - full example](https://docs.maxio.com/hc/en-
+     * us/articles/38206331271693-Examples#h_01K0PJ15QRX4B1TYZKZD8ZND6D)
      *
      *
      * ```json
@@ -458,11 +456,11 @@ class SubscriptionsController extends BaseController
      * + [Full documentation on Stripe Direct Debit](https://maxio.zendesk.com/hc/en-
      * us/articles/24176170430093-Stripe-SEPA-and-BECS-Direct-Debit)
      *
-     * + [Using Chargify.js with Stripe SEPA, BECS or BACS Direct Debit - minimal example](page:development-
-     * tools/chargify-js/examples#minimal-example-with-sepa-becs-or-bacs-direct-debit-stripe-gateway)
+     * + [Using Chargify.js with Stripe SEPA, BECS or BACS Direct Debit - minimal example](https://docs.
+     * maxio.com/hc/en-us/articles/38206331271693-Examples#h_01K0PJ15QQFKKN8Z7B7DZ9AJS5)
      *
-     * + [Using Chargify.js with Stripe BACS Direct Debit - full example](page:development-tools/chargify-
-     * js/examples#full-example-with-bacs-direct-debit-stripe-gateway)
+     * + [Using Chargify.js with Stripe BACS Direct Debit - full example](https://docs.maxio.com/hc/en-
+     * us/articles/38206331271693-Examples#h_01K0PJ15QR7PA1DJ3XE9MD05FM)
      *
      * ```json
      * {

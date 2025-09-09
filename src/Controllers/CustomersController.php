@@ -144,7 +144,7 @@ class CustomersController extends BaseController
     }
 
     /**
-     * This method allows to retrieve the Customer properties by Advanced Billing-generated Customer ID.
+     * Retrieves the Customer properties by Advanced Billing-generated Customer ID.
      *
      * @param int $id The Advanced Billing id of the customer
      *

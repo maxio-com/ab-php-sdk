@@ -29,23 +29,23 @@ curl -u <api_key>:x -H Accept:application/json -H Content-Type:application/json 
 Run the following command to install the package and automatically add the dependency to your composer.json file:
 
 ```bash
-composer require "maxio/advanced-billing-sdk:7.0.0"
+composer require "maxio/advanced-billing-sdk:7.0.1"
 ```
 
 Or add it to the composer.json file manually as given below:
 
 ```json
 "require": {
-    "maxio/advanced-billing-sdk": "7.0.0"
+    "maxio/advanced-billing-sdk": "7.0.1"
 }
 ```
 
 You can also view the package at:
-https://packagist.org/packages/maxio/advanced-billing-sdk#7.0.0
+https://packagist.org/packages/maxio/advanced-billing-sdk#7.0.1
 
 ## Initialize the API Client
 
-**_Note:_** Documentation for the client can be found [here.](https://www.github.com/maxio-com/ab-php-sdk/tree/7.0.0/doc/client.md)
+**_Note:_** Documentation for the client can be found [here.](https://www.github.com/maxio-com/ab-php-sdk/tree/7.0.1/doc/client.md)
 
 The following parameters are configurable for the API Client:
 
@@ -62,8 +62,8 @@ The following parameters are configurable for the API Client:
 | retryOnTimeout | `bool` | Whether to retry on request timeout.<br>*Default*: `true` |
 | httpStatusCodesToRetry | `array` | Http status codes to retry against.<br>*Default*: `408, 413, 429, 500, 502, 503, 504, 521, 522, 524` |
 | httpMethodsToRetry | `array` | Http methods to retry against.<br>*Default*: `'GET', 'PUT'` |
-| proxyConfiguration | [`ProxyConfigurationBuilder`](https://www.github.com/maxio-com/ab-php-sdk/tree/7.0.0/doc/proxy-configuration-builder.md) | Represents the proxy configurations for API calls |
-| basicAuthCredentials | [`BasicAuthCredentials`](https://www.github.com/maxio-com/ab-php-sdk/tree/7.0.0/doc/auth/basic-authentication.md) | The Credentials Setter for Basic Authentication |
+| proxyConfiguration | [`ProxyConfigurationBuilder`](https://www.github.com/maxio-com/ab-php-sdk/tree/7.0.1/doc/proxy-configuration-builder.md) | Represents the proxy configurations for API calls |
+| basicAuthCredentials | [`BasicAuthCredentials`](https://www.github.com/maxio-com/ab-php-sdk/tree/7.0.1/doc/auth/basic-authentication.md) | The Credentials Setter for Basic Authentication |
 
 The API client can be initialized as follows:
 
@@ -99,55 +99,55 @@ The SDK can be configured to use a different environment for making API calls. A
 
 This API uses the following authentication schemes.
 
-* [`BasicAuth (Basic Authentication)`](https://www.github.com/maxio-com/ab-php-sdk/tree/7.0.0/doc/auth/basic-authentication.md)
+* [`BasicAuth (Basic Authentication)`](https://www.github.com/maxio-com/ab-php-sdk/tree/7.0.1/doc/auth/basic-authentication.md)
 
 ## List of APIs
 
-* [API Exports](https://www.github.com/maxio-com/ab-php-sdk/tree/7.0.0/doc/controllers/api-exports.md)
-* [Advance Invoice](https://www.github.com/maxio-com/ab-php-sdk/tree/7.0.0/doc/controllers/advance-invoice.md)
-* [Billing Portal](https://www.github.com/maxio-com/ab-php-sdk/tree/7.0.0/doc/controllers/billing-portal.md)
-* [Component Price Points](https://www.github.com/maxio-com/ab-php-sdk/tree/7.0.0/doc/controllers/component-price-points.md)
-* [Custom Fields](https://www.github.com/maxio-com/ab-php-sdk/tree/7.0.0/doc/controllers/custom-fields.md)
-* [Events-Based Billing Segments](https://www.github.com/maxio-com/ab-php-sdk/tree/7.0.0/doc/controllers/events-based-billing-segments.md)
-* [Payment Profiles](https://www.github.com/maxio-com/ab-php-sdk/tree/7.0.0/doc/controllers/payment-profiles.md)
-* [Product Families](https://www.github.com/maxio-com/ab-php-sdk/tree/7.0.0/doc/controllers/product-families.md)
-* [Product Price Points](https://www.github.com/maxio-com/ab-php-sdk/tree/7.0.0/doc/controllers/product-price-points.md)
-* [Proforma Invoices](https://www.github.com/maxio-com/ab-php-sdk/tree/7.0.0/doc/controllers/proforma-invoices.md)
-* [Reason Codes](https://www.github.com/maxio-com/ab-php-sdk/tree/7.0.0/doc/controllers/reason-codes.md)
-* [Referral Codes](https://www.github.com/maxio-com/ab-php-sdk/tree/7.0.0/doc/controllers/referral-codes.md)
-* [Sales Commissions](https://www.github.com/maxio-com/ab-php-sdk/tree/7.0.0/doc/controllers/sales-commissions.md)
-* [Subscription Components](https://www.github.com/maxio-com/ab-php-sdk/tree/7.0.0/doc/controllers/subscription-components.md)
-* [Subscription Groups](https://www.github.com/maxio-com/ab-php-sdk/tree/7.0.0/doc/controllers/subscription-groups.md)
-* [Subscription Group Invoice Account](https://www.github.com/maxio-com/ab-php-sdk/tree/7.0.0/doc/controllers/subscription-group-invoice-account.md)
-* [Subscription Group Status](https://www.github.com/maxio-com/ab-php-sdk/tree/7.0.0/doc/controllers/subscription-group-status.md)
-* [Subscription Invoice Account](https://www.github.com/maxio-com/ab-php-sdk/tree/7.0.0/doc/controllers/subscription-invoice-account.md)
-* [Subscription Notes](https://www.github.com/maxio-com/ab-php-sdk/tree/7.0.0/doc/controllers/subscription-notes.md)
-* [Subscription Products](https://www.github.com/maxio-com/ab-php-sdk/tree/7.0.0/doc/controllers/subscription-products.md)
-* [Subscription Status](https://www.github.com/maxio-com/ab-php-sdk/tree/7.0.0/doc/controllers/subscription-status.md)
-* [Coupons](https://www.github.com/maxio-com/ab-php-sdk/tree/7.0.0/doc/controllers/coupons.md)
-* [Components](https://www.github.com/maxio-com/ab-php-sdk/tree/7.0.0/doc/controllers/components.md)
-* [Customers](https://www.github.com/maxio-com/ab-php-sdk/tree/7.0.0/doc/controllers/customers.md)
-* [Events](https://www.github.com/maxio-com/ab-php-sdk/tree/7.0.0/doc/controllers/events.md)
-* [Insights](https://www.github.com/maxio-com/ab-php-sdk/tree/7.0.0/doc/controllers/insights.md)
-* [Invoices](https://www.github.com/maxio-com/ab-php-sdk/tree/7.0.0/doc/controllers/invoices.md)
-* [Offers](https://www.github.com/maxio-com/ab-php-sdk/tree/7.0.0/doc/controllers/offers.md)
-* [Products](https://www.github.com/maxio-com/ab-php-sdk/tree/7.0.0/doc/controllers/products.md)
-* [Sites](https://www.github.com/maxio-com/ab-php-sdk/tree/7.0.0/doc/controllers/sites.md)
-* [Subscriptions](https://www.github.com/maxio-com/ab-php-sdk/tree/7.0.0/doc/controllers/subscriptions.md)
-* [Webhooks](https://www.github.com/maxio-com/ab-php-sdk/tree/7.0.0/doc/controllers/webhooks.md)
+* [API Exports](https://www.github.com/maxio-com/ab-php-sdk/tree/7.0.1/doc/controllers/api-exports.md)
+* [Advance Invoice](https://www.github.com/maxio-com/ab-php-sdk/tree/7.0.1/doc/controllers/advance-invoice.md)
+* [Billing Portal](https://www.github.com/maxio-com/ab-php-sdk/tree/7.0.1/doc/controllers/billing-portal.md)
+* [Component Price Points](https://www.github.com/maxio-com/ab-php-sdk/tree/7.0.1/doc/controllers/component-price-points.md)
+* [Custom Fields](https://www.github.com/maxio-com/ab-php-sdk/tree/7.0.1/doc/controllers/custom-fields.md)
+* [Events-Based Billing Segments](https://www.github.com/maxio-com/ab-php-sdk/tree/7.0.1/doc/controllers/events-based-billing-segments.md)
+* [Payment Profiles](https://www.github.com/maxio-com/ab-php-sdk/tree/7.0.1/doc/controllers/payment-profiles.md)
+* [Product Families](https://www.github.com/maxio-com/ab-php-sdk/tree/7.0.1/doc/controllers/product-families.md)
+* [Product Price Points](https://www.github.com/maxio-com/ab-php-sdk/tree/7.0.1/doc/controllers/product-price-points.md)
+* [Proforma Invoices](https://www.github.com/maxio-com/ab-php-sdk/tree/7.0.1/doc/controllers/proforma-invoices.md)
+* [Reason Codes](https://www.github.com/maxio-com/ab-php-sdk/tree/7.0.1/doc/controllers/reason-codes.md)
+* [Referral Codes](https://www.github.com/maxio-com/ab-php-sdk/tree/7.0.1/doc/controllers/referral-codes.md)
+* [Sales Commissions](https://www.github.com/maxio-com/ab-php-sdk/tree/7.0.1/doc/controllers/sales-commissions.md)
+* [Subscription Components](https://www.github.com/maxio-com/ab-php-sdk/tree/7.0.1/doc/controllers/subscription-components.md)
+* [Subscription Groups](https://www.github.com/maxio-com/ab-php-sdk/tree/7.0.1/doc/controllers/subscription-groups.md)
+* [Subscription Group Invoice Account](https://www.github.com/maxio-com/ab-php-sdk/tree/7.0.1/doc/controllers/subscription-group-invoice-account.md)
+* [Subscription Group Status](https://www.github.com/maxio-com/ab-php-sdk/tree/7.0.1/doc/controllers/subscription-group-status.md)
+* [Subscription Invoice Account](https://www.github.com/maxio-com/ab-php-sdk/tree/7.0.1/doc/controllers/subscription-invoice-account.md)
+* [Subscription Notes](https://www.github.com/maxio-com/ab-php-sdk/tree/7.0.1/doc/controllers/subscription-notes.md)
+* [Subscription Products](https://www.github.com/maxio-com/ab-php-sdk/tree/7.0.1/doc/controllers/subscription-products.md)
+* [Subscription Status](https://www.github.com/maxio-com/ab-php-sdk/tree/7.0.1/doc/controllers/subscription-status.md)
+* [Coupons](https://www.github.com/maxio-com/ab-php-sdk/tree/7.0.1/doc/controllers/coupons.md)
+* [Components](https://www.github.com/maxio-com/ab-php-sdk/tree/7.0.1/doc/controllers/components.md)
+* [Customers](https://www.github.com/maxio-com/ab-php-sdk/tree/7.0.1/doc/controllers/customers.md)
+* [Events](https://www.github.com/maxio-com/ab-php-sdk/tree/7.0.1/doc/controllers/events.md)
+* [Insights](https://www.github.com/maxio-com/ab-php-sdk/tree/7.0.1/doc/controllers/insights.md)
+* [Invoices](https://www.github.com/maxio-com/ab-php-sdk/tree/7.0.1/doc/controllers/invoices.md)
+* [Offers](https://www.github.com/maxio-com/ab-php-sdk/tree/7.0.1/doc/controllers/offers.md)
+* [Products](https://www.github.com/maxio-com/ab-php-sdk/tree/7.0.1/doc/controllers/products.md)
+* [Sites](https://www.github.com/maxio-com/ab-php-sdk/tree/7.0.1/doc/controllers/sites.md)
+* [Subscriptions](https://www.github.com/maxio-com/ab-php-sdk/tree/7.0.1/doc/controllers/subscriptions.md)
+* [Webhooks](https://www.github.com/maxio-com/ab-php-sdk/tree/7.0.1/doc/controllers/webhooks.md)
 
 ## SDK Infrastructure
 
 ### Configuration
 
-* [ProxyConfigurationBuilder](https://www.github.com/maxio-com/ab-php-sdk/tree/7.0.0/doc/proxy-configuration-builder.md)
+* [ProxyConfigurationBuilder](https://www.github.com/maxio-com/ab-php-sdk/tree/7.0.1/doc/proxy-configuration-builder.md)
 
 ### HTTP
 
-* [HttpRequest](https://www.github.com/maxio-com/ab-php-sdk/tree/7.0.0/doc/http-request.md)
-* [HttpResponse](https://www.github.com/maxio-com/ab-php-sdk/tree/7.0.0/doc/http-response.md)
+* [HttpRequest](https://www.github.com/maxio-com/ab-php-sdk/tree/7.0.1/doc/http-request.md)
+* [HttpResponse](https://www.github.com/maxio-com/ab-php-sdk/tree/7.0.1/doc/http-response.md)
 
 ### Utilities
 
-* [ApiException](https://www.github.com/maxio-com/ab-php-sdk/tree/7.0.0/doc/api-exception.md)
+* [ApiException](https://www.github.com/maxio-com/ab-php-sdk/tree/7.0.1/doc/api-exception.md)
 
