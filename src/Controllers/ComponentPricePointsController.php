@@ -71,7 +71,7 @@ class ComponentPricePointsController extends BaseController
     }
 
     /**
-     * This endpoint can be used to create a new price point for an existing component.
+     * Creates a price point for an existing component.
      *
      * @param int $componentId The Advanced Billing id of the component
      * @param CreateComponentPricePointRequest|null $body

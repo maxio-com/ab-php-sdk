@@ -664,9 +664,9 @@ $result = $componentsController->findComponent($handle);
 
 # Read Component
 
-This request will return information regarding a component from a specific product family.
+Returns information regarding a component from a specific product family.
 
-You may read the component by either the component's id or handle. When using the handle, it must be prefixed with `handle:`.
+You can read the component by either the component's id or handle. When using the handle, it must be prefixed with `handle:`.
 
 ```php
 function readComponent(int $productFamilyId, string $componentId): ComponentResponse

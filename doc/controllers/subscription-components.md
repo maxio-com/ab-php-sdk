@@ -1101,14 +1101,14 @@ Q. Is it possible to record metered usage for more than one component at a time?
 A. No. Usage should be reported as one API call per component on a single subscription. For example, to record that a subscriber has sent both an SMS Message and an Email, send an API call for each.
 
 ```php
-function createUsage(int $subscriptionId, $componentId, ?CreateUsageRequest $body = null): UsageResponse
+function createUsage($subscriptionIdOrReference, $componentId, ?CreateUsageRequest $body = null): UsageResponse
 ```
 
 ## Parameters
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+| `subscriptionIdOrReference` | int\|string | Template, Required | This is a container for one-of cases. |
 | `componentId` | int\|string | Template, Required | This is a container for one-of cases. |
 | `body` | [`?CreateUsageRequest`](../../doc/models/create-usage-request.md) | Body, Optional | - |
 
@@ -1119,7 +1119,7 @@ function createUsage(int $subscriptionId, $componentId, ?CreateUsageRequest $bod
 ## Example Usage
 
 ```php
-$subscriptionId = 222;
+$subscriptionIdOrReference = 234;
 
 $componentId = 144;
 
@@ -1132,7 +1132,7 @@ $body = CreateUsageRequestBuilder::init(
 )->build();
 
 $result = $subscriptionComponentsController->createUsage(
-    $subscriptionId,
+    $subscriptionIdOrReference,
     $componentId,
     $body
 );
@@ -1188,7 +1188,7 @@ function listUsages(array $options): array
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+| `subscriptionIdOrReference` | int\|string | Template, Required | This is a container for one-of cases. |
 | `componentId` | int\|string | Template, Required | This is a container for one-of cases. |
 | `sinceId` | `?int` | Query, Optional | Returns usages with an id greater than or equal to the one specified |
 | `maxId` | `?int` | Query, Optional | Returns usages with an id less than or equal to the one specified |
@@ -1205,7 +1205,7 @@ function listUsages(array $options): array
 
 ```php
 $collect = [
-    'subscriptionId' => 222,
+    'subscriptionIdOrReference' => 234,
     'componentId' => 144,
     'page' => 2,
     'perPage' => 50
@@ -1296,7 +1296,11 @@ $body = ActivateEventBasedComponentBuilder::init()
                 PriceBuilder::init(
                     1,
                     '5.0'
-                )->build()
+                )
+                    ->endingQuantity(
+                        null
+                    )
+                    ->build()
             ]
         )
             ->taxIncluded(false)
