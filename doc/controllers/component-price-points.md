@@ -95,7 +95,7 @@ $result = $componentPricePointsController->promoteComponentPricePointToDefault(
 
 # Create Component Price Point
 
-This endpoint can be used to create a new price point for an existing component.
+Creates a price point for an existing component.
 
 ```php
 function createComponentPricePoint(
@@ -138,7 +138,7 @@ $body = CreateComponentPricePointRequestBuilder::init(
                 '4.00'
             )
                 ->endingQuantity(
-                    null
+                    '200'
                 )
                 ->build()
         ]
