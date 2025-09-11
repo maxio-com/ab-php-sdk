@@ -135,10 +135,11 @@ function listProductPricePoints(array $options): ListProductPricePointsResponse
 ## Example Usage
 
 ```php
-$collect = Liquid error: Value cannot be null. (Parameter 'key')[
+$collect = [
     'productId' => 124,
     'page' => 2,
-    'perPage' => 10
+    'perPage' => 10,
+    'filterType' => Liquid error: Value cannot be null. (Parameter 'key')
 ];
 
 $result = $productPricePointsController->listProductPricePoints($collect);

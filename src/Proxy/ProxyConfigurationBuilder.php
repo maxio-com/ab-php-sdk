@@ -91,7 +91,7 @@ class ProxyConfigurationBuilder
             'port' => $this->port,
             'tunnel' => $this->tunnel,
             'address' => $this->address,
-            'auth' => ['user' => '$this->user', 'pass' => '$this->pass', 'method' => $this->authMethod]
+            'auth' => ['user' => $this->user, 'pass' => $this->pass, 'method' => $this->authMethod]
         ];
     }
 }

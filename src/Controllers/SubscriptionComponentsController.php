@@ -660,7 +660,12 @@ class SubscriptionComponentsController extends BaseController
      * A. No. Usage should be reported as one API call per component on a single subscription. For example,
      * to record that a subscriber has sent both an SMS Message and an Email, send an API call for each.
      *
-     * @param int $subscriptionId The Chargify id of the subscription
+     * @param int|string $subscriptionIdOrReference Either the Advanced Billing subscription ID
+     *        (integer) or the subscription reference (string). Important: In cases where a
+     *        numeric string value matches both an existing subscription ID and an existing
+     *        subscription reference, the system will prioritize the subscription ID lookup. For
+     *        example, if both subscription ID 123 and subscription reference "123" exist, passing
+     *        "123" will return the subscription with ID 123.
      * @param int|string $componentId Either the Advanced Billing id for the component or the
      *        component's handle prefixed by `handle:`
      * @param CreateUsageRequest|null $body
@@ -669,15 +674,20 @@ class SubscriptionComponentsController extends BaseController
      *
      * @throws ApiException Thrown if API call fails
      */
-    public function createUsage(int $subscriptionId, $componentId, ?CreateUsageRequest $body = null): UsageResponse
-    {
+    public function createUsage(
+        $subscriptionIdOrReference,
+        $componentId,
+        ?CreateUsageRequest $body = null
+    ): UsageResponse {
         $_reqBuilder = $this->requestBuilder(
             RequestMethod::POST,
-            '/subscriptions/{subscription_id}/components/{component_id}/usages.json'
+            '/subscriptions/{subscription_id_or_reference}/components/{component_id}/usages.json'
         )
             ->auth('BasicAuth')
             ->parameters(
-                TemplateParam::init('subscription_id', $subscriptionId)->required(),
+                TemplateParam::init('subscription_id_or_reference', $subscriptionIdOrReference)
+                    ->required()
+                    ->strictType('oneOf(int,string)'),
                 TemplateParam::init('component_id', $componentId)->required()->strictType('oneOf(int,string)'),
                 HeaderParam::init('Content-Type', 'application/json'),
                 BodyParam::init($body)
@@ -728,11 +738,14 @@ class SubscriptionComponentsController extends BaseController
     {
         $_reqBuilder = $this->requestBuilder(
             RequestMethod::GET,
-            '/subscriptions/{subscription_id}/components/{component_id}/usages.json'
+            '/subscriptions/{subscription_id_or_reference}/components/{component_id}/usages.json'
         )
             ->auth('BasicAuth')
             ->parameters(
-                TemplateParam::init('subscription_id', $options)->extract('subscriptionId')->required(),
+                TemplateParam::init('subscription_id_or_reference', $options)
+                    ->extract('subscriptionIdOrReference')
+                    ->required()
+                    ->strictType('oneOf(int,string)'),
                 TemplateParam::init('component_id', $options)
                     ->extract('componentId')
                     ->required()

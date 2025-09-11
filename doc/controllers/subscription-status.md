@@ -397,7 +397,7 @@ function resumeSubscription(
 ```php
 $subscriptionId = 222;
 
-Liquid error: Value cannot be null. (Parameter 'key')$result = $subscriptionStatusController->resumeSubscription(Liquid error: Value cannot be null. (Parameter 'key')$subscriptionId);
+$result = $subscriptionStatusController->resumeSubscription($subscriptionId);
 ```
 
 ## Example Response *(as JSON)*

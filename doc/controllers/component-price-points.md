@@ -95,7 +95,7 @@ $result = $componentPricePointsController->promoteComponentPricePointToDefault(
 
 # Create Component Price Point
 
-This endpoint can be used to create a new price point for an existing component.
+Creates a price point for an existing component.
 
 ```php
 function createComponentPricePoint(
@@ -136,7 +136,11 @@ $body = CreateComponentPricePointRequestBuilder::init(
             PriceBuilder::init(
                 '101',
                 '4.00'
-            )->build()
+            )
+                ->endingQuantity(
+                    '200'
+                )
+                ->build()
         ]
     )
         ->handle('wholesale-handle')
@@ -188,10 +192,11 @@ function listComponentPricePoints(array $options): ComponentPricePointsResponse
 ## Example Usage
 
 ```php
-$collect = Liquid error: Value cannot be null. (Parameter 'key')[
+$collect = [
     'componentId' => 222,
     'page' => 2,
-    'perPage' => 50
+    'perPage' => 50,
+    'filterType' => Liquid error: Value cannot be null. (Parameter 'key')
 ];
 
 $result = $componentPricePointsController->listComponentPricePoints($collect);
