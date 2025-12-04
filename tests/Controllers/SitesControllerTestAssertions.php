@@ -16,12 +16,12 @@ final class SitesControllerTestAssertions
 
     public function assertExpectedSiteDataWereReturned(Site $expectedSite, Site $site): void
     {
-        $expectedSiteJson = $expectedSite->jsonSerialize();
-        $siteJson = $site->jsonSerialize();
+        $expectedSiteJson = json_decode(json_encode($expectedSite->jsonSerialize()), true);
+        $siteJson = json_decode(json_encode($site->jsonSerialize()), true);
         
         // Remove new API fields that may not be in test expectations
         // The net_terms object may contain additional properties
-        if (isset($siteJson['net_terms']['additionalProperties'])) {
+        if (isset($siteJson['net_terms']['additionalProperties']['net_terms_on_automatic_signups_enabled'])) {
             unset($siteJson['net_terms']['additionalProperties']['net_terms_on_automatic_signups_enabled']);
         }
         
