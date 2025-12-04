@@ -19,11 +19,6 @@ final class SitesControllerTestAssertions
         $expectedSiteJson = json_decode(json_encode($expectedSite->jsonSerialize()), true);
         $siteJson = json_decode(json_encode($site->jsonSerialize()), true);
         
-        // Remove new API fields that may not be in test expectations
-        if (isset($siteJson['net_terms']['net_terms_on_automatic_signups_enabled'])) {
-            unset($siteJson['net_terms']['net_terms_on_automatic_signups_enabled']);
-        }
-        
         $this->testCase::assertEquals($expectedSiteJson, $siteJson);
     }
 
