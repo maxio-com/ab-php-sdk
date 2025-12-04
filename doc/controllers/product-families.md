@@ -18,7 +18,7 @@ $productFamiliesController = $client->getProductFamiliesController();
 
 # List Products for Product Family
 
-This method allows to retrieve a list of Products belonging to a Product Family.
+Retrieves a list of Products belonging to a Product Family.
 
 ```php
 function listProductsForProductFamily(array $options): array
@@ -49,7 +49,7 @@ function listProductsForProductFamily(array $options): array
 ```php
 $collect = [
     'productFamilyId' => 'product_family_id4',
-    'page' => 2,
+    'page' => 1,
     'perPage' => 50,
     'dateField' => BasicDateField::UPDATED_AT,
     'filter' => ListProductsFilterBuilder::init()
@@ -175,7 +175,7 @@ $result = $productFamiliesController->listProductsForProductFamily($collect);
 
 # Create Product Family
 
-This method will create a Product Family within your Advanced Billing site. Create a Product Family to act as a container for your products, components and coupons.
+Creates a Product Family within your Advanced Billing site. Create a Product Family to act as a container for your products, components and coupons.
 
 Full documentation on how Product Families operate within the Advanced Billing UI can be located [here](https://maxio.zendesk.com/hc/en-us/articles/24261098936205-Product-Families).
 
@@ -230,7 +230,7 @@ $result = $productFamiliesController->createProductFamily($body);
 
 # List Product Families
 
-This method allows to retrieve a list of Product Families for a site.
+Retrieve a list of Product Families for a site.
 
 ```php
 function listProductFamilies(array $options): array
@@ -292,7 +292,7 @@ $result = $productFamiliesController->listProductFamilies($collect);
 
 # Read Product Family
 
-This method allows to retrieve a Product Family via the `product_family_id`. The response will contain a Product Family object.
+Retrieves a Product Family via the `product_family_id`. The response will contain a Product Family object.
 
 The product family can be specified either with the id number, or with the `handle:my-family` format.
 

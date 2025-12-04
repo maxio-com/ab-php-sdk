@@ -3,12 +3,12 @@
 
 ## Data Type
 
-`int|string`
+`int|string(SnapDay)`
 
 ## Cases
 
 | Type |
 |  --- |
 | `int` |
-| `string` |
+| [`string(SnapDay)`](../../../doc/models/snap-day.md) |
 

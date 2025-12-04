@@ -149,9 +149,8 @@ class CreateInvoiceItem implements \JsonSerializable
 
     /**
      * Returns Taxable.
-     * Set to true to automatically calculate taxes. Site must be configured to use and calculate taxes.
-     *
-     * If using Avalara, a tax_code parameter must also be sent.
+     * Set to true to automatically calculate taxes. Site must be configured to use and calculate taxes. If
+     * using AvaTax, a tax_code parameter must also be sent.
      */
     public function getTaxable(): ?bool
     {
@@ -160,9 +159,8 @@ class CreateInvoiceItem implements \JsonSerializable
 
     /**
      * Sets Taxable.
-     * Set to true to automatically calculate taxes. Site must be configured to use and calculate taxes.
-     *
-     * If using Avalara, a tax_code parameter must also be sent.
+     * Set to true to automatically calculate taxes. Site must be configured to use and calculate taxes. If
+     * using AvaTax, a tax_code parameter must also be sent.
      *
      * @maps taxable
      */
@@ -173,6 +171,8 @@ class CreateInvoiceItem implements \JsonSerializable
 
     /**
      * Returns Tax Code.
+     * A string representing the tax code related to the product type. This is especially important when
+     * using AvaTax to tax based on locale. This attribute has a max length of 25 characters.
      */
     public function getTaxCode(): ?string
     {
@@ -181,6 +181,8 @@ class CreateInvoiceItem implements \JsonSerializable
 
     /**
      * Sets Tax Code.
+     * A string representing the tax code related to the product type. This is especially important when
+     * using AvaTax to tax based on locale. This attribute has a max length of 25 characters.
      *
      * @maps tax_code
      */

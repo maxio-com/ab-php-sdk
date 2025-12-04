@@ -44,6 +44,26 @@ class ComponentCustomPrice implements \JsonSerializable
     private $prices;
 
     /**
+     * @var bool|null
+     */
+    private $renewPrepaidAllocation;
+
+    /**
+     * @var bool|null
+     */
+    private $rolloverPrepaidRemainder;
+
+    /**
+     * @var array
+     */
+    private $expirationInterval = [];
+
+    /**
+     * @var array
+     */
+    private $expirationIntervalUnit = [];
+
+    /**
      * @param Price[] $prices
      */
     public function __construct(array $prices)
@@ -178,6 +198,118 @@ class ComponentCustomPrice implements \JsonSerializable
     }
 
     /**
+     * Returns Renew Prepaid Allocation.
+     * Applicable only to prepaid usage components. Controls whether the allocated quantity renews each
+     * period.
+     */
+    public function getRenewPrepaidAllocation(): ?bool
+    {
+        return $this->renewPrepaidAllocation;
+    }
+
+    /**
+     * Sets Renew Prepaid Allocation.
+     * Applicable only to prepaid usage components. Controls whether the allocated quantity renews each
+     * period.
+     *
+     * @maps renew_prepaid_allocation
+     */
+    public function setRenewPrepaidAllocation(?bool $renewPrepaidAllocation): void
+    {
+        $this->renewPrepaidAllocation = $renewPrepaidAllocation;
+    }
+
+    /**
+     * Returns Rollover Prepaid Remainder.
+     * Applicable only to prepaid usage components. Controls whether remaining units roll over to the next
+     * period.
+     */
+    public function getRolloverPrepaidRemainder(): ?bool
+    {
+        return $this->rolloverPrepaidRemainder;
+    }
+
+    /**
+     * Sets Rollover Prepaid Remainder.
+     * Applicable only to prepaid usage components. Controls whether remaining units roll over to the next
+     * period.
+     *
+     * @maps rollover_prepaid_remainder
+     */
+    public function setRolloverPrepaidRemainder(?bool $rolloverPrepaidRemainder): void
+    {
+        $this->rolloverPrepaidRemainder = $rolloverPrepaidRemainder;
+    }
+
+    /**
+     * Returns Expiration Interval.
+     * Applicable only when rollover is enabled. Number of `expiration_interval_unit`s after which rollover
+     * amounts expire.
+     */
+    public function getExpirationInterval(): ?int
+    {
+        if (count($this->expirationInterval) == 0) {
+            return null;
+        }
+        return $this->expirationInterval['value'];
+    }
+
+    /**
+     * Sets Expiration Interval.
+     * Applicable only when rollover is enabled. Number of `expiration_interval_unit`s after which rollover
+     * amounts expire.
+     *
+     * @maps expiration_interval
+     */
+    public function setExpirationInterval(?int $expirationInterval): void
+    {
+        $this->expirationInterval['value'] = $expirationInterval;
+    }
+
+    /**
+     * Unsets Expiration Interval.
+     * Applicable only when rollover is enabled. Number of `expiration_interval_unit`s after which rollover
+     * amounts expire.
+     */
+    public function unsetExpirationInterval(): void
+    {
+        $this->expirationInterval = [];
+    }
+
+    /**
+     * Returns Expiration Interval Unit.
+     * Applicable only when rollover is enabled. Interval unit for rollover expiration (month or day).
+     */
+    public function getExpirationIntervalUnit(): ?string
+    {
+        if (count($this->expirationIntervalUnit) == 0) {
+            return null;
+        }
+        return $this->expirationIntervalUnit['value'];
+    }
+
+    /**
+     * Sets Expiration Interval Unit.
+     * Applicable only when rollover is enabled. Interval unit for rollover expiration (month or day).
+     *
+     * @maps expiration_interval_unit
+     * @factory \AdvancedBillingLib\Models\ExpirationIntervalUnit::checkValue
+     */
+    public function setExpirationIntervalUnit(?string $expirationIntervalUnit): void
+    {
+        $this->expirationIntervalUnit['value'] = $expirationIntervalUnit;
+    }
+
+    /**
+     * Unsets Expiration Interval Unit.
+     * Applicable only when rollover is enabled. Interval unit for rollover expiration (month or day).
+     */
+    public function unsetExpirationIntervalUnit(): void
+    {
+        $this->expirationIntervalUnit = [];
+    }
+
+    /**
      * Converts the ComponentCustomPrice object to a human-readable string representation.
      *
      * @return string The string representation of the ComponentCustomPrice object.
@@ -192,6 +324,10 @@ class ComponentCustomPrice implements \JsonSerializable
                 'interval' => $this->interval,
                 'intervalUnit' => $this->getIntervalUnit(),
                 'prices' => $this->prices,
+                'renewPrepaidAllocation' => $this->renewPrepaidAllocation,
+                'rolloverPrepaidRemainder' => $this->rolloverPrepaidRemainder,
+                'expirationInterval' => $this->getExpirationInterval(),
+                'expirationIntervalUnit' => $this->getExpirationIntervalUnit(),
                 'additionalProperties' => $this->additionalProperties
             ]
         );
@@ -238,18 +374,33 @@ class ComponentCustomPrice implements \JsonSerializable
     {
         $json = [];
         if (isset($this->taxIncluded)) {
-            $json['tax_included']   = $this->taxIncluded;
+            $json['tax_included']               = $this->taxIncluded;
         }
         if (isset($this->pricingScheme)) {
-            $json['pricing_scheme'] = PricingScheme::checkValue($this->pricingScheme);
+            $json['pricing_scheme']             = PricingScheme::checkValue($this->pricingScheme);
         }
         if (isset($this->interval)) {
-            $json['interval']       = $this->interval;
+            $json['interval']                   = $this->interval;
         }
         if (!empty($this->intervalUnit)) {
-            $json['interval_unit']  = IntervalUnit::checkValue($this->intervalUnit['value']);
+            $json['interval_unit']              = IntervalUnit::checkValue($this->intervalUnit['value']);
         }
-        $json['prices']             = $this->prices;
+        $json['prices']                         = $this->prices;
+        if (isset($this->renewPrepaidAllocation)) {
+            $json['renew_prepaid_allocation']   = $this->renewPrepaidAllocation;
+        }
+        if (isset($this->rolloverPrepaidRemainder)) {
+            $json['rollover_prepaid_remainder'] = $this->rolloverPrepaidRemainder;
+        }
+        if (!empty($this->expirationInterval)) {
+            $json['expiration_interval']        = $this->expirationInterval['value'];
+        }
+        if (!empty($this->expirationIntervalUnit)) {
+            $json['expiration_interval_unit']   =
+                ExpirationIntervalUnit::checkValue(
+                    $this->expirationIntervalUnit['value']
+                );
+        }
         $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;

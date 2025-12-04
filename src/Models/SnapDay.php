@@ -14,9 +14,6 @@ use Core\Utils\CoreHelper;
 use Exception;
 use stdClass;
 
-/**
- * Use for subscriptions with product eligible for calendar billing only. Value can be 1-28 or 'end'.
- */
 class SnapDay
 {
     public const END = 'end';

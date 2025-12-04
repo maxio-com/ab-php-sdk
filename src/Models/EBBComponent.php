@@ -315,7 +315,7 @@ class EBBComponent implements \JsonSerializable
     /**
      * Returns Tax Code.
      * A string representing the tax code related to the component type. This is especially important when
-     * using the Avalara service to tax based on locale. This attribute has a max length of 10 characters.
+     * using AvaTax to tax based on locale. This attribute has a max length of 25 characters.
      */
     public function getTaxCode(): ?string
     {
@@ -325,7 +325,7 @@ class EBBComponent implements \JsonSerializable
     /**
      * Sets Tax Code.
      * A string representing the tax code related to the component type. This is especially important when
-     * using the Avalara service to tax based on locale. This attribute has a max length of 10 characters.
+     * using AvaTax to tax based on locale. This attribute has a max length of 25 characters.
      *
      * @maps tax_code
      */

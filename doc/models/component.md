@@ -21,7 +21,6 @@
 | `pricePerUnitInCents` | `?int` | Optional | deprecated - use unit_price instead | getPricePerUnitInCents(): ?int | setPricePerUnitInCents(?int pricePerUnitInCents): void |
 | `kind` | [`?string(ComponentKind)`](../../doc/models/component-kind.md) | Optional | A handle for the component type | getKind(): ?string | setKind(?string kind): void |
 | `archived` | `?bool` | Optional | Boolean flag describing whether a component is archived or not. | getArchived(): ?bool | setArchived(?bool archived): void |
-| `taxable` | `?bool` | Optional | Boolean flag describing whether a component is taxable or not. | getTaxable(): ?bool | setTaxable(?bool taxable): void |
 | `description` | `?string` | Optional | The description of the component. | getDescription(): ?string | setDescription(?string description): void |
 | `defaultPricePointId` | `?int` | Optional | - | getDefaultPricePointId(): ?int | setDefaultPricePointId(?int defaultPricePointId): void |
 | `overagePrices` | [`?(ComponentPrice[])`](../../doc/models/component-price.md) | Optional | Applicable only to prepaid usage components. An array of overage price brackets. | getOveragePrices(): ?array | setOveragePrices(?array overagePrices): void |
@@ -29,7 +28,8 @@
 | `pricePointCount` | `?int` | Optional | Count for the number of price points associated with the component | getPricePointCount(): ?int | setPricePointCount(?int pricePointCount): void |
 | `pricePointsUrl` | `?string` | Optional | URL that points to the location to read the existing price points via GET request | getPricePointsUrl(): ?string | setPricePointsUrl(?string pricePointsUrl): void |
 | `defaultPricePointName` | `?string` | Optional | - | getDefaultPricePointName(): ?string | setDefaultPricePointName(?string defaultPricePointName): void |
-| `taxCode` | `?string` | Optional | A string representing the tax code related to the component type. This is especially important when using the Avalara service to tax based on locale. This attribute has a max length of 10 characters. | getTaxCode(): ?string | setTaxCode(?string taxCode): void |
+| `taxable` | `?bool` | Optional | Boolean flag describing whether a component is taxable or not. | getTaxable(): ?bool | setTaxable(?bool taxable): void |
+| `taxCode` | `?string` | Optional | A string representing the tax code related to the component type. This is especially important when using AvaTax to tax based on locale. This attribute has a max length of 25 characters. | getTaxCode(): ?string | setTaxCode(?string taxCode): void |
 | `recurring` | `?bool` | Optional | - | getRecurring(): ?bool | setRecurring(?bool recurring): void |
 | `upgradeCharge` | [`?string(CreditType)`](../../doc/models/credit-type.md) | Optional | The type of credit to be created when upgrading/downgrading. Defaults to the component and then site setting if one is not provided.<br>Available values: `full`, `prorated`, `none`. | getUpgradeCharge(): ?string | setUpgradeCharge(?string upgradeCharge): void |
 | `downgradeCredit` | [`?string(CreditType)`](../../doc/models/credit-type.md) | Optional | The type of credit to be created when upgrading/downgrading. Defaults to the component and then site setting if one is not provided.<br>Available values: `full`, `prorated`, `none`. | getDowngradeCredit(): ?string | setDowngradeCredit(?string downgradeCredit): void |

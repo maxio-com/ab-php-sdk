@@ -160,7 +160,7 @@ function listMrrMovements(array $options): ListMRRResponse
 
 ```php
 $collect = [
-    'page' => 2,
+    'page' => 1,
     'perPage' => 20
 ];
 
@@ -258,7 +258,7 @@ $collect = [
         )
         ->build(),
     'atTime' => 'at_time=2022-01-10T10:00:00-05:00',
-    'page' => 2,
+    'page' => 1,
     'perPage' => 50,
     'direction' => Direction::DESC
 ];

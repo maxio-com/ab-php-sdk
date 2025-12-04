@@ -95,6 +95,68 @@ class ComponentCustomPriceBuilder
     }
 
     /**
+     * Sets renew prepaid allocation field.
+     *
+     * @param bool|null $value
+     */
+    public function renewPrepaidAllocation(?bool $value): self
+    {
+        $this->instance->setRenewPrepaidAllocation($value);
+        return $this;
+    }
+
+    /**
+     * Sets rollover prepaid remainder field.
+     *
+     * @param bool|null $value
+     */
+    public function rolloverPrepaidRemainder(?bool $value): self
+    {
+        $this->instance->setRolloverPrepaidRemainder($value);
+        return $this;
+    }
+
+    /**
+     * Sets expiration interval field.
+     *
+     * @param int|null $value
+     */
+    public function expirationInterval(?int $value): self
+    {
+        $this->instance->setExpirationInterval($value);
+        return $this;
+    }
+
+    /**
+     * Unsets expiration interval field.
+     */
+    public function unsetExpirationInterval(): self
+    {
+        $this->instance->unsetExpirationInterval();
+        return $this;
+    }
+
+    /**
+     * Sets expiration interval unit field.
+     *
+     * @param string|null $value
+     */
+    public function expirationIntervalUnit(?string $value): self
+    {
+        $this->instance->setExpirationIntervalUnit($value);
+        return $this;
+    }
+
+    /**
+     * Unsets expiration interval unit field.
+     */
+    public function unsetExpirationIntervalUnit(): self
+    {
+        $this->instance->unsetExpirationIntervalUnit();
+        return $this;
+    }
+
+    /**
      * Add an additional property to this model.
      *
      * @param string $name Name of property.

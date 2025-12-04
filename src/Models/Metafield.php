@@ -105,7 +105,7 @@ class Metafield implements \JsonSerializable
 
     /**
      * Returns Data Count.
-     * the amount of subscriptions this metafield has been applied to in Chargify
+     * The amount of subscriptions this metafield has been applied to in Advanced Billing.
      */
     public function getDataCount(): ?int
     {
@@ -114,7 +114,7 @@ class Metafield implements \JsonSerializable
 
     /**
      * Sets Data Count.
-     * the amount of subscriptions this metafield has been applied to in Chargify
+     * The amount of subscriptions this metafield has been applied to in Advanced Billing.
      *
      * @maps data_count
      */
@@ -125,10 +125,8 @@ class Metafield implements \JsonSerializable
 
     /**
      * Returns Input Type.
-     * Indicates how data should be added to the metafield. For example, a text type is just a string, so a
-     * given metafield of this type can have any value attached. On the other hand, dropdown and radio have
-     * a set of allowed values that can be input, and appear differently on a Public Signup Page. Defaults
-     * to 'text'
+     * Indicates the type of metafield. A text metafield allows any string value. Dropdown and radio
+     * metafields have a set of values that can be selected.  Defaults to 'text'.
      */
     public function getInputType(): ?string
     {
@@ -137,10 +135,8 @@ class Metafield implements \JsonSerializable
 
     /**
      * Sets Input Type.
-     * Indicates how data should be added to the metafield. For example, a text type is just a string, so a
-     * given metafield of this type can have any value attached. On the other hand, dropdown and radio have
-     * a set of allowed values that can be input, and appear differently on a Public Signup Page. Defaults
-     * to 'text'
+     * Indicates the type of metafield. A text metafield allows any string value. Dropdown and radio
+     * metafields have a set of values that can be selected.  Defaults to 'text'.
      *
      * @maps input_type
      * @factory \AdvancedBillingLib\Models\MetafieldInput::checkValue

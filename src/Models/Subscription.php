@@ -1117,8 +1117,10 @@ class Subscription implements \JsonSerializable
     /**
      * Returns Snap Day.
      * The day of the month that the subscription will charge according to calendar billing rules, if used.
+     *
+     * @return int|string|null
      */
-    public function getSnapDay(): ?string
+    public function getSnapDay()
     {
         if (count($this->snapDay) == 0) {
             return null;
@@ -1131,8 +1133,12 @@ class Subscription implements \JsonSerializable
      * The day of the month that the subscription will charge according to calendar billing rules, if used.
      *
      * @maps snap_day
+     * @mapsBy anyOf(oneOf(int,SnapDay),null)
+     * @factory \AdvancedBillingLib\Models\SnapDay::checkValue SnapDay
+     *
+     * @param int|string|null $snapDay
      */
-    public function setSnapDay(?string $snapDay): void
+    public function setSnapDay($snapDay): void
     {
         $this->snapDay['value'] = $snapDay;
     }
@@ -1634,8 +1640,8 @@ class Subscription implements \JsonSerializable
 
     /**
      * Returns Current Billing Amount in Cents.
-     * The balance in cents plus the estimated renewal amount in cents. Returned ONLY for readSubscription
-     * operation as it's compute intensive operation.
+     * The balance in cents plus the estimated renewal amount in cents. Returned ONLY for the
+     * readSubscription operation as it's a compute intensive operation.
      */
     public function getCurrentBillingAmountInCents(): ?int
     {
@@ -1644,8 +1650,8 @@ class Subscription implements \JsonSerializable
 
     /**
      * Sets Current Billing Amount in Cents.
-     * The balance in cents plus the estimated renewal amount in cents. Returned ONLY for readSubscription
-     * operation as it's compute intensive operation.
+     * The balance in cents plus the estimated renewal amount in cents. Returned ONLY for the
+     * readSubscription operation as it's a compute intensive operation.
      *
      * @maps current_billing_amount_in_cents
      */
@@ -2389,7 +2395,14 @@ class Subscription implements \JsonSerializable
             $json['coupon_code']                           = $this->couponCode['value'];
         }
         if (!empty($this->snapDay)) {
-            $json['snap_day']                              = $this->snapDay['value'];
+            $json['snap_day']                              =
+                ApiHelper::getJsonHelper()->verifyTypes(
+                    $this->snapDay['value'],
+                    'anyOf(oneOf(int,SnapDay),null)',
+                    [
+                        '\AdvancedBillingLib\Models\SnapDay::checkValue SnapDay'
+                    ]
+                );
         }
         if (isset($this->paymentCollectionMethod)) {
             $json['payment_collection_method']             =

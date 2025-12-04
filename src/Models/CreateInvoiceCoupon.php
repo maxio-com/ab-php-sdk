@@ -21,6 +21,11 @@ class CreateInvoiceCoupon implements \JsonSerializable
     private $code;
 
     /**
+     * @var string|null
+     */
+    private $subcode;
+
+    /**
      * @var string|float|null
      */
     private $percentage;
@@ -61,6 +66,24 @@ class CreateInvoiceCoupon implements \JsonSerializable
     public function setCode(?string $code): void
     {
         $this->code = $code;
+    }
+
+    /**
+     * Returns Subcode.
+     */
+    public function getSubcode(): ?string
+    {
+        return $this->subcode;
+    }
+
+    /**
+     * Sets Subcode.
+     *
+     * @maps subcode
+     */
+    public function setSubcode(?string $subcode): void
+    {
+        $this->subcode = $subcode;
     }
 
     /**
@@ -188,6 +211,7 @@ class CreateInvoiceCoupon implements \JsonSerializable
             'CreateInvoiceCoupon',
             [
                 'code' => $this->code,
+                'subcode' => $this->subcode,
                 'percentage' => $this->percentage,
                 'amount' => $this->amount,
                 'description' => $this->description,
@@ -240,6 +264,9 @@ class CreateInvoiceCoupon implements \JsonSerializable
         $json = [];
         if (isset($this->code)) {
             $json['code']                 = $this->code;
+        }
+        if (isset($this->subcode)) {
+            $json['subcode']              = $this->subcode;
         }
         if (isset($this->percentage)) {
             $json['percentage']           =

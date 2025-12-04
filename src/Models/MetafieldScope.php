@@ -140,7 +140,8 @@ class MetafieldScope implements \JsonSerializable
 
     /**
      * Returns Public Show.
-     * Include (1) or exclude (0) metafields from being viewable by your ecosystem.
+     * Include (1) or exclude (0) metafields used in [Embeddable Components](page:development-
+     * tools/embeddable-components/overview) from being viewable by your ecosystem.
      */
     public function getPublicShow(): ?string
     {
@@ -149,7 +150,8 @@ class MetafieldScope implements \JsonSerializable
 
     /**
      * Sets Public Show.
-     * Include (1) or exclude (0) metafields from being viewable by your ecosystem.
+     * Include (1) or exclude (0) metafields used in [Embeddable Components](page:development-
+     * tools/embeddable-components/overview) from being viewable by your ecosystem.
      *
      * @maps public_show
      * @factory \AdvancedBillingLib\Models\IncludeOption::checkValue
@@ -161,7 +163,8 @@ class MetafieldScope implements \JsonSerializable
 
     /**
      * Returns Public Edit.
-     * Include (1) or exclude (0) metafields from being edited by your ecosystem.
+     * Include (1) or exclude (0) metafields used in [Embeddable Components](page:development-
+     * tools/embeddable-components/overview) from being editable by your ecosystem.
      */
     public function getPublicEdit(): ?string
     {
@@ -170,7 +173,8 @@ class MetafieldScope implements \JsonSerializable
 
     /**
      * Sets Public Edit.
-     * Include (1) or exclude (0) metafields from being edited by your ecosystem.
+     * Include (1) or exclude (0) metafields used in [Embeddable Components](page:development-
+     * tools/embeddable-components/overview) from being editable by your ecosystem.
      *
      * @maps public_edit
      * @factory \AdvancedBillingLib\Models\IncludeOption::checkValue

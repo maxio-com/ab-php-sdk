@@ -49,7 +49,7 @@ function listExportedProformaInvoices(array $options): array
 $collect = [
     'batchId' => 'batch_id8',
     'perPage' => 100,
-    'page' => 2
+    'page' => 1
 ];
 
 $result = $aPIExportsController->listExportedProformaInvoices($collect);
@@ -90,7 +90,7 @@ function listExportedInvoices(array $options): array
 $collect = [
     'batchId' => 'batch_id8',
     'perPage' => 100,
-    'page' => 2
+    'page' => 1
 ];
 
 $result = $aPIExportsController->listExportedInvoices($collect);
@@ -131,7 +131,7 @@ function listExportedSubscriptions(array $options): array
 $collect = [
     'batchId' => 'batch_id8',
     'perPage' => 100,
-    'page' => 2
+    'page' => 1
 ];
 
 $result = $aPIExportsController->listExportedSubscriptions($collect);

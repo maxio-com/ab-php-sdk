@@ -36,6 +36,11 @@ class CreateUsage implements \JsonSerializable
     private $billingSchedule;
 
     /**
+     * @var ComponentCustomPrice|null
+     */
+    private $customPrice;
+
+    /**
      * Returns Quantity.
      * integer by default or decimal number if fractional quantities are enabled for the component
      */
@@ -94,8 +99,7 @@ class CreateUsage implements \JsonSerializable
     /**
      * Returns Billing Schedule.
      * This attribute is particularly useful when you need to align billing events for different components
-     * on distinct schedules within a subscription. Please note this only works for site with
-     * Multifrequency enabled
+     * on distinct schedules within a subscription. This only works for site with Multifrequency enabled.
      */
     public function getBillingSchedule(): ?BillingSchedule
     {
@@ -105,14 +109,33 @@ class CreateUsage implements \JsonSerializable
     /**
      * Sets Billing Schedule.
      * This attribute is particularly useful when you need to align billing events for different components
-     * on distinct schedules within a subscription. Please note this only works for site with
-     * Multifrequency enabled
+     * on distinct schedules within a subscription. This only works for site with Multifrequency enabled.
      *
      * @maps billing_schedule
      */
     public function setBillingSchedule(?BillingSchedule $billingSchedule): void
     {
         $this->billingSchedule = $billingSchedule;
+    }
+
+    /**
+     * Returns Custom Price.
+     * Create or update custom pricing unique to the subscription. Used in place of `price_point_id`.
+     */
+    public function getCustomPrice(): ?ComponentCustomPrice
+    {
+        return $this->customPrice;
+    }
+
+    /**
+     * Sets Custom Price.
+     * Create or update custom pricing unique to the subscription. Used in place of `price_point_id`.
+     *
+     * @maps custom_price
+     */
+    public function setCustomPrice(?ComponentCustomPrice $customPrice): void
+    {
+        $this->customPrice = $customPrice;
     }
 
     /**
@@ -129,6 +152,7 @@ class CreateUsage implements \JsonSerializable
                 'pricePointId' => $this->pricePointId,
                 'memo' => $this->memo,
                 'billingSchedule' => $this->billingSchedule,
+                'customPrice' => $this->customPrice,
                 'additionalProperties' => $this->additionalProperties
             ]
         );
@@ -185,6 +209,9 @@ class CreateUsage implements \JsonSerializable
         }
         if (isset($this->billingSchedule)) {
             $json['billing_schedule'] = $this->billingSchedule;
+        }
+        if (isset($this->customPrice)) {
+            $json['custom_price']     = $this->customPrice;
         }
         $json = array_merge($json, $this->additionalProperties);
 

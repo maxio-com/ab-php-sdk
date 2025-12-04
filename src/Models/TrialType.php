@@ -15,20 +15,18 @@ use Exception;
 use stdClass;
 
 /**
- * Indicates the type of metafield. A text metafield allows any string value. Dropdown and radio
- * metafields have a set of values that can be selected.  Defaults to 'text'.
+ * Indicates how a trial is handled when the trail period ends and there is no credit card on file. For
+ * `no_obligation`, the subscription transitions to a Trial Ended state. Maxio will not send any emails
+ * or statements. For `payment_expected`, the subscription transitions to a Past Due state. Maxio will
+ * send normal dunning emails and statements according to your other settings.
  */
-class MetafieldInput
+class TrialType
 {
-    public const BALANCE_TRACKER = 'balance_tracker';
+    public const NO_OBLIGATION = 'no_obligation';
 
-    public const TEXT = 'text';
+    public const PAYMENT_EXPECTED = 'payment_expected';
 
-    public const RADIO = 'radio';
-
-    public const DROPDOWN = 'dropdown';
-
-    private const _ALL_VALUES = [self::BALANCE_TRACKER, self::TEXT, self::RADIO, self::DROPDOWN];
+    private const _ALL_VALUES = [self::NO_OBLIGATION, self::PAYMENT_EXPECTED];
 
     /**
      * Ensures that all the given values are present in this Enum.
@@ -45,6 +43,6 @@ class MetafieldInput
         if (CoreHelper::checkValueOrValuesInList($value, self::_ALL_VALUES)) {
             return $value;
         }
-        throw new Exception("$value is invalid for MetafieldInput.");
+        throw new Exception("$value is invalid for TrialType.");
     }
 }

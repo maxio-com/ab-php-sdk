@@ -150,7 +150,7 @@ function listOffers(array $options): ListOffersResponse
 
 ```php
 $collect = [
-    'page' => 2,
+    'page' => 1,
     'perPage' => 50,
     'includeArchived' => true
 ];

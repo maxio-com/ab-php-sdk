@@ -50,6 +50,15 @@ class CalendarBillingBuilder
     }
 
     /**
+     * Unsets snap day field.
+     */
+    public function unsetSnapDay(): self
+    {
+        $this->instance->unsetSnapDay();
+        return $this;
+    }
+
+    /**
      * Sets calendar billing first charge field.
      *
      * @param string|null $value

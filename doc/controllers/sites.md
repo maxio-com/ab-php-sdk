@@ -152,7 +152,7 @@ function listChargifyJsPublicKeys(array $options): ListPublicKeysResponse
 
 ```php
 $collect = [
-    'page' => 2,
+    'page' => 1,
     'perPage' => 50
 ];
 

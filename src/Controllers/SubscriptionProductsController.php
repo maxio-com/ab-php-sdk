@@ -48,16 +48,16 @@ class SubscriptionProductsController extends BaseController
      *
      * ## Failed Migrations
      *
-     * One of the most common ways that a migration can fail is when the attempt is made to migrate a
-     * subscription to it's current product. Please be aware of this issue!
+     * Importaint note: One of the most common ways that a migration can fail is when the attempt is made
+     * to migrate a subscription to its current product.
      *
      * ## Migration 3D Secure - Stripe
      *
-     * It may happen that a payment needs 3D Secure Authentication when the subscription is migrated to a
-     * new product; this is referred to in our help docs as a [post-authentication flow](https://maxio.
-     * zendesk.com/hc/en-us/articles/24176278996493-Testing-Implementing-3D-Secure#psd2-flows-pre-
-     * authentication-and-post-authentication). The server returns `422 Unprocessable Entity` in this case
-     * with the following response:
+     * When a payment requires 3D Secure Authentication to adhear to Strong Customer Authentication (SCA)
+     * when the subscription is migrated to a new product, the request enters a [post-authentication
+     * flow](https://maxio.zendesk.com/hc/en-us/articles/24176278996493-Testing-Implementing-3D-Secure#psd2-
+     * flows-pre-authentication-and-post-authentication). The server returns `422 Unprocessable Entity` in
+     * this case with the following response:
      *
      * ```json
      * {
@@ -102,7 +102,7 @@ class SubscriptionProductsController extends BaseController
      *
      * ### Example Redirect Flow
      *
-     * You may wish to redirect customers to different pages depending on whether their SCA was performed
+     * You may wish to redirect customers to different pages depending on whether SCA was performed
      * successfully. Here's an example flow to use as a reference:
      *
      * 1. Create a migration via API; it requires 3DS

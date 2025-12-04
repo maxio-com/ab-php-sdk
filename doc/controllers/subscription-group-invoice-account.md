@@ -91,7 +91,7 @@ function listPrepaymentsForSubscriptionGroup(array $options): ListSubscriptionGr
 ```php
 $collect = [
     'uid' => 'uid0',
-    'page' => 2,
+    'page' => 1,
     'perPage' => 50,
     'filter' => ListPrepaymentsFilterBuilder::init()
         ->dateField(ListPrepaymentDateField::CREATED_AT)

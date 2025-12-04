@@ -136,6 +136,15 @@ class CreateOrUpdateProductBuilder
     }
 
     /**
+     * Unsets trial type field.
+     */
+    public function unsetTrialType(): self
+    {
+        $this->instance->unsetTrialType();
+        return $this;
+    }
+
+    /**
      * Sets expiration interval field.
      *
      * @param int|null $value

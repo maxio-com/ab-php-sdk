@@ -62,9 +62,9 @@ class ProductPricePoint implements \JsonSerializable
     private $trialIntervalUnit = [];
 
     /**
-     * @var string|null
+     * @var array
      */
-    private $trialType;
+    private $trialType = [];
 
     /**
      * @var array
@@ -371,20 +371,44 @@ class ProductPricePoint implements \JsonSerializable
 
     /**
      * Returns Trial Type.
+     * Indicates how a trial is handled when the trail period ends and there is no credit card on file. For
+     * `no_obligation`, the subscription transitions to a Trial Ended state. Maxio will not send any emails
+     * or statements. For `payment_expected`, the subscription transitions to a Past Due state. Maxio will
+     * send normal dunning emails and statements according to your other settings.
      */
     public function getTrialType(): ?string
     {
-        return $this->trialType;
+        if (count($this->trialType) == 0) {
+            return null;
+        }
+        return $this->trialType['value'];
     }
 
     /**
      * Sets Trial Type.
+     * Indicates how a trial is handled when the trail period ends and there is no credit card on file. For
+     * `no_obligation`, the subscription transitions to a Trial Ended state. Maxio will not send any emails
+     * or statements. For `payment_expected`, the subscription transitions to a Past Due state. Maxio will
+     * send normal dunning emails and statements according to your other settings.
      *
      * @maps trial_type
+     * @factory \AdvancedBillingLib\Models\TrialType::checkValue
      */
     public function setTrialType(?string $trialType): void
     {
-        $this->trialType = $trialType;
+        $this->trialType['value'] = $trialType;
+    }
+
+    /**
+     * Unsets Trial Type.
+     * Indicates how a trial is handled when the trail period ends and there is no credit card on file. For
+     * `no_obligation`, the subscription transitions to a Trial Ended state. Maxio will not send any emails
+     * or statements. For `payment_expected`, the subscription transitions to a Past Due state. Maxio will
+     * send normal dunning emails and statements according to your other settings.
+     */
+    public function unsetTrialType(): void
+    {
+        $this->trialType = [];
     }
 
     /**
@@ -788,7 +812,7 @@ class ProductPricePoint implements \JsonSerializable
                 'trialPriceInCents' => $this->getTrialPriceInCents(),
                 'trialInterval' => $this->getTrialInterval(),
                 'trialIntervalUnit' => $this->getTrialIntervalUnit(),
-                'trialType' => $this->trialType,
+                'trialType' => $this->getTrialType(),
                 'introductoryOffer' => $this->getIntroductoryOffer(),
                 'initialChargeInCents' => $this->getInitialChargeInCents(),
                 'initialChargeAfterTrial' => $this->getInitialChargeAfterTrial(),
@@ -875,8 +899,8 @@ class ProductPricePoint implements \JsonSerializable
         if (!empty($this->trialIntervalUnit)) {
             $json['trial_interval_unit']        = IntervalUnit::checkValue($this->trialIntervalUnit['value']);
         }
-        if (isset($this->trialType)) {
-            $json['trial_type']                 = $this->trialType;
+        if (!empty($this->trialType)) {
+            $json['trial_type']                 = TrialType::checkValue($this->trialType['value']);
         }
         if (!empty($this->introductoryOffer)) {
             $json['introductory_offer']         = $this->introductoryOffer['value'];

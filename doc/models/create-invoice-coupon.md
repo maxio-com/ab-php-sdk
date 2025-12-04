@@ -10,6 +10,7 @@
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
 | `code` | `?string` | Optional | - | getCode(): ?string | setCode(?string code): void |
+| `subcode` | `?string` | Optional | - | getSubcode(): ?string | setSubcode(?string subcode): void |
 | `percentage` | string\|float\|null | Optional | This is a container for one-of cases. | getPercentage(): | setPercentage( percentage): void |
 | `amount` | string\|float\|null | Optional | This is a container for one-of cases. | getAmount(): | setAmount( amount): void |
 | `description` | `?string` | Optional | **Constraints**: *Maximum Length*: `255` | getDescription(): ?string | setDescription(?string description): void |
@@ -22,9 +23,9 @@
 {
   "percentage": 50.0,
   "code": "code4",
+  "subcode": "subcode8",
   "amount": "String9",
-  "description": "description4",
-  "product_family_id": "String3"
+  "description": "description4"
 }
 ```
 

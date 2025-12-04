@@ -46,7 +46,7 @@ function listWebhooks(array $options): array
 
 ```php
 $collect = [
-    'page' => 2,
+    'page' => 1,
     'perPage' => 50
 ];
 

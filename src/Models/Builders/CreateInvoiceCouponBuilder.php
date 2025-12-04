@@ -50,6 +50,17 @@ class CreateInvoiceCouponBuilder
     }
 
     /**
+     * Sets subcode field.
+     *
+     * @param string|null $value
+     */
+    public function subcode(?string $value): self
+    {
+        $this->instance->setSubcode($value);
+        return $this;
+    }
+
+    /**
      * Sets percentage field.
      *
      * @param string|float|null $value
