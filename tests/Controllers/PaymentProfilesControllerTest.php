@@ -48,6 +48,9 @@ final class PaymentProfilesControllerTest extends TestCase
     public function test_ListPaymentProfiles_ShouldReturnEmptyList_WhenCustomerDoesNotHaveAnyPaymentProfile(): void
     {
         $customer = $this->testData->loadCustomer();
+        
+        // Clean up any existing payment profiles for this customer
+        $this->cleaner->removeAllPaymentProfilesForCustomer($customer->getId());
 
         $paymentProfiles = $this->client
             ->getPaymentProfilesController()
@@ -64,6 +67,10 @@ final class PaymentProfilesControllerTest extends TestCase
     public function test_ListPaymentProfiles_ShouldReturnListWithPaymentProfiles_WhenCustomerHasOneProfile(): void
     {
         $customer = $this->testData->loadCustomer();
+        
+        // Clean up any existing payment profiles for this customer
+        $this->cleaner->removeAllPaymentProfilesForCustomer($customer->getId());
+        
         $creditCardPaymentProfile = $this->testData->loadCreditCardPaymentProfile($customer->getId());
 
         $paymentProfiles = $this->client
@@ -120,6 +127,10 @@ final class PaymentProfilesControllerTest extends TestCase
     public function test_DeleteUnusedPaymentProfile_ShouldRemoveProfile_WhenProfileWasCreated(): void
     {
         $customer = $this->testData->loadCustomer();
+        
+        // Clean up any existing payment profiles for this customer
+        $this->cleaner->removeAllPaymentProfilesForCustomer($customer->getId());
+        
         $creditCardPaymentProfile = $this->testData->loadCreditCardPaymentProfile($customer->getId());
 
         $this->client->getPaymentProfilesController()->deleteUnusedPaymentProfile($creditCardPaymentProfile->getId());
@@ -139,6 +150,10 @@ final class PaymentProfilesControllerTest extends TestCase
     public function test_DeleteSubscriptionPaymentProfile_ShouldDeleteProfile_WhenProfileBelongsToSubscription(): void
     {
         $customer = $this->testData->loadCustomer();
+        
+        // Clean up any existing payment profiles for this customer
+        $this->cleaner->removeAllPaymentProfilesForCustomer($customer->getId());
+        
         $creditCardPaymentProfile = $this->testData->loadCreditCardPaymentProfile($customer->getId());
         $subscription = $this->testData->loadSubscription($customer->getId(), $creditCardPaymentProfile->getId());
 
