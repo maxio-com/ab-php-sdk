@@ -338,7 +338,7 @@ class Product implements \JsonSerializable
     /**
      * Returns Request Credit Card.
      * Deprecated value that can be ignored unless you have legacy hosted pages. For Public Signup Page
-     * users, please read this attribute from under the signup page.
+     * users, read this attribute from under the signup page.
      */
     public function getRequestCreditCard(): ?bool
     {
@@ -348,7 +348,7 @@ class Product implements \JsonSerializable
     /**
      * Sets Request Credit Card.
      * Deprecated value that can be ignored unless you have legacy hosted pages. For Public Signup Page
-     * users, please read this attribute from under the signup page.
+     * users, read this attribute from under the signup page.
      *
      * @maps request_credit_card
      */
@@ -1014,7 +1014,7 @@ class Product implements \JsonSerializable
     /**
      * Returns Tax Code.
      * A string representing the tax code related to the product type. This is especially important when
-     * using the Avalara service to tax based on locale. This attribute has a max length of 10 characters.
+     * using AvaTax to tax based on locale. This attribute has a max length of 25 characters.
      */
     public function getTaxCode(): ?string
     {
@@ -1027,7 +1027,7 @@ class Product implements \JsonSerializable
     /**
      * Sets Tax Code.
      * A string representing the tax code related to the product type. This is especially important when
-     * using the Avalara service to tax based on locale. This attribute has a max length of 10 characters.
+     * using AvaTax to tax based on locale. This attribute has a max length of 25 characters.
      *
      * @maps tax_code
      */
@@ -1039,7 +1039,7 @@ class Product implements \JsonSerializable
     /**
      * Unsets Tax Code.
      * A string representing the tax code related to the product type. This is especially important when
-     * using the Avalara service to tax based on locale. This attribute has a max length of 10 characters.
+     * using AvaTax to tax based on locale. This attribute has a max length of 25 characters.
      */
     public function unsetTaxCode(): void
     {

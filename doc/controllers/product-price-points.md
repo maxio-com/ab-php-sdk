@@ -25,7 +25,7 @@ $productPricePointsController = $client->getProductPricePointsController();
 
 # Create Product Price Point
 
-[Product Price Point Documentation](https://maxio.zendesk.com/hc/en-us/articles/24261111947789-Product-Price-Points)
+Creates a Product Price Point. See the [Product Price Point](https://maxio.zendesk.com/hc/en-us/articles/24261111947789-Product-Price-Points) documentation for details.
 
 ```php
 function createProductPricePoint(
@@ -61,7 +61,7 @@ $body = CreateProductPricePointRequestBuilder::init(
         ->trialPriceInCents(4900)
         ->trialInterval(1)
         ->trialIntervalUnit(IntervalUnit::MONTH)
-        ->trialType('payment_expected')
+        ->trialType(TrialType::PAYMENT_EXPECTED)
         ->initialChargeInCents(120000)
         ->initialChargeAfterTrial(false)
         ->expirationInterval(12)
@@ -111,7 +111,7 @@ $result = $productPricePointsController->createProductPricePoint(
 
 # List Product Price Points
 
-Use this endpoint to retrieve a list of product price points.
+Retrieves a list of product price points.
 
 ```php
 function listProductPricePoints(array $options): ListProductPricePointsResponse
@@ -137,7 +137,7 @@ function listProductPricePoints(array $options): ListProductPricePointsResponse
 ```php
 $collect = [
     'productId' => 124,
-    'page' => 2,
+    'page' => 1,
     'perPage' => 10,
     'filterType' => Liquid error: Value cannot be null. (Parameter 'key')
 ];
@@ -177,9 +177,9 @@ $result = $productPricePointsController->listProductPricePoints($collect);
 
 # Update Product Price Point
 
-Use this endpoint to update a product price point.
+Updates a product price point.
 
-Note: Custom product price points are not able to be updated.
+Note: Custom product price points cannot be updated.
 
 ```php
 function updateProductPricePoint(
@@ -317,7 +317,7 @@ $result = $productPricePointsController->readProductPricePoint(
 
 # Archive Product Price Point
 
-Use this endpoint to archive a product price point.
+Archives a product price point.
 
 ```php
 function archiveProductPricePoint($productId, $pricePointId): ProductPricePointResponse
@@ -443,9 +443,9 @@ $result = $productPricePointsController->unarchiveProductPricePoint(
 
 # Promote Product Price Point to Default
 
-Use this endpoint to make a product price point the default for the product.
+Sets a product price point as the default for the product.
 
-Note: Custom product price points are not able to be set as the default for a product.
+Note: Custom product price points cannot be set as the default for a product.
 
 ```php
 function promoteProductPricePointToDefault(int $productId, int $pricePointId): ProductResponse
@@ -531,7 +531,7 @@ $result = $productPricePointsController->promoteProductPricePointToDefault(
 
 # Bulk Create Product Price Points
 
-Use this endpoint to create multiple product price points in one request.
+Creates multiple product price points in one request.
 
 ```php
 function bulkCreateProductPricePoints(
@@ -568,7 +568,7 @@ $body = BulkCreateProductPricePointsRequestBuilder::init(
             ->trialPriceInCents(4900)
             ->trialInterval(1)
             ->trialIntervalUnit(IntervalUnit::MONTH)
-            ->trialType('payment_expected')
+            ->trialType(TrialType::PAYMENT_EXPECTED)
             ->initialChargeInCents(120000)
             ->initialChargeAfterTrial(false)
             ->expirationInterval(12)
@@ -584,7 +584,7 @@ $body = BulkCreateProductPricePointsRequestBuilder::init(
             ->trialPriceInCents(4900)
             ->trialInterval(1)
             ->trialIntervalUnit(IntervalUnit::MONTH)
-            ->trialType('payment_expected')
+            ->trialType(TrialType::PAYMENT_EXPECTED)
             ->initialChargeInCents(120000)
             ->initialChargeAfterTrial(false)
             ->expirationInterval(12)
@@ -637,7 +637,7 @@ $result = $productPricePointsController->bulkCreateProductPricePoints(
 
 # Create Product Currency Prices
 
-This endpoint allows you to create currency prices for a given currency that has been defined on the site level in your settings.
+Creates currency prices for a given currency that has been defined on the site level in your settings.
 
 When creating currency prices, they need to mirror the structure of your primary pricing. If the product price point defines a trial and/or setup fee, each currency must also define a trial and/or setup fee.
 
@@ -718,11 +718,11 @@ $result = $productPricePointsController->createProductCurrencyPrices(
 
 # Update Product Currency Prices
 
-This endpoint allows you to update the `price`s of currency prices for a given currency that exists on the product price point.
+Updates the `price`s of currency prices for a given currency that exists on the product price point.
 
 When updating the pricing, it needs to mirror the structure of your primary pricing. If the product price point defines a trial and/or setup fee, each currency must also define a trial and/or setup fee.
 
-Note: Currency Prices are not able to be updated for custom product price points.
+Note: Currency Prices cannot be updated for custom product price points.
 
 ```php
 function updateProductCurrencyPrices(
@@ -837,7 +837,7 @@ $collect = [
         )
         ->build(),
     'mInclude' => ListProductsPricePointsInclude::CURRENCY_PRICES,
-    'page' => 2,
+    'page' => 1,
     'perPage' => 50
 ];
 

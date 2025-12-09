@@ -97,7 +97,7 @@ function listSubscriptionNotes(array $options): array
 ```php
 $collect = [
     'subscriptionId' => 222,
-    'page' => 2,
+    'page' => 1,
     'perPage' => 50
 ];
 

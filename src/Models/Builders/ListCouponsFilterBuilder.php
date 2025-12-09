@@ -127,6 +127,17 @@ class ListCouponsFilterBuilder
     }
 
     /**
+     * Sets include archived field.
+     *
+     * @param bool|null $value
+     */
+    public function includeArchived(?bool $value): self
+    {
+        $this->instance->setIncludeArchived($value);
+        return $this;
+    }
+
+    /**
      * Add an additional property to this model.
      *
      * @param string $name Name of property.

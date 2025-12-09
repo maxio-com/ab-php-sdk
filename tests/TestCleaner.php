@@ -35,15 +35,48 @@ final class TestCleaner
 
     public function removeUnusedPaymentProfileById(int $paymentProfileId): void
     {
-        $this->client->getPaymentProfilesController()->deleteUnusedPaymentProfile($paymentProfileId);
+        try {
+            $this->client->getPaymentProfilesController()->deleteUnusedPaymentProfile($paymentProfileId);
+        } catch (ApiException) {
+            // Payment profile might already be deleted or in use, ignore
+        }
     }
 
     public function removeSubscriptionPaymentProfileById(int $subscriptionId, int $paymentProfileId): void
     {
-        $this->client->getPaymentProfilesController()->deleteSubscriptionsPaymentProfile(
-            $subscriptionId,
-            $paymentProfileId
-        );
+        try {
+            $this->client->getPaymentProfilesController()->deleteSubscriptionsPaymentProfile(
+                $subscriptionId,
+                $paymentProfileId
+            );
+        } catch (ApiException) {
+            // Payment profile might already be deleted, try as unused profile
+            try {
+                $this->client->getPaymentProfilesController()->deleteUnusedPaymentProfile($paymentProfileId);
+            } catch (ApiException) {
+                // Ignore if still fails
+            }
+        }
+    }
+    
+    public function removeAllPaymentProfilesForCustomer(int $customerId): void
+    {
+        try {
+            $paymentProfiles = $this->client->getPaymentProfilesController()->listPaymentProfiles([
+                'customer_id' => $customerId
+            ]);
+            
+            foreach ($paymentProfiles as $profileResponse) {
+                $profile = $profileResponse->getPaymentProfile();
+                try {
+                    $this->client->getPaymentProfilesController()->deleteUnusedPaymentProfile($profile->getId());
+                } catch (ApiException) {
+                    // Ignore if deletion fails
+                }
+            }
+        } catch (ApiException) {
+            // Ignore if listing fails
+        }
     }
 
     public function removeMetafield(string $resourceType, string $name): void

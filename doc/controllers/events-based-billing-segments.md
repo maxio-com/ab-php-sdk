@@ -126,7 +126,7 @@ function listSegmentsForPricePoint(array $options): ListSegmentsResponse
 $collect = [
     'componentId' => 'component_id8',
     'pricePointId' => 'price_point_id8',
-    'page' => 2,
+    'page' => 1,
     'perPage' => 50,
     'filter' => ListSegmentsFilterBuilder::init()
         ->segmentProperty1Value('EU')

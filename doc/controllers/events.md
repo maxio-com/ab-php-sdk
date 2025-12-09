@@ -114,7 +114,7 @@ function listEvents(array $options): array
 
 ```php
 $collect = [
-    'page' => 2,
+    'page' => 1,
     'perPage' => 50,
     'direction' => Direction::DESC,
     'filter' => [
@@ -229,7 +229,7 @@ function listSubscriptionEvents(array $options): array
 ```php
 $collect = [
     'subscriptionId' => 222,
-    'page' => 2,
+    'page' => 1,
     'perPage' => 50,
     'direction' => Direction::DESC,
     'filter' => [
@@ -312,7 +312,7 @@ function readEventsCount(array $options): CountResponse
 
 ```php
 $collect = [
-    'page' => 2,
+    'page' => 1,
     'perPage' => 50,
     'direction' => Direction::DESC,
     'filter' => [

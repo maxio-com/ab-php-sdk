@@ -99,6 +99,15 @@ class CreateProductPricePointBuilder
     }
 
     /**
+     * Unsets trial type field.
+     */
+    public function unsetTrialType(): self
+    {
+        $this->instance->unsetTrialType();
+        return $this;
+    }
+
+    /**
      * Sets initial charge in cents field.
      *
      * @param int|null $value

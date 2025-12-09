@@ -194,7 +194,7 @@ function listComponentPricePoints(array $options): ComponentPricePointsResponse
 ```php
 $collect = [
     'componentId' => 222,
-    'page' => 2,
+    'page' => 1,
     'perPage' => 50,
     'filterType' => Liquid error: Value cannot be null. (Parameter 'key')
 ];
@@ -384,7 +384,7 @@ $result = $componentPricePointsController->bulkCreateComponentPricePoints(
 
 # Update Component Price Point
 
-When updating a price point, it's prices can be updated as well by creating new prices or editing / removing existing ones.
+When updating a price point, prices can be updated as well by creating new prices or editing / removing existing ones.
 
 Passing in a price bracket without an `id` will attempt to create a new price.
 
@@ -819,7 +819,7 @@ function listAllComponentPricePoints(array $options): ListComponentsPricePointsR
 ```php
 $collect = [
     'mInclude' => ListComponentsPricePointsInclude::CURRENCY_PRICES,
-    'page' => 2,
+    'page' => 1,
     'perPage' => 50,
     'filter' => ListPricePointsFilterBuilder::init()
         ->startDate(DateTimeHelper::fromSimpleDate('2011-12-17'))

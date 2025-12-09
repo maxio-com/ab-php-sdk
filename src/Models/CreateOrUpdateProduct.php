@@ -71,9 +71,9 @@ class CreateOrUpdateProduct implements \JsonSerializable
     private $trialIntervalUnit = [];
 
     /**
-     * @var string|null
+     * @var array
      */
-    private $trialType;
+    private $trialType = [];
 
     /**
      * @var int|null
@@ -201,7 +201,7 @@ class CreateOrUpdateProduct implements \JsonSerializable
     /**
      * Returns Require Credit Card.
      * Deprecated value that can be ignored unless you have legacy hosted pages. For Public Signup Page
-     * users, please read this attribute from under the signup page.
+     * users, read this attribute from under the signup page.
      */
     public function getRequireCreditCard(): ?bool
     {
@@ -211,7 +211,7 @@ class CreateOrUpdateProduct implements \JsonSerializable
     /**
      * Sets Require Credit Card.
      * Deprecated value that can be ignored unless you have legacy hosted pages. For Public Signup Page
-     * users, please read this attribute from under the signup page.
+     * users, read this attribute from under the signup page.
      *
      * @maps require_credit_card
      */
@@ -363,20 +363,44 @@ class CreateOrUpdateProduct implements \JsonSerializable
 
     /**
      * Returns Trial Type.
+     * Indicates how a trial is handled when the trail period ends and there is no credit card on file. For
+     * `no_obligation`, the subscription transitions to a Trial Ended state. Maxio will not send any emails
+     * or statements. For `payment_expected`, the subscription transitions to a Past Due state. Maxio will
+     * send normal dunning emails and statements according to your other settings.
      */
     public function getTrialType(): ?string
     {
-        return $this->trialType;
+        if (count($this->trialType) == 0) {
+            return null;
+        }
+        return $this->trialType['value'];
     }
 
     /**
      * Sets Trial Type.
+     * Indicates how a trial is handled when the trail period ends and there is no credit card on file. For
+     * `no_obligation`, the subscription transitions to a Trial Ended state. Maxio will not send any emails
+     * or statements. For `payment_expected`, the subscription transitions to a Past Due state. Maxio will
+     * send normal dunning emails and statements according to your other settings.
      *
      * @maps trial_type
+     * @factory \AdvancedBillingLib\Models\TrialType::checkValue
      */
     public function setTrialType(?string $trialType): void
     {
-        $this->trialType = $trialType;
+        $this->trialType['value'] = $trialType;
+    }
+
+    /**
+     * Unsets Trial Type.
+     * Indicates how a trial is handled when the trail period ends and there is no credit card on file. For
+     * `no_obligation`, the subscription transitions to a Trial Ended state. Maxio will not send any emails
+     * or statements. For `payment_expected`, the subscription transitions to a Past Due state. Maxio will
+     * send normal dunning emails and statements according to your other settings.
+     */
+    public function unsetTrialType(): void
+    {
+        $this->trialType = [];
     }
 
     /**
@@ -455,7 +479,7 @@ class CreateOrUpdateProduct implements \JsonSerializable
     /**
      * Returns Tax Code.
      * A string representing the tax code related to the product type. This is especially important when
-     * using the Avalara service to tax based on locale. This attribute has a max length of 10 characters.
+     * using AvaTax to tax based on locale. This attribute has a max length of 25 characters.
      */
     public function getTaxCode(): ?string
     {
@@ -465,7 +489,7 @@ class CreateOrUpdateProduct implements \JsonSerializable
     /**
      * Sets Tax Code.
      * A string representing the tax code related to the product type. This is especially important when
-     * using the Avalara service to tax based on locale. This attribute has a max length of 10 characters.
+     * using AvaTax to tax based on locale. This attribute has a max length of 25 characters.
      *
      * @maps tax_code
      */
@@ -495,7 +519,7 @@ class CreateOrUpdateProduct implements \JsonSerializable
                 'trialPriceInCents' => $this->trialPriceInCents,
                 'trialInterval' => $this->trialInterval,
                 'trialIntervalUnit' => $this->getTrialIntervalUnit(),
-                'trialType' => $this->trialType,
+                'trialType' => $this->getTrialType(),
                 'expirationInterval' => $this->expirationInterval,
                 'expirationIntervalUnit' => $this->getExpirationIntervalUnit(),
                 'autoCreateSignupPage' => $this->autoCreateSignupPage,
@@ -568,8 +592,8 @@ class CreateOrUpdateProduct implements \JsonSerializable
         if (!empty($this->trialIntervalUnit)) {
             $json['trial_interval_unit']      = IntervalUnit::checkValue($this->trialIntervalUnit['value']);
         }
-        if (isset($this->trialType)) {
-            $json['trial_type']               = $this->trialType;
+        if (!empty($this->trialType)) {
+            $json['trial_type']               = TrialType::checkValue($this->trialType['value']);
         }
         if (isset($this->expirationInterval)) {
             $json['expiration_interval']      = $this->expirationInterval;

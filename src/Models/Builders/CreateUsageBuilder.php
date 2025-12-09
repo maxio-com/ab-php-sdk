@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace AdvancedBillingLib\Models\Builders;
 
 use AdvancedBillingLib\Models\BillingSchedule;
+use AdvancedBillingLib\Models\ComponentCustomPrice;
 use AdvancedBillingLib\Models\CreateUsage;
 use Core\Utils\CoreHelper;
 
@@ -80,6 +81,17 @@ class CreateUsageBuilder
     public function billingSchedule(?BillingSchedule $value): self
     {
         $this->instance->setBillingSchedule($value);
+        return $this;
+    }
+
+    /**
+     * Sets custom price field.
+     *
+     * @param ComponentCustomPrice|null $value
+     */
+    public function customPrice(?ComponentCustomPrice $value): self
+    {
+        $this->instance->setCustomPrice($value);
         return $this;
     }
 

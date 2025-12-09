@@ -77,11 +77,6 @@ class Component implements \JsonSerializable
     private $archived;
 
     /**
-     * @var bool|null
-     */
-    private $taxable;
-
-    /**
      * @var array
      */
     private $description = [];
@@ -115,6 +110,11 @@ class Component implements \JsonSerializable
      * @var string|null
      */
     private $defaultPricePointName;
+
+    /**
+     * @var bool|null
+     */
+    private $taxable;
 
     /**
      * @var array
@@ -484,26 +484,6 @@ class Component implements \JsonSerializable
     }
 
     /**
-     * Returns Taxable.
-     * Boolean flag describing whether a component is taxable or not.
-     */
-    public function getTaxable(): ?bool
-    {
-        return $this->taxable;
-    }
-
-    /**
-     * Sets Taxable.
-     * Boolean flag describing whether a component is taxable or not.
-     *
-     * @maps taxable
-     */
-    public function setTaxable(?bool $taxable): void
-    {
-        $this->taxable = $taxable;
-    }
-
-    /**
      * Returns Description.
      * The description of the component.
      */
@@ -710,9 +690,29 @@ class Component implements \JsonSerializable
     }
 
     /**
+     * Returns Taxable.
+     * Boolean flag describing whether a component is taxable or not.
+     */
+    public function getTaxable(): ?bool
+    {
+        return $this->taxable;
+    }
+
+    /**
+     * Sets Taxable.
+     * Boolean flag describing whether a component is taxable or not.
+     *
+     * @maps taxable
+     */
+    public function setTaxable(?bool $taxable): void
+    {
+        $this->taxable = $taxable;
+    }
+
+    /**
      * Returns Tax Code.
      * A string representing the tax code related to the component type. This is especially important when
-     * using the Avalara service to tax based on locale. This attribute has a max length of 10 characters.
+     * using AvaTax to tax based on locale. This attribute has a max length of 25 characters.
      */
     public function getTaxCode(): ?string
     {
@@ -725,7 +725,7 @@ class Component implements \JsonSerializable
     /**
      * Sets Tax Code.
      * A string representing the tax code related to the component type. This is especially important when
-     * using the Avalara service to tax based on locale. This attribute has a max length of 10 characters.
+     * using AvaTax to tax based on locale. This attribute has a max length of 25 characters.
      *
      * @maps tax_code
      */
@@ -737,7 +737,7 @@ class Component implements \JsonSerializable
     /**
      * Unsets Tax Code.
      * A string representing the tax code related to the component type. This is especially important when
-     * using the Avalara service to tax based on locale. This attribute has a max length of 10 characters.
+     * using AvaTax to tax based on locale. This attribute has a max length of 25 characters.
      */
     public function unsetTaxCode(): void
     {
@@ -1153,7 +1153,6 @@ class Component implements \JsonSerializable
                 'pricePerUnitInCents' => $this->getPricePerUnitInCents(),
                 'kind' => $this->kind,
                 'archived' => $this->archived,
-                'taxable' => $this->taxable,
                 'description' => $this->getDescription(),
                 'defaultPricePointId' => $this->getDefaultPricePointId(),
                 'overagePrices' => $this->getOveragePrices(),
@@ -1161,6 +1160,7 @@ class Component implements \JsonSerializable
                 'pricePointCount' => $this->pricePointCount,
                 'pricePointsUrl' => $this->getPricePointsUrl(),
                 'defaultPricePointName' => $this->defaultPricePointName,
+                'taxable' => $this->taxable,
                 'taxCode' => $this->getTaxCode(),
                 'recurring' => $this->recurring,
                 'upgradeCharge' => $this->getUpgradeCharge(),
@@ -1257,9 +1257,6 @@ class Component implements \JsonSerializable
         if (isset($this->archived)) {
             $json['archived']                      = $this->archived;
         }
-        if (isset($this->taxable)) {
-            $json['taxable']                       = $this->taxable;
-        }
         if (!empty($this->description)) {
             $json['description']                   = $this->description['value'];
         }
@@ -1280,6 +1277,9 @@ class Component implements \JsonSerializable
         }
         if (isset($this->defaultPricePointName)) {
             $json['default_price_point_name']      = $this->defaultPricePointName;
+        }
+        if (isset($this->taxable)) {
+            $json['taxable']                       = $this->taxable;
         }
         if (!empty($this->taxCode)) {
             $json['tax_code']                      = $this->taxCode['value'];

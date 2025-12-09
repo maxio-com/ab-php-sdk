@@ -208,17 +208,6 @@ class ComponentBuilder
     }
 
     /**
-     * Sets taxable field.
-     *
-     * @param bool|null $value
-     */
-    public function taxable(?bool $value): self
-    {
-        $this->instance->setTaxable($value);
-        return $this;
-    }
-
-    /**
      * Sets description field.
      *
      * @param string|null $value
@@ -337,6 +326,17 @@ class ComponentBuilder
     public function defaultPricePointName(?string $value): self
     {
         $this->instance->setDefaultPricePointName($value);
+        return $this;
+    }
+
+    /**
+     * Sets taxable field.
+     *
+     * @param bool|null $value
+     */
+    public function taxable(?bool $value): self
+    {
+        $this->instance->setTaxable($value);
         return $this;
     }
 

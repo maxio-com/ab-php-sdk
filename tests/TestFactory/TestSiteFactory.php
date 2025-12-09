@@ -83,6 +83,7 @@ final class TestSiteFactory
             ->remittanceNetTerms(TestSiteData::REMITTANCE_NET_TERMS)
             ->netTermsOnRemittanceSignupsEnabled(TestSiteData::ON_REMITTANCE_SIGNUPS_ENABLED)
             ->customNetTermsEnabled(TestSiteData::CUSTOM_NET_TERMS_ENABLED)
+            ->additionalProperty('net_terms_on_automatic_signups_enabled', false)
             ->build();
     }
 }

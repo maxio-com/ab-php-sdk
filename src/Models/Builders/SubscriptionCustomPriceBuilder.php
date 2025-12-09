@@ -108,6 +108,26 @@ class SubscriptionCustomPriceBuilder
     }
 
     /**
+     * Sets trial type field.
+     *
+     * @param string|null $value
+     */
+    public function trialType(?string $value): self
+    {
+        $this->instance->setTrialType($value);
+        return $this;
+    }
+
+    /**
+     * Unsets trial type field.
+     */
+    public function unsetTrialType(): self
+    {
+        $this->instance->unsetTrialType();
+        return $this;
+    }
+
+    /**
      * Sets initial charge in cents field.
      *
      * @param string|int|null $value

@@ -47,9 +47,9 @@ class UpdateSubscription implements \JsonSerializable
     private $nextProductPricePointId;
 
     /**
-     * @var string|int|null
+     * @var array
      */
-    private $snapDay;
+    private $snapDay = [];
 
     /**
      * @var \DateTime|null
@@ -244,11 +244,14 @@ class UpdateSubscription implements \JsonSerializable
      * Returns Snap Day.
      * Use for subscriptions with product eligible for calendar billing only. Value can be 1-28 or 'end'.
      *
-     * @return string|int|null
+     * @return int|string|null
      */
     public function getSnapDay()
     {
-        return $this->snapDay;
+        if (count($this->snapDay) == 0) {
+            return null;
+        }
+        return $this->snapDay['value'];
     }
 
     /**
@@ -256,14 +259,23 @@ class UpdateSubscription implements \JsonSerializable
      * Use for subscriptions with product eligible for calendar billing only. Value can be 1-28 or 'end'.
      *
      * @maps snap_day
-     * @mapsBy anyOf(oneOf(SnapDay,int),null)
+     * @mapsBy anyOf(oneOf(int,SnapDay),null)
      * @factory \AdvancedBillingLib\Models\SnapDay::checkValue SnapDay
      *
-     * @param string|int|null $snapDay
+     * @param int|string|null $snapDay
      */
     public function setSnapDay($snapDay): void
     {
-        $this->snapDay = $snapDay;
+        $this->snapDay['value'] = $snapDay;
+    }
+
+    /**
+     * Unsets Snap Day.
+     * Use for subscriptions with product eligible for calendar billing only. Value can be 1-28 or 'end'.
+     */
+    public function unsetSnapDay(): void
+    {
+        $this->snapDay = [];
     }
 
     /**
@@ -632,7 +644,7 @@ class UpdateSubscription implements \JsonSerializable
                 'productChangeDelayed' => $this->productChangeDelayed,
                 'nextProductId' => $this->nextProductId,
                 'nextProductPricePointId' => $this->nextProductPricePointId,
-                'snapDay' => $this->snapDay,
+                'snapDay' => $this->getSnapDay(),
                 'initialBillingAt' => $this->initialBillingAt,
                 'deferSignup' => $this->deferSignup,
                 'nextBillingAt' => $this->nextBillingAt,
@@ -711,11 +723,11 @@ class UpdateSubscription implements \JsonSerializable
         if (isset($this->nextProductPricePointId)) {
             $json['next_product_price_point_id']           = $this->nextProductPricePointId;
         }
-        if (isset($this->snapDay)) {
+        if (!empty($this->snapDay)) {
             $json['snap_day']                              =
                 ApiHelper::getJsonHelper()->verifyTypes(
-                    $this->snapDay,
-                    'anyOf(oneOf(SnapDay,int),null)',
+                    $this->snapDay['value'],
+                    'anyOf(oneOf(int,SnapDay),null)',
                     [
                         '\AdvancedBillingLib\Models\SnapDay::checkValue SnapDay'
                     ]

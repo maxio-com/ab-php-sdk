@@ -57,6 +57,11 @@ class ListCouponsFilter implements \JsonSerializable
     private $useSiteExchangeRate;
 
     /**
+     * @var bool|null
+     */
+    private $includeArchived;
+
+    /**
      * Returns Date Field.
      * The type of filter you would like to apply to your search. Use in query
      * `filter[date_field]=created_at`.
@@ -235,8 +240,11 @@ class ListCouponsFilter implements \JsonSerializable
 
     /**
      * Returns Use Site Exchange Rate.
-     * Allows fetching coupons with matching use_site_exchange_rate based on provided value. Use in query
-     * `filter[use_site_exchange_rate]=true`.
+     * If true, restricts the list to coupons whose pricing is recalculated from the site’s current
+     * exchange rates, so their currency_prices array contains on-the-fly conversions rather than stored
+     * price records. If false, restricts the list to coupons that have manually defined amounts for each
+     * currency, ensuring the response includes the saved currency_prices entries instead of exchange-rate-
+     * derived values. Use in query `filter[use_site_exchange_rate]=true`.
      */
     public function getUseSiteExchangeRate(): ?bool
     {
@@ -245,14 +253,37 @@ class ListCouponsFilter implements \JsonSerializable
 
     /**
      * Sets Use Site Exchange Rate.
-     * Allows fetching coupons with matching use_site_exchange_rate based on provided value. Use in query
-     * `filter[use_site_exchange_rate]=true`.
+     * If true, restricts the list to coupons whose pricing is recalculated from the site’s current
+     * exchange rates, so their currency_prices array contains on-the-fly conversions rather than stored
+     * price records. If false, restricts the list to coupons that have manually defined amounts for each
+     * currency, ensuring the response includes the saved currency_prices entries instead of exchange-rate-
+     * derived values. Use in query `filter[use_site_exchange_rate]=true`.
      *
      * @maps use_site_exchange_rate
      */
     public function setUseSiteExchangeRate(?bool $useSiteExchangeRate): void
     {
         $this->useSiteExchangeRate = $useSiteExchangeRate;
+    }
+
+    /**
+     * Returns Include Archived.
+     * Controls returning archived coupons.
+     */
+    public function getIncludeArchived(): ?bool
+    {
+        return $this->includeArchived;
+    }
+
+    /**
+     * Sets Include Archived.
+     * Controls returning archived coupons.
+     *
+     * @maps include_archived
+     */
+    public function setIncludeArchived(?bool $includeArchived): void
+    {
+        $this->includeArchived = $includeArchived;
     }
 
     /**
@@ -273,6 +304,7 @@ class ListCouponsFilter implements \JsonSerializable
                 'ids' => $this->ids,
                 'codes' => $this->codes,
                 'useSiteExchangeRate' => $this->useSiteExchangeRate,
+                'includeArchived' => $this->includeArchived,
                 'additionalProperties' => $this->additionalProperties
             ]
         );
@@ -341,6 +373,9 @@ class ListCouponsFilter implements \JsonSerializable
         }
         if (isset($this->useSiteExchangeRate)) {
             $json['use_site_exchange_rate'] = $this->useSiteExchangeRate;
+        }
+        if (isset($this->includeArchived)) {
+            $json['include_archived']       = $this->includeArchived;
         }
         $json = array_merge($json, $this->additionalProperties);
 

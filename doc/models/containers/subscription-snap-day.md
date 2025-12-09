@@ -1,5 +1,5 @@
 
-# Update Subscription Snap Day
+# Subscription Snap Day
 
 ## Data Type
 

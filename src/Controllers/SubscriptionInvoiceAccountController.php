@@ -65,7 +65,7 @@ class SubscriptionInvoiceAccountController extends BaseController
      * using the default credit card payment profile and applied to the prepayment account balance.  This
      * is especially useful for manual replenishment of prepaid subscriptions.
      *
-     * Please note that you **can't** pass `amount_in_cents`.
+     * Note that passing `amount_in_cents` is now allowed.
      *
      *
      * @param int $subscriptionId The Chargify id of the subscription

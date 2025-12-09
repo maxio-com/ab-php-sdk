@@ -9,7 +9,7 @@
 
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
-| `chargifyToken` | `?string` | Optional | Token received after sending billing informations using chargify.js. | getChargifyToken(): ?string | setChargifyToken(?string chargifyToken): void |
+| `chargifyToken` | `?string` | Optional | Token received after sending billing information using chargify.js. | getChargifyToken(): ?string | setChargifyToken(?string chargifyToken): void |
 | `id` | `?int` | Optional | - | getId(): ?int | setId(?int id): void |
 | `paymentType` | [`?string(PaymentType)`](../../doc/models/payment-type.md) | Optional | - | getPaymentType(): ?string | setPaymentType(?string paymentType): void |
 | `firstName` | `?string` | Optional | First name on card or bank account. If omitted, the first_name from customer attributes will be used. | getFirstName(): ?string | setFirstName(?string firstName): void |
@@ -23,7 +23,7 @@
 | `billingAddress2` | `?string` | Optional | Second line of the customer’s billing address i.e. Apt. 100 | getBillingAddress2(): ?string | setBillingAddress2(?string billingAddress2): void |
 | `billingCity` | `?string` | Optional | The credit card or bank account billing address city (i.e. “Boston”). This value is merely passed through to the payment gateway. | getBillingCity(): ?string | setBillingCity(?string billingCity): void |
 | `billingState` | `?string` | Optional | The credit card or bank account billing address state (i.e. MA). This value is merely passed through to the payment gateway. This must conform to the [ISO_3166-1](https://en.wikipedia.org/wiki/ISO_3166-1#Current_codes) in order to be valid for tax locale purposes. | getBillingState(): ?string | setBillingState(?string billingState): void |
-| `billingCountry` | `?string` | Optional | The credit card or bank account billing address country, required in [ISO_3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) format (i.e. “US”). This value is merely passed through to the payment gateway. Some gateways require country codes in a specific format. Please check your gateway’s documentation. If creating an ACH subscription, only US is supported at this time. | getBillingCountry(): ?string | setBillingCountry(?string billingCountry): void |
+| `billingCountry` | `?string` | Optional | The credit card or bank account billing address country, required in [ISO_3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) format (i.e. “US”). This value is merely passed through to the payment gateway. Some gateways require country codes in a specific format. Check your gateway’s documentation. If creating an ACH subscription, only US is supported at this time. | getBillingCountry(): ?string | setBillingCountry(?string billingCountry): void |
 | `billingZip` | `?string` | Optional | The credit card or bank account billing address zip code (i.e. 12345). This value is merely passed through to the payment gateway. | getBillingZip(): ?string | setBillingZip(?string billingZip): void |
 | `currentVault` | [`?string(AllVaults)`](../../doc/models/all-vaults.md) | Optional | The vault that stores the payment profile with the provided `vault_token`. Use `bogus` for testing. | getCurrentVault(): ?string | setCurrentVault(?string currentVault): void |
 | `vaultToken` | `?string` | Optional | The “token” provided by your vault storage for an already stored payment profile | getVaultToken(): ?string | setVaultToken(?string vaultToken): void |

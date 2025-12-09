@@ -16,7 +16,10 @@ final class SitesControllerTestAssertions
 
     public function assertExpectedSiteDataWereReturned(Site $expectedSite, Site $site): void
     {
-        $this->testCase::assertEquals($expectedSite->jsonSerialize(), $site->jsonSerialize());
+        $expectedSiteJson = json_decode(json_encode($expectedSite->jsonSerialize()), true);
+        $siteJson = json_decode(json_encode($site->jsonSerialize()), true);
+        
+        $this->testCase::assertEquals($expectedSiteJson, $siteJson);
     }
 
     public function assertUnauthorizedApiExceptionThrown(): void

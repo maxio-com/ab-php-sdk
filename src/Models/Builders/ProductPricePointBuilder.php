@@ -186,6 +186,15 @@ class ProductPricePointBuilder
     }
 
     /**
+     * Unsets trial type field.
+     */
+    public function unsetTrialType(): self
+    {
+        $this->instance->unsetTrialType();
+        return $this;
+    }
+
+    /**
      * Sets introductory offer field.
      *
      * @param bool|null $value

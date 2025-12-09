@@ -53,8 +53,7 @@ class ActivateEventBasedComponent implements \JsonSerializable
     /**
      * Returns Billing Schedule.
      * This attribute is particularly useful when you need to align billing events for different components
-     * on distinct schedules within a subscription. Please note this only works for site with
-     * Multifrequency enabled
+     * on distinct schedules within a subscription. This only works for site with Multifrequency enabled.
      */
     public function getBillingSchedule(): ?BillingSchedule
     {
@@ -64,8 +63,7 @@ class ActivateEventBasedComponent implements \JsonSerializable
     /**
      * Sets Billing Schedule.
      * This attribute is particularly useful when you need to align billing events for different components
-     * on distinct schedules within a subscription. Please note this only works for site with
-     * Multifrequency enabled
+     * on distinct schedules within a subscription. This only works for site with Multifrequency enabled.
      *
      * @maps billing_schedule
      */

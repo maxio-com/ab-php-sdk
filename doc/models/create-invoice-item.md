@@ -12,8 +12,8 @@
 | `title` | `?string` | Optional | - | getTitle(): ?string | setTitle(?string title): void |
 | `quantity` | float\|string\|null | Optional | This is a container for one-of cases. | getQuantity(): | setQuantity( quantity): void |
 | `unitPrice` | float\|string\|null | Optional | This is a container for one-of cases. | getUnitPrice(): | setUnitPrice( unitPrice): void |
-| `taxable` | `?bool` | Optional | Set to true to automatically calculate taxes. Site must be configured to use and calculate taxes.<br><br>If using Avalara, a tax_code parameter must also be sent. | getTaxable(): ?bool | setTaxable(?bool taxable): void |
-| `taxCode` | `?string` | Optional | - | getTaxCode(): ?string | setTaxCode(?string taxCode): void |
+| `taxable` | `?bool` | Optional | Set to true to automatically calculate taxes. Site must be configured to use and calculate taxes. If using AvaTax, a tax_code parameter must also be sent. | getTaxable(): ?bool | setTaxable(?bool taxable): void |
+| `taxCode` | `?string` | Optional | A string representing the tax code related to the product type. This is especially important when using AvaTax to tax based on locale. This attribute has a max length of 25 characters. | getTaxCode(): ?string | setTaxCode(?string taxCode): void |
 | `periodRangeStart` | `?string` | Optional | YYYY-MM-DD | getPeriodRangeStart(): ?string | setPeriodRangeStart(?string periodRangeStart): void |
 | `periodRangeEnd` | `?string` | Optional | YYYY-MM-DD | getPeriodRangeEnd(): ?string | setPeriodRangeEnd(?string periodRangeEnd): void |
 | `productId` | string\|int\|null | Optional | This is a container for one-of cases. | getProductId(): | setProductId( productId): void |

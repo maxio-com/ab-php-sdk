@@ -28,7 +28,7 @@ class ResumeOptions implements \JsonSerializable
     /**
      * Returns Require Resume.
      * Chargify will only attempt to resume the subscription's billing period. If not resumable, the
-     * subscription will be left in it's current state.
+     * subscription will be left in its current state.
      */
     public function getRequireResume(): ?bool
     {
@@ -38,7 +38,7 @@ class ResumeOptions implements \JsonSerializable
     /**
      * Sets Require Resume.
      * Chargify will only attempt to resume the subscription's billing period. If not resumable, the
-     * subscription will be left in it's current state.
+     * subscription will be left in its current state.
      *
      * @maps require_resume
      */
