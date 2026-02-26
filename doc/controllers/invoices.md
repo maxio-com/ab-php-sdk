@@ -71,10 +71,20 @@ $body = RefundInvoiceRequestBuilder::init(
         ->build()
 )->build();
 
-$result = $invoicesController->refundInvoice(
-    $uid,
-    $body
-);
+$invoicesController = $client->getInvoicesController();
+
+try {
+    $result = $invoicesController->refundInvoice(
+        $uid,
+        $body
+    );
+    echo 'Invoice:';
+    var_dump($result);
+} catch (ErrorListResponseException $exp) {
+    echo 'Caught ErrorListResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Errors
@@ -155,7 +165,15 @@ $collect = [
     'sort' => InvoiceSortField::TOTAL_AMOUNT
 ];
 
-$result = $invoicesController->listInvoices($collect);
+$invoicesController = $client->getInvoicesController();
+
+try {
+    $result = $invoicesController->listInvoices($collect);
+    echo 'ListInvoicesResponse:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -468,7 +486,15 @@ function readInvoice(string $uid): Invoice
 ```php
 $uid = 'uid0';
 
-$result = $invoicesController->readInvoice($uid);
+$invoicesController = $client->getInvoicesController();
+
+try {
+    $result = $invoicesController->readInvoice($uid);
+    echo 'Invoice:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -636,7 +662,15 @@ $collect = [
     'perPage' => 100
 ];
 
-$result = $invoicesController->listInvoiceEvents($collect);
+$invoicesController = $client->getInvoicesController();
+
+try {
+    $result = $invoicesController->listInvoiceEvents($collect);
+    echo 'ListInvoiceEventsResponse:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -1058,10 +1092,20 @@ $body = CreateInvoicePaymentRequestBuilder::init(
         ->build()
 )->build();
 
-$result = $invoicesController->recordPaymentForInvoice(
-    $uid,
-    $body
-);
+$invoicesController = $client->getInvoicesController();
+
+try {
+    $result = $invoicesController->recordPaymentForInvoice(
+        $uid,
+        $body
+    );
+    echo 'Invoice:';
+    var_dump($result);
+} catch (ErrorListResponseException $exp) {
+    echo 'Caught ErrorListResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Errors
@@ -1139,7 +1183,17 @@ $body = CreateMultiInvoicePaymentRequestBuilder::init(
         ->build()
 )->build();
 
-$result = $invoicesController->recordPaymentForMultipleInvoices($body);
+$invoicesController = $client->getInvoicesController();
+
+try {
+    $result = $invoicesController->recordPaymentForMultipleInvoices($body);
+    echo 'MultiInvoicePaymentResponse:';
+    var_dump($result);
+} catch (ErrorListResponseException $exp) {
+    echo 'Caught ErrorListResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -1213,7 +1267,15 @@ $collect = [
     'applications' => false
 ];
 
-$result = $invoicesController->listCreditNotes($collect);
+$invoicesController = $client->getInvoicesController();
+
+try {
+    $result = $invoicesController->listCreditNotes($collect);
+    echo 'ListCreditNotesResponse:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -1541,7 +1603,15 @@ function readCreditNote(string $uid): CreditNote
 ```php
 $uid = 'uid0';
 
-$result = $invoicesController->readCreditNote($uid);
+$invoicesController = $client->getInvoicesController();
+
+try {
+    $result = $invoicesController->readCreditNote($uid);
+    echo 'CreditNote:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -1875,7 +1945,7 @@ function recordPaymentForSubscription(
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription. |
 | `body` | [`?RecordPaymentRequest`](../../doc/models/record-payment-request.md) | Body, Optional | - |
 
 ## Response Type
@@ -1896,10 +1966,20 @@ $body = RecordPaymentRequestBuilder::init(
     )->build()
 )->build();
 
-$result = $invoicesController->recordPaymentForSubscription(
-    $subscriptionId,
-    $body
-);
+$invoicesController = $client->getInvoicesController();
+
+try {
+    $result = $invoicesController->recordPaymentForSubscription(
+        $subscriptionId,
+        $body
+    );
+    echo 'RecordPaymentResponse:';
+    var_dump($result);
+} catch (ErrorListResponseException $exp) {
+    echo 'Caught ErrorListResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -1965,7 +2045,17 @@ function reopenInvoice(string $uid): Invoice
 ```php
 $uid = 'uid0';
 
-$result = $invoicesController->reopenInvoice($uid);
+$invoicesController = $client->getInvoicesController();
+
+try {
+    $result = $invoicesController->reopenInvoice($uid);
+    echo 'Invoice:';
+    var_dump($result);
+} catch (ErrorListResponseException $exp) {
+    echo 'Caught ErrorListResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Errors
@@ -2006,10 +2096,20 @@ $body = VoidInvoiceRequestBuilder::init(
     )->build()
 )->build();
 
-$result = $invoicesController->voidInvoice(
-    $uid,
-    $body
-);
+$invoicesController = $client->getInvoicesController();
+
+try {
+    $result = $invoicesController->voidInvoice(
+        $uid,
+        $body
+    );
+    echo 'Invoice:';
+    var_dump($result);
+} catch (ErrorListResponseException $exp) {
+    echo 'Caught ErrorListResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Errors
@@ -2051,7 +2151,15 @@ $collect = [
     'direction' => Direction::ASC
 ];
 
-$result = $invoicesController->listConsolidatedInvoiceSegments($collect);
+$invoicesController = $client->getInvoicesController();
+
+try {
+    $result = $invoicesController->listConsolidatedInvoiceSegments($collect);
+    echo 'ConsolidatedInvoice:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -2546,7 +2654,7 @@ function createInvoice(int $subscriptionId, ?CreateInvoiceRequest $body = null):
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription. |
 | `body` | [`?CreateInvoiceRequest`](../../doc/models/create-invoice-request.md) | Body, Optional | - |
 
 ## Response Type
@@ -2576,10 +2684,20 @@ $body = CreateInvoiceRequestBuilder::init(
         ->build()
 )->build();
 
-$result = $invoicesController->createInvoice(
-    $subscriptionId,
-    $body
-);
+$invoicesController = $client->getInvoicesController();
+
+try {
+    $result = $invoicesController->createInvoice(
+        $subscriptionId,
+        $body
+    );
+    echo 'InvoiceResponse:';
+    var_dump($result);
+} catch (ErrorArrayMapResponseException $exp) {
+    echo 'Caught ErrorArrayMapResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -2690,6 +2808,8 @@ $result = $invoicesController->createInvoice(
 
 This endpoint allows for invoices to be programmatically delivered via email. This endpoint supports the delivery of both ad-hoc and automatically generated invoices. Additionally, this endpoint supports email delivery to direct recipients, carbon-copy (cc) recipients, and blind carbon-copy (bcc) recipients.
 
+**File Attachments**: You can attach files to invoice emails using `attachment_urls[]` parameter by providing URLs to the files you want to attach. When using attachments, the request must use `multipart/form-data` content type. Max 10 files, 10MB per file.
+
 If no recipient email addresses are specified in the request, then the subscription's default email configuration will be used. For example, if `recipient_emails` is left blank, then the invoice will be delivered to the subscription's customer email address.
 
 On success, a 204 no-content response will be returned. The response does not indicate that email(s) have been delivered, but instead indicates that emails have been successfully queued for delivery. If _any_ invalid or malformed email address is found in the request body, the entire request will be rejected and a 422 response will be returned.
@@ -2732,10 +2852,18 @@ $body = SendInvoiceRequestBuilder::init()
     )
     ->build();
 
-$invoicesController->sendInvoice(
-    $uid,
-    $body
-);
+$invoicesController = $client->getInvoicesController();
+
+try {
+    $invoicesController->sendInvoice(
+        $uid,
+        $body
+    );
+} catch (ErrorListResponseException $exp) {
+    echo 'Caught ErrorListResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Errors
@@ -2770,7 +2898,17 @@ function previewCustomerInformationChanges(string $uid): CustomerChangesPreviewR
 ```php
 $uid = 'uid0';
 
-$result = $invoicesController->previewCustomerInformationChanges($uid);
+$invoicesController = $client->getInvoicesController();
+
+try {
+    $result = $invoicesController->previewCustomerInformationChanges($uid);
+    echo 'CustomerChangesPreviewResponse:';
+    var_dump($result);
+} catch (ErrorListResponseException $exp) {
+    echo 'Caught ErrorListResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -2859,7 +2997,17 @@ function updateCustomerInformation(string $uid): Invoice
 ```php
 $uid = 'uid0';
 
-$result = $invoicesController->updateCustomerInformation($uid);
+$invoicesController = $client->getInvoicesController();
+
+try {
+    $result = $invoicesController->updateCustomerInformation($uid);
+    echo 'Invoice:';
+    var_dump($result);
+} catch (ErrorListResponseException $exp) {
+    echo 'Caught ErrorListResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -3060,7 +3208,7 @@ $result = $invoicesController->updateCustomerInformation($uid);
 
 # Issue Invoice
 
-This endpoint allows you to issue an invoice that is in "pending" status. For example, you can issue an invoice that was created when allocating new quantity on a component and using "accrue charges" option.
+This endpoint allows you to issue an invoice that is in "pending" or "draft" status. For example, you can issue an invoice that was created when allocating new quantity on a component and using "accrue charges" option.
 
 You cannot issue a pending child invoice that was created for a member subscription in a group.
 
@@ -3096,10 +3244,20 @@ $body = IssueInvoiceRequestBuilder::init()
     ->onFailedPayment(FailedPaymentAction::LEAVE_OPEN_INVOICE)
     ->build();
 
-$result = $invoicesController->issueInvoice(
-    $uid,
-    $body
-);
+$invoicesController = $client->getInvoicesController();
+
+try {
+    $result = $invoicesController->issueInvoice(
+        $uid,
+        $body
+    );
+    echo 'Invoice:';
+    var_dump($result);
+} catch (ErrorListResponseException $exp) {
+    echo 'Caught ErrorListResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Errors

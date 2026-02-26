@@ -74,7 +74,17 @@ $body = SubscriptionGroupSignupRequestBuilder::init(
         ->build()
 )->build();
 
-$result = $subscriptionGroupsController->signupWithSubscriptionGroup($body);
+$subscriptionGroupsController = $client->getSubscriptionGroupsController();
+
+try {
+    $result = $subscriptionGroupsController->signupWithSubscriptionGroup($body);
+    echo 'SubscriptionGroupSignupResponse:';
+    var_dump($result);
+} catch (SubscriptionGroupSignupErrorResponseException $exp) {
+    echo 'Caught SubscriptionGroupSignupErrorResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Errors
@@ -119,7 +129,17 @@ $body = CreateSubscriptionGroupRequestBuilder::init(
         ->build()
 )->build();
 
-$result = $subscriptionGroupsController->createSubscriptionGroup($body);
+$subscriptionGroupsController = $client->getSubscriptionGroupsController();
+
+try {
+    $result = $subscriptionGroupsController->createSubscriptionGroup($body);
+    echo 'SubscriptionGroupResponse:';
+    var_dump($result);
+} catch (SubscriptionGroupCreateErrorResponseException $exp) {
+    echo 'Caught SubscriptionGroupCreateErrorResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -127,6 +147,7 @@ $result = $subscriptionGroupsController->createSubscriptionGroup($body);
 ```json
 {
   "subscription_group": {
+    "uid": "grp_952mvqcnk53wq",
     "customer_id": 1,
     "payment_profile": {
       "id": 1,
@@ -186,7 +207,15 @@ $collect = [
     ]
 ];
 
-$result = $subscriptionGroupsController->listSubscriptionGroups($collect);
+$subscriptionGroupsController = $client->getSubscriptionGroupsController();
+
+try {
+    $result = $subscriptionGroupsController->listSubscriptionGroups($collect);
+    echo 'ListSubscriptionGroupsResponse:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -260,10 +289,18 @@ $include = [
     SubscriptionGroupInclude::CURRENT_BILLING_AMOUNT_IN_CENTS
 ];
 
-$result = $subscriptionGroupsController->readSubscriptionGroup(
-    $uid,
-    $include
-);
+$subscriptionGroupsController = $client->getSubscriptionGroupsController();
+
+try {
+    $result = $subscriptionGroupsController->readSubscriptionGroup(
+        $uid,
+        $include
+    );
+    echo 'FullSubscriptionGroupResponse:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -349,10 +386,20 @@ $body = UpdateSubscriptionGroupRequestBuilder::init(
         ->build()
 )->build();
 
-$result = $subscriptionGroupsController->updateSubscriptionGroupMembers(
-    $uid,
-    $body
-);
+$subscriptionGroupsController = $client->getSubscriptionGroupsController();
+
+try {
+    $result = $subscriptionGroupsController->updateSubscriptionGroupMembers(
+        $uid,
+        $body
+    );
+    echo 'SubscriptionGroupResponse:';
+    var_dump($result);
+} catch (SubscriptionGroupUpdateErrorResponseException $exp) {
+    echo 'Caught SubscriptionGroupUpdateErrorResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -385,8 +432,8 @@ $result = $subscriptionGroupsController->updateSubscriptionGroupMembers(
 
 # Delete Subscription Group
 
-Use this endpoint to delete subscription group.
-Only groups without members can be deleted
+Deletes a subscription group.
+Only groups without members can be deleted.
 
 ```php
 function deleteSubscriptionGroup(string $uid): DeleteSubscriptionGroupResponse
@@ -407,7 +454,15 @@ function deleteSubscriptionGroup(string $uid): DeleteSubscriptionGroupResponse
 ```php
 $uid = 'uid0';
 
-$result = $subscriptionGroupsController->deleteSubscriptionGroup($uid);
+$subscriptionGroupsController = $client->getSubscriptionGroupsController();
+
+try {
+    $result = $subscriptionGroupsController->deleteSubscriptionGroup($uid);
+    echo 'DeleteSubscriptionGroupResponse:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -451,7 +506,15 @@ function findSubscriptionGroup(string $subscriptionId): FullSubscriptionGroupRes
 ```php
 $subscriptionId = 'subscription_id0';
 
-$result = $subscriptionGroupsController->findSubscriptionGroup($subscriptionId);
+$subscriptionGroupsController = $client->getSubscriptionGroupsController();
+
+try {
+    $result = $subscriptionGroupsController->findSubscriptionGroup($subscriptionId);
+    echo 'FullSubscriptionGroupResponse:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -530,7 +593,7 @@ function addSubscriptionToGroup(
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription. |
 | `body` | [`?AddSubscriptionToAGroup`](../../doc/models/add-subscription-to-a-group.md) | Body, Optional | - |
 
 ## Response Type
@@ -562,10 +625,18 @@ $body = AddSubscriptionToAGroupBuilder::init()
     )
     ->build();
 
-$result = $subscriptionGroupsController->addSubscriptionToGroup(
-    $subscriptionId,
-    $body
-);
+$subscriptionGroupsController = $client->getSubscriptionGroupsController();
+
+try {
+    $result = $subscriptionGroupsController->addSubscriptionToGroup(
+        $subscriptionId,
+        $body
+    );
+    echo 'SubscriptionGroupResponse:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -603,7 +674,7 @@ function removeSubscriptionFromGroup(int $subscriptionId): void
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription. |
 
 ## Response Type
 
@@ -614,7 +685,15 @@ function removeSubscriptionFromGroup(int $subscriptionId): void
 ```php
 $subscriptionId = 222;
 
-$subscriptionGroupsController->removeSubscriptionFromGroup($subscriptionId);
+$subscriptionGroupsController = $client->getSubscriptionGroupsController();
+
+try {
+    $subscriptionGroupsController->removeSubscriptionFromGroup($subscriptionId);
+} catch (ErrorListResponseException $exp) {
+    echo 'Caught ErrorListResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Errors

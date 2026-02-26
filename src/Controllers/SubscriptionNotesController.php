@@ -35,7 +35,7 @@ class SubscriptionNotesController extends BaseController
      * Full documentation on how to use Notes in the Advanced Billing UI can be located [here](https:
      * //maxio.zendesk.com/hc/en-us/articles/24251712214413-Subscription-Summary-Overview).
      *
-     * @param int $subscriptionId The Chargify id of the subscription
+     * @param int $subscriptionId The Chargify id of the subscription.
      * @param UpdateSubscriptionNoteRequest|null $body
      *
      * @return SubscriptionNoteResponse Response from the API call
@@ -104,7 +104,7 @@ class SubscriptionNotesController extends BaseController
      * Once you have obtained the ID of the note you wish to read, use this method to show a particular
      * note attached to a subscription.
      *
-     * @param int $subscriptionId The Chargify id of the subscription
+     * @param int $subscriptionId The Chargify id of the subscription.
      * @param int $noteId The Advanced Billing id of the note
      *
      * @return SubscriptionNoteResponse Response from the API call
@@ -131,7 +131,7 @@ class SubscriptionNotesController extends BaseController
     /**
      * Use the following method to update a note for a Subscription.
      *
-     * @param int $subscriptionId The Chargify id of the subscription
+     * @param int $subscriptionId The Chargify id of the subscription.
      * @param int $noteId The Advanced Billing id of the note
      * @param UpdateSubscriptionNoteRequest|null $body
      *
@@ -170,9 +170,9 @@ class SubscriptionNotesController extends BaseController
     }
 
     /**
-     * Use the following method to delete a note for a Subscription.
+     * Deletes a note for a Subscription.
      *
-     * @param int $subscriptionId The Chargify id of the subscription
+     * @param int $subscriptionId The Chargify id of the subscription.
      * @param int $noteId The Advanced Billing id of the note
      *
      * @return void Response from the API call

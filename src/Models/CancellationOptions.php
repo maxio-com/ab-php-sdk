@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace AdvancedBillingLib\Models;
 
 use AdvancedBillingLib\ApiHelper;
+use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
 class CancellationOptions implements \JsonSerializable
@@ -26,8 +27,23 @@ class CancellationOptions implements \JsonSerializable
     private $reasonCode;
 
     /**
+     * @var bool|null
+     */
+    private $cancelAtEndOfPeriod;
+
+    /**
+     * @var array
+     */
+    private $scheduledCancellationAt = [];
+
+    /**
+     * @var bool|null
+     */
+    private $refundPrepaymentAccountBalance;
+
+    /**
      * Returns Cancellation Message.
-     * For your internal use. An indication as to why the subscription is being canceled.
+     * An indication as to why the subscription is being canceled. For your internal use.
      */
     public function getCancellationMessage(): ?string
     {
@@ -36,7 +52,7 @@ class CancellationOptions implements \JsonSerializable
 
     /**
      * Sets Cancellation Message.
-     * For your internal use. An indication as to why the subscription is being canceled.
+     * An indication as to why the subscription is being canceled. For your internal use.
      *
      * @maps cancellation_message
      */
@@ -47,7 +63,8 @@ class CancellationOptions implements \JsonSerializable
 
     /**
      * Returns Reason Code.
-     * The reason code associated with the cancellation. See the list of reason codes associated with your
+     * The reason code associated with the cancellation. Use the [List Reason
+     * Codes]($e/Reason%20Codes/listReasonCodes) endpoint to retrieve the reason codes associated with your
      * site.
      */
     public function getReasonCode(): ?string
@@ -57,7 +74,8 @@ class CancellationOptions implements \JsonSerializable
 
     /**
      * Sets Reason Code.
-     * The reason code associated with the cancellation. See the list of reason codes associated with your
+     * The reason code associated with the cancellation. Use the [List Reason
+     * Codes]($e/Reason%20Codes/listReasonCodes) endpoint to retrieve the reason codes associated with your
      * site.
      *
      * @maps reason_code
@@ -65,6 +83,93 @@ class CancellationOptions implements \JsonSerializable
     public function setReasonCode(?string $reasonCode): void
     {
         $this->reasonCode = $reasonCode;
+    }
+
+    /**
+     * Returns Cancel at End of Period.
+     * When true, the subscription is cancelled at the current period end instead of immediately. To use
+     * this option, the Schedule Subscription Cancellation feature must be enabled on your site.
+     */
+    public function getCancelAtEndOfPeriod(): ?bool
+    {
+        return $this->cancelAtEndOfPeriod;
+    }
+
+    /**
+     * Sets Cancel at End of Period.
+     * When true, the subscription is cancelled at the current period end instead of immediately. To use
+     * this option, the Schedule Subscription Cancellation feature must be enabled on your site.
+     *
+     * @maps cancel_at_end_of_period
+     */
+    public function setCancelAtEndOfPeriod(?bool $cancelAtEndOfPeriod): void
+    {
+        $this->cancelAtEndOfPeriod = $cancelAtEndOfPeriod;
+    }
+
+    /**
+     * Returns Scheduled Cancellation At.
+     * Schedules the cancellation on the provided date. This is option is not applicable for prepaid
+     * subscriptions. To use this option, the Schedule Subscription Cancellation feature must be enabled on
+     * your site.
+     */
+    public function getScheduledCancellationAt(): ?\DateTime
+    {
+        if (count($this->scheduledCancellationAt) == 0) {
+            return null;
+        }
+        return $this->scheduledCancellationAt['value'];
+    }
+
+    /**
+     * Sets Scheduled Cancellation At.
+     * Schedules the cancellation on the provided date. This is option is not applicable for prepaid
+     * subscriptions. To use this option, the Schedule Subscription Cancellation feature must be enabled on
+     * your site.
+     *
+     * @maps scheduled_cancellation_at
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
+     */
+    public function setScheduledCancellationAt(?\DateTime $scheduledCancellationAt): void
+    {
+        $this->scheduledCancellationAt['value'] = $scheduledCancellationAt;
+    }
+
+    /**
+     * Unsets Scheduled Cancellation At.
+     * Schedules the cancellation on the provided date. This is option is not applicable for prepaid
+     * subscriptions. To use this option, the Schedule Subscription Cancellation feature must be enabled on
+     * your site.
+     */
+    public function unsetScheduledCancellationAt(): void
+    {
+        $this->scheduledCancellationAt = [];
+    }
+
+    /**
+     * Returns Refund Prepayment Account Balance.
+     * Applies to prepaid subscriptions. When true, which is the default, the remaining prepaid balance is
+     * refunded as part of cancellation processing. When false, prepaid balance is not refunded as part of
+     * cancellation processing. To use this option, the Schedule Subscription Cancellation feature must be
+     * enabled on your site.
+     */
+    public function getRefundPrepaymentAccountBalance(): ?bool
+    {
+        return $this->refundPrepaymentAccountBalance;
+    }
+
+    /**
+     * Sets Refund Prepayment Account Balance.
+     * Applies to prepaid subscriptions. When true, which is the default, the remaining prepaid balance is
+     * refunded as part of cancellation processing. When false, prepaid balance is not refunded as part of
+     * cancellation processing. To use this option, the Schedule Subscription Cancellation feature must be
+     * enabled on your site.
+     *
+     * @maps refund_prepayment_account_balance
+     */
+    public function setRefundPrepaymentAccountBalance(?bool $refundPrepaymentAccountBalance): void
+    {
+        $this->refundPrepaymentAccountBalance = $refundPrepaymentAccountBalance;
     }
 
     /**
@@ -79,6 +184,9 @@ class CancellationOptions implements \JsonSerializable
             [
                 'cancellationMessage' => $this->cancellationMessage,
                 'reasonCode' => $this->reasonCode,
+                'cancelAtEndOfPeriod' => $this->cancelAtEndOfPeriod,
+                'scheduledCancellationAt' => $this->getScheduledCancellationAt(),
+                'refundPrepaymentAccountBalance' => $this->refundPrepaymentAccountBalance,
                 'additionalProperties' => $this->additionalProperties
             ]
         );
@@ -125,10 +233,22 @@ class CancellationOptions implements \JsonSerializable
     {
         $json = [];
         if (isset($this->cancellationMessage)) {
-            $json['cancellation_message'] = $this->cancellationMessage;
+            $json['cancellation_message']              = $this->cancellationMessage;
         }
         if (isset($this->reasonCode)) {
-            $json['reason_code']          = $this->reasonCode;
+            $json['reason_code']                       = $this->reasonCode;
+        }
+        if (isset($this->cancelAtEndOfPeriod)) {
+            $json['cancel_at_end_of_period']           = $this->cancelAtEndOfPeriod;
+        }
+        if (!empty($this->scheduledCancellationAt)) {
+            $json['scheduled_cancellation_at']         =
+                DateTimeHelper::toRfc3339DateTime(
+                    $this->scheduledCancellationAt['value']
+                );
+        }
+        if (isset($this->refundPrepaymentAccountBalance)) {
+            $json['refund_prepayment_account_balance'] = $this->refundPrepaymentAccountBalance;
         }
         $json = array_merge($json, $this->additionalProperties);
 

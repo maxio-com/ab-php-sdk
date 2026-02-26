@@ -393,7 +393,7 @@ class InvoicesController extends BaseController
      *
      * Only ungrouped or primary subscriptions may be paid using the "bulk" payment request.
      *
-     * @param int $subscriptionId The Chargify id of the subscription
+     * @param int $subscriptionId The Chargify id of the subscription.
      * @param RecordPaymentRequest|null $body
      *
      * @return RecordPaymentResponse Response from the API call
@@ -756,7 +756,7 @@ class InvoicesController extends BaseController
      *
      * By default, invoices will be created with open status. Possible alternative is `draft`.
      *
-     * @param int $subscriptionId The Chargify id of the subscription
+     * @param int $subscriptionId The Chargify id of the subscription.
      * @param CreateInvoiceRequest|null $body
      *
      * @return InvoiceResponse Response from the API call
@@ -791,6 +791,10 @@ class InvoicesController extends BaseController
      * the delivery of both ad-hoc and automatically generated invoices. Additionally, this endpoint
      * supports email delivery to direct recipients, carbon-copy (cc) recipients, and blind carbon-copy
      * (bcc) recipients.
+     *
+     * **File Attachments**: You can attach files to invoice emails using `attachment_urls[]` parameter by
+     * providing URLs to the files you want to attach. When using attachments, the request must use
+     * `multipart/form-data` content type. Max 10 files, 10MB per file.
      *
      * If no recipient email addresses are specified in the request, then the subscription's default email
      * configuration will be used. For example, if `recipient_emails` is left blank, then the invoice will
@@ -915,9 +919,9 @@ class InvoicesController extends BaseController
     }
 
     /**
-     * This endpoint allows you to issue an invoice that is in "pending" status. For example, you can issue
-     * an invoice that was created when allocating new quantity on a component and using "accrue charges"
-     * option.
+     * This endpoint allows you to issue an invoice that is in "pending" or "draft" status. For example,
+     * you can issue an invoice that was created when allocating new quantity on a component and using
+     * "accrue charges" option.
      *
      * You cannot issue a pending child invoice that was created for a member subscription in a group.
      *

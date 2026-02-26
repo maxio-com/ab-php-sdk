@@ -72,6 +72,17 @@ class SendInvoiceRequestBuilder
     }
 
     /**
+     * Sets attachment urls field.
+     *
+     * @param string[]|null $value
+     */
+    public function attachmentUrls(?array $value): self
+    {
+        $this->instance->setAttachmentUrls($value);
+        return $this;
+    }
+
+    /**
      * Add an additional property to this model.
      *
      * @param string $name Name of property.

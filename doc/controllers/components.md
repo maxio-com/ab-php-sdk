@@ -74,10 +74,20 @@ $body = CreateMeteredComponentBuilder::init(
         )->build()
 )->build();
 
-$result = $componentsController->createMeteredComponent(
-    $productFamilyId,
-    $body
-);
+$componentsController = $client->getComponentsController();
+
+try {
+    $result = $componentsController->createMeteredComponent(
+        $productFamilyId,
+        $body
+    );
+    echo 'ComponentResponse:';
+    var_dump($result);
+} catch (ErrorListResponseException $exp) {
+    echo 'Caught ErrorListResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -200,10 +210,20 @@ $body = CreateQuantityBasedComponentBuilder::init(
         ->build()
 )->build();
 
-$result = $componentsController->createQuantityBasedComponent(
-    $productFamilyId,
-    $body
-);
+$componentsController = $client->getComponentsController();
+
+try {
+    $result = $componentsController->createQuantityBasedComponent(
+        $productFamilyId,
+        $body
+    );
+    echo 'ComponentResponse:';
+    var_dump($result);
+} catch (ErrorListResponseException $exp) {
+    echo 'Caught ErrorListResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -308,10 +328,20 @@ $body = CreateOnOffComponentBuilder::init(
         ->build()
 )->build();
 
-$result = $componentsController->createOnOffComponent(
-    $productFamilyId,
-    $body
-);
+$componentsController = $client->getComponentsController();
+
+try {
+    $result = $componentsController->createOnOffComponent(
+        $productFamilyId,
+        $body
+    );
+    echo 'ComponentResponse:';
+    var_dump($result);
+} catch (ErrorListResponseException $exp) {
+    echo 'Caught ErrorListResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -426,10 +456,20 @@ $body = CreatePrepaidComponentBuilder::init(
         ->build()
 )->build();
 
-$result = $componentsController->createPrepaidUsageComponent(
-    $productFamilyId,
-    $body
-);
+$componentsController = $client->getComponentsController();
+
+try {
+    $result = $componentsController->createPrepaidUsageComponent(
+        $productFamilyId,
+        $body
+    );
+    echo 'ComponentResponse:';
+    var_dump($result);
+} catch (ErrorListResponseException $exp) {
+    echo 'Caught ErrorListResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -552,10 +592,20 @@ $body = CreateEBBComponentBuilder::init(
         )->build()
 )->build();
 
-$result = $componentsController->createEventBasedComponent(
-    $productFamilyId,
-    $body
-);
+$componentsController = $client->getComponentsController();
+
+try {
+    $result = $componentsController->createEventBasedComponent(
+        $productFamilyId,
+        $body
+    );
+    echo 'ComponentResponse:';
+    var_dump($result);
+} catch (ErrorListResponseException $exp) {
+    echo 'Caught ErrorListResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -628,7 +678,15 @@ function findComponent(string $handle): ComponentResponse
 ```php
 $handle = 'handle6';
 
-$result = $componentsController->findComponent($handle);
+$componentsController = $client->getComponentsController();
+
+try {
+    $result = $componentsController->findComponent($handle);
+    echo 'ComponentResponse:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -690,10 +748,18 @@ $productFamilyId = 140;
 
 $componentId = 'component_id8';
 
-$result = $componentsController->readComponent(
-    $productFamilyId,
-    $componentId
-);
+$componentsController = $client->getComponentsController();
+
+try {
+    $result = $componentsController->readComponent(
+        $productFamilyId,
+        $componentId
+    );
+    echo 'ComponentResponse:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -767,11 +833,21 @@ $body = UpdateComponentRequestBuilder::init(
         ->build()
 )->build();
 
-$result = $componentsController->updateProductFamilyComponent(
-    $productFamilyId,
-    $componentId,
-    $body
-);
+$componentsController = $client->getComponentsController();
+
+try {
+    $result = $componentsController->updateProductFamilyComponent(
+        $productFamilyId,
+        $componentId,
+        $body
+    );
+    echo 'ComponentResponse:';
+    var_dump($result);
+} catch (ErrorListResponseException $exp) {
+    echo 'Caught ErrorListResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -837,10 +913,20 @@ $productFamilyId = 140;
 
 $componentId = 'component_id8';
 
-$result = $componentsController->archiveComponent(
-    $productFamilyId,
-    $componentId
-);
+$componentsController = $client->getComponentsController();
+
+try {
+    $result = $componentsController->archiveComponent(
+        $productFamilyId,
+        $componentId
+    );
+    echo 'Component:';
+    var_dump($result);
+} catch (ErrorListResponseException $exp) {
+    echo 'Caught ErrorListResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -920,7 +1006,15 @@ $collect = [
         ->build()
 ];
 
-$result = $componentsController->listComponents($collect);
+$componentsController = $client->getComponentsController();
+
+try {
+    $result = $componentsController->listComponents($collect);
+    echo 'ComponentResponse[]:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -1055,10 +1149,20 @@ $body = UpdateComponentRequestBuilder::init(
         ->build()
 )->build();
 
-$result = $componentsController->updateComponent(
-    $componentId,
-    $body
-);
+$componentsController = $client->getComponentsController();
+
+try {
+    $result = $componentsController->updateComponent(
+        $componentId,
+        $body
+    );
+    echo 'ComponentResponse:';
+    var_dump($result);
+} catch (ErrorListResponseException $exp) {
+    echo 'Caught ErrorListResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -1144,7 +1248,15 @@ $collect = [
     'dateField' => BasicDateField::UPDATED_AT
 ];
 
-$result = $componentsController->listComponentsForProductFamily($collect);
+$componentsController = $client->getComponentsController();
+
+try {
+    $result = $componentsController->listComponentsForProductFamily($collect);
+    echo 'ComponentResponse[]:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*

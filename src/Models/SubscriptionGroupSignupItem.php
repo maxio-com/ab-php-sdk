@@ -299,7 +299,8 @@ class SubscriptionGroupSignupItem implements \JsonSerializable
     /**
      * Returns Custom Price.
      * (Optional) Used in place of `product_price_point_id` to define a custom price point unique to the
-     * subscription
+     * subscription. A subscription can have up to 30 custom price points. Exceeding this limit will result
+     * in an API error.
      */
     public function getCustomPrice(): ?SubscriptionCustomPrice
     {
@@ -309,7 +310,8 @@ class SubscriptionGroupSignupItem implements \JsonSerializable
     /**
      * Sets Custom Price.
      * (Optional) Used in place of `product_price_point_id` to define a custom price point unique to the
-     * subscription
+     * subscription. A subscription can have up to 30 custom price points. Exceeding this limit will result
+     * in an API error.
      *
      * @maps custom_price
      */

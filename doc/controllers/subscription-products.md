@@ -84,7 +84,7 @@ function migrateSubscriptionProduct(
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription. |
 | `body` | [`?SubscriptionProductMigrationRequest`](../../doc/models/subscription-product-migration-request.md) | Body, Optional | - |
 
 ## Response Type
@@ -106,10 +106,20 @@ $body = SubscriptionProductMigrationRequestBuilder::init(
         ->build()
 )->build();
 
-$result = $subscriptionProductsController->migrateSubscriptionProduct(
-    $subscriptionId,
-    $body
-);
+$subscriptionProductsController = $client->getSubscriptionProductsController();
+
+try {
+    $result = $subscriptionProductsController->migrateSubscriptionProduct(
+        $subscriptionId,
+        $body
+    );
+    echo 'SubscriptionResponse:';
+    var_dump($result);
+} catch (ErrorListResponseException $exp) {
+    echo 'Caught ErrorListResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -262,7 +272,7 @@ function previewSubscriptionProductMigration(
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription. |
 | `body` | [`?SubscriptionMigrationPreviewRequest`](../../doc/models/subscription-migration-preview-request.md) | Body, Optional | - |
 
 ## Response Type
@@ -283,10 +293,20 @@ $body = SubscriptionMigrationPreviewRequestBuilder::init(
         ->build()
 )->build();
 
-$result = $subscriptionProductsController->previewSubscriptionProductMigration(
-    $subscriptionId,
-    $body
-);
+$subscriptionProductsController = $client->getSubscriptionProductsController();
+
+try {
+    $result = $subscriptionProductsController->previewSubscriptionProductMigration(
+        $subscriptionId,
+        $body
+    );
+    echo 'SubscriptionMigrationPreviewResponse:';
+    var_dump($result);
+} catch (ErrorListResponseException $exp) {
+    echo 'Caught ErrorListResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*

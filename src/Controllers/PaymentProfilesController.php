@@ -381,7 +381,7 @@ class PaymentProfilesController extends BaseController
     }
 
     /**
-     * This will delete a payment profile belonging to the customer on the subscription.
+     * Deletes a payment profile belonging to the customer on the subscription.
      *
      * + If the customer has multiple subscriptions, the payment profile will be removed from all of them.
      *
@@ -391,7 +391,7 @@ class PaymentProfilesController extends BaseController
      * the Admin UI and use the “Add New Credit Card” or “Make Active Payment Method” link, (depending on
      * whether there are other cards present).
      *
-     * @param int $subscriptionId The Chargify id of the subscription
+     * @param int $subscriptionId The Chargify id of the subscription.
      * @param int $paymentProfileId The Chargify id of the payment profile
      *
      * @return void Response from the API call
@@ -454,7 +454,7 @@ class PaymentProfilesController extends BaseController
     }
 
     /**
-     * This will delete a Payment Profile belonging to a Subscription Group.
+     * Deletes a Payment Profile belonging to a Subscription Group.
      *
      * **Note**: If the Payment Profile belongs to multiple Subscription Groups and/or Subscriptions, it
      * will be removed from all of them.
@@ -488,7 +488,7 @@ class PaymentProfilesController extends BaseController
      * You must elect to change the existing payment profile to a new payment profile ID in order to
      * receive a satisfactory response from this endpoint.
      *
-     * @param int $subscriptionId The Chargify id of the subscription
+     * @param int $subscriptionId The Chargify id of the subscription.
      * @param int $paymentProfileId The Chargify id of the payment profile
      *
      * @return PaymentProfileResponse Response from the API call
@@ -619,7 +619,7 @@ class PaymentProfilesController extends BaseController
      * These error responses are designed to prevent excessive or invalid requests, and to provide clear
      * and helpful information to users who encounter errors during the request process.
      *
-     * @param int $subscriptionId The Chargify id of the subscription
+     * @param int $subscriptionId The Chargify id of the subscription.
      *
      * @return void Response from the API call
      *

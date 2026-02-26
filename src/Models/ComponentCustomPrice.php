@@ -39,6 +39,16 @@ class ComponentCustomPrice implements \JsonSerializable
     private $intervalUnit = [];
 
     /**
+     * @var array
+     */
+    private $listPricePointId = [];
+
+    /**
+     * @var bool|null
+     */
+    private $useDefaultListPrice;
+
+    /**
      * @var Price[]
      */
     private $prices;
@@ -173,8 +183,65 @@ class ComponentCustomPrice implements \JsonSerializable
     }
 
     /**
+     * Returns List Price Point Id.
+     * Optional id of the price point to use for list price calculations when
+     * overriding the customer price.
+     */
+    public function getListPricePointId(): ?int
+    {
+        if (count($this->listPricePointId) == 0) {
+            return null;
+        }
+        return $this->listPricePointId['value'];
+    }
+
+    /**
+     * Sets List Price Point Id.
+     * Optional id of the price point to use for list price calculations when
+     * overriding the customer price.
+     *
+     * @maps list_price_point_id
+     */
+    public function setListPricePointId(?int $listPricePointId): void
+    {
+        $this->listPricePointId['value'] = $listPricePointId;
+    }
+
+    /**
+     * Unsets List Price Point Id.
+     * Optional id of the price point to use for list price calculations when
+     * overriding the customer price.
+     */
+    public function unsetListPricePointId(): void
+    {
+        $this->listPricePointId = [];
+    }
+
+    /**
+     * Returns Use Default List Price.
+     * When true, list price calculations will continue to use the default price point even when a
+     * `custom_price` is supplied.
+     */
+    public function getUseDefaultListPrice(): ?bool
+    {
+        return $this->useDefaultListPrice;
+    }
+
+    /**
+     * Sets Use Default List Price.
+     * When true, list price calculations will continue to use the default price point even when a
+     * `custom_price` is supplied.
+     *
+     * @maps use_default_list_price
+     */
+    public function setUseDefaultListPrice(?bool $useDefaultListPrice): void
+    {
+        $this->useDefaultListPrice = $useDefaultListPrice;
+    }
+
+    /**
      * Returns Prices.
-     * On/off components only need one price bracket starting at 1
+     * On/off components only need one price bracket starting at 1.
      *
      * @return Price[]
      */
@@ -185,7 +252,7 @@ class ComponentCustomPrice implements \JsonSerializable
 
     /**
      * Sets Prices.
-     * On/off components only need one price bracket starting at 1
+     * On/off components only need one price bracket starting at 1.
      *
      * @required
      * @maps prices
@@ -323,6 +390,8 @@ class ComponentCustomPrice implements \JsonSerializable
                 'pricingScheme' => $this->pricingScheme,
                 'interval' => $this->interval,
                 'intervalUnit' => $this->getIntervalUnit(),
+                'listPricePointId' => $this->getListPricePointId(),
+                'useDefaultListPrice' => $this->useDefaultListPrice,
                 'prices' => $this->prices,
                 'renewPrepaidAllocation' => $this->renewPrepaidAllocation,
                 'rolloverPrepaidRemainder' => $this->rolloverPrepaidRemainder,
@@ -384,6 +453,12 @@ class ComponentCustomPrice implements \JsonSerializable
         }
         if (!empty($this->intervalUnit)) {
             $json['interval_unit']              = IntervalUnit::checkValue($this->intervalUnit['value']);
+        }
+        if (!empty($this->listPricePointId)) {
+            $json['list_price_point_id']        = $this->listPricePointId['value'];
+        }
+        if (isset($this->useDefaultListPrice)) {
+            $json['use_default_list_price']     = $this->useDefaultListPrice;
         }
         $json['prices']                         = $this->prices;
         if (isset($this->renewPrepaidAllocation)) {

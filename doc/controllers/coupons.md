@@ -95,10 +95,20 @@ $body = CouponRequestBuilder::init()
     )
     ->build();
 
-$result = $couponsController->createCoupon(
-    $productFamilyId,
-    $body
-);
+$couponsController = $client->getCouponsController();
+
+try {
+    $result = $couponsController->createCoupon(
+        $productFamilyId,
+        $body
+    );
+    echo 'CouponResponse:';
+    var_dump($result);
+} catch (ErrorListResponseException $exp) {
+    echo 'Caught ErrorListResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Errors
@@ -159,7 +169,15 @@ $collect = [
     'currencyPrices' => true
 ];
 
-$result = $couponsController->listCouponsForProductFamily($collect);
+$couponsController = $client->getCouponsController();
+
+try {
+    $result = $couponsController->listCouponsForProductFamily($collect);
+    echo 'CouponResponse[]:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -285,11 +303,19 @@ function findCoupon(
 ```php
 $currencyPrices = true;
 
-$result = $couponsController->findCoupon(
-    null,
-    null,
-    $currencyPrices
-);
+$couponsController = $client->getCouponsController();
+
+try {
+    $result = $couponsController->findCoupon(
+        null,
+        null,
+        $currencyPrices
+    );
+    echo 'CouponResponse:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 
@@ -327,11 +353,19 @@ $couponId = 162;
 
 $currencyPrices = true;
 
-$result = $couponsController->readCoupon(
-    $productFamilyId,
-    $couponId,
-    $currencyPrices
-);
+$couponsController = $client->getCouponsController();
+
+try {
+    $result = $couponsController->readCoupon(
+        $productFamilyId,
+        $couponId,
+        $currencyPrices
+    );
+    echo 'CouponResponse:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -426,11 +460,21 @@ $body = CouponRequestBuilder::init()
     )
     ->build();
 
-$result = $couponsController->updateCoupon(
-    $productFamilyId,
-    $couponId,
-    $body
-);
+$couponsController = $client->getCouponsController();
+
+try {
+    $result = $couponsController->updateCoupon(
+        $productFamilyId,
+        $couponId,
+        $body
+    );
+    echo 'CouponResponse:';
+    var_dump($result);
+} catch (ErrorListResponseException $exp) {
+    echo 'Caught ErrorListResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -497,10 +541,18 @@ $productFamilyId = 140;
 
 $couponId = 162;
 
-$result = $couponsController->archiveCoupon(
-    $productFamilyId,
-    $couponId
-);
+$couponsController = $client->getCouponsController();
+
+try {
+    $result = $couponsController->archiveCoupon(
+        $productFamilyId,
+        $couponId
+    );
+    echo 'CouponResponse:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -582,7 +634,15 @@ $collect = [
     'currencyPrices' => true
 ];
 
-$result = $couponsController->listCoupons($collect);
+$couponsController = $client->getCouponsController();
+
+try {
+    $result = $couponsController->listCoupons($collect);
+    echo 'CouponResponse[]:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -660,10 +720,18 @@ $productFamilyId = 140;
 
 $couponId = 162;
 
-$result = $couponsController->readCouponUsage(
-    $productFamilyId,
-    $couponId
-);
+$couponsController = $client->getCouponsController();
+
+try {
+    $result = $couponsController->readCouponUsage(
+        $productFamilyId,
+        $couponId
+    );
+    echo 'CouponUsage[]:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -745,7 +813,17 @@ function validateCoupon(string $code, ?int $productFamilyId = null): CouponRespo
 ```php
 $code = 'code8';
 
-$result = $couponsController->validateCoupon($code);
+$couponsController = $client->getCouponsController();
+
+try {
+    $result = $couponsController->validateCoupon($code);
+    echo 'CouponResponse:';
+    var_dump($result);
+} catch (SingleStringErrorResponseException $exp) {
+    echo 'Caught SingleStringErrorResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -826,10 +904,20 @@ $body = CouponCurrencyRequestBuilder::init(
     ]
 )->build();
 
-$result = $couponsController->createOrUpdateCouponCurrencyPrices(
-    $couponId,
-    $body
-);
+$couponsController = $client->getCouponsController();
+
+try {
+    $result = $couponsController->createOrUpdateCouponCurrencyPrices(
+        $couponId,
+        $body
+    );
+    echo 'CouponCurrencyResponse:';
+    var_dump($result);
+} catch (ErrorStringMapResponseException $exp) {
+    echo 'Caught ErrorStringMapResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Errors
@@ -912,10 +1000,18 @@ $body = CouponSubcodesBuilder::init()
     )
     ->build();
 
-$result = $couponsController->createCouponSubcodes(
-    $couponId,
-    $body
-);
+$couponsController = $client->getCouponsController();
+
+try {
+    $result = $couponsController->createCouponSubcodes(
+        $couponId,
+        $body
+    );
+    echo 'CouponSubcodesResponse:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -960,7 +1056,15 @@ $collect = [
     'perPage' => 50
 ];
 
-$result = $couponsController->listCouponSubcodes($collect);
+$couponsController = $client->getCouponsController();
+
+try {
+    $result = $couponsController->listCouponSubcodes($collect);
+    echo 'CouponSubcodes:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -1037,10 +1141,18 @@ $body = CouponSubcodesBuilder::init()
     )
     ->build();
 
-$result = $couponsController->updateCouponSubcodes(
-    $couponId,
-    $body
-);
+$couponsController = $client->getCouponsController();
+
+try {
+    $result = $couponsController->updateCouponSubcodes(
+        $couponId,
+        $body
+    );
+    echo 'CouponSubcodesResponse:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 
@@ -1091,10 +1203,16 @@ $couponId = 162;
 
 $subcode = 'subcode4';
 
-$couponsController->deleteCouponSubcode(
-    $couponId,
-    $subcode
-);
+$couponsController = $client->getCouponsController();
+
+try {
+    $couponsController->deleteCouponSubcode(
+        $couponId,
+        $subcode
+    );
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Errors

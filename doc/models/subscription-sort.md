@@ -15,4 +15,8 @@
 | `NEXT_ASSESSMENT` |
 | `UPDATED_AT` |
 | `CREATED_AT` |
+| `TOTAL_PAYMENTS` |
+| `ID` |
+| `OPEN_BALANCE` |
+| `EXPIRES_AT` |
 

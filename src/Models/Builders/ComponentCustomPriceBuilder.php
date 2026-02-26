@@ -95,6 +95,37 @@ class ComponentCustomPriceBuilder
     }
 
     /**
+     * Sets list price point id field.
+     *
+     * @param int|null $value
+     */
+    public function listPricePointId(?int $value): self
+    {
+        $this->instance->setListPricePointId($value);
+        return $this;
+    }
+
+    /**
+     * Unsets list price point id field.
+     */
+    public function unsetListPricePointId(): self
+    {
+        $this->instance->unsetListPricePointId();
+        return $this;
+    }
+
+    /**
+     * Sets use default list price field.
+     *
+     * @param bool|null $value
+     */
+    public function useDefaultListPrice(?bool $value): self
+    {
+        $this->instance->setUseDefaultListPrice($value);
+        return $this;
+    }
+
+    /**
      * Sets renew prepaid allocation field.
      *
      * @param bool|null $value

@@ -63,10 +63,20 @@ $body = CreateOrUpdateProductRequestBuilder::init(
         ->build()
 )->build();
 
-$result = $productsController->createProduct(
-    $productFamilyId,
-    $body
-);
+$productsController = $client->getProductsController();
+
+try {
+    $result = $productsController->createProduct(
+        $productFamilyId,
+        $body
+    );
+    echo 'ProductResponse:';
+    var_dump($result);
+} catch (ErrorListResponseException $exp) {
+    echo 'Caught ErrorListResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -148,7 +158,15 @@ function readProduct(int $productId): ProductResponse
 ```php
 $productId = 202;
 
-$result = $productsController->readProduct($productId);
+$productsController = $client->getProductsController();
+
+try {
+    $result = $productsController->readProduct($productId);
+    echo 'ProductResponse:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -227,7 +245,17 @@ function updateProduct(int $productId, ?CreateOrUpdateProductRequest $body = nul
 ```php
 $productId = 202;
 
-$result = $productsController->updateProduct($productId);
+$productsController = $client->getProductsController();
+
+try {
+    $result = $productsController->updateProduct($productId);
+    echo 'ProductResponse:';
+    var_dump($result);
+} catch (ErrorListResponseException $exp) {
+    echo 'Caught ErrorListResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -310,7 +338,17 @@ function archiveProduct(int $productId): ProductResponse
 ```php
 $productId = 202;
 
-$result = $productsController->archiveProduct($productId);
+$productsController = $client->getProductsController();
+
+try {
+    $result = $productsController->archiveProduct($productId);
+    echo 'ProductResponse:';
+    var_dump($result);
+} catch (ErrorListResponseException $exp) {
+    echo 'Caught ErrorListResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -386,7 +424,15 @@ function readProductByHandle(string $apiHandle): ProductResponse
 ```php
 $apiHandle = 'api_handle6';
 
-$result = $productsController->readProductByHandle($apiHandle);
+$productsController = $client->getProductsController();
+
+try {
+    $result = $productsController->readProductByHandle($apiHandle);
+    echo 'ProductResponse:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -505,7 +551,15 @@ $collect = [
     'mInclude' => ListProductsInclude::PREPAID_PRODUCT_PRICE_POINT
 ];
 
-$result = $productsController->listProducts($collect);
+$productsController = $client->getProductsController();
+
+try {
+    $result = $productsController->listProducts($collect);
+    echo 'ProductResponse[]:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*

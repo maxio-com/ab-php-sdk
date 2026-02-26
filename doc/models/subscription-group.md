@@ -9,6 +9,7 @@
 
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
+| `uid` | `?string` | Optional | - | getUid(): ?string | setUid(?string uid): void |
 | `customerId` | `?int` | Optional | - | getCustomerId(): ?int | setCustomerId(?int customerId): void |
 | `paymentProfile` | [`?SubscriptionGroupPaymentProfile`](../../doc/models/subscription-group-payment-profile.md) | Optional | - | getPaymentProfile(): ?SubscriptionGroupPaymentProfile | setPaymentProfile(?SubscriptionGroupPaymentProfile paymentProfile): void |
 | `paymentCollectionMethod` | [`?string(CollectionMethod)`](../../doc/models/collection-method.md) | Optional | The type of payment collection to be used in the subscription. For legacy Statements Architecture valid options are - `invoice`, `automatic`. For current Relationship Invoicing Architecture valid options are - `remittance`, `automatic`, `prepaid`. | getPaymentCollectionMethod(): ?string | setPaymentCollectionMethod(?string paymentCollectionMethod): void |
@@ -19,6 +20,7 @@
 
 ```json
 {
+  "uid": "uid4",
   "customer_id": 36,
   "payment_profile": {
     "id": 44,
@@ -31,8 +33,7 @@
     146,
     147,
     148
-  ],
-  "created_at": "2016-03-13T12:52:32.123Z"
+  ]
 }
 ```
 

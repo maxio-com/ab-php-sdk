@@ -74,7 +74,17 @@ $body = CreateOfferRequestBuilder::init(
         ->build()
 )->build();
 
-$result = $offersController->createOffer($body);
+$offersController = $client->getOffersController();
+
+try {
+    $result = $offersController->createOffer($body);
+    echo 'OfferResponse:';
+    var_dump($result);
+} catch (ErrorArrayMapResponseException $exp) {
+    echo 'Caught ErrorArrayMapResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -155,7 +165,17 @@ $collect = [
     'includeArchived' => true
 ];
 
-$result = $offersController->listOffers($collect);
+$offersController = $client->getOffersController();
+
+try {
+    $result = $offersController->listOffers($collect);
+    echo 'ListOffersResponse:';
+    var_dump($result);
+} catch (ErrorListResponseException $exp) {
+    echo 'Caught ErrorListResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -243,7 +263,15 @@ function readOffer(int $offerId): OfferResponse
 ```php
 $offerId = 130;
 
-$result = $offersController->readOffer($offerId);
+$offersController = $client->getOffersController();
+
+try {
+    $result = $offersController->readOffer($offerId);
+    echo 'OfferResponse:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 
@@ -270,7 +298,13 @@ function archiveOffer(int $offerId): void
 ```php
 $offerId = 130;
 
-$offersController->archiveOffer($offerId);
+$offersController = $client->getOffersController();
+
+try {
+    $offersController->archiveOffer($offerId);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 
@@ -297,6 +331,12 @@ function unarchiveOffer(int $offerId): void
 ```php
 $offerId = 130;
 
-$offersController->unarchiveOffer($offerId);
+$offersController = $client->getOffersController();
+
+try {
+    $offersController->unarchiveOffer($offerId);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 

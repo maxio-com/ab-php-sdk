@@ -129,7 +129,17 @@ $body = CreatePaymentProfileRequestBuilder::init(
         ->build()
 )->build();
 
-$result = $paymentProfilesController->createPaymentProfile($body);
+$paymentProfilesController = $client->getPaymentProfilesController();
+
+try {
+    $result = $paymentProfilesController->createPaymentProfile($body);
+    echo 'PaymentProfileResponse:';
+    var_dump($result);
+} catch (ErrorListResponseException $exp) {
+    echo 'Caught ErrorListResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -197,7 +207,15 @@ $collect = [
     'perPage' => 50
 ];
 
-$result = $paymentProfilesController->listPaymentProfiles($collect);
+$paymentProfilesController = $client->getPaymentProfilesController();
+
+try {
+    $result = $paymentProfilesController->listPaymentProfiles($collect);
+    echo 'PaymentProfileResponse[]:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -323,7 +341,15 @@ function readPaymentProfile(int $paymentProfileId): PaymentProfileResponse
 ```php
 $paymentProfileId = 198;
 
-$result = $paymentProfilesController->readPaymentProfile($paymentProfileId);
+$paymentProfilesController = $client->getPaymentProfilesController();
+
+try {
+    $result = $paymentProfilesController->readPaymentProfile($paymentProfileId);
+    echo 'PaymentProfileResponse:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -437,10 +463,20 @@ $body = UpdatePaymentProfileRequestBuilder::init(
         ->build()
 )->build();
 
-$result = $paymentProfilesController->updatePaymentProfile(
-    $paymentProfileId,
-    $body
-);
+$paymentProfilesController = $client->getPaymentProfilesController();
+
+try {
+    $result = $paymentProfilesController->updatePaymentProfile(
+        $paymentProfileId,
+        $body
+    );
+    echo 'PaymentProfileResponse:';
+    var_dump($result);
+} catch (ErrorStringMapResponseException $exp) {
+    echo 'Caught ErrorStringMapResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -495,7 +531,15 @@ function deleteUnusedPaymentProfile(int $paymentProfileId): void
 ```php
 $paymentProfileId = 198;
 
-$paymentProfilesController->deleteUnusedPaymentProfile($paymentProfileId);
+$paymentProfilesController = $client->getPaymentProfilesController();
+
+try {
+    $paymentProfilesController->deleteUnusedPaymentProfile($paymentProfileId);
+} catch (ErrorListResponseException $exp) {
+    echo 'Caught ErrorListResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Errors
@@ -508,7 +552,7 @@ $paymentProfilesController->deleteUnusedPaymentProfile($paymentProfileId);
 
 # Delete Subscriptions Payment Profile
 
-This will delete a payment profile belonging to the customer on the subscription.
+Deletes a payment profile belonging to the customer on the subscription.
 
 + If the customer has multiple subscriptions, the payment profile will be removed from all of them.
 
@@ -522,7 +566,7 @@ function deleteSubscriptionsPaymentProfile(int $subscriptionId, int $paymentProf
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription. |
 | `paymentProfileId` | `int` | Template, Required | The Chargify id of the payment profile |
 
 ## Response Type
@@ -536,10 +580,16 @@ $subscriptionId = 222;
 
 $paymentProfileId = 198;
 
-$paymentProfilesController->deleteSubscriptionsPaymentProfile(
-    $subscriptionId,
-    $paymentProfileId
-);
+$paymentProfilesController = $client->getPaymentProfilesController();
+
+try {
+    $paymentProfilesController->deleteSubscriptionsPaymentProfile(
+        $subscriptionId,
+        $paymentProfileId
+    );
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 
@@ -577,10 +627,20 @@ $body = BankAccountVerificationRequestBuilder::init(
         ->build()
 )->build();
 
-$result = $paymentProfilesController->verifyBankAccount(
-    $bankAccountId,
-    $body
-);
+$paymentProfilesController = $client->getPaymentProfilesController();
+
+try {
+    $result = $paymentProfilesController->verifyBankAccount(
+        $bankAccountId,
+        $body
+    );
+    echo 'BankAccountResponse:';
+    var_dump($result);
+} catch (ErrorListResponseException $exp) {
+    echo 'Caught ErrorListResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -621,7 +681,7 @@ $result = $paymentProfilesController->verifyBankAccount(
 
 # Delete Subscription Group Payment Profile
 
-This will delete a Payment Profile belonging to a Subscription Group.
+Deletes a Payment Profile belonging to a Subscription Group.
 
 **Note**: If the Payment Profile belongs to multiple Subscription Groups and/or Subscriptions, it will be removed from all of them.
 
@@ -647,10 +707,16 @@ $uid = 'uid0';
 
 $paymentProfileId = 198;
 
-$paymentProfilesController->deleteSubscriptionGroupPaymentProfile(
-    $uid,
-    $paymentProfileId
-);
+$paymentProfilesController = $client->getPaymentProfilesController();
+
+try {
+    $paymentProfilesController->deleteSubscriptionGroupPaymentProfile(
+        $uid,
+        $paymentProfileId
+    );
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 
@@ -671,7 +737,7 @@ function changeSubscriptionDefaultPaymentProfile(
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription. |
 | `paymentProfileId` | `int` | Template, Required | The Chargify id of the payment profile |
 
 ## Response Type
@@ -685,10 +751,20 @@ $subscriptionId = 222;
 
 $paymentProfileId = 198;
 
-$result = $paymentProfilesController->changeSubscriptionDefaultPaymentProfile(
-    $subscriptionId,
-    $paymentProfileId
-);
+$paymentProfilesController = $client->getPaymentProfilesController();
+
+try {
+    $result = $paymentProfilesController->changeSubscriptionDefaultPaymentProfile(
+        $subscriptionId,
+        $paymentProfileId
+    );
+    echo 'PaymentProfileResponse:';
+    var_dump($result);
+} catch (ErrorListResponseException $exp) {
+    echo 'Caught ErrorListResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -761,10 +837,20 @@ $uid = 'uid0';
 
 $paymentProfileId = 198;
 
-$result = $paymentProfilesController->changeSubscriptionGroupDefaultPaymentProfile(
-    $uid,
-    $paymentProfileId
-);
+$paymentProfilesController = $client->getPaymentProfilesController();
+
+try {
+    $result = $paymentProfilesController->changeSubscriptionGroupDefaultPaymentProfile(
+        $uid,
+        $paymentProfileId
+    );
+    echo 'PaymentProfileResponse:';
+    var_dump($result);
+} catch (ErrorListResponseException $exp) {
+    echo 'Caught ErrorListResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -830,7 +916,17 @@ function readOneTimeToken(string $chargifyToken): GetOneTimeTokenRequest
 ```php
 $chargifyToken = 'chargify_token8';
 
-$result = $paymentProfilesController->readOneTimeToken($chargifyToken);
+$paymentProfilesController = $client->getPaymentProfilesController();
+
+try {
+    $result = $paymentProfilesController->readOneTimeToken($chargifyToken);
+    echo 'GetOneTimeTokenRequest:';
+    var_dump($result);
+} catch (ErrorListResponseException $exp) {
+    echo 'Caught ErrorListResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Errors
@@ -858,7 +954,7 @@ function sendRequestUpdatePaymentEmail(int $subscriptionId): void
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription. |
 
 ## Response Type
 
@@ -869,7 +965,15 @@ function sendRequestUpdatePaymentEmail(int $subscriptionId): void
 ```php
 $subscriptionId = 222;
 
-$paymentProfilesController->sendRequestUpdatePaymentEmail($subscriptionId);
+$paymentProfilesController = $client->getPaymentProfilesController();
+
+try {
+    $paymentProfilesController->sendRequestUpdatePaymentEmail($subscriptionId);
+} catch (ErrorListResponseException $exp) {
+    echo 'Caught ErrorListResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Errors

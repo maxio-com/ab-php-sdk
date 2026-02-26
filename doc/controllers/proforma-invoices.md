@@ -13,6 +13,7 @@ $proformaInvoicesController = $client->getProformaInvoicesController();
 * [Create Consolidated Proforma Invoice](../../doc/controllers/proforma-invoices.md#create-consolidated-proforma-invoice)
 * [List Subscription Group Proforma Invoices](../../doc/controllers/proforma-invoices.md#list-subscription-group-proforma-invoices)
 * [Read Proforma Invoice](../../doc/controllers/proforma-invoices.md#read-proforma-invoice)
+* [Deliver Proforma Invoice](../../doc/controllers/proforma-invoices.md#deliver-proforma-invoice)
 * [Create Proforma Invoice](../../doc/controllers/proforma-invoices.md#create-proforma-invoice)
 * [List Proforma Invoices](../../doc/controllers/proforma-invoices.md#list-proforma-invoices)
 * [Void Proforma Invoice](../../doc/controllers/proforma-invoices.md#void-proforma-invoice)
@@ -50,7 +51,15 @@ function createConsolidatedProformaInvoice(string $uid): void
 ```php
 $uid = 'uid0';
 
-$proformaInvoicesController->createConsolidatedProformaInvoice($uid);
+$proformaInvoicesController = $client->getProformaInvoicesController();
+
+try {
+    $proformaInvoicesController->createConsolidatedProformaInvoice($uid);
+} catch (ErrorListResponseException $exp) {
+    echo 'Caught ErrorListResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Errors
@@ -99,7 +108,15 @@ $collect = [
     'customFields' => false
 ];
 
-$result = $proformaInvoicesController->listSubscriptionGroupProformaInvoices($collect);
+$proformaInvoicesController = $client->getProformaInvoicesController();
+
+try {
+    $result = $proformaInvoicesController->listSubscriptionGroupProformaInvoices($collect);
+    echo 'ListProformaInvoicesResponse:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Errors
@@ -136,7 +153,15 @@ function readProformaInvoice(string $proformaInvoiceUid): ProformaInvoice
 ```php
 $proformaInvoiceUid = 'proforma_invoice_uid4';
 
-$result = $proformaInvoicesController->readProformaInvoice($proformaInvoiceUid);
+$proformaInvoicesController = $client->getProformaInvoicesController();
+
+try {
+    $result = $proformaInvoicesController->readProformaInvoice($proformaInvoiceUid);
+    echo 'ProformaInvoice:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Errors
@@ -144,6 +169,80 @@ $result = $proformaInvoicesController->readProformaInvoice($proformaInvoiceUid);
 | HTTP Status Code | Error Description | Exception Class |
 |  --- | --- | --- |
 | 404 | Not Found | `ApiException` |
+
+
+# Deliver Proforma Invoice
+
+Allows for proforma invoices to be programmatically delivered via email. Supports email
+delivery to direct recipients, carbon-copy (cc) recipients, and blind carbon-copy (bcc) recipients.
+
+If `recipient_emails` is omitted, the system will fall back to the primary recipient derived from the invoice or
+subscription. At least one recipient must be present, either via the request body or via this default behavior, so an
+empty body may still succeed when defaults are available.
+
+```php
+function deliverProformaInvoice(
+    string $proformaInvoiceUid,
+    ?DeliverProformaInvoiceRequest $body = null
+): ProformaInvoice
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `proformaInvoiceUid` | `string` | Template, Required | The uid of the proforma invoice |
+| `body` | [`?DeliverProformaInvoiceRequest`](../../doc/models/deliver-proforma-invoice-request.md) | Body, Optional | - |
+
+## Response Type
+
+[`ProformaInvoice`](../../doc/models/proforma-invoice.md)
+
+## Example Usage
+
+```php
+$proformaInvoiceUid = 'proforma_invoice_uid4';
+
+$body = DeliverProformaInvoiceRequestBuilder::init()
+    ->recipientEmails(
+        [
+            'user0@example.com'
+        ]
+    )
+    ->ccRecipientEmails(
+        [
+            'user1@example.com'
+        ]
+    )
+    ->bccRecipientEmails(
+        [
+            'user2@example.com'
+        ]
+    )
+    ->build();
+
+$proformaInvoicesController = $client->getProformaInvoicesController();
+
+try {
+    $result = $proformaInvoicesController->deliverProformaInvoice(
+        $proformaInvoiceUid,
+        $body
+    );
+    echo 'ProformaInvoice:';
+    var_dump($result);
+} catch (ErrorListResponseException $exp) {
+    echo 'Caught ErrorListResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 404 | Not Found | `ApiException` |
+| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
 
 
 # Create Proforma Invoice
@@ -164,7 +263,7 @@ function createProformaInvoice(int $subscriptionId): ProformaInvoice
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription. |
 
 ## Response Type
 
@@ -175,7 +274,17 @@ function createProformaInvoice(int $subscriptionId): ProformaInvoice
 ```php
 $subscriptionId = 222;
 
-$result = $proformaInvoicesController->createProformaInvoice($subscriptionId);
+$proformaInvoicesController = $client->getProformaInvoicesController();
+
+try {
+    $result = $proformaInvoicesController->createProformaInvoice($subscriptionId);
+    echo 'ProformaInvoice:';
+    var_dump($result);
+} catch (ErrorListResponseException $exp) {
+    echo 'Caught ErrorListResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Errors
@@ -197,7 +306,7 @@ function listProformaInvoices(array $options): ListProformaInvoicesResponse
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription. |
 | `startDate` | `?string` | Query, Optional | The beginning date range for the invoice's Due Date, in the YYYY-MM-DD format. |
 | `endDate` | `?string` | Query, Optional | The ending date range for the invoice's Due Date, in the YYYY-MM-DD format. |
 | `status` | [`?string(ProformaInvoiceStatus)`](../../doc/models/proforma-invoice-status.md) | Query, Optional | The current status of the invoice.  Allowed Values: draft, open, paid, pending, voided |
@@ -231,7 +340,15 @@ $collect = [
     'customFields' => false
 ];
 
-$result = $proformaInvoicesController->listProformaInvoices($collect);
+$proformaInvoicesController = $client->getProformaInvoicesController();
+
+try {
+    $result = $proformaInvoicesController->listProformaInvoices($collect);
+    echo 'ListProformaInvoicesResponse:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 
@@ -267,7 +384,17 @@ function voidProformaInvoice(string $proformaInvoiceUid, ?VoidInvoiceRequest $bo
 ```php
 $proformaInvoiceUid = 'proforma_invoice_uid4';
 
-$result = $proformaInvoicesController->voidProformaInvoice($proformaInvoiceUid);
+$proformaInvoicesController = $client->getProformaInvoicesController();
+
+try {
+    $result = $proformaInvoicesController->voidProformaInvoice($proformaInvoiceUid);
+    echo 'ProformaInvoice:';
+    var_dump($result);
+} catch (ErrorListResponseException $exp) {
+    echo 'Caught ErrorListResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Errors
@@ -296,7 +423,7 @@ function previewProformaInvoice(int $subscriptionId): ProformaInvoice
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription. |
 
 ## Response Type
 
@@ -307,7 +434,17 @@ function previewProformaInvoice(int $subscriptionId): ProformaInvoice
 ```php
 $subscriptionId = 222;
 
-$result = $proformaInvoicesController->previewProformaInvoice($subscriptionId);
+$proformaInvoicesController = $client->getProformaInvoicesController();
+
+try {
+    $result = $proformaInvoicesController->previewProformaInvoice($subscriptionId);
+    echo 'ProformaInvoice:';
+    var_dump($result);
+} catch (ErrorListResponseException $exp) {
+    echo 'Caught ErrorListResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Errors
@@ -358,7 +495,19 @@ $body = CreateSubscriptionRequestBuilder::init(
         ->build()
 )->build();
 
-$result = $proformaInvoicesController->createSignupProformaInvoice($body);
+$proformaInvoicesController = $client->getProformaInvoicesController();
+
+try {
+    $result = $proformaInvoicesController->createSignupProformaInvoice($body);
+    echo 'ProformaInvoice:';
+    var_dump($result);
+} catch (ProformaBadRequestErrorResponseException $exp) {
+    echo 'Caught ProformaBadRequestErrorResponseException:', $exp;
+} catch (ErrorArrayMapResponseException $exp) {
+    echo 'Caught ErrorArrayMapResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Errors
@@ -413,10 +562,22 @@ $body = CreateSubscriptionRequestBuilder::init(
         ->build()
 )->build();
 
-$result = $proformaInvoicesController->previewSignupProformaInvoice(
-    null,
-    $body
-);
+$proformaInvoicesController = $client->getProformaInvoicesController();
+
+try {
+    $result = $proformaInvoicesController->previewSignupProformaInvoice(
+        null,
+        $body
+    );
+    echo 'SignupProformaPreviewResponse:';
+    var_dump($result);
+} catch (ProformaBadRequestErrorResponseException $exp) {
+    echo 'Caught ProformaBadRequestErrorResponseException:', $exp;
+} catch (ErrorArrayMapResponseException $exp) {
+    echo 'Caught ErrorArrayMapResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Errors

@@ -45,6 +45,7 @@
 | `payments` | [`?(ProformaInvoicePayment[])`](../../doc/models/proforma-invoice-payment.md) | Optional | - | getPayments(): ?array | setPayments(?array payments): void |
 | `customFields` | [`?(InvoiceCustomField[])`](../../doc/models/invoice-custom-field.md) | Optional | - | getCustomFields(): ?array | setCustomFields(?array customFields): void |
 | `publicUrl` | `?string` | Optional | - | getPublicUrl(): ?string | setPublicUrl(?string publicUrl): void |
+| `availableActions` | [`?AvailableActions`](../../doc/models/available-actions.md) | Optional | - | getAvailableActions(): ?AvailableActions | setAvailableActions(?AvailableActions availableActions): void |
 
 ## Example (as JSON)
 

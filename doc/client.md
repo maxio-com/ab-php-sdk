@@ -6,7 +6,7 @@ The following parameters are configurable for the API Client:
 | Parameter | Type | Description |
 |  --- | --- | --- |
 | site | `string` | The subdomain for your Advanced Billing site.<br>*Default*: `'subdomain'` |
-| environment | `Environment` | The API environment. <br> **Default: `Environment.US`** |
+| environment | [`Environment`](../README.md#environments) | The API environment. <br> **Default: `Environment.US`** |
 | timeout | `int` | Timeout for API calls in seconds.<br>*Default*: `120` |
 | enableRetries | `bool` | Whether to enable retries and backoff feature.<br>*Default*: `false` |
 | numberOfRetries | `int` | The number of retries to make.<br>*Default*: `0` |
@@ -76,6 +76,7 @@ The gateway for the SDK. This class acts as a factory for the Controllers and al
 | getSubscriptionInvoiceAccountController() | Gets SubscriptionInvoiceAccountController |
 | getSubscriptionNotesController() | Gets SubscriptionNotesController |
 | getSubscriptionProductsController() | Gets SubscriptionProductsController |
+| getSubscriptionRenewalsController() | Gets SubscriptionRenewalsController |
 | getSubscriptionStatusController() | Gets SubscriptionStatusController |
 | getWebhooksController() | Gets WebhooksController |
 

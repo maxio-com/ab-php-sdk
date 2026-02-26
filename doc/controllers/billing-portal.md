@@ -54,7 +54,17 @@ function enableBillingPortalForCustomer(int $customerId, ?int $autoInvite = null
 ```php
 $customerId = 150;
 
-$result = $billingPortalController->enableBillingPortalForCustomer($customerId);
+$billingPortalController = $client->getBillingPortalController();
+
+try {
+    $result = $billingPortalController->enableBillingPortalForCustomer($customerId);
+    echo 'CustomerResponse:';
+    var_dump($result);
+} catch (ErrorListResponseException $exp) {
+    echo 'Caught ErrorListResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Errors
@@ -95,7 +105,19 @@ function readBillingPortalLink(int $customerId): PortalManagementLink
 ```php
 $customerId = 150;
 
-$result = $billingPortalController->readBillingPortalLink($customerId);
+$billingPortalController = $client->getBillingPortalController();
+
+try {
+    $result = $billingPortalController->readBillingPortalLink($customerId);
+    echo 'PortalManagementLink:';
+    var_dump($result);
+} catch (ErrorListResponseException $exp) {
+    echo 'Caught ErrorListResponseException:', $exp;
+} catch (TooManyManagementLinkRequestsErrorException $exp) {
+    echo 'Caught TooManyManagementLinkRequestsErrorException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -154,7 +176,17 @@ function resendBillingPortalInvitation(int $customerId): ResentInvitation
 ```php
 $customerId = 150;
 
-$result = $billingPortalController->resendBillingPortalInvitation($customerId);
+$billingPortalController = $client->getBillingPortalController();
+
+try {
+    $result = $billingPortalController->resendBillingPortalInvitation($customerId);
+    echo 'ResentInvitation:';
+    var_dump($result);
+} catch (ErrorListResponseException $exp) {
+    echo 'Caught ErrorListResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -205,7 +237,15 @@ function revokeBillingPortalAccess(int $customerId): RevokedInvitation
 ```php
 $customerId = 150;
 
-$result = $billingPortalController->revokeBillingPortalAccess($customerId);
+$billingPortalController = $client->getBillingPortalController();
+
+try {
+    $result = $billingPortalController->revokeBillingPortalAccess($customerId);
+    echo 'RevokedInvitation:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*

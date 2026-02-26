@@ -131,8 +131,8 @@ class ReactivateSubscriptionRequest implements \JsonSerializable
 
     /**
      * Returns Use Credits and Prepayments.
-     * If true is sent, Chargify will use service credits and prepayments upon reactivation. If false is
-     * sent, the service credits and prepayments will be ignored.
+     * If true is sent, Advanced Billing will use service credits and prepayments upon reactivation. If
+     * false is sent, the service credits and prepayments will be ignored.
      */
     public function getUseCreditsAndPrepayments(): ?bool
     {
@@ -141,8 +141,8 @@ class ReactivateSubscriptionRequest implements \JsonSerializable
 
     /**
      * Sets Use Credits and Prepayments.
-     * If true is sent, Chargify will use service credits and prepayments upon reactivation. If false is
-     * sent, the service credits and prepayments will be ignored.
+     * If true is sent, Advanced Billing will use service credits and prepayments upon reactivation. If
+     * false is sent, the service credits and prepayments will be ignored.
      *
      * @maps use_credits_and_prepayments
      */
@@ -153,9 +153,10 @@ class ReactivateSubscriptionRequest implements \JsonSerializable
 
     /**
      * Returns Resume.
-     * If `true`, Chargify will attempt to resume the subscription's billing period. if not resumable, the
-     * subscription will be reactivated with a new billing period. If `false`: Chargify will only attempt
-     * to reactivate the subscription.
+     * If `true`, Advanced Billing will attempt to resume the subscription's billing period. If not
+     * resumable, the subscription will be reactivated with a new billing period. If `false` or omitted,
+     * Advanced Billing will only attempt to reactivate the subscription with a new billing period,
+     * regardless of whether or not the subscription is resumable.
      *
      * @return bool|ResumeOptions|null
      */
@@ -166,9 +167,10 @@ class ReactivateSubscriptionRequest implements \JsonSerializable
 
     /**
      * Sets Resume.
-     * If `true`, Chargify will attempt to resume the subscription's billing period. if not resumable, the
-     * subscription will be reactivated with a new billing period. If `false`: Chargify will only attempt
-     * to reactivate the subscription.
+     * If `true`, Advanced Billing will attempt to resume the subscription's billing period. If not
+     * resumable, the subscription will be reactivated with a new billing period. If `false` or omitted,
+     * Advanced Billing will only attempt to reactivate the subscription with a new billing period,
+     * regardless of whether or not the subscription is resumable.
      *
      * @maps resume
      * @mapsBy anyOf(oneOf(bool,ResumeOptions),null)

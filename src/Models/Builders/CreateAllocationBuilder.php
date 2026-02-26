@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace AdvancedBillingLib\Models\Builders;
 
 use AdvancedBillingLib\Models\BillingSchedule;
+use AdvancedBillingLib\Models\ComponentCustomPrice;
 use AdvancedBillingLib\Models\CreateAllocation;
 use Core\Utils\CoreHelper;
 
@@ -39,6 +40,39 @@ class CreateAllocationBuilder
     public static function init(float $quantity): self
     {
         return new self(new CreateAllocation($quantity));
+    }
+
+    /**
+     * Sets decimal quantity field.
+     *
+     * @param string|null $value
+     */
+    public function decimalQuantity(?string $value): self
+    {
+        $this->instance->setDecimalQuantity($value);
+        return $this;
+    }
+
+    /**
+     * Sets previous quantity field.
+     *
+     * @param float|null $value
+     */
+    public function previousQuantity(?float $value): self
+    {
+        $this->instance->setPreviousQuantity($value);
+        return $this;
+    }
+
+    /**
+     * Sets decimal previous quantity field.
+     *
+     * @param string|null $value
+     */
+    public function decimalPreviousQuantity(?string $value): self
+    {
+        $this->instance->setDecimalPreviousQuantity($value);
+        return $this;
     }
 
     /**
@@ -86,17 +120,6 @@ class CreateAllocationBuilder
     }
 
     /**
-     * Sets accrue charge field.
-     *
-     * @param bool|null $value
-     */
-    public function accrueCharge(?bool $value): self
-    {
-        $this->instance->setAccrueCharge($value);
-        return $this;
-    }
-
-    /**
      * Sets downgrade credit field.
      *
      * @param string|null $value
@@ -133,6 +156,17 @@ class CreateAllocationBuilder
     public function unsetUpgradeCharge(): self
     {
         $this->instance->unsetUpgradeCharge();
+        return $this;
+    }
+
+    /**
+     * Sets accrue charge field.
+     *
+     * @param bool|null $value
+     */
+    public function accrueCharge(?bool $value): self
+    {
+        $this->instance->setAccrueCharge($value);
         return $this;
     }
 
@@ -175,6 +209,17 @@ class CreateAllocationBuilder
     public function billingSchedule(?BillingSchedule $value): self
     {
         $this->instance->setBillingSchedule($value);
+        return $this;
+    }
+
+    /**
+     * Sets custom price field.
+     *
+     * @param ComponentCustomPrice|null $value
+     */
+    public function customPrice(?ComponentCustomPrice $value): self
+    {
+        $this->instance->setCustomPrice($value);
         return $this;
     }
 

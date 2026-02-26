@@ -1484,7 +1484,7 @@ class Subscription implements \JsonSerializable
 
     /**
      * Returns Reason Code.
-     * If the subscription is canceled, this is their churn code.
+     * The churn reason code associated to a cancelled subscription.
      */
     public function getReasonCode(): ?string
     {
@@ -1496,7 +1496,7 @@ class Subscription implements \JsonSerializable
 
     /**
      * Sets Reason Code.
-     * If the subscription is canceled, this is their churn code.
+     * The churn reason code associated to a cancelled subscription.
      *
      * @maps reason_code
      */
@@ -1507,7 +1507,7 @@ class Subscription implements \JsonSerializable
 
     /**
      * Unsets Reason Code.
-     * If the subscription is canceled, this is their churn code.
+     * The churn reason code associated to a cancelled subscription.
      */
     public function unsetReasonCode(): void
     {
@@ -1813,7 +1813,7 @@ class Subscription implements \JsonSerializable
 
     /**
      * Returns Reference.
-     * The reference value (provided by your app) for the subscription itelf.
+     * The reference value (provided by your app) for the subscription istelf.
      */
     public function getReference(): ?string
     {
@@ -1825,7 +1825,7 @@ class Subscription implements \JsonSerializable
 
     /**
      * Sets Reference.
-     * The reference value (provided by your app) for the subscription itelf.
+     * The reference value (provided by your app) for the subscription istelf.
      *
      * @maps reference
      */
@@ -1836,7 +1836,7 @@ class Subscription implements \JsonSerializable
 
     /**
      * Unsets Reference.
-     * The reference value (provided by your app) for the subscription itelf.
+     * The reference value (provided by your app) for the subscription istelf.
      */
     public function unsetReference(): void
     {

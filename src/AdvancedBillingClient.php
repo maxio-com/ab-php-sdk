@@ -41,6 +41,7 @@ use AdvancedBillingLib\Controllers\SubscriptionGroupStatusController;
 use AdvancedBillingLib\Controllers\SubscriptionInvoiceAccountController;
 use AdvancedBillingLib\Controllers\SubscriptionNotesController;
 use AdvancedBillingLib\Controllers\SubscriptionProductsController;
+use AdvancedBillingLib\Controllers\SubscriptionRenewalsController;
 use AdvancedBillingLib\Controllers\SubscriptionsController;
 use AdvancedBillingLib\Controllers\SubscriptionStatusController;
 use AdvancedBillingLib\Controllers\WebhooksController;
@@ -115,6 +116,8 @@ class AdvancedBillingClient implements ConfigurationInterface
 
     private $subscriptionProducts;
 
+    private $subscriptionRenewals;
+
     private $subscriptionStatus;
 
     private $webhooks;
@@ -144,7 +147,7 @@ class AdvancedBillingClient implements ConfigurationInterface
             ->converter(new CompatibilityConverter())
             ->jsonHelper(ApiHelper::getJsonHelper())
             ->apiCallback($this->config['httpCallback'] ?? null)
-            ->userAgent('AB SDK PHP:8.0.0 on OS {os-info}')
+            ->userAgent('AB SDK PHP:9.0.0 on OS {os-info}')
             ->globalConfig($this->getGlobalConfiguration())
             ->globalErrors($this->getGlobalErrors())
             ->serverUrls(self::ENVIRONMENT_MAP[$this->getEnvironment()], Server::PRODUCTION)
@@ -627,6 +630,17 @@ class AdvancedBillingClient implements ConfigurationInterface
             $this->subscriptionProducts = new SubscriptionProductsController($this->client);
         }
         return $this->subscriptionProducts;
+    }
+
+    /**
+     * Returns Subscription Renewals Controller
+     */
+    public function getSubscriptionRenewalsController(): SubscriptionRenewalsController
+    {
+        if ($this->subscriptionRenewals == null) {
+            $this->subscriptionRenewals = new SubscriptionRenewalsController($this->client);
+        }
+        return $this->subscriptionRenewals;
     }
 
     /**

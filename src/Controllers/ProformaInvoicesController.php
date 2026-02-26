@@ -16,6 +16,7 @@ use AdvancedBillingLib\Exceptions\ErrorListResponseException;
 use AdvancedBillingLib\Exceptions\ProformaBadRequestErrorResponseException;
 use AdvancedBillingLib\Models\CreateSignupProformaPreviewInclude;
 use AdvancedBillingLib\Models\CreateSubscriptionRequest;
+use AdvancedBillingLib\Models\DeliverProformaInvoiceRequest;
 use AdvancedBillingLib\Models\Direction;
 use AdvancedBillingLib\Models\ListProformaInvoicesResponse;
 use AdvancedBillingLib\Models\ProformaInvoice;
@@ -135,6 +136,49 @@ class ProformaInvoicesController extends BaseController
     }
 
     /**
+     * Allows for proforma invoices to be programmatically delivered via email. Supports email
+     * delivery to direct recipients, carbon-copy (cc) recipients, and blind carbon-copy (bcc) recipients.
+     *
+     * If `recipient_emails` is omitted, the system will fall back to the primary recipient derived from
+     * the invoice or
+     * subscription. At least one recipient must be present, either via the request body or via this
+     * default behavior, so an
+     * empty body may still succeed when defaults are available.
+     *
+     * @param string $proformaInvoiceUid The uid of the proforma invoice
+     * @param DeliverProformaInvoiceRequest|null $body
+     *
+     * @return ProformaInvoice Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function deliverProformaInvoice(
+        string $proformaInvoiceUid,
+        ?DeliverProformaInvoiceRequest $body = null
+    ): ProformaInvoice {
+        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/proforma_invoices/{proforma_invoice_uid}.json')
+            ->auth('BasicAuth')
+            ->parameters(
+                TemplateParam::init('proforma_invoice_uid', $proformaInvoiceUid)->required(),
+                HeaderParam::init('Content-Type', 'application/json'),
+                BodyParam::init($body)
+            );
+
+        $_resHandler = $this->responseHandler()
+            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
+            ->throwErrorOn(
+                '422',
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
+            )
+            ->type(ProformaInvoice::class);
+
+        return $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
      * This endpoint will create a proforma invoice and return it as a response. If the information becomes
      * outdated, simply void the old proforma invoice and generate a new one.
      *
@@ -146,7 +190,7 @@ class ProformaInvoicesController extends BaseController
      * Proforma invoices are only available on Relationship Invoicing sites. To create a proforma invoice,
      * the subscription must not be in a group, must not be prepaid, and must be in a live state.
      *
-     * @param int $subscriptionId The Chargify id of the subscription
+     * @param int $subscriptionId The Chargify id of the subscription.
      *
      * @return ProformaInvoice Response from the API call
      *
@@ -282,7 +326,7 @@ class ProformaInvoicesController extends BaseController
      * Alternatively, if you have some proforma invoices already, you may make a preview call to determine
      * whether any billing information for the subscription's upcoming renewal has changed.
      *
-     * @param int $subscriptionId The Chargify id of the subscription
+     * @param int $subscriptionId The Chargify id of the subscription.
      *
      * @return ProformaInvoice Response from the API call
      *

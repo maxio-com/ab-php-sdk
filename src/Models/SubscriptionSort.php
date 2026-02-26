@@ -28,13 +28,25 @@ class SubscriptionSort
 
     public const CREATED_AT = 'created_at';
 
+    public const TOTAL_PAYMENTS = 'total_payments';
+
+    public const ID = 'id';
+
+    public const OPEN_BALANCE = 'open_balance';
+
+    public const EXPIRES_AT = 'expires_at';
+
     private const _ALL_VALUES = [
         self::SIGNUP_DATE,
         self::PERIOD_START,
         self::PERIOD_END,
         self::NEXT_ASSESSMENT,
         self::UPDATED_AT,
-        self::CREATED_AT
+        self::CREATED_AT,
+        self::TOTAL_PAYMENTS,
+        self::ID,
+        self::OPEN_BALANCE,
+        self::EXPIRES_AT
     ];
 
     /**

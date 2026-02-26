@@ -61,7 +61,17 @@ $body = CreateReasonCodeRequestBuilder::init(
         ->build()
 )->build();
 
-$result = $reasonCodesController->createReasonCode($body);
+$reasonCodesController = $client->getReasonCodesController();
+
+try {
+    $result = $reasonCodesController->createReasonCode($body);
+    echo 'ReasonCodeResponse:';
+    var_dump($result);
+} catch (ErrorListResponseException $exp) {
+    echo 'Caught ErrorListResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Errors
@@ -98,7 +108,17 @@ $collect = [
     'perPage' => 50
 ];
 
-$result = $reasonCodesController->listReasonCodes($collect);
+$reasonCodesController = $client->getReasonCodesController();
+
+try {
+    $result = $reasonCodesController->listReasonCodes($collect);
+    echo 'ReasonCodeResponse[]:';
+    var_dump($result);
+} catch (ErrorListResponseException $exp) {
+    echo 'Caught ErrorListResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -171,7 +191,15 @@ function readReasonCode(int $reasonCodeId): ReasonCodeResponse
 ```php
 $reasonCodeId = 32;
 
-$result = $reasonCodesController->readReasonCode($reasonCodeId);
+$reasonCodesController = $client->getReasonCodesController();
+
+try {
+    $result = $reasonCodesController->readReasonCode($reasonCodeId);
+    echo 'ReasonCodeResponse:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Errors
@@ -205,7 +233,17 @@ function updateReasonCode(int $reasonCodeId, ?UpdateReasonCodeRequest $body = nu
 ```php
 $reasonCodeId = 32;
 
-$result = $reasonCodesController->updateReasonCode($reasonCodeId);
+$reasonCodesController = $client->getReasonCodesController();
+
+try {
+    $result = $reasonCodesController->updateReasonCode($reasonCodeId);
+    echo 'ReasonCodeResponse:';
+    var_dump($result);
+} catch (ErrorListResponseException $exp) {
+    echo 'Caught ErrorListResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Errors
@@ -239,7 +277,15 @@ function deleteReasonCode(int $reasonCodeId): OkResponse
 ```php
 $reasonCodeId = 32;
 
-$result = $reasonCodesController->deleteReasonCode($reasonCodeId);
+$reasonCodesController = $client->getReasonCodesController();
+
+try {
+    $result = $reasonCodesController->deleteReasonCode($reasonCodeId);
+    echo 'OkResponse:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*

@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models\Builders;
 
+use AdvancedBillingLib\Models\AvailableActions;
 use AdvancedBillingLib\Models\InvoiceAddress;
 use AdvancedBillingLib\Models\InvoiceCustomer;
 use AdvancedBillingLib\Models\InvoiceCustomField;
@@ -485,6 +486,17 @@ class ProformaInvoiceBuilder
     public function unsetPublicUrl(): self
     {
         $this->instance->unsetPublicUrl();
+        return $this;
+    }
+
+    /**
+     * Sets available actions field.
+     *
+     * @param AvailableActions|null $value
+     */
+    public function availableActions(?AvailableActions $value): self
+    {
+        $this->instance->setAvailableActions($value);
         return $this;
     }
 

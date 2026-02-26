@@ -37,7 +37,7 @@ class AdvanceInvoiceController extends BaseController
      * advance invoice before using this endpoint to generate it.
      *
      *
-     * @param int $subscriptionId The Chargify id of the subscription
+     * @param int $subscriptionId The Chargify id of the subscription.
      * @param IssueAdvanceInvoiceRequest|null $body
      *
      * @return Invoice Response from the API call
@@ -75,7 +75,7 @@ class AdvanceInvoiceController extends BaseController
      * Once an advance invoice has been generated for a subscription's upcoming renewal, it can be viewed
      * through this endpoint. There can only be one advance invoice per subscription per billing cycle.
      *
-     * @param int $subscriptionId The Chargify id of the subscription
+     * @param int $subscriptionId The Chargify id of the subscription.
      *
      * @return Invoice Response from the API call
      *
@@ -101,7 +101,7 @@ class AdvanceInvoiceController extends BaseController
      * cause any prepayments and credits that were applied to the invoice to be returned to the
      * subscription. For a full overview of the impact of voiding, [see our help docs]($m/Invoice).
      *
-     * @param int $subscriptionId The Chargify id of the subscription
+     * @param int $subscriptionId The Chargify id of the subscription.
      * @param VoidInvoiceRequest|null $body
      *
      * @return Invoice Response from the API call
