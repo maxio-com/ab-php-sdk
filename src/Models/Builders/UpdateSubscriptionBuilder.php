@@ -110,20 +110,11 @@ class UpdateSubscriptionBuilder
     /**
      * Sets snap day field.
      *
-     * @param int|string|null $value
+     * @param string|int|null $value
      */
     public function snapDay($value): self
     {
         $this->instance->setSnapDay($value);
-        return $this;
-    }
-
-    /**
-     * Unsets snap day field.
-     */
-    public function unsetSnapDay(): self
-    {
-        $this->instance->unsetSnapDay();
         return $this;
     }
 
