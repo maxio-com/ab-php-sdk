@@ -136,49 +136,6 @@ class ProformaInvoicesController extends BaseController
     }
 
     /**
-     * Allows for proforma invoices to be programmatically delivered via email. Supports email
-     * delivery to direct recipients, carbon-copy (cc) recipients, and blind carbon-copy (bcc) recipients.
-     *
-     * If `recipient_emails` is omitted, the system will fall back to the primary recipient derived from
-     * the invoice or
-     * subscription. At least one recipient must be present, either via the request body or via this
-     * default behavior, so an
-     * empty body may still succeed when defaults are available.
-     *
-     * @param string $proformaInvoiceUid The uid of the proforma invoice
-     * @param DeliverProformaInvoiceRequest|null $body
-     *
-     * @return ProformaInvoice Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function deliverProformaInvoice(
-        string $proformaInvoiceUid,
-        ?DeliverProformaInvoiceRequest $body = null
-    ): ProformaInvoice {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/proforma_invoices/{proforma_invoice_uid}.json')
-            ->auth('BasicAuth')
-            ->parameters(
-                TemplateParam::init('proforma_invoice_uid', $proformaInvoiceUid)->required(),
-                HeaderParam::init('Content-Type', 'application/json'),
-                BodyParam::init($body)
-            );
-
-        $_resHandler = $this->responseHandler()
-            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
-            ->throwErrorOn(
-                '422',
-                ErrorType::initWithErrorTemplate(
-                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
-                    ErrorListResponseException::class
-                )
-            )
-            ->type(ProformaInvoice::class);
-
-        return $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
      * This endpoint will create a proforma invoice and return it as a response. If the information becomes
      * outdated, simply void the old proforma invoice and generate a new one.
      *
@@ -257,6 +214,52 @@ class ProformaInvoicesController extends BaseController
             );
 
         $_resHandler = $this->responseHandler()->type(ListProformaInvoicesResponse::class);
+
+        return $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
+     * Allows for proforma invoices to be programmatically delivered via email. Supports email
+     * delivery to direct recipients, carbon-copy (cc) recipients, and blind carbon-copy (bcc) recipients.
+     *
+     * If `recipient_emails` is omitted, the system will fall back to the primary recipient derived from
+     * the invoice or
+     * subscription. At least one recipient must be present, either via the request body or via this
+     * default behavior, so an
+     * empty body may still succeed when defaults are available.
+     *
+     * @param string $proformaInvoiceUid The uid of the proforma invoice
+     * @param DeliverProformaInvoiceRequest|null $body
+     *
+     * @return ProformaInvoice Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function deliverProformaInvoice(
+        string $proformaInvoiceUid,
+        ?DeliverProformaInvoiceRequest $body = null
+    ): ProformaInvoice {
+        $_reqBuilder = $this->requestBuilder(
+            RequestMethod::POST,
+            '/proforma_invoices/{proforma_invoice_uid}/deliveries.json'
+        )
+            ->auth('BasicAuth')
+            ->parameters(
+                TemplateParam::init('proforma_invoice_uid', $proformaInvoiceUid)->required(),
+                HeaderParam::init('Content-Type', 'application/json'),
+                BodyParam::init($body)
+            );
+
+        $_resHandler = $this->responseHandler()
+            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
+            ->throwErrorOn(
+                '422',
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
+            )
+            ->type(ProformaInvoice::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
     }

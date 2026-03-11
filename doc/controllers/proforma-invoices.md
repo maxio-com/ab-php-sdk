@@ -13,9 +13,9 @@ $proformaInvoicesController = $client->getProformaInvoicesController();
 * [Create Consolidated Proforma Invoice](../../doc/controllers/proforma-invoices.md#create-consolidated-proforma-invoice)
 * [List Subscription Group Proforma Invoices](../../doc/controllers/proforma-invoices.md#list-subscription-group-proforma-invoices)
 * [Read Proforma Invoice](../../doc/controllers/proforma-invoices.md#read-proforma-invoice)
-* [Deliver Proforma Invoice](../../doc/controllers/proforma-invoices.md#deliver-proforma-invoice)
 * [Create Proforma Invoice](../../doc/controllers/proforma-invoices.md#create-proforma-invoice)
 * [List Proforma Invoices](../../doc/controllers/proforma-invoices.md#list-proforma-invoices)
+* [Deliver Proforma Invoice](../../doc/controllers/proforma-invoices.md#deliver-proforma-invoice)
 * [Void Proforma Invoice](../../doc/controllers/proforma-invoices.md#void-proforma-invoice)
 * [Preview Proforma Invoice](../../doc/controllers/proforma-invoices.md#preview-proforma-invoice)
 * [Create Signup Proforma Invoice](../../doc/controllers/proforma-invoices.md#create-signup-proforma-invoice)
@@ -171,80 +171,6 @@ try {
 | 404 | Not Found | `ApiException` |
 
 
-# Deliver Proforma Invoice
-
-Allows for proforma invoices to be programmatically delivered via email. Supports email
-delivery to direct recipients, carbon-copy (cc) recipients, and blind carbon-copy (bcc) recipients.
-
-If `recipient_emails` is omitted, the system will fall back to the primary recipient derived from the invoice or
-subscription. At least one recipient must be present, either via the request body or via this default behavior, so an
-empty body may still succeed when defaults are available.
-
-```php
-function deliverProformaInvoice(
-    string $proformaInvoiceUid,
-    ?DeliverProformaInvoiceRequest $body = null
-): ProformaInvoice
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `proformaInvoiceUid` | `string` | Template, Required | The uid of the proforma invoice |
-| `body` | [`?DeliverProformaInvoiceRequest`](../../doc/models/deliver-proforma-invoice-request.md) | Body, Optional | - |
-
-## Response Type
-
-[`ProformaInvoice`](../../doc/models/proforma-invoice.md)
-
-## Example Usage
-
-```php
-$proformaInvoiceUid = 'proforma_invoice_uid4';
-
-$body = DeliverProformaInvoiceRequestBuilder::init()
-    ->recipientEmails(
-        [
-            'user0@example.com'
-        ]
-    )
-    ->ccRecipientEmails(
-        [
-            'user1@example.com'
-        ]
-    )
-    ->bccRecipientEmails(
-        [
-            'user2@example.com'
-        ]
-    )
-    ->build();
-
-$proformaInvoicesController = $client->getProformaInvoicesController();
-
-try {
-    $result = $proformaInvoicesController->deliverProformaInvoice(
-        $proformaInvoiceUid,
-        $body
-    );
-    echo 'ProformaInvoice:';
-    var_dump($result);
-} catch (ErrorListResponseException $exp) {
-    echo 'Caught ErrorListResponseException:', $exp;
-} catch (ApiException $exp) {
-    echo 'Caught:', $exp;
-}
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 404 | Not Found | `ApiException` |
-| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
-
-
 # Create Proforma Invoice
 
 This endpoint will create a proforma invoice and return it as a response. If the information becomes outdated, simply void the old proforma invoice and generate a new one.
@@ -350,6 +276,80 @@ try {
     echo 'Caught:', $exp;
 }
 ```
+
+
+# Deliver Proforma Invoice
+
+Allows for proforma invoices to be programmatically delivered via email. Supports email
+delivery to direct recipients, carbon-copy (cc) recipients, and blind carbon-copy (bcc) recipients.
+
+If `recipient_emails` is omitted, the system will fall back to the primary recipient derived from the invoice or
+subscription. At least one recipient must be present, either via the request body or via this default behavior, so an
+empty body may still succeed when defaults are available.
+
+```php
+function deliverProformaInvoice(
+    string $proformaInvoiceUid,
+    ?DeliverProformaInvoiceRequest $body = null
+): ProformaInvoice
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `proformaInvoiceUid` | `string` | Template, Required | The uid of the proforma invoice |
+| `body` | [`?DeliverProformaInvoiceRequest`](../../doc/models/deliver-proforma-invoice-request.md) | Body, Optional | - |
+
+## Response Type
+
+[`ProformaInvoice`](../../doc/models/proforma-invoice.md)
+
+## Example Usage
+
+```php
+$proformaInvoiceUid = 'proforma_invoice_uid4';
+
+$body = DeliverProformaInvoiceRequestBuilder::init()
+    ->recipientEmails(
+        [
+            'user0@example.com'
+        ]
+    )
+    ->ccRecipientEmails(
+        [
+            'user1@example.com'
+        ]
+    )
+    ->bccRecipientEmails(
+        [
+            'user2@example.com'
+        ]
+    )
+    ->build();
+
+$proformaInvoicesController = $client->getProformaInvoicesController();
+
+try {
+    $result = $proformaInvoicesController->deliverProformaInvoice(
+        $proformaInvoiceUid,
+        $body
+    );
+    echo 'ProformaInvoice:';
+    var_dump($result);
+} catch (ErrorListResponseException $exp) {
+    echo 'Caught ErrorListResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 404 | Not Found | `ApiException` |
+| 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
 
 
 # Void Proforma Invoice
