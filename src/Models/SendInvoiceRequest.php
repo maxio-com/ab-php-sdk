@@ -31,6 +31,11 @@ class SendInvoiceRequest implements \JsonSerializable
     private $bccRecipientEmails;
 
     /**
+     * @var string[]|null
+     */
+    private $attachmentUrls;
+
+    /**
      * Returns Recipient Emails.
      *
      * @return string[]|null
@@ -97,6 +102,30 @@ class SendInvoiceRequest implements \JsonSerializable
     }
 
     /**
+     * Returns Attachment Urls.
+     * Array of URLs to files to attach to the invoice email. Max 10 files, 10MB each.
+     *
+     * @return string[]|null
+     */
+    public function getAttachmentUrls(): ?array
+    {
+        return $this->attachmentUrls;
+    }
+
+    /**
+     * Sets Attachment Urls.
+     * Array of URLs to files to attach to the invoice email. Max 10 files, 10MB each.
+     *
+     * @maps attachment_urls
+     *
+     * @param string[]|null $attachmentUrls
+     */
+    public function setAttachmentUrls(?array $attachmentUrls): void
+    {
+        $this->attachmentUrls = $attachmentUrls;
+    }
+
+    /**
      * Converts the SendInvoiceRequest object to a human-readable string representation.
      *
      * @return string The string representation of the SendInvoiceRequest object.
@@ -109,6 +138,7 @@ class SendInvoiceRequest implements \JsonSerializable
                 'recipientEmails' => $this->recipientEmails,
                 'ccRecipientEmails' => $this->ccRecipientEmails,
                 'bccRecipientEmails' => $this->bccRecipientEmails,
+                'attachmentUrls' => $this->attachmentUrls,
                 'additionalProperties' => $this->additionalProperties
             ]
         );
@@ -162,6 +192,9 @@ class SendInvoiceRequest implements \JsonSerializable
         }
         if (isset($this->bccRecipientEmails)) {
             $json['bcc_recipient_emails'] = $this->bccRecipientEmails;
+        }
+        if (isset($this->attachmentUrls)) {
+            $json['attachment_urls']      = $this->attachmentUrls;
         }
         $json = array_merge($json, $this->additionalProperties);
 

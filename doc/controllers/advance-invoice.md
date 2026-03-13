@@ -30,7 +30,7 @@ function issueAdvanceInvoice(int $subscriptionId, ?IssueAdvanceInvoiceRequest $b
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription. |
 | `body` | [`?IssueAdvanceInvoiceRequest`](../../doc/models/issue-advance-invoice-request.md) | Body, Optional | - |
 
 ## Response Type
@@ -46,10 +46,20 @@ $body = IssueAdvanceInvoiceRequestBuilder::init()
     ->force(true)
     ->build();
 
-$result = $advanceInvoiceController->issueAdvanceInvoice(
-    $subscriptionId,
-    $body
-);
+$advanceInvoiceController = $client->getAdvanceInvoiceController();
+
+try {
+    $result = $advanceInvoiceController->issueAdvanceInvoice(
+        $subscriptionId,
+        $body
+    );
+    echo 'Invoice:';
+    var_dump($result);
+} catch (ErrorListResponseException $exp) {
+    echo 'Caught ErrorListResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Errors
@@ -72,7 +82,7 @@ function readAdvanceInvoice(int $subscriptionId): Invoice
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription. |
 
 ## Response Type
 
@@ -83,7 +93,15 @@ function readAdvanceInvoice(int $subscriptionId): Invoice
 ```php
 $subscriptionId = 222;
 
-$result = $advanceInvoiceController->readAdvanceInvoice($subscriptionId);
+$advanceInvoiceController = $client->getAdvanceInvoiceController();
+
+try {
+    $result = $advanceInvoiceController->readAdvanceInvoice($subscriptionId);
+    echo 'Invoice:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Errors
@@ -106,7 +124,7 @@ function voidAdvanceInvoice(int $subscriptionId, ?VoidInvoiceRequest $body = nul
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription. |
 | `body` | [`?VoidInvoiceRequest`](../../doc/models/void-invoice-request.md) | Body, Optional | - |
 
 ## Response Type
@@ -118,7 +136,15 @@ function voidAdvanceInvoice(int $subscriptionId, ?VoidInvoiceRequest $body = nul
 ```php
 $subscriptionId = 222;
 
-$result = $advanceInvoiceController->voidAdvanceInvoice($subscriptionId);
+$advanceInvoiceController = $client->getAdvanceInvoiceController();
+
+try {
+    $result = $advanceInvoiceController->voidAdvanceInvoice($subscriptionId);
+    echo 'Invoice:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Errors

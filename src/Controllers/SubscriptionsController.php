@@ -100,8 +100,8 @@ class SubscriptionsController extends BaseController
     }
 
     /**
-     * This method will return an array of subscriptions from a Site. Pay close attention to query string
-     * filters and pagination in order to control responses from the server.
+     * returns an array of subscriptions from a Site. Pay close attention to query string filters and
+     * pagination in order to control responses from the server.
      *
      * ## Search for a subscription
      *
@@ -257,7 +257,7 @@ class SubscriptionsController extends BaseController
      * `snap_day`will will reset to 'null on the next billing cycle. This is because  a product change is
      * instantanous and only affects the product associated with a subscription.
      *
-     * @param int $subscriptionId The Chargify id of the subscription
+     * @param int $subscriptionId The Chargify id of the subscription.
      * @param UpdateSubscriptionRequest|null $body
      *
      * @return SubscriptionResponse Response from the API call
@@ -290,14 +290,14 @@ class SubscriptionsController extends BaseController
     }
 
     /**
-     * Use this endpoint to find subscription details.
+     * Retrieves subscription details.
      *
      * ## Self-Service Page token
      *
      * Self-Service Page token for the subscription is not returned by default. If this information is
      * desired, the include[]=self_service_page_token parameter must be provided with the request.
      *
-     * @param int $subscriptionId The Chargify id of the subscription
+     * @param int $subscriptionId The Chargify id of the subscription.
      * @param string[]|null $mInclude Allows including additional data in the response. Use in
      *        query: `include[]=coupons&include[]=self_service_page_token`.
      *
@@ -356,7 +356,7 @@ class SubscriptionsController extends BaseController
      * If unpermitted parameters are sent, a 400 HTTP response is sent along with a string giving the
      * reason for the problem.
      *
-     * @param int $subscriptionId The Chargify id of the subscription
+     * @param int $subscriptionId The Chargify id of the subscription.
      * @param OverrideSubscriptionRequest|null $body Only these fields are available to be set.
      *
      * @return void Response from the API call
@@ -421,7 +421,7 @@ class SubscriptionsController extends BaseController
      *
      * The query params will be: `?ack={customer_id}&cascade[]=customer&cascade[]=payment_profile`
      *
-     * @param int $subscriptionId The Chargify id of the subscription
+     * @param int $subscriptionId The Chargify id of the subscription.
      * @param int $ack id of the customer.
      * @param string[]|null $cascade Options are "customer" or "payment_profile". Use in query:
      *        `cascade[]=customer&cascade[]=payment_profile`.
@@ -458,7 +458,7 @@ class SubscriptionsController extends BaseController
     /**
      * Use this endpoint to update a subscription's prepaid configuration.
      *
-     * @param int $subscriptionId The Chargify id of the subscription
+     * @param int $subscriptionId The Chargify id of the subscription.
      * @param UpsertPrepaidConfigurationRequest|null $body
      *
      * @return PrepaidConfigurationResponse Response from the API call
@@ -563,7 +563,7 @@ class SubscriptionsController extends BaseController
      * the request body parameters as described below. When passing in request body parameters, the list of
      * coupon codes will simply be added to any existing list of codes on the subscription.
      *
-     * @param int $subscriptionId The Chargify id of the subscription
+     * @param int $subscriptionId The Chargify id of the subscription.
      * @param string|null $code A code for the coupon that would be applied to a subscription
      * @param AddCouponsRequest|null $body
      *
@@ -608,7 +608,7 @@ class SubscriptionsController extends BaseController
      * documentation [here.](https://maxio.zendesk.com/hc/en-us/articles/24261259337101-Coupons-and-
      * Subscriptions#removing-a-coupon)
      *
-     * @param int $subscriptionId The Chargify id of the subscription
+     * @param int $subscriptionId The Chargify id of the subscription.
      * @param string|null $couponCode The coupon code
      *
      * @return string Response from the API call
@@ -696,7 +696,7 @@ class SubscriptionsController extends BaseController
      * the invoice back to the subscription.
      *
      *
-     * @param int $subscriptionId The Chargify id of the subscription
+     * @param int $subscriptionId The Chargify id of the subscription.
      * @param ActivateSubscriptionRequest|null $body
      *
      * @return SubscriptionResponse Response from the API call

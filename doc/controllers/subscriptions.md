@@ -82,7 +82,17 @@ $body = CreateSubscriptionRequestBuilder::init(
         ->build()
 )->build();
 
-$result = $subscriptionsController->createSubscription($body);
+$subscriptionsController = $client->getSubscriptionsController();
+
+try {
+    $result = $subscriptionsController->createSubscription($body);
+    echo 'SubscriptionResponse:';
+    var_dump($result);
+} catch (ErrorListResponseException $exp) {
+    echo 'Caught ErrorListResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -233,7 +243,7 @@ $result = $subscriptionsController->createSubscription($body);
 
 # List Subscriptions
 
-This method will return an array of subscriptions from a Site. Pay close attention to query string filters and pagination in order to control responses from the server.
+returns an array of subscriptions from a Site. Pay close attention to query string filters and pagination in order to control responses from the server.
 
 ## Search for a subscription
 
@@ -288,7 +298,15 @@ $collect = [
     ]
 ];
 
-$result = $subscriptionsController->listSubscriptions($collect);
+$subscriptionsController = $client->getSubscriptionsController();
+
+try {
+    $result = $subscriptionsController->listSubscriptions($collect);
+    echo 'SubscriptionResponse[]:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 
@@ -352,7 +370,7 @@ function updateSubscription(int $subscriptionId, ?UpdateSubscriptionRequest $bod
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription. |
 | `body` | [`?UpdateSubscriptionRequest`](../../doc/models/update-subscription-request.md) | Body, Optional | - |
 
 ## Response Type
@@ -371,10 +389,20 @@ $body = UpdateSubscriptionRequestBuilder::init(
         ->build()
 )->build();
 
-$result = $subscriptionsController->updateSubscription(
-    $subscriptionId,
-    $body
-);
+$subscriptionsController = $client->getSubscriptionsController();
+
+try {
+    $result = $subscriptionsController->updateSubscription(
+        $subscriptionId,
+        $body
+    );
+    echo 'SubscriptionResponse:';
+    var_dump($result);
+} catch (ErrorListResponseException $exp) {
+    echo 'Caught ErrorListResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -496,7 +524,7 @@ $result = $subscriptionsController->updateSubscription(
 
 # Read Subscription
 
-Use this endpoint to find subscription details.
+Retrieves subscription details.
 
 ## Self-Service Page token
 
@@ -510,7 +538,7 @@ function readSubscription(int $subscriptionId, ?array $mInclude = null): Subscri
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription. |
 | `mInclude` | [`?(string(SubscriptionInclude)[])`](../../doc/models/subscription-include.md) | Query, Optional | Allows including additional data in the response. Use in query: `include[]=coupons&include[]=self_service_page_token`. |
 
 ## Response Type
@@ -527,10 +555,18 @@ $include = [
     SubscriptionInclude::SELF_SERVICE_PAGE_TOKEN
 ];
 
-$result = $subscriptionsController->readSubscription(
-    $subscriptionId,
-    $include
-);
+$subscriptionsController = $client->getSubscriptionsController();
+
+try {
+    $result = $subscriptionsController->readSubscription(
+        $subscriptionId,
+        $include
+    );
+    echo 'SubscriptionResponse:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -703,7 +739,7 @@ function overrideSubscription(int $subscriptionId, ?OverrideSubscriptionRequest 
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription. |
 | `body` | [`?OverrideSubscriptionRequest`](../../doc/models/override-subscription-request.md) | Body, Optional | Only these fields are available to be set. |
 
 ## Response Type
@@ -724,10 +760,18 @@ $body = OverrideSubscriptionRequestBuilder::init(
         ->build()
 )->build();
 
-$subscriptionsController->overrideSubscription(
-    $subscriptionId,
-    $body
-);
+$subscriptionsController = $client->getSubscriptionsController();
+
+try {
+    $subscriptionsController->overrideSubscription(
+        $subscriptionId,
+        $body
+    );
+} catch (SingleErrorResponseException $exp) {
+    echo 'Caught SingleErrorResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Errors
@@ -758,7 +802,15 @@ function findSubscription(?string $reference = null): SubscriptionResponse
 ## Example Usage
 
 ```php
-$result = $subscriptionsController->findSubscription();
+$subscriptionsController = $client->getSubscriptionsController();
+
+try {
+    $result = $subscriptionsController->findSubscription();
+    echo 'SubscriptionResponse:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Errors
@@ -788,7 +840,7 @@ function purgeSubscription(int $subscriptionId, int $ack, ?array $cascade = null
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription. |
 | `ack` | `int` | Query, Required | id of the customer. |
 | `cascade` | [`?(string(SubscriptionPurgeType)[])`](../../doc/models/subscription-purge-type.md) | Query, Optional | Options are "customer" or "payment_profile".<br>Use in query: `cascade[]=customer&cascade[]=payment_profile`. |
 
@@ -808,11 +860,21 @@ $cascade = [
     SubscriptionPurgeType::PAYMENT_PROFILE
 ];
 
-$result = $subscriptionsController->purgeSubscription(
-    $subscriptionId,
-    $ack,
-    $cascade
-);
+$subscriptionsController = $client->getSubscriptionsController();
+
+try {
+    $result = $subscriptionsController->purgeSubscription(
+        $subscriptionId,
+        $ack,
+        $cascade
+    );
+    echo 'SubscriptionResponse:';
+    var_dump($result);
+} catch (SubscriptionResponseErrorException $exp) {
+    echo 'Caught SubscriptionResponseErrorException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Errors
@@ -837,7 +899,7 @@ function updatePrepaidSubscriptionConfiguration(
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription. |
 | `body` | [`?UpsertPrepaidConfigurationRequest`](../../doc/models/upsert-prepaid-configuration-request.md) | Body, Optional | - |
 
 ## Response Type
@@ -858,10 +920,18 @@ $body = UpsertPrepaidConfigurationRequestBuilder::init(
         ->build()
 )->build();
 
-$result = $subscriptionsController->updatePrepaidSubscriptionConfiguration(
-    $subscriptionId,
-    $body
-);
+$subscriptionsController = $client->getSubscriptionsController();
+
+try {
+    $result = $subscriptionsController->updatePrepaidSubscriptionConfiguration(
+        $subscriptionId,
+        $body
+    );
+    echo 'PrepaidConfigurationResponse:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -936,7 +1006,15 @@ $body = CreateSubscriptionRequestBuilder::init(
         ->build()
 )->build();
 
-$result = $subscriptionsController->previewSubscription($body);
+$subscriptionsController = $client->getSubscriptionsController();
+
+try {
+    $result = $subscriptionsController->previewSubscription($body);
+    echo 'SubscriptionPreviewResponse:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -1082,7 +1160,7 @@ function applyCouponsToSubscription(
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription. |
 | `code` | `?string` | Query, Optional | A code for the coupon that would be applied to a subscription |
 | `body` | [`?AddCouponsRequest`](../../doc/models/add-coupons-request.md) | Body, Optional | - |
 
@@ -1104,11 +1182,21 @@ $body = AddCouponsRequestBuilder::init()
     )
     ->build();
 
-$result = $subscriptionsController->applyCouponsToSubscription(
-    $subscriptionId,
-    null,
-    $body
-);
+$subscriptionsController = $client->getSubscriptionsController();
+
+try {
+    $result = $subscriptionsController->applyCouponsToSubscription(
+        $subscriptionId,
+        null,
+        $body
+    );
+    echo 'SubscriptionResponse:';
+    var_dump($result);
+} catch (SubscriptionAddCouponErrorException $exp) {
+    echo 'Caught SubscriptionAddCouponErrorException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -1282,7 +1370,7 @@ function removeCouponFromSubscription(int $subscriptionId, ?string $couponCode =
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription. |
 | `couponCode` | `?string` | Query, Optional | The coupon code |
 
 ## Response Type
@@ -1294,7 +1382,17 @@ function removeCouponFromSubscription(int $subscriptionId, ?string $couponCode =
 ```php
 $subscriptionId = 222;
 
-$result = $subscriptionsController->removeCouponFromSubscription($subscriptionId);
+$subscriptionsController = $client->getSubscriptionsController();
+
+try {
+    $result = $subscriptionsController->removeCouponFromSubscription($subscriptionId);
+    echo 'string:';
+    var_dump($result);
+} catch (SubscriptionRemoveCouponErrorsException $exp) {
+    echo 'Caught SubscriptionRemoveCouponErrorsException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response
@@ -1367,7 +1465,7 @@ function activateSubscription(
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription. |
 | `body` | [`?ActivateSubscriptionRequest`](../../doc/models/activate-subscription-request.md) | Body, Optional | - |
 
 ## Response Type
@@ -1379,7 +1477,17 @@ function activateSubscription(
 ```php
 $subscriptionId = 222;
 
-$result = $subscriptionsController->activateSubscription($subscriptionId);
+$subscriptionsController = $client->getSubscriptionsController();
+
+try {
+    $result = $subscriptionsController->activateSubscription($subscriptionId);
+    echo 'SubscriptionResponse:';
+    var_dump($result);
+} catch (ErrorArrayMapResponseException $exp) {
+    echo 'Caught ErrorArrayMapResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Errors

@@ -31,7 +31,7 @@ function readAccountBalances(int $subscriptionId): AccountBalances
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription. |
 
 ## Response Type
 
@@ -42,7 +42,15 @@ function readAccountBalances(int $subscriptionId): AccountBalances
 ```php
 $subscriptionId = 222;
 
-$result = $subscriptionInvoiceAccountController->readAccountBalances($subscriptionId);
+$subscriptionInvoiceAccountController = $client->getSubscriptionInvoiceAccountController();
+
+try {
+    $result = $subscriptionInvoiceAccountController->readAccountBalances($subscriptionId);
+    echo 'AccountBalances:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 
@@ -64,7 +72,7 @@ function createPrepayment(int $subscriptionId, ?CreatePrepaymentRequest $body = 
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription. |
 | `body` | [`?CreatePrepaymentRequest`](../../doc/models/create-prepayment-request.md) | Body, Optional | - |
 
 ## Response Type
@@ -85,10 +93,18 @@ $body = CreatePrepaymentRequestBuilder::init(
     )->build()
 )->build();
 
-$result = $subscriptionInvoiceAccountController->createPrepayment(
-    $subscriptionId,
-    $body
-);
+$subscriptionInvoiceAccountController = $client->getSubscriptionInvoiceAccountController();
+
+try {
+    $result = $subscriptionInvoiceAccountController->createPrepayment(
+        $subscriptionId,
+        $body
+    );
+    echo 'CreatePrepaymentResponse:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -126,7 +142,7 @@ function listPrepayments(array $options): PrepaymentsResponse
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription. |
 | `page` | `?int` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`.<br><br>**Default**: `1`<br><br>**Constraints**: `>= 1` |
 | `perPage` | `?int` | Query, Optional | This parameter indicates how many records to fetch in each request. Default value is 20. The maximum allowed values is 200; any per_page value over 200 will be changed to 200.<br>Use in query `per_page=200`.<br><br>**Default**: `20`<br><br>**Constraints**: `<= 200` |
 | `filter` | [`?ListPrepaymentsFilter`](../../doc/models/list-prepayments-filter.md) | Query, Optional | Filter to use for List Prepayments operations |
@@ -149,7 +165,15 @@ $collect = [
         ->build()
 ];
 
-$result = $subscriptionInvoiceAccountController->listPrepayments($collect);
+$subscriptionInvoiceAccountController = $client->getSubscriptionInvoiceAccountController();
+
+try {
+    $result = $subscriptionInvoiceAccountController->listPrepayments($collect);
+    echo 'PrepaymentsResponse:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -192,7 +216,7 @@ function issueServiceCredit(int $subscriptionId, ?IssueServiceCreditRequest $bod
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription. |
 | `body` | [`?IssueServiceCreditRequest`](../../doc/models/issue-service-credit-request.md) | Body, Optional | - |
 
 ## Response Type
@@ -210,10 +234,18 @@ $body = IssueServiceCreditRequestBuilder::init(
     )->build()
 )->build();
 
-$result = $subscriptionInvoiceAccountController->issueServiceCredit(
-    $subscriptionId,
-    $body
-);
+$subscriptionInvoiceAccountController = $client->getSubscriptionInvoiceAccountController();
+
+try {
+    $result = $subscriptionInvoiceAccountController->issueServiceCredit(
+        $subscriptionId,
+        $body
+    );
+    echo 'ServiceCredit:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -247,7 +279,7 @@ function deductServiceCredit(int $subscriptionId, ?DeductServiceCreditRequest $b
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription. |
 | `body` | [`?DeductServiceCreditRequest`](../../doc/models/deduct-service-credit-request.md) | Body, Optional | - |
 
 ## Response Type
@@ -267,10 +299,16 @@ $body = DeductServiceCreditRequestBuilder::init(
         ->build()
 )->build();
 
-$subscriptionInvoiceAccountController->deductServiceCredit(
-    $subscriptionId,
-    $body
-);
+$subscriptionInvoiceAccountController = $client->getSubscriptionInvoiceAccountController();
+
+try {
+    $subscriptionInvoiceAccountController->deductServiceCredit(
+        $subscriptionId,
+        $body
+    );
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Errors
@@ -297,7 +335,7 @@ function listServiceCredits(
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription. |
 | `page` | `?int` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`.<br><br>**Default**: `1`<br><br>**Constraints**: `>= 1` |
 | `perPage` | `?int` | Query, Optional | This parameter indicates how many records to fetch in each request. Default value is 20. The maximum allowed values is 200; any per_page value over 200 will be changed to 200.<br>Use in query `per_page=200`.<br><br>**Default**: `20`<br><br>**Constraints**: `<= 200` |
 | `direction` | [`?string(SortingDirection)`](../../doc/models/sorting-direction.md) | Query, Optional | Controls the order in which results are returned.<br>Use in query `direction=asc`. |
@@ -315,11 +353,21 @@ $page = 1;
 
 $perPage = 50;
 
-$result = $subscriptionInvoiceAccountController->listServiceCredits(
-    $subscriptionId,
-    $page,
-    $perPage
-);
+$subscriptionInvoiceAccountController = $client->getSubscriptionInvoiceAccountController();
+
+try {
+    $result = $subscriptionInvoiceAccountController->listServiceCredits(
+        $subscriptionId,
+        $page,
+        $perPage
+    );
+    echo 'ListServiceCreditsResponse:';
+    var_dump($result);
+} catch (ErrorListResponseException $exp) {
+    echo 'Caught ErrorListResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -377,7 +425,7 @@ function refundPrepayment(
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription. |
 | `prepaymentId` | `int` | Template, Required | id of prepayment |
 | `body` | [`?RefundPrepaymentRequest`](../../doc/models/refund-prepayment-request.md) | Body, Optional | - |
 
@@ -392,10 +440,20 @@ $subscriptionId = 222;
 
 $prepaymentId = 228;
 
-$result = $subscriptionInvoiceAccountController->refundPrepayment(
-    $subscriptionId,
-    $prepaymentId
-);
+$subscriptionInvoiceAccountController = $client->getSubscriptionInvoiceAccountController();
+
+try {
+    $result = $subscriptionInvoiceAccountController->refundPrepayment(
+        $subscriptionId,
+        $prepaymentId
+    );
+    echo 'PrepaymentResponse:';
+    var_dump($result);
+} catch (RefundPrepaymentBaseErrorsResponseException $exp) {
+    echo 'Caught RefundPrepaymentBaseErrorsResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Errors

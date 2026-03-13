@@ -15,7 +15,9 @@ Create or update custom pricing unique to the subscription. Used in place of `pr
 | `pricingScheme` | [`?string(PricingScheme)`](../../doc/models/pricing-scheme.md) | Optional | Omit for On/Off components | getPricingScheme(): ?string | setPricingScheme(?string pricingScheme): void |
 | `interval` | `?int` | Optional | The numerical interval. i.e. an interval of ‘30’ coupled with an interval_unit of day would mean this component price point would renew every 30 days. This property is only available for sites with Multifrequency enabled. | getInterval(): ?int | setInterval(?int interval): void |
 | `intervalUnit` | [`?string(IntervalUnit)`](../../doc/models/interval-unit.md) | Optional | A string representing the interval unit for this component price point, either month or day. This property is only available for sites with Multifrequency enabled. | getIntervalUnit(): ?string | setIntervalUnit(?string intervalUnit): void |
-| `prices` | [`Price[]`](../../doc/models/price.md) | Required | On/off components only need one price bracket starting at 1 | getPrices(): array | setPrices(array prices): void |
+| `listPricePointId` | `?int` | Optional | Optional id of the price point to use for list price calculations when<br>overriding the customer price. | getListPricePointId(): ?int | setListPricePointId(?int listPricePointId): void |
+| `useDefaultListPrice` | `?bool` | Optional | When true, list price calculations will continue to use the default price point even when a `custom_price` is supplied. | getUseDefaultListPrice(): ?bool | setUseDefaultListPrice(?bool useDefaultListPrice): void |
+| `prices` | [`Price[]`](../../doc/models/price.md) | Required | On/off components only need one price bracket starting at 1. | getPrices(): array | setPrices(array prices): void |
 | `renewPrepaidAllocation` | `?bool` | Optional | Applicable only to prepaid usage components. Controls whether the allocated quantity renews each period. | getRenewPrepaidAllocation(): ?bool | setRenewPrepaidAllocation(?bool renewPrepaidAllocation): void |
 | `rolloverPrepaidRemainder` | `?bool` | Optional | Applicable only to prepaid usage components. Controls whether remaining units roll over to the next period. | getRolloverPrepaidRemainder(): ?bool | setRolloverPrepaidRemainder(?bool rolloverPrepaidRemainder): void |
 | `expirationInterval` | `?int` | Optional | Applicable only when rollover is enabled. Number of `expiration_interval_unit`s after which rollover amounts expire. | getExpirationInterval(): ?int | setExpirationInterval(?int expirationInterval): void |
@@ -36,7 +38,7 @@ Create or update custom pricing unique to the subscription. Used in place of `pr
   "pricing_scheme": "stairstep",
   "interval": 162,
   "interval_unit": "day",
-  "renew_prepaid_allocation": false
+  "list_price_point_id": 146
 }
 ```
 

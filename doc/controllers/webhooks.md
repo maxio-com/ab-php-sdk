@@ -50,7 +50,15 @@ $collect = [
     'perPage' => 50
 ];
 
-$result = $webhooksController->listWebhooks($collect);
+$webhooksController = $client->getWebhooksController();
+
+try {
+    $result = $webhooksController->listWebhooks($collect);
+    echo 'WebhookResponse[]:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -118,7 +126,15 @@ $body = EnableWebhooksRequestBuilder::init(
     true
 )->build();
 
-$result = $webhooksController->enableWebhooks($body);
+$webhooksController = $client->getWebhooksController();
+
+try {
+    $result = $webhooksController->enableWebhooks($body);
+    echo 'EnableWebhooksResponse:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -158,7 +174,15 @@ $body = ReplayWebhooksRequestBuilder::init(
     ]
 )->build();
 
-$result = $webhooksController->replayWebhooks($body);
+$webhooksController = $client->getWebhooksController();
+
+try {
+    $result = $webhooksController->replayWebhooks($body);
+    echo 'ReplayWebhooksResponse:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -202,7 +226,17 @@ $body = CreateOrUpdateEndpointRequestBuilder::init(
     )->build()
 )->build();
 
-$result = $webhooksController->createEndpoint($body);
+$webhooksController = $client->getWebhooksController();
+
+try {
+    $result = $webhooksController->createEndpoint($body);
+    echo 'EndpointResponse:';
+    var_dump($result);
+} catch (ErrorListResponseException $exp) {
+    echo 'Caught ErrorListResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -244,7 +278,15 @@ function listEndpoints(): array
 ## Example Usage
 
 ```php
-$result = $webhooksController->listEndpoints();
+$webhooksController = $client->getWebhooksController();
+
+try {
+    $result = $webhooksController->listEndpoints();
+    echo 'Endpoint[]:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -315,10 +357,20 @@ $body = CreateOrUpdateEndpointRequestBuilder::init(
     )->build()
 )->build();
 
-$result = $webhooksController->updateEndpoint(
-    $endpointId,
-    $body
-);
+$webhooksController = $client->getWebhooksController();
+
+try {
+    $result = $webhooksController->updateEndpoint(
+        $endpointId,
+        $body
+    );
+    echo 'EndpointResponse:';
+    var_dump($result);
+} catch (ErrorListResponseException $exp) {
+    echo 'Caught ErrorListResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Errors

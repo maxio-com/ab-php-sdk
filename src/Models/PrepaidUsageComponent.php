@@ -302,7 +302,6 @@ class PrepaidUsageComponent implements \JsonSerializable
      * Returns Upgrade Charge.
      * The type of credit to be created when upgrading/downgrading. Defaults to the component and then site
      * setting if one is not provided.
-     * Available values: `full`, `prorated`, `none`.
      */
     public function getUpgradeCharge(): ?string
     {
@@ -316,7 +315,6 @@ class PrepaidUsageComponent implements \JsonSerializable
      * Sets Upgrade Charge.
      * The type of credit to be created when upgrading/downgrading. Defaults to the component and then site
      * setting if one is not provided.
-     * Available values: `full`, `prorated`, `none`.
      *
      * @maps upgrade_charge
      * @factory \AdvancedBillingLib\Models\CreditType::checkValue
@@ -330,7 +328,6 @@ class PrepaidUsageComponent implements \JsonSerializable
      * Unsets Upgrade Charge.
      * The type of credit to be created when upgrading/downgrading. Defaults to the component and then site
      * setting if one is not provided.
-     * Available values: `full`, `prorated`, `none`.
      */
     public function unsetUpgradeCharge(): void
     {
@@ -341,7 +338,6 @@ class PrepaidUsageComponent implements \JsonSerializable
      * Returns Downgrade Credit.
      * The type of credit to be created when upgrading/downgrading. Defaults to the component and then site
      * setting if one is not provided.
-     * Available values: `full`, `prorated`, `none`.
      */
     public function getDowngradeCredit(): ?string
     {
@@ -355,7 +351,6 @@ class PrepaidUsageComponent implements \JsonSerializable
      * Sets Downgrade Credit.
      * The type of credit to be created when upgrading/downgrading. Defaults to the component and then site
      * setting if one is not provided.
-     * Available values: `full`, `prorated`, `none`.
      *
      * @maps downgrade_credit
      * @factory \AdvancedBillingLib\Models\CreditType::checkValue
@@ -369,7 +364,6 @@ class PrepaidUsageComponent implements \JsonSerializable
      * Unsets Downgrade Credit.
      * The type of credit to be created when upgrading/downgrading. Defaults to the component and then site
      * setting if one is not provided.
-     * Available values: `full`, `prorated`, `none`.
      */
     public function unsetDowngradeCredit(): void
     {

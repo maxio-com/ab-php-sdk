@@ -45,7 +45,15 @@ function readSite(): SiteResponse
 ## Example Usage
 
 ```php
-$result = $sitesController->readSite();
+$sitesController = $client->getSitesController();
+
+try {
+    $result = $sitesController->readSite();
+    echo 'SiteResponse:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -125,7 +133,13 @@ function clearSite(?string $cleanupScope = CleanupScope::ALL): void
 ```php
 $cleanupScope = CleanupScope::ALL;
 
-$sitesController->clearSite($cleanupScope);
+$sitesController = $client->getSitesController();
+
+try {
+    $sitesController->clearSite($cleanupScope);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 
@@ -156,7 +170,15 @@ $collect = [
     'perPage' => 50
 ];
 
-$result = $sitesController->listChargifyJsPublicKeys($collect);
+$sitesController = $client->getSitesController();
+
+try {
+    $result = $sitesController->listChargifyJsPublicKeys($collect);
+    echo 'ListPublicKeysResponse:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*

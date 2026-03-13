@@ -429,9 +429,9 @@ class SubscriptionBuilder
     /**
      * Sets snap day field.
      *
-     * @param int|string|null $value
+     * @param string|null $value
      */
-    public function snapDay($value): self
+    public function snapDay(?string $value): self
     {
         $this->instance->setSnapDay($value);
         return $this;

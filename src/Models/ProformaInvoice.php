@@ -197,6 +197,11 @@ class ProformaInvoice implements \JsonSerializable
     private $publicUrl = [];
 
     /**
+     * @var AvailableActions|null
+     */
+    private $availableActions;
+
+    /**
      * Returns Uid.
      */
     public function getUid(): ?string
@@ -966,6 +971,24 @@ class ProformaInvoice implements \JsonSerializable
     }
 
     /**
+     * Returns Available Actions.
+     */
+    public function getAvailableActions(): ?AvailableActions
+    {
+        return $this->availableActions;
+    }
+
+    /**
+     * Sets Available Actions.
+     *
+     * @maps available_actions
+     */
+    public function setAvailableActions(?AvailableActions $availableActions): void
+    {
+        $this->availableActions = $availableActions;
+    }
+
+    /**
      * Converts the ProformaInvoice object to a human-readable string representation.
      *
      * @return string The string representation of the ProformaInvoice object.
@@ -1011,6 +1034,7 @@ class ProformaInvoice implements \JsonSerializable
                 'payments' => $this->payments,
                 'customFields' => $this->customFields,
                 'publicUrl' => $this->getPublicUrl(),
+                'availableActions' => $this->availableActions,
                 'additionalProperties' => $this->additionalProperties
             ]
         );
@@ -1163,6 +1187,9 @@ class ProformaInvoice implements \JsonSerializable
         }
         if (!empty($this->publicUrl)) {
             $json['public_url']           = $this->publicUrl['value'];
+        }
+        if (isset($this->availableActions)) {
+            $json['available_actions']    = $this->availableActions;
         }
         $json = array_merge($json, $this->additionalProperties);
 

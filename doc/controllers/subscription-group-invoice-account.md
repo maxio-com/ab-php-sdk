@@ -43,7 +43,17 @@ function createSubscriptionGroupPrepayment(
 ```php
 $uid = 'uid0';
 
-$result = $subscriptionGroupInvoiceAccountController->createSubscriptionGroupPrepayment($uid);
+$subscriptionGroupInvoiceAccountController = $client->getSubscriptionGroupInvoiceAccountController();
+
+try {
+    $result = $subscriptionGroupInvoiceAccountController->createSubscriptionGroupPrepayment($uid);
+    echo 'SubscriptionGroupPrepaymentResponse:';
+    var_dump($result);
+} catch (ErrorListResponseException $exp) {
+    echo 'Caught ErrorListResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -100,7 +110,15 @@ $collect = [
         ->build()
 ];
 
-$result = $subscriptionGroupInvoiceAccountController->listPrepaymentsForSubscriptionGroup($collect);
+$subscriptionGroupInvoiceAccountController = $client->getSubscriptionGroupInvoiceAccountController();
+
+try {
+    $result = $subscriptionGroupInvoiceAccountController->listPrepaymentsForSubscriptionGroup($collect);
+    echo 'ListSubscriptionGroupPrepaymentResponse:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -167,10 +185,20 @@ $body = IssueServiceCreditRequestBuilder::init(
         ->build()
 )->build();
 
-$result = $subscriptionGroupInvoiceAccountController->issueSubscriptionGroupServiceCredit(
-    $uid,
-    $body
-);
+$subscriptionGroupInvoiceAccountController = $client->getSubscriptionGroupInvoiceAccountController();
+
+try {
+    $result = $subscriptionGroupInvoiceAccountController->issueSubscriptionGroupServiceCredit(
+        $uid,
+        $body
+    );
+    echo 'ServiceCreditResponse:';
+    var_dump($result);
+} catch (ErrorListResponseException $exp) {
+    echo 'Caught ErrorListResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -229,10 +257,20 @@ $body = DeductServiceCreditRequestBuilder::init(
         ->build()
 )->build();
 
-$result = $subscriptionGroupInvoiceAccountController->deductSubscriptionGroupServiceCredit(
-    $uid,
-    $body
-);
+$subscriptionGroupInvoiceAccountController = $client->getSubscriptionGroupInvoiceAccountController();
+
+try {
+    $result = $subscriptionGroupInvoiceAccountController->deductSubscriptionGroupServiceCredit(
+        $uid,
+        $body
+    );
+    echo 'ServiceCredit:';
+    var_dump($result);
+} catch (ErrorListResponseException $exp) {
+    echo 'Caught ErrorListResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*

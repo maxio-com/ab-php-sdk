@@ -16,6 +16,7 @@
 | `description` | `?string` | Optional | - | getDescription(): ?string | setDescription(?string description): void |
 | `createdAt` | `?DateTime` | Optional | - | getCreatedAt(): ?\DateTime | setCreatedAt(?\DateTime createdAt): void |
 | `updatedAt` | `?DateTime` | Optional | - | getUpdatedAt(): ?\DateTime | setUpdatedAt(?\DateTime updatedAt): void |
+| `archivedAt` | `?DateTime` | Optional | Timestamp indicating when this product family was archived. `null` if the product family is not archived. | getArchivedAt(): ?\DateTime | setArchivedAt(?\DateTime archivedAt): void |
 
 ## Example (as JSON)
 

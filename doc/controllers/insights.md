@@ -39,7 +39,15 @@ function readSiteStats(): SiteSummary
 ## Example Usage
 
 ```php
-$result = $insightsController->readSiteStats();
+$insightsController = $client->getInsightsController();
+
+try {
+    $result = $insightsController->readSiteStats();
+    echo 'SiteSummary:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -86,7 +94,15 @@ function readMrr(?\DateTime $atTime = null, ?int $subscriptionId = null): MRRRes
 ## Example Usage
 
 ```php
-$result = $insightsController->readMrr();
+$insightsController = $client->getInsightsController();
+
+try {
+    $result = $insightsController->readMrr();
+    echo 'MRRResponse:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -164,7 +180,15 @@ $collect = [
     'perPage' => 20
 ];
 
-$result = $insightsController->listMrrMovements($collect);
+$insightsController = $client->getInsightsController();
+
+try {
+    $result = $insightsController->listMrrMovements($collect);
+    echo 'ListMRRResponse:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -263,7 +287,17 @@ $collect = [
     'direction' => Direction::DESC
 ];
 
-$result = $insightsController->listMrrPerSubscription($collect);
+$insightsController = $client->getInsightsController();
+
+try {
+    $result = $insightsController->listMrrPerSubscription($collect);
+    echo 'SubscriptionMRRResponse:';
+    var_dump($result);
+} catch (SubscriptionsMrrErrorResponseException $exp) {
+    echo 'Caught SubscriptionsMrrErrorResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Errors

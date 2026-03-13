@@ -42,7 +42,7 @@ function retrySubscription(int $subscriptionId): SubscriptionResponse
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription. |
 
 ## Response Type
 
@@ -53,7 +53,17 @@ function retrySubscription(int $subscriptionId): SubscriptionResponse
 ```php
 $subscriptionId = 222;
 
-$result = $subscriptionStatusController->retrySubscription($subscriptionId);
+$subscriptionStatusController = $client->getSubscriptionStatusController();
+
+try {
+    $result = $subscriptionStatusController->retrySubscription($subscriptionId);
+    echo 'SubscriptionResponse:';
+    var_dump($result);
+} catch (ErrorListResponseException $exp) {
+    echo 'Caught ErrorListResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -201,7 +211,8 @@ $result = $subscriptionStatusController->retrySubscription($subscriptionId);
 
 # Cancel Subscription
 
-The DELETE action causes the cancellation of the Subscription. This means, the method sets the Subscription state to "canceled".
+Cancels the Subscription. The Delete method sets the Subscription state to `canceled`.
+To cancel the subscription immediately, omit any schedule parameters from the request. To use the schedule options, the Schedule Subscription Cancellation feature must be enabled on your site.
 
 ```php
 function cancelSubscription(int $subscriptionId, ?CancellationRequest $body = null): SubscriptionResponse
@@ -211,7 +222,7 @@ function cancelSubscription(int $subscriptionId, ?CancellationRequest $body = nu
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription. |
 | `body` | [`?CancellationRequest`](../../doc/models/cancellation-request.md) | Body, Optional | - |
 
 ## Response Type
@@ -223,7 +234,15 @@ function cancelSubscription(int $subscriptionId, ?CancellationRequest $body = nu
 ```php
 $subscriptionId = 222;
 
-$result = $subscriptionStatusController->cancelSubscription($subscriptionId);
+$subscriptionStatusController = $client->getSubscriptionStatusController();
+
+try {
+    $result = $subscriptionStatusController->cancelSubscription($subscriptionId);
+    echo 'SubscriptionResponse:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -385,8 +404,8 @@ function resumeSubscription(
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
-| `calendarBillingResumptionCharge` | [`?string(ResumptionCharge)`](../../doc/models/resumption-charge.md) | Query, Optional | (For calendar billing subscriptions only) The way that the resumed subscription's charge should be handled<br><br>**Default**: `ResumptionCharge::PRORATED` |
+| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription. |
+| `calendarBillingResumptionCharge` | [`?string(ResumptionCharge)`](../../doc/models/resumption-charge.md) | Query, Optional | (For calendar billing subscriptions only) The way that the resumed subscription's charge should be handled.<br><br>**Default**: `ResumptionCharge::PRORATED` |
 
 ## Response Type
 
@@ -397,7 +416,17 @@ function resumeSubscription(
 ```php
 $subscriptionId = 222;
 
-$result = $subscriptionStatusController->resumeSubscription($subscriptionId);
+$subscriptionStatusController = $client->getSubscriptionStatusController();
+
+try {
+    $result = $subscriptionStatusController->resumeSubscription($subscriptionId);
+    echo 'SubscriptionResponse:';
+    var_dump($result);
+} catch (ErrorListResponseException $exp) {
+    echo 'Caught ErrorListResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -532,7 +561,7 @@ function pauseSubscription(int $subscriptionId, ?PauseRequest $body = null): Sub
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription. |
 | `body` | [`?PauseRequest`](../../doc/models/pause-request.md) | Body, Optional | Allows to pause a Subscription |
 
 ## Response Type
@@ -552,10 +581,20 @@ $body = PauseRequestBuilder::init()
     )
     ->build();
 
-$result = $subscriptionStatusController->pauseSubscription(
-    $subscriptionId,
-    $body
-);
+$subscriptionStatusController = $client->getSubscriptionStatusController();
+
+try {
+    $result = $subscriptionStatusController->pauseSubscription(
+        $subscriptionId,
+        $body
+    );
+    echo 'SubscriptionResponse:';
+    var_dump($result);
+} catch (ErrorListResponseException $exp) {
+    echo 'Caught ErrorListResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -695,7 +734,7 @@ function updateAutomaticSubscriptionResumption(
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription. |
 | `body` | [`?PauseRequest`](../../doc/models/pause-request.md) | Body, Optional | Allows to pause a Subscription |
 
 ## Response Type
@@ -715,10 +754,20 @@ $body = PauseRequestBuilder::init()
     )
     ->build();
 
-$result = $subscriptionStatusController->updateAutomaticSubscriptionResumption(
-    $subscriptionId,
-    $body
-);
+$subscriptionStatusController = $client->getSubscriptionStatusController();
+
+try {
+    $result = $subscriptionStatusController->updateAutomaticSubscriptionResumption(
+        $subscriptionId,
+        $body
+    );
+    echo 'SubscriptionResponse:';
+    var_dump($result);
+} catch (ErrorListResponseException $exp) {
+    echo 'Caught ErrorListResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -850,7 +899,7 @@ $result = $subscriptionStatusController->updateAutomaticSubscriptionResumption(
 
 # Reactivate Subscription
 
-Advanced Billing offers the ability to reactivate a previously canceled subscription. For details on how the reactivation works, and how to reactivate subscriptions through the application, see [reactivation](https://maxio.zendesk.com/hc/en-us/articles/24252109503629-Reactivating-and-Resuming).
+Reactivate a previously canceled subscription. For details on how the reactivation works, and how to reactivate subscriptions through the application, see [reactivation](https://maxio.zendesk.com/hc/en-us/articles/24252109503629-Reactivating-and-Resuming).
 
 **Note: The term "resume" is used also during another process in Advanced Billing. This occurs when an on-hold subscription is "resumed". This returns the subscription to an active state.**
 
@@ -870,6 +919,8 @@ Consider a subscription which was created on June 1st, and would renew on July 1
 If a reactivation with `resume: true` were attempted _before_ what would have been the next billing date of July 1st, then Advanced Billing would resume the subscription.
 
 If a reactivation with `resume: true` were attempted _after_ what would have been the next billing date of July 1st, then Advanced Billing would not resume the subscription, and instead it would be reactivated with a new billing period.
+
+If a reactivation with `resume: false`, or where 'resume" is omited were attempted, then Advanced Billing would reactivate the subscription with a new billing period regardless of whether or not resuming the previous billing period were possible.
 
 | Canceled | Reactivation | Resumable? |
 |---|---|---|
@@ -1020,7 +1071,7 @@ function reactivateSubscription(
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription. |
 | `body` | [`?ReactivateSubscriptionRequest`](../../doc/models/reactivate-subscription-request.md) | Body, Optional | - |
 
 ## Response Type
@@ -1047,10 +1098,20 @@ $body = ReactivateSubscriptionRequestBuilder::init()
     )
     ->build();
 
-$result = $subscriptionStatusController->reactivateSubscription(
-    $subscriptionId,
-    $body
-);
+$subscriptionStatusController = $client->getSubscriptionStatusController();
+
+try {
+    $result = $subscriptionStatusController->reactivateSubscription(
+        $subscriptionId,
+        $body
+    );
+    echo 'SubscriptionResponse:';
+    var_dump($result);
+} catch (ErrorListResponseException $exp) {
+    echo 'Caught ErrorListResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -1172,11 +1233,7 @@ $result = $subscriptionStatusController->reactivateSubscription(
 
 # Initiate Delayed Cancellation
 
-Advanced Billing offers the ability to cancel a subscription at the end of the current billing period. This period is set by its current product.
-
-Requesting to cancel the subscription at the end of the period sets the `cancel_at_end_of_period` flag to true.
-
-Note that you cannot set `cancel_at_end_of_period` at subscription creation, or if the subscription is past due.
+Cancels a subscription at the end of the current billing period based on the subscription's current product. You cannot set `cancel_at_end_of_period` at subscription creation, or if the subscription is past due.
 
 ```php
 function initiateDelayedCancellation(
@@ -1189,7 +1246,7 @@ function initiateDelayedCancellation(
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription. |
 | `body` | [`?CancellationRequest`](../../doc/models/cancellation-request.md) | Body, Optional | - |
 
 ## Response Type
@@ -1201,7 +1258,17 @@ function initiateDelayedCancellation(
 ```php
 $subscriptionId = 222;
 
-$result = $subscriptionStatusController->initiateDelayedCancellation($subscriptionId);
+$subscriptionStatusController = $client->getSubscriptionStatusController();
+
+try {
+    $result = $subscriptionStatusController->initiateDelayedCancellation($subscriptionId);
+    echo 'DelayedCancellationResponse:';
+    var_dump($result);
+} catch (ErrorListResponseException $exp) {
+    echo 'Caught ErrorListResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Errors
@@ -1226,7 +1293,7 @@ function cancelDelayedCancellation(int $subscriptionId): DelayedCancellationResp
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription. |
 
 ## Response Type
 
@@ -1237,7 +1304,15 @@ function cancelDelayedCancellation(int $subscriptionId): DelayedCancellationResp
 ```php
 $subscriptionId = 222;
 
-$result = $subscriptionStatusController->cancelDelayedCancellation($subscriptionId);
+$subscriptionStatusController = $client->getSubscriptionStatusController();
+
+try {
+    $result = $subscriptionStatusController->cancelDelayedCancellation($subscriptionId);
+    echo 'DelayedCancellationResponse:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -1267,7 +1342,7 @@ function cancelDunning(int $subscriptionId): SubscriptionResponse
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription. |
 
 ## Response Type
 
@@ -1278,7 +1353,17 @@ function cancelDunning(int $subscriptionId): SubscriptionResponse
 ```php
 $subscriptionId = 222;
 
-$result = $subscriptionStatusController->cancelDunning($subscriptionId);
+$subscriptionStatusController = $client->getSubscriptionStatusController();
+
+try {
+    $result = $subscriptionStatusController->cancelDunning($subscriptionId);
+    echo 'SubscriptionResponse:';
+    var_dump($result);
+} catch (ErrorListResponseException $exp) {
+    echo 'Caught ErrorListResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Errors
@@ -1311,7 +1396,7 @@ Optionally, **you may provide your own custom quantities** for any component to 
 
 ## Subscription Side Effects
 
-You can request a `POST` to obtain this data from the endpoint without any side effects. Plain and simple, this will preview data, not log any changes against a subscription.
+You can request a `POST` to obtain this data from the endpoint without any side effects. This method allows you to preview data, but does not log any changes against a subscription.
 
 ```php
 function previewRenewal(int $subscriptionId, ?RenewalPreviewRequest $body = null): RenewalPreviewResponse
@@ -1321,7 +1406,7 @@ function previewRenewal(int $subscriptionId, ?RenewalPreviewRequest $body = null
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription |
+| `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription. |
 | `body` | [`?RenewalPreviewRequest`](../../doc/models/renewal-preview-request.md) | Body, Optional | - |
 
 ## Response Type
@@ -1364,10 +1449,20 @@ $body = RenewalPreviewRequestBuilder::init()
     )
     ->build();
 
-$result = $subscriptionStatusController->previewRenewal(
-    $subscriptionId,
-    $body
-);
+$subscriptionStatusController = $client->getSubscriptionStatusController();
+
+try {
+    $result = $subscriptionStatusController->previewRenewal(
+        $subscriptionId,
+        $body
+    );
+    echo 'RenewalPreviewResponse:';
+    var_dump($result);
+} catch (ErrorListResponseException $exp) {
+    echo 'Caught ErrorListResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*

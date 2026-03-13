@@ -52,7 +52,15 @@ $collect = [
     'page' => 1
 ];
 
-$result = $aPIExportsController->listExportedProformaInvoices($collect);
+$aPIExportsController = $client->getAPIExportsController();
+
+try {
+    $result = $aPIExportsController->listExportedProformaInvoices($collect);
+    echo 'ProformaInvoice[]:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Errors
@@ -93,7 +101,15 @@ $collect = [
     'page' => 1
 ];
 
-$result = $aPIExportsController->listExportedInvoices($collect);
+$aPIExportsController = $client->getAPIExportsController();
+
+try {
+    $result = $aPIExportsController->listExportedInvoices($collect);
+    echo 'Invoice[]:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Errors
@@ -134,7 +150,15 @@ $collect = [
     'page' => 1
 ];
 
-$result = $aPIExportsController->listExportedSubscriptions($collect);
+$aPIExportsController = $client->getAPIExportsController();
+
+try {
+    $result = $aPIExportsController->listExportedSubscriptions($collect);
+    echo 'Subscription[]:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Errors
@@ -161,7 +185,17 @@ function exportProformaInvoices(): BatchJobResponse
 ## Example Usage
 
 ```php
-$result = $aPIExportsController->exportProformaInvoices();
+$aPIExportsController = $client->getAPIExportsController();
+
+try {
+    $result = $aPIExportsController->exportProformaInvoices();
+    echo 'BatchJobResponse:';
+    var_dump($result);
+} catch (SingleErrorResponseException $exp) {
+    echo 'Caught SingleErrorResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Errors
@@ -187,7 +221,17 @@ function exportInvoices(): BatchJobResponse
 ## Example Usage
 
 ```php
-$result = $aPIExportsController->exportInvoices();
+$aPIExportsController = $client->getAPIExportsController();
+
+try {
+    $result = $aPIExportsController->exportInvoices();
+    echo 'BatchJobResponse:';
+    var_dump($result);
+} catch (SingleErrorResponseException $exp) {
+    echo 'Caught SingleErrorResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Errors
@@ -213,7 +257,17 @@ function exportSubscriptions(): BatchJobResponse
 ## Example Usage
 
 ```php
-$result = $aPIExportsController->exportSubscriptions();
+$aPIExportsController = $client->getAPIExportsController();
+
+try {
+    $result = $aPIExportsController->exportSubscriptions();
+    echo 'BatchJobResponse:';
+    var_dump($result);
+} catch (SingleErrorResponseException $exp) {
+    echo 'Caught SingleErrorResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Errors
@@ -246,7 +300,15 @@ function readProformaInvoicesExport(string $batchId): BatchJobResponse
 ```php
 $batchId = 'batch_id8';
 
-$result = $aPIExportsController->readProformaInvoicesExport($batchId);
+$aPIExportsController = $client->getAPIExportsController();
+
+try {
+    $result = $aPIExportsController->readProformaInvoicesExport($batchId);
+    echo 'BatchJobResponse:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Errors
@@ -279,7 +341,15 @@ function readInvoicesExport(string $batchId): BatchJobResponse
 ```php
 $batchId = 'batch_id8';
 
-$result = $aPIExportsController->readInvoicesExport($batchId);
+$aPIExportsController = $client->getAPIExportsController();
+
+try {
+    $result = $aPIExportsController->readInvoicesExport($batchId);
+    echo 'BatchJobResponse:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Errors
@@ -312,7 +382,15 @@ function readSubscriptionsExport(string $batchId): BatchJobResponse
 ```php
 $batchId = 'batch_id8';
 
-$result = $aPIExportsController->readSubscriptionsExport($batchId);
+$aPIExportsController = $client->getAPIExportsController();
+
+try {
+    $result = $aPIExportsController->readSubscriptionsExport($batchId);
+    echo 'BatchJobResponse:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Errors

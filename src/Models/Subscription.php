@@ -1116,11 +1116,9 @@ class Subscription implements \JsonSerializable
 
     /**
      * Returns Snap Day.
-     * The day of the month that the subscription will charge according to calendar billing rules, if used.
-     *
-     * @return int|string|null
+     * A day of month that subscription will be processed on. Can be 1 up to 28 or 'end'.
      */
-    public function getSnapDay()
+    public function getSnapDay(): ?string
     {
         if (count($this->snapDay) == 0) {
             return null;
@@ -1130,22 +1128,18 @@ class Subscription implements \JsonSerializable
 
     /**
      * Sets Snap Day.
-     * The day of the month that the subscription will charge according to calendar billing rules, if used.
+     * A day of month that subscription will be processed on. Can be 1 up to 28 or 'end'.
      *
      * @maps snap_day
-     * @mapsBy anyOf(oneOf(int,SnapDay),null)
-     * @factory \AdvancedBillingLib\Models\SnapDay::checkValue SnapDay
-     *
-     * @param int|string|null $snapDay
      */
-    public function setSnapDay($snapDay): void
+    public function setSnapDay(?string $snapDay): void
     {
         $this->snapDay['value'] = $snapDay;
     }
 
     /**
      * Unsets Snap Day.
-     * The day of the month that the subscription will charge according to calendar billing rules, if used.
+     * A day of month that subscription will be processed on. Can be 1 up to 28 or 'end'.
      */
     public function unsetSnapDay(): void
     {
@@ -1484,7 +1478,7 @@ class Subscription implements \JsonSerializable
 
     /**
      * Returns Reason Code.
-     * If the subscription is canceled, this is their churn code.
+     * The churn reason code associated to a cancelled subscription.
      */
     public function getReasonCode(): ?string
     {
@@ -1496,7 +1490,7 @@ class Subscription implements \JsonSerializable
 
     /**
      * Sets Reason Code.
-     * If the subscription is canceled, this is their churn code.
+     * The churn reason code associated to a cancelled subscription.
      *
      * @maps reason_code
      */
@@ -1507,7 +1501,7 @@ class Subscription implements \JsonSerializable
 
     /**
      * Unsets Reason Code.
-     * If the subscription is canceled, this is their churn code.
+     * The churn reason code associated to a cancelled subscription.
      */
     public function unsetReasonCode(): void
     {
@@ -1813,7 +1807,7 @@ class Subscription implements \JsonSerializable
 
     /**
      * Returns Reference.
-     * The reference value (provided by your app) for the subscription itelf.
+     * The reference value (provided by your app) for the subscription istelf.
      */
     public function getReference(): ?string
     {
@@ -1825,7 +1819,7 @@ class Subscription implements \JsonSerializable
 
     /**
      * Sets Reference.
-     * The reference value (provided by your app) for the subscription itelf.
+     * The reference value (provided by your app) for the subscription istelf.
      *
      * @maps reference
      */
@@ -1836,7 +1830,7 @@ class Subscription implements \JsonSerializable
 
     /**
      * Unsets Reference.
-     * The reference value (provided by your app) for the subscription itelf.
+     * The reference value (provided by your app) for the subscription istelf.
      */
     public function unsetReference(): void
     {
@@ -2395,14 +2389,7 @@ class Subscription implements \JsonSerializable
             $json['coupon_code']                           = $this->couponCode['value'];
         }
         if (!empty($this->snapDay)) {
-            $json['snap_day']                              =
-                ApiHelper::getJsonHelper()->verifyTypes(
-                    $this->snapDay['value'],
-                    'anyOf(oneOf(int,SnapDay),null)',
-                    [
-                        '\AdvancedBillingLib\Models\SnapDay::checkValue SnapDay'
-                    ]
-                );
+            $json['snap_day']                              = $this->snapDay['value'];
         }
         if (isset($this->paymentCollectionMethod)) {
             $json['payment_collection_method']             =

@@ -83,7 +83,17 @@ $body = CreateCustomerRequestBuilder::init(
         ->build()
 )->build();
 
-$result = $customersController->createCustomer($body);
+$customersController = $client->getCustomersController();
+
+try {
+    $result = $customersController->createCustomer($body);
+    echo 'CustomerResponse:';
+    var_dump($result);
+} catch (CustomerErrorResponseException $exp) {
+    echo 'Caught CustomerErrorResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -177,7 +187,15 @@ $collect = [
     'dateField' => BasicDateField::UPDATED_AT
 ];
 
-$result = $customersController->listCustomers($collect);
+$customersController = $client->getCustomersController();
+
+try {
+    $result = $customersController->listCustomers($collect);
+    echo 'CustomerResponse[]:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -288,7 +306,15 @@ function readCustomer(int $id): CustomerResponse
 ```php
 $id = 112;
 
-$result = $customersController->readCustomer($id);
+$customersController = $client->getCustomersController();
+
+try {
+    $result = $customersController->readCustomer($id);
+    echo 'CustomerResponse:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -361,10 +387,20 @@ $body = UpdateCustomerRequestBuilder::init(
         ->build()
 )->build();
 
-$result = $customersController->updateCustomer(
-    $id,
-    $body
-);
+$customersController = $client->getCustomersController();
+
+try {
+    $result = $customersController->updateCustomer(
+        $id,
+        $body
+    );
+    echo 'CustomerResponse:';
+    var_dump($result);
+} catch (CustomerErrorResponseException $exp) {
+    echo 'Caught CustomerErrorResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -429,7 +465,13 @@ function deleteCustomer(int $id): void
 ```php
 $id = 112;
 
-$customersController->deleteCustomer($id);
+$customersController = $client->getCustomersController();
+
+try {
+    $customersController->deleteCustomer($id);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 
@@ -456,7 +498,15 @@ function readCustomerByReference(string $reference): CustomerResponse
 ```php
 $reference = 'reference4';
 
-$result = $customersController->readCustomerByReference($reference);
+$customersController = $client->getCustomersController();
+
+try {
+    $result = $customersController->readCustomerByReference($reference);
+    echo 'CustomerResponse:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 
@@ -483,6 +533,14 @@ function listCustomerSubscriptions(int $customerId): array
 ```php
 $customerId = 150;
 
-$result = $customersController->listCustomerSubscriptions($customerId);
+$customersController = $client->getCustomersController();
+
+try {
+    $result = $customersController->listCustomerSubscriptions($customerId);
+    echo 'SubscriptionResponse[]:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 

@@ -516,7 +516,8 @@ class ComponentPricePoint implements \JsonSerializable
      * Returns Currency Prices.
      * An array of currency pricing data is available when multiple currencies are defined for the site. It
      * varies based on the use_site_exchange_rate setting for the price point. This parameter is present
-     * only in the response of read endpoints, after including the appropriate query parameter.
+     * only in the response of read endpoints, after including the appropriate query parameter. The clone
+     * endpoint always returns currency prices if they are present.
      *
      * @return ComponentCurrencyPrice[]|null
      */
@@ -529,7 +530,8 @@ class ComponentPricePoint implements \JsonSerializable
      * Sets Currency Prices.
      * An array of currency pricing data is available when multiple currencies are defined for the site. It
      * varies based on the use_site_exchange_rate setting for the price point. This parameter is present
-     * only in the response of read endpoints, after including the appropriate query parameter.
+     * only in the response of read endpoints, after including the appropriate query parameter. The clone
+     * endpoint always returns currency prices if they are present.
      *
      * @maps currency_prices
      *

@@ -19,9 +19,9 @@ use stdClass;
 class CalendarBilling implements \JsonSerializable
 {
     /**
-     * @var array
+     * @var int|string|null
      */
-    private $snapDay = [];
+    private $snapDay;
 
     /**
      * @var string|null
@@ -36,10 +36,7 @@ class CalendarBilling implements \JsonSerializable
      */
     public function getSnapDay()
     {
-        if (count($this->snapDay) == 0) {
-            return null;
-        }
-        return $this->snapDay['value'];
+        return $this->snapDay;
     }
 
     /**
@@ -47,23 +44,13 @@ class CalendarBilling implements \JsonSerializable
      * A day of month that subscription will be processed on. Can be 1 up to 28 or 'end'.
      *
      * @maps snap_day
-     * @mapsBy anyOf(oneOf(int,SnapDay),null)
-     * @factory \AdvancedBillingLib\Models\SnapDay::checkValue SnapDay
+     * @mapsBy anyOf(oneOf(int,string),null)
      *
      * @param int|string|null $snapDay
      */
     public function setSnapDay($snapDay): void
     {
-        $this->snapDay['value'] = $snapDay;
-    }
-
-    /**
-     * Unsets Snap Day.
-     * A day of month that subscription will be processed on. Can be 1 up to 28 or 'end'.
-     */
-    public function unsetSnapDay(): void
-    {
-        $this->snapDay = [];
+        $this->snapDay = $snapDay;
     }
 
     /**
@@ -95,7 +82,7 @@ class CalendarBilling implements \JsonSerializable
         return ApiHelper::stringify(
             'CalendarBilling',
             [
-                'snapDay' => $this->getSnapDay(),
+                'snapDay' => $this->snapDay,
                 'calendarBillingFirstCharge' => $this->calendarBillingFirstCharge,
                 'additionalProperties' => $this->additionalProperties
             ]
@@ -142,14 +129,11 @@ class CalendarBilling implements \JsonSerializable
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
-        if (!empty($this->snapDay)) {
+        if (isset($this->snapDay)) {
             $json['snap_day']                      =
                 ApiHelper::getJsonHelper()->verifyTypes(
-                    $this->snapDay['value'],
-                    'anyOf(oneOf(int,SnapDay),null)',
-                    [
-                        '\AdvancedBillingLib\Models\SnapDay::checkValue SnapDay'
-                    ]
+                    $this->snapDay,
+                    'anyOf(oneOf(int,string),null)'
                 );
         }
         if (isset($this->calendarBillingFirstCharge)) {

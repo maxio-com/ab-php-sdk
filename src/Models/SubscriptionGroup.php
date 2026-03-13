@@ -17,6 +17,11 @@ use stdClass;
 class SubscriptionGroup implements \JsonSerializable
 {
     /**
+     * @var string|null
+     */
+    private $uid;
+
+    /**
      * @var int|null
      */
     private $customerId;
@@ -40,6 +45,24 @@ class SubscriptionGroup implements \JsonSerializable
      * @var \DateTime|null
      */
     private $createdAt;
+
+    /**
+     * Returns Uid.
+     */
+    public function getUid(): ?string
+    {
+        return $this->uid;
+    }
+
+    /**
+     * Sets Uid.
+     *
+     * @maps uid
+     */
+    public function setUid(?string $uid): void
+    {
+        $this->uid = $uid;
+    }
 
     /**
      * Returns Customer Id.
@@ -153,6 +176,7 @@ class SubscriptionGroup implements \JsonSerializable
         return ApiHelper::stringify(
             'SubscriptionGroup',
             [
+                'uid' => $this->uid,
                 'customerId' => $this->customerId,
                 'paymentProfile' => $this->paymentProfile,
                 'paymentCollectionMethod' => $this->paymentCollectionMethod,
@@ -203,6 +227,9 @@ class SubscriptionGroup implements \JsonSerializable
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
+        if (isset($this->uid)) {
+            $json['uid']                       = $this->uid;
+        }
         if (isset($this->customerId)) {
             $json['customer_id']               = $this->customerId;
         }

@@ -46,10 +46,18 @@ $body = CancelGroupedSubscriptionsRequestBuilder::init()
     ->chargeUnbilledUsage(true)
     ->build();
 
-$subscriptionGroupStatusController->cancelSubscriptionsInGroup(
-    $uid,
-    $body
-);
+$subscriptionGroupStatusController = $client->getSubscriptionGroupStatusController();
+
+try {
+    $subscriptionGroupStatusController->cancelSubscriptionsInGroup(
+        $uid,
+        $body
+    );
+} catch (ErrorListResponseException $exp) {
+    echo 'Caught ErrorListResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Errors
@@ -84,7 +92,15 @@ function initiateDelayedCancellationForGroup(string $uid): void
 ```php
 $uid = 'uid0';
 
-$subscriptionGroupStatusController->initiateDelayedCancellationForGroup($uid);
+$subscriptionGroupStatusController = $client->getSubscriptionGroupStatusController();
+
+try {
+    $subscriptionGroupStatusController->initiateDelayedCancellationForGroup($uid);
+} catch (ErrorListResponseException $exp) {
+    echo 'Caught ErrorListResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Errors
@@ -117,7 +133,15 @@ function cancelDelayedCancellationForGroup(string $uid): void
 ```php
 $uid = 'uid0';
 
-$subscriptionGroupStatusController->cancelDelayedCancellationForGroup($uid);
+$subscriptionGroupStatusController = $client->getSubscriptionGroupStatusController();
+
+try {
+    $subscriptionGroupStatusController->cancelDelayedCancellationForGroup($uid);
+} catch (ErrorListResponseException $exp) {
+    echo 'Caught ErrorListResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Errors
@@ -176,10 +200,20 @@ $body = ReactivateSubscriptionGroupRequestBuilder::init()
     ->resume(true)
     ->build();
 
-$result = $subscriptionGroupStatusController->reactivateSubscriptionGroup(
-    $uid,
-    $body
-);
+$subscriptionGroupStatusController = $client->getSubscriptionGroupStatusController();
+
+try {
+    $result = $subscriptionGroupStatusController->reactivateSubscriptionGroup(
+        $uid,
+        $body
+    );
+    echo 'ReactivateSubscriptionGroupResponse:';
+    var_dump($result);
+} catch (ErrorListResponseException $exp) {
+    echo 'Caught ErrorListResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*

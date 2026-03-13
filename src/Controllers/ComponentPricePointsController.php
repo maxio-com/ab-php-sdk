@@ -13,7 +13,9 @@ namespace AdvancedBillingLib\Controllers;
 use AdvancedBillingLib\Exceptions\ApiException;
 use AdvancedBillingLib\Exceptions\ErrorArrayMapResponseException;
 use AdvancedBillingLib\Exceptions\ErrorListResponseException;
+use AdvancedBillingLib\Models\CloneComponentPricePointRequest;
 use AdvancedBillingLib\Models\ComponentCurrencyPricesResponse;
+use AdvancedBillingLib\Models\ComponentPricePointCurrencyOverageResponse;
 use AdvancedBillingLib\Models\ComponentPricePointResponse;
 use AdvancedBillingLib\Models\ComponentPricePointsResponse;
 use AdvancedBillingLib\Models\ComponentResponse;
@@ -184,6 +186,60 @@ class ComponentPricePointsController extends BaseController
     }
 
     /**
+     * Clones a component price point. Custom price points (tied to a specific subscription) cannot be
+     * cloned. The following attributes are copied from the source price point:
+     * - Pricing scheme
+     * - All price tiers (with starting/ending quantities and unit prices)
+     * - Tax included setting
+     * - Currency prices (if definitive pricing is set)
+     * - Overage pricing (for prepaid usage components)
+     * - Interval settings (if multi-frequency is enabled)
+     * - Event-based billing segments (if applicable)
+     *
+     * @param int|string $componentId The id or handle of the component. When using the handle, it
+     *        must be prefixed with `handle:`. Example: `123` for an integer ID, or `handle:
+     *        example-product-handle` for a string handle.
+     * @param int|string $pricePointId The id or handle of the price point. When using the handle,
+     *        it must be prefixed with `handle:`. Example: `123` for an integer ID, or `handle:
+     *        example-price_point-handle` for a string handle.
+     * @param CloneComponentPricePointRequest|null $body
+     *
+     * @return ComponentPricePointCurrencyOverageResponse Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function cloneComponentPricePoint(
+        $componentId,
+        $pricePointId,
+        ?CloneComponentPricePointRequest $body = null
+    ): ComponentPricePointCurrencyOverageResponse {
+        $_reqBuilder = $this->requestBuilder(
+            RequestMethod::POST,
+            '/components/{component_id}/price_points/{price_point_id}/clone.json'
+        )
+            ->auth('BasicAuth')
+            ->parameters(
+                TemplateParam::init('component_id', $componentId)->required()->strictType('oneOf(int,string)'),
+                TemplateParam::init('price_point_id', $pricePointId)->required()->strictType('oneOf(int,string)'),
+                HeaderParam::init('Content-Type', 'application/json'),
+                BodyParam::init($body)
+            );
+
+        $_resHandler = $this->responseHandler()
+            ->throwErrorOn('404', ErrorType::initWithErrorTemplate('Not Found:\'{$response.body}\''))
+            ->throwErrorOn(
+                '422',
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
+            )
+            ->type(ComponentPricePointCurrencyOverageResponse::class);
+
+        return $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
      * When updating a price point, prices can be updated as well by creating new prices or editing /
      * removing existing ones.
      *
@@ -248,7 +304,7 @@ class ComponentPricePointsController extends BaseController
      *        example-price_point-handle` for a string handle.
      * @param bool|null $currencyPrices Include an array of currency price data
      *
-     * @return ComponentPricePointResponse Response from the API call
+     * @return ComponentPricePointCurrencyOverageResponse Response from the API call
      *
      * @throws ApiException Thrown if API call fails
      */
@@ -256,7 +312,7 @@ class ComponentPricePointsController extends BaseController
         $componentId,
         $pricePointId,
         ?bool $currencyPrices = null
-    ): ComponentPricePointResponse {
+    ): ComponentPricePointCurrencyOverageResponse {
         $_reqBuilder = $this->requestBuilder(
             RequestMethod::GET,
             '/components/{component_id}/price_points/{price_point_id}.json'
@@ -268,7 +324,7 @@ class ComponentPricePointsController extends BaseController
                 QueryParam::init('currency_prices', $currencyPrices)->commaSeparated()
             );
 
-        $_resHandler = $this->responseHandler()->type(ComponentPricePointResponse::class);
+        $_resHandler = $this->responseHandler()->type(ComponentPricePointCurrencyOverageResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
     }

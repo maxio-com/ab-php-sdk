@@ -47,6 +47,7 @@ final class TestCustomerFactory
             ->additionalProperty('vat_country', null)
             ->additionalProperty('vat_status', 'vat_invalid')
             ->additionalProperty('business_type', null)
+            ->additionalProperty('maxioid', null)
             ->build();
     }
 }

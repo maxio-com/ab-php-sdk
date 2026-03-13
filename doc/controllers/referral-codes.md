@@ -40,7 +40,17 @@ function validateReferralCode(string $code): ReferralValidationResponse
 ```php
 $code = 'code8';
 
-$result = $referralCodesController->validateReferralCode($code);
+$referralCodesController = $client->getReferralCodesController();
+
+try {
+    $result = $referralCodesController->validateReferralCode($code);
+    echo 'ReferralValidationResponse:';
+    var_dump($result);
+} catch (SingleStringErrorResponseException $exp) {
+    echo 'Caught SingleStringErrorResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*

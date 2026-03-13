@@ -79,10 +79,20 @@ $body = CreateMetafieldsRequestBuilder::init(
         ->build()
 )->build();
 
-$result = $customFieldsController->createMetafields(
-    $resourceType,
-    $body
-);
+$customFieldsController = $client->getCustomFieldsController();
+
+try {
+    $result = $customFieldsController->createMetafields(
+        $resourceType,
+        $body
+    );
+    echo 'Metafield[]:';
+    var_dump($result);
+} catch (SingleErrorResponseException $exp) {
+    echo 'Caught SingleErrorResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -154,7 +164,15 @@ $collect = [
     'perPage' => 50
 ];
 
-$result = $customFieldsController->listMetafields($collect);
+$customFieldsController = $client->getCustomFieldsController();
+
+try {
+    $result = $customFieldsController->listMetafields($collect);
+    echo 'ListMetafieldsResponse:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -236,7 +254,17 @@ function updateMetafield(string $resourceType, ?UpdateMetafieldsRequest $body = 
 ```php
 $resourceType = ResourceType::SUBSCRIPTIONS;
 
-$result = $customFieldsController->updateMetafield($resourceType);
+$customFieldsController = $client->getCustomFieldsController();
+
+try {
+    $result = $customFieldsController->updateMetafield($resourceType);
+    echo 'Metafield[]:';
+    var_dump($result);
+} catch (SingleErrorResponseException $exp) {
+    echo 'Caught SingleErrorResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Errors
@@ -270,7 +298,13 @@ function deleteMetafield(string $resourceType, ?string $name = null): void
 ```php
 $resourceType = ResourceType::SUBSCRIPTIONS;
 
-$customFieldsController->deleteMetafield($resourceType);
+$customFieldsController = $client->getCustomFieldsController();
+
+try {
+    $customFieldsController->deleteMetafield($resourceType);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Errors
@@ -324,11 +358,21 @@ $body = CreateMetadataRequestBuilder::init(
     ]
 )->build();
 
-$result = $customFieldsController->createMetadata(
-    $resourceType,
-    $resourceId,
-    $body
-);
+$customFieldsController = $client->getCustomFieldsController();
+
+try {
+    $result = $customFieldsController->createMetadata(
+        $resourceType,
+        $resourceId,
+        $body
+    );
+    echo 'Metadata[]:';
+    var_dump($result);
+} catch (SingleErrorResponseException $exp) {
+    echo 'Caught SingleErrorResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Errors
@@ -369,7 +413,15 @@ $collect = [
     'perPage' => 50
 ];
 
-$result = $customFieldsController->listMetadata($collect);
+$customFieldsController = $client->getCustomFieldsController();
+
+try {
+    $result = $customFieldsController->listMetadata($collect);
+    echo 'PaginatedMetadata:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -425,10 +477,20 @@ $resourceType = ResourceType::SUBSCRIPTIONS;
 
 $resourceId = 60;
 
-$result = $customFieldsController->updateMetadata(
-    $resourceType,
-    $resourceId
-);
+$customFieldsController = $client->getCustomFieldsController();
+
+try {
+    $result = $customFieldsController->updateMetadata(
+        $resourceType,
+        $resourceId
+    );
+    echo 'Metadata[]:';
+    var_dump($result);
+} catch (SingleErrorResponseException $exp) {
+    echo 'Caught SingleErrorResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Errors
@@ -466,10 +528,16 @@ $resourceType = ResourceType::SUBSCRIPTIONS;
 
 $resourceId = 60;
 
-$customFieldsController->deleteMetadata(
-    $resourceType,
-    $resourceId
-);
+$customFieldsController = $client->getCustomFieldsController();
+
+try {
+    $customFieldsController->deleteMetadata(
+        $resourceType,
+        $resourceId
+    );
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Errors
@@ -517,6 +585,14 @@ $collect = [
     'dateField' => BasicDateField::UPDATED_AT
 ];
 
-$result = $customFieldsController->listMetadataForResourceType($collect);
+$customFieldsController = $client->getCustomFieldsController();
+
+try {
+    $result = $customFieldsController->listMetadataForResourceType($collect);
+    echo 'PaginatedMetadata:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 

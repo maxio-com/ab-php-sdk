@@ -40,6 +40,17 @@ class SubscriptionGroupBuilder
     }
 
     /**
+     * Sets uid field.
+     *
+     * @param string|null $value
+     */
+    public function uid(?string $value): self
+    {
+        $this->instance->setUid($value);
+        return $this;
+    }
+
+    /**
      * Sets customer id field.
      *
      * @param int|null $value

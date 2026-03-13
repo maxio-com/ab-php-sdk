@@ -134,6 +134,26 @@ class ProductFamilyBuilder
     }
 
     /**
+     * Sets archived at field.
+     *
+     * @param \DateTime|null $value
+     */
+    public function archivedAt(?\DateTime $value): self
+    {
+        $this->instance->setArchivedAt($value);
+        return $this;
+    }
+
+    /**
+     * Unsets archived at field.
+     */
+    public function unsetArchivedAt(): self
+    {
+        $this->instance->unsetArchivedAt();
+        return $this;
+    }
+
+    /**
      * Add an additional property to this model.
      *
      * @param string $name Name of property.

@@ -55,7 +55,15 @@ $collect = [
     'perPage' => 100
 ];
 
-$result = $salesCommissionsController->listSalesCommissionSettings($collect);
+$salesCommissionsController = $client->getSalesCommissionsController();
+
+try {
+    $result = $salesCommissionsController->listSalesCommissionSettings($collect);
+    echo 'SaleRepSettings[]:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -133,7 +141,15 @@ $collect = [
     'perPage' => 100
 ];
 
-$result = $salesCommissionsController->listSalesReps($collect);
+$salesCommissionsController = $client->getSalesCommissionsController();
+
+try {
+    $result = $salesCommissionsController->listSalesReps($collect);
+    echo 'ListSaleRepItem[]:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -271,14 +287,22 @@ $page = 1;
 
 $perPage = 100;
 
-$result = $salesCommissionsController->readSalesRep(
-    $sellerId,
-    $salesRepId,
-    $authorization,
-    null,
-    $page,
-    $perPage
-);
+$salesCommissionsController = $client->getSalesCommissionsController();
+
+try {
+    $result = $salesCommissionsController->readSalesRep(
+        $sellerId,
+        $salesRepId,
+        $authorization,
+        null,
+        $page,
+        $perPage
+    );
+    echo 'SaleRep:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*

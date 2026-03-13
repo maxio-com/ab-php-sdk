@@ -27,6 +27,7 @@ final class TestProductFamilyFactory
             ->description(ProductFamilyTestData::DESCRIPTION)
             ->handle($handle)
             ->accountingCode(ProductFamilyTestData::ACCOUNTING_CODE)
+            ->archivedAt(null)
             ->build();
     }
 }

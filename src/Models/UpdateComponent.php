@@ -269,7 +269,6 @@ class UpdateComponent implements \JsonSerializable
      * Returns Upgrade Charge.
      * The type of credit to be created when upgrading/downgrading. Defaults to the component and then site
      * setting if one is not provided.
-     * Available values: `full`, `prorated`, `none`.
      */
     public function getUpgradeCharge(): ?string
     {
@@ -283,7 +282,6 @@ class UpdateComponent implements \JsonSerializable
      * Sets Upgrade Charge.
      * The type of credit to be created when upgrading/downgrading. Defaults to the component and then site
      * setting if one is not provided.
-     * Available values: `full`, `prorated`, `none`.
      *
      * @maps upgrade_charge
      * @factory \AdvancedBillingLib\Models\CreditType::checkValue
@@ -297,7 +295,6 @@ class UpdateComponent implements \JsonSerializable
      * Unsets Upgrade Charge.
      * The type of credit to be created when upgrading/downgrading. Defaults to the component and then site
      * setting if one is not provided.
-     * Available values: `full`, `prorated`, `none`.
      */
     public function unsetUpgradeCharge(): void
     {

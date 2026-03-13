@@ -79,11 +79,21 @@ $body = CreateSegmentRequestBuilder::init(
         ->build()
 )->build();
 
-$result = $eventsBasedBillingSegmentsController->createSegment(
-    $componentId,
-    $pricePointId,
-    $body
-);
+$eventsBasedBillingSegmentsController = $client->getEventsBasedBillingSegmentsController();
+
+try {
+    $result = $eventsBasedBillingSegmentsController->createSegment(
+        $componentId,
+        $pricePointId,
+        $body
+    );
+    echo 'SegmentResponse:';
+    var_dump($result);
+} catch (EventBasedBillingSegmentErrorsException $exp) {
+    echo 'Caught EventBasedBillingSegmentErrorsException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Errors
@@ -133,7 +143,17 @@ $collect = [
         ->build()
 ];
 
-$result = $eventsBasedBillingSegmentsController->listSegmentsForPricePoint($collect);
+$eventsBasedBillingSegmentsController = $client->getEventsBasedBillingSegmentsController();
+
+try {
+    $result = $eventsBasedBillingSegmentsController->listSegmentsForPricePoint($collect);
+    echo 'ListSegmentsResponse:';
+    var_dump($result);
+} catch (EventBasedBillingListSegmentsErrorsException $exp) {
+    echo 'Caught EventBasedBillingListSegmentsErrorsException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Errors
@@ -181,11 +201,21 @@ $pricePointId = 'price_point_id8';
 
 $id = 60;
 
-$result = $eventsBasedBillingSegmentsController->updateSegment(
-    $componentId,
-    $pricePointId,
-    $id
-);
+$eventsBasedBillingSegmentsController = $client->getEventsBasedBillingSegmentsController();
+
+try {
+    $result = $eventsBasedBillingSegmentsController->updateSegment(
+        $componentId,
+        $pricePointId,
+        $id
+    );
+    echo 'SegmentResponse:';
+    var_dump($result);
+} catch (EventBasedBillingSegmentErrorsException $exp) {
+    echo 'Caught EventBasedBillingSegmentErrorsException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Errors
@@ -227,11 +257,17 @@ $pricePointId = 'price_point_id8';
 
 $id = 60;
 
-$eventsBasedBillingSegmentsController->deleteSegment(
-    $componentId,
-    $pricePointId,
-    $id
-);
+$eventsBasedBillingSegmentsController = $client->getEventsBasedBillingSegmentsController();
+
+try {
+    $eventsBasedBillingSegmentsController->deleteSegment(
+        $componentId,
+        $pricePointId,
+        $id
+    );
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Errors
@@ -277,10 +313,20 @@ $componentId = 'component_id8';
 
 $pricePointId = 'price_point_id8';
 
-$result = $eventsBasedBillingSegmentsController->bulkCreateSegments(
-    $componentId,
-    $pricePointId
-);
+$eventsBasedBillingSegmentsController = $client->getEventsBasedBillingSegmentsController();
+
+try {
+    $result = $eventsBasedBillingSegmentsController->bulkCreateSegments(
+        $componentId,
+        $pricePointId
+    );
+    echo 'ListSegmentsResponse:';
+    var_dump($result);
+} catch (EventBasedBillingSegmentException $exp) {
+    echo 'Caught EventBasedBillingSegmentException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Errors
@@ -326,10 +372,20 @@ $componentId = 'component_id8';
 
 $pricePointId = 'price_point_id8';
 
-$result = $eventsBasedBillingSegmentsController->bulkUpdateSegments(
-    $componentId,
-    $pricePointId
-);
+$eventsBasedBillingSegmentsController = $client->getEventsBasedBillingSegmentsController();
+
+try {
+    $result = $eventsBasedBillingSegmentsController->bulkUpdateSegments(
+        $componentId,
+        $pricePointId
+    );
+    echo 'ListSegmentsResponse:';
+    var_dump($result);
+} catch (EventBasedBillingSegmentException $exp) {
+    echo 'Caught EventBasedBillingSegmentException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Errors

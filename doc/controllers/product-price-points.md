@@ -69,10 +69,20 @@ $body = CreateProductPricePointRequestBuilder::init(
         ->build()
 )->build();
 
-$result = $productPricePointsController->createProductPricePoint(
-    $productId,
-    $body
-);
+$productPricePointsController = $client->getProductPricePointsController();
+
+try {
+    $result = $productPricePointsController->createProductPricePoint(
+        $productId,
+        $body
+    );
+    echo 'ProductPricePointResponse:';
+    var_dump($result);
+} catch (ProductPricePointErrorResponseException $exp) {
+    echo 'Caught ProductPricePointErrorResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -142,7 +152,15 @@ $collect = [
     'filterType' => Liquid error: Value cannot be null. (Parameter 'key')
 ];
 
-$result = $productPricePointsController->listProductPricePoints($collect);
+$productPricePointsController = $client->getProductPricePointsController();
+
+try {
+    $result = $productPricePointsController->listProductPricePoints($collect);
+    echo 'ListProductPricePointsResponse:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -215,11 +233,19 @@ $body = UpdateProductPricePointRequestBuilder::init(
         ->build()
 )->build();
 
-$result = $productPricePointsController->updateProductPricePoint(
-    $productId,
-    $pricePointId,
-    $body
-);
+$productPricePointsController = $client->getProductPricePointsController();
+
+try {
+    $result = $productPricePointsController->updateProductPricePoint(
+        $productId,
+        $pricePointId,
+        $body
+    );
+    echo 'ProductPricePointResponse:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -281,10 +307,18 @@ $productId = 124;
 
 $pricePointId = 188;
 
-$result = $productPricePointsController->readProductPricePoint(
-    $productId,
-    $pricePointId
-);
+$productPricePointsController = $client->getProductPricePointsController();
+
+try {
+    $result = $productPricePointsController->readProductPricePoint(
+        $productId,
+        $pricePointId
+    );
+    echo 'ProductPricePointResponse:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -341,10 +375,20 @@ $productId = 124;
 
 $pricePointId = 188;
 
-$result = $productPricePointsController->archiveProductPricePoint(
-    $productId,
-    $pricePointId
-);
+$productPricePointsController = $client->getProductPricePointsController();
+
+try {
+    $result = $productPricePointsController->archiveProductPricePoint(
+        $productId,
+        $pricePointId
+    );
+    echo 'ProductPricePointResponse:';
+    var_dump($result);
+} catch (ErrorListResponseException $exp) {
+    echo 'Caught ErrorListResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -407,10 +451,18 @@ $productId = 202;
 
 $pricePointId = 10;
 
-$result = $productPricePointsController->unarchiveProductPricePoint(
-    $productId,
-    $pricePointId
-);
+$productPricePointsController = $client->getProductPricePointsController();
+
+try {
+    $result = $productPricePointsController->unarchiveProductPricePoint(
+        $productId,
+        $pricePointId
+    );
+    echo 'ProductPricePointResponse:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -469,10 +521,18 @@ $productId = 202;
 
 $pricePointId = 10;
 
-$result = $productPricePointsController->promoteProductPricePointToDefault(
-    $productId,
-    $pricePointId
-);
+$productPricePointsController = $client->getProductPricePointsController();
+
+try {
+    $result = $productPricePointsController->promoteProductPricePointToDefault(
+        $productId,
+        $pricePointId
+    );
+    echo 'ProductResponse:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -593,10 +653,18 @@ $body = BulkCreateProductPricePointsRequestBuilder::init(
     ]
 )->build();
 
-$result = $productPricePointsController->bulkCreateProductPricePoints(
-    $productId,
-    $body
-);
+$productPricePointsController = $client->getProductPricePointsController();
+
+try {
+    $result = $productPricePointsController->bulkCreateProductPricePoints(
+        $productId,
+        $body
+    );
+    echo 'BulkCreateProductPricePointsResponse:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -686,10 +754,20 @@ $body = CreateProductCurrencyPricesRequestBuilder::init(
     ]
 )->build();
 
-$result = $productPricePointsController->createProductCurrencyPrices(
-    $productPricePointId,
-    $body
-);
+$productPricePointsController = $client->getProductPricePointsController();
+
+try {
+    $result = $productPricePointsController->createProductCurrencyPrices(
+        $productPricePointId,
+        $body
+    );
+    echo 'CurrencyPricesResponse:';
+    var_dump($result);
+} catch (ErrorArrayMapResponseException $exp) {
+    echo 'Caught ErrorArrayMapResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -760,10 +838,20 @@ $body = UpdateCurrencyPricesRequestBuilder::init(
     ]
 )->build();
 
-$result = $productPricePointsController->updateProductCurrencyPrices(
-    $productPricePointId,
-    $body
-);
+$productPricePointsController = $client->getProductPricePointsController();
+
+try {
+    $result = $productPricePointsController->updateProductCurrencyPrices(
+        $productPricePointId,
+        $body
+    );
+    echo 'CurrencyPricesResponse:';
+    var_dump($result);
+} catch (ErrorArrayMapResponseException $exp) {
+    echo 'Caught ErrorArrayMapResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -841,7 +929,17 @@ $collect = [
     'perPage' => 50
 ];
 
-$result = $productPricePointsController->listAllProductPricePoints($collect);
+$productPricePointsController = $client->getProductPricePointsController();
+
+try {
+    $result = $productPricePointsController->listAllProductPricePoints($collect);
+    echo 'ListProductPricePointsResponse:';
+    var_dump($result);
+} catch (ErrorListResponseException $exp) {
+    echo 'Caught ErrorListResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*

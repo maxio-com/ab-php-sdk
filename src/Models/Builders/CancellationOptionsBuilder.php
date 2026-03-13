@@ -61,6 +61,48 @@ class CancellationOptionsBuilder
     }
 
     /**
+     * Sets cancel at end of period field.
+     *
+     * @param bool|null $value
+     */
+    public function cancelAtEndOfPeriod(?bool $value): self
+    {
+        $this->instance->setCancelAtEndOfPeriod($value);
+        return $this;
+    }
+
+    /**
+     * Sets scheduled cancellation at field.
+     *
+     * @param \DateTime|null $value
+     */
+    public function scheduledCancellationAt(?\DateTime $value): self
+    {
+        $this->instance->setScheduledCancellationAt($value);
+        return $this;
+    }
+
+    /**
+     * Unsets scheduled cancellation at field.
+     */
+    public function unsetScheduledCancellationAt(): self
+    {
+        $this->instance->unsetScheduledCancellationAt();
+        return $this;
+    }
+
+    /**
+     * Sets refund prepayment account balance field.
+     *
+     * @param bool|null $value
+     */
+    public function refundPrepaymentAccountBalance(?bool $value): self
+    {
+        $this->instance->setRefundPrepaymentAccountBalance($value);
+        return $this;
+    }
+
+    /**
      * Add an additional property to this model.
      *
      * @param string $name Name of property.

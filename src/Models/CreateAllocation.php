@@ -21,6 +21,21 @@ class CreateAllocation implements \JsonSerializable
     private $quantity;
 
     /**
+     * @var string|null
+     */
+    private $decimalQuantity;
+
+    /**
+     * @var float|null
+     */
+    private $previousQuantity;
+
+    /**
+     * @var string|null
+     */
+    private $decimalPreviousQuantity;
+
+    /**
      * @var int|null
      */
     private $componentId;
@@ -41,11 +56,6 @@ class CreateAllocation implements \JsonSerializable
     private $prorationUpgradeScheme;
 
     /**
-     * @var bool|null
-     */
-    private $accrueCharge;
-
-    /**
      * @var array
      */
     private $downgradeCredit = [];
@@ -54,6 +64,11 @@ class CreateAllocation implements \JsonSerializable
      * @var array
      */
     private $upgradeCharge = [];
+
+    /**
+     * @var bool|null
+     */
+    private $accrueCharge;
 
     /**
      * @var bool|null
@@ -69,6 +84,11 @@ class CreateAllocation implements \JsonSerializable
      * @var BillingSchedule|null
      */
     private $billingSchedule;
+
+    /**
+     * @var ComponentCustomPrice|null
+     */
+    private $customPrice;
 
     /**
      * @param float $quantity
@@ -104,9 +124,77 @@ class CreateAllocation implements \JsonSerializable
     }
 
     /**
+     * Returns Decimal Quantity.
+     * Decimal representation of the allocated quantity. Only valid when decimal
+     * allocations are enabled for the component.
+     */
+    public function getDecimalQuantity(): ?string
+    {
+        return $this->decimalQuantity;
+    }
+
+    /**
+     * Sets Decimal Quantity.
+     * Decimal representation of the allocated quantity. Only valid when decimal
+     * allocations are enabled for the component.
+     *
+     * @maps decimal_quantity
+     */
+    public function setDecimalQuantity(?string $decimalQuantity): void
+    {
+        $this->decimalQuantity = $decimalQuantity;
+    }
+
+    /**
+     * Returns Previous Quantity.
+     * The quantity that was in effect before this allocation. Responses always
+     * include this value; it may be supplied on preview requests to ensure the
+     * expected change is evaluated.
+     */
+    public function getPreviousQuantity(): ?float
+    {
+        return $this->previousQuantity;
+    }
+
+    /**
+     * Sets Previous Quantity.
+     * The quantity that was in effect before this allocation. Responses always
+     * include this value; it may be supplied on preview requests to ensure the
+     * expected change is evaluated.
+     *
+     * @maps previous_quantity
+     */
+    public function setPreviousQuantity(?float $previousQuantity): void
+    {
+        $this->previousQuantity = $previousQuantity;
+    }
+
+    /**
+     * Returns Decimal Previous Quantity.
+     * Decimal representation of `previous_quantity`. Only valid when decimal
+     * allocations are enabled for the component.
+     */
+    public function getDecimalPreviousQuantity(): ?string
+    {
+        return $this->decimalPreviousQuantity;
+    }
+
+    /**
+     * Sets Decimal Previous Quantity.
+     * Decimal representation of `previous_quantity`. Only valid when decimal
+     * allocations are enabled for the component.
+     *
+     * @maps decimal_previous_quantity
+     */
+    public function setDecimalPreviousQuantity(?string $decimalPreviousQuantity): void
+    {
+        $this->decimalPreviousQuantity = $decimalPreviousQuantity;
+    }
+
+    /**
      * Returns Component Id.
      * (required for the multiple allocations endpoint) The id associated with the component for which the
-     * allocation is being made
+     * allocation is being made.
      */
     public function getComponentId(): ?int
     {
@@ -116,7 +204,7 @@ class CreateAllocation implements \JsonSerializable
     /**
      * Sets Component Id.
      * (required for the multiple allocations endpoint) The id associated with the component for which the
-     * allocation is being made
+     * allocation is being made.
      *
      * @maps component_id
      */
@@ -127,7 +215,7 @@ class CreateAllocation implements \JsonSerializable
 
     /**
      * Returns Memo.
-     * A memo to record along with the allocation
+     * A memo to record along with the allocation.
      */
     public function getMemo(): ?string
     {
@@ -136,7 +224,7 @@ class CreateAllocation implements \JsonSerializable
 
     /**
      * Sets Memo.
-     * A memo to record along with the allocation
+     * A memo to record along with the allocation.
      *
      * @maps memo
      */
@@ -186,32 +274,15 @@ class CreateAllocation implements \JsonSerializable
     }
 
     /**
-     * Returns Accrue Charge.
-     * If the change in cost is an upgrade, this determines if the charge should accrue to the next renewal
-     * or if capture should be attempted immediately. Defaults to the site setting if one is not provided.
-     */
-    public function getAccrueCharge(): ?bool
-    {
-        return $this->accrueCharge;
-    }
-
-    /**
-     * Sets Accrue Charge.
-     * If the change in cost is an upgrade, this determines if the charge should accrue to the next renewal
-     * or if capture should be attempted immediately. Defaults to the site setting if one is not provided.
-     *
-     * @maps accrue_charge
-     */
-    public function setAccrueCharge(?bool $accrueCharge): void
-    {
-        $this->accrueCharge = $accrueCharge;
-    }
-
-    /**
      * Returns Downgrade Credit.
      * The type of credit to be created when upgrading/downgrading. Defaults to the component and then site
-     * setting if one is not provided.
-     * Available values: `full`, `prorated`, `none`.
+     * setting if one is not provided. Values are:
+     *
+     * `full` -  A full price credit is added for the amount owed.
+     *
+     * `prorated` - A prorated credit is added for the amount owed.
+     *
+     * `none` - No charge is added.
      */
     public function getDowngradeCredit(): ?string
     {
@@ -224,11 +295,16 @@ class CreateAllocation implements \JsonSerializable
     /**
      * Sets Downgrade Credit.
      * The type of credit to be created when upgrading/downgrading. Defaults to the component and then site
-     * setting if one is not provided.
-     * Available values: `full`, `prorated`, `none`.
+     * setting if one is not provided. Values are:
+     *
+     * `full` -  A full price credit is added for the amount owed.
+     *
+     * `prorated` - A prorated credit is added for the amount owed.
+     *
+     * `none` - No charge is added.
      *
      * @maps downgrade_credit
-     * @factory \AdvancedBillingLib\Models\CreditType::checkValue
+     * @factory \AdvancedBillingLib\Models\DowngradeCreditCreditType::checkValue
      */
     public function setDowngradeCredit(?string $downgradeCredit): void
     {
@@ -238,8 +314,13 @@ class CreateAllocation implements \JsonSerializable
     /**
      * Unsets Downgrade Credit.
      * The type of credit to be created when upgrading/downgrading. Defaults to the component and then site
-     * setting if one is not provided.
-     * Available values: `full`, `prorated`, `none`.
+     * setting if one is not provided. Values are:
+     *
+     * `full` -  A full price credit is added for the amount owed.
+     *
+     * `prorated` - A prorated credit is added for the amount owed.
+     *
+     * `none` - No charge is added.
      */
     public function unsetDowngradeCredit(): void
     {
@@ -249,8 +330,13 @@ class CreateAllocation implements \JsonSerializable
     /**
      * Returns Upgrade Charge.
      * The type of credit to be created when upgrading/downgrading. Defaults to the component and then site
-     * setting if one is not provided.
-     * Available values: `full`, `prorated`, `none`.
+     * setting if one is not provided. Values are:
+     *
+     * `full` - A charge is added for the full price of the component.
+     *
+     * `prorated` - A charge is added for the prorated price of the component change.
+     *
+     * `none` - No charge is added.
      */
     public function getUpgradeCharge(): ?string
     {
@@ -263,11 +349,16 @@ class CreateAllocation implements \JsonSerializable
     /**
      * Sets Upgrade Charge.
      * The type of credit to be created when upgrading/downgrading. Defaults to the component and then site
-     * setting if one is not provided.
-     * Available values: `full`, `prorated`, `none`.
+     * setting if one is not provided. Values are:
+     *
+     * `full` - A charge is added for the full price of the component.
+     *
+     * `prorated` - A charge is added for the prorated price of the component change.
+     *
+     * `none` - No charge is added.
      *
      * @maps upgrade_charge
-     * @factory \AdvancedBillingLib\Models\CreditType::checkValue
+     * @factory \AdvancedBillingLib\Models\UpgradeChargeCreditType::checkValue
      */
     public function setUpgradeCharge(?string $upgradeCharge): void
     {
@@ -277,12 +368,53 @@ class CreateAllocation implements \JsonSerializable
     /**
      * Unsets Upgrade Charge.
      * The type of credit to be created when upgrading/downgrading. Defaults to the component and then site
-     * setting if one is not provided.
-     * Available values: `full`, `prorated`, `none`.
+     * setting if one is not provided. Values are:
+     *
+     * `full` - A charge is added for the full price of the component.
+     *
+     * `prorated` - A charge is added for the prorated price of the component change.
+     *
+     * `none` - No charge is added.
      */
     public function unsetUpgradeCharge(): void
     {
         $this->upgradeCharge = [];
+    }
+
+    /**
+     * Returns Accrue Charge.
+     * "If the change in cost is an upgrade, this determines if the charge should accrue to the next
+     * renewal or if capture should be attempted immediately.
+     *
+     * `true` - Attempt to charge the customer at the next renewal.
+     *
+     * `false` - Attempt to charge the customer right away. If it fails, the charge will be accrued until
+     * the next renewal.
+     *
+     * Defaults to the site setting if unspecified in the request.
+     */
+    public function getAccrueCharge(): ?bool
+    {
+        return $this->accrueCharge;
+    }
+
+    /**
+     * Sets Accrue Charge.
+     * "If the change in cost is an upgrade, this determines if the charge should accrue to the next
+     * renewal or if capture should be attempted immediately.
+     *
+     * `true` - Attempt to charge the customer at the next renewal.
+     *
+     * `false` - Attempt to charge the customer right away. If it fails, the charge will be accrued until
+     * the next renewal.
+     *
+     * Defaults to the site setting if unspecified in the request.
+     *
+     * @maps accrue_charge
+     */
+    public function setAccrueCharge(?bool $accrueCharge): void
+    {
+        $this->accrueCharge = $accrueCharge;
     }
 
     /**
@@ -370,6 +502,26 @@ class CreateAllocation implements \JsonSerializable
     }
 
     /**
+     * Returns Custom Price.
+     * Create or update custom pricing unique to the subscription. Used in place of `price_point_id`.
+     */
+    public function getCustomPrice(): ?ComponentCustomPrice
+    {
+        return $this->customPrice;
+    }
+
+    /**
+     * Sets Custom Price.
+     * Create or update custom pricing unique to the subscription. Used in place of `price_point_id`.
+     *
+     * @maps custom_price
+     */
+    public function setCustomPrice(?ComponentCustomPrice $customPrice): void
+    {
+        $this->customPrice = $customPrice;
+    }
+
+    /**
      * Converts the CreateAllocation object to a human-readable string representation.
      *
      * @return string The string representation of the CreateAllocation object.
@@ -380,16 +532,20 @@ class CreateAllocation implements \JsonSerializable
             'CreateAllocation',
             [
                 'quantity' => $this->quantity,
+                'decimalQuantity' => $this->decimalQuantity,
+                'previousQuantity' => $this->previousQuantity,
+                'decimalPreviousQuantity' => $this->decimalPreviousQuantity,
                 'componentId' => $this->componentId,
                 'memo' => $this->memo,
                 'prorationDowngradeScheme' => $this->prorationDowngradeScheme,
                 'prorationUpgradeScheme' => $this->prorationUpgradeScheme,
-                'accrueCharge' => $this->accrueCharge,
                 'downgradeCredit' => $this->getDowngradeCredit(),
                 'upgradeCharge' => $this->getUpgradeCharge(),
+                'accrueCharge' => $this->accrueCharge,
                 'initiateDunning' => $this->initiateDunning,
                 'pricePointId' => $this->getPricePointId(),
                 'billingSchedule' => $this->billingSchedule,
+                'customPrice' => $this->customPrice,
                 'additionalProperties' => $this->additionalProperties
             ]
         );
@@ -436,6 +592,15 @@ class CreateAllocation implements \JsonSerializable
     {
         $json = [];
         $json['quantity']                       = $this->quantity;
+        if (isset($this->decimalQuantity)) {
+            $json['decimal_quantity']           = $this->decimalQuantity;
+        }
+        if (isset($this->previousQuantity)) {
+            $json['previous_quantity']          = $this->previousQuantity;
+        }
+        if (isset($this->decimalPreviousQuantity)) {
+            $json['decimal_previous_quantity']  = $this->decimalPreviousQuantity;
+        }
         if (isset($this->componentId)) {
             $json['component_id']               = $this->componentId;
         }
@@ -448,14 +613,17 @@ class CreateAllocation implements \JsonSerializable
         if (isset($this->prorationUpgradeScheme)) {
             $json['proration_upgrade_scheme']   = $this->prorationUpgradeScheme;
         }
-        if (isset($this->accrueCharge)) {
-            $json['accrue_charge']              = $this->accrueCharge;
-        }
         if (!empty($this->downgradeCredit)) {
-            $json['downgrade_credit']           = CreditType::checkValue($this->downgradeCredit['value']);
+            $json['downgrade_credit']           =
+                DowngradeCreditCreditType::checkValue(
+                    $this->downgradeCredit['value']
+                );
         }
         if (!empty($this->upgradeCharge)) {
-            $json['upgrade_charge']             = CreditType::checkValue($this->upgradeCharge['value']);
+            $json['upgrade_charge']             = UpgradeChargeCreditType::checkValue($this->upgradeCharge['value']);
+        }
+        if (isset($this->accrueCharge)) {
+            $json['accrue_charge']              = $this->accrueCharge;
         }
         if (isset($this->initiateDunning)) {
             $json['initiate_dunning']           = $this->initiateDunning;
@@ -469,6 +637,9 @@ class CreateAllocation implements \JsonSerializable
         }
         if (isset($this->billingSchedule)) {
             $json['billing_schedule']           = $this->billingSchedule;
+        }
+        if (isset($this->customPrice)) {
+            $json['custom_price']               = $this->customPrice;
         }
         $json = array_merge($json, $this->additionalProperties);
 

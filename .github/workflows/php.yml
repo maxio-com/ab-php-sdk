@@ -46,8 +46,8 @@ jobs:
           SUB_DOMAIN: ${{ secrets.SUB_DOMAIN }}
           DOMAIN: ${{ secrets.DOMAIN }}
 
-      - name: Wait 10 seconds to allow site be cleared
-        run: sleep 10
+      - name: Wait 60 seconds to allow site be cleared
+        run: sleep 60
 
 
   run_tests:

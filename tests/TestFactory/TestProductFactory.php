@@ -78,6 +78,7 @@ final class TestProductFactory
             ->publicSignupPages(ProductTestData::PUBLIC_SIGNUP_PAGES)
             ->taxCode(ProductTestData::TAX_CODE)
             ->itemCategory(ProductTestData::ITEM_CATEGORY)
+            ->additionalProperty('trial_type', 'payment_expected')
             ->build();
     }
 }

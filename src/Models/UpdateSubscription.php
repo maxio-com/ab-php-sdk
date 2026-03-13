@@ -47,9 +47,9 @@ class UpdateSubscription implements \JsonSerializable
     private $nextProductPricePointId;
 
     /**
-     * @var array
+     * @var string|int|null
      */
-    private $snapDay = [];
+    private $snapDay;
 
     /**
      * @var \DateTime|null
@@ -242,40 +242,27 @@ class UpdateSubscription implements \JsonSerializable
 
     /**
      * Returns Snap Day.
-     * Use for subscriptions with product eligible for calendar billing only. Value can be 1-28 or 'end'.
+     * A day of month that subscription will be processed on. Can be 1 up to 28 or 'end'.
      *
-     * @return int|string|null
+     * @return string|int|null
      */
     public function getSnapDay()
     {
-        if (count($this->snapDay) == 0) {
-            return null;
-        }
-        return $this->snapDay['value'];
+        return $this->snapDay;
     }
 
     /**
      * Sets Snap Day.
-     * Use for subscriptions with product eligible for calendar billing only. Value can be 1-28 or 'end'.
+     * A day of month that subscription will be processed on. Can be 1 up to 28 or 'end'.
      *
      * @maps snap_day
-     * @mapsBy anyOf(oneOf(int,SnapDay),null)
-     * @factory \AdvancedBillingLib\Models\SnapDay::checkValue SnapDay
+     * @mapsBy anyOf(oneOf(string,int),null)
      *
-     * @param int|string|null $snapDay
+     * @param string|int|null $snapDay
      */
     public function setSnapDay($snapDay): void
     {
-        $this->snapDay['value'] = $snapDay;
-    }
-
-    /**
-     * Unsets Snap Day.
-     * Use for subscriptions with product eligible for calendar billing only. Value can be 1-28 or 'end'.
-     */
-    public function unsetSnapDay(): void
-    {
-        $this->snapDay = [];
+        $this->snapDay = $snapDay;
     }
 
     /**
@@ -489,7 +476,8 @@ class UpdateSubscription implements \JsonSerializable
     /**
      * Returns Custom Price.
      * (Optional) Used in place of `product_price_point_id` to define a custom price point unique to the
-     * subscription
+     * subscription. A subscription can have up to 30 custom price points. Exceeding this limit will result
+     * in an API error.
      */
     public function getCustomPrice(): ?SubscriptionCustomPrice
     {
@@ -499,7 +487,8 @@ class UpdateSubscription implements \JsonSerializable
     /**
      * Sets Custom Price.
      * (Optional) Used in place of `product_price_point_id` to define a custom price point unique to the
-     * subscription
+     * subscription. A subscription can have up to 30 custom price points. Exceeding this limit will result
+     * in an API error.
      *
      * @maps custom_price
      */
@@ -644,7 +633,7 @@ class UpdateSubscription implements \JsonSerializable
                 'productChangeDelayed' => $this->productChangeDelayed,
                 'nextProductId' => $this->nextProductId,
                 'nextProductPricePointId' => $this->nextProductPricePointId,
-                'snapDay' => $this->getSnapDay(),
+                'snapDay' => $this->snapDay,
                 'initialBillingAt' => $this->initialBillingAt,
                 'deferSignup' => $this->deferSignup,
                 'nextBillingAt' => $this->nextBillingAt,
@@ -723,14 +712,11 @@ class UpdateSubscription implements \JsonSerializable
         if (isset($this->nextProductPricePointId)) {
             $json['next_product_price_point_id']           = $this->nextProductPricePointId;
         }
-        if (!empty($this->snapDay)) {
+        if (isset($this->snapDay)) {
             $json['snap_day']                              =
                 ApiHelper::getJsonHelper()->verifyTypes(
-                    $this->snapDay['value'],
-                    'anyOf(oneOf(int,SnapDay),null)',
-                    [
-                        '\AdvancedBillingLib\Models\SnapDay::checkValue SnapDay'
-                    ]
+                    $this->snapDay,
+                    'anyOf(oneOf(string,int),null)'
                 );
         }
         if (isset($this->initialBillingAt)) {

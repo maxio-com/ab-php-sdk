@@ -52,6 +52,11 @@ class ProductFamily implements \JsonSerializable
     private $updatedAt;
 
     /**
+     * @var array
+     */
+    private $archivedAt = [];
+
+    /**
      * Returns Id.
      */
     public function getId(): ?int
@@ -202,6 +207,42 @@ class ProductFamily implements \JsonSerializable
     }
 
     /**
+     * Returns Archived At.
+     * Timestamp indicating when this product family was archived. `null` if the product family is not
+     * archived.
+     */
+    public function getArchivedAt(): ?\DateTime
+    {
+        if (count($this->archivedAt) == 0) {
+            return null;
+        }
+        return $this->archivedAt['value'];
+    }
+
+    /**
+     * Sets Archived At.
+     * Timestamp indicating when this product family was archived. `null` if the product family is not
+     * archived.
+     *
+     * @maps archived_at
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
+     */
+    public function setArchivedAt(?\DateTime $archivedAt): void
+    {
+        $this->archivedAt['value'] = $archivedAt;
+    }
+
+    /**
+     * Unsets Archived At.
+     * Timestamp indicating when this product family was archived. `null` if the product family is not
+     * archived.
+     */
+    public function unsetArchivedAt(): void
+    {
+        $this->archivedAt = [];
+    }
+
+    /**
      * Converts the ProductFamily object to a human-readable string representation.
      *
      * @return string The string representation of the ProductFamily object.
@@ -218,6 +259,7 @@ class ProductFamily implements \JsonSerializable
                 'description' => $this->getDescription(),
                 'createdAt' => $this->createdAt,
                 'updatedAt' => $this->updatedAt,
+                'archivedAt' => $this->getArchivedAt(),
                 'additionalProperties' => $this->additionalProperties
             ]
         );
@@ -283,6 +325,9 @@ class ProductFamily implements \JsonSerializable
         }
         if (isset($this->updatedAt)) {
             $json['updated_at']      = DateTimeHelper::toRfc3339DateTime($this->updatedAt);
+        }
+        if (!empty($this->archivedAt)) {
+            $json['archived_at']     = DateTimeHelper::toRfc3339DateTime($this->archivedAt['value']);
         }
         $json = array_merge($json, $this->additionalProperties);
 

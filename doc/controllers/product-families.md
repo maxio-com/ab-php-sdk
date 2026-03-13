@@ -64,7 +64,15 @@ $collect = [
     'mInclude' => ListProductsInclude::PREPAID_PRODUCT_PRICE_POINT
 ];
 
-$result = $productFamiliesController->listProductsForProductFamily($collect);
+$productFamiliesController = $client->getProductFamiliesController();
+
+try {
+    $result = $productFamiliesController->listProductsForProductFamily($collect);
+    echo 'ProductResponse[]:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -204,7 +212,17 @@ $body = CreateProductFamilyRequestBuilder::init(
         ->build()
 )->build();
 
-$result = $productFamiliesController->createProductFamily($body);
+$productFamiliesController = $client->getProductFamiliesController();
+
+try {
+    $result = $productFamiliesController->createProductFamily($body);
+    echo 'ProductFamilyResponse:';
+    var_dump($result);
+} catch (ErrorListResponseException $exp) {
+    echo 'Caught ErrorListResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -257,7 +275,15 @@ $collect = [
     'dateField' => BasicDateField::UPDATED_AT
 ];
 
-$result = $productFamiliesController->listProductFamilies($collect);
+$productFamiliesController = $client->getProductFamiliesController();
+
+try {
+    $result = $productFamiliesController->listProductFamilies($collect);
+    echo 'ProductFamilyResponse[]:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -272,7 +298,8 @@ $result = $productFamiliesController->listProductFamilies($collect);
       "handle": "acme-projects",
       "accounting_code": null,
       "created_at": "2013-02-20T15:05:51-07:00",
-      "updated_at": "2013-02-20T15:05:51-07:00"
+      "updated_at": "2013-02-20T15:05:51-07:00",
+      "archived_at": null
     }
   },
   {
@@ -283,7 +310,8 @@ $result = $productFamiliesController->listProductFamilies($collect);
       "handle": "bat-family",
       "accounting_code": null,
       "created_at": "2014-04-16T12:41:13-06:00",
-      "updated_at": "2014-04-16T12:41:13-06:00"
+      "updated_at": "2014-04-16T12:41:13-06:00",
+      "archived_at": "2024-11-05T09:30:00-07:00"
     }
   }
 ]
@@ -315,7 +343,15 @@ function readProductFamily(int $id): ProductFamilyResponse
 ```php
 $id = 112;
 
-$result = $productFamiliesController->readProductFamily($id);
+$productFamiliesController = $client->getProductFamiliesController();
+
+try {
+    $result = $productFamiliesController->readProductFamily($id);
+    echo 'ProductFamilyResponse:';
+    var_dump($result);
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Example Response *(as JSON)*
@@ -327,7 +363,8 @@ $result = $productFamiliesController->readProductFamily($id);
     "name": "Acme Projects",
     "description": "",
     "handle": "billing-plans",
-    "accounting_code": null
+    "accounting_code": null,
+    "archived_at": null
   }
 }
 ```
