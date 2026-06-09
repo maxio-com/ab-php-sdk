@@ -20,11 +20,15 @@ $webhooksController = $client->getWebhooksController();
 
 # List Webhooks
 
-Allows you to view a list of webhooks.  You can pass query parameters if you want to filter webhooks. See the [Webhooks](page:introduction/webhooks/webhooks) documentation for more information.
+Retrieves a list of webhooks.  You can pass query parameters if you want to filter webhooks. See the [Webhooks](page:introduction/webhooks/webhooks) documentation for more information.
 
 ```php
 function listWebhooks(array $options): array
 ```
+
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
 
 ## Parameters
 
@@ -39,6 +43,8 @@ function listWebhooks(array $options): array
 | `subscription` | `?int` | Query, Optional | The Advanced Billing id of a subscription you'd like to filter for |
 
 ## Response Type
+
+**201**: OK
 
 [`WebhookResponse[]`](../../doc/models/webhook-response.md)
 
@@ -103,11 +109,15 @@ try {
 
 # Enable Webhooks
 
-Allows you to enable webhooks for your site
+Enables webhooks for your site.
 
 ```php
 function enableWebhooks(?EnableWebhooksRequest $body = null): EnableWebhooksResponse
 ```
+
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
 
 ## Parameters
 
@@ -116,6 +126,8 @@ function enableWebhooks(?EnableWebhooksRequest $body = null): EnableWebhooksResp
 | `body` | [`?EnableWebhooksRequest`](../../doc/models/enable-webhooks-request.md) | Body, Optional | - |
 
 ## Response Type
+
+**200**: OK
 
 [`EnableWebhooksResponse`](../../doc/models/enable-webhooks-response.md)
 
@@ -154,6 +166,10 @@ Replays webhooks. Posting to this endpoint does not immediately resend the webho
 function replayWebhooks(?ReplayWebhooksRequest $body = null): ReplayWebhooksResponse
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -161,6 +177,8 @@ function replayWebhooks(?ReplayWebhooksRequest $body = null): ReplayWebhooksResp
 | `body` | [`?ReplayWebhooksRequest`](../../doc/models/replay-webhooks-request.md) | Body, Optional | - |
 
 ## Response Type
+
+**200**: OK
 
 [`ReplayWebhooksResponse`](../../doc/models/replay-webhooks-response.md)
 
@@ -196,12 +214,16 @@ try {
 
 # Create Endpoint
 
-Creates an endpoint and assigns a list of webhooks subscriptions (events) to it.
+Creates an endpoint and assigns a list of webhook subscriptions (events) to it.
 See the [Webhooks Reference](page:introduction/webhooks/webhooks-reference#events) page for available events.
 
 ```php
 function createEndpoint(?CreateOrUpdateEndpointRequest $body = null): EndpointResponse
 ```
+
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
 
 ## Parameters
 
@@ -210,6 +232,8 @@ function createEndpoint(?CreateOrUpdateEndpointRequest $body = null): EndpointRe
 | `body` | [`?CreateOrUpdateEndpointRequest`](../../doc/models/create-or-update-endpoint-request.md) | Body, Optional | Used to Create or Update Endpoint |
 
 ## Response Type
+
+**200**: OK
 
 [`EndpointResponse`](../../doc/models/endpoint-response.md)
 
@@ -221,7 +245,8 @@ $body = CreateOrUpdateEndpointRequestBuilder::init(
         'https://your.site/webhooks',
         [
             WebhookSubscription::PAYMENT_SUCCESS,
-            WebhookSubscription::PAYMENT_FAILURE
+            WebhookSubscription::PAYMENT_FAILURE,
+            WebhookSubscription::INVOICE_PENDING
         ]
     )->build()
 )->build();
@@ -250,7 +275,8 @@ try {
     "status": "enabled",
     "webhook_subscriptions": [
       "payment_success",
-      "payment_failure"
+      "payment_failure",
+      "invoice_pending"
     ]
   }
 }
@@ -271,7 +297,13 @@ Returns created endpoints for a site.
 function listEndpoints(): array
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Response Type
+
+**200**: OK
 
 [`Endpoint[]`](../../doc/models/endpoint.md)
 
@@ -300,7 +332,8 @@ try {
     "status": "enabled",
     "webhook_subscriptions": [
       "payment_success",
-      "payment_failure"
+      "payment_failure",
+      "invoice_pending"
     ]
   },
   {
@@ -324,11 +357,15 @@ Updates an Endpoint. You can change the `url` of your endpoint or the list of `w
 
 Always send a complete list of events to which you want to subscribe. Sending a PUT request for an existing endpoint with an empty list of `webhook_subscriptions` will unsubscribe all events.
 
-If you want unsubscribe from a specific event, send a list of `webhook_subscriptions` without the specific event key.
+If you want to unsubscribe from a specific event, send a list of `webhook_subscriptions` without the specific event key.
 
 ```php
 function updateEndpoint(int $endpointId, ?CreateOrUpdateEndpointRequest $body = null): EndpointResponse
 ```
+
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
 
 ## Parameters
 
@@ -338,6 +375,8 @@ function updateEndpoint(int $endpointId, ?CreateOrUpdateEndpointRequest $body = 
 | `body` | [`?CreateOrUpdateEndpointRequest`](../../doc/models/create-or-update-endpoint-request.md) | Body, Optional | Used to Create or Update Endpoint |
 
 ## Response Type
+
+**200**: OK
 
 [`EndpointResponse`](../../doc/models/endpoint-response.md)
 
@@ -352,7 +391,8 @@ $body = CreateOrUpdateEndpointRequestBuilder::init(
         [
             WebhookSubscription::PAYMENT_FAILURE,
             WebhookSubscription::PAYMENT_SUCCESS,
-            WebhookSubscription::REFUND_FAILURE
+            WebhookSubscription::REFUND_FAILURE,
+            WebhookSubscription::INVOICE_PENDING
         ]
     )->build()
 )->build();

@@ -47,6 +47,10 @@ You can restrict a coupon to only apply to specific products / components by opt
 function createCoupon(int $productFamilyId, ?CouponRequest $body = null): CouponResponse
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -55,6 +59,8 @@ function createCoupon(int $productFamilyId, ?CouponRequest $body = null): Coupon
 | `body` | [`?CouponRequest`](../../doc/models/coupon-request.md) | Body, Optional | - |
 
 ## Response Type
+
+**201**: Created
 
 [`CouponResponse`](../../doc/models/coupon-response.md)
 
@@ -126,6 +132,10 @@ List coupons for a specific Product Family in a Site.
 function listCouponsForProductFamily(array $options): array
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -137,6 +147,8 @@ function listCouponsForProductFamily(array $options): array
 | `currencyPrices` | `?bool` | Query, Optional | When fetching coupons, if you have defined multiple currencies at the site level, you can optionally pass the `?currency_prices=true` query param to include an array of currency price data in the response. Use in query `currency_prices=true`. |
 
 ## Response Type
+
+**200**: OK
 
 [`CouponResponse[]`](../../doc/models/coupon-response.md)
 
@@ -286,6 +298,10 @@ function findCoupon(
 ): CouponResponse
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -295,6 +311,8 @@ function findCoupon(
 | `currencyPrices` | `?bool` | Query, Optional | When fetching coupons, if you have defined multiple currencies at the site level, you can optionally pass the `?currency_prices=true` query param to include an array of currency price data in the response. |
 
 ## Response Type
+
+**200**: OK
 
 [`CouponResponse`](../../doc/models/coupon-response.md)
 
@@ -332,6 +350,10 @@ If the coupon is set to `use_site_exchange_rate: true`, it will return pricing b
 function readCoupon(int $productFamilyId, int $couponId, ?bool $currencyPrices = null): CouponResponse
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -341,6 +363,8 @@ function readCoupon(int $productFamilyId, int $couponId, ?bool $currencyPrices =
 | `currencyPrices` | `?bool` | Query, Optional | When fetching coupons, if you have defined multiple currencies at the site level, you can optionally pass the `?currency_prices=true` query param to include an array of currency price data in the response. |
 
 ## Response Type
+
+**200**: OK
 
 [`CouponResponse`](../../doc/models/coupon-response.md)
 
@@ -411,6 +435,10 @@ You can restrict a coupon to only apply to specific products / components by opt
 function updateCoupon(int $productFamilyId, int $couponId, ?CouponRequest $body = null): CouponResponse
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -420,6 +448,8 @@ function updateCoupon(int $productFamilyId, int $couponId, ?CouponRequest $body 
 | `body` | [`?CouponRequest`](../../doc/models/coupon-request.md) | Body, Optional | - |
 
 ## Response Type
+
+**200**: OK
 
 [`CouponResponse`](../../doc/models/coupon-response.md)
 
@@ -523,6 +553,10 @@ The `archived_at` date and time will be assigned.
 function archiveCoupon(int $productFamilyId, int $couponId): CouponResponse
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -531,6 +565,8 @@ function archiveCoupon(int $productFamilyId, int $couponId): CouponResponse
 | `couponId` | `int` | Template, Required | The Advanced Billing id of the coupon |
 
 ## Response Type
+
+**200**: OK
 
 [`CouponResponse`](../../doc/models/coupon-response.md)
 
@@ -593,6 +629,10 @@ You can retrieve a list of coupons.
 function listCoupons(array $options): array
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -603,6 +643,8 @@ function listCoupons(array $options): array
 | `currencyPrices` | `?bool` | Query, Optional | When fetching coupons, if you have defined multiple currencies at the site level, you can optionally pass the `?currency_prices=true` query param to include an array of currency price data in the response. Use in query `currency_prices=true`. |
 
 ## Response Type
+
+**200**: OK
 
 [`CouponResponse[]`](../../doc/models/coupon-response.md)
 
@@ -702,6 +744,10 @@ This request will provide details about the coupon usage as an array of data has
 function readCouponUsage(int $productFamilyId, int $couponId): array
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -710,6 +756,8 @@ function readCouponUsage(int $productFamilyId, int $couponId): array
 | `couponId` | `int` | Template, Required | The Advanced Billing id of the coupon. |
 
 ## Response Type
+
+**200**: OK
 
 [`CouponUsage[]`](../../doc/models/coupon-usage.md)
 
@@ -797,6 +845,10 @@ https://<subdomain>.chargify.com/coupons/validate.<format>?code=<coupon_code>&pr
 function validateCoupon(string $code, ?int $productFamilyId = null): CouponResponse
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -805,6 +857,8 @@ function validateCoupon(string $code, ?int $productFamilyId = null): CouponRespo
 | `productFamilyId` | `?int` | Query, Optional | The Advanced Billing id of the product family to which the coupon belongs |
 
 ## Response Type
+
+**200**: OK
 
 [`CouponResponse`](../../doc/models/coupon-response.md)
 
@@ -875,6 +929,10 @@ function createOrUpdateCouponCurrencyPrices(
 ): CouponCurrencyResponse
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -883,6 +941,8 @@ function createOrUpdateCouponCurrencyPrices(
 | `body` | [`?CouponCurrencyRequest`](../../doc/models/coupon-currency-request.md) | Body, Optional | - |
 
 ## Response Type
+
+**200**: OK
 
 [`CouponCurrencyResponse`](../../doc/models/coupon-currency-response.md)
 
@@ -974,6 +1034,10 @@ So, if the coupon subcode is `20%OFF`, the URL to delete this coupon subcode wou
 function createCouponSubcodes(int $couponId, ?CouponSubcodes $body = null): CouponSubcodesResponse
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -982,6 +1046,8 @@ function createCouponSubcodes(int $couponId, ?CouponSubcodes $body = null): Coup
 | `body` | [`?CouponSubcodes`](../../doc/models/coupon-subcodes.md) | Body, Optional | - |
 
 ## Response Type
+
+**200**: OK
 
 [`CouponSubcodesResponse`](../../doc/models/coupon-subcodes-response.md)
 
@@ -1035,6 +1101,10 @@ This request allows you to request the subcodes that are attached to a coupon.
 function listCouponSubcodes(array $options): CouponSubcodes
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -1044,6 +1114,8 @@ function listCouponSubcodes(array $options): CouponSubcodes
 | `perPage` | `?int` | Query, Optional | This parameter indicates how many records to fetch in each request. Default value is 20. The maximum allowed values is 200; any per_page value over 200 will be changed to 200.<br>Use in query `per_page=200`.<br><br>**Default**: `20`<br><br>**Constraints**: `<= 200` |
 
 ## Response Type
+
+**200**: OK
 
 [`CouponSubcodes`](../../doc/models/coupon-subcodes.md)
 
@@ -1115,6 +1187,10 @@ The response will contain:
 function updateCouponSubcodes(int $couponId, ?CouponSubcodes $body = null): CouponSubcodesResponse
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -1123,6 +1199,8 @@ function updateCouponSubcodes(int $couponId, ?CouponSubcodes $body = null): Coup
 | `body` | [`?CouponSubcodes`](../../doc/models/coupon-subcodes.md) | Body, Optional | - |
 
 ## Response Type
+
+**200**: OK
 
 [`CouponSubcodesResponse`](../../doc/models/coupon-subcodes-response.md)
 
@@ -1185,6 +1263,10 @@ Or if the coupon subcode is 20%OFF, the URL to delete this coupon subcode would 
 function deleteCouponSubcode(int $couponId, string $subcode): void
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -1193,6 +1275,8 @@ function deleteCouponSubcode(int $couponId, string $subcode): void
 | `subcode` | `string` | Template, Required | The subcode of the coupon |
 
 ## Response Type
+
+**200**: OK
 
 `void`
 

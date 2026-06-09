@@ -15,39 +15,54 @@ use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
 /**
- * This attribute is particularly useful when you need to align billing events for different components
- * on distinct schedules within a subscription. This only works for site with Multifrequency enabled.
+ * Billing schedule settings for component allocations or usages on multi-frequency subscriptions. Use
+ * this to start a component's billing period on a custom date instead of aligning with the product
+ * charge schedule.
  */
 class BillingSchedule implements \JsonSerializable
 {
     /**
-     * @var \DateTime|null
+     * @var array
      */
-    private $initialBillingAt;
+    private $initialBillingAt = [];
 
     /**
      * Returns Initial Billing At.
-     * The initial_billing_at attribute in Maxio allows you to specify a custom starting date for billing
-     * cycles associated with components that have their own billing frequency set. Only ISO8601 format is
-     * supported.
+     * Custom start date (ISO 8601 date, YYYY-MM-DD) for the component's first billing period. If omitted
+     * or null, billing aligns with the product schedule. If provided, date must be on or after the minimum
+     * allowed date for the subscription or component.
      */
     public function getInitialBillingAt(): ?\DateTime
     {
-        return $this->initialBillingAt;
+        if (count($this->initialBillingAt) == 0) {
+            return null;
+        }
+        return $this->initialBillingAt['value'];
     }
 
     /**
      * Sets Initial Billing At.
-     * The initial_billing_at attribute in Maxio allows you to specify a custom starting date for billing
-     * cycles associated with components that have their own billing frequency set. Only ISO8601 format is
-     * supported.
+     * Custom start date (ISO 8601 date, YYYY-MM-DD) for the component's first billing period. If omitted
+     * or null, billing aligns with the product schedule. If provided, date must be on or after the minimum
+     * allowed date for the subscription or component.
      *
      * @maps initial_billing_at
      * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromSimpleDate
      */
     public function setInitialBillingAt(?\DateTime $initialBillingAt): void
     {
-        $this->initialBillingAt = $initialBillingAt;
+        $this->initialBillingAt['value'] = $initialBillingAt;
+    }
+
+    /**
+     * Unsets Initial Billing At.
+     * Custom start date (ISO 8601 date, YYYY-MM-DD) for the component's first billing period. If omitted
+     * or null, billing aligns with the product schedule. If provided, date must be on or after the minimum
+     * allowed date for the subscription or component.
+     */
+    public function unsetInitialBillingAt(): void
+    {
+        $this->initialBillingAt = [];
     }
 
     /**
@@ -59,7 +74,10 @@ class BillingSchedule implements \JsonSerializable
     {
         return ApiHelper::stringify(
             'BillingSchedule',
-            ['initialBillingAt' => $this->initialBillingAt, 'additionalProperties' => $this->additionalProperties]
+            [
+                'initialBillingAt' => $this->getInitialBillingAt(),
+                'additionalProperties' => $this->additionalProperties
+            ]
         );
     }
 
@@ -103,8 +121,8 @@ class BillingSchedule implements \JsonSerializable
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
-        if (isset($this->initialBillingAt)) {
-            $json['initial_billing_at'] = DateTimeHelper::toSimpleDate($this->initialBillingAt);
+        if (!empty($this->initialBillingAt)) {
+            $json['initial_billing_at'] = DateTimeHelper::toSimpleDate($this->initialBillingAt['value']);
         }
         $json = array_merge($json, $this->additionalProperties);
 

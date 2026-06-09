@@ -128,6 +128,17 @@ class InvoiceLineItemBuilder
     }
 
     /**
+     * Sets tax included field.
+     *
+     * @param bool|null $value
+     */
+    public function taxIncluded(?bool $value): self
+    {
+        $this->instance->setTaxIncluded($value);
+        return $this;
+    }
+
+    /**
      * Sets total amount field.
      *
      * @param string|null $value

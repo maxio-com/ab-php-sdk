@@ -12,3 +12,25 @@
 | [`UpdateMetafield`](../../../doc/models/update-metafield.md) |
 | [`UpdateMetafield[]`](../../../doc/models/update-metafield.md) |
 
+## UpdateMetafield
+
+### Initialization Code
+
+#### Example
+
+```php
+$value = UpdateMetafieldBuilder::init()->build();
+```
+
+## UpdateMetafield[]
+
+### Initialization Code
+
+#### Example
+
+```php
+$value = [
+    UpdateMetafieldBuilder::init()->build()
+];
+```
+

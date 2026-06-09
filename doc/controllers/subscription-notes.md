@@ -19,7 +19,7 @@ $subscriptionNotesController = $client->getSubscriptionNotesController();
 
 # Create Subscription Note
 
-Use the following method to create a note for a subscription.
+Creates a note for a subscription.
 
 ## How to Use Subscription Notes
 
@@ -36,6 +36,10 @@ function createSubscriptionNote(
 ): SubscriptionNoteResponse
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -44,6 +48,8 @@ function createSubscriptionNote(
 | `body` | [`?UpdateSubscriptionNoteRequest`](../../doc/models/update-subscription-note-request.md) | Body, Optional | Updatable fields for Subscription Note |
 
 ## Response Type
+
+**200**: OK
 
 [`SubscriptionNoteResponse`](../../doc/models/subscription-note-response.md)
 
@@ -84,11 +90,15 @@ try {
 
 # List Subscription Notes
 
-Use this method to retrieve a list of Notes associated with a Subscription. The response will be an array of Notes.
+Retrieves a list of notes associated with a subscription. The response will be an array of Notes.
 
 ```php
 function listSubscriptionNotes(array $options): array
 ```
+
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
 
 ## Parameters
 
@@ -99,6 +109,8 @@ function listSubscriptionNotes(array $options): array
 | `perPage` | `?int` | Query, Optional | This parameter indicates how many records to fetch in each request. Default value is 20. The maximum allowed values is 200; any per_page value over 200 will be changed to 200.<br>Use in query `per_page=200`.<br><br>**Default**: `20`<br><br>**Constraints**: `<= 200` |
 
 ## Response Type
+
+**200**: OK
 
 [`SubscriptionNoteResponse[]`](../../doc/models/subscription-note-response.md)
 
@@ -160,11 +172,15 @@ try {
 
 # Read Subscription Note
 
-Once you have obtained the ID of the note you wish to read, use this method to show a particular note attached to a subscription.
+Retrieves a specific note attached to a subscription.
 
 ```php
 function readSubscriptionNote(int $subscriptionId, int $noteId): SubscriptionNoteResponse
 ```
+
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
 
 ## Parameters
 
@@ -174,6 +190,8 @@ function readSubscriptionNote(int $subscriptionId, int $noteId): SubscriptionNot
 | `noteId` | `int` | Template, Required | The Advanced Billing id of the note |
 
 ## Response Type
+
+**200**: OK
 
 [`SubscriptionNoteResponse`](../../doc/models/subscription-note-response.md)
 
@@ -216,7 +234,7 @@ try {
 
 # Update Subscription Note
 
-Use the following method to update a note for a Subscription.
+Updates a note for a subscription.
 
 ```php
 function updateSubscriptionNote(
@@ -225,6 +243,10 @@ function updateSubscriptionNote(
     ?UpdateSubscriptionNoteRequest $body = null
 ): SubscriptionNoteResponse
 ```
+
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
 
 ## Parameters
 
@@ -235,6 +257,8 @@ function updateSubscriptionNote(
 | `body` | [`?UpdateSubscriptionNoteRequest`](../../doc/models/update-subscription-note-request.md) | Body, Optional | Updatable fields for Subscription Note |
 
 ## Response Type
+
+**200**: OK
 
 [`SubscriptionNoteResponse`](../../doc/models/subscription-note-response.md)
 
@@ -284,6 +308,10 @@ Deletes a note for a Subscription.
 function deleteSubscriptionNote(int $subscriptionId, int $noteId): void
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -292,6 +320,8 @@ function deleteSubscriptionNote(int $subscriptionId, int $noteId): void
 | `noteId` | `int` | Template, Required | The Advanced Billing id of the note |
 
 ## Response Type
+
+**200**: OK
 
 `void`
 

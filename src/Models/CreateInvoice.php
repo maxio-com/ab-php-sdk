@@ -90,6 +90,9 @@ class CreateInvoice implements \JsonSerializable
 
     /**
      * Returns Issue Date.
+     * Date on which the invoice will be issued (format YYYY-MM-DD). This date is interpreted and validated
+     * in your site's time zone. It must be today or a date in the past — future dates are not accepted. If
+     * omitted, defaults to today in your site's time zone.
      */
     public function getIssueDate(): ?\DateTime
     {
@@ -98,6 +101,9 @@ class CreateInvoice implements \JsonSerializable
 
     /**
      * Sets Issue Date.
+     * Date on which the invoice will be issued (format YYYY-MM-DD). This date is interpreted and validated
+     * in your site's time zone. It must be today or a date in the past — future dates are not accepted. If
+     * omitted, defaults to today in your site's time zone.
      *
      * @maps issue_date
      * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromSimpleDate

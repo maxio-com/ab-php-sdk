@@ -12,7 +12,7 @@ $componentsController = $client->getComponentsController();
 
 * [Create Metered Component](../../doc/controllers/components.md#create-metered-component)
 * [Create Quantity Based Component](../../doc/controllers/components.md#create-quantity-based-component)
-* [Create on Off Component](../../doc/controllers/components.md#create-on-off-component)
+* [Create On Off Component](../../doc/controllers/components.md#create-on-off-component)
 * [Create Prepaid Usage Component](../../doc/controllers/components.md#create-prepaid-usage-component)
 * [Create Event Based Component](../../doc/controllers/components.md#create-event-based-component)
 * [Find Component](../../doc/controllers/components.md#find-component)
@@ -28,7 +28,7 @@ $componentsController = $client->getComponentsController();
 
 This request will create a component definition of kind **metered_component** under the specified product family. Metered component can then be added and “allocated” for a subscription.
 
-Metered components are used to bill for any type of unit that resets to 0 at the end of the billing period (think daily Google Adwords clicks or monthly cell phone minutes). This is most commonly associated with usage-based billing and many other pricing schemes.
+Metered components are used to bill for any type of unit that resets to 0 at the end of the billing period (think daily Google Ads clicks or monthly cell phone minutes). This is most commonly associated with usage-based billing and many other pricing schemes.
 
 Note that this is different from recurring quantity-based components, which DO NOT reset to zero at the start of every billing period. If you want to bill for a quantity of something that does not change unless you change it, then you want quantity components, instead.
 
@@ -41,6 +41,10 @@ function createMeteredComponent(
 ): ComponentResponse
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -49,6 +53,8 @@ function createMeteredComponent(
 | `body` | [`?CreateMeteredComponent`](../../doc/models/create-metered-component.md) | Body, Optional | - |
 
 ## Response Type
+
+**201**: Created
 
 [`ComponentResponse`](../../doc/models/component-response.md)
 
@@ -173,6 +179,10 @@ function createQuantityBasedComponent(
 ): ComponentResponse
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -181,6 +191,8 @@ function createQuantityBasedComponent(
 | `body` | [`?CreateQuantityBasedComponent`](../../doc/models/create-quantity-based-component.md) | Body, Optional | - |
 
 ## Response Type
+
+**201**: Created
 
 [`ComponentResponse`](../../doc/models/component-response.md)
 
@@ -284,7 +296,7 @@ try {
 | 422 | Unprocessable Entity (WebDAV) | [`ErrorListResponseException`](../../doc/models/error-list-response-exception.md) |
 
 
-# Create on Off Component
+# Create On Off Component
 
 This request will create a component definition of kind **on_off_component** under the specified product family. On/Off component can then be added and “allocated” for a subscription.
 
@@ -296,6 +308,10 @@ For more information on components, see our documentation [here](https://maxio.z
 function createOnOffComponent(string $productFamilyId, ?CreateOnOffComponent $body = null): ComponentResponse
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -304,6 +320,8 @@ function createOnOffComponent(string $productFamilyId, ?CreateOnOffComponent $bo
 | `body` | [`?CreateOnOffComponent`](../../doc/models/create-on-off-component.md) | Body, Optional | - |
 
 ## Response Type
+
+**201**: Created
 
 [`ComponentResponse`](../../doc/models/component-response.md)
 
@@ -405,6 +423,10 @@ function createPrepaidUsageComponent(
 ): ComponentResponse
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -413,6 +435,8 @@ function createPrepaidUsageComponent(
 | `body` | [`?CreatePrepaidComponent`](../../doc/models/create-prepaid-component.md) | Body, Optional | - |
 
 ## Response Type
+
+**201**: Created
 
 [`ComponentResponse`](../../doc/models/component-response.md)
 
@@ -556,6 +580,10 @@ For more information on components, see our documentation [here](https://maxio.z
 function createEventBasedComponent(string $productFamilyId, ?CreateEBBComponent $body = null): ComponentResponse
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -564,6 +592,8 @@ function createEventBasedComponent(string $productFamilyId, ?CreateEBBComponent 
 | `body` | [`?CreateEBBComponent`](../../doc/models/create-ebb-component.md) | Body, Optional | - |
 
 ## Response Type
+
+**201**: Created
 
 [`ComponentResponse`](../../doc/models/component-response.md)
 
@@ -663,6 +693,10 @@ This request will return information regarding a component having the handle you
 function findComponent(string $handle): ComponentResponse
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -670,6 +704,8 @@ function findComponent(string $handle): ComponentResponse
 | `handle` | `string` | Query, Required | The handle of the component to find |
 
 ## Response Type
+
+**200**: OK
 
 [`ComponentResponse`](../../doc/models/component-response.md)
 
@@ -730,6 +766,10 @@ You can read the component by either the component's id or handle. When using th
 function readComponent(int $productFamilyId, string $componentId): ComponentResponse
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -738,6 +778,8 @@ function readComponent(int $productFamilyId, string $componentId): ComponentResp
 | `componentId` | `string` | Template, Required | Either the Advanced Billing id of the component or the handle for the component prefixed with `handle:`<br><br>**Constraints**: *Pattern*: `/\A(?:\d+\|handle:(?:uuid:\|[a-z])(?:\w\|-)+)\z/` |
 
 ## Response Type
+
+**200**: OK
 
 [`ComponentResponse`](../../doc/models/component-response.md)
 
@@ -808,6 +850,10 @@ function updateProductFamilyComponent(
 ): ComponentResponse
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -817,6 +863,8 @@ function updateProductFamilyComponent(
 | `body` | [`?UpdateComponentRequest`](../../doc/models/update-component-request.md) | Body, Optional | - |
 
 ## Response Type
+
+**200**: OK
 
 [`ComponentResponse`](../../doc/models/component-response.md)
 
@@ -895,6 +943,10 @@ Sending a DELETE request to this endpoint will archive the component. All curren
 function archiveComponent(int $productFamilyId, string $componentId): Component
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -903,6 +955,8 @@ function archiveComponent(int $productFamilyId, string $componentId): Component
 | `componentId` | `string` | Template, Required | Either the Advanced Billing id of the component or the handle for the component prefixed with `handle:`<br><br>**Constraints**: *Pattern*: `/\A(?:\d+\|handle:(?:uuid:\|[a-z])(?:\w\|-)+)\z/` |
 
 ## Response Type
+
+**200**: OK
 
 [`Component`](../../doc/models/component.md)
 
@@ -970,6 +1024,10 @@ This request will return a list of components for a site.
 function listComponents(array $options): array
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -985,6 +1043,8 @@ function listComponents(array $options): array
 | `filter` | [`?ListComponentsFilter`](../../doc/models/list-components-filter.md) | Query, Optional | Filter to use for List Components operations |
 
 ## Response Type
+
+**200**: OK
 
 [`ComponentResponse[]`](../../doc/models/component-response.md)
 
@@ -1127,6 +1187,10 @@ You may read the component by either the component's id or handle. When using th
 function updateComponent(string $componentId, ?UpdateComponentRequest $body = null): ComponentResponse
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -1135,6 +1199,8 @@ function updateComponent(string $componentId, ?UpdateComponentRequest $body = nu
 | `body` | [`?UpdateComponentRequest`](../../doc/models/update-component-request.md) | Body, Optional | - |
 
 ## Response Type
+
+**200**: OK
 
 [`ComponentResponse`](../../doc/models/component-response.md)
 
@@ -1210,6 +1276,10 @@ This request will return a list of components for a particular product family.
 function listComponentsForProductFamily(array $options): array
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -1226,6 +1296,8 @@ function listComponentsForProductFamily(array $options): array
 | `startDatetime` | `?string` | Query, Optional | The start date and time (format YYYY-MM-DD HH:MM:SS) with which to filter the date_field. Returns components with a timestamp at or after exact time provided in query. You can specify timezone in query - otherwise your site's time zone will be used. If provided, this parameter will be used instead of start_date. |
 
 ## Response Type
+
+**200**: OK
 
 [`ComponentResponse[]`](../../doc/models/component-response.md)
 

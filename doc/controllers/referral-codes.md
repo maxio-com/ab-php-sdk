@@ -25,6 +25,10 @@ If the referral code is valid the status code will be `200` and the referral cod
 function validateReferralCode(string $code): ReferralValidationResponse
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -32,6 +36,8 @@ function validateReferralCode(string $code): ReferralValidationResponse
 | `code` | `string` | Query, Required | The referral code you are trying to validate |
 
 ## Response Type
+
+**200**: OK
 
 [`ReferralValidationResponse`](../../doc/models/referral-validation-response.md)
 

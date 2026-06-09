@@ -33,12 +33,11 @@ class BankAccountPaymentProfileBuilder
     /**
      * Initializes a new Bank Account Payment Profile Builder object.
      *
-     * @param string $maskedBankAccountNumber
      * @param string $paymentType
      */
-    public static function init(string $maskedBankAccountNumber, string $paymentType): self
+    public static function init(string $paymentType): self
     {
-        return new self(new BankAccountPaymentProfile($maskedBankAccountNumber, $paymentType));
+        return new self(new BankAccountPaymentProfile($paymentType));
     }
 
     /**
@@ -266,6 +265,35 @@ class BankAccountPaymentProfileBuilder
     public function maskedBankRoutingNumber(?string $value): self
     {
         $this->instance->setMaskedBankRoutingNumber($value);
+        return $this;
+    }
+
+    /**
+     * Unsets masked bank routing number field.
+     */
+    public function unsetMaskedBankRoutingNumber(): self
+    {
+        $this->instance->unsetMaskedBankRoutingNumber();
+        return $this;
+    }
+
+    /**
+     * Sets masked bank account number field.
+     *
+     * @param string|null $value
+     */
+    public function maskedBankAccountNumber(?string $value): self
+    {
+        $this->instance->setMaskedBankAccountNumber($value);
+        return $this;
+    }
+
+    /**
+     * Unsets masked bank account number field.
+     */
+    public function unsetMaskedBankAccountNumber(): self
+    {
+        $this->instance->unsetMaskedBankAccountNumber();
         return $this;
     }
 

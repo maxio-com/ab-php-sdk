@@ -28,7 +28,7 @@
 | `billingAddress2` | `?string` | Optional | The current billing street address, second line, for the card. | getBillingAddress2(): ?string | setBillingAddress2(?string billingAddress2): void |
 | `paymentType` | [`string(PaymentType)`](../../doc/models/payment-type.md) | Required | **Default**: `PaymentType::CREDIT_CARD` | getPaymentType(): string | setPaymentType(string paymentType): void |
 | `disabled` | `?bool` | Optional | - | getDisabled(): ?bool | setDisabled(?bool disabled): void |
-| `chargifyToken` | `?string` | Optional | Token received after sending billing information using chargify.js. This token will only be received if passed as a sole attribute of credit_card_attributes (i.e. tok_9g6hw85pnpt6knmskpwp4ttt) | getChargifyToken(): ?string | setChargifyToken(?string chargifyToken): void |
+| `chargifyToken` | `?string` | Optional | Token received after sending billing information using Maxio.js (formerly Chargify.js). This token will only be received if passed as a sole attribute of credit_card_attributes (i.e. tok_9g6hw85pnpt6knmskpwp4ttt) | getChargifyToken(): ?string | setChargifyToken(?string chargifyToken): void |
 | `siteGatewaySettingId` | `?int` | Optional | - | getSiteGatewaySettingId(): ?int | setSiteGatewaySettingId(?int siteGatewaySettingId): void |
 | `gatewayHandle` | `?string` | Optional | An identifier of connected gateway. | getGatewayHandle(): ?string | setGatewayHandle(?string gatewayHandle): void |
 | `createdAt` | `?DateTime` | Optional | A timestamp indicating when this payment profile was created | getCreatedAt(): ?\DateTime | setCreatedAt(?\DateTime createdAt): void |

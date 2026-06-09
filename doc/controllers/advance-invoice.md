@@ -26,6 +26,10 @@ We recommend using either the create or preview endpoints for proforma invoices 
 function issueAdvanceInvoice(int $subscriptionId, ?IssueAdvanceInvoiceRequest $body = null): Invoice
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -34,6 +38,8 @@ function issueAdvanceInvoice(int $subscriptionId, ?IssueAdvanceInvoiceRequest $b
 | `body` | [`?IssueAdvanceInvoiceRequest`](../../doc/models/issue-advance-invoice-request.md) | Body, Optional | - |
 
 ## Response Type
+
+**201**: Created
 
 [`Invoice`](../../doc/models/invoice.md)
 
@@ -78,6 +84,10 @@ Once an advance invoice has been generated for a subscription's upcoming renewal
 function readAdvanceInvoice(int $subscriptionId): Invoice
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -85,6 +95,8 @@ function readAdvanceInvoice(int $subscriptionId): Invoice
 | `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription. |
 
 ## Response Type
+
+**200**: OK
 
 [`Invoice`](../../doc/models/invoice.md)
 
@@ -120,6 +132,10 @@ A `reason` is required in order to void, and the invoice must have an open statu
 function voidAdvanceInvoice(int $subscriptionId, ?VoidInvoiceRequest $body = null): Invoice
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -128,6 +144,8 @@ function voidAdvanceInvoice(int $subscriptionId, ?VoidInvoiceRequest $body = nul
 | `body` | [`?VoidInvoiceRequest`](../../doc/models/void-invoice-request.md) | Body, Optional | - |
 
 ## Response Type
+
+**201**: Created
 
 [`Invoice`](../../doc/models/invoice.md)
 

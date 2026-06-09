@@ -24,7 +24,7 @@ use CoreInterfaces\Core\Request\RequestMethod;
 class SubscriptionNotesController extends BaseController
 {
     /**
-     * Use the following method to create a note for a subscription.
+     * Creates a note for a subscription.
      *
      * ## How to Use Subscription Notes
      *
@@ -68,8 +68,7 @@ class SubscriptionNotesController extends BaseController
     }
 
     /**
-     * Use this method to retrieve a list of Notes associated with a Subscription. The response will be an
-     * array of Notes.
+     * Retrieves a list of notes associated with a subscription. The response will be an array of Notes.
      *
      * @param array $options Array with all options for search
      *
@@ -101,8 +100,7 @@ class SubscriptionNotesController extends BaseController
     }
 
     /**
-     * Once you have obtained the ID of the note you wish to read, use this method to show a particular
-     * note attached to a subscription.
+     * Retrieves a specific note attached to a subscription.
      *
      * @param int $subscriptionId The Chargify id of the subscription.
      * @param int $noteId The Advanced Billing id of the note
@@ -129,7 +127,7 @@ class SubscriptionNotesController extends BaseController
     }
 
     /**
-     * Use the following method to update a note for a Subscription.
+     * Updates a note for a subscription.
      *
      * @param int $subscriptionId The Chargify id of the subscription.
      * @param int $noteId The Advanced Billing id of the note

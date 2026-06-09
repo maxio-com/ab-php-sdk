@@ -39,6 +39,10 @@ This method gives a merchant the option to create a reason codes for a given Sit
 function createReasonCode(?CreateReasonCodeRequest $body = null): ReasonCodeResponse
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -46,6 +50,8 @@ function createReasonCode(?CreateReasonCodeRequest $body = null): ReasonCodeResp
 | `body` | [`?CreateReasonCodeRequest`](../../doc/models/create-reason-code-request.md) | Body, Optional | - |
 
 ## Response Type
+
+**200**: OK
 
 [`ReasonCodeResponse`](../../doc/models/reason-code-response.md)
 
@@ -89,6 +95,10 @@ This method gives a merchant the option to retrieve a list of all of the current
 function listReasonCodes(array $options): array
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -97,6 +107,8 @@ function listReasonCodes(array $options): array
 | `perPage` | `?int` | Query, Optional | This parameter indicates how many records to fetch in each request. Default value is 20. The maximum allowed values is 200; any per_page value over 200 will be changed to 200.<br>Use in query `per_page=200`.<br><br>**Default**: `20`<br><br>**Constraints**: `<= 200` |
 
 ## Response Type
+
+**200**: OK
 
 [`ReasonCodeResponse[]`](../../doc/models/reason-code-response.md)
 
@@ -176,6 +188,10 @@ This method gives a merchant the option to retrieve a list of a particular code 
 function readReasonCode(int $reasonCodeId): ReasonCodeResponse
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -183,6 +199,8 @@ function readReasonCode(int $reasonCodeId): ReasonCodeResponse
 | `reasonCodeId` | `int` | Template, Required | The Advanced Billing id of the reason code |
 
 ## Response Type
+
+**200**: OK
 
 [`ReasonCodeResponse`](../../doc/models/reason-code-response.md)
 
@@ -217,6 +235,10 @@ This method gives a merchant the option to update an existing reason code for a 
 function updateReasonCode(int $reasonCodeId, ?UpdateReasonCodeRequest $body = null): ReasonCodeResponse
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -225,6 +247,8 @@ function updateReasonCode(int $reasonCodeId, ?UpdateReasonCodeRequest $body = nu
 | `body` | [`?UpdateReasonCodeRequest`](../../doc/models/update-reason-code-request.md) | Body, Optional | - |
 
 ## Response Type
+
+**200**: OK
 
 [`ReasonCodeResponse`](../../doc/models/reason-code-response.md)
 
@@ -262,6 +286,10 @@ This method gives a merchant the option to delete one reason code from the Churn
 function deleteReasonCode(int $reasonCodeId): OkResponse
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -269,6 +297,8 @@ function deleteReasonCode(int $reasonCodeId): OkResponse
 | `reasonCodeId` | `int` | Template, Required | The Advanced Billing id of the reason code |
 
 ## Response Type
+
+**200**: OK
 
 [`OkResponse`](../../doc/models/ok-response.md)
 

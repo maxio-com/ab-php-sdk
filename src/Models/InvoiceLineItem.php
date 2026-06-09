@@ -57,6 +57,11 @@ class InvoiceLineItem implements \JsonSerializable
     private $taxAmount;
 
     /**
+     * @var bool|null
+     */
+    private $taxIncluded;
+
+    /**
      * @var string|null
      */
     private $totalAmount;
@@ -333,6 +338,38 @@ class InvoiceLineItem implements \JsonSerializable
     public function setTaxAmount(?string $taxAmount): void
     {
         $this->taxAmount = $taxAmount;
+    }
+
+    /**
+     * Returns Tax Included.
+     * Whether the unit price for this line item is tax-inclusive.
+     *
+     * When `true`, `unit_price` already includes tax and `tax_amount` represents the portion of the price
+     * attributable to tax. When `false`, any applicable tax is added on top of the price.
+     *
+     * The value is inherited from the source price point's `tax_included` setting. Custom or ad-hoc line
+     * items (which have no associated price point) always return `false`.
+     */
+    public function getTaxIncluded(): ?bool
+    {
+        return $this->taxIncluded;
+    }
+
+    /**
+     * Sets Tax Included.
+     * Whether the unit price for this line item is tax-inclusive.
+     *
+     * When `true`, `unit_price` already includes tax and `tax_amount` represents the portion of the price
+     * attributable to tax. When `false`, any applicable tax is added on top of the price.
+     *
+     * The value is inherited from the source price point's `tax_included` setting. Custom or ad-hoc line
+     * items (which have no associated price point) always return `false`.
+     *
+     * @maps tax_included
+     */
+    public function setTaxIncluded(?bool $taxIncluded): void
+    {
+        $this->taxIncluded = $taxIncluded;
     }
 
     /**
@@ -768,6 +805,7 @@ class InvoiceLineItem implements \JsonSerializable
                 'subtotalAmount' => $this->subtotalAmount,
                 'discountAmount' => $this->discountAmount,
                 'taxAmount' => $this->taxAmount,
+                'taxIncluded' => $this->taxIncluded,
                 'totalAmount' => $this->totalAmount,
                 'tieredUnitPrice' => $this->tieredUnitPrice,
                 'periodRangeStart' => $this->periodRangeStart,
@@ -851,6 +889,9 @@ class InvoiceLineItem implements \JsonSerializable
         }
         if (isset($this->taxAmount)) {
             $json['tax_amount']               = $this->taxAmount;
+        }
+        if (isset($this->taxIncluded)) {
+            $json['tax_included']             = $this->taxIncluded;
         }
         if (isset($this->totalAmount)) {
             $json['total_amount']             = $this->totalAmount;

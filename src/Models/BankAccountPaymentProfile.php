@@ -87,14 +87,14 @@ class BankAccountPaymentProfile implements \JsonSerializable
     private $bankName;
 
     /**
-     * @var string|null
+     * @var array
      */
-    private $maskedBankRoutingNumber;
+    private $maskedBankRoutingNumber = [];
 
     /**
-     * @var string
+     * @var array
      */
-    private $maskedBankAccountNumber;
+    private $maskedBankAccountNumber = [];
 
     /**
      * @var string|null
@@ -137,12 +137,10 @@ class BankAccountPaymentProfile implements \JsonSerializable
     private $updatedAt;
 
     /**
-     * @param string $maskedBankAccountNumber
      * @param string $paymentType
      */
-    public function __construct(string $maskedBankAccountNumber, string $paymentType)
+    public function __construct(string $paymentType)
     {
-        $this->maskedBankAccountNumber = $maskedBankAccountNumber;
         $this->paymentType = $paymentType;
     }
 
@@ -253,7 +251,7 @@ class BankAccountPaymentProfile implements \JsonSerializable
 
     /**
      * Returns Vault Token.
-     * The “token” provided by your vault storage for an already stored payment profile
+     * The "token" provided by your vault storage for an already stored payment profile
      */
     public function getVaultToken(): ?string
     {
@@ -262,7 +260,7 @@ class BankAccountPaymentProfile implements \JsonSerializable
 
     /**
      * Sets Vault Token.
-     * The “token” provided by your vault storage for an already stored payment profile
+     * The "token" provided by your vault storage for an already stored payment profile
      *
      * @maps vault_token
      */
@@ -521,46 +519,71 @@ class BankAccountPaymentProfile implements \JsonSerializable
     /**
      * Returns Masked Bank Routing Number.
      * A string representation of the stored bank routing number with all but the last 4 digits marked with
-     * X’s (i.e. ‘XXXXXXX1111’). payment_type will be bank_account
+     * X's (i.e. 'XXXXXXX1111'). payment_type will be bank_account
      */
     public function getMaskedBankRoutingNumber(): ?string
     {
-        return $this->maskedBankRoutingNumber;
+        if (count($this->maskedBankRoutingNumber) == 0) {
+            return null;
+        }
+        return $this->maskedBankRoutingNumber['value'];
     }
 
     /**
      * Sets Masked Bank Routing Number.
      * A string representation of the stored bank routing number with all but the last 4 digits marked with
-     * X’s (i.e. ‘XXXXXXX1111’). payment_type will be bank_account
+     * X's (i.e. 'XXXXXXX1111'). payment_type will be bank_account
      *
      * @maps masked_bank_routing_number
      */
     public function setMaskedBankRoutingNumber(?string $maskedBankRoutingNumber): void
     {
-        $this->maskedBankRoutingNumber = $maskedBankRoutingNumber;
+        $this->maskedBankRoutingNumber['value'] = $maskedBankRoutingNumber;
+    }
+
+    /**
+     * Unsets Masked Bank Routing Number.
+     * A string representation of the stored bank routing number with all but the last 4 digits marked with
+     * X's (i.e. 'XXXXXXX1111'). payment_type will be bank_account
+     */
+    public function unsetMaskedBankRoutingNumber(): void
+    {
+        $this->maskedBankRoutingNumber = [];
     }
 
     /**
      * Returns Masked Bank Account Number.
      * A string representation of the stored bank account number with all but the last 4 digits marked with
-     * X’s (i.e. ‘XXXXXXX1111’)
+     * X's (i.e. 'XXXXXXX1111')
      */
-    public function getMaskedBankAccountNumber(): string
+    public function getMaskedBankAccountNumber(): ?string
     {
-        return $this->maskedBankAccountNumber;
+        if (count($this->maskedBankAccountNumber) == 0) {
+            return null;
+        }
+        return $this->maskedBankAccountNumber['value'];
     }
 
     /**
      * Sets Masked Bank Account Number.
      * A string representation of the stored bank account number with all but the last 4 digits marked with
-     * X’s (i.e. ‘XXXXXXX1111’)
+     * X's (i.e. 'XXXXXXX1111')
      *
-     * @required
      * @maps masked_bank_account_number
      */
-    public function setMaskedBankAccountNumber(string $maskedBankAccountNumber): void
+    public function setMaskedBankAccountNumber(?string $maskedBankAccountNumber): void
     {
-        $this->maskedBankAccountNumber = $maskedBankAccountNumber;
+        $this->maskedBankAccountNumber['value'] = $maskedBankAccountNumber;
+    }
+
+    /**
+     * Unsets Masked Bank Account Number.
+     * A string representation of the stored bank account number with all but the last 4 digits marked with
+     * X's (i.e. 'XXXXXXX1111')
+     */
+    public function unsetMaskedBankAccountNumber(): void
+    {
+        $this->maskedBankAccountNumber = [];
     }
 
     /**
@@ -771,8 +794,8 @@ class BankAccountPaymentProfile implements \JsonSerializable
                 'customerVaultToken' => $this->getCustomerVaultToken(),
                 'billingAddress2' => $this->getBillingAddress2(),
                 'bankName' => $this->bankName,
-                'maskedBankRoutingNumber' => $this->maskedBankRoutingNumber,
-                'maskedBankAccountNumber' => $this->maskedBankAccountNumber,
+                'maskedBankRoutingNumber' => $this->getMaskedBankRoutingNumber(),
+                'maskedBankAccountNumber' => $this->getMaskedBankAccountNumber(),
                 'bankAccountType' => $this->bankAccountType,
                 'bankAccountHolderType' => $this->bankAccountHolderType,
                 'paymentType' => $this->paymentType,
@@ -868,10 +891,12 @@ class BankAccountPaymentProfile implements \JsonSerializable
         if (isset($this->bankName)) {
             $json['bank_name']                  = $this->bankName;
         }
-        if (isset($this->maskedBankRoutingNumber)) {
-            $json['masked_bank_routing_number'] = $this->maskedBankRoutingNumber;
+        if (!empty($this->maskedBankRoutingNumber)) {
+            $json['masked_bank_routing_number'] = $this->maskedBankRoutingNumber['value'];
         }
-        $json['masked_bank_account_number']     = $this->maskedBankAccountNumber;
+        if (!empty($this->maskedBankAccountNumber)) {
+            $json['masked_bank_account_number'] = $this->maskedBankAccountNumber['value'];
+        }
         if (isset($this->bankAccountType)) {
             $json['bank_account_type']          = BankAccountType::checkValue($this->bankAccountType);
         }

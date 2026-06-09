@@ -14,7 +14,7 @@
 | `lastName` | `?string` | Optional | The last name of the bank account holder | getLastName(): ?string | setLastName(?string lastName): void |
 | `customerId` | `?int` | Optional | The Chargify-assigned id for the customer record to which the bank account belongs | getCustomerId(): ?int | setCustomerId(?int customerId): void |
 | `currentVault` | [`?string(BankAccountVault)`](../../doc/models/bank-account-vault.md) | Optional | The vault that stores the payment profile with the provided vault_token. Use `bogus` for testing. | getCurrentVault(): ?string | setCurrentVault(?string currentVault): void |
-| `vaultToken` | `?string` | Optional | The “token” provided by your vault storage for an already stored payment profile | getVaultToken(): ?string | setVaultToken(?string vaultToken): void |
+| `vaultToken` | `?string` | Optional | The "token" provided by your vault storage for an already stored payment profile | getVaultToken(): ?string | setVaultToken(?string vaultToken): void |
 | `billingAddress` | `?string` | Optional | The current billing street address for the bank account | getBillingAddress(): ?string | setBillingAddress(?string billingAddress): void |
 | `billingCity` | `?string` | Optional | The current billing address city for the bank account | getBillingCity(): ?string | setBillingCity(?string billingCity): void |
 | `billingState` | `?string` | Optional | The current billing address state for the bank account | getBillingState(): ?string | setBillingState(?string billingState): void |
@@ -23,8 +23,8 @@
 | `customerVaultToken` | `?string` | Optional | (only for Authorize.Net CIM storage): the customerProfileId for the owner of the customerPaymentProfileId provided as the vault_token. | getCustomerVaultToken(): ?string | setCustomerVaultToken(?string customerVaultToken): void |
 | `billingAddress2` | `?string` | Optional | The current billing street address, second line, for the bank account | getBillingAddress2(): ?string | setBillingAddress2(?string billingAddress2): void |
 | `bankName` | `?string` | Optional | The bank where the account resides | getBankName(): ?string | setBankName(?string bankName): void |
-| `maskedBankRoutingNumber` | `?string` | Optional | A string representation of the stored bank routing number with all but the last 4 digits marked with X’s (i.e. ‘XXXXXXX1111’). payment_type will be bank_account | getMaskedBankRoutingNumber(): ?string | setMaskedBankRoutingNumber(?string maskedBankRoutingNumber): void |
-| `maskedBankAccountNumber` | `string` | Required | A string representation of the stored bank account number with all but the last 4 digits marked with X’s (i.e. ‘XXXXXXX1111’) | getMaskedBankAccountNumber(): string | setMaskedBankAccountNumber(string maskedBankAccountNumber): void |
+| `maskedBankRoutingNumber` | `?string` | Optional | A string representation of the stored bank routing number with all but the last 4 digits marked with X's (i.e. 'XXXXXXX1111'). payment_type will be bank_account | getMaskedBankRoutingNumber(): ?string | setMaskedBankRoutingNumber(?string maskedBankRoutingNumber): void |
+| `maskedBankAccountNumber` | `?string` | Optional | A string representation of the stored bank account number with all but the last 4 digits marked with X's (i.e. 'XXXXXXX1111') | getMaskedBankAccountNumber(): ?string | setMaskedBankAccountNumber(?string maskedBankAccountNumber): void |
 | `bankAccountType` | [`?string(BankAccountType)`](../../doc/models/bank-account-type.md) | Optional | Defaults to checking | getBankAccountType(): ?string | setBankAccountType(?string bankAccountType): void |
 | `bankAccountHolderType` | [`?string(BankAccountHolderType)`](../../doc/models/bank-account-holder-type.md) | Optional | Defaults to personal | getBankAccountHolderType(): ?string | setBankAccountHolderType(?string bankAccountHolderType): void |
 | `paymentType` | [`string(PaymentType)`](../../doc/models/payment-type.md) | Required | **Default**: `PaymentType::BANK_ACCOUNT` | getPaymentType(): string | setPaymentType(string paymentType): void |
@@ -38,7 +38,6 @@
 
 ```json
 {
-  "masked_bank_account_number": "masked_bank_account_number8",
   "payment_type": "bank_account",
   "verified": false,
   "id": 188,

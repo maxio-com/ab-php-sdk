@@ -38,6 +38,10 @@ In order to prevent abuse & overuse, we ask that you request a new URL only when
 function enableBillingPortalForCustomer(int $customerId, ?int $autoInvite = null): CustomerResponse
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -46,6 +50,8 @@ function enableBillingPortalForCustomer(int $customerId, ?int $autoInvite = null
 | `autoInvite` | [`?int(AutoInvite)`](../../doc/models/auto-invite.md) | Query, Optional | When set to 1, an Invitation email will be sent to the Customer.<br>When set to 0, or not sent, an email will not be sent.<br>Use in query: `auto_invite=1`. |
 
 ## Response Type
+
+**200**: OK
 
 [`CustomerResponse`](../../doc/models/customer-response.md)
 
@@ -90,6 +96,10 @@ This method will provide to the API user the exact URL required for a subscriber
 function readBillingPortalLink(int $customerId): PortalManagementLink
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -97,6 +107,8 @@ function readBillingPortalLink(int $customerId): PortalManagementLink
 | `customerId` | `int` | Template, Required | The Chargify id of the customer |
 
 ## Response Type
+
+**200**: OK
 
 [`PortalManagementLink`](../../doc/models/portal-management-link.md)
 
@@ -161,6 +173,10 @@ This endpoint will only return a JSON response.
 function resendBillingPortalInvitation(int $customerId): ResentInvitation
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -168,6 +184,8 @@ function resendBillingPortalInvitation(int $customerId): ResentInvitation
 | `customerId` | `int` | Template, Required | The Chargify id of the customer |
 
 ## Response Type
+
+**200**: OK
 
 [`ResentInvitation`](../../doc/models/resent-invitation.md)
 
@@ -222,6 +240,10 @@ This endpoint will only return a JSON response.
 function revokeBillingPortalAccess(int $customerId): RevokedInvitation
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -229,6 +251,8 @@ function revokeBillingPortalAccess(int $customerId): RevokedInvitation
 | `customerId` | `int` | Template, Required | The Chargify id of the customer |
 
 ## Response Type
+
+**200**: OK
 
 [`RevokedInvitation`](../../doc/models/revoked-invitation.md)
 

@@ -32,6 +32,8 @@ class WebhookSubscription
 
     public const INVOICE_ISSUED = 'invoice_issued';
 
+    public const INVOICE_PENDING = 'invoice_pending';
+
     public const METERED_USAGE = 'metered_usage';
 
     public const PAYMENT_FAILURE = 'payment_failure';
@@ -96,6 +98,7 @@ class WebhookSubscription
         self::EXPIRING_CARD,
         self::EXPIRATION_DATE_CHANGE,
         self::INVOICE_ISSUED,
+        self::INVOICE_PENDING,
         self::METERED_USAGE,
         self::PAYMENT_FAILURE,
         self::PAYMENT_SUCCESS,

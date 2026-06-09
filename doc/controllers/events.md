@@ -90,6 +90,10 @@ Here’s an example event for the `subscription_state_change` event:
 function listEvents(array $options): array
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -107,6 +111,8 @@ function listEvents(array $options): array
 | `endDatetime` | `?string` | Query, Optional | The end date and time (format YYYY-MM-DD HH:MM:SS) with which to filter the date_field. Returns components with a timestamp at or before exact time provided in query. You can specify timezone in query - otherwise your site's time zone will be used. If provided, this parameter will be used instead of end_date. |
 
 ## Response Type
+
+**200**: OK
 
 [`EventResponse[]`](../../doc/models/event-response.md)
 
@@ -216,6 +222,10 @@ For precise mappings from key to event_specific_data, refer to [Event](../../doc
 function listSubscriptionEvents(array $options): array
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -229,6 +239,8 @@ function listSubscriptionEvents(array $options): array
 | `filter` | [`?(string(EventKey)[])`](../../doc/models/event-key.md) | Query, Optional | You can pass multiple event keys after comma.<br>Use in query `filter=signup_success,payment_success`. |
 
 ## Response Type
+
+**200**: OK
 
 [`EventResponse[]`](../../doc/models/event-response.md)
 
@@ -309,6 +321,10 @@ Get a count of all the events for a given site by using this method.
 function readEventsCount(array $options): CountResponse
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -321,6 +337,8 @@ function readEventsCount(array $options): CountResponse
 | `filter` | [`?(string(EventKey)[])`](../../doc/models/event-key.md) | Query, Optional | You can pass multiple event keys after comma.<br>Use in query `filter=signup_success,payment_success`. |
 
 ## Response Type
+
+**200**: OK
 
 [`CountResponse`](../../doc/models/count-response.md)
 

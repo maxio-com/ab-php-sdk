@@ -31,6 +31,10 @@ Access to the Sales Commission API endpoints is available to users with financia
 function listSalesCommissionSettings(array $options): array
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -42,6 +46,8 @@ function listSalesCommissionSettings(array $options): array
 | `perPage` | `?int` | Query, Optional | This parameter indicates how many records to fetch in each request. Default value is 100.<br><br>**Default**: `100` |
 
 ## Response Type
+
+**200**: OK
 
 [`SaleRepSettings[]`](../../doc/models/sale-rep-settings.md)
 
@@ -117,6 +123,10 @@ Access to the Sales Commission API endpoints is available to users with financia
 function listSalesReps(array $options): array
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -128,6 +138,8 @@ function listSalesReps(array $options): array
 | `perPage` | `?int` | Query, Optional | This parameter indicates how many records to fetch in each request. Default value is 100.<br><br>**Default**: `100` |
 
 ## Response Type
+
+**200**: OK
 
 [`ListSaleRepItem[]`](../../doc/models/list-sale-rep-item.md)
 
@@ -259,6 +271,10 @@ function readSalesRep(
 ): SaleRep
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -271,6 +287,8 @@ function readSalesRep(
 | `perPage` | `?int` | Query, Optional | This parameter indicates how many records to fetch in each request. Default value is 100.<br><br>**Default**: `100` |
 
 ## Response Type
+
+**200**: OK
 
 [`SaleRep`](../../doc/models/sale-rep.md)
 

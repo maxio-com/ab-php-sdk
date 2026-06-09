@@ -37,6 +37,10 @@ You can optionally pass in a `product_price_point_id` that corresponds with the 
 function createOffer(?CreateOfferRequest $body = null): OfferResponse
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -44,6 +48,8 @@ function createOffer(?CreateOfferRequest $body = null): OfferResponse
 | `body` | [`?CreateOfferRequest`](../../doc/models/create-offer-request.md) | Body, Optional | - |
 
 ## Response Type
+
+**201**: Created
 
 [`OfferResponse`](../../doc/models/offer-response.md)
 
@@ -144,6 +150,10 @@ This endpoint will list offers for a site.
 function listOffers(array $options): ListOffersResponse
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -153,6 +163,8 @@ function listOffers(array $options): ListOffersResponse
 | `includeArchived` | `?bool` | Query, Optional | Include archived products. Use in query: `include_archived=true`. |
 
 ## Response Type
+
+**200**: OK
 
 [`ListOffersResponse`](../../doc/models/list-offers-response.md)
 
@@ -248,6 +260,10 @@ This method allows you to list a specific offer's attributes. This is different 
 function readOffer(int $offerId): OfferResponse
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -255,6 +271,8 @@ function readOffer(int $offerId): OfferResponse
 | `offerId` | `int` | Template, Required | The Chargify id of the offer |
 
 ## Response Type
+
+**200**: OK
 
 [`OfferResponse`](../../doc/models/offer-response.md)
 
@@ -283,6 +301,10 @@ Archive an existing offer. Please provide an `offer_id` in order to archive the 
 function archiveOffer(int $offerId): void
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -290,6 +312,8 @@ function archiveOffer(int $offerId): void
 | `offerId` | `int` | Template, Required | The Chargify id of the offer |
 
 ## Response Type
+
+**200**: OK
 
 `void`
 
@@ -316,6 +340,10 @@ Unarchive a previously archived offer. Please provide an `offer_id` in order to 
 function unarchiveOffer(int $offerId): void
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -323,6 +351,8 @@ function unarchiveOffer(int $offerId): void
 | `offerId` | `int` | Template, Required | The Chargify id of the offer |
 
 ## Response Type
+
+**200**: OK
 
 `void`
 

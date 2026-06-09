@@ -36,6 +36,10 @@ Proforma invoices are only available on Relationship Invoicing sites. To create 
 function createConsolidatedProformaInvoice(string $uid): void
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -43,6 +47,8 @@ function createConsolidatedProformaInvoice(string $uid): void
 | `uid` | `string` | Template, Required | The uid of the subscription group |
 
 ## Response Type
+
+**201**: Created
 
 `void`
 
@@ -79,6 +85,10 @@ By default, proforma invoices returned on the index will only include totals, no
 function listSubscriptionGroupProformaInvoices(array $options): ListProformaInvoicesResponse
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -92,6 +102,8 @@ function listSubscriptionGroupProformaInvoices(array $options): ListProformaInvo
 | `customFields` | `?bool` | Query, Optional | Include custom fields data<br><br>**Default**: `false` |
 
 ## Response Type
+
+**200**: OK
 
 [`ListProformaInvoicesResponse`](../../doc/models/list-proforma-invoices-response.md)
 
@@ -138,6 +150,10 @@ Proforma invoices are only available on Relationship Invoicing sites.
 function readProformaInvoice(string $proformaInvoiceUid): ProformaInvoice
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -145,6 +161,8 @@ function readProformaInvoice(string $proformaInvoiceUid): ProformaInvoice
 | `proformaInvoiceUid` | `string` | Template, Required | The uid of the proforma invoice |
 
 ## Response Type
+
+**200**: OK
 
 [`ProformaInvoice`](../../doc/models/proforma-invoice.md)
 
@@ -185,6 +203,10 @@ Proforma invoices are only available on Relationship Invoicing sites. To create 
 function createProformaInvoice(int $subscriptionId): ProformaInvoice
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -192,6 +214,8 @@ function createProformaInvoice(int $subscriptionId): ProformaInvoice
 | `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription. |
 
 ## Response Type
+
+**200**: OK
 
 [`ProformaInvoice`](../../doc/models/proforma-invoice.md)
 
@@ -228,6 +252,10 @@ By default, proforma invoices returned on the index will only include totals, no
 function listProformaInvoices(array $options): ListProformaInvoicesResponse
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -247,6 +275,8 @@ function listProformaInvoices(array $options): ListProformaInvoicesResponse
 | `customFields` | `?bool` | Query, Optional | Include custom fields data<br><br>**Default**: `false` |
 
 ## Response Type
+
+**200**: OK
 
 [`ListProformaInvoicesResponse`](../../doc/models/list-proforma-invoices-response.md)
 
@@ -294,6 +324,10 @@ function deliverProformaInvoice(
 ): ProformaInvoice
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -302,6 +336,8 @@ function deliverProformaInvoice(
 | `body` | [`?DeliverProformaInvoiceRequest`](../../doc/models/deliver-proforma-invoice-request.md) | Body, Optional | - |
 
 ## Response Type
+
+**201**: Created
 
 [`ProformaInvoice`](../../doc/models/proforma-invoice.md)
 
@@ -368,6 +404,10 @@ A reason for the void operation is required to be included in the request body. 
 function voidProformaInvoice(string $proformaInvoiceUid, ?VoidInvoiceRequest $body = null): ProformaInvoice
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -376,6 +416,8 @@ function voidProformaInvoice(string $proformaInvoiceUid, ?VoidInvoiceRequest $bo
 | `body` | [`?VoidInvoiceRequest`](../../doc/models/void-invoice-request.md) | Body, Optional | - |
 
 ## Response Type
+
+**200**: OK
 
 [`ProformaInvoice`](../../doc/models/proforma-invoice.md)
 
@@ -419,6 +461,10 @@ Alternatively, if you have some proforma invoices already, you may make a previe
 function previewProformaInvoice(int $subscriptionId): ProformaInvoice
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -426,6 +472,8 @@ function previewProformaInvoice(int $subscriptionId): ProformaInvoice
 | `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription. |
 
 ## Response Type
+
+**200**: OK
 
 [`ProformaInvoice`](../../doc/models/proforma-invoice.md)
 
@@ -469,6 +517,10 @@ A product and customer first name, last name, and email are the minimum requirem
 function createSignupProformaInvoice(?CreateSubscriptionRequest $body = null): ProformaInvoice
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -476,6 +528,8 @@ function createSignupProformaInvoice(?CreateSubscriptionRequest $body = null): P
 | `body` | [`?CreateSubscriptionRequest`](../../doc/models/create-subscription-request.md) | Body, Optional | - |
 
 ## Response Type
+
+**201**: Created
 
 [`ProformaInvoice`](../../doc/models/proforma-invoice.md)
 
@@ -535,6 +589,10 @@ function previewSignupProformaInvoice(
 ): SignupProformaPreviewResponse
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -543,6 +601,8 @@ function previewSignupProformaInvoice(
 | `body` | [`?CreateSubscriptionRequest`](../../doc/models/create-subscription-request.md) | Body, Optional | - |
 
 ## Response Type
+
+**201**: Created
 
 [`SignupProformaPreviewResponse`](../../doc/models/signup-proforma-preview-response.md)
 

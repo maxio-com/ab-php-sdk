@@ -32,6 +32,10 @@ function createSegment(
 ): SegmentResponse
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -41,6 +45,8 @@ function createSegment(
 | `body` | [`?CreateSegmentRequest`](../../doc/models/create-segment-request.md) | Body, Optional | - |
 
 ## Response Type
+
+**201**: Created
 
 [`SegmentResponse`](../../doc/models/segment-response.md)
 
@@ -116,6 +122,10 @@ You may specify component and/or price point by using either the numeric ID or t
 function listSegmentsForPricePoint(array $options): ListSegmentsResponse
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -127,6 +137,8 @@ function listSegmentsForPricePoint(array $options): ListSegmentsResponse
 | `filter` | [`?ListSegmentsFilter`](../../doc/models/list-segments-filter.md) | Query, Optional | Filter to use for List Segments for a Price Point operation |
 
 ## Response Type
+
+**200**: OK
 
 [`ListSegmentsResponse`](../../doc/models/list-segments-response.md)
 
@@ -179,6 +191,10 @@ function updateSegment(
 ): SegmentResponse
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -189,6 +205,8 @@ function updateSegment(
 | `body` | [`?UpdateSegmentRequest`](../../doc/models/update-segment-request.md) | Body, Optional | - |
 
 ## Response Type
+
+**200**: OK
 
 [`SegmentResponse`](../../doc/models/segment-response.md)
 
@@ -236,6 +254,10 @@ You may specify component and/or price point by using either the numeric ID or t
 function deleteSegment(string $componentId, string $pricePointId, float $id): void
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -245,6 +267,8 @@ function deleteSegment(string $componentId, string $pricePointId, float $id): vo
 | `id` | `float` | Template, Required | The ID of the Segment |
 
 ## Response Type
+
+**204**: No Content
 
 `void`
 
@@ -294,6 +318,10 @@ function bulkCreateSegments(
 ): ListSegmentsResponse
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -303,6 +331,8 @@ function bulkCreateSegments(
 | `body` | [`?BulkCreateSegments`](../../doc/models/bulk-create-segments.md) | Body, Optional | - |
 
 ## Response Type
+
+**201**: Created
 
 [`ListSegmentsResponse`](../../doc/models/list-segments-response.md)
 
@@ -353,6 +383,10 @@ function bulkUpdateSegments(
 ): ListSegmentsResponse
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -362,6 +396,8 @@ function bulkUpdateSegments(
 | `body` | [`?BulkUpdateSegments`](../../doc/models/bulk-update-segments.md) | Body, Optional | - |
 
 ## Response Type
+
+**200**: OK
 
 [`ListSegmentsResponse`](../../doc/models/list-segments-response.md)
 

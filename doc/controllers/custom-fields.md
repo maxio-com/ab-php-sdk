@@ -42,6 +42,10 @@ See [Custom Fields Reference](https://docs.maxio.com/hc/en-us/articles/242661408
 function createMetafields(string $resourceType, ?CreateMetafieldsRequest $body = null): array
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -50,6 +54,8 @@ function createMetafields(string $resourceType, ?CreateMetafieldsRequest $body =
 | `body` | [`?CreateMetafieldsRequest`](../../doc/models/create-metafields-request.md) | Body, Optional | - |
 
 ## Response Type
+
+**200**: OK
 
 [`Metafield[]`](../../doc/models/metafield.md)
 
@@ -141,6 +147,10 @@ Lists the metafields and their associated details for a Site and resource type. 
 function listMetafields(array $options): ListMetafieldsResponse
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -152,6 +162,8 @@ function listMetafields(array $options): ListMetafieldsResponse
 | `direction` | [`?string(SortingDirection)`](../../doc/models/sorting-direction.md) | Query, Optional | Controls the order in which results are returned.<br>Use in query `direction=asc`. |
 
 ## Response Type
+
+**200**: OK
 
 [`ListMetafieldsResponse`](../../doc/models/list-metafields-response.md)
 
@@ -238,6 +250,10 @@ With this endpoint, you can:
 function updateMetafield(string $resourceType, ?UpdateMetafieldsRequest $body = null): array
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -246,6 +262,8 @@ function updateMetafield(string $resourceType, ?UpdateMetafieldsRequest $body = 
 | `body` | [`?UpdateMetafieldsRequest`](../../doc/models/update-metafields-request.md) | Body, Optional | - |
 
 ## Response Type
+
+**200**: OK
 
 [`Metafield[]`](../../doc/models/metafield.md)
 
@@ -282,6 +300,10 @@ Deletes a metafield from your Site. Removes the metafield and associated metadat
 function deleteMetafield(string $resourceType, ?string $name = null): void
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -290,6 +312,8 @@ function deleteMetafield(string $resourceType, ?string $name = null): void
 | `name` | `?string` | Query, Optional | The name of the metafield to be deleted |
 
 ## Response Type
+
+**200**: OK
 
 `void`
 
@@ -326,6 +350,10 @@ If you create metadata on a subscription or customer with a metafield that does 
 function createMetadata(string $resourceType, int $resourceId, ?CreateMetadataRequest $body = null): array
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -335,6 +363,8 @@ function createMetadata(string $resourceType, int $resourceId, ?CreateMetadataRe
 | `body` | [`?CreateMetadataRequest`](../../doc/models/create-metadata-request.md) | Body, Optional | - |
 
 ## Response Type
+
+**200**: OK
 
 [`Metadata[]`](../../doc/models/metadata.md)
 
@@ -390,6 +420,10 @@ Lists metadata and metafields for a specific customer or subscription.
 function listMetadata(array $options): PaginatedMetadata
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -400,6 +434,8 @@ function listMetadata(array $options): PaginatedMetadata
 | `perPage` | `?int` | Query, Optional | This parameter indicates how many records to fetch in each request. Default value is 20. The maximum allowed values is 200; any per_page value over 200 will be changed to 200.<br>Use in query `per_page=200`.<br><br>**Default**: `20`<br><br>**Constraints**: `<= 200` |
 
 ## Response Type
+
+**200**: OK
 
 [`PaginatedMetadata`](../../doc/models/paginated-metadata.md)
 
@@ -458,6 +494,10 @@ Each site is limited to 100 unique metafields per resource. This means you can h
 function updateMetadata(string $resourceType, int $resourceId, ?UpdateMetadataRequest $body = null): array
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -467,6 +507,8 @@ function updateMetadata(string $resourceType, int $resourceId, ?UpdateMetadataRe
 | `body` | [`?UpdateMetadataRequest`](../../doc/models/update-metadata-request.md) | Body, Optional | - |
 
 ## Response Type
+
+**200**: OK
 
 [`Metadata[]`](../../doc/models/metadata.md)
 
@@ -508,6 +550,10 @@ Deletes one or more metafields (and associated metadata) from the specified subs
 function deleteMetadata(string $resourceType, int $resourceId, ?string $name = null, ?array $names = null): void
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -518,6 +564,8 @@ function deleteMetadata(string $resourceType, int $resourceId, ?string $name = n
 | `names` | `?(string[])` | Query, Optional | Names of fields to be removed. Use in query: `names[]=field1&names[]=my-field&names[]=another-field`. |
 
 ## Response Type
+
+**200**: OK
 
 `void`
 
@@ -555,6 +603,10 @@ Lists  metadata for a specified array of subscriptions or customers.
 function listMetadataForResourceType(array $options): PaginatedMetadata
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -572,6 +624,8 @@ function listMetadataForResourceType(array $options): PaginatedMetadata
 | `direction` | [`?string(SortingDirection)`](../../doc/models/sorting-direction.md) | Query, Optional | Controls the order in which results are returned.<br>Use in query `direction=asc`. |
 
 ## Response Type
+
+**200**: OK
 
 [`PaginatedMetadata`](../../doc/models/paginated-metadata.md)
 

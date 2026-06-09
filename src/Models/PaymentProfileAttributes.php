@@ -145,8 +145,9 @@ class PaymentProfileAttributes implements \JsonSerializable
 
     /**
      * Returns Chargify Token.
-     * (Optional) Token received after sending billing information using chargify.js. This token must be
-     * passed as a sole attribute of `payment_profile_attributes` (i.e. tok_9g6hw85pnpt6knmskpwp4ttt)
+     * (Optional) Token received after sending billing information using Maxio.js (formerly Chargify.js).
+     * This token must be passed as a sole attribute of `payment_profile_attributes` (i.e.
+     * tok_9g6hw85pnpt6knmskpwp4ttt)
      */
     public function getChargifyToken(): ?string
     {
@@ -155,8 +156,9 @@ class PaymentProfileAttributes implements \JsonSerializable
 
     /**
      * Sets Chargify Token.
-     * (Optional) Token received after sending billing information using chargify.js. This token must be
-     * passed as a sole attribute of `payment_profile_attributes` (i.e. tok_9g6hw85pnpt6knmskpwp4ttt)
+     * (Optional) Token received after sending billing information using Maxio.js (formerly Chargify.js).
+     * This token must be passed as a sole attribute of `payment_profile_attributes` (i.e.
+     * tok_9g6hw85pnpt6knmskpwp4ttt)
      *
      * @maps chargify_token
      */

@@ -50,6 +50,10 @@ For more: [Customer Locale](https://maxio.zendesk.com/hc/en-us/articles/24286672
 function createCustomer(?CreateCustomerRequest $body = null): CustomerResponse
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -57,6 +61,8 @@ function createCustomer(?CreateCustomerRequest $body = null): CustomerResponse
 | `body` | [`?CreateCustomerRequest`](../../doc/models/create-customer-request.md) | Body, Optional | - |
 
 ## Response Type
+
+**200**: OK
 
 [`CustomerResponse`](../../doc/models/customer-response.md)
 
@@ -160,6 +166,10 @@ To retrieve a single, exact match by reference, use the [lookup endpoint](https:
 function listCustomers(array $options): array
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -175,6 +185,8 @@ function listCustomers(array $options): array
 | `q` | `?string` | Query, Optional | A search query by which to filter customers (can be an email, an ID, a reference, organization) |
 
 ## Response Type
+
+**200**: OK
 
 [`CustomerResponse[]`](../../doc/models/customer-response.md)
 
@@ -291,6 +303,10 @@ Retrieves the Customer properties by Advanced Billing-generated Customer ID.
 function readCustomer(int $id): CustomerResponse
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -298,6 +314,8 @@ function readCustomer(int $id): CustomerResponse
 | `id` | `int` | Template, Required | The Advanced Billing id of the customer |
 
 ## Response Type
+
+**200**: OK
 
 [`CustomerResponse`](../../doc/models/customer-response.md)
 
@@ -363,6 +381,10 @@ This method allows to update the Customer.
 function updateCustomer(int $id, ?UpdateCustomerRequest $body = null): CustomerResponse
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -371,6 +393,8 @@ function updateCustomer(int $id, ?UpdateCustomerRequest $body = null): CustomerR
 | `body` | [`?UpdateCustomerRequest`](../../doc/models/update-customer-request.md) | Body, Optional | - |
 
 ## Response Type
+
+**200**: OK
 
 [`CustomerResponse`](../../doc/models/customer-response.md)
 
@@ -450,6 +474,10 @@ This method allows you to delete the Customer.
 function deleteCustomer(int $id): void
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -457,6 +485,8 @@ function deleteCustomer(int $id): void
 | `id` | `int` | Template, Required | The Advanced Billing id of the customer |
 
 ## Response Type
+
+**204**: No Content
 
 `void`
 
@@ -483,6 +513,10 @@ Use this method to return the customer object if you have the unique **Reference
 function readCustomerByReference(string $reference): CustomerResponse
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -490,6 +524,8 @@ function readCustomerByReference(string $reference): CustomerResponse
 | `reference` | `string` | Query, Required | Customer reference |
 
 ## Response Type
+
+**200**: OK
 
 [`CustomerResponse`](../../doc/models/customer-response.md)
 
@@ -518,6 +554,10 @@ This method lists all subscriptions that belong to a customer.
 function listCustomerSubscriptions(int $customerId): array
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -525,6 +565,8 @@ function listCustomerSubscriptions(int $customerId): array
 | `customerId` | `int` | Template, Required | The Chargify id of the customer |
 
 ## Response Type
+
+**200**: OK
 
 [`SubscriptionResponse[]`](../../doc/models/subscription-response.md)
 

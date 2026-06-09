@@ -47,7 +47,7 @@ use CoreInterfaces\Core\Request\RequestMethod;
 class SubscriptionComponentsController extends BaseController
 {
     /**
-     * This request will list information regarding a specific component owned by a subscription.
+     * Returns information for a specific component on a subscription.
      *
      * @param int $subscriptionId The Chargify id of the subscription.
      * @param int $componentId The Advanced Billing id of the component. Alternatively, the
@@ -77,7 +77,7 @@ class SubscriptionComponentsController extends BaseController
     }
 
     /**
-     * This request will list a subscription's applied components.
+     * Lists a subscription's applied components.
      *
      * ## Archived Components
      *
@@ -208,8 +208,8 @@ class SubscriptionComponentsController extends BaseController
      * When creating an allocation via the API, you can pass the `upgrade_charge`, `downgrade_credit`, and
      * `accrue_charge` to be applied.
      *
-     * > **Note:** These proration and accural fields are ignored for Prepaid Components since this
-     * component type always generate charges immediately without proration.
+     * > **Note:** These proration and accrual fields are ignored for Prepaid Components since this
+     * component type always generates charges immediately without proration.
      *
      * For information on prorated components and upgrade/downgrade schemes, see [Setting Component
      * Allocations.](https://maxio.zendesk.com/hc/en-us/articles/24251906165133-Component-Allocations-
@@ -233,7 +233,7 @@ class SubscriptionComponentsController extends BaseController
      * > **Note:** Proration uses the current price of the component as well as the current tax rates.
      * Changes to either may cause the prorated charge/credit to be wrong.
      *
-     * For more informaiton see the [Component Allocations](https://maxio.zendesk.com/hc/en-
+     * For more information, see the [Component Allocations](https://maxio.zendesk.com/hc/en-
      * us/articles/24251883961485-Component-Allocations-Overview) product Documentation.
      *
      * @param int $subscriptionId The Chargify id of the subscription.
@@ -275,7 +275,7 @@ class SubscriptionComponentsController extends BaseController
     }
 
     /**
-     * This endpoint returns the 50 most recent Allocations, ordered by most recent first.
+     * Returns the 50 most recent Allocations, ordered by most recent first.
      *
      * ## On/Off Components
      *
@@ -324,7 +324,7 @@ class SubscriptionComponentsController extends BaseController
 
     /**
      * Creates multiple allocations, sets the current allocated quantity for each of the components, and
-     * recording a memo.   A `component_id` is required for each allocation.
+     * records a memo.   A `component_id` is required for each allocation.
      *
      * The charges and/or credits that are created will be rolled up into a single total which is used to
      * determine whether this is an upgrade or a downgrade.
@@ -347,8 +347,8 @@ class SubscriptionComponentsController extends BaseController
      * > **Note:** Proration uses the current price of the component as well as the current tax rates.
      * Changes to either may cause the prorated charge/credit to be wrong.
      *
-     * For more informaiton see the [Component Allocations](https://maxio.zendesk.com/hc/en-
-     * us/articles/24251883961485-Component-Allocations-Overview) product Documentation.
+     * For more information, see the [Component Allocations](https://maxio.zendesk.com/hc/en-
+     * us/articles/24251883961485-Component-Allocations-Overview) product documentation.
      *
      * @param int $subscriptionId The Chargify id of the subscription.
      * @param AllocateComponents|null $body
@@ -385,9 +385,9 @@ class SubscriptionComponentsController extends BaseController
     }
 
     /**
-     * Advanced Billing offers the ability to preview a potential subscription's **quantity-based** or
-     * **on/off** component allocation in the middle of the current billing period.  This is useful if you
-     * want users to be able to see the effect of a component operation before actually doing it.
+     * Previews a potential subscription's **quantity-based** or **on/off** component allocation in the
+     * middle of the current billing period.  This is useful if you want users to be able to see the effect
+     * of a component operation before actually doing it.
      *
      * ## Fine-grained Component Control: Use with multiple `upgrade_charge`s or `downgrade_credits`
      *
@@ -434,9 +434,8 @@ class SubscriptionComponentsController extends BaseController
     }
 
     /**
-     * When the expiration interval options are selected on a prepaid usage component price point, all
-     * allocations will be created with an expiration date. This expiration date can be changed after the
-     * fact to allow for extending or shortening the allocation's active window.
+     * Updates the expiration date for a prepaid usage allocation. This expiration date can be changed
+     * after the fact to allow for extending or shortening the allocation's active window.
      *
      * In order to change a prepaid usage allocation's expiration date, a PUT call must be made to the
      * allocation's endpoint with a new expiration date.
@@ -493,8 +492,10 @@ class SubscriptionComponentsController extends BaseController
     }
 
     /**
+     * Deletes a prepaid usage allocation.
+     *
      * Prepaid Usage components are unique in that their allocations are always additive. In order to
-     * reduce a subscription's allocated quantity for a prepaid usage component each allocation must be
+     * reduce a subscription's allocated quantity for a prepaid usage component, each allocation must be
      * destroyed individually via this endpoint.
      *
      * ## Credit Scheme
@@ -562,14 +563,14 @@ class SubscriptionComponentsController extends BaseController
      * Components). Additionally, for information on how to record component usage against a subscription,
      * see the following resources:
      *
-     * It is not possible to record metered usage for more than one component at a time Usage should be
+     * It is not possible to record metered usage for more than one component at a time. Usage should be
      * reported as one API call per component on a single subscription. For example, to record that a
      * subscriber has sent both an SMS Message and an Email, send an API call for each.
      *
-     * See the following product documention articles for more information:
+     * See the following product documentation articles for more information:
      *
      * - [Create and Manage Components](https://maxio.zendesk.com/hc/en-us/articles/24261149711501-Create-
-     * Edit-and-Archive-Components). A
+     * Edit-and-Archive-Components)
      * - [Recording Metered Component Usage](https://maxio.zendesk.com/hc/en-us/articles/24251890500109-
      * Reporting-Component-Allocations#reporting-metered-component-usage)
      * - [Reporting Prepaid Component Status](https://maxio.zendesk.com/hc/en-us/articles/24251890500109-
@@ -664,8 +665,8 @@ class SubscriptionComponentsController extends BaseController
     }
 
     /**
-     * This request will return a list of the usages associated with a subscription for a particular
-     * metered component. This will display the previously recorded components for a subscription.
+     * Returns a list of usages associated with a subscription for a particular metered component. This
+     * will display the previously recorded components for a subscription.
      *
      * This endpoint is not compatible with quantity-based components.
      *
@@ -727,6 +728,8 @@ class SubscriptionComponentsController extends BaseController
     }
 
     /**
+     * Activates an event-based component for a single subscription.
+     *
      * In order to bill your subscribers on your Events data under the Events-Based Billing feature, the
      * components must be activated for the subscriber.
      *
@@ -769,8 +772,8 @@ class SubscriptionComponentsController extends BaseController
     }
 
     /**
-     * Use this endpoint to deactivate an event-based component for a single subscription. Deactivating the
-     * event-based component causes Advanced Billing to ignore related events at subscription renewal.
+     * Deactivates an event-based component for a single subscription. Deactivating the event-based
+     * component causes Advanced Billing to ignore related events at subscription renewal.
      *
      * @param int $subscriptionId The Advanced Billing id of the subscription
      * @param int $componentId The Advanced Billing id of the component
@@ -795,6 +798,8 @@ class SubscriptionComponentsController extends BaseController
     }
 
     /**
+     * Records a single event for Events-Based Billing.
+     *
      * ## Documentation
      *
      * Events-Based Billing is an evolved form of metered billing that is based on data-rich events
@@ -844,7 +849,7 @@ class SubscriptionComponentsController extends BaseController
     }
 
     /**
-     * Use this endpoint to record a collection of events.
+     * Records a collection of events.
      *
      * *Note: this endpoint differs from the standard Chargify API endpoints in that the subdomain will be
      * `events` and your site subdomain will be included in the URL path.*
@@ -877,7 +882,7 @@ class SubscriptionComponentsController extends BaseController
     }
 
     /**
-     * This request will list components applied to each subscription.
+     * Lists components applied to each subscription.
      *
      * @param array $options Array with all options for search
      *

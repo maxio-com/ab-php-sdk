@@ -82,6 +82,8 @@ class EventKey
 
     public const INVOICE_ISSUED = 'invoice_issued';
 
+    public const INVOICE_PENDING = 'invoice_pending';
+
     public const PREPAID_SUBSCRIPTION_BALANCE_CHANGED = 'prepaid_subscription_balance_changed';
 
     public const SUBSCRIPTION_GROUP_SIGNUP_SUCCESS = 'subscription_group_signup_success';
@@ -211,6 +213,7 @@ class EventKey
         self::TRIAL_END_NOTICE,
         self::DUNNING_STEP_REACHED,
         self::INVOICE_ISSUED,
+        self::INVOICE_PENDING,
         self::PREPAID_SUBSCRIPTION_BALANCE_CHANGED,
         self::SUBSCRIPTION_GROUP_SIGNUP_SUCCESS,
         self::SUBSCRIPTION_GROUP_SIGNUP_FAILURE,

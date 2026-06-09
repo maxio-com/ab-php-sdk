@@ -9,7 +9,7 @@
 
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
-| `chargifyToken` | `?string` | Optional | Token received after sending billing information using chargify.js. | getChargifyToken(): ?string | setChargifyToken(?string chargifyToken): void |
+| `chargifyToken` | `?string` | Optional | Token received after sending billing information using Maxio.js (formerly Chargify.js). | getChargifyToken(): ?string | setChargifyToken(?string chargifyToken): void |
 | `id` | `?int` | Optional | - | getId(): ?int | setId(?int id): void |
 | `paymentType` | [`?string(PaymentType)`](../../doc/models/payment-type.md) | Optional | - | getPaymentType(): ?string | setPaymentType(?string paymentType): void |
 | `firstName` | `?string` | Optional | First name on card or bank account. If omitted, the first_name from customer attributes will be used. | getFirstName(): ?string | setFirstName(?string firstName): void |
@@ -29,8 +29,8 @@
 | `vaultToken` | `?string` | Optional | The “token” provided by your vault storage for an already stored payment profile | getVaultToken(): ?string | setVaultToken(?string vaultToken): void |
 | `customerVaultToken` | `?string` | Optional | (only for Authorize.Net CIM storage or Square) The customerProfileId for the owner of the customerPaymentProfileId provided as the vault_token | getCustomerVaultToken(): ?string | setCustomerVaultToken(?string customerVaultToken): void |
 | `customerId` | `?int` | Optional | (Required when creating a new payment profile) The Chargify customer id. | getCustomerId(): ?int | setCustomerId(?int customerId): void |
-| `paypalEmail` | `?string` | Optional | used by merchants that implemented BraintreeBlue javaScript libraries on their own. We recommend using Chargify.js instead. | getPaypalEmail(): ?string | setPaypalEmail(?string paypalEmail): void |
-| `paymentMethodNonce` | `?string` | Optional | used by merchants that implemented BraintreeBlue javaScript libraries on their own. We recommend using Chargify.js instead. | getPaymentMethodNonce(): ?string | setPaymentMethodNonce(?string paymentMethodNonce): void |
+| `paypalEmail` | `?string` | Optional | used by merchants that implemented BraintreeBlue javaScript libraries on their own. We recommend using Maxio.js (formerly Chargify.js) instead. | getPaypalEmail(): ?string | setPaypalEmail(?string paypalEmail): void |
+| `paymentMethodNonce` | `?string` | Optional | used by merchants that implemented BraintreeBlue javaScript libraries on their own. We recommend using Maxio.js (formerly Chargify.js) instead. | getPaymentMethodNonce(): ?string | setPaymentMethodNonce(?string paymentMethodNonce): void |
 | `gatewayHandle` | `?string` | Optional | This attribute is only available if MultiGateway feature is enabled for your Site. This feature is in the Private Beta currently. gateway_handle is used to directly select a gateway where a payment profile will be stored in. Every connected gateway must have a unique gateway handle specified. Read [Multigateway description](https://chargify.zendesk.com/hc/en-us/articles/4407761759643#connecting-with-multiple-gateways) to learn more about new concepts that MultiGateway introduces and the default behavior when this attribute is not passed. | getGatewayHandle(): ?string | setGatewayHandle(?string gatewayHandle): void |
 | `cvv` | `?string` | Optional | The 3- or 4-digit Card Verification Value. This value is merely passed through to the payment gateway. | getCvv(): ?string | setCvv(?string cvv): void |
 | `bankName` | `?string` | Optional | (Required when creating with ACH or GoCardless, optional with Stripe Direct Debit). The name of the bank where the customerʼs account resides | getBankName(): ?string | setBankName(?string bankName): void |
