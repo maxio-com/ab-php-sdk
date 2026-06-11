@@ -27,7 +27,7 @@ final class CustomerTestData
     public const PORTAL_INVITE_LAST_SENT_AT = null;
     public const PORTAL_INVITE_LAST_ACCEPTED_AT = null;
     public const TAX_EXEMPT = false;
-    public const VAT_NUMBER = 'test vat number';
+    public const VAT_NUMBER = 'TEST VAT NUMBER';
     public const PARENT_ID = null;
     public const LOCALE = null;
     public const UPDATED_FIRST_NAME = 'UpdatedExample';
