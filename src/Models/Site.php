@@ -98,6 +98,21 @@ class Site implements \JsonSerializable
     /**
      * @var bool|null
      */
+    private $multiFrequencyEnabled;
+
+    /**
+     * @var bool|null
+     */
+    private $autoRenewalsEnabled;
+
+    /**
+     * @var bool|null
+     */
+    private $portalEnabled;
+
+    /**
+     * @var bool|null
+     */
     private $test;
 
     /**
@@ -393,6 +408,68 @@ class Site implements \JsonSerializable
     }
 
     /**
+     * Returns Multi Frequency Enabled.
+     * Whether the site has the multi-frequency billing feature enabled. Only present when relationship
+     * invoicing is active.
+     */
+    public function getMultiFrequencyEnabled(): ?bool
+    {
+        return $this->multiFrequencyEnabled;
+    }
+
+    /**
+     * Sets Multi Frequency Enabled.
+     * Whether the site has the multi-frequency billing feature enabled. Only present when relationship
+     * invoicing is active.
+     *
+     * @maps multi_frequency_enabled
+     */
+    public function setMultiFrequencyEnabled(?bool $multiFrequencyEnabled): void
+    {
+        $this->multiFrequencyEnabled = $multiFrequencyEnabled;
+    }
+
+    /**
+     * Returns Auto Renewals Enabled.
+     * Whether the auto-renewals feature is enabled for this site.
+     */
+    public function getAutoRenewalsEnabled(): ?bool
+    {
+        return $this->autoRenewalsEnabled;
+    }
+
+    /**
+     * Sets Auto Renewals Enabled.
+     * Whether the auto-renewals feature is enabled for this site.
+     *
+     * @maps auto_renewals_enabled
+     */
+    public function setAutoRenewalsEnabled(?bool $autoRenewalsEnabled): void
+    {
+        $this->autoRenewalsEnabled = $autoRenewalsEnabled;
+    }
+
+    /**
+     * Returns Portal Enabled.
+     * Whether the Billing Portal is enabled for this site.
+     */
+    public function getPortalEnabled(): ?bool
+    {
+        return $this->portalEnabled;
+    }
+
+    /**
+     * Sets Portal Enabled.
+     * Whether the Billing Portal is enabled for this site.
+     *
+     * @maps portal_enabled
+     */
+    public function setPortalEnabled(?bool $portalEnabled): void
+    {
+        $this->portalEnabled = $portalEnabled;
+    }
+
+    /**
      * Returns Test.
      */
     public function getTest(): ?bool
@@ -436,6 +513,9 @@ class Site implements \JsonSerializable
                 'organizationAddress' => $this->organizationAddress,
                 'taxConfiguration' => $this->taxConfiguration,
                 'netTerms' => $this->netTerms,
+                'multiFrequencyEnabled' => $this->multiFrequencyEnabled,
+                'autoRenewalsEnabled' => $this->autoRenewalsEnabled,
+                'portalEnabled' => $this->portalEnabled,
                 'test' => $this->test,
                 'additionalProperties' => $this->additionalProperties
             ]
@@ -529,6 +609,15 @@ class Site implements \JsonSerializable
         }
         if (isset($this->netTerms)) {
             $json['net_terms']                                  = $this->netTerms;
+        }
+        if (isset($this->multiFrequencyEnabled)) {
+            $json['multi_frequency_enabled']                    = $this->multiFrequencyEnabled;
+        }
+        if (isset($this->autoRenewalsEnabled)) {
+            $json['auto_renewals_enabled']                      = $this->autoRenewalsEnabled;
+        }
+        if (isset($this->portalEnabled)) {
+            $json['portal_enabled']                             = $this->portalEnabled;
         }
         if (isset($this->test)) {
             $json['test']                                       = $this->test;

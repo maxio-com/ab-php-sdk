@@ -189,7 +189,7 @@ try {
 
 # Create Product Family
 
-Creates a Product Family within your Advanced Billing site. Create a Product Family to act as a container for your products, components and coupons.
+Creates a Product Family within your Advanced Billing site. Create a Product Family to act as a container for your products, components, and coupons.
 
 Full documentation on how Product Families operate within the Advanced Billing UI can be located [here](https://maxio.zendesk.com/hc/en-us/articles/24261098936205-Product-Families).
 
@@ -260,7 +260,7 @@ try {
 
 # List Product Families
 
-Retrieve a list of Product Families for a site.
+Returns a list of Product Families for a site.
 
 ```php
 function listProductFamilies(array $options): array

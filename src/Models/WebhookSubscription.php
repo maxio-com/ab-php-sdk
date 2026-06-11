@@ -20,6 +20,10 @@ class WebhookSubscription
 
     public const COMPONENT_ALLOCATION_CHANGE = 'component_allocation_change';
 
+    public const CHJS_TOKENIZATION_FAILURE = 'chjs_tokenization_failure';
+
+    public const CHJS_TOKENIZATION_SUCCESS = 'chjs_tokenization_success';
+
     public const CUSTOMER_CREATE = 'customer_create';
 
     public const CUSTOMER_UPDATE = 'customer_update';
@@ -92,6 +96,8 @@ class WebhookSubscription
     private const _ALL_VALUES = [
         self::BILLING_DATE_CHANGE,
         self::COMPONENT_ALLOCATION_CHANGE,
+        self::CHJS_TOKENIZATION_FAILURE,
+        self::CHJS_TOKENIZATION_SUCCESS,
         self::CUSTOMER_CREATE,
         self::CUSTOMER_UPDATE,
         self::DUNNING_STEP_REACHED,

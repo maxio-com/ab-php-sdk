@@ -367,6 +367,26 @@ class InvoiceLineItemBuilder
     }
 
     /**
+     * Sets prepaid allocation expires at field.
+     *
+     * @param \DateTime|null $value
+     */
+    public function prepaidAllocationExpiresAt(?\DateTime $value): self
+    {
+        $this->instance->setPrepaidAllocationExpiresAt($value);
+        return $this;
+    }
+
+    /**
+     * Unsets prepaid allocation expires at field.
+     */
+    public function unsetPrepaidAllocationExpiresAt(): self
+    {
+        $this->instance->unsetPrepaidAllocationExpiresAt();
+        return $this;
+    }
+
+    /**
      * Add an additional property to this model.
      *
      * @param string $name Name of property.

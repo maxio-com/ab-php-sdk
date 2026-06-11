@@ -146,8 +146,8 @@ class ProductPricePointsController extends BaseController
     }
 
     /**
-     * Use this endpoint to retrieve details for a specific product price point. You can achieve this by
-     * using either the product price point ID or handle.
+     * Returns details for a specific product price point. You can achieve this by using either the product
+     * price point ID or handle.
      *
      * @param int|string $productId The id or handle of the product. When using the handle, it must
      *        be prefixed with `handle:`. Example: `123` for an integer ID, or `handle:example-
@@ -227,7 +227,7 @@ class ProductPricePointsController extends BaseController
     }
 
     /**
-     * Use this endpoint to unarchive an archived product price point.
+     * Unarchives an archived product price point.
      *
      * @param int $productId The Advanced Billing id of the product to which the price point belongs
      * @param int $pricePointId The Advanced Billing id of the product price point
@@ -406,7 +406,7 @@ class ProductPricePointsController extends BaseController
     }
 
     /**
-     * This method allows retrieval of a list of Products Price Points belonging to a Site.
+     * Lists Product Price Points belonging to a site.
      *
      * @param array $options Array with all options for search
      *

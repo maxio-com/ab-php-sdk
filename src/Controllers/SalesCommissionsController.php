@@ -22,7 +22,7 @@ use CoreInterfaces\Core\Request\RequestMethod;
 class SalesCommissionsController extends BaseController
 {
     /**
-     * Endpoint returns subscriptions with associated sales reps
+     * Lists subscriptions with associated sales reps.
      *
      * ## Modified Authentication Process
      *
@@ -66,7 +66,7 @@ class SalesCommissionsController extends BaseController
     }
 
     /**
-     * Endpoint returns sales rep list with details
+     * Returns a sales rep list with details.
      *
      * ## Modified Authentication Process
      *
@@ -107,7 +107,7 @@ class SalesCommissionsController extends BaseController
     }
 
     /**
-     * Endpoint returns sales rep and attached subscriptions details.
+     * Returns a sales rep and attached subscription details.
      *
      * ## Modified Authentication Process
      *

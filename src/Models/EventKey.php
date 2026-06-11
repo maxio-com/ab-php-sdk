@@ -171,6 +171,10 @@ class EventKey
 
     public const COMPONENT_BILLING_DATE_CHANGED = 'component_billing_date_changed';
 
+    public const CHJS_TOKENIZATION_FAILURE = 'chjs_tokenization_failure';
+
+    public const CHJS_TOKENIZATION_SUCCESS = 'chjs_tokenization_success';
+
     public const SUBSCRIPTION_TERM_RENEWAL_SCHEDULED = 'subscription_term_renewal_scheduled';
 
     public const SUBSCRIPTION_TERM_RENEWAL_PENDING = 'subscription_term_renewal_pending';
@@ -257,6 +261,8 @@ class EventKey
         self::CHARGEBACK_WON,
         self::PAYMENT_COLLECTION_METHOD_CHANGED,
         self::COMPONENT_BILLING_DATE_CHANGED,
+        self::CHJS_TOKENIZATION_FAILURE,
+        self::CHJS_TOKENIZATION_SUCCESS,
         self::SUBSCRIPTION_TERM_RENEWAL_SCHEDULED,
         self::SUBSCRIPTION_TERM_RENEWAL_PENDING,
         self::SUBSCRIPTION_TERM_RENEWAL_ACTIVATED,

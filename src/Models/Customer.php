@@ -167,6 +167,11 @@ class Customer implements \JsonSerializable
     private $defaultAutoRenewalProfileId = [];
 
     /**
+     * @var array
+     */
+    private $maxioid = [];
+
+    /**
      * Returns First Name.
      * The first name of the customer
      */
@@ -1062,6 +1067,38 @@ class Customer implements \JsonSerializable
     }
 
     /**
+     * Returns Maxioid.
+     * The Maxio-generated unique identifier for the customer.
+     */
+    public function getMaxioid(): ?string
+    {
+        if (count($this->maxioid) == 0) {
+            return null;
+        }
+        return $this->maxioid['value'];
+    }
+
+    /**
+     * Sets Maxioid.
+     * The Maxio-generated unique identifier for the customer.
+     *
+     * @maps maxioid
+     */
+    public function setMaxioid(?string $maxioid): void
+    {
+        $this->maxioid['value'] = $maxioid;
+    }
+
+    /**
+     * Unsets Maxioid.
+     * The Maxio-generated unique identifier for the customer.
+     */
+    public function unsetMaxioid(): void
+    {
+        $this->maxioid = [];
+    }
+
+    /**
      * Converts the Customer object to a human-readable string representation.
      *
      * @return string The string representation of the Customer object.
@@ -1101,6 +1138,7 @@ class Customer implements \JsonSerializable
                 'salesforceId' => $this->getSalesforceId(),
                 'taxExemptReason' => $this->getTaxExemptReason(),
                 'defaultAutoRenewalProfileId' => $this->getDefaultAutoRenewalProfileId(),
+                'maxioid' => $this->getMaxioid(),
                 'additionalProperties' => $this->additionalProperties
             ]
         );
@@ -1244,6 +1282,9 @@ class Customer implements \JsonSerializable
         }
         if (!empty($this->defaultAutoRenewalProfileId)) {
             $json['default_auto_renewal_profile_id'] = $this->defaultAutoRenewalProfileId['value'];
+        }
+        if (!empty($this->maxioid)) {
+            $json['maxioid']                         = $this->maxioid['value'];
         }
         $json = array_merge($json, $this->additionalProperties);
 

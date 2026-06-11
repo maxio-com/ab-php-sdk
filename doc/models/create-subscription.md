@@ -58,7 +58,7 @@
 | `achAgreement` | [`?ACHAgreement`](../../doc/models/ach-agreement.md) | Optional | (Optional) If passed, the proof of the authorized ACH agreement terms will be persisted. | getAchAgreement(): ?ACHAgreement | setAchAgreement(?ACHAgreement achAgreement): void |
 | `dunningCommunicationDelayEnabled` | `?bool` | Optional | Enable Communication Delay feature, making sure no communication (email or SMS) is sent to the Customer between 9PM and 8AM in time zone set by the `dunning_communication_delay_time_zone` attribute.<br><br>**Default**: `false` | getDunningCommunicationDelayEnabled(): ?bool | setDunningCommunicationDelayEnabled(?bool dunningCommunicationDelayEnabled): void |
 | `dunningCommunicationDelayTimeZone` | `?string` | Optional | Time zone for the Dunning Communication Delay feature. | getDunningCommunicationDelayTimeZone(): ?string | setDunningCommunicationDelayTimeZone(?string dunningCommunicationDelayTimeZone): void |
-| `skipBillingManifestTaxes` | `?bool` | Optional | Valid only for the Subscription Preview endpoint. When set to `true` it skips calculating taxes for the current and next billing manifests.<br><br>**Default**: `false` | getSkipBillingManifestTaxes(): ?bool | setSkipBillingManifestTaxes(?bool skipBillingManifestTaxes): void |
+| `skipBillingManifestTaxes` | `?bool` | Optional | Valid only for the Subscription Preview endpoint. When set to `true` it skips calculating taxes for the current and next billing manifests. Defaults to `false` when not provided. | getSkipBillingManifestTaxes(): ?bool | setSkipBillingManifestTaxes(?bool skipBillingManifestTaxes): void |
 
 ## Example (as JSON)
 
@@ -71,7 +71,6 @@
   },
   "dunning_communication_delay_enabled": false,
   "dunning_communication_delay_time_zone": "\"Eastern Time (US & Canada)\"",
-  "skip_billing_manifest_taxes": false,
   "product_handle": "product_handle6",
   "product_id": 212,
   "product_price_point_handle": "product_price_point_handle0",

@@ -264,7 +264,7 @@ class CreateSubscription implements \JsonSerializable
     /**
      * @var bool|null
      */
-    private $skipBillingManifestTaxes = false;
+    private $skipBillingManifestTaxes;
 
     /**
      * Returns Product Handle.
@@ -1407,7 +1407,7 @@ class CreateSubscription implements \JsonSerializable
     /**
      * Returns Skip Billing Manifest Taxes.
      * Valid only for the Subscription Preview endpoint. When set to `true` it skips calculating taxes for
-     * the current and next billing manifests.
+     * the current and next billing manifests. Defaults to `false` when not provided.
      */
     public function getSkipBillingManifestTaxes(): ?bool
     {
@@ -1417,7 +1417,7 @@ class CreateSubscription implements \JsonSerializable
     /**
      * Sets Skip Billing Manifest Taxes.
      * Valid only for the Subscription Preview endpoint. When set to `true` it skips calculating taxes for
-     * the current and next billing manifests.
+     * the current and next billing manifests. Defaults to `false` when not provided.
      *
      * @maps skip_billing_manifest_taxes
      */

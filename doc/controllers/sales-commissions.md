@@ -17,7 +17,7 @@ $salesCommissionsController = $client->getSalesCommissionsController();
 
 # List Sales Commission Settings
 
-Endpoint returns subscriptions with associated sales reps
+Lists subscriptions with associated sales reps.
 
 ## Modified Authentication Process
 
@@ -109,7 +109,7 @@ try {
 
 # List Sales Reps
 
-Endpoint returns sales rep list with details
+Returns a sales rep list with details.
 
 ## Modified Authentication Process
 
@@ -250,7 +250,7 @@ try {
 
 # Read Sales Rep
 
-Endpoint returns sales rep and attached subscriptions details.
+Returns a sales rep and attached subscription details.
 
 ## Modified Authentication Process
 

@@ -219,6 +219,39 @@ class SiteBuilder
     }
 
     /**
+     * Sets multi frequency enabled field.
+     *
+     * @param bool|null $value
+     */
+    public function multiFrequencyEnabled(?bool $value): self
+    {
+        $this->instance->setMultiFrequencyEnabled($value);
+        return $this;
+    }
+
+    /**
+     * Sets auto renewals enabled field.
+     *
+     * @param bool|null $value
+     */
+    public function autoRenewalsEnabled(?bool $value): self
+    {
+        $this->instance->setAutoRenewalsEnabled($value);
+        return $this;
+    }
+
+    /**
+     * Sets portal enabled field.
+     *
+     * @param bool|null $value
+     */
+    public function portalEnabled(?bool $value): self
+    {
+        $this->instance->setPortalEnabled($value);
+        return $this;
+    }
+
+    /**
      * Sets test field.
      *
      * @param bool|null $value

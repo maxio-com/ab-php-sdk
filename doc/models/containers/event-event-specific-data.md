@@ -3,7 +3,7 @@
 
 ## Data Type
 
-`SubscriptionProductChange|SubscriptionStateChange|PaymentRelatedEvents|RefundSuccess|ComponentAllocationChange|MeteredUsage|PrepaidUsage|DunningStepReached|InvoiceIssued|PendingCancellationChange|PrepaidSubscriptionBalanceChanged|ProformaInvoiceIssued|SubscriptionGroupSignupEventData|CreditAccountBalanceChanged|PrepaymentAccountBalanceChanged|PaymentCollectionMethodChanged|ItemPricePointChanged|CustomFieldValueChange`
+`SubscriptionProductChange|SubscriptionStateChange|PaymentRelatedEvents|RefundSuccess|ComponentAllocationChange|MeteredUsage|PrepaidUsage|DunningStepReached|InvoiceIssued|PendingCancellationChange|PrepaidSubscriptionBalanceChanged|ProformaInvoiceIssued|SubscriptionGroupSignupEventData|CreditAccountBalanceChanged|PrepaymentAccountBalanceChanged|PaymentCollectionMethodChanged|ItemPricePointChanged|CustomFieldValueChange|ChjsTokenizationSuccess|ChjsTokenizationFailure`
 
 ## Cases
 
@@ -27,6 +27,8 @@
 | [`PaymentCollectionMethodChanged`](../../../doc/models/payment-collection-method-changed.md) |
 | [`ItemPricePointChanged`](../../../doc/models/item-price-point-changed.md) |
 | [`CustomFieldValueChange`](../../../doc/models/custom-field-value-change.md) |
+| [`ChjsTokenizationSuccess`](../../../doc/models/chjs-tokenization-success.md) |
+| [`ChjsTokenizationFailure`](../../../doc/models/chjs-tokenization-failure.md) |
 
 ## SubscriptionProductChange
 
@@ -345,5 +347,31 @@ $value = CustomFieldValueChangeBuilder::init(
     ->oldValue('old_value2')
     ->newValue('new_value8')
     ->build();
+```
+
+## ChjsTokenizationSuccess
+
+### Initialization Code
+
+#### Example
+
+```php
+$value = ChjsTokenizationSuccessBuilder::init(
+    PaymentProfileBuilder::init(
+        44
+    )->build()
+)->build();
+```
+
+## ChjsTokenizationFailure
+
+### Initialization Code
+
+#### Example
+
+```php
+$value = ChjsTokenizationFailureBuilder::init(
+    'errors2'
+)->build();
 ```
 

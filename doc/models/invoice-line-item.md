@@ -33,6 +33,7 @@
 | `productPricePointId` | `?int` | Optional | The price point ID of the line item's product | getProductPricePointId(): ?int | setProductPricePointId(?int productPricePointId): void |
 | `customItem` | `?bool` | Optional | - | getCustomItem(): ?bool | setCustomItem(?bool customItem): void |
 | `kind` | `?string` | Optional | - | getKind(): ?string | setKind(?string kind): void |
+| `prepaidAllocationExpiresAt` | `?DateTime` | Optional | The date a prepaid allocation is set to expire. Only present on line items representing prepaid component allocations. The format is `"YYYY-MM-DD"`. | getPrepaidAllocationExpiresAt(): ?\DateTime | setPrepaidAllocationExpiresAt(?\DateTime prepaidAllocationExpiresAt): void |
 
 ## Example (as JSON)
 
