@@ -357,7 +357,7 @@ $value = CustomFieldValueChangeBuilder::init(
 
 ```php
 $value = ChjsTokenizationSuccessBuilder::init(
-    PaymentProfileBuilder::init(
+    TokenizedPaymentProfileBuilder::init(
         44
     )->build()
 )->build();

@@ -10,34 +10,34 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models\Builders;
 
-use AdvancedBillingLib\Models\PaymentProfile;
+use AdvancedBillingLib\Models\TokenizedPaymentProfile;
 use Core\Utils\CoreHelper;
 
 /**
- * Builder for model PaymentProfile
+ * Builder for model TokenizedPaymentProfile
  *
- * @see PaymentProfile
+ * @see TokenizedPaymentProfile
  */
-class PaymentProfileBuilder
+class TokenizedPaymentProfileBuilder
 {
     /**
-     * @var PaymentProfile
+     * @var TokenizedPaymentProfile
      */
     private $instance;
 
-    private function __construct(PaymentProfile $instance)
+    private function __construct(TokenizedPaymentProfile $instance)
     {
         $this->instance = $instance;
     }
 
     /**
-     * Initializes a new Payment Profile Builder object.
+     * Initializes a new Tokenized Payment Profile Builder object.
      *
      * @param int $id
      */
     public static function init(int $id): self
     {
-        return new self(new PaymentProfile($id));
+        return new self(new TokenizedPaymentProfile($id));
     }
 
     /**
@@ -104,9 +104,9 @@ class PaymentProfileBuilder
     }
 
     /**
-     * Initializes a new Payment Profile object.
+     * Initializes a new Tokenized Payment Profile object.
      */
-    public function build(): PaymentProfile
+    public function build(): TokenizedPaymentProfile
     {
         return CoreHelper::clone($this->instance);
     }

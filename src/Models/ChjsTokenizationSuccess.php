@@ -16,7 +16,7 @@ use stdClass;
 class ChjsTokenizationSuccess implements \JsonSerializable
 {
     /**
-     * @var PaymentProfile
+     * @var TokenizedPaymentProfile
      */
     private $paymentProfile;
 
@@ -26,9 +26,9 @@ class ChjsTokenizationSuccess implements \JsonSerializable
     private $gatewayCustomerId = [];
 
     /**
-     * @param PaymentProfile $paymentProfile
+     * @param TokenizedPaymentProfile $paymentProfile
      */
-    public function __construct(PaymentProfile $paymentProfile)
+    public function __construct(TokenizedPaymentProfile $paymentProfile)
     {
         $this->paymentProfile = $paymentProfile;
     }
@@ -36,7 +36,7 @@ class ChjsTokenizationSuccess implements \JsonSerializable
     /**
      * Returns Payment Profile.
      */
-    public function getPaymentProfile(): PaymentProfile
+    public function getPaymentProfile(): TokenizedPaymentProfile
     {
         return $this->paymentProfile;
     }
@@ -47,7 +47,7 @@ class ChjsTokenizationSuccess implements \JsonSerializable
      * @required
      * @maps payment_profile
      */
-    public function setPaymentProfile(PaymentProfile $paymentProfile): void
+    public function setPaymentProfile(TokenizedPaymentProfile $paymentProfile): void
     {
         $this->paymentProfile = $paymentProfile;
     }

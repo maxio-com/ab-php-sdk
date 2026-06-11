@@ -1,5 +1,5 @@
 
-# Payment-Profile 2
+# Payment-Profile
 
 ## Data Type
 

@@ -11,7 +11,7 @@ declare(strict_types=1);
 namespace AdvancedBillingLib\Models\Builders;
 
 use AdvancedBillingLib\Models\ChjsTokenizationSuccess;
-use AdvancedBillingLib\Models\PaymentProfile;
+use AdvancedBillingLib\Models\TokenizedPaymentProfile;
 use Core\Utils\CoreHelper;
 
 /**
@@ -34,9 +34,9 @@ class ChjsTokenizationSuccessBuilder
     /**
      * Initializes a new Chjs Tokenization Success Builder object.
      *
-     * @param PaymentProfile $paymentProfile
+     * @param TokenizedPaymentProfile $paymentProfile
      */
-    public static function init(PaymentProfile $paymentProfile): self
+    public static function init(TokenizedPaymentProfile $paymentProfile): self
     {
         return new self(new ChjsTokenizationSuccess($paymentProfile));
     }

@@ -13,7 +13,7 @@ namespace AdvancedBillingLib\Models;
 use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
-class PaymentProfile implements \JsonSerializable
+class TokenizedPaymentProfile implements \JsonSerializable
 {
     /**
      * @var int
@@ -139,14 +139,14 @@ class PaymentProfile implements \JsonSerializable
     }
 
     /**
-     * Converts the PaymentProfile object to a human-readable string representation.
+     * Converts the TokenizedPaymentProfile object to a human-readable string representation.
      *
-     * @return string The string representation of the PaymentProfile object.
+     * @return string The string representation of the TokenizedPaymentProfile object.
      */
     public function __toString(): string
     {
         return ApiHelper::stringify(
-            'PaymentProfile',
+            'TokenizedPaymentProfile',
             [
                 'id' => $this->id,
                 'vaultToken' => $this->vaultToken,
