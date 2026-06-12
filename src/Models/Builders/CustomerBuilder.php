@@ -576,6 +576,26 @@ class CustomerBuilder
     }
 
     /**
+     * Sets maxioid field.
+     *
+     * @param string|null $value
+     */
+    public function maxioid(?string $value): self
+    {
+        $this->instance->setMaxioid($value);
+        return $this;
+    }
+
+    /**
+     * Unsets maxioid field.
+     */
+    public function unsetMaxioid(): self
+    {
+        $this->instance->unsetMaxioid();
+        return $this;
+    }
+
+    /**
      * Add an additional property to this model.
      *
      * @param string $name Name of property.

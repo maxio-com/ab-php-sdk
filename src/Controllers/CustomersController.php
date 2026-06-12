@@ -28,9 +28,8 @@ use CoreInterfaces\Core\Request\RequestMethod;
 class CustomersController extends BaseController
 {
     /**
-     * You may create a new Customer at any time, or you may create a Customer at the same time you create
-     * a Subscription. The only validation restriction is that you may only create one customer for a given
-     * reference value.
+     * Creates a new customer; can also be created alongside a new subscription. The only validation
+     * restriction is that you may only create one customer for a given reference value.
      *
      * If provided, the `reference` value must be unique. It represents a unique identifier for the
      * customer from your own app, i.e. the customer’s ID. This allows you to retrieve a given customer via
@@ -92,7 +91,7 @@ class CustomersController extends BaseController
     }
 
     /**
-     * This request will by default list all customers associated with your Site.
+     * Lists all customers associated with your site, or filters results using the search parameter.
      *
      * ## Find Customer
      *
@@ -164,7 +163,7 @@ class CustomersController extends BaseController
     }
 
     /**
-     * This method allows to update the Customer.
+     * Updates the customer.
      *
      * @param int $id The Advanced Billing id of the customer
      * @param UpdateCustomerRequest|null $body
@@ -198,7 +197,7 @@ class CustomersController extends BaseController
     }
 
     /**
-     * This method allows you to delete the Customer.
+     * Deletes the customer.
      *
      * @param int $id The Advanced Billing id of the customer
      *
@@ -216,8 +215,7 @@ class CustomersController extends BaseController
     }
 
     /**
-     * Use this method to return the customer object if you have the unique **Reference ID (Your App)**
-     * value handy. It will return a single match.
+     * Returns a customer by their unique reference ID. It will return a single match.
      *
      * @param string $reference Customer reference
      *
@@ -237,7 +235,7 @@ class CustomersController extends BaseController
     }
 
     /**
-     * This method lists all subscriptions that belong to a customer.
+     * Lists all subscriptions that belong to a customer.
      *
      * @param int $customerId The Chargify id of the customer
      *

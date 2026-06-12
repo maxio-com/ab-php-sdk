@@ -17,15 +17,15 @@ $sitesController = $client->getSitesController();
 
 # Read Site
 
-This endpoint allows you to fetch some site data.
+Retrieves site data.
 
 Full documentation on Sites in the Advanced Billing UI can be located [here](https://maxio.zendesk.com/hc/en-us/sections/24250550707085-Sites).
 
-Specifically, the [Clearing Site Data](https://maxio.zendesk.com/hc/en-us/articles/24250617028365-Clearing-Site-Data) section is extremely relevant to this endpoint documentation.
+Specifically, the [Clearing Site Data](https://maxio.zendesk.com/hc/en-us/articles/24250617028365-Clearing-Site-Data) section is relevant to this endpoint documentation.
 
 #### Relationship invoicing enabled
 
-If site has RI enabled then you will see more settings like:
+If the site has RI enabled then you will see more settings like:
 
     "customer_hierarchy_enabled": true,
     "whopays_enabled": true,
@@ -38,7 +38,13 @@ You can read more about these settings here:
 function readSite(): SiteResponse
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Response Type
+
+**200**: OK
 
 [`SiteResponse`](../../doc/models/site-response.md)
 
@@ -110,13 +116,17 @@ try {
 
 # Clear Site
 
-This call is asynchronous and there may be a delay before the site data is fully deleted. If you are clearing site data for an automated test, you will need to build in a delay and/or check that there are no products, etc., in the site before proceeding.
+Clears all data from a test site asynchronously. This call is asynchronous and there may be a delay before the site data is fully deleted. If you are clearing site data for an automated test, you will need to build in a delay and/or check that there are no products, etc., in the site before proceeding.
 
 **This functionality will only work on sites in TEST mode. Attempts to perform this on sites in “live” mode will result in a response of 403 FORBIDDEN.**
 
 ```php
 function clearSite(?string $cleanupScope = CleanupScope::ALL): void
 ```
+
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
 
 ## Parameters
 
@@ -125,6 +135,8 @@ function clearSite(?string $cleanupScope = CleanupScope::ALL): void
 | `cleanupScope` | [`?string(CleanupScope)`](../../doc/models/cleanup-scope.md) | Query, Optional | `all`: Will clear all products, customers, and related subscriptions from the site.<br>`customers`: Will clear only customers and related subscriptions (leaving the products untouched) for the site.<br>Revenue will also be reset to 0.<br>Use in query `cleanup_scope=all`.<br><br>**Default**: `CleanupScope::ALL` |
 
 ## Response Type
+
+**200**: OK
 
 `void`
 
@@ -145,11 +157,15 @@ try {
 
 # List Chargify Js Public Keys
 
-This endpoint returns public keys used for Chargify.js.
+Returns public keys used for Maxio.js (formerly Chargify.js).
 
 ```php
 function listChargifyJsPublicKeys(array $options): ListPublicKeysResponse
 ```
+
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
 
 ## Parameters
 
@@ -159,6 +175,8 @@ function listChargifyJsPublicKeys(array $options): ListPublicKeysResponse
 | `perPage` | `?int` | Query, Optional | This parameter indicates how many records to fetch in each request. Default value is 20. The maximum allowed values is 200; any per_page value over 200 will be changed to 200.<br>Use in query `per_page=200`.<br><br>**Default**: `20`<br><br>**Constraints**: `<= 200` |
 
 ## Response Type
+
+**200**: OK
 
 [`ListPublicKeysResponse`](../../doc/models/list-public-keys-response.md)
 

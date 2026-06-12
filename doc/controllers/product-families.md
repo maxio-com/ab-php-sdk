@@ -24,6 +24,10 @@ Retrieves a list of Products belonging to a Product Family.
 function listProductsForProductFamily(array $options): array
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -41,6 +45,8 @@ function listProductsForProductFamily(array $options): array
 | `mInclude` | [`?string(ListProductsInclude)`](../../doc/models/list-products-include.md) | Query, Optional | Allows including additional data in the response. Use in query `include=prepaid_product_price_point`. |
 
 ## Response Type
+
+**200**: OK
 
 [`ProductResponse[]`](../../doc/models/product-response.md)
 
@@ -183,13 +189,17 @@ try {
 
 # Create Product Family
 
-Creates a Product Family within your Advanced Billing site. Create a Product Family to act as a container for your products, components and coupons.
+Creates a Product Family within your Advanced Billing site. Create a Product Family to act as a container for your products, components, and coupons.
 
 Full documentation on how Product Families operate within the Advanced Billing UI can be located [here](https://maxio.zendesk.com/hc/en-us/articles/24261098936205-Product-Families).
 
 ```php
 function createProductFamily(?CreateProductFamilyRequest $body = null): ProductFamilyResponse
 ```
+
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
 
 ## Parameters
 
@@ -198,6 +208,8 @@ function createProductFamily(?CreateProductFamilyRequest $body = null): ProductF
 | `body` | [`?CreateProductFamilyRequest`](../../doc/models/create-product-family-request.md) | Body, Optional | - |
 
 ## Response Type
+
+**201**: Created
 
 [`ProductFamilyResponse`](../../doc/models/product-family-response.md)
 
@@ -248,11 +260,15 @@ try {
 
 # List Product Families
 
-Retrieve a list of Product Families for a site.
+Returns a list of Product Families for a site.
 
 ```php
 function listProductFamilies(array $options): array
 ```
+
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
 
 ## Parameters
 
@@ -265,6 +281,8 @@ function listProductFamilies(array $options): array
 | `endDatetime` | `?DateTime` | Query, Optional | The end date and time (format YYYY-MM-DD HH:MM:SS) with which to filter the date_field. Returns products with a timestamp at or before exact time provided in query. You can specify timezone in query - otherwise your site's time zone will be used. If provided, this parameter will be used instead of end_date. |
 
 ## Response Type
+
+**200**: OK
 
 [`ProductFamilyResponse[]`](../../doc/models/product-family-response.md)
 
@@ -328,6 +346,10 @@ The product family can be specified either with the id number, or with the `hand
 function readProductFamily(int $id): ProductFamilyResponse
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -335,6 +357,8 @@ function readProductFamily(int $id): ProductFamilyResponse
 | `id` | `int` | Template, Required | The Advanced Billing id of the product family |
 
 ## Response Type
+
+**200**: OK
 
 [`ProductFamilyResponse`](../../doc/models/product-family-response.md)
 

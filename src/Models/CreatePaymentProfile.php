@@ -177,7 +177,7 @@ class CreatePaymentProfile implements \JsonSerializable
 
     /**
      * Returns Chargify Token.
-     * Token received after sending billing information using chargify.js.
+     * Token received after sending billing information using Maxio.js (formerly Chargify.js).
      */
     public function getChargifyToken(): ?string
     {
@@ -186,7 +186,7 @@ class CreatePaymentProfile implements \JsonSerializable
 
     /**
      * Sets Chargify Token.
-     * Token received after sending billing information using chargify.js.
+     * Token received after sending billing information using Maxio.js (formerly Chargify.js).
      *
      * @maps chargify_token
      */
@@ -619,7 +619,7 @@ class CreatePaymentProfile implements \JsonSerializable
     /**
      * Returns Paypal Email.
      * used by merchants that implemented BraintreeBlue javaScript libraries on their own. We recommend
-     * using Chargify.js instead.
+     * using Maxio.js (formerly Chargify.js) instead.
      */
     public function getPaypalEmail(): ?string
     {
@@ -629,7 +629,7 @@ class CreatePaymentProfile implements \JsonSerializable
     /**
      * Sets Paypal Email.
      * used by merchants that implemented BraintreeBlue javaScript libraries on their own. We recommend
-     * using Chargify.js instead.
+     * using Maxio.js (formerly Chargify.js) instead.
      *
      * @maps paypal_email
      */
@@ -641,7 +641,7 @@ class CreatePaymentProfile implements \JsonSerializable
     /**
      * Returns Payment Method Nonce.
      * used by merchants that implemented BraintreeBlue javaScript libraries on their own. We recommend
-     * using Chargify.js instead.
+     * using Maxio.js (formerly Chargify.js) instead.
      */
     public function getPaymentMethodNonce(): ?string
     {
@@ -651,7 +651,7 @@ class CreatePaymentProfile implements \JsonSerializable
     /**
      * Sets Payment Method Nonce.
      * used by merchants that implemented BraintreeBlue javaScript libraries on their own. We recommend
-     * using Chargify.js instead.
+     * using Maxio.js (formerly Chargify.js) instead.
      *
      * @maps payment_method_nonce
      */

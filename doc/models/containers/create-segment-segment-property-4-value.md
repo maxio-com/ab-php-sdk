@@ -14,3 +14,43 @@
 | `int` |
 | `bool` |
 
+## string
+
+### Initialization Code
+
+#### Example
+
+```php
+$value = 'String0';
+```
+
+## float
+
+### Initialization Code
+
+#### Example
+
+```php
+$value = 0;
+```
+
+## int
+
+### Initialization Code
+
+#### Example
+
+```php
+$value = 0;
+```
+
+## bool
+
+### Initialization Code
+
+#### Example
+
+```php
+$value = false;
+```
+

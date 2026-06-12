@@ -39,6 +39,7 @@
 | `salesforceId` | `?string` | Optional | The Salesforce ID for the customer | getSalesforceId(): ?string | setSalesforceId(?string salesforceId): void |
 | `taxExemptReason` | `?string` | Optional | The Tax Exemption Reason Code for the customer | getTaxExemptReason(): ?string | setTaxExemptReason(?string taxExemptReason): void |
 | `defaultAutoRenewalProfileId` | `?int` | Optional | The default auto-renewal profile ID for the customer | getDefaultAutoRenewalProfileId(): ?int | setDefaultAutoRenewalProfileId(?int defaultAutoRenewalProfileId): void |
+| `maxioid` | `?string` | Optional | The Maxio-generated unique identifier for the customer. | getMaxioid(): ?string | setMaxioid(?string maxioid): void |
 
 ## Example (as JSON)
 

@@ -50,6 +50,15 @@ class BillingScheduleBuilder
     }
 
     /**
+     * Unsets initial billing at field.
+     */
+    public function unsetInitialBillingAt(): self
+    {
+        $this->instance->unsetInitialBillingAt();
+        return $this;
+    }
+
+    /**
      * Add an additional property to this model.
      *
      * @param string $name Name of property.

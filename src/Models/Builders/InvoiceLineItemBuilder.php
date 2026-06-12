@@ -128,6 +128,17 @@ class InvoiceLineItemBuilder
     }
 
     /**
+     * Sets tax included field.
+     *
+     * @param bool|null $value
+     */
+    public function taxIncluded(?bool $value): self
+    {
+        $this->instance->setTaxIncluded($value);
+        return $this;
+    }
+
+    /**
      * Sets total amount field.
      *
      * @param string|null $value
@@ -352,6 +363,26 @@ class InvoiceLineItemBuilder
     public function kind(?string $value): self
     {
         $this->instance->setKind($value);
+        return $this;
+    }
+
+    /**
+     * Sets prepaid allocation expires at field.
+     *
+     * @param \DateTime|null $value
+     */
+    public function prepaidAllocationExpiresAt(?\DateTime $value): self
+    {
+        $this->instance->setPrepaidAllocationExpiresAt($value);
+        return $this;
+    }
+
+    /**
+     * Unsets prepaid allocation expires at field.
+     */
+    public function unsetPrepaidAllocationExpiresAt(): self
+    {
+        $this->instance->unsetPrepaidAllocationExpiresAt();
         return $this;
     }
 

@@ -19,7 +19,7 @@ $offersController = $client->getOffersController();
 
 # Create Offer
 
-Create an offer within your Advanced Billing site by sending a POST request.
+Creates an offer within your Advanced Billing site.
 
 ## Documentation
 
@@ -37,6 +37,10 @@ You can optionally pass in a `product_price_point_id` that corresponds with the 
 function createOffer(?CreateOfferRequest $body = null): OfferResponse
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -44,6 +48,8 @@ function createOffer(?CreateOfferRequest $body = null): OfferResponse
 | `body` | [`?CreateOfferRequest`](../../doc/models/create-offer-request.md) | Body, Optional | - |
 
 ## Response Type
+
+**201**: Created
 
 [`OfferResponse`](../../doc/models/offer-response.md)
 
@@ -138,11 +144,15 @@ try {
 
 # List Offers
 
-This endpoint will list offers for a site.
+Lists offers for a site.
 
 ```php
 function listOffers(array $options): ListOffersResponse
 ```
+
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
 
 ## Parameters
 
@@ -153,6 +163,8 @@ function listOffers(array $options): ListOffersResponse
 | `includeArchived` | `?bool` | Query, Optional | Include archived products. Use in query: `include_archived=true`. |
 
 ## Response Type
+
+**200**: OK
 
 [`ListOffersResponse`](../../doc/models/list-offers-response.md)
 
@@ -242,11 +254,15 @@ try {
 
 # Read Offer
 
-This method allows you to list a specific offer's attributes. This is different than list all offers for a site, as it requires an `offer_id`.
+Returns a specific offer's attributes. This is different from listing all offers for a site, as it requires an `offer_id`.
 
 ```php
 function readOffer(int $offerId): OfferResponse
 ```
+
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
 
 ## Parameters
 
@@ -255,6 +271,8 @@ function readOffer(int $offerId): OfferResponse
 | `offerId` | `int` | Template, Required | The Chargify id of the offer |
 
 ## Response Type
+
+**200**: OK
 
 [`OfferResponse`](../../doc/models/offer-response.md)
 
@@ -277,11 +295,15 @@ try {
 
 # Archive Offer
 
-Archive an existing offer. Please provide an `offer_id` in order to archive the correct item.
+Archives an existing offer. Please provide an `offer_id` in order to archive the correct item.
 
 ```php
 function archiveOffer(int $offerId): void
 ```
+
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
 
 ## Parameters
 
@@ -290,6 +312,8 @@ function archiveOffer(int $offerId): void
 | `offerId` | `int` | Template, Required | The Chargify id of the offer |
 
 ## Response Type
+
+**200**: OK
 
 `void`
 
@@ -310,11 +334,15 @@ try {
 
 # Unarchive Offer
 
-Unarchive a previously archived offer. Please provide an `offer_id` in order to un-archive the correct item.
+Unarchives a previously archived offer. Please provide an `offer_id` in order to unarchive the correct item.
 
 ```php
 function unarchiveOffer(int $offerId): void
 ```
+
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
 
 ## Parameters
 
@@ -323,6 +351,8 @@ function unarchiveOffer(int $offerId): void
 | `offerId` | `int` | Template, Required | The Chargify id of the offer |
 
 ## Response Type
+
+**200**: OK
 
 `void`
 

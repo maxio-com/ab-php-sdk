@@ -82,6 +82,8 @@ class EventKey
 
     public const INVOICE_ISSUED = 'invoice_issued';
 
+    public const INVOICE_PENDING = 'invoice_pending';
+
     public const PREPAID_SUBSCRIPTION_BALANCE_CHANGED = 'prepaid_subscription_balance_changed';
 
     public const SUBSCRIPTION_GROUP_SIGNUP_SUCCESS = 'subscription_group_signup_success';
@@ -169,6 +171,10 @@ class EventKey
 
     public const COMPONENT_BILLING_DATE_CHANGED = 'component_billing_date_changed';
 
+    public const CHJS_TOKENIZATION_FAILURE = 'chjs_tokenization_failure';
+
+    public const CHJS_TOKENIZATION_SUCCESS = 'chjs_tokenization_success';
+
     public const SUBSCRIPTION_TERM_RENEWAL_SCHEDULED = 'subscription_term_renewal_scheduled';
 
     public const SUBSCRIPTION_TERM_RENEWAL_PENDING = 'subscription_term_renewal_pending';
@@ -211,6 +217,7 @@ class EventKey
         self::TRIAL_END_NOTICE,
         self::DUNNING_STEP_REACHED,
         self::INVOICE_ISSUED,
+        self::INVOICE_PENDING,
         self::PREPAID_SUBSCRIPTION_BALANCE_CHANGED,
         self::SUBSCRIPTION_GROUP_SIGNUP_SUCCESS,
         self::SUBSCRIPTION_GROUP_SIGNUP_FAILURE,
@@ -254,6 +261,8 @@ class EventKey
         self::CHARGEBACK_WON,
         self::PAYMENT_COLLECTION_METHOD_CHANGED,
         self::COMPONENT_BILLING_DATE_CHANGED,
+        self::CHJS_TOKENIZATION_FAILURE,
+        self::CHJS_TOKENIZATION_SUCCESS,
         self::SUBSCRIPTION_TERM_RENEWAL_SCHEDULED,
         self::SUBSCRIPTION_TERM_RENEWAL_PENDING,
         self::SUBSCRIPTION_TERM_RENEWAL_ACTIVATED,

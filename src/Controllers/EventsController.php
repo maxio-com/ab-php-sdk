@@ -23,6 +23,8 @@ use CoreInterfaces\Core\Request\RequestMethod;
 class EventsController extends BaseController
 {
     /**
+     * Lists events for a site.
+     *
      * ## Events Intro
      *
      * Advanced Billing Events include various activity that happens around a Site. This information is
@@ -30,8 +32,8 @@ class EventsController extends BaseController
      * errors.
      *
      * Within the Advanced Billing UI, "Events" are referred to as "Site Activity".  Full documentation on
-     * how to record view Events / Site Activty in the Advanced Billing UI can be located [here](https:
-     * //maxio.zendesk.com/hc/en-us/articles/24250671733517-Site-Activity).
+     * how to view Events / Site Activity in the Advanced Billing UI can be located [here](https://maxio.
+     * zendesk.com/hc/en-us/articles/24250671733517-Site-Activity).
      *
      * ## List Events for a Site
      *
@@ -135,7 +137,7 @@ class EventsController extends BaseController
     }
 
     /**
-     * The following request will return a list of events for a subscription.
+     * Lists events for a subscription.
      *
      * ## Event Key
      * The event type is identified by the key property. You can check supported keys
@@ -179,7 +181,7 @@ class EventsController extends BaseController
     }
 
     /**
-     * Get a count of all the events for a given site by using this method.
+     * Returns the total count of events for a given site.
      *
      * @param array $options Array with all options for search
      *

@@ -38,6 +38,7 @@ final class TestSiteFactory
             ->netTerms($this->createDefaultNetTerms())
             ->additionalProperty("brighton_v1_enabled", false)
             ->additionalProperty("auto_renewals_enabled", false)
+            ->additionalProperty("portal_enabled", false)
             ->scheduleSubscriptionCancellationEnabled(false)
             ->test(TestSiteData::TEST)
             ->build();

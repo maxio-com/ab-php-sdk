@@ -26,8 +26,8 @@ use CoreInterfaces\Core\Request\RequestMethod;
 class InsightsController extends BaseController
 {
     /**
-     * The Stats API is a very basic view of some Site-level stats. This API call only answers with JSON
-     * responses. An XML version is not provided.
+     * Returns basic site-level stats. This API call only answers with JSON responses. An XML version is
+     * not provided.
      *
      * ## Stats Documentation
      *
@@ -53,7 +53,7 @@ class InsightsController extends BaseController
     }
 
     /**
-     * This endpoint returns your site's current MRR, including plan and usage breakouts.
+     * Returns your site's current MRR, including plan and usage breakouts.
      *
      * @deprecated
      *
@@ -84,7 +84,7 @@ class InsightsController extends BaseController
     }
 
     /**
-     * This endpoint returns your site's MRR movements.
+     * Lists your site's MRR movements.
      *
      * ## Understanding MRR movements
      *

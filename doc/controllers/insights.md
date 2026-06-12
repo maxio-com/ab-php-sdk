@@ -13,12 +13,12 @@ $insightsController = $client->getInsightsController();
 * [Read Site Stats](../../doc/controllers/insights.md#read-site-stats)
 * [Read Mrr](../../doc/controllers/insights.md#read-mrr)
 * [List Mrr Movements](../../doc/controllers/insights.md#list-mrr-movements)
-* [List Mrr Per Subscription](../../doc/controllers/insights.md#list-mrr-per-subscription)
+* [List Mrr per Subscription](../../doc/controllers/insights.md#list-mrr-per-subscription)
 
 
 # Read Site Stats
 
-The Stats API is a very basic view of some Site-level stats. This API call only answers with JSON responses. An XML version is not provided.
+Returns basic site-level stats. This API call only answers with JSON responses. An XML version is not provided.
 
 ## Stats Documentation
 
@@ -32,7 +32,13 @@ https://subdomain.chargify.com/dashboard
 function readSiteStats(): SiteSummary
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Response Type
+
+**200**: OK
 
 [`SiteSummary`](../../doc/models/site-summary.md)
 
@@ -74,11 +80,15 @@ try {
 
 **This endpoint is deprecated.**
 
-This endpoint returns your site's current MRR, including plan and usage breakouts.
+Returns your site's current MRR, including plan and usage breakouts.
 
 ```php
 function readMrr(?\DateTime $atTime = null, ?int $subscriptionId = null): MRRResponse
 ```
+
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
 
 ## Parameters
 
@@ -88,6 +98,8 @@ function readMrr(?\DateTime $atTime = null, ?int $subscriptionId = null): MRRRes
 | `subscriptionId` | `?int` | Query, Optional | submit the id of a subscription in order to limit results |
 
 ## Response Type
+
+**200**: OK
 
 [`MRRResponse`](../../doc/models/mrr-response.md)
 
@@ -130,7 +142,7 @@ try {
 
 **This endpoint is deprecated.**
 
-This endpoint returns your site's MRR movements.
+Lists your site's MRR movements.
 
 ## Understanding MRR movements
 
@@ -159,6 +171,10 @@ Usage includes revenue from:
 function listMrrMovements(array $options): ListMRRResponse
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -169,6 +185,8 @@ function listMrrMovements(array $options): ListMRRResponse
 | `direction` | [`?string(SortingDirection)`](../../doc/models/sorting-direction.md) | Query, Optional | Controls the order in which results are returned.<br>Use in query `direction=asc`. |
 
 ## Response Type
+
+**200**: OK
 
 [`ListMRRResponse`](../../doc/models/list-mrr-response.md)
 
@@ -244,7 +262,7 @@ try {
 ```
 
 
-# List Mrr Per Subscription
+# List Mrr per Subscription
 
 **This endpoint is deprecated.**
 
@@ -253,6 +271,10 @@ This endpoint returns your site's current MRR, including plan and usage breakout
 ```php
 function listMrrPerSubscription(array $options): SubscriptionMRRResponse
 ```
+
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
 
 ## Parameters
 
@@ -265,6 +287,8 @@ function listMrrPerSubscription(array $options): SubscriptionMRRResponse
 | `direction` | [`?string(Direction)`](../../doc/models/direction.md) | Query, Optional | Controls the order in which results are returned. Records are ordered by subscription_id in ascending order by default. Use in query `direction=desc`. |
 
 ## Response Type
+
+**200**: OK
 
 [`SubscriptionMRRResponse`](../../doc/models/subscription-mrr-response.md)
 

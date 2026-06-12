@@ -12,3 +12,23 @@
 | `string` |
 | `float` |
 
+## string
+
+### Initialization Code
+
+#### Example
+
+```php
+$value = 'String0';
+```
+
+## float
+
+### Initialization Code
+
+#### Example
+
+```php
+$value = 0;
+```
+

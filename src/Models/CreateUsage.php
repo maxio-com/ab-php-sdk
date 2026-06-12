@@ -98,8 +98,9 @@ class CreateUsage implements \JsonSerializable
 
     /**
      * Returns Billing Schedule.
-     * This attribute is particularly useful when you need to align billing events for different components
-     * on distinct schedules within a subscription. This only works for site with Multifrequency enabled.
+     * Billing schedule settings for component allocations or usages on multi-frequency subscriptions. Use
+     * this to start a component's billing period on a custom date instead of aligning with the product
+     * charge schedule.
      */
     public function getBillingSchedule(): ?BillingSchedule
     {
@@ -108,8 +109,9 @@ class CreateUsage implements \JsonSerializable
 
     /**
      * Sets Billing Schedule.
-     * This attribute is particularly useful when you need to align billing events for different components
-     * on distinct schedules within a subscription. This only works for site with Multifrequency enabled.
+     * Billing schedule settings for component allocations or usages on multi-frequency subscriptions. Use
+     * this to start a component's billing period on a custom date instead of aligning with the product
+     * charge schedule.
      *
      * @maps billing_schedule
      */

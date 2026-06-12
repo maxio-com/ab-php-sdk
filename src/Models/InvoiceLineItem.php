@@ -57,6 +57,11 @@ class InvoiceLineItem implements \JsonSerializable
     private $taxAmount;
 
     /**
+     * @var bool|null
+     */
+    private $taxIncluded;
+
+    /**
      * @var string|null
      */
     private $totalAmount;
@@ -130,6 +135,11 @@ class InvoiceLineItem implements \JsonSerializable
      * @var string|null
      */
     private $kind;
+
+    /**
+     * @var array
+     */
+    private $prepaidAllocationExpiresAt = [];
 
     /**
      * Returns Uid.
@@ -333,6 +343,38 @@ class InvoiceLineItem implements \JsonSerializable
     public function setTaxAmount(?string $taxAmount): void
     {
         $this->taxAmount = $taxAmount;
+    }
+
+    /**
+     * Returns Tax Included.
+     * Whether the unit price for this line item is tax-inclusive.
+     *
+     * When `true`, `unit_price` already includes tax and `tax_amount` represents the portion of the price
+     * attributable to tax. When `false`, any applicable tax is added on top of the price.
+     *
+     * The value is inherited from the source price point's `tax_included` setting. Custom or ad-hoc line
+     * items (which have no associated price point) always return `false`.
+     */
+    public function getTaxIncluded(): ?bool
+    {
+        return $this->taxIncluded;
+    }
+
+    /**
+     * Sets Tax Included.
+     * Whether the unit price for this line item is tax-inclusive.
+     *
+     * When `true`, `unit_price` already includes tax and `tax_amount` represents the portion of the price
+     * attributable to tax. When `false`, any applicable tax is added on top of the price.
+     *
+     * The value is inherited from the source price point's `tax_included` setting. Custom or ad-hoc line
+     * items (which have no associated price point) always return `false`.
+     *
+     * @maps tax_included
+     */
+    public function setTaxIncluded(?bool $taxIncluded): void
+    {
+        $this->taxIncluded = $taxIncluded;
     }
 
     /**
@@ -751,6 +793,42 @@ class InvoiceLineItem implements \JsonSerializable
     }
 
     /**
+     * Returns Prepaid Allocation Expires At.
+     * The date a prepaid allocation is set to expire. Only present on line items representing prepaid
+     * component allocations. The format is `"YYYY-MM-DD"`.
+     */
+    public function getPrepaidAllocationExpiresAt(): ?\DateTime
+    {
+        if (count($this->prepaidAllocationExpiresAt) == 0) {
+            return null;
+        }
+        return $this->prepaidAllocationExpiresAt['value'];
+    }
+
+    /**
+     * Sets Prepaid Allocation Expires At.
+     * The date a prepaid allocation is set to expire. Only present on line items representing prepaid
+     * component allocations. The format is `"YYYY-MM-DD"`.
+     *
+     * @maps prepaid_allocation_expires_at
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromSimpleDate
+     */
+    public function setPrepaidAllocationExpiresAt(?\DateTime $prepaidAllocationExpiresAt): void
+    {
+        $this->prepaidAllocationExpiresAt['value'] = $prepaidAllocationExpiresAt;
+    }
+
+    /**
+     * Unsets Prepaid Allocation Expires At.
+     * The date a prepaid allocation is set to expire. Only present on line items representing prepaid
+     * component allocations. The format is `"YYYY-MM-DD"`.
+     */
+    public function unsetPrepaidAllocationExpiresAt(): void
+    {
+        $this->prepaidAllocationExpiresAt = [];
+    }
+
+    /**
      * Converts the InvoiceLineItem object to a human-readable string representation.
      *
      * @return string The string representation of the InvoiceLineItem object.
@@ -768,6 +846,7 @@ class InvoiceLineItem implements \JsonSerializable
                 'subtotalAmount' => $this->subtotalAmount,
                 'discountAmount' => $this->discountAmount,
                 'taxAmount' => $this->taxAmount,
+                'taxIncluded' => $this->taxIncluded,
                 'totalAmount' => $this->totalAmount,
                 'tieredUnitPrice' => $this->tieredUnitPrice,
                 'periodRangeStart' => $this->periodRangeStart,
@@ -783,6 +862,7 @@ class InvoiceLineItem implements \JsonSerializable
                 'productPricePointId' => $this->getProductPricePointId(),
                 'customItem' => $this->customItem,
                 'kind' => $this->kind,
+                'prepaidAllocationExpiresAt' => $this->getPrepaidAllocationExpiresAt(),
                 'additionalProperties' => $this->additionalProperties
             ]
         );
@@ -829,73 +909,82 @@ class InvoiceLineItem implements \JsonSerializable
     {
         $json = [];
         if (isset($this->uid)) {
-            $json['uid']                      = $this->uid;
+            $json['uid']                           = $this->uid;
         }
         if (isset($this->title)) {
-            $json['title']                    = $this->title;
+            $json['title']                         = $this->title;
         }
         if (isset($this->description)) {
-            $json['description']              = $this->description;
+            $json['description']                   = $this->description;
         }
         if (isset($this->quantity)) {
-            $json['quantity']                 = $this->quantity;
+            $json['quantity']                      = $this->quantity;
         }
         if (isset($this->unitPrice)) {
-            $json['unit_price']               = $this->unitPrice;
+            $json['unit_price']                    = $this->unitPrice;
         }
         if (isset($this->subtotalAmount)) {
-            $json['subtotal_amount']          = $this->subtotalAmount;
+            $json['subtotal_amount']               = $this->subtotalAmount;
         }
         if (isset($this->discountAmount)) {
-            $json['discount_amount']          = $this->discountAmount;
+            $json['discount_amount']               = $this->discountAmount;
         }
         if (isset($this->taxAmount)) {
-            $json['tax_amount']               = $this->taxAmount;
+            $json['tax_amount']                    = $this->taxAmount;
+        }
+        if (isset($this->taxIncluded)) {
+            $json['tax_included']                  = $this->taxIncluded;
         }
         if (isset($this->totalAmount)) {
-            $json['total_amount']             = $this->totalAmount;
+            $json['total_amount']                  = $this->totalAmount;
         }
         if (isset($this->tieredUnitPrice)) {
-            $json['tiered_unit_price']        = $this->tieredUnitPrice;
+            $json['tiered_unit_price']             = $this->tieredUnitPrice;
         }
         if (isset($this->periodRangeStart)) {
-            $json['period_range_start']       = DateTimeHelper::toSimpleDate($this->periodRangeStart);
+            $json['period_range_start']            = DateTimeHelper::toSimpleDate($this->periodRangeStart);
         }
         if (isset($this->periodRangeEnd)) {
-            $json['period_range_end']         = DateTimeHelper::toSimpleDate($this->periodRangeEnd);
+            $json['period_range_end']              = DateTimeHelper::toSimpleDate($this->periodRangeEnd);
         }
         if (isset($this->transactionId)) {
-            $json['transaction_id']           = $this->transactionId;
+            $json['transaction_id']                = $this->transactionId;
         }
         if (!empty($this->productId)) {
-            $json['product_id']               = $this->productId['value'];
+            $json['product_id']                    = $this->productId['value'];
         }
         if (!empty($this->productVersion)) {
-            $json['product_version']          = $this->productVersion['value'];
+            $json['product_version']               = $this->productVersion['value'];
         }
         if (!empty($this->componentId)) {
-            $json['component_id']             = $this->componentId['value'];
+            $json['component_id']                  = $this->componentId['value'];
         }
         if (!empty($this->pricePointId)) {
-            $json['price_point_id']           = $this->pricePointId['value'];
+            $json['price_point_id']                = $this->pricePointId['value'];
         }
         if (!empty($this->billingScheduleItemId)) {
-            $json['billing_schedule_item_id'] = $this->billingScheduleItemId['value'];
+            $json['billing_schedule_item_id']      = $this->billingScheduleItemId['value'];
         }
         if (isset($this->hide)) {
-            $json['hide']                     = $this->hide;
+            $json['hide']                          = $this->hide;
         }
         if (!empty($this->componentCostData)) {
-            $json['component_cost_data']      = $this->componentCostData['value'];
+            $json['component_cost_data']           = $this->componentCostData['value'];
         }
         if (!empty($this->productPricePointId)) {
-            $json['product_price_point_id']   = $this->productPricePointId['value'];
+            $json['product_price_point_id']        = $this->productPricePointId['value'];
         }
         if (isset($this->customItem)) {
-            $json['custom_item']              = $this->customItem;
+            $json['custom_item']                   = $this->customItem;
         }
         if (isset($this->kind)) {
-            $json['kind']                     = $this->kind;
+            $json['kind']                          = $this->kind;
+        }
+        if (!empty($this->prepaidAllocationExpiresAt)) {
+            $json['prepaid_allocation_expires_at'] =
+                DateTimeHelper::toSimpleDate(
+                    $this->prepaidAllocationExpiresAt['value']
+                );
         }
         $json = array_merge($json, $this->additionalProperties);
 

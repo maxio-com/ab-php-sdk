@@ -23,13 +23,17 @@ $aPIExportsController = $client->getAPIExportsController();
 
 # List Exported Proforma Invoices
 
-This API returns an array of exported proforma invoices for a provided `batch_id`. Pay close attention to pagination in order to control responses from the server.
+Lists exported proforma invoices for a provided `batch_id`. Use pagination to control responses returned from the server.
 
 Example: `GET https://{subdomain}.chargify.com/api_exports/proforma_invoices/123/rows?per_page=10000&page=1`.
 
 ```php
 function listExportedProformaInvoices(array $options): array
 ```
+
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
 
 ## Parameters
 
@@ -40,6 +44,8 @@ function listExportedProformaInvoices(array $options): array
 | `page` | `?int` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`.<br><br>**Default**: `1`<br><br>**Constraints**: `>= 1` |
 
 ## Response Type
+
+**200**: OK
 
 [`ProformaInvoice[]`](../../doc/models/proforma-invoice.md)
 
@@ -72,13 +78,17 @@ try {
 
 # List Exported Invoices
 
-This API returns an array of exported invoices for a provided `batch_id`. Pay close attention to pagination in order to control responses from the server.
+Lists exported invoices for a provided `batch_id`. Use pagination to control responses returned from the server.
 
 Example: `GET https://{subdomain}.chargify.com/api_exports/invoices/123/rows?per_page=10000&page=1`.
 
 ```php
 function listExportedInvoices(array $options): array
 ```
+
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
 
 ## Parameters
 
@@ -89,6 +99,8 @@ function listExportedInvoices(array $options): array
 | `page` | `?int` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`.<br><br>**Default**: `1`<br><br>**Constraints**: `>= 1` |
 
 ## Response Type
+
+**200**: OK
 
 [`Invoice[]`](../../doc/models/invoice.md)
 
@@ -121,13 +133,17 @@ try {
 
 # List Exported Subscriptions
 
-This API returns an array of exported subscriptions for a provided `batch_id`. Pay close attention to pagination in order to control responses from the server.
+Lists exported subscriptions for a provided `batch_id`. Use pagination to control responses returned from the server.
 
 Example: `GET https://{subdomain}.chargify.com/api_exports/subscriptions/123/rows?per_page=200&page=1`.
 
 ```php
 function listExportedSubscriptions(array $options): array
 ```
+
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
 
 ## Parameters
 
@@ -138,6 +154,8 @@ function listExportedSubscriptions(array $options): array
 | `page` | `?int` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`.<br><br>**Default**: `1`<br><br>**Constraints**: `>= 1` |
 
 ## Response Type
+
+**200**: OK
 
 [`Subscription[]`](../../doc/models/subscription.md)
 
@@ -170,7 +188,7 @@ try {
 
 # Export Proforma Invoices
 
-This API creates a proforma invoices export and returns a batchjob object.
+Creates a proforma invoices export and returns a batch job object.
 
 It is only available for Relationship Invoicing architecture.
 
@@ -178,7 +196,13 @@ It is only available for Relationship Invoicing architecture.
 function exportProformaInvoices(): BatchJobResponse
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Response Type
+
+**201**: Created
 
 [`BatchJobResponse`](../../doc/models/batch-job-response.md)
 
@@ -208,13 +232,19 @@ try {
 
 # Export Invoices
 
-This API creates an invoices export and returns a batchjob object.
+Creates an invoices export and returns a batch job object.
 
 ```php
 function exportInvoices(): BatchJobResponse
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Response Type
+
+**201**: Created
 
 [`BatchJobResponse`](../../doc/models/batch-job-response.md)
 
@@ -244,13 +274,19 @@ try {
 
 # Export Subscriptions
 
-This API creates a subscriptions export and returns a batchjob object.
+Creates a subscriptions export and returns a batch job object.
 
 ```php
 function exportSubscriptions(): BatchJobResponse
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Response Type
+
+**201**: Created
 
 [`BatchJobResponse`](../../doc/models/batch-job-response.md)
 
@@ -279,11 +315,15 @@ try {
 
 # Read Proforma Invoices Export
 
-This API returns a batchjob object for proforma invoices export.
+Returns a batch job object for a proforma invoices export.
 
 ```php
 function readProformaInvoicesExport(string $batchId): BatchJobResponse
 ```
+
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
 
 ## Parameters
 
@@ -292,6 +332,8 @@ function readProformaInvoicesExport(string $batchId): BatchJobResponse
 | `batchId` | `string` | Template, Required | Id of a Batch Job. |
 
 ## Response Type
+
+**200**: OK
 
 [`BatchJobResponse`](../../doc/models/batch-job-response.md)
 
@@ -320,11 +362,15 @@ try {
 
 # Read Invoices Export
 
-This API returns a batchjob object for invoices export.
+Returns a batch job object for an invoices export.
 
 ```php
 function readInvoicesExport(string $batchId): BatchJobResponse
 ```
+
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
 
 ## Parameters
 
@@ -333,6 +379,8 @@ function readInvoicesExport(string $batchId): BatchJobResponse
 | `batchId` | `string` | Template, Required | Id of a Batch Job. |
 
 ## Response Type
+
+**200**: OK
 
 [`BatchJobResponse`](../../doc/models/batch-job-response.md)
 
@@ -361,11 +409,15 @@ try {
 
 # Read Subscriptions Export
 
-This API returns a batchjob object for subscriptions export.
+Returns a batch job object for a subscriptions export.
 
 ```php
 function readSubscriptionsExport(string $batchId): BatchJobResponse
 ```
+
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
 
 ## Parameters
 
@@ -374,6 +426,8 @@ function readSubscriptionsExport(string $batchId): BatchJobResponse
 | `batchId` | `string` | Template, Required | Id of a Batch Job. |
 
 ## Response Type
+
+**200**: OK
 
 [`BatchJobResponse`](../../doc/models/batch-job-response.md)
 

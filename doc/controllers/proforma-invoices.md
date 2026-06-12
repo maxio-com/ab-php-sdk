@@ -24,7 +24,7 @@ $proformaInvoicesController = $client->getProformaInvoicesController();
 
 # Create Consolidated Proforma Invoice
 
-This endpoint will trigger the creation of a consolidated proforma invoice asynchronously. It will return a 201 with no message, or a 422 with any errors. To find and view the new consolidated proforma invoice, you may poll the subscription group listing for proforma invoices; only one consolidated proforma invoice may be created per group at a time.
+Creates a consolidated proforma invoice asynchronously. It will return a 201 with no message, or a 422 with any errors. To find and view the new consolidated proforma invoice, you may poll the subscription group listing for proforma invoices; only one consolidated proforma invoice may be created per group at a time.
 
 If the information becomes outdated, simply void the old consolidated proforma invoice and generate a new one.
 
@@ -36,6 +36,10 @@ Proforma invoices are only available on Relationship Invoicing sites. To create 
 function createConsolidatedProformaInvoice(string $uid): void
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -43,6 +47,8 @@ function createConsolidatedProformaInvoice(string $uid): void
 | `uid` | `string` | Template, Required | The uid of the subscription group |
 
 ## Response Type
+
+**201**: Created
 
 `void`
 
@@ -71,13 +77,17 @@ try {
 
 # List Subscription Group Proforma Invoices
 
-Only proforma invoices with a `consolidation_level` of parent are returned.
+Lists proforma invoices with a `consolidation_level` of parent for the subscription group.
 
 By default, proforma invoices returned on the index will only include totals, not detailed breakdowns for `line_items`, `discounts`, `taxes`, `credits`, `payments`, `custom_fields`. To include breakdowns, pass the specific field as a key in the query with a value set to true.
 
 ```php
 function listSubscriptionGroupProformaInvoices(array $options): ListProformaInvoicesResponse
 ```
+
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
 
 ## Parameters
 
@@ -92,6 +102,8 @@ function listSubscriptionGroupProformaInvoices(array $options): ListProformaInvo
 | `customFields` | `?bool` | Query, Optional | Include custom fields data<br><br>**Default**: `false` |
 
 ## Response Type
+
+**200**: OK
 
 [`ListProformaInvoicesResponse`](../../doc/models/list-proforma-invoices-response.md)
 
@@ -128,7 +140,7 @@ try {
 
 # Read Proforma Invoice
 
-Use this endpoint to read the details of an existing proforma invoice.
+Returns the details of an existing proforma invoice.
 
 ## Restrictions
 
@@ -138,6 +150,10 @@ Proforma invoices are only available on Relationship Invoicing sites.
 function readProformaInvoice(string $proformaInvoiceUid): ProformaInvoice
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -145,6 +161,8 @@ function readProformaInvoice(string $proformaInvoiceUid): ProformaInvoice
 | `proformaInvoiceUid` | `string` | Template, Required | The uid of the proforma invoice |
 
 ## Response Type
+
+**200**: OK
 
 [`ProformaInvoice`](../../doc/models/proforma-invoice.md)
 
@@ -173,7 +191,7 @@ try {
 
 # Create Proforma Invoice
 
-This endpoint will create a proforma invoice and return it as a response. If the information becomes outdated, simply void the old proforma invoice and generate a new one.
+Creates a proforma invoice and returns it as a response. If the information becomes outdated, simply void the old proforma invoice and generate a new one.
 
 If you would like to preview the next billing amounts without generating a full proforma invoice, use the renewal preview endpoint.
 
@@ -185,6 +203,10 @@ Proforma invoices are only available on Relationship Invoicing sites. To create 
 function createProformaInvoice(int $subscriptionId): ProformaInvoice
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -192,6 +214,8 @@ function createProformaInvoice(int $subscriptionId): ProformaInvoice
 | `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription. |
 
 ## Response Type
+
+**200**: OK
 
 [`ProformaInvoice`](../../doc/models/proforma-invoice.md)
 
@@ -222,11 +246,15 @@ try {
 
 # List Proforma Invoices
 
-By default, proforma invoices returned on the index will only include totals, not detailed breakdowns for `line_items`, `discounts`, `taxes`, `credits`, `payments`, or `custom_fields`. To include breakdowns, pass the specific field as a key in the query with a value set to `true`.
+Lists proforma invoices for a subscription. By default, results only include totals, not detailed breakdowns for `line_items`, `discounts`, `taxes`, `credits`, `payments`, or `custom_fields`. To include breakdowns, pass the specific field as a key in the query with a value set to `true`.
 
 ```php
 function listProformaInvoices(array $options): ListProformaInvoicesResponse
 ```
+
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
 
 ## Parameters
 
@@ -247,6 +275,8 @@ function listProformaInvoices(array $options): ListProformaInvoicesResponse
 | `customFields` | `?bool` | Query, Optional | Include custom fields data<br><br>**Default**: `false` |
 
 ## Response Type
+
+**200**: OK
 
 [`ListProformaInvoicesResponse`](../../doc/models/list-proforma-invoices-response.md)
 
@@ -280,7 +310,7 @@ try {
 
 # Deliver Proforma Invoice
 
-Allows for proforma invoices to be programmatically delivered via email. Supports email
+Delivers a proforma invoice programmatically via email. Supports email
 delivery to direct recipients, carbon-copy (cc) recipients, and blind carbon-copy (bcc) recipients.
 
 If `recipient_emails` is omitted, the system will fall back to the primary recipient derived from the invoice or
@@ -294,6 +324,10 @@ function deliverProformaInvoice(
 ): ProformaInvoice
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -302,6 +336,8 @@ function deliverProformaInvoice(
 | `body` | [`?DeliverProformaInvoiceRequest`](../../doc/models/deliver-proforma-invoice-request.md) | Body, Optional | - |
 
 ## Response Type
+
+**201**: Created
 
 [`ProformaInvoice`](../../doc/models/proforma-invoice.md)
 
@@ -354,7 +390,7 @@ try {
 
 # Void Proforma Invoice
 
-This endpoint will void a proforma invoice that has the status "draft".
+Voids a proforma invoice that has the status "draft".
 
 ## Restrictions
 
@@ -368,6 +404,10 @@ A reason for the void operation is required to be included in the request body. 
 function voidProformaInvoice(string $proformaInvoiceUid, ?VoidInvoiceRequest $body = null): ProformaInvoice
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -376,6 +416,8 @@ function voidProformaInvoice(string $proformaInvoiceUid, ?VoidInvoiceRequest $bo
 | `body` | [`?VoidInvoiceRequest`](../../doc/models/void-invoice-request.md) | Body, Optional | - |
 
 ## Response Type
+
+**200**: OK
 
 [`ProformaInvoice`](../../doc/models/proforma-invoice.md)
 
@@ -407,7 +449,7 @@ try {
 
 # Preview Proforma Invoice
 
-Return a preview of the data that will be included on a given subscription's proforma invoice if one were to be generated. It will have similar line items and totals as a renewal preview, but the response will be presented in the format of a proforma invoice. Consequently it will include additional information such as the name and addresses that will appear on the proforma invoice.
+Returns a preview of the data that will be included on a given subscription's proforma invoice if one were to be generated. It will have similar line items and totals as a renewal preview, but the response will be presented in the format of a proforma invoice. Consequently it will include additional information such as the name and addresses that will appear on the proforma invoice.
 
 The preview endpoint is subject to all the same conditions as the proforma invoice endpoint. For example, previews are only available on the Relationship Invoicing architecture, and previews cannot be made for end-of-life subscriptions.
 
@@ -419,6 +461,10 @@ Alternatively, if you have some proforma invoices already, you may make a previe
 function previewProformaInvoice(int $subscriptionId): ProformaInvoice
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -426,6 +472,8 @@ function previewProformaInvoice(int $subscriptionId): ProformaInvoice
 | `subscriptionId` | `int` | Template, Required | The Chargify id of the subscription. |
 
 ## Response Type
+
+**200**: OK
 
 [`ProformaInvoice`](../../doc/models/proforma-invoice.md)
 
@@ -457,9 +505,7 @@ try {
 
 # Create Signup Proforma Invoice
 
-This endpoint is only available for Relationship Invoicing sites. It cannot be used to create consolidated proforma invoices or preview prepaid subscriptions.
-
-Create a proforma invoice to preview costs before a subscription's signup. Like other proforma invoices, it can be emailed to the customer, voided, and publicly viewed on the chargifypay domain.
+Creates a proforma invoice to preview costs before a subscription's signup. This endpoint is only available for Relationship Invoicing sites and cannot be used to create consolidated proforma invoices or preview prepaid subscriptions. Like other proforma invoices, it can be emailed to the customer, voided, and publicly viewed on the chargifypay domain.
 
 Pass a payload that resembles a subscription create or signup preview request. For example, you can specify components, coupons/a referral, offers, custom pricing, and an existing customer or payment profile to populate a shipping or billing address.
 
@@ -469,6 +515,10 @@ A product and customer first name, last name, and email are the minimum requirem
 function createSignupProformaInvoice(?CreateSubscriptionRequest $body = null): ProformaInvoice
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -476,6 +526,8 @@ function createSignupProformaInvoice(?CreateSubscriptionRequest $body = null): P
 | `body` | [`?CreateSubscriptionRequest`](../../doc/models/create-subscription-request.md) | Body, Optional | - |
 
 ## Response Type
+
+**201**: Created
 
 [`ProformaInvoice`](../../doc/models/proforma-invoice.md)
 
@@ -520,9 +572,7 @@ try {
 
 # Preview Signup Proforma Invoice
 
-This endpoint is only available for Relationship Invoicing sites. It cannot be used to create consolidated proforma invoice previews or preview prepaid subscriptions.
-
-Create a signup preview in the format of a proforma invoice to preview costs before a subscription's signup. You have the option of optionally previewing the first renewal's costs as well. The proforma invoice preview will not be persisted.
+Creates a signup preview in the format of a proforma invoice to preview costs before a subscription's signup. This endpoint is only available for Relationship Invoicing sites and cannot be used to create consolidated proforma invoice previews or preview prepaid subscriptions. You have the option of previewing the first renewal's costs as well. The proforma invoice preview will not be persisted.
 
 Pass a payload that resembles a subscription create or signup preview request. For example, you can specify components, coupons/a referral, offers, custom pricing, and an existing customer or payment profile to populate a shipping or billing address.
 
@@ -535,6 +585,10 @@ function previewSignupProformaInvoice(
 ): SignupProformaPreviewResponse
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -543,6 +597,8 @@ function previewSignupProformaInvoice(
 | `body` | [`?CreateSubscriptionRequest`](../../doc/models/create-subscription-request.md) | Body, Optional | - |
 
 ## Response Type
+
+**201**: Created
 
 [`SignupProformaPreviewResponse`](../../doc/models/signup-proforma-preview-response.md)
 

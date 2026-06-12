@@ -18,7 +18,7 @@ $subscriptionGroupInvoiceAccountController = $client->getSubscriptionGroupInvoic
 
 # Create Subscription Group Prepayment
 
-A prepayment can be added for a subscription group identified by the group's `uid`. This endpoint requires a `amount`, `details`, `method`, and `memo`. On success, the prepayment will be added to the group's prepayment balance.
+Adds a prepayment for a subscription group. This endpoint requires an `amount`, `details`, `method`, and `memo`. On success, the prepayment will be added to the group's prepayment balance.
 
 ```php
 function createSubscriptionGroupPrepayment(
@@ -26,6 +26,10 @@ function createSubscriptionGroupPrepayment(
     ?SubscriptionGroupPrepaymentRequest $body = null
 ): SubscriptionGroupPrepaymentResponse
 ```
+
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
 
 ## Parameters
 
@@ -35,6 +39,8 @@ function createSubscriptionGroupPrepayment(
 | `body` | [`?SubscriptionGroupPrepaymentRequest`](../../doc/models/subscription-group-prepayment-request.md) | Body, Optional | - |
 
 ## Response Type
+
+**200**: OK
 
 [`SubscriptionGroupPrepaymentResponse`](../../doc/models/subscription-group-prepayment-response.md)
 
@@ -77,11 +83,15 @@ try {
 
 # List Prepayments for Subscription Group
 
-This request will list a subscription group's prepayments.
+Lists a subscription group's prepayments.
 
 ```php
 function listPrepaymentsForSubscriptionGroup(array $options): ListSubscriptionGroupPrepaymentResponse
 ```
+
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
 
 ## Parameters
 
@@ -93,6 +103,8 @@ function listPrepaymentsForSubscriptionGroup(array $options): ListSubscriptionGr
 | `filter` | [`?ListPrepaymentsFilter`](../../doc/models/list-prepayments-filter.md) | Query, Optional | Filter to use for List Prepayments operations |
 
 ## Response Type
+
+**200**: OK
 
 [`ListSubscriptionGroupPrepaymentResponse`](../../doc/models/list-subscription-group-prepayment-response.md)
 
@@ -152,7 +164,7 @@ try {
 
 # Issue Subscription Group Service Credit
 
-Credit can be issued for a subscription group identified by the group's `uid`. Credit will be added to the group in the amount specified in the request body. The credit will be applied to group member invoices as they are generated.
+Issues service credit for a subscription group. Credit will be added to the group in the amount specified in the request body. The credit will be applied to group member invoices as they are generated.
 
 ```php
 function issueSubscriptionGroupServiceCredit(
@@ -160,6 +172,10 @@ function issueSubscriptionGroupServiceCredit(
     ?IssueServiceCreditRequest $body = null
 ): ServiceCreditResponse
 ```
+
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
 
 ## Parameters
 
@@ -169,6 +185,8 @@ function issueSubscriptionGroupServiceCredit(
 | `body` | [`?IssueServiceCreditRequest`](../../doc/models/issue-service-credit-request.md) | Body, Optional | - |
 
 ## Response Type
+
+**200**: OK
 
 [`ServiceCreditResponse`](../../doc/models/service-credit-response.md)
 
@@ -224,7 +242,7 @@ try {
 
 # Deduct Subscription Group Service Credit
 
-Credit can be deducted for a subscription group identified by the group's `uid`. Credit will be deducted from the group in the amount specified in the request body.
+Deducts service credit for a subscription group. Credit will be deducted from the group in the amount specified in the request body.
 
 ```php
 function deductSubscriptionGroupServiceCredit(
@@ -232,6 +250,10 @@ function deductSubscriptionGroupServiceCredit(
     ?DeductServiceCreditRequest $body = null
 ): ServiceCredit
 ```
+
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
 
 ## Parameters
 
@@ -241,6 +263,8 @@ function deductSubscriptionGroupServiceCredit(
 | `body` | [`?DeductServiceCreditRequest`](../../doc/models/deduct-service-credit-request.md) | Body, Optional | - |
 
 ## Response Type
+
+**201**: Created
 
 [`ServiceCredit`](../../doc/models/service-credit.md)
 

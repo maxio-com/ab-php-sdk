@@ -22,7 +22,7 @@ $productsController = $client->getProductsController();
 
 Creates a product in your Advanced Billing site.
 
-See the following product docuemation for more information:
+See the following product documentation for more information:
 
 + [Products Documentation](https://maxio.zendesk.com/hc/en-us/articles/24261090117645-Products-Overview)
 + [Changing a Subscription's Product](https://maxio.zendesk.com/hc/en-us/articles/24252069837581-Product-Changes-and-Migrations)
@@ -30,6 +30,10 @@ See the following product docuemation for more information:
 ```php
 function createProduct(string $productFamilyId, ?CreateOrUpdateProductRequest $body = null): ProductResponse
 ```
+
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
 
 ## Parameters
 
@@ -39,6 +43,8 @@ function createProduct(string $productFamilyId, ?CreateOrUpdateProductRequest $b
 | `body` | [`?CreateOrUpdateProductRequest`](../../doc/models/create-or-update-product-request.md) | Body, Optional | - |
 
 ## Response Type
+
+**201**: Created
 
 [`ProductResponse`](../../doc/models/product-response.md)
 
@@ -143,6 +149,10 @@ Reads the current details of a product.
 function readProduct(int $productId): ProductResponse
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -150,6 +160,8 @@ function readProduct(int $productId): ProductResponse
 | `productId` | `int` | Template, Required | The Advanced Billing id of the product |
 
 ## Response Type
+
+**200**: OK
 
 [`ProductResponse`](../../doc/models/product-response.md)
 
@@ -229,6 +241,10 @@ Updating a product using this endpoint will create a new price point and set it 
 function updateProduct(int $productId, ?CreateOrUpdateProductRequest $body = null): ProductResponse
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -237,6 +253,8 @@ function updateProduct(int $productId, ?CreateOrUpdateProductRequest $body = nul
 | `body` | [`?CreateOrUpdateProductRequest`](../../doc/models/create-or-update-product-request.md) | Body, Optional | - |
 
 ## Response Type
+
+**200**: OK
 
 [`ProductResponse`](../../doc/models/product-response.md)
 
@@ -315,13 +333,17 @@ try {
 
 # Archive Product
 
-Archives the product. All current subscribers will be unffected; their subscription/purchase will continue to be charged monthly.
+Archives the product. All current subscribers will be unaffected; their subscription/purchase will continue to be charged monthly.
 
 This will restrict the option to chose the product for purchase via the Billing Portal, as well as disable Public Signup Pages for the product.
 
 ```php
 function archiveProduct(int $productId): ProductResponse
 ```
+
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
 
 ## Parameters
 
@@ -330,6 +352,8 @@ function archiveProduct(int $productId): ProductResponse
 | `productId` | `int` | Template, Required | The Advanced Billing id of the product |
 
 ## Response Type
+
+**200**: OK
 
 [`ProductResponse`](../../doc/models/product-response.md)
 
@@ -409,6 +433,10 @@ Retrieves a Product object by its `api_handle`.
 function readProductByHandle(string $apiHandle): ProductResponse
 ```
 
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
+
 ## Parameters
 
 | Parameter | Type | Tags | Description |
@@ -416,6 +444,8 @@ function readProductByHandle(string $apiHandle): ProductResponse
 | `apiHandle` | `string` | Template, Required | The handle of the product |
 
 ## Response Type
+
+**200**: OK
 
 [`ProductResponse`](../../doc/models/product-response.md)
 
@@ -506,11 +536,15 @@ try {
 
 # List Products
 
-This method allows to retrieve a list of Products belonging to a Site.
+Lists products belonging to a site.
 
 ```php
 function listProducts(array $options): array
 ```
+
+## Authentication
+
+This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
 
 ## Parameters
 
@@ -528,6 +562,8 @@ function listProducts(array $options): array
 | `mInclude` | [`?string(ListProductsInclude)`](../../doc/models/list-products-include.md) | Query, Optional | Allows including additional data in the response. Use in query `include=prepaid_product_price_point`. |
 
 ## Response Type
+
+**200**: OK
 
 [`ProductResponse[]`](../../doc/models/product-response.md)
 

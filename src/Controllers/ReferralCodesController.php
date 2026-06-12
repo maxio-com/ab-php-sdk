@@ -20,8 +20,8 @@ use CoreInterfaces\Core\Request\RequestMethod;
 class ReferralCodesController extends BaseController
 {
     /**
-     * Use this method to determine if the referral code is valid and applicable within your Site. This
-     * method is useful for validating referral codes that are entered by a customer.
+     * Validates whether a referral code is valid and applicable within your site. This method is useful
+     * for validating referral codes that are entered by a customer.
      *
      * ## Referrals Documentation
      *
