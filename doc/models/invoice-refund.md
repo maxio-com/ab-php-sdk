@@ -19,15 +19,17 @@
 | `gatewayHandle` | `?string` | Optional | - | getGatewayHandle(): ?string | setGatewayHandle(?string gatewayHandle): void |
 | `achLateReject` | `?bool` | Optional | - | getAchLateReject(): ?bool | setAchLateReject(?bool achLateReject): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "transaction_id": 172,
-  "payment_id": 42,
-  "memo": "memo6",
-  "original_amount": "original_amount6",
-  "applied_amount": "applied_amount6"
-}
+```php
+use AdvancedBillingLib\Models\Builders\InvoiceRefundBuilder;
+
+$invoiceRefund = InvoiceRefundBuilder::init()
+    ->transactionId(166)
+    ->paymentId(36)
+    ->memo('memo6')
+    ->originalAmount('original_amount6')
+    ->appliedAmount('applied_amount6')
+    ->build();
 ```
 

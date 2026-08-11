@@ -18,15 +18,17 @@
 | `name` | `?string` | Optional | - | getName(): ?string | setName(?string name): void |
 | `phone` | `?string` | Optional | - | getPhone(): ?string | setPhone(?string phone): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "street": "street4",
-  "line2": "line28",
-  "city": "city4",
-  "state": "state0",
-  "zip": "zip2"
-}
+```php
+use AdvancedBillingLib\Models\Builders\OrganizationAddressBuilder;
+
+$organizationAddress = OrganizationAddressBuilder::init()
+    ->street('street2')
+    ->line2('line26')
+    ->city('city2')
+    ->state('state8')
+    ->zip('zip6')
+    ->build();
 ```
 

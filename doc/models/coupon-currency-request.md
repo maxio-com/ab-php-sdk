@@ -11,16 +11,19 @@
 |  --- | --- | --- | --- | --- | --- |
 | `currencyPrices` | [`UpdateCouponCurrency[]`](../../doc/models/update-coupon-currency.md) | Required | - | getCurrencyPrices(): array | setCurrencyPrices(array currencyPrices): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "currency_prices": [
-    {
-      "currency": "currency8",
-      "price": 78
-    }
-  ]
-}
+```php
+use AdvancedBillingLib\Models\Builders\CouponCurrencyRequestBuilder;
+use AdvancedBillingLib\Models\Builders\UpdateCouponCurrencyBuilder;
+
+$couponCurrencyRequest = CouponCurrencyRequestBuilder::init(
+    [
+        UpdateCouponCurrencyBuilder::init(
+            'currency8',
+            78
+        )->build()
+    ]
+)->build();
 ```
 

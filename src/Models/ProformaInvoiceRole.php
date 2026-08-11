@@ -15,7 +15,7 @@ use Exception;
 use stdClass;
 
 /**
- * 'proforma' value is deprecated in favor of proforma_adhoc and proforma_automatic
+ * 'proforma' value is deprecated in favor of proforma_adhoc and proforma_automatic.
  */
 class ProformaInvoiceRole
 {

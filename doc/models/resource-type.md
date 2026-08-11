@@ -12,3 +12,11 @@
 | `SUBSCRIPTIONS` |
 | `CUSTOMERS` |
 
+## Example
+
+```php
+use AdvancedBillingLib\Models\ResourceType;
+
+$resourceType = ResourceType::SUBSCRIPTIONS;
+```
+

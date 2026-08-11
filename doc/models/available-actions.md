@@ -11,14 +11,18 @@
 |  --- | --- | --- | --- | --- | --- |
 | `sendEmail` | [`?SendEmail`](../../doc/models/send-email.md) | Optional | - | getSendEmail(): ?SendEmail | setSendEmail(?SendEmail sendEmail): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "send_email": {
-    "can_execute": false,
-    "url": "url0"
-  }
-}
+```php
+use AdvancedBillingLib\Models\Builders\AvailableActionsBuilder;
+use AdvancedBillingLib\Models\Builders\SendEmailBuilder;
+
+$availableActions = AvailableActionsBuilder::init()
+    ->sendEmail(
+        SendEmailBuilder::init(
+            false,
+            'url0'
+        )->build()
+    )->build();
 ```
 

@@ -26,7 +26,7 @@ class CreateSubscriptionComponent implements \JsonSerializable
     private $enabled;
 
     /**
-     * @var int|null
+     * @var int|string|null
      */
     private $unitBalance;
 
@@ -96,8 +96,10 @@ class CreateSubscriptionComponent implements \JsonSerializable
     /**
      * Returns Unit Balance.
      * Used for metered and events based components.
+     *
+     * @return int|string|null
      */
-    public function getUnitBalance(): ?int
+    public function getUnitBalance()
     {
         return $this->unitBalance;
     }
@@ -107,8 +109,11 @@ class CreateSubscriptionComponent implements \JsonSerializable
      * Used for metered and events based components.
      *
      * @maps unit_balance
+     * @mapsBy anyOf(oneOf(int,string),null)
+     *
+     * @param int|string|null $unitBalance
      */
-    public function setUnitBalance(?int $unitBalance): void
+    public function setUnitBalance($unitBalance): void
     {
         $this->unitBalance = $unitBalance;
     }
@@ -274,7 +279,11 @@ class CreateSubscriptionComponent implements \JsonSerializable
             $json['enabled']            = $this->enabled;
         }
         if (isset($this->unitBalance)) {
-            $json['unit_balance']       = $this->unitBalance;
+            $json['unit_balance']       =
+                ApiHelper::getJsonHelper()->verifyTypes(
+                    $this->unitBalance,
+                    'anyOf(oneOf(int,string),null)'
+                );
         }
         if (isset($this->allocatedQuantity)) {
             $json['allocated_quantity'] =

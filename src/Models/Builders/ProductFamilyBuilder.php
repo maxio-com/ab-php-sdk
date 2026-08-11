@@ -112,6 +112,17 @@ class ProductFamilyBuilder
     }
 
     /**
+     * Sets surcharging field.
+     *
+     * @param bool|null $value
+     */
+    public function surcharging(?bool $value): self
+    {
+        $this->instance->setSurcharging($value);
+        return $this;
+    }
+
+    /**
      * Sets created at field.
      *
      * @param \DateTime|null $value

@@ -112,7 +112,7 @@ class CouponPayload implements \JsonSerializable
      * Returns Code.
      * Required when creating a new coupon. The code is limited to 255 characters. May contain uppercase
      * alphanumeric characters and these special characters (which allow for email addresses to be used):
-     * “%”, “@”, “+”, “-”, “_”, and “.”
+     * “%”, “@”, “+”, “-”, “_”, and “.”.
      */
     public function getCode(): ?string
     {
@@ -123,7 +123,7 @@ class CouponPayload implements \JsonSerializable
      * Sets Code.
      * Required when creating a new coupon. The code is limited to 255 characters. May contain uppercase
      * alphanumeric characters and these special characters (which allow for email addresses to be used):
-     * “%”, “@”, “+”, “-”, “_”, and “.”
+     * “%”, “@”, “+”, “-”, “_”, and “.”.
      *
      * @maps code
      */
@@ -157,7 +157,7 @@ class CouponPayload implements \JsonSerializable
     /**
      * Returns Percentage.
      * Required when creating a new percentage coupon. Can't be used together with amount_in_cents.
-     * Percentage discount
+     * Percentage discount.
      *
      * @return string|float|null
      */
@@ -169,7 +169,7 @@ class CouponPayload implements \JsonSerializable
     /**
      * Sets Percentage.
      * Required when creating a new percentage coupon. Can't be used together with amount_in_cents.
-     * Percentage discount
+     * Percentage discount.
      *
      * @maps percentage
      * @mapsBy anyOf(oneOf(string,float),null)
@@ -184,7 +184,7 @@ class CouponPayload implements \JsonSerializable
     /**
      * Returns Amount in Cents.
      * Required when creating a new flat amount coupon. Can't be used together with percentage. Flat USD
-     * discount
+     * discount.
      */
     public function getAmountInCents(): ?int
     {
@@ -194,7 +194,7 @@ class CouponPayload implements \JsonSerializable
     /**
      * Sets Amount in Cents.
      * Required when creating a new flat amount coupon. Can't be used together with percentage. Flat USD
-     * discount
+     * discount.
      *
      * @maps amount_in_cents
      */

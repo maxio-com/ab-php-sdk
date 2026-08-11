@@ -16,67 +16,132 @@
 | `paymentProfileId` | `?string` | Optional | - | getPaymentProfileId(): ?string | setPaymentProfileId(?string paymentProfileId): void |
 | `payerId` | `?string` | Optional | - | getPayerId(): ?string | setPayerId(?string payerId): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "subscriptions": {
-    "key0": {
-      "product": [
-        "product9"
-      ],
-      "product_price_point_id": [
-        "product_price_point_id7"
-      ],
-      "payment_profile": [
-        "payment_profile2"
-      ],
-      "payment_profile.chargify_token": [
-        "payment_profile.chargify_token6"
-      ],
-      "base": [
-        "base5",
-        "base6"
-      ]
-    },
-    "key1": {
-      "product": [
-        "product9"
-      ],
-      "product_price_point_id": [
-        "product_price_point_id7"
-      ],
-      "payment_profile": [
-        "payment_profile2"
-      ],
-      "payment_profile.chargify_token": [
-        "payment_profile.chargify_token6"
-      ],
-      "base": [
-        "base5",
-        "base6"
-      ]
-    }
-  },
-  "payer_reference": "payer_reference0",
-  "payer": {
-    "last_name": [
-      "last_name5",
-      "last_name6"
-    ],
-    "first_name": [
-      "first_name8"
-    ],
-    "email": [
-      "email0",
-      "email9"
-    ]
-  },
-  "subscription_group": [
-    "subscription_group1",
-    "subscription_group2"
-  ],
-  "payment_profile_id": "payment_profile_id2"
-}
+```php
+use AdvancedBillingLib\Models\Builders\SubscriptionGroupSignupErrorBuilder;
+use AdvancedBillingLib\Models\Builders\SubscriptionGroupSubscriptionErrorBuilder;
+use AdvancedBillingLib\Models\Builders\PayerErrorBuilder;
+
+$subscriptionGroupSignupError = SubscriptionGroupSignupErrorBuilder::init()
+    ->subscriptions(
+        [
+            'key0' => SubscriptionGroupSubscriptionErrorBuilder::init()
+                ->product(
+                    [
+                        'product9'
+                    ]
+                )
+                ->productPricePointId(
+                    [
+                        'product_price_point_id7'
+                    ]
+                )
+                ->paymentProfile(
+                    [
+                        'payment_profile2'
+                    ]
+                )
+                ->paymentProfileChargifyToken(
+                    [
+                        'payment_profile.chargify_token6'
+                    ]
+                )
+                ->base(
+                    [
+                        'base5',
+                        'base6'
+                    ]
+                )
+                ->build(),
+            'key1' => SubscriptionGroupSubscriptionErrorBuilder::init()
+                ->product(
+                    [
+                        'product9'
+                    ]
+                )
+                ->productPricePointId(
+                    [
+                        'product_price_point_id7'
+                    ]
+                )
+                ->paymentProfile(
+                    [
+                        'payment_profile2'
+                    ]
+                )
+                ->paymentProfileChargifyToken(
+                    [
+                        'payment_profile.chargify_token6'
+                    ]
+                )
+                ->base(
+                    [
+                        'base5',
+                        'base6'
+                    ]
+                )
+                ->build(),
+            'key2' => SubscriptionGroupSubscriptionErrorBuilder::init()
+                ->product(
+                    [
+                        'product9'
+                    ]
+                )
+                ->productPricePointId(
+                    [
+                        'product_price_point_id7'
+                    ]
+                )
+                ->paymentProfile(
+                    [
+                        'payment_profile2'
+                    ]
+                )
+                ->paymentProfileChargifyToken(
+                    [
+                        'payment_profile.chargify_token6'
+                    ]
+                )
+                ->base(
+                    [
+                        'base5',
+                        'base6'
+                    ]
+                )
+                ->build()
+        ]
+    )
+    ->payerReference('payer_reference8')
+    ->payer(
+        PayerErrorBuilder::init()
+            ->lastName(
+                [
+                    'last_name5',
+                    'last_name6'
+                ]
+            )
+            ->firstName(
+                [
+                    'first_name8'
+                ]
+            )
+            ->email(
+                [
+                    'email0',
+                    'email9'
+                ]
+            )
+            ->build()
+    )
+    ->subscriptionGroup(
+        [
+            'subscription_group3',
+            'subscription_group4',
+            'subscription_group5'
+        ]
+    )
+    ->paymentProfileId('payment_profile_id4')
+    ->build();
 ```
 

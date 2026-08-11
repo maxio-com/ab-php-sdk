@@ -13,3 +13,11 @@
 | `MONTH` |
 | `NEVER` |
 
+## Example
+
+```php
+use AdvancedBillingLib\Models\ExpirationIntervalUnit;
+
+$expirationIntervalUnit = ExpirationIntervalUnit::NEVER;
+```
+

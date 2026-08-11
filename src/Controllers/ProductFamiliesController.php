@@ -115,7 +115,7 @@ class ProductFamiliesController extends BaseController
     }
 
     /**
-     * Returns a list of Product Families for a site.
+     * Lists Product Families for a site.
      *
      * @param array $options Array with all options for search
      *

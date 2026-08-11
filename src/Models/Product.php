@@ -202,6 +202,11 @@ class Product implements \JsonSerializable
     private $productPricePointHandle = [];
 
     /**
+     * @var array
+     */
+    private $unspscCode = [];
+
+    /**
      * Returns Id.
      */
     public function getId(): ?int
@@ -305,7 +310,7 @@ class Product implements \JsonSerializable
 
     /**
      * Returns Accounting Code.
-     * E.g. Internal ID or SKU Number
+     * E.g., Internal ID or SKU Number
      */
     public function getAccountingCode(): ?string
     {
@@ -317,7 +322,7 @@ class Product implements \JsonSerializable
 
     /**
      * Sets Accounting Code.
-     * E.g. Internal ID or SKU Number
+     * E.g., Internal ID or SKU Number
      *
      * @maps accounting_code
      */
@@ -328,7 +333,7 @@ class Product implements \JsonSerializable
 
     /**
      * Unsets Accounting Code.
-     * E.g. Internal ID or SKU Number
+     * E.g., Internal ID or SKU Number
      */
     public function unsetAccountingCode(): void
     {
@@ -361,7 +366,7 @@ class Product implements \JsonSerializable
      * Returns Expiration Interval.
      * A numerical interval for the length a subscription to this product will run before it expires. See
      * the description of interval for a description of how this value is coupled with an interval unit to
-     * calculate the full interval
+     * calculate the full interval.
      */
     public function getExpirationInterval(): ?int
     {
@@ -375,7 +380,7 @@ class Product implements \JsonSerializable
      * Sets Expiration Interval.
      * A numerical interval for the length a subscription to this product will run before it expires. See
      * the description of interval for a description of how this value is coupled with an interval unit to
-     * calculate the full interval
+     * calculate the full interval.
      *
      * @maps expiration_interval
      */
@@ -388,7 +393,7 @@ class Product implements \JsonSerializable
      * Unsets Expiration Interval.
      * A numerical interval for the length a subscription to this product will run before it expires. See
      * the description of interval for a description of how this value is coupled with an interval unit to
-     * calculate the full interval
+     * calculate the full interval.
      */
     public function unsetExpirationInterval(): void
     {
@@ -492,8 +497,8 @@ class Product implements \JsonSerializable
 
     /**
      * Returns Interval.
-     * The numerical interval. i.e. an interval of ‘30’ coupled with an interval_unit of day would mean
-     * this product would renew every 30 days
+     * The numerical interval. e.g., an interval of ‘30’ coupled with an interval_unit of day would mean
+     * this product would renew every 30 days.
      */
     public function getInterval(): ?int
     {
@@ -502,8 +507,8 @@ class Product implements \JsonSerializable
 
     /**
      * Sets Interval.
-     * The numerical interval. i.e. an interval of ‘30’ coupled with an interval_unit of day would mean
-     * this product would renew every 30 days
+     * The numerical interval. e.g., an interval of ‘30’ coupled with an interval_unit of day would mean
+     * this product would renew every 30 days.
      *
      * @maps interval
      */
@@ -601,7 +606,7 @@ class Product implements \JsonSerializable
      * Returns Trial Interval.
      * A numerical interval for the length of the trial period of a subscription to this product. See the
      * description of interval for a description of how this value is coupled with an interval unit to
-     * calculate the full interval
+     * calculate the full interval.
      */
     public function getTrialInterval(): ?int
     {
@@ -615,7 +620,7 @@ class Product implements \JsonSerializable
      * Sets Trial Interval.
      * A numerical interval for the length of the trial period of a subscription to this product. See the
      * description of interval for a description of how this value is coupled with an interval unit to
-     * calculate the full interval
+     * calculate the full interval.
      *
      * @maps trial_interval
      */
@@ -628,7 +633,7 @@ class Product implements \JsonSerializable
      * Unsets Trial Interval.
      * A numerical interval for the length of the trial period of a subscription to this product. See the
      * description of interval for a description of how this value is coupled with an interval unit to
-     * calculate the full interval
+     * calculate the full interval.
      */
     public function unsetTrialInterval(): void
     {
@@ -855,7 +860,7 @@ class Product implements \JsonSerializable
      * Returns Update Return Params.
      * The parameters will append to the url after a successful account update. See [help
      * documentation](https://help.chargify.com/products/product-editing.html#return-parameters-after-
-     * account-update)
+     * account-update).
      */
     public function getUpdateReturnParams(): ?string
     {
@@ -869,7 +874,7 @@ class Product implements \JsonSerializable
      * Sets Update Return Params.
      * The parameters will append to the url after a successful account update. See [help
      * documentation](https://help.chargify.com/products/product-editing.html#return-parameters-after-
-     * account-update)
+     * account-update).
      *
      * @maps update_return_params
      */
@@ -882,7 +887,7 @@ class Product implements \JsonSerializable
      * Unsets Update Return Params.
      * The parameters will append to the url after a successful account update. See [help
      * documentation](https://help.chargify.com/products/product-editing.html#return-parameters-after-
-     * account-update)
+     * account-update).
      */
     public function unsetUpdateReturnParams(): void
     {
@@ -1173,6 +1178,44 @@ class Product implements \JsonSerializable
     }
 
     /**
+     * Returns Unspsc Code.
+     * (Optional) Custom UNSPSC commodity code for Level 3/CEDP payment data. When set, this value is sent
+     * as the commodity code on invoice line items for this product instead of the default derived from
+     * item_category.
+     */
+    public function getUnspscCode(): ?string
+    {
+        if (count($this->unspscCode) == 0) {
+            return null;
+        }
+        return $this->unspscCode['value'];
+    }
+
+    /**
+     * Sets Unspsc Code.
+     * (Optional) Custom UNSPSC commodity code for Level 3/CEDP payment data. When set, this value is sent
+     * as the commodity code on invoice line items for this product instead of the default derived from
+     * item_category.
+     *
+     * @maps unspsc_code
+     */
+    public function setUnspscCode(?string $unspscCode): void
+    {
+        $this->unspscCode['value'] = $unspscCode;
+    }
+
+    /**
+     * Unsets Unspsc Code.
+     * (Optional) Custom UNSPSC commodity code for Level 3/CEDP payment data. When set, this value is sent
+     * as the commodity code on invoice line items for this product instead of the default derived from
+     * item_category.
+     */
+    public function unsetUnspscCode(): void
+    {
+        $this->unspscCode = [];
+    }
+
+    /**
      * Converts the Product object to a human-readable string representation.
      *
      * @return string The string representation of the Product object.
@@ -1219,6 +1262,7 @@ class Product implements \JsonSerializable
                 'itemCategory' => $this->getItemCategory(),
                 'productPricePointId' => $this->productPricePointId,
                 'productPricePointHandle' => $this->getProductPricePointHandle(),
+                'unspscCode' => $this->getUnspscCode(),
                 'additionalProperties' => $this->additionalProperties
             ]
         );
@@ -1377,6 +1421,9 @@ class Product implements \JsonSerializable
         }
         if (!empty($this->productPricePointHandle)) {
             $json['product_price_point_handle']     = $this->productPricePointHandle['value'];
+        }
+        if (!empty($this->unspscCode)) {
+            $json['unspsc_code']                    = $this->unspscCode['value'];
         }
         $json = array_merge($json, $this->additionalProperties);
 

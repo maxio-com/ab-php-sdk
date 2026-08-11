@@ -16,24 +16,32 @@
 | `subscriptionIds` | `?(int[])` | Optional | - | getSubscriptionIds(): ?array | setSubscriptionIds(?array subscriptionIds): void |
 | `createdAt` | `?DateTime` | Optional | - | getCreatedAt(): ?\DateTime | setCreatedAt(?\DateTime createdAt): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "uid": "uid4",
-  "customer_id": 36,
-  "payment_profile": {
-    "id": 44,
-    "first_name": "first_name4",
-    "last_name": "last_name2",
-    "masked_card_number": "masked_card_number2"
-  },
-  "payment_collection_method": "prepaid",
-  "subscription_ids": [
-    146,
-    147,
-    148
-  ]
-}
+```php
+use AdvancedBillingLib\Models\Builders\SubscriptionGroupBuilder;
+use AdvancedBillingLib\Models\Builders\SubscriptionGroupPaymentProfileBuilder;
+use AdvancedBillingLib\Models\CollectionMethod;
+
+$subscriptionGroup = SubscriptionGroupBuilder::init()
+    ->uid('uid8')
+    ->customerId(78)
+    ->paymentProfile(
+        SubscriptionGroupPaymentProfileBuilder::init()
+            ->id(44)
+            ->firstName('first_name4')
+            ->lastName('last_name2')
+            ->maskedCardNumber('masked_card_number2')
+            ->build()
+    )
+    ->paymentCollectionMethod(CollectionMethod::AUTOMATIC)
+    ->subscriptionIds(
+        [
+            188,
+            189,
+            190
+        ]
+    )
+    ->build();
 ```
 

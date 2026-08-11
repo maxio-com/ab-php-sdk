@@ -13,3 +13,11 @@
 | `CREDIT` |
 | `REFUND` |
 
+## Example
+
+```php
+use AdvancedBillingLib\Models\CreditScheme;
+
+$creditScheme = CreditScheme::NONE;
+```
+

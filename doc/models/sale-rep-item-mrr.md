@@ -13,13 +13,15 @@
 | `usage` | `?string` | Optional | - | getUsage(): ?string | setUsage(?string usage): void |
 | `recurring` | `?string` | Optional | - | getRecurring(): ?string | setRecurring(?string recurring): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "mrr": "mrr2",
-  "usage": "usage0",
-  "recurring": "recurring4"
-}
+```php
+use AdvancedBillingLib\Models\Builders\SaleRepItemMrrBuilder;
+
+$saleRepItemMrr = SaleRepItemMrrBuilder::init()
+    ->mrr('mrr8')
+    ->usage('usage0')
+    ->recurring('recurring6')
+    ->build();
 ```
 

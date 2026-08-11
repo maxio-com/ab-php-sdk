@@ -11,16 +11,20 @@
 |  --- | --- | --- | --- | --- | --- |
 | `refund` | [`RefundPrepayment`](../../doc/models/refund-prepayment.md) | Required | - | getRefund(): RefundPrepayment | setRefund(RefundPrepayment refund): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "refund": {
-    "amount_in_cents": 132,
-    "amount": "String1",
-    "memo": "memo2",
-    "external": false
-  }
-}
+```php
+use AdvancedBillingLib\Models\Builders\RefundPrepaymentRequestBuilder;
+use AdvancedBillingLib\Models\Builders\RefundPrepaymentBuilder;
+
+$refundPrepaymentRequest = RefundPrepaymentRequestBuilder::init(
+    RefundPrepaymentBuilder::init(
+        'String1',
+        'memo2'
+    )
+        ->amountInCents(132)
+        ->external(false)
+        ->build()
+)->build();
 ```
 

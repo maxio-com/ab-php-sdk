@@ -11,11 +11,13 @@
 |  --- | --- | --- | --- | --- | --- |
 | `message` | `?string` | Optional | - | getMessage(): ?string | setMessage(?string message): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "message": "message8"
-}
+```php
+use AdvancedBillingLib\Models\Builders\DelayedCancellationResponseBuilder;
+
+$delayedCancellationResponse = DelayedCancellationResponseBuilder::init()
+    ->message('message4')
+    ->build();
 ```
 

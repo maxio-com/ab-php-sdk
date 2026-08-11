@@ -19,3 +19,11 @@
 | `TRIAL_ENDED_AT` |
 | `UPDATED_AT` |
 
+## Example
+
+```php
+use AdvancedBillingLib\Models\SubscriptionDateField;
+
+$subscriptionDateField = SubscriptionDateField::UPDATED_AT;
+```
+

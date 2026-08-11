@@ -17,15 +17,19 @@ Example schema for an `failed_payment` event
 | `paymentMethod` | [`string(InvoicePaymentMethodType)`](../../doc/models/invoice-payment-method-type.md) | Required | - | getPaymentMethod(): string | setPaymentMethod(string paymentMethod): void |
 | `transactionId` | `int` | Required | The transaction ID of the failed payment. | getTransactionId(): int | setTransactionId(int transactionId): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "amount_in_cents": 128,
-  "applied_amount": 154,
-  "memo": "memo2",
-  "payment_method": "credit_card",
-  "transaction_id": 170
-}
+```php
+use AdvancedBillingLib\Models\Builders\FailedPaymentEventDataBuilder;
+use AdvancedBillingLib\Models\InvoicePaymentMethodType;
+
+$failedPaymentEventData = FailedPaymentEventDataBuilder::init(
+    34,
+    196,
+    InvoicePaymentMethodType::ACH,
+    76
+)
+    ->memo('memo0')
+    ->build();
 ```
 

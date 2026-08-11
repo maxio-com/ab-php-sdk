@@ -473,7 +473,7 @@ class ProformaInvoice implements \JsonSerializable
 
     /**
      * Returns Consolidation Level.
-     * Consolidation level of the invoice, which is applicable to invoice consolidation.  It will hold one
+     * Consolidation level of the invoice, which is applicable to invoice consolidation. It will hold one
      * of the following values:
      *
      * * "none": A normal invoice with no consolidation.
@@ -493,7 +493,7 @@ class ProformaInvoice implements \JsonSerializable
 
     /**
      * Sets Consolidation Level.
-     * Consolidation level of the invoice, which is applicable to invoice consolidation.  It will hold one
+     * Consolidation level of the invoice, which is applicable to invoice consolidation. It will hold one
      * of the following values:
      *
      * * "none": A normal invoice with no consolidation.
@@ -552,7 +552,7 @@ class ProformaInvoice implements \JsonSerializable
 
     /**
      * Returns Role.
-     * 'proforma' value is deprecated in favor of proforma_adhoc and proforma_automatic
+     * 'proforma' value is deprecated in favor of proforma_adhoc and proforma_automatic.
      */
     public function getRole(): ?string
     {
@@ -561,7 +561,7 @@ class ProformaInvoice implements \JsonSerializable
 
     /**
      * Sets Role.
-     * 'proforma' value is deprecated in favor of proforma_adhoc and proforma_automatic
+     * 'proforma' value is deprecated in favor of proforma_adhoc and proforma_automatic.
      *
      * @maps role
      * @factory \AdvancedBillingLib\Models\ProformaInvoiceRole::checkValue
@@ -593,7 +593,7 @@ class ProformaInvoice implements \JsonSerializable
 
     /**
      * Returns Customer.
-     * Information about the customer who is owner or recipient the invoiced subscription.
+     * Information about the customer who is owner or recipient of the invoiced subscription.
      */
     public function getCustomer(): ?InvoiceCustomer
     {
@@ -602,7 +602,7 @@ class ProformaInvoice implements \JsonSerializable
 
     /**
      * Sets Customer.
-     * Information about the customer who is owner or recipient the invoiced subscription.
+     * Information about the customer who is owner or recipient of the invoiced subscription.
      *
      * @maps customer
      */

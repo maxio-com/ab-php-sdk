@@ -13,11 +13,14 @@ Example schema for an `change_chargeback_status` event
 |  --- | --- | --- | --- | --- | --- |
 | `chargebackStatus` | [`string(ChargebackStatus)`](../../doc/models/chargeback-status.md) | Required | - | getChargebackStatus(): string | setChargebackStatus(string chargebackStatus): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "chargeback_status": "open"
-}
+```php
+use AdvancedBillingLib\Models\Builders\ChangeChargebackStatusEventDataBuilder;
+use AdvancedBillingLib\Models\ChargebackStatus;
+
+$changeChargebackStatusEventData = ChangeChargebackStatusEventDataBuilder::init(
+    ChargebackStatus::WON
+)->build();
 ```
 

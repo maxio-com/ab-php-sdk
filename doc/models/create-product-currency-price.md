@@ -13,13 +13,16 @@
 | `price` | `int` | Required | Price for the given role. | getPrice(): int | setPrice(int price): void |
 | `role` | [`string(CurrencyPriceRole)`](../../doc/models/currency-price-role.md) | Required | Role for the price. | getRole(): string | setRole(string role): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "currency": "currency0",
-  "price": 222,
-  "role": "baseline"
-}
+```php
+use AdvancedBillingLib\Models\Builders\CreateProductCurrencyPriceBuilder;
+use AdvancedBillingLib\Models\CurrencyPriceRole;
+
+$createProductCurrencyPrice = CreateProductCurrencyPriceBuilder::init(
+    'currency2',
+    78,
+    CurrencyPriceRole::BASELINE
+)->build();
 ```
 

@@ -16,15 +16,18 @@
 | `deletedAt` | `?DateTime` | Optional | - | getDeletedAt(): ?\DateTime | setDeletedAt(?\DateTime deletedAt): void |
 | `metafieldId` | `?int` | Optional | - | getMetafieldId(): ?int | setMetafieldId(?int metafieldId): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "id": 12,
-  "value": "value0",
-  "resource_id": 96,
-  "name": "name8",
-  "deleted_at": "2016-03-13T12:52:32.123Z"
-}
+```php
+use AdvancedBillingLib\Models\Builders\MetadataBuilder;
+use AdvancedBillingLib\Utils\DateTimeHelper;
+
+$metadata = MetadataBuilder::init()
+    ->id(50)
+    ->value('value8')
+    ->resourceId(134)
+    ->name('name6')
+    ->deletedAt(DateTimeHelper::fromRfc3339DateTime('2016-03-13T12:52:32.123Z'))
+    ->build();
 ```
 

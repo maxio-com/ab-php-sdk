@@ -11,19 +11,38 @@
 |  --- | --- | --- | --- | --- | --- |
 | `pricePoints` | [`?(ProductPricePoint[])`](../../doc/models/product-price-point.md) | Optional | - | getPricePoints(): ?array | setPricePoints(?array pricePoints): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "price_points": [
-    {
-      "id": 40,
-      "name": "name2",
-      "handle": "handle8",
-      "price_in_cents": 108,
-      "interval": 92
-    }
-  ]
-}
+```php
+use AdvancedBillingLib\Models\Builders\BulkCreateProductPricePointsResponseBuilder;
+use AdvancedBillingLib\Models\Builders\ProductPricePointBuilder;
+
+$bulkCreateProductPricePointsResponse = BulkCreateProductPricePointsResponseBuilder::init()
+    ->pricePoints(
+        [
+            ProductPricePointBuilder::init()
+                ->id(40)
+                ->name('name2')
+                ->handle('handle8')
+                ->priceInCents(108)
+                ->interval(92)
+                ->build(),
+            ProductPricePointBuilder::init()
+                ->id(40)
+                ->name('name2')
+                ->handle('handle8')
+                ->priceInCents(108)
+                ->interval(92)
+                ->build(),
+            ProductPricePointBuilder::init()
+                ->id(40)
+                ->name('name2')
+                ->handle('handle8')
+                ->priceInCents(108)
+                ->interval(92)
+                ->build()
+        ]
+    )
+    ->build();
 ```
 

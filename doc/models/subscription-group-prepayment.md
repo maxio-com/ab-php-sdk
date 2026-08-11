@@ -14,14 +14,17 @@
 | `memo` | `string` | Required | - | getMemo(): string | setMemo(string memo): void |
 | `method` | [`string(SubscriptionGroupPrepaymentMethod)`](../../doc/models/subscription-group-prepayment-method.md) | Required | - | getMethod(): string | setMethod(string method): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "amount": 96,
-  "details": "details2",
-  "memo": "memo6",
-  "method": "money_order"
-}
+```php
+use AdvancedBillingLib\Models\Builders\SubscriptionGroupPrepaymentBuilder;
+use AdvancedBillingLib\Models\SubscriptionGroupPrepaymentMethod;
+
+$subscriptionGroupPrepayment = SubscriptionGroupPrepaymentBuilder::init(
+    12,
+    'details4',
+    'memo8',
+    SubscriptionGroupPrepaymentMethod::MONEY_ORDER
+)->build();
 ```
 

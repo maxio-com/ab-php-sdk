@@ -18,3 +18,11 @@ A handle for the billing manifest line item kind
 | `COMPONENT` |
 | `TAX` |
 
+## Example
+
+```php
+use AdvancedBillingLib\Models\BillingManifestLineItemKind;
+
+$billingManifestLineItemKind = BillingManifestLineItemKind::COMPONENT;
+```
+

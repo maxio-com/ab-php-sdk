@@ -14,14 +14,16 @@
 | `totalPages` | `?int` | Optional | - | getTotalPages(): ?int | setTotalPages(?int totalPages): void |
 | `statusCode` | `?int` | Optional | - | getStatusCode(): ?int | setStatusCode(?int statusCode): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "total_count": 226,
-  "current_page": 202,
-  "total_pages": 214,
-  "status_code": 244
-}
+```php
+use AdvancedBillingLib\Models\Builders\ListProformaInvoicesMetaBuilder;
+
+$listProformaInvoicesMeta = ListProformaInvoicesMetaBuilder::init()
+    ->totalCount(50)
+    ->currentPage(26)
+    ->totalPages(38)
+    ->statusCode(68)
+    ->build();
 ```
 

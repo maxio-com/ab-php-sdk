@@ -12,28 +12,32 @@
 | `chargifyJsKeys` | [`?(PublicKey[])`](../../doc/models/public-key.md) | Optional | - | getChargifyJsKeys(): ?array | setChargifyJsKeys(?array chargifyJsKeys): void |
 | `meta` | [`?ListPublicKeysMeta`](../../doc/models/list-public-keys-meta.md) | Optional | - | getMeta(): ?ListPublicKeysMeta | setMeta(?ListPublicKeysMeta meta): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "chargify_js_keys": [
-    {
-      "public_key": "public_key8",
-      "requires_security_token": false,
-      "created_at": "2016-03-13T12:52:32.123Z"
-    },
-    {
-      "public_key": "public_key8",
-      "requires_security_token": false,
-      "created_at": "2016-03-13T12:52:32.123Z"
-    }
-  ],
-  "meta": {
-    "total_count": 150,
-    "current_page": 126,
-    "total_pages": 138,
-    "per_page": 152
-  }
-}
+```php
+use AdvancedBillingLib\Models\Builders\ListPublicKeysResponseBuilder;
+use AdvancedBillingLib\Models\Builders\PublicKeyBuilder;
+use AdvancedBillingLib\Utils\DateTimeHelper;
+use AdvancedBillingLib\Models\Builders\ListPublicKeysMetaBuilder;
+
+$listPublicKeysResponse = ListPublicKeysResponseBuilder::init()
+    ->chargifyJsKeys(
+        [
+            PublicKeyBuilder::init()
+                ->publicKey('public_key8')
+                ->requiresSecurityToken(false)
+                ->createdAt(DateTimeHelper::fromRfc3339DateTime('2016-03-13T12:52:32.123Z'))
+                ->build()
+        ]
+    )
+    ->meta(
+        ListPublicKeysMetaBuilder::init()
+            ->totalCount(150)
+            ->currentPage(126)
+            ->totalPages(138)
+            ->perPage(152)
+            ->build()
+    )
+    ->build();
 ```
 

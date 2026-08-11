@@ -11,11 +11,13 @@
 |  --- | --- | --- | --- | --- | --- |
 | `subscriptionGroup` | `string` | Required | - | getSubscriptionGroup(): string | setSubscriptionGroup(string subscriptionGroup): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "subscription_group": "subscription_group2"
-}
+```php
+use AdvancedBillingLib\Models\Builders\SubscriptionGroupSingleErrorBuilder;
+
+$subscriptionGroupSingleError = SubscriptionGroupSingleErrorBuilder::init(
+    'subscription_group0'
+)->build();
 ```
 

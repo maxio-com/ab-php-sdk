@@ -13,13 +13,15 @@
 | `expirationMonth` | `?string` | Optional | - | getExpirationMonth(): ?string | setExpirationMonth(?string expirationMonth): void |
 | `expirationYear` | `?string` | Optional | - | getExpirationYear(): ?string | setExpirationYear(?string expirationYear): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "full_number": "full_number0",
-  "expiration_month": "expiration_month6",
-  "expiration_year": "expiration_year0"
-}
+```php
+use AdvancedBillingLib\Models\Builders\CreditCardAttributesBuilder;
+
+$creditCardAttributes = CreditCardAttributesBuilder::init()
+    ->fullNumber('full_number8')
+    ->expirationMonth('expiration_month8')
+    ->expirationYear('expiration_year2')
+    ->build();
 ```
 

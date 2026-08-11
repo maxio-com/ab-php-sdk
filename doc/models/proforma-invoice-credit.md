@@ -14,14 +14,16 @@
 | `originalAmount` | `?string` | Optional | **Constraints**: *Minimum Length*: `1` | getOriginalAmount(): ?string | setOriginalAmount(?string originalAmount): void |
 | `appliedAmount` | `?string` | Optional | **Constraints**: *Minimum Length*: `1` | getAppliedAmount(): ?string | setAppliedAmount(?string appliedAmount): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "uid": "uid8",
-  "memo": "memo2",
-  "original_amount": "original_amount2",
-  "applied_amount": "applied_amount0"
-}
+```php
+use AdvancedBillingLib\Models\Builders\ProformaInvoiceCreditBuilder;
+
+$proformaInvoiceCredit = ProformaInvoiceCreditBuilder::init()
+    ->uid('uid4')
+    ->memo('memo8')
+    ->originalAmount('original_amount8')
+    ->appliedAmount('applied_amount4')
+    ->build();
 ```
 

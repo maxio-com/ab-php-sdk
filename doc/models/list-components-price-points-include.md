@@ -13,7 +13,9 @@
 
 ## Example
 
-```
-currency_prices
+```php
+use AdvancedBillingLib\Models\ListComponentsPricePointsInclude;
+
+$listComponentsPricePointsInclude = ListComponentsPricePointsInclude::CURRENCY_PRICES;
 ```
 

@@ -11,18 +11,15 @@
 |  --- | --- | --- | --- | --- | --- |
 | `errors` | [`EventBasedBillingSegmentError`](../../doc/models/event-based-billing-segment-error.md) | Required | - | getErrors(): EventBasedBillingSegmentError | setErrors(EventBasedBillingSegmentError errors): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "errors": {
-    "segments": {
-      "key0": {
-        "key1": "val1",
-        "key2": "val2"
-      }
-    }
-  }
+```php
+try {
+    // make the API call
+} catch (EventBasedBillingSegmentException $exp) {
+    echo 'Caught EventBasedBillingSegmentException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught ApiException:', $exp;
 }
 ```
 

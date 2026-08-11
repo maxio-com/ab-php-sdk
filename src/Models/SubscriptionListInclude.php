@@ -18,7 +18,21 @@ class SubscriptionListInclude
 {
     public const SELF_SERVICE_PAGE_TOKEN = 'self_service_page_token';
 
-    private const _ALL_VALUES = [self::SELF_SERVICE_PAGE_TOKEN];
+    public const CURRENT_ACCOUNT_BALANCE_IN_CENTS = 'current_account_balance_in_cents';
+
+    public const CURRENT_BILLING_AMOUNT = 'current_billing_amount';
+
+    public const THREE_DS_ACTION_LINK = 'three_ds_action_link';
+
+    public const COUPONS = 'coupons';
+
+    private const _ALL_VALUES = [
+        self::SELF_SERVICE_PAGE_TOKEN,
+        self::CURRENT_ACCOUNT_BALANCE_IN_CENTS,
+        self::CURRENT_BILLING_AMOUNT,
+        self::THREE_DS_ACTION_LINK,
+        self::COUPONS
+    ];
 
     /**
      * Ensures that all the given values are present in this Enum.

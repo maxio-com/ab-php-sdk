@@ -10,32 +10,32 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models\Builders;
 
-use AdvancedBillingLib\Models\ListSubcriptionGroupPrepaymentItem;
+use AdvancedBillingLib\Models\ListSubscriptionGroupPrepaymentItem;
 use Core\Utils\CoreHelper;
 
 /**
- * Builder for model ListSubcriptionGroupPrepaymentItem
+ * Builder for model ListSubscriptionGroupPrepaymentItem
  *
- * @see ListSubcriptionGroupPrepaymentItem
+ * @see ListSubscriptionGroupPrepaymentItem
  */
-class ListSubcriptionGroupPrepaymentItemBuilder
+class ListSubscriptionGroupPrepaymentItemBuilder
 {
     /**
-     * @var ListSubcriptionGroupPrepaymentItem
+     * @var ListSubscriptionGroupPrepaymentItem
      */
     private $instance;
 
-    private function __construct(ListSubcriptionGroupPrepaymentItem $instance)
+    private function __construct(ListSubscriptionGroupPrepaymentItem $instance)
     {
         $this->instance = $instance;
     }
 
     /**
-     * Initializes a new List Subcription Group Prepayment Item Builder object.
+     * Initializes a new List Subscription Group Prepayment Item Builder object.
      */
     public static function init(): self
     {
-        return new self(new ListSubcriptionGroupPrepaymentItem());
+        return new self(new ListSubscriptionGroupPrepaymentItem());
     }
 
     /**
@@ -150,9 +150,9 @@ class ListSubcriptionGroupPrepaymentItemBuilder
     }
 
     /**
-     * Initializes a new List Subcription Group Prepayment Item object.
+     * Initializes a new List Subscription Group Prepayment Item object.
      */
-    public function build(): ListSubcriptionGroupPrepaymentItem
+    public function build(): ListSubscriptionGroupPrepaymentItem
     {
         return CoreHelper::clone($this->instance);
     }

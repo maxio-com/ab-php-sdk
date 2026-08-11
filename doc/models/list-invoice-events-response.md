@@ -14,52 +14,145 @@
 | `perPage` | `?int` | Optional | - | getPerPage(): ?int | setPerPage(?int perPage): void |
 | `totalPages` | `?int` | Optional | - | getTotalPages(): ?int | setTotalPages(?int totalPages): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "events": [
-    {
-      "event_type": "apply_credit_note",
-      "id": 214,
-      "timestamp": "2016-03-13T12:52:32.123Z",
-      "invoice": {
-        "id": 166,
-        "uid": "uid6",
-        "site_id": 92,
-        "customer_id": 204,
-        "subscription_id": 20
-      },
-      "event_data": {
-        "uid": "uid6",
-        "credit_note_number": "credit_note_number0",
-        "credit_note_uid": "credit_note_uid0",
-        "original_amount": "original_amount0",
-        "applied_amount": "applied_amount2",
-        "transaction_time": "2016-03-13T12:52:32.123Z",
-        "memo": "memo0",
-        "role": "role0",
-        "consolidated_invoice": false,
-        "applied_credit_notes": [
-          {
-            "uid": "uid4",
-            "number": "number8"
-          },
-          {
-            "uid": "uid4",
-            "number": "number8"
-          },
-          {
-            "uid": "uid4",
-            "number": "number8"
-          }
+```php
+use AdvancedBillingLib\Models\Builders\ListInvoiceEventsResponseBuilder;
+use AdvancedBillingLib\Models\Builders\ApplyCreditNoteEventBuilder;
+use AdvancedBillingLib\Utils\DateTimeHelper;
+use AdvancedBillingLib\Models\Builders\InvoiceBuilder;
+use AdvancedBillingLib\Models\InvoiceEventType;
+use AdvancedBillingLib\Models\Builders\ApplyCreditNoteEventDataBuilder;
+use AdvancedBillingLib\Models\Builders\AppliedCreditNoteDataBuilder;
+
+$listInvoiceEventsResponse = ListInvoiceEventsResponseBuilder::init()
+    ->events(
+        [
+            ApplyCreditNoteEventBuilder::init(
+                214,
+                DateTimeHelper::fromRfc3339DateTimeRequired('2016-03-13T12:52:32.123Z'),
+                InvoiceBuilder::init()
+                    ->id(166)
+                    ->uid('uid6')
+                    ->siteId(92)
+                    ->customerId(204)
+                    ->subscriptionId(20)
+                    ->build(),
+                InvoiceEventType::APPLY_CREDIT_NOTE,
+                ApplyCreditNoteEventDataBuilder::init(
+                    'uid6',
+                    'credit_note_number0',
+                    'credit_note_uid0',
+                    'original_amount0',
+                    'applied_amount2'
+                )
+                    ->transactionTime(DateTimeHelper::fromRfc3339DateTime('2016-03-13T12:52:32.123Z'))
+                    ->memo('memo0')
+                    ->role('role0')
+                    ->consolidatedInvoice(false)
+                    ->appliedCreditNotes(
+                        [
+                            AppliedCreditNoteDataBuilder::init()
+                                ->uid('uid4')
+                                ->number('number8')
+                                ->build(),
+                            AppliedCreditNoteDataBuilder::init()
+                                ->uid('uid4')
+                                ->number('number8')
+                                ->build(),
+                            AppliedCreditNoteDataBuilder::init()
+                                ->uid('uid4')
+                                ->number('number8')
+                                ->build()
+                        ]
+                    )
+                    ->build()
+            )->build(),
+            ApplyCreditNoteEventBuilder::init(
+                214,
+                DateTimeHelper::fromRfc3339DateTimeRequired('2016-03-13T12:52:32.123Z'),
+                InvoiceBuilder::init()
+                    ->id(166)
+                    ->uid('uid6')
+                    ->siteId(92)
+                    ->customerId(204)
+                    ->subscriptionId(20)
+                    ->build(),
+                InvoiceEventType::APPLY_CREDIT_NOTE,
+                ApplyCreditNoteEventDataBuilder::init(
+                    'uid6',
+                    'credit_note_number0',
+                    'credit_note_uid0',
+                    'original_amount0',
+                    'applied_amount2'
+                )
+                    ->transactionTime(DateTimeHelper::fromRfc3339DateTime('2016-03-13T12:52:32.123Z'))
+                    ->memo('memo0')
+                    ->role('role0')
+                    ->consolidatedInvoice(false)
+                    ->appliedCreditNotes(
+                        [
+                            AppliedCreditNoteDataBuilder::init()
+                                ->uid('uid4')
+                                ->number('number8')
+                                ->build(),
+                            AppliedCreditNoteDataBuilder::init()
+                                ->uid('uid4')
+                                ->number('number8')
+                                ->build(),
+                            AppliedCreditNoteDataBuilder::init()
+                                ->uid('uid4')
+                                ->number('number8')
+                                ->build()
+                        ]
+                    )
+                    ->build()
+            )->build(),
+            ApplyCreditNoteEventBuilder::init(
+                214,
+                DateTimeHelper::fromRfc3339DateTimeRequired('2016-03-13T12:52:32.123Z'),
+                InvoiceBuilder::init()
+                    ->id(166)
+                    ->uid('uid6')
+                    ->siteId(92)
+                    ->customerId(204)
+                    ->subscriptionId(20)
+                    ->build(),
+                InvoiceEventType::APPLY_CREDIT_NOTE,
+                ApplyCreditNoteEventDataBuilder::init(
+                    'uid6',
+                    'credit_note_number0',
+                    'credit_note_uid0',
+                    'original_amount0',
+                    'applied_amount2'
+                )
+                    ->transactionTime(DateTimeHelper::fromRfc3339DateTime('2016-03-13T12:52:32.123Z'))
+                    ->memo('memo0')
+                    ->role('role0')
+                    ->consolidatedInvoice(false)
+                    ->appliedCreditNotes(
+                        [
+                            AppliedCreditNoteDataBuilder::init()
+                                ->uid('uid4')
+                                ->number('number8')
+                                ->build(),
+                            AppliedCreditNoteDataBuilder::init()
+                                ->uid('uid4')
+                                ->number('number8')
+                                ->build(),
+                            AppliedCreditNoteDataBuilder::init()
+                                ->uid('uid4')
+                                ->number('number8')
+                                ->build()
+                        ]
+                    )
+                    ->build()
+            )->build()
         ]
-      }
-    }
-  ],
-  "page": 184,
-  "per_page": 96,
-  "total_pages": 194
-}
+    )
+    ->page(28)
+    ->perPage(196)
+    ->totalPages(94)
+    ->build();
 ```
 

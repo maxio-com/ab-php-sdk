@@ -11,20 +11,26 @@
 |  --- | --- | --- | --- | --- | --- |
 | `subscriptionsMrr` | [`SubscriptionMRR[]`](../../doc/models/subscription-mrr.md) | Required | **Constraints**: *Minimum Items*: `1`, *Unique Items Required* | getSubscriptionsMrr(): array | setSubscriptionsMrr(array subscriptionsMrr): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "subscriptions_mrr": [
-    {
-      "subscription_id": 0,
-      "mrr_amount_in_cents": 0,
-      "breakouts": {
-        "plan_amount_in_cents": 0,
-        "usage_amount_in_cents": 0
-      }
-    }
-  ]
-}
+```php
+use AdvancedBillingLib\Models\Builders\SubscriptionMRRResponseBuilder;
+use AdvancedBillingLib\Models\Builders\SubscriptionMRRBuilder;
+use AdvancedBillingLib\Models\Builders\SubscriptionMRRBreakoutBuilder;
+
+$subscriptionMRRResponse = SubscriptionMRRResponseBuilder::init(
+    [
+        SubscriptionMRRBuilder::init(
+            0,
+            0
+        )
+            ->breakouts(
+                SubscriptionMRRBreakoutBuilder::init(
+                    0,
+                    0
+                )->build()
+            )->build()
+    ]
+)->build();
 ```
 

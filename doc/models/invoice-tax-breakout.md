@@ -14,14 +14,16 @@
 | `taxAmount` | `?string` | Optional | - | getTaxAmount(): ?string | setTaxAmount(?string taxAmount): void |
 | `taxExemptAmount` | `?string` | Optional | - | getTaxExemptAmount(): ?string | setTaxExemptAmount(?string taxExemptAmount): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "uid": "uid2",
-  "taxable_amount": "taxable_amount6",
-  "tax_amount": "tax_amount6",
-  "tax_exempt_amount": "tax_exempt_amount2"
-}
+```php
+use AdvancedBillingLib\Models\Builders\InvoiceTaxBreakoutBuilder;
+
+$invoiceTaxBreakout = InvoiceTaxBreakoutBuilder::init()
+    ->uid('uid4')
+    ->taxableAmount('taxable_amount8')
+    ->taxAmount('tax_amount2')
+    ->taxExemptAmount('tax_exempt_amount4')
+    ->build();
 ```
 

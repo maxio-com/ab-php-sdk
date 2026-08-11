@@ -11,15 +11,19 @@
 |  --- | --- | --- | --- | --- | --- |
 | `memberIds` | `?(int[])` | Optional | - | getMemberIds(): ?array | setMemberIds(?array memberIds): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "member_ids": [
-    52,
-    53,
-    54
-  ]
-}
+```php
+use AdvancedBillingLib\Models\Builders\UpdateSubscriptionGroupBuilder;
+
+$updateSubscriptionGroup = UpdateSubscriptionGroupBuilder::init()
+    ->memberIds(
+        [
+            248,
+            249,
+            250
+        ]
+    )
+    ->build();
 ```
 

@@ -22,15 +22,18 @@
 | `transactionId` | `?int` | Optional | - | getTransactionId(): ?int | setTransactionId(?int transactionId): void |
 | `lineItemBreakouts` | [`?(InvoiceDiscountBreakout[])`](../../doc/models/invoice-discount-breakout.md) | Optional | - | getLineItemBreakouts(): ?array | setLineItemBreakouts(?array lineItemBreakouts): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "uid": "uid0",
-  "title": "title4",
-  "description": "description0",
-  "code": "code8",
-  "source_type": "Coupon"
-}
+```php
+use AdvancedBillingLib\Models\Builders\InvoiceDiscountBuilder;
+use AdvancedBillingLib\Models\InvoiceDiscountSourceType;
+
+$invoiceDiscount = InvoiceDiscountBuilder::init()
+    ->uid('uid4')
+    ->title('title0')
+    ->description('description6')
+    ->code('code2')
+    ->sourceType(InvoiceDiscountSourceType::COUPON)
+    ->build();
 ```
 

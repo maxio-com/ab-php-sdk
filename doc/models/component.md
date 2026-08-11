@@ -10,15 +10,15 @@
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
 | `id` | `?int` | Optional | The unique ID assigned to the component by Chargify. This ID can be used to fetch the component from the API. | getId(): ?int | setId(?int id): void |
-| `name` | `?string` | Optional | The name of the Component, suitable for display on statements. i.e. Text Messages. | getName(): ?string | setName(?string name): void |
+| `name` | `?string` | Optional | The name of the Component, suitable for display on statements. e.g., Text Messages. | getName(): ?string | setName(?string name): void |
 | `handle` | `?string` | Optional | The component API handle | getHandle(): ?string | setHandle(?string handle): void |
 | `pricingScheme` | [`?string(PricingScheme)`](../../doc/models/pricing-scheme.md) | Optional | - | getPricingScheme(): ?string | setPricingScheme(?string pricingScheme): void |
-| `unitName` | `?string` | Optional | The name of the unit that the component’s usage is measured in. i.e. message | getUnitName(): ?string | setUnitName(?string unitName): void |
+| `unitName` | `?string` | Optional | The name of the unit that the component’s usage is measured in. e.g., message | getUnitName(): ?string | setUnitName(?string unitName): void |
 | `unitPrice` | `?string` | Optional | The amount the customer will be charged per unit. This field is only populated for ‘per_unit’ pricing schemes, otherwise it may be null. | getUnitPrice(): ?string | setUnitPrice(?string unitPrice): void |
 | `productFamilyId` | `?int` | Optional | The id of the Product Family to which the Component belongs | getProductFamilyId(): ?int | setProductFamilyId(?int productFamilyId): void |
 | `productFamilyName` | `?string` | Optional | The name of the Product Family to which the Component belongs | getProductFamilyName(): ?string | setProductFamilyName(?string productFamilyName): void |
 | `productFamilyHandle` | `?string` | Optional | The handle of the Product Family to which the Component belongs | getProductFamilyHandle(): ?string | setProductFamilyHandle(?string productFamilyHandle): void |
-| `pricePerUnitInCents` | `?int` | Optional | deprecated - use unit_price instead | getPricePerUnitInCents(): ?int | setPricePerUnitInCents(?int pricePerUnitInCents): void |
+| `pricePerUnitInCents` | `?int` | Optional | deprecated - use unit_price instead. | getPricePerUnitInCents(): ?int | setPricePerUnitInCents(?int pricePerUnitInCents): void |
 | `kind` | [`?string(ComponentKind)`](../../doc/models/component-kind.md) | Optional | A handle for the component type | getKind(): ?string | setKind(?string kind): void |
 | `archived` | `?bool` | Optional | Boolean flag describing whether a component is archived or not. | getArchived(): ?bool | setArchived(?bool archived): void |
 | `description` | `?string` | Optional | The description of the component. | getDescription(): ?string | setDescription(?string description): void |
@@ -42,19 +42,24 @@
 | `useSiteExchangeRate` | `?bool` | Optional | - | getUseSiteExchangeRate(): ?bool | setUseSiteExchangeRate(?bool useSiteExchangeRate): void |
 | `accountingCode` | `?string` | Optional | E.g. Internal ID or SKU Number | getAccountingCode(): ?string | setAccountingCode(?string accountingCode): void |
 | `eventBasedBillingMetricId` | `?int` | Optional | (Only for Event Based Components) This is an ID of a metric attached to the component. This metric is used to bill upon collected events. | getEventBasedBillingMetricId(): ?int | setEventBasedBillingMetricId(?int eventBasedBillingMetricId): void |
-| `interval` | `?int` | Optional | The numerical interval. i.e. an interval of ‘30’ coupled with an interval_unit of day would mean this component's default price point would renew every 30 days. This property is only available for sites with Multifrequency enabled. | getInterval(): ?int | setInterval(?int interval): void |
+| `interval` | `?int` | Optional | The numerical interval. e.g., an interval of ‘30’ coupled with an interval_unit of day would mean this component’s default price point would renew every 30 days. This property is only available for sites with Multifrequency enabled. | getInterval(): ?int | setInterval(?int interval): void |
 | `intervalUnit` | [`?string(IntervalUnit)`](../../doc/models/interval-unit.md) | Optional | A string representing the interval unit for this component's default price point, either month or day. This property is only available for sites with Multifrequency enabled. | getIntervalUnit(): ?string | setIntervalUnit(?string intervalUnit): void |
+| `unspscCode` | `?string` | Optional | (Optional) Custom UNSPSC commodity code for Level 3/CEDP payment data. When set, this value is sent as the commodity code on invoice line items for this component instead of the default derived from item_category. | getUnspscCode(): ?string | setUnspscCode(?string unspscCode): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "item_category": "Business Software",
-  "id": 24,
-  "name": "name2",
-  "handle": "handle8",
-  "pricing_scheme": "per_unit",
-  "unit_name": "unit_name4"
-}
+```php
+use AdvancedBillingLib\Models\Builders\ComponentBuilder;
+use AdvancedBillingLib\Models\PricingScheme;
+use AdvancedBillingLib\Models\ItemCategory;
+
+$component = ComponentBuilder::init()
+    ->id(80)
+    ->name('name8')
+    ->handle('handle4')
+    ->pricingScheme(PricingScheme::PER_UNIT)
+    ->unitName('unit_name0')
+    ->itemCategory(ItemCategory::ENUM_BUSINESS_SOFTWARE)
+    ->build();
 ```
 

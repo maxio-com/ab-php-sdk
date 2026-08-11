@@ -34,7 +34,7 @@ class MeteredUsageBuilder
      * Initializes a new Metered Usage Builder object.
      *
      * @param string $previousUnitBalance
-     * @param int $newUnitBalance
+     * @param int|string $newUnitBalance
      * @param int $usageQuantity
      * @param int $componentId
      * @param string $componentHandle
@@ -42,7 +42,7 @@ class MeteredUsageBuilder
      */
     public static function init(
         string $previousUnitBalance,
-        int $newUnitBalance,
+        $newUnitBalance,
         int $usageQuantity,
         int $componentId,
         string $componentHandle,

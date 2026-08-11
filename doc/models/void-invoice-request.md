@@ -11,13 +11,16 @@
 |  --- | --- | --- | --- | --- | --- |
 | `void` | [`VoidInvoice`](../../doc/models/void-invoice.md) | Required | - | getVoid(): VoidInvoice | setVoid(VoidInvoice void): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "void": {
-    "reason": "reason6"
-  }
-}
+```php
+use AdvancedBillingLib\Models\Builders\VoidInvoiceRequestBuilder;
+use AdvancedBillingLib\Models\Builders\VoidInvoiceBuilder;
+
+$voidInvoiceRequest = VoidInvoiceRequestBuilder::init(
+    VoidInvoiceBuilder::init(
+        'reason6'
+    )->build()
+)->build();
 ```
 

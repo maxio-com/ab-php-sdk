@@ -96,6 +96,15 @@ class CreditCardPaymentProfileBuilder
     }
 
     /**
+     * Unsets card type field.
+     */
+    public function unsetCardType(): self
+    {
+        $this->instance->unsetCardType();
+        return $this;
+    }
+
+    /**
      * Sets expiration month field.
      *
      * @param int|null $value

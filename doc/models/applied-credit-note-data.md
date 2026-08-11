@@ -12,12 +12,14 @@
 | `uid` | `?string` | Optional | The UID of the credit note | getUid(): ?string | setUid(?string uid): void |
 | `number` | `?string` | Optional | The number of the credit note | getNumber(): ?string | setNumber(?string number): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "uid": "uid2",
-  "number": "number0"
-}
+```php
+use AdvancedBillingLib\Models\Builders\AppliedCreditNoteDataBuilder;
+
+$appliedCreditNoteData = AppliedCreditNoteDataBuilder::init()
+    ->uid('uid4')
+    ->number('number2')
+    ->build();
 ```
 

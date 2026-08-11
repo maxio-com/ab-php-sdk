@@ -206,7 +206,7 @@ class AllocateComponents implements \JsonSerializable
     /**
      * Returns Payment Collection Method.
      * (Optional) If not passed, the allocation(s) will use the payment collection method on the
-     * subscription
+     * subscription.
      */
     public function getPaymentCollectionMethod(): ?string
     {
@@ -216,7 +216,7 @@ class AllocateComponents implements \JsonSerializable
     /**
      * Sets Payment Collection Method.
      * (Optional) If not passed, the allocation(s) will use the payment collection method on the
-     * subscription
+     * subscription.
      *
      * @maps payment_collection_method
      * @factory \AdvancedBillingLib\Models\CollectionMethod::checkValue

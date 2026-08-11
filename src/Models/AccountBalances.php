@@ -42,7 +42,7 @@ class AccountBalances implements \JsonSerializable
 
     /**
      * Returns Open Invoices.
-     * The balance, in cents, of the sum of the subscription's  open, payable invoices.
+     * The balance, in cents, of the sum of the subscription's open, payable invoices.
      */
     public function getOpenInvoices(): ?AccountBalance
     {
@@ -51,7 +51,7 @@ class AccountBalances implements \JsonSerializable
 
     /**
      * Sets Open Invoices.
-     * The balance, in cents, of the sum of the subscription's  open, payable invoices.
+     * The balance, in cents, of the sum of the subscription's open, payable invoices.
      *
      * @maps open_invoices
      */
@@ -62,7 +62,7 @@ class AccountBalances implements \JsonSerializable
 
     /**
      * Returns Pending Invoices.
-     * The balance, in cents, of the sum of the subscription's  pending, payable invoices.
+     * The balance, in cents, of the sum of the subscription's pending, payable invoices.
      */
     public function getPendingInvoices(): ?AccountBalance
     {
@@ -71,7 +71,7 @@ class AccountBalances implements \JsonSerializable
 
     /**
      * Sets Pending Invoices.
-     * The balance, in cents, of the sum of the subscription's  pending, payable invoices.
+     * The balance, in cents, of the sum of the subscription's pending, payable invoices.
      *
      * @maps pending_invoices
      */

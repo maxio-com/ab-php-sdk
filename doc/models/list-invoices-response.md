@@ -11,23 +11,27 @@
 |  --- | --- | --- | --- | --- | --- |
 | `invoices` | [`Invoice[]`](../../doc/models/invoice.md) | Required | - | getInvoices(): array | setInvoices(array invoices): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "invoices": [
-    {
-      "issue_date": "2024-01-01",
-      "due_date": "2024-01-01",
-      "paid_date": "2024-01-01",
-      "public_url_expires_on": "2024-01-21",
-      "id": 196,
-      "uid": "uid6",
-      "site_id": 122,
-      "customer_id": 234,
-      "subscription_id": 50
-    }
-  ]
-}
+```php
+use AdvancedBillingLib\Models\Builders\ListInvoicesResponseBuilder;
+use AdvancedBillingLib\Models\Builders\InvoiceBuilder;
+use AdvancedBillingLib\Utils\DateTimeHelper;
+
+$listInvoicesResponse = ListInvoicesResponseBuilder::init(
+    [
+        InvoiceBuilder::init()
+            ->id(196)
+            ->uid('uid6')
+            ->siteId(122)
+            ->customerId(234)
+            ->subscriptionId(50)
+            ->issueDate(DateTimeHelper::fromSimpleDate('2024-01-01'))
+            ->dueDate(DateTimeHelper::fromSimpleDate('2024-01-01'))
+            ->paidDate(DateTimeHelper::fromSimpleDate('2024-01-01'))
+            ->publicUrlExpiresOn(DateTimeHelper::fromSimpleDate('2024-01-21'))
+            ->build()
+    ]
+)->build();
 ```
 

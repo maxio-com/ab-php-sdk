@@ -13,13 +13,15 @@
 | `applicationUid` | `?string` | Optional | Unique identifier for the payment. It has the prefix "pmt_" followed by alphanumeric characters. | getApplicationUid(): ?string | setApplicationUid(?string applicationUid): void |
 | `appliedAmount` | `?string` | Optional | Dollar amount of the paid invoice. | getAppliedAmount(): ?string | setAppliedAmount(?string appliedAmount): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "invoice_uid": "invoice_uid2",
-  "application_uid": "application_uid4",
-  "applied_amount": "applied_amount6"
-}
+```php
+use AdvancedBillingLib\Models\Builders\InvoicePaymentApplicationBuilder;
+
+$invoicePaymentApplication = InvoicePaymentApplicationBuilder::init()
+    ->invoiceUid('invoice_uid8')
+    ->applicationUid('application_uid8')
+    ->appliedAmount('applied_amount0')
+    ->build();
 ```
 

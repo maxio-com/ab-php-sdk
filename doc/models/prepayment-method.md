@@ -17,3 +17,11 @@
 | `CREDIT_CARD` |
 | `OTHER` |
 
+## Example
+
+```php
+use AdvancedBillingLib\Models\PrepaymentMethod;
+
+$prepaymentMethod = PrepaymentMethod::OTHER;
+```
+

@@ -48,3 +48,11 @@ The type of card used.
 | `SOLO` |
 | `LASER` |
 
+## Example
+
+```php
+use AdvancedBillingLib\Models\CardType;
+
+$cardType = CardType::SOLO;
+```
+

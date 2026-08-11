@@ -47,7 +47,7 @@ class Event implements \JsonSerializable
     private $createdAt;
 
     /**
-     * @var SubscriptionProductChange|SubscriptionStateChange|PaymentRelatedEvents|RefundSuccess|ComponentAllocationChange|MeteredUsage|PrepaidUsage|DunningStepReached|InvoiceIssued|PendingCancellationChange|PrepaidSubscriptionBalanceChanged|ProformaInvoiceIssued|SubscriptionGroupSignupEventData|CreditAccountBalanceChanged|PrepaymentAccountBalanceChanged|PaymentCollectionMethodChanged|ItemPricePointChanged|CustomFieldValueChange|ChjsTokenizationSuccess|ChjsTokenizationFailure|null
+     * @var SubscriptionProductChange|SubscriptionProductChangeScheduled|SubscriptionStateChange|PaymentRelatedEvents|RefundSuccess|ComponentAllocationChange|MeteredUsage|PrepaidUsage|DunningStepReached|InvoiceIssued|PendingCancellationChange|PrepaidSubscriptionBalanceChanged|ProformaInvoiceIssued|SubscriptionGroupSignupEventData|CreditAccountBalanceChanged|PrepaymentAccountBalanceChanged|PaymentCollectionMethodChanged|ItemPricePointChanged|CustomFieldValueChange|ChjsTokenizationSuccess|ChjsTokenizationFailure|null
      */
     private $eventSpecificData;
 
@@ -184,6 +184,7 @@ class Event implements \JsonSerializable
      * The schema varies based on the event key. The key-to-event data mapping is as follows:
      *
      * * `subscription_product_change` - SubscriptionProductChange
+     * * `subscription_product_change_scheduled` - SubscriptionProductChangeScheduled
      * * `subscription_state_change` - SubscriptionStateChange
      * * `signup_success`, `delayed_signup_creation_success`, `payment_success`, `payment_failure`,
      * `renewal_success`, `renewal_failure`, `chargeback_lost`, `chargeback_accepted`, `chargeback_closed` -
@@ -234,7 +235,7 @@ class Event implements \JsonSerializable
      * `subscription_term_renewal_activated`, `subscription_term_renewal_removed`
      * they map to `null` instead.
      *
-     * @return SubscriptionProductChange|SubscriptionStateChange|PaymentRelatedEvents|RefundSuccess|ComponentAllocationChange|MeteredUsage|PrepaidUsage|DunningStepReached|InvoiceIssued|PendingCancellationChange|PrepaidSubscriptionBalanceChanged|ProformaInvoiceIssued|SubscriptionGroupSignupEventData|CreditAccountBalanceChanged|PrepaymentAccountBalanceChanged|PaymentCollectionMethodChanged|ItemPricePointChanged|CustomFieldValueChange|ChjsTokenizationSuccess|ChjsTokenizationFailure|null
+     * @return SubscriptionProductChange|SubscriptionProductChangeScheduled|SubscriptionStateChange|PaymentRelatedEvents|RefundSuccess|ComponentAllocationChange|MeteredUsage|PrepaidUsage|DunningStepReached|InvoiceIssued|PendingCancellationChange|PrepaidSubscriptionBalanceChanged|ProformaInvoiceIssued|SubscriptionGroupSignupEventData|CreditAccountBalanceChanged|PrepaymentAccountBalanceChanged|PaymentCollectionMethodChanged|ItemPricePointChanged|CustomFieldValueChange|ChjsTokenizationSuccess|ChjsTokenizationFailure|null
      */
     public function getEventSpecificData()
     {
@@ -246,6 +247,7 @@ class Event implements \JsonSerializable
      * The schema varies based on the event key. The key-to-event data mapping is as follows:
      *
      * * `subscription_product_change` - SubscriptionProductChange
+     * * `subscription_product_change_scheduled` - SubscriptionProductChangeScheduled
      * * `subscription_state_change` - SubscriptionStateChange
      * * `signup_success`, `delayed_signup_creation_success`, `payment_success`, `payment_failure`,
      * `renewal_success`, `renewal_failure`, `chargeback_lost`, `chargeback_accepted`, `chargeback_closed` -
@@ -297,9 +299,9 @@ class Event implements \JsonSerializable
      * they map to `null` instead.
      *
      * @maps event_specific_data
-     * @mapsBy anyOf(oneOf(SubscriptionProductChange,SubscriptionStateChange,PaymentRelatedEvents,RefundSuccess,ComponentAllocationChange,MeteredUsage,PrepaidUsage,DunningStepReached,InvoiceIssued,PendingCancellationChange,PrepaidSubscriptionBalanceChanged,ProformaInvoiceIssued,SubscriptionGroupSignupEventData,CreditAccountBalanceChanged,PrepaymentAccountBalanceChanged,PaymentCollectionMethodChanged,ItemPricePointChanged,CustomFieldValueChange,ChjsTokenizationSuccess,ChjsTokenizationFailure),null)
+     * @mapsBy anyOf(oneOf(SubscriptionProductChange,SubscriptionProductChangeScheduled,SubscriptionStateChange,PaymentRelatedEvents,RefundSuccess,ComponentAllocationChange,MeteredUsage,PrepaidUsage,DunningStepReached,InvoiceIssued,PendingCancellationChange,PrepaidSubscriptionBalanceChanged,ProformaInvoiceIssued,SubscriptionGroupSignupEventData,CreditAccountBalanceChanged,PrepaymentAccountBalanceChanged,PaymentCollectionMethodChanged,ItemPricePointChanged,CustomFieldValueChange,ChjsTokenizationSuccess,ChjsTokenizationFailure),null)
      *
-     * @param SubscriptionProductChange|SubscriptionStateChange|PaymentRelatedEvents|RefundSuccess|ComponentAllocationChange|MeteredUsage|PrepaidUsage|DunningStepReached|InvoiceIssued|PendingCancellationChange|PrepaidSubscriptionBalanceChanged|ProformaInvoiceIssued|SubscriptionGroupSignupEventData|CreditAccountBalanceChanged|PrepaymentAccountBalanceChanged|PaymentCollectionMethodChanged|ItemPricePointChanged|CustomFieldValueChange|ChjsTokenizationSuccess|ChjsTokenizationFailure|null $eventSpecificData
+     * @param SubscriptionProductChange|SubscriptionProductChangeScheduled|SubscriptionStateChange|PaymentRelatedEvents|RefundSuccess|ComponentAllocationChange|MeteredUsage|PrepaidUsage|DunningStepReached|InvoiceIssued|PendingCancellationChange|PrepaidSubscriptionBalanceChanged|ProformaInvoiceIssued|SubscriptionGroupSignupEventData|CreditAccountBalanceChanged|PrepaymentAccountBalanceChanged|PaymentCollectionMethodChanged|ItemPricePointChanged|CustomFieldValueChange|ChjsTokenizationSuccess|ChjsTokenizationFailure|null $eventSpecificData
      */
     public function setEventSpecificData($eventSpecificData): void
     {
@@ -377,12 +379,13 @@ class Event implements \JsonSerializable
         $json['event_specific_data'] =
             ApiHelper::getJsonHelper()->verifyTypes(
                 $this->eventSpecificData,
-                'anyOf(oneOf(SubscriptionProductChange,SubscriptionStateChange,PaymentRelatedEvents,R' .
-                'efundSuccess,ComponentAllocationChange,MeteredUsage,PrepaidUsage,DunningStepReached,' .
-                'InvoiceIssued,PendingCancellationChange,PrepaidSubscriptionBalanceChanged,ProformaIn' .
-                'voiceIssued,SubscriptionGroupSignupEventData,CreditAccountBalanceChanged,PrepaymentA' .
-                'ccountBalanceChanged,PaymentCollectionMethodChanged,ItemPricePointChanged,CustomFiel' .
-                'dValueChange,ChjsTokenizationSuccess,ChjsTokenizationFailure),null)'
+                'anyOf(oneOf(SubscriptionProductChange,SubscriptionProductChangeScheduled,Subscriptio' .
+                'nStateChange,PaymentRelatedEvents,RefundSuccess,ComponentAllocationChange,MeteredUsa' .
+                'ge,PrepaidUsage,DunningStepReached,InvoiceIssued,PendingCancellationChange,PrepaidSu' .
+                'bscriptionBalanceChanged,ProformaInvoiceIssued,SubscriptionGroupSignupEventData,Cred' .
+                'itAccountBalanceChanged,PrepaymentAccountBalanceChanged,PaymentCollectionMethodChang' .
+                'ed,ItemPricePointChanged,CustomFieldValueChange,ChjsTokenizationSuccess,ChjsTokeniza' .
+                'tionFailure),null)'
             );
         $json = array_merge($json, $this->additionalProperties);
 

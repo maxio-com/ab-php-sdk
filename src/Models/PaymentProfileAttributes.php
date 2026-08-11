@@ -146,8 +146,8 @@ class PaymentProfileAttributes implements \JsonSerializable
     /**
      * Returns Chargify Token.
      * (Optional) Token received after sending billing information using Maxio.js (formerly Chargify.js).
-     * This token must be passed as a sole attribute of `payment_profile_attributes` (i.e.
-     * tok_9g6hw85pnpt6knmskpwp4ttt)
+     * This token must be passed as a sole attribute of `payment_profile_attributes` (e.g.,
+     * tok_9g6hw85pnpt6knmskpwp4ttt).
      */
     public function getChargifyToken(): ?string
     {
@@ -157,8 +157,8 @@ class PaymentProfileAttributes implements \JsonSerializable
     /**
      * Sets Chargify Token.
      * (Optional) Token received after sending billing information using Maxio.js (formerly Chargify.js).
-     * This token must be passed as a sole attribute of `payment_profile_attributes` (i.e.
-     * tok_9g6hw85pnpt6knmskpwp4ttt)
+     * This token must be passed as a sole attribute of `payment_profile_attributes` (e.g.,
+     * tok_9g6hw85pnpt6knmskpwp4ttt).
      *
      * @maps chargify_token
      */
@@ -268,7 +268,7 @@ class PaymentProfileAttributes implements \JsonSerializable
 
     /**
      * Returns Full Number.
-     * The full credit card number (string representation, i.e. 5424000000000015)
+     * The full credit card number (string representation, e.g., 5424000000000015)
      */
     public function getFullNumber(): ?string
     {
@@ -277,7 +277,7 @@ class PaymentProfileAttributes implements \JsonSerializable
 
     /**
      * Sets Full Number.
-     * The full credit card number (string representation, i.e. 5424000000000015)
+     * The full credit card number (string representation, e.g., 5424000000000015)
      *
      * @maps full_number
      */
@@ -288,8 +288,8 @@ class PaymentProfileAttributes implements \JsonSerializable
 
     /**
      * Returns Card Type.
-     * (Optional, used only for Subscription Import) If you know the card type (i.e. Visa, MC, etc) you may
-     * supply it here so that we may display the card type in the UI.
+     * (Optional, used only for Subscription Import) If you know the card type (e.g., Visa, MC, etc.) you
+     * may supply it here so that we may display the card type in the UI.
      */
     public function getCardType(): ?string
     {
@@ -298,8 +298,8 @@ class PaymentProfileAttributes implements \JsonSerializable
 
     /**
      * Sets Card Type.
-     * (Optional, used only for Subscription Import) If you know the card type (i.e. Visa, MC, etc) you may
-     * supply it here so that we may display the card type in the UI.
+     * (Optional, used only for Subscription Import) If you know the card type (e.g., Visa, MC, etc.) you
+     * may supply it here so that we may display the card type in the UI.
      *
      * @maps card_type
      * @factory \AdvancedBillingLib\Models\CardType::checkValue
@@ -312,7 +312,7 @@ class PaymentProfileAttributes implements \JsonSerializable
     /**
      * Returns Expiration Month.
      * (Optional when performing a Subscription Import via vault_token, required otherwise) The 1- or 2-
-     * digit credit card expiration month, as an integer or string, i.e. 5
+     * digit credit card expiration month, as an integer or string, e.g., 5
      *
      * @return int|string|null
      */
@@ -324,7 +324,7 @@ class PaymentProfileAttributes implements \JsonSerializable
     /**
      * Sets Expiration Month.
      * (Optional when performing a Subscription Import via vault_token, required otherwise) The 1- or 2-
-     * digit credit card expiration month, as an integer or string, i.e. 5
+     * digit credit card expiration month, as an integer or string, e.g., 5
      *
      * @maps expiration_month
      * @mapsBy anyOf(oneOf(int,string),null)
@@ -339,7 +339,7 @@ class PaymentProfileAttributes implements \JsonSerializable
     /**
      * Returns Expiration Year.
      * (Optional when performing a Subscription Import via vault_token, required otherwise) The 4-digit
-     * credit card expiration year, as an integer or string, i.e. 2012
+     * credit card expiration year, as an integer or string, e.g., 2012
      *
      * @return int|string|null
      */
@@ -351,7 +351,7 @@ class PaymentProfileAttributes implements \JsonSerializable
     /**
      * Sets Expiration Year.
      * (Optional when performing a Subscription Import via vault_token, required otherwise) The 4-digit
-     * credit card expiration year, as an integer or string, i.e. 2012
+     * credit card expiration year, as an integer or string, e.g., 2012
      *
      * @maps expiration_year
      * @mapsBy anyOf(oneOf(int,string),null)
@@ -366,7 +366,7 @@ class PaymentProfileAttributes implements \JsonSerializable
     /**
      * Returns Billing Address.
      * (Optional, may be required by your product configuration or gateway settings) The credit card or
-     * bank account billing street address (i.e. 123 Main St.). This value is merely passed through to the
+     * bank account billing street address (e.g., 123 Main St.). This value is merely passed through to the
      * payment gateway.
      */
     public function getBillingAddress(): ?string
@@ -377,7 +377,7 @@ class PaymentProfileAttributes implements \JsonSerializable
     /**
      * Sets Billing Address.
      * (Optional, may be required by your product configuration or gateway settings) The credit card or
-     * bank account billing street address (i.e. 123 Main St.). This value is merely passed through to the
+     * bank account billing street address (e.g., 123 Main St.). This value is merely passed through to the
      * payment gateway.
      *
      * @maps billing_address
@@ -389,7 +389,7 @@ class PaymentProfileAttributes implements \JsonSerializable
 
     /**
      * Returns Billing Address 2.
-     * (Optional) Second line of the customer’s billing address i.e. Apt. 100
+     * (Optional) Second line of the customer’s billing address, e.g., Apt. 100
      */
     public function getBillingAddress2(): ?string
     {
@@ -401,7 +401,7 @@ class PaymentProfileAttributes implements \JsonSerializable
 
     /**
      * Sets Billing Address 2.
-     * (Optional) Second line of the customer’s billing address i.e. Apt. 100
+     * (Optional) Second line of the customer’s billing address, e.g., Apt. 100
      *
      * @maps billing_address_2
      */
@@ -412,7 +412,7 @@ class PaymentProfileAttributes implements \JsonSerializable
 
     /**
      * Unsets Billing Address 2.
-     * (Optional) Second line of the customer’s billing address i.e. Apt. 100
+     * (Optional) Second line of the customer’s billing address, e.g., Apt. 100
      */
     public function unsetBillingAddress2(): void
     {
@@ -422,7 +422,7 @@ class PaymentProfileAttributes implements \JsonSerializable
     /**
      * Returns Billing City.
      * (Optional, may be required by your product configuration or gateway settings) The credit card or
-     * bank account billing address city (i.e. “Boston”). This value is merely passed through to the
+     * bank account billing address city (e.g., “Boston”). This value is merely passed through to the
      * payment gateway.
      */
     public function getBillingCity(): ?string
@@ -433,7 +433,7 @@ class PaymentProfileAttributes implements \JsonSerializable
     /**
      * Sets Billing City.
      * (Optional, may be required by your product configuration or gateway settings) The credit card or
-     * bank account billing address city (i.e. “Boston”). This value is merely passed through to the
+     * bank account billing address city (e.g., “Boston”). This value is merely passed through to the
      * payment gateway.
      *
      * @maps billing_city
@@ -446,7 +446,7 @@ class PaymentProfileAttributes implements \JsonSerializable
     /**
      * Returns Billing State.
      * (Optional, may be required by your product configuration or gateway settings) The credit card or
-     * bank account billing address state (i.e. MA). This value is merely passed through to the payment
+     * bank account billing address state (e.g., MA). This value is merely passed through to the payment
      * gateway. This must conform to the [ISO_3166-1](https://en.wikipedia.org/wiki/ISO_3166-
      * 1#Current_codes) in order to be valid for tax locale purposes.
      */
@@ -458,7 +458,7 @@ class PaymentProfileAttributes implements \JsonSerializable
     /**
      * Sets Billing State.
      * (Optional, may be required by your product configuration or gateway settings) The credit card or
-     * bank account billing address state (i.e. MA). This value is merely passed through to the payment
+     * bank account billing address state (e.g., MA). This value is merely passed through to the payment
      * gateway. This must conform to the [ISO_3166-1](https://en.wikipedia.org/wiki/ISO_3166-
      * 1#Current_codes) in order to be valid for tax locale purposes.
      *
@@ -473,7 +473,7 @@ class PaymentProfileAttributes implements \JsonSerializable
      * Returns Billing Country.
      * (Optional, may be required by your product configuration or gateway settings) The credit card or
      * bank account billing address country, required in [ISO_3166-1 alpha-2](https://en.wikipedia.
-     * org/wiki/ISO_3166-1_alpha-2) format (i.e. “US”). This value is merely passed through to the payment
+     * org/wiki/ISO_3166-1_alpha-2) format (e.g., “US”). This value is merely passed through to the payment
      * gateway. Some gateways require country codes in a specific format. Check your gateway’s
      * documentation. If creating an ACH subscription, only US is supported at this time.
      */
@@ -486,7 +486,7 @@ class PaymentProfileAttributes implements \JsonSerializable
      * Sets Billing Country.
      * (Optional, may be required by your product configuration or gateway settings) The credit card or
      * bank account billing address country, required in [ISO_3166-1 alpha-2](https://en.wikipedia.
-     * org/wiki/ISO_3166-1_alpha-2) format (i.e. “US”). This value is merely passed through to the payment
+     * org/wiki/ISO_3166-1_alpha-2) format (e.g., “US”). This value is merely passed through to the payment
      * gateway. Some gateways require country codes in a specific format. Check your gateway’s
      * documentation. If creating an ACH subscription, only US is supported at this time.
      *
@@ -500,7 +500,7 @@ class PaymentProfileAttributes implements \JsonSerializable
     /**
      * Returns Billing Zip.
      * (Optional, may be required by your product configuration or gateway settings) The credit card or
-     * bank account billing address zip code (i.e. 12345). This value is merely passed through to the
+     * bank account billing address zip code (e.g., 12345). This value is merely passed through to the
      * payment gateway.
      */
     public function getBillingZip(): ?string
@@ -511,7 +511,7 @@ class PaymentProfileAttributes implements \JsonSerializable
     /**
      * Sets Billing Zip.
      * (Optional, may be required by your product configuration or gateway settings) The credit card or
-     * bank account billing address zip code (i.e. 12345). This value is merely passed through to the
+     * bank account billing address zip code (e.g., 12345). This value is merely passed through to the
      * payment gateway.
      *
      * @maps billing_zip
@@ -701,7 +701,7 @@ class PaymentProfileAttributes implements \JsonSerializable
     /**
      * Returns Last Four.
      * (Optional, used only for Subscription Import) If you have the last 4 digits of the credit card
-     * number, you may supply them here so that we may create a masked card number (i.e. XXXX-XXXX-XXXX-
+     * number, you may supply them here so that we may create a masked card number (e.g., XXXX-XXXX-XXXX-
      * 1234) for display in the UI. Last 4 digits are required for refunds in Auth.Net.
      */
     public function getLastFour(): ?string
@@ -712,7 +712,7 @@ class PaymentProfileAttributes implements \JsonSerializable
     /**
      * Sets Last Four.
      * (Optional, used only for Subscription Import) If you have the last 4 digits of the credit card
-     * number, you may supply them here so that we may create a masked card number (i.e. XXXX-XXXX-XXXX-
+     * number, you may supply them here so that we may create a masked card number (e.g., XXXX-XXXX-XXXX-
      * 1234) for display in the UI. Last 4 digits are required for refunds in Auth.Net.
      *
      * @maps last_four

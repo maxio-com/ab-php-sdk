@@ -20,3 +20,11 @@
 | `OPEN_BALANCE` |
 | `EXPIRES_AT` |
 
+## Example
+
+```php
+use AdvancedBillingLib\Models\SubscriptionSort;
+
+$subscriptionSort = SubscriptionSort::TOTAL_PAYMENTS;
+```
+

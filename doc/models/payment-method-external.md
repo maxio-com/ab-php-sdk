@@ -14,14 +14,18 @@
 | `memo` | `?string` | Required | - | getMemo(): ?string | setMemo(?string memo): void |
 | `type` | [`string(InvoiceEventPaymentMethod)`](../../doc/models/invoice-event-payment-method.md) | Required | - | getType(): string | setType(string type): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "details": "details4",
-  "kind": "kind2",
-  "memo": "memo8",
-  "type": "external"
-}
+```php
+use AdvancedBillingLib\Models\Builders\PaymentMethodExternalBuilder;
+use AdvancedBillingLib\Models\InvoiceEventPaymentMethod;
+
+$paymentMethodExternal = PaymentMethodExternalBuilder::init(
+    'kind8',
+    InvoiceEventPaymentMethod::EXTERNAL
+)
+    ->details('details0')
+    ->memo('memo4')
+    ->build();
 ```
 

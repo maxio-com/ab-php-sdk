@@ -13,8 +13,8 @@
 | `name` | `?string` | Optional | - | getName(): ?string | setName(?string name): void |
 | `kind` | [`?string(ComponentKind)`](../../doc/models/component-kind.md) | Optional | A handle for the component type | getKind(): ?string | setKind(?string kind): void |
 | `unitName` | `?string` | Optional | - | getUnitName(): ?string | setUnitName(?string unitName): void |
-| `enabled` | `?bool` | Optional | (for on/off components) indicates if the component is enabled for the subscription | getEnabled(): ?bool | setEnabled(?bool enabled): void |
-| `unitBalance` | `?int` | Optional | - | getUnitBalance(): ?int | setUnitBalance(?int unitBalance): void |
+| `enabled` | `?bool` | Optional | (for on/off components) indicates if the component is enabled for the subscription. | getEnabled(): ?bool | setEnabled(?bool enabled): void |
+| `unitBalance` | int\|string\|null | Optional | This is a container for one-of cases. | getUnitBalance(): | setUnitBalance( unitBalance): void |
 | `currency` | `?string` | Optional | - | getCurrency(): ?string | setCurrency(?string currency): void |
 | `allocatedQuantity` | int\|string\|null | Optional | This is a container for one-of cases. | getAllocatedQuantity(): | setAllocatedQuantity( allocatedQuantity): void |
 | `pricingScheme` | [`?string(PricingScheme)`](../../doc/models/pricing-scheme.md) | Optional | - | getPricingScheme(): ?string | setPricingScheme(?string pricingScheme): void |
@@ -36,21 +36,24 @@
 | `useSiteExchangeRate` | `?bool` | Optional | - | getUseSiteExchangeRate(): ?bool | setUseSiteExchangeRate(?bool useSiteExchangeRate): void |
 | `description` | `?string` | Optional | - | getDescription(): ?string | setDescription(?string description): void |
 | `allowFractionalQuantities` | `?bool` | Optional | - | getAllowFractionalQuantities(): ?bool | setAllowFractionalQuantities(?bool allowFractionalQuantities): void |
-| `subscription` | [`?SubscriptionComponentSubscription`](../../doc/models/subscription-component-subscription.md) | Optional | An optional object, will be returned if provided `include=subscription` query param. | getSubscription(): ?SubscriptionComponentSubscription | setSubscription(?SubscriptionComponentSubscription subscription): void |
+| `subscription` | [`?SubscriptionComponentSubscription`](../../doc/models/subscription-component-subscription.md) | Optional | (Optional) Object that will be returned if the `include=subscription` query param is provided. | getSubscription(): ?SubscriptionComponentSubscription | setSubscription(?SubscriptionComponentSubscription subscription): void |
 | `historicUsages` | [`?(HistoricUsage[])`](../../doc/models/historic-usage.md) | Optional | - | getHistoricUsages(): ?array | setHistoricUsages(?array historicUsages): void |
 | `displayOnHostedPage` | `?bool` | Optional | - | getDisplayOnHostedPage(): ?bool | setDisplayOnHostedPage(?bool displayOnHostedPage): void |
-| `interval` | `?int` | Optional | The numerical interval. i.e. an interval of '30' coupled with an interval_unit of day would mean this component price point would renew every 30 days. This property is only available for sites with Multifrequency enabled. | getInterval(): ?int | setInterval(?int interval): void |
+| `interval` | `?int` | Optional | The numerical interval. e.g., an interval of '30' coupled with an interval_unit of day would mean this component price point would renew every 30 days. This property is only available for sites with Multifrequency enabled. | getInterval(): ?int | setInterval(?int interval): void |
 | `intervalUnit` | [`?string(IntervalUnit)`](../../doc/models/interval-unit.md) | Optional | A string representing the interval unit for this component price point, either month or day. This property is only available for sites with Multifrequency enabled. | getIntervalUnit(): ?string | setIntervalUnit(?string intervalUnit): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "id": 20,
-  "name": "name8",
-  "kind": "quantity_based_component",
-  "unit_name": "unit_name0",
-  "enabled": false
-}
+```php
+use AdvancedBillingLib\Models\Builders\SubscriptionComponentBuilder;
+use AdvancedBillingLib\Models\ComponentKind;
+
+$subscriptionComponent = SubscriptionComponentBuilder::init()
+    ->id(254)
+    ->name('name8')
+    ->kind(ComponentKind::QUANTITY_BASED_COMPONENT)
+    ->unitName('unit_name0')
+    ->enabled(false)
+    ->build();
 ```
 

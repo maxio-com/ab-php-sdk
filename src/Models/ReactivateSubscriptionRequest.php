@@ -47,7 +47,7 @@ class ReactivateSubscriptionRequest implements \JsonSerializable
 
     /**
      * Returns Calendar Billing.
-     * These values are only applicable to subscriptions using calendar billing
+     * These values are only applicable to subscriptions using calendar billing.
      */
     public function getCalendarBilling(): ?ReactivationBilling
     {
@@ -56,7 +56,7 @@ class ReactivateSubscriptionRequest implements \JsonSerializable
 
     /**
      * Sets Calendar Billing.
-     * These values are only applicable to subscriptions using calendar billing
+     * These values are only applicable to subscriptions using calendar billing.
      *
      * @maps calendar_billing
      */

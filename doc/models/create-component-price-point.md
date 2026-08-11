@@ -15,27 +15,36 @@
 | `prices` | [`Price[]`](../../doc/models/price.md) | Required | - | getPrices(): array | setPrices(array prices): void |
 | `useSiteExchangeRate` | `?bool` | Optional | Whether to use the site level exchange rate or define your own prices for each currency if you have multiple currencies defined on the site. Setting not supported when creating price points in bulk.<br><br>**Default**: `true` | getUseSiteExchangeRate(): ?bool | setUseSiteExchangeRate(?bool useSiteExchangeRate): void |
 | `taxIncluded` | `?bool` | Optional | Whether or not the price point includes tax. Setting not supported when creating price points in bulk. | getTaxIncluded(): ?bool | setTaxIncluded(?bool taxIncluded): void |
-| `interval` | `?int` | Optional | The numerical interval. i.e. an interval of ‘30’ coupled with an interval_unit of day would mean this price point would renew every 30 days. This property is only available for sites with Multifrequency enabled. | getInterval(): ?int | setInterval(?int interval): void |
+| `interval` | `?int` | Optional | The numerical interval. e.g., an interval of ‘30’ coupled with an interval_unit of day would mean this price point would renew every 30 days. This property is only available for sites with Multifrequency enabled. | getInterval(): ?int | setInterval(?int interval): void |
 | `intervalUnit` | [`?string(IntervalUnit)`](../../doc/models/interval-unit.md) | Optional | A string representing the interval unit for this price point, either month or day. This property is only available for sites with Multifrequency enabled. | getIntervalUnit(): ?string | setIntervalUnit(?string intervalUnit): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "name": "name0",
-  "pricing_scheme": "per_unit",
-  "prices": [
-    {
-      "starting_quantity": 242,
-      "ending_quantity": 40,
-      "unit_price": 23.26
-    }
-  ],
-  "use_site_exchange_rate": true,
-  "handle": "handle6",
-  "tax_included": false,
-  "interval": 24,
-  "interval_unit": "day"
-}
+```php
+use AdvancedBillingLib\Models\Builders\CreateComponentPricePointBuilder;
+use AdvancedBillingLib\Models\PricingScheme;
+use AdvancedBillingLib\Models\Builders\PriceBuilder;
+use AdvancedBillingLib\Models\IntervalUnit;
+
+$createComponentPricePoint = CreateComponentPricePointBuilder::init(
+    'name4',
+    PricingScheme::PER_UNIT,
+    [
+        PriceBuilder::init(
+            242,
+            23.26
+        )
+            ->endingQuantity(
+                40
+            )
+            ->build()
+    ]
+)
+    ->handle('handle0')
+    ->useSiteExchangeRate(true)
+    ->taxIncluded(false)
+    ->interval(140)
+    ->intervalUnit(IntervalUnit::DAY)
+    ->build();
 ```
 

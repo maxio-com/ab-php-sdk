@@ -11,34 +11,53 @@
 |  --- | --- | --- | --- | --- | --- |
 | `segment` | [`CreateSegment`](../../doc/models/create-segment.md) | Required | - | getSegment(): CreateSegment | setSegment(CreateSegment segment): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "segment": {
-    "segment_property_1_value": "String1",
-    "segment_property_2_value": "String3",
-    "segment_property_3_value": "String1",
-    "segment_property_4_value": "String5",
-    "pricing_scheme": "stairstep",
-    "prices": [
-      {
-        "starting_quantity": 64,
-        "ending_quantity": 38,
-        "unit_price": "String3"
-      },
-      {
-        "starting_quantity": 64,
-        "ending_quantity": 38,
-        "unit_price": "String3"
-      },
-      {
-        "starting_quantity": 64,
-        "ending_quantity": 38,
-        "unit_price": "String3"
-      }
-    ]
-  }
-}
+```php
+use AdvancedBillingLib\Models\Builders\CreateSegmentRequestBuilder;
+use AdvancedBillingLib\Models\Builders\CreateSegmentBuilder;
+use AdvancedBillingLib\Models\PricingScheme;
+use AdvancedBillingLib\Models\Builders\CreateOrUpdateSegmentPriceBuilder;
+
+$createSegmentRequest = CreateSegmentRequestBuilder::init(
+    CreateSegmentBuilder::init(
+        PricingScheme::STAIRSTEP
+    )
+        ->segmentProperty1Value(
+            'String1'
+        )
+        ->segmentProperty2Value(
+            'String3'
+        )
+        ->segmentProperty3Value(
+            'String1'
+        )
+        ->segmentProperty4Value(
+            'String5'
+        )
+        ->prices(
+            [
+                CreateOrUpdateSegmentPriceBuilder::init(
+                    'String3'
+                )
+                    ->startingQuantity(64)
+                    ->endingQuantity(38)
+                    ->build(),
+                CreateOrUpdateSegmentPriceBuilder::init(
+                    'String3'
+                )
+                    ->startingQuantity(64)
+                    ->endingQuantity(38)
+                    ->build(),
+                CreateOrUpdateSegmentPriceBuilder::init(
+                    'String3'
+                )
+                    ->startingQuantity(64)
+                    ->endingQuantity(38)
+                    ->build()
+            ]
+        )
+        ->build()
+)->build();
 ```
 

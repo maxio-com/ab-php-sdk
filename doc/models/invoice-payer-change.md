@@ -14,14 +14,16 @@
 | `organization` | `?string` | Optional | - | getOrganization(): ?string | setOrganization(?string organization): void |
 | `email` | `?string` | Optional | - | getEmail(): ?string | setEmail(?string email): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "first_name": "first_name2",
-  "last_name": "last_name0",
-  "organization": "organization4",
-  "email": "email4"
-}
+```php
+use AdvancedBillingLib\Models\Builders\InvoicePayerChangeBuilder;
+
+$invoicePayerChange = InvoicePayerChangeBuilder::init()
+    ->firstName('first_name4')
+    ->lastName('last_name2')
+    ->organization('organization2')
+    ->email('email2')
+    ->build();
 ```
 

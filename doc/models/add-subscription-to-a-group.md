@@ -11,21 +11,33 @@
 |  --- | --- | --- | --- | --- | --- |
 | `group` | [`?GroupSettings`](../../doc/models/group-settings.md) | Optional | - | getGroup(): ?GroupSettings | setGroup(?GroupSettings group): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "group": {
-    "target": {
-      "type": "parent",
-      "id": 236
-    },
-    "billing": {
-      "accrue": false,
-      "align_date": false,
-      "prorate": false
-    }
-  }
-}
+```php
+use AdvancedBillingLib\Models\Builders\AddSubscriptionToAGroupBuilder;
+use AdvancedBillingLib\Models\Builders\GroupSettingsBuilder;
+use AdvancedBillingLib\Models\Builders\GroupTargetBuilder;
+use AdvancedBillingLib\Models\GroupTargetType;
+use AdvancedBillingLib\Models\Builders\GroupBillingBuilder;
+
+$addSubscriptionToAGroup = AddSubscriptionToAGroupBuilder::init()
+    ->group(
+        GroupSettingsBuilder::init(
+            GroupTargetBuilder::init(
+                GroupTargetType::PARENT_
+            )
+                ->id(236)
+                ->build()
+        )
+            ->billing(
+                GroupBillingBuilder::init()
+                    ->accrue(false)
+                    ->alignDate(false)
+                    ->prorate(false)
+                    ->build()
+            )
+            ->build()
+    )
+    ->build();
 ```
 

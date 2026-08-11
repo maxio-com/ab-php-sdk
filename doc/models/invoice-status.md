@@ -19,3 +19,11 @@ The current status of the invoice. See [Invoice Statuses](https://maxio.zendesk.
 | `CANCELED` |
 | `PROCESSING` |
 
+## Example
+
+```php
+use AdvancedBillingLib\Models\InvoiceStatus;
+
+$invoiceStatus = InvoiceStatus::PAID;
+```
+

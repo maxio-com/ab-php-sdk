@@ -11,11 +11,14 @@
 |  --- | --- | --- | --- | --- | --- |
 | `creditScheme` | [`string(CreditScheme)`](../../doc/models/credit-scheme.md) | Required | - | getCreditScheme(): string | setCreditScheme(string creditScheme): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "credit_scheme": "credit"
-}
+```php
+use AdvancedBillingLib\Models\Builders\CreditSchemeRequestBuilder;
+use AdvancedBillingLib\Models\CreditScheme;
+
+$creditSchemeRequest = CreditSchemeRequestBuilder::init(
+    CreditScheme::CREDIT
+)->build();
 ```
 

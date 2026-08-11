@@ -11,16 +11,21 @@
 |  --- | --- | --- | --- | --- | --- |
 | `referralCode` | [`?ReferralCode`](../../doc/models/referral-code.md) | Optional | - | getReferralCode(): ?ReferralCode | setReferralCode(?ReferralCode referralCode): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "referral_code": {
-    "id": 46,
-    "site_id": 228,
-    "subscription_id": 156,
-    "code": "code0"
-  }
-}
+```php
+use AdvancedBillingLib\Models\Builders\ReferralValidationResponseBuilder;
+use AdvancedBillingLib\Models\Builders\ReferralCodeBuilder;
+
+$referralValidationResponse = ReferralValidationResponseBuilder::init()
+    ->referralCode(
+        ReferralCodeBuilder::init()
+            ->id(46)
+            ->siteId(228)
+            ->subscriptionId(156)
+            ->code('code0')
+            ->build()
+    )
+    ->build();
 ```
 

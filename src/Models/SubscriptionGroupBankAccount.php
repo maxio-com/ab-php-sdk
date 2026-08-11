@@ -142,7 +142,7 @@ class SubscriptionGroupBankAccount implements \JsonSerializable
     /**
      * Returns Bank Routing Number.
      * (Required when creating a subscription with ACH. Optional when creating a subscription with
-     * GoCardless). The routing number of the bank. It becomes bank_code while passing via GoCardless API
+     * GoCardless.) The routing number of the bank. It becomes bank_code while passing via GoCardless API.
      */
     public function getBankRoutingNumber(): ?string
     {
@@ -152,7 +152,7 @@ class SubscriptionGroupBankAccount implements \JsonSerializable
     /**
      * Sets Bank Routing Number.
      * (Required when creating a subscription with ACH. Optional when creating a subscription with
-     * GoCardless). The routing number of the bank. It becomes bank_code while passing via GoCardless API
+     * GoCardless.) The routing number of the bank. It becomes bank_code while passing via GoCardless API.
      *
      * @maps bank_routing_number
      */
@@ -164,7 +164,7 @@ class SubscriptionGroupBankAccount implements \JsonSerializable
     /**
      * Returns Bank Iban.
      * (Optional when creating a subscription with GoCardless). International Bank Account Number.
-     * Alternatively, local bank details can be provided
+     * Alternatively, local bank details can be provided.
      */
     public function getBankIban(): ?string
     {
@@ -174,7 +174,7 @@ class SubscriptionGroupBankAccount implements \JsonSerializable
     /**
      * Sets Bank Iban.
      * (Optional when creating a subscription with GoCardless). International Bank Account Number.
-     * Alternatively, local bank details can be provided
+     * Alternatively, local bank details can be provided.
      *
      * @maps bank_iban
      */
@@ -186,7 +186,7 @@ class SubscriptionGroupBankAccount implements \JsonSerializable
     /**
      * Returns Bank Branch Code.
      * (Optional when creating a subscription with GoCardless) Branch code. Alternatively, an IBAN can be
-     * provided
+     * provided.
      */
     public function getBankBranchCode(): ?string
     {
@@ -196,7 +196,7 @@ class SubscriptionGroupBankAccount implements \JsonSerializable
     /**
      * Sets Bank Branch Code.
      * (Optional when creating a subscription with GoCardless) Branch code. Alternatively, an IBAN can be
-     * provided
+     * provided.
      *
      * @maps bank_branch_code
      */

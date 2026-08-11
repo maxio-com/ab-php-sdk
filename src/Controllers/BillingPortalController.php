@@ -100,7 +100,7 @@ class BillingPortalController extends BaseController
      * + Only request a new URL after the `new_link_available_at` date
      * + You are limited to 15 requests for the same URL. If you make more than 15 requests before
      * `new_link_available_at`, you will be blocked from further Management URL requests (with a response
-     * code `429`)
+     * code `429`).
      *
      * @param int $customerId The Chargify id of the customer
      *

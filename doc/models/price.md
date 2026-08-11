@@ -13,13 +13,18 @@
 | `endingQuantity` | int\|string\|null | Optional | This is a container for one-of cases. | getEndingQuantity(): | setEndingQuantity( endingQuantity): void |
 | `unitPrice` | float\|string | Required | This is a container for one-of cases. | getUnitPrice(): | setUnitPrice( unitPrice): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "starting_quantity": 40,
-  "ending_quantity": 14,
-  "unit_price": 125.12
-}
+```php
+use AdvancedBillingLib\Models\Builders\PriceBuilder;
+
+$price = PriceBuilder::init(
+    132,
+    70.44
+)
+    ->endingQuantity(
+        6
+    )
+    ->build();
 ```
 

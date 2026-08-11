@@ -14,14 +14,16 @@
 | `usageAmountInCents` | `?int` | Optional | - | getUsageAmountInCents(): ?int | setUsageAmountInCents(?int usageAmountInCents): void |
 | `usageAmountFormatted` | `?string` | Optional | - | getUsageAmountFormatted(): ?string | setUsageAmountFormatted(?string usageAmountFormatted): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "plan_amount_in_cents": 68,
-  "plan_amount_formatted": "plan_amount_formatted2",
-  "usage_amount_in_cents": 176,
-  "usage_amount_formatted": "usage_amount_formatted0"
-}
+```php
+use AdvancedBillingLib\Models\Builders\BreakoutsBuilder;
+
+$breakouts = BreakoutsBuilder::init()
+    ->planAmountInCents(254)
+    ->planAmountFormatted('plan_amount_formatted0')
+    ->usageAmountInCents(106)
+    ->usageAmountFormatted('usage_amount_formatted8')
+    ->build();
 ```
 

@@ -96,6 +96,11 @@ class UpdateCustomer implements \JsonSerializable
     private $taxExempt;
 
     /**
+     * @var bool|null
+     */
+    private $surcharging;
+
+    /**
      * @var string|null
      */
     private $taxExemptReason;
@@ -114,6 +119,11 @@ class UpdateCustomer implements \JsonSerializable
      * @var array
      */
     private $salesforceId = [];
+
+    /**
+     * @var array
+     */
+    private $brandingThemeId = [];
 
     /**
      * Returns First Name.
@@ -406,6 +416,28 @@ class UpdateCustomer implements \JsonSerializable
     }
 
     /**
+     * Returns Surcharging.
+     * Whether surcharging is enabled for the customer. Only applied on sites where surcharging control is
+     * enabled.
+     */
+    public function getSurcharging(): ?bool
+    {
+        return $this->surcharging;
+    }
+
+    /**
+     * Sets Surcharging.
+     * Whether surcharging is enabled for the customer. Only applied on sites where surcharging control is
+     * enabled.
+     *
+     * @maps surcharging
+     */
+    public function setSurcharging(?bool $surcharging): void
+    {
+        $this->surcharging = $surcharging;
+    }
+
+    /**
      * Returns Tax Exempt Reason.
      */
     public function getTaxExemptReason(): ?string
@@ -454,7 +486,7 @@ class UpdateCustomer implements \JsonSerializable
 
     /**
      * Returns Verified.
-     * Is the customer verified to use ACH as a payment method. Available only on Authorize.Net gateway
+     * Is the customer verified to use ACH as a payment method. Available only on the Authorize.Net gateway.
      */
     public function getVerified(): ?bool
     {
@@ -466,7 +498,7 @@ class UpdateCustomer implements \JsonSerializable
 
     /**
      * Sets Verified.
-     * Is the customer verified to use ACH as a payment method. Available only on Authorize.Net gateway
+     * Is the customer verified to use ACH as a payment method. Available only on the Authorize.Net gateway.
      *
      * @maps verified
      */
@@ -477,7 +509,7 @@ class UpdateCustomer implements \JsonSerializable
 
     /**
      * Unsets Verified.
-     * Is the customer verified to use ACH as a payment method. Available only on Authorize.Net gateway
+     * Is the customer verified to use ACH as a payment method. Available only on the Authorize.Net gateway.
      */
     public function unsetVerified(): void
     {
@@ -517,6 +549,44 @@ class UpdateCustomer implements \JsonSerializable
     }
 
     /**
+     * Returns Branding Theme Id.
+     * The ID of the Branding Theme assigned to this customer as the customer's default Branding Theme.
+     * This customer-level Branding Theme is used when a subscription does not have its own subscription-
+     * level Branding Theme. Available only when Branding Themes are enabled for the site.
+     */
+    public function getBrandingThemeId(): ?int
+    {
+        if (count($this->brandingThemeId) == 0) {
+            return null;
+        }
+        return $this->brandingThemeId['value'];
+    }
+
+    /**
+     * Sets Branding Theme Id.
+     * The ID of the Branding Theme assigned to this customer as the customer's default Branding Theme.
+     * This customer-level Branding Theme is used when a subscription does not have its own subscription-
+     * level Branding Theme. Available only when Branding Themes are enabled for the site.
+     *
+     * @maps branding_theme_id
+     */
+    public function setBrandingThemeId(?int $brandingThemeId): void
+    {
+        $this->brandingThemeId['value'] = $brandingThemeId;
+    }
+
+    /**
+     * Unsets Branding Theme Id.
+     * The ID of the Branding Theme assigned to this customer as the customer's default Branding Theme.
+     * This customer-level Branding Theme is used when a subscription does not have its own subscription-
+     * level Branding Theme. Available only when Branding Themes are enabled for the site.
+     */
+    public function unsetBrandingThemeId(): void
+    {
+        $this->brandingThemeId = [];
+    }
+
+    /**
      * Converts the UpdateCustomer object to a human-readable string representation.
      *
      * @return string The string representation of the UpdateCustomer object.
@@ -542,10 +612,12 @@ class UpdateCustomer implements \JsonSerializable
                 'locale' => $this->locale,
                 'vatNumber' => $this->vatNumber,
                 'taxExempt' => $this->taxExempt,
+                'surcharging' => $this->surcharging,
                 'taxExemptReason' => $this->taxExemptReason,
                 'parentId' => $this->getParentId(),
                 'verified' => $this->getVerified(),
                 'salesforceId' => $this->getSalesforceId(),
+                'brandingThemeId' => $this->getBrandingThemeId(),
                 'additionalProperties' => $this->additionalProperties
             ]
         );
@@ -639,6 +711,9 @@ class UpdateCustomer implements \JsonSerializable
         if (isset($this->taxExempt)) {
             $json['tax_exempt']        = $this->taxExempt;
         }
+        if (isset($this->surcharging)) {
+            $json['surcharging']       = $this->surcharging;
+        }
         if (isset($this->taxExemptReason)) {
             $json['tax_exempt_reason'] = $this->taxExemptReason;
         }
@@ -650,6 +725,9 @@ class UpdateCustomer implements \JsonSerializable
         }
         if (!empty($this->salesforceId)) {
             $json['salesforce_id']     = $this->salesforceId['value'];
+        }
+        if (!empty($this->brandingThemeId)) {
+            $json['branding_theme_id'] = $this->brandingThemeId['value'];
         }
         $json = array_merge($json, $this->additionalProperties);
 

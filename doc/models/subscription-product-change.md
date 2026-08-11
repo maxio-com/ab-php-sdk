@@ -12,12 +12,14 @@
 | `previousProductId` | `int` | Required | - | getPreviousProductId(): int | setPreviousProductId(int previousProductId): void |
 | `newProductId` | `int` | Required | - | getNewProductId(): int | setNewProductId(int newProductId): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "previous_product_id": 126,
-  "new_product_id": 12
-}
+```php
+use AdvancedBillingLib\Models\Builders\SubscriptionProductChangeBuilder;
+
+$subscriptionProductChange = SubscriptionProductChangeBuilder::init(
+    104,
+    10
+)->build();
 ```
 

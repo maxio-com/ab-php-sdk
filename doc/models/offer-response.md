@@ -11,17 +11,22 @@
 |  --- | --- | --- | --- | --- | --- |
 | `offer` | [`?Offer`](../../doc/models/offer.md) | Optional | - | getOffer(): ?Offer | setOffer(?Offer offer): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "offer": {
-    "id": 28,
-    "site_id": 210,
-    "product_family_id": 224,
-    "product_id": 30,
-    "product_price_point_id": 150
-  }
-}
+```php
+use AdvancedBillingLib\Models\Builders\OfferResponseBuilder;
+use AdvancedBillingLib\Models\Builders\OfferBuilder;
+
+$offerResponse = OfferResponseBuilder::init()
+    ->offer(
+        OfferBuilder::init()
+            ->id(28)
+            ->siteId(210)
+            ->productFamilyId(224)
+            ->productId(30)
+            ->productPricePointId(150)
+            ->build()
+    )
+    ->build();
 ```
 

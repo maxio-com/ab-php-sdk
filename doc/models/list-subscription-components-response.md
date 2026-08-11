@@ -11,19 +11,23 @@
 |  --- | --- | --- | --- | --- | --- |
 | `subscriptionsComponents` | [`SubscriptionComponent[]`](../../doc/models/subscription-component.md) | Required | - | getSubscriptionsComponents(): array | setSubscriptionsComponents(array subscriptionsComponents): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "subscriptions_components": [
-    {
-      "id": 138,
-      "name": "name2",
-      "kind": "metered_component",
-      "unit_name": "unit_name4",
-      "enabled": false
-    }
-  ]
-}
+```php
+use AdvancedBillingLib\Models\Builders\ListSubscriptionComponentsResponseBuilder;
+use AdvancedBillingLib\Models\Builders\SubscriptionComponentBuilder;
+use AdvancedBillingLib\Models\ComponentKind;
+
+$listSubscriptionComponentsResponse = ListSubscriptionComponentsResponseBuilder::init(
+    [
+        SubscriptionComponentBuilder::init()
+            ->id(138)
+            ->name('name2')
+            ->kind(ComponentKind::METERED_COMPONENT)
+            ->unitName('unit_name4')
+            ->enabled(false)
+            ->build()
+    ]
+)->build();
 ```
 

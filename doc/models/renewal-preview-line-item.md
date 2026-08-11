@@ -24,15 +24,19 @@
 | `periodRangeStart` | `?string` | Optional | - | getPeriodRangeStart(): ?string | setPeriodRangeStart(?string periodRangeStart): void |
 | `periodRangeEnd` | `?string` | Optional | - | getPeriodRangeEnd(): ?string | setPeriodRangeEnd(?string periodRangeEnd): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "transaction_type": "charge",
-  "kind": "prepaid_usage_component",
-  "amount_in_cents": 154,
-  "memo": "memo0",
-  "discount_amount_in_cents": 214
-}
+```php
+use AdvancedBillingLib\Models\Builders\RenewalPreviewLineItemBuilder;
+use AdvancedBillingLib\Models\LineItemTransactionType;
+use AdvancedBillingLib\Models\LineItemKind;
+
+$renewalPreviewLineItem = RenewalPreviewLineItemBuilder::init()
+    ->transactionType(LineItemTransactionType::ADJUSTMENT)
+    ->kind(LineItemKind::PREPAID_USAGE_COMPONENT)
+    ->amountInCents(32)
+    ->memo('memo0')
+    ->discountAmountInCents(228)
+    ->build();
 ```
 

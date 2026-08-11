@@ -11,14 +11,18 @@
 |  --- | --- | --- | --- | --- | --- |
 | `codes` | `?(string[])` | Optional | - | getCodes(): ?array | setCodes(?array codes): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "codes": [
-    "codes0",
-    "codes1"
-  ]
-}
+```php
+use AdvancedBillingLib\Models\Builders\AddCouponsRequestBuilder;
+
+$addCouponsRequest = AddCouponsRequestBuilder::init()
+    ->codes(
+        [
+            'codes6',
+            'codes7'
+        ]
+    )
+    ->build();
 ```
 

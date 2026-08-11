@@ -11,15 +11,18 @@
 |  --- | --- | --- | --- | --- | --- |
 | `members` | `?(string[])` | Optional | - | getMembers(): ?array | setMembers(?array members): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "members": [
-    "members4",
-    "members5",
-    "members6"
-  ]
-}
+```php
+use AdvancedBillingLib\Models\Builders\SubscriptionGroupUpdateErrorBuilder;
+
+$subscriptionGroupUpdateError = SubscriptionGroupUpdateErrorBuilder::init()
+    ->members(
+        [
+            'members6',
+            'members7'
+        ]
+    )
+    ->build();
 ```
 

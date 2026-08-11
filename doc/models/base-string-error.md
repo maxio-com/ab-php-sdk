@@ -13,13 +13,18 @@ The error is base if it is not directly associated with a single attribute.
 |  --- | --- | --- | --- | --- | --- |
 | `base` | `?(string[])` | Optional | - | getBase(): ?array | setBase(?array base): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "base": [
-    "base3"
-  ]
-}
+```php
+use AdvancedBillingLib\Models\Builders\BaseStringErrorBuilder;
+
+$baseStringError = BaseStringErrorBuilder::init()
+    ->base(
+        [
+            'base5',
+            'base6'
+        ]
+    )
+    ->build();
 ```
 

@@ -11,17 +11,21 @@
 |  --- | --- | --- | --- | --- | --- |
 | `note` | [`SubscriptionNote`](../../doc/models/subscription-note.md) | Required | - | getNote(): SubscriptionNote | setNote(SubscriptionNote note): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "note": {
-    "id": 28,
-    "body": "body0",
-    "subscription_id": 138,
-    "created_at": "2016-03-13T12:52:32.123Z",
-    "updated_at": "2016-03-13T12:52:32.123Z"
-  }
-}
+```php
+use AdvancedBillingLib\Models\Builders\SubscriptionNoteResponseBuilder;
+use AdvancedBillingLib\Models\Builders\SubscriptionNoteBuilder;
+use AdvancedBillingLib\Utils\DateTimeHelper;
+
+$subscriptionNoteResponse = SubscriptionNoteResponseBuilder::init(
+    SubscriptionNoteBuilder::init()
+        ->id(28)
+        ->body('body0')
+        ->subscriptionId(138)
+        ->createdAt(DateTimeHelper::fromRfc3339DateTime('2016-03-13T12:52:32.123Z'))
+        ->updatedAt(DateTimeHelper::fromRfc3339DateTime('2016-03-13T12:52:32.123Z'))
+        ->build()
+)->build();
 ```
 

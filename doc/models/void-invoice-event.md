@@ -15,38 +15,48 @@
 | `eventType` | [`string(InvoiceEventType)`](../../doc/models/invoice-event-type.md) | Required | **Default**: `InvoiceEventType::VOID_INVOICE` | getEventType(): string | setEventType(string eventType): void |
 | `eventData` | [`VoidInvoiceEventData`](../../doc/models/void-invoice-event-data.md) | Required | Example schema for an `void_invoice` event | getEventData(): VoidInvoiceEventData | setEventData(VoidInvoiceEventData eventData): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "id": 16,
-  "timestamp": "2016-03-13T12:52:32.123Z",
-  "invoice": {
-    "issue_date": "2024-01-01",
-    "due_date": "2024-01-01",
-    "paid_date": "2024-01-01",
-    "public_url_expires_on": "2024-01-21",
-    "id": 166,
-    "uid": "uid6",
-    "site_id": 92,
-    "customer_id": 204,
-    "subscription_id": 20
-  },
-  "event_type": "void_invoice",
-  "event_data": {
-    "credit_note_attributes": {
-      "uid": "uid2",
-      "site_id": 72,
-      "customer_id": 184,
-      "subscription_id": 0,
-      "number": "number0"
-    },
-    "memo": "memo0",
-    "applied_amount": "applied_amount2",
-    "transaction_time": "2016-03-13T12:52:32.123Z",
-    "is_advance_invoice": false,
-    "reason": "reason2"
-  }
-}
+```php
+use AdvancedBillingLib\Models\Builders\VoidInvoiceEventBuilder;
+use AdvancedBillingLib\Utils\DateTimeHelper;
+use AdvancedBillingLib\Models\Builders\InvoiceBuilder;
+use AdvancedBillingLib\Models\InvoiceEventType;
+use AdvancedBillingLib\Models\Builders\VoidInvoiceEventDataBuilder;
+use AdvancedBillingLib\Models\Builders\CreditNoteBuilder;
+
+$voidInvoiceEvent = VoidInvoiceEventBuilder::init(
+    236,
+    DateTimeHelper::fromRfc3339DateTimeRequired('2016-03-13T12:52:32.123Z'),
+    InvoiceBuilder::init()
+        ->id(166)
+        ->uid('uid6')
+        ->siteId(92)
+        ->customerId(204)
+        ->subscriptionId(20)
+        ->issueDate(DateTimeHelper::fromSimpleDate('2024-01-01'))
+        ->dueDate(DateTimeHelper::fromSimpleDate('2024-01-01'))
+        ->paidDate(DateTimeHelper::fromSimpleDate('2024-01-01'))
+        ->publicUrlExpiresOn(DateTimeHelper::fromSimpleDate('2024-01-21'))
+        ->build(),
+    InvoiceEventType::VOID_INVOICE,
+    VoidInvoiceEventDataBuilder::init(
+        false,
+        'reason2'
+    )
+        ->creditNoteAttributes(
+            CreditNoteBuilder::init()
+                ->uid('uid2')
+                ->siteId(72)
+                ->customerId(184)
+                ->subscriptionId(0)
+                ->number('number0')
+                ->build()
+        )
+        ->memo('memo0')
+        ->appliedAmount('applied_amount2')
+        ->transactionTime(DateTimeHelper::fromRfc3339DateTime('2016-03-13T12:52:32.123Z'))
+        ->build()
+)->build();
 ```
 

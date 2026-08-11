@@ -12,18 +12,26 @@
 | `perPage` | `?(string[])` | Optional | - | getPerPage(): ?array | setPerPage(?array perPage): void |
 | `pricePoint` | `?(string[])` | Optional | - | getPricePoint(): ?array | setPricePoint(?array pricePoint): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "per_page": [
-    "per_page7",
-    "per_page8"
-  ],
-  "price_point": [
-    "price_point6",
-    "price_point7"
-  ]
-}
+```php
+use AdvancedBillingLib\Models\Builders\ErrorsBuilder;
+
+$errors = ErrorsBuilder::init()
+    ->perPage(
+        [
+            'per_page1',
+            'per_page2',
+            'per_page3'
+        ]
+    )
+    ->pricePoint(
+        [
+            'price_point0',
+            'price_point9',
+            'price_point8'
+        ]
+    )
+    ->build();
 ```
 

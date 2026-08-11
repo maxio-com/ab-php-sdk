@@ -12,12 +12,14 @@
 | `kind` | `?string` | Optional | - | getKind(): ?string | setKind(?string kind): void |
 | `message` | `?string` | Optional | - | getMessage(): ?string | setMessage(?string message): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "kind": "kind0",
-  "message": "message8"
-}
+```php
+use AdvancedBillingLib\Models\Builders\SubscriptionComponentAllocationErrorItemBuilder;
+
+$subscriptionComponentAllocationErrorItem = SubscriptionComponentAllocationErrorItemBuilder::init()
+    ->kind('kind6')
+    ->message('message8')
+    ->build();
 ```
 

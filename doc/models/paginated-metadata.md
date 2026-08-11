@@ -15,30 +15,29 @@
 | `perPage` | `?int` | Optional | - | getPerPage(): ?int | setPerPage(?int perPage): void |
 | `metadata` | [`?(Metadata[])`](../../doc/models/metadata.md) | Optional | - | getMetadata(): ?array | setMetadata(?array metadata): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "total_count": 26,
-  "current_page": 2,
-  "total_pages": 14,
-  "per_page": 20,
-  "metadata": [
-    {
-      "id": 50,
-      "value": "value8",
-      "resource_id": 134,
-      "name": "name6",
-      "deleted_at": "2016-03-13T12:52:32.123Z"
-    },
-    {
-      "id": 50,
-      "value": "value8",
-      "resource_id": 134,
-      "name": "name6",
-      "deleted_at": "2016-03-13T12:52:32.123Z"
-    }
-  ]
-}
+```php
+use AdvancedBillingLib\Models\Builders\PaginatedMetadataBuilder;
+use AdvancedBillingLib\Models\Builders\MetadataBuilder;
+use AdvancedBillingLib\Utils\DateTimeHelper;
+
+$paginatedMetadata = PaginatedMetadataBuilder::init()
+    ->totalCount(166)
+    ->currentPage(142)
+    ->totalPages(154)
+    ->perPage(136)
+    ->metadata(
+        [
+            MetadataBuilder::init()
+                ->id(50)
+                ->value('value8')
+                ->resourceId(134)
+                ->name('name6')
+                ->deletedAt(DateTimeHelper::fromRfc3339DateTime('2016-03-13T12:52:32.123Z'))
+                ->build()
+        ]
+    )
+    ->build();
 ```
 

@@ -15,3 +15,11 @@ The type of credit to be created when upgrading/downgrading. Defaults to the com
 | `PRORATED` |
 | `NONE` |
 
+## Example
+
+```php
+use AdvancedBillingLib\Models\CreditType;
+
+$creditType = CreditType::PRORATED;
+```
+

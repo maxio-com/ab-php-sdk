@@ -13,13 +13,15 @@
 | `eligibleAmount` | `?string` | Optional | - | getEligibleAmount(): ?string | setEligibleAmount(?string eligibleAmount): void |
 | `discountAmount` | `?string` | Optional | - | getDiscountAmount(): ?string | setDiscountAmount(?string discountAmount): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "uid": "uid8",
-  "eligible_amount": "eligible_amount0",
-  "discount_amount": "discount_amount8"
-}
+```php
+use AdvancedBillingLib\Models\Builders\InvoiceDiscountBreakoutBuilder;
+
+$invoiceDiscountBreakout = InvoiceDiscountBreakoutBuilder::init()
+    ->uid('uid0')
+    ->eligibleAmount('eligible_amount2')
+    ->discountAmount('discount_amount4')
+    ->build();
 ```
 

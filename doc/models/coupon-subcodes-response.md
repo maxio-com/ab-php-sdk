@@ -13,23 +13,28 @@
 | `duplicateCodes` | `?(string[])` | Optional | - | getDuplicateCodes(): ?array | setDuplicateCodes(?array duplicateCodes): void |
 | `invalidCodes` | `?(string[])` | Optional | - | getInvalidCodes(): ?array | setInvalidCodes(?array invalidCodes): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "created_codes": [
-    "created_codes1",
-    "created_codes2"
-  ],
-  "duplicate_codes": [
-    "duplicate_codes8",
-    "duplicate_codes7"
-  ],
-  "invalid_codes": [
-    "invalid_codes0",
-    "invalid_codes9",
-    "invalid_codes8"
-  ]
-}
+```php
+use AdvancedBillingLib\Models\Builders\CouponSubcodesResponseBuilder;
+
+$couponSubcodesResponse = CouponSubcodesResponseBuilder::init()
+    ->createdCodes(
+        [
+            'created_codes7'
+        ]
+    )
+    ->duplicateCodes(
+        [
+            'duplicate_codes8'
+        ]
+    )
+    ->invalidCodes(
+        [
+            'invalid_codes4',
+            'invalid_codes3'
+        ]
+    )
+    ->build();
 ```
 

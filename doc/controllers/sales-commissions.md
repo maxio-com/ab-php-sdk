@@ -25,7 +25,7 @@ The Sales Commission API differs from other Chargify API endpoints. This resourc
 
 Access to the Sales Commission API endpoints is available to users with financial access, where the seller has the Advanced Analytics component enabled. For further information on getting access to Advanced Analytics contact Maxio support.
 
-> Note: The request is at seller level, it means `<<subdomain>>` variable will be replaced by `app`
+> Note: The request is at seller level, it means `<<subdomain>>` variable will be replaced by `app`.
 
 ```php
 function listSalesCommissionSettings(array $options): array
@@ -109,7 +109,7 @@ try {
 
 # List Sales Reps
 
-Returns a sales rep list with details.
+Lists sales reps with details.
 
 ## Modified Authentication Process
 
@@ -117,7 +117,7 @@ The Sales Commission API differs from other Chargify API endpoints. This resourc
 
 Access to the Sales Commission API endpoints is available to users with financial access, where the seller has the Advanced Analytics component enabled. For further information on getting access to Advanced Analytics contact Maxio support.
 
-> Note: The request is at seller level, it means `<<subdomain>>` variable will be replaced by `app`
+> Note: The request is at seller level, it means `<<subdomain>>` variable will be replaced by `app`.
 
 ```php
 function listSalesReps(array $options): array
@@ -258,7 +258,7 @@ The Sales Commission API differs from other Chargify API endpoints. This resourc
 
 Access to the Sales Commission API endpoints is available to users with financial access, where the seller has the Advanced Analytics component enabled. For further information on getting access to Advanced Analytics contact Maxio support.
 
-> Note: The request is at seller level, it means `<<subdomain>>` variable will be replaced by `app`
+> Note: The request is at seller level, it means `<<subdomain>>` variable will be replaced by `app`.
 
 ```php
 function readSalesRep(

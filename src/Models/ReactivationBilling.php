@@ -14,7 +14,7 @@ use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 /**
- * These values are only applicable to subscriptions using calendar billing
+ * These values are only applicable to subscriptions using calendar billing.
  */
 class ReactivationBilling implements \JsonSerializable
 {
@@ -26,9 +26,9 @@ class ReactivationBilling implements \JsonSerializable
     /**
      * Returns Reactivation Charge.
      * You may choose how to handle the reactivation charge for that subscription: 1) `prorated` A prorated
-     * charge for the product price will be attempted for to complete the period 2) `immediate` A full-
-     * price charge for the product price will be attempted immediately 3) `delayed` A full-price charge
-     * for the product price will be attempted at the next renewal
+     * charge for the product price will be attempted to complete the period 2) `immediate` A full-price
+     * charge for the product price will be attempted immediately 3) `delayed` A full-price charge for the
+     * product price will be attempted at the next renewal.
      */
     public function getReactivationCharge(): ?string
     {
@@ -38,9 +38,9 @@ class ReactivationBilling implements \JsonSerializable
     /**
      * Sets Reactivation Charge.
      * You may choose how to handle the reactivation charge for that subscription: 1) `prorated` A prorated
-     * charge for the product price will be attempted for to complete the period 2) `immediate` A full-
-     * price charge for the product price will be attempted immediately 3) `delayed` A full-price charge
-     * for the product price will be attempted at the next renewal
+     * charge for the product price will be attempted to complete the period 2) `immediate` A full-price
+     * charge for the product price will be attempted immediately 3) `delayed` A full-price charge for the
+     * product price will be attempted at the next renewal.
      *
      * @maps reactivation_charge
      * @factory \AdvancedBillingLib\Models\ReactivationCharge::checkValue

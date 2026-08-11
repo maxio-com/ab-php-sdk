@@ -11,11 +11,14 @@
 |  --- | --- | --- | --- | --- | --- |
 | `automaticallyResumeAt` | `?DateTime` | Optional | - | getAutomaticallyResumeAt(): ?\DateTime | setAutomaticallyResumeAt(?\DateTime automaticallyResumeAt): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "automatically_resume_at": "2016-03-13T12:52:32.123Z"
-}
+```php
+use AdvancedBillingLib\Models\Builders\AutoResumeBuilder;
+use AdvancedBillingLib\Utils\DateTimeHelper;
+
+$autoResume = AutoResumeBuilder::init()
+    ->automaticallyResumeAt(DateTimeHelper::fromRfc3339DateTime('2016-03-13T12:52:32.123Z'))
+    ->build();
 ```
 

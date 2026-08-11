@@ -16,29 +16,41 @@
 | `price` | `?(string[])` | Optional | - | getPrice(): ?array | setPrice(?array price): void |
 | `priceInCents` | `?(string[])` | Optional | - | getPriceInCents(): ?array | setPriceInCents(?array priceInCents): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "price_point": "can't be blank",
-  "interval": [
-    "Recurring Interval: cannot be blank.",
-    "Recurring Interval: must be greater than or equal to 1."
-  ],
-  "interval_unit": [
-    "Interval unit: cannot be blank.",
-    "Interval unit: must be 'month' or 'day'."
-  ],
-  "name": [
-    "Name: cannot be blank."
-  ],
-  "price": [
-    "Price: is not a number.",
-    "Price: must be greater than or equal to 0."
-  ],
-  "price_in_cents": [
-    "Price in cents: cannot be blank."
-  ]
-}
+```php
+use AdvancedBillingLib\Models\Builders\ProductPricePointErrorsBuilder;
+
+$productPricePointErrors = ProductPricePointErrorsBuilder::init()
+    ->pricePoint('can\'t be blank')
+    ->interval(
+        [
+            'Recurring Interval: cannot be blank.',
+            'Recurring Interval: must be greater than or equal to 1.'
+        ]
+    )
+    ->intervalUnit(
+        [
+            'Interval unit: cannot be blank.',
+            'Interval unit: must be \'month\' or \'day\'.'
+        ]
+    )
+    ->name(
+        [
+            'Name: cannot be blank.'
+        ]
+    )
+    ->price(
+        [
+            'Price: is not a number.',
+            'Price: must be greater than or equal to 0.'
+        ]
+    )
+    ->priceInCents(
+        [
+            'Price in cents: cannot be blank.'
+        ]
+    )
+    ->build();
 ```
 

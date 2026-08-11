@@ -19,15 +19,18 @@ Warning: When updating a metafield's scope attribute, all scope attributes must 
 | `publicEdit` | [`?string(IncludeOption)`](../../doc/models/include-option.md) | Optional | Include (1) or exclude (0) metafields used in [Embeddable Components](page:development-tools/embeddable-components/overview) from being editable by your ecosystem. | getPublicEdit(): ?string | setPublicEdit(?string publicEdit): void |
 | `hosted` | `?(string[])` | Optional | - | getHosted(): ?array | setHosted(?array hosted): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "csv": "0",
-  "invoices": "0",
-  "statements": "0",
-  "portal": "0",
-  "public_show": "0"
-}
+```php
+use AdvancedBillingLib\Models\Builders\MetafieldScopeBuilder;
+use AdvancedBillingLib\Models\IncludeOption;
+
+$metafieldScope = MetafieldScopeBuilder::init()
+    ->csv(IncludeOption::EXCLUDE)
+    ->invoices(IncludeOption::EXCLUDE)
+    ->statements(IncludeOption::EXCLUDE)
+    ->portal(IncludeOption::EXCLUDE)
+    ->publicShow(IncludeOption::EXCLUDE)
+    ->build();
 ```
 

@@ -11,15 +11,18 @@
 |  --- | --- | --- | --- | --- | --- |
 | `reasonCode` | [`UpdateReasonCode`](../../doc/models/update-reason-code.md) | Required | - | getReasonCode(): UpdateReasonCode | setReasonCode(UpdateReasonCode reasonCode): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "reason_code": {
-    "code": "code4",
-    "description": "description6",
-    "position": 14
-  }
-}
+```php
+use AdvancedBillingLib\Models\Builders\UpdateReasonCodeRequestBuilder;
+use AdvancedBillingLib\Models\Builders\UpdateReasonCodeBuilder;
+
+$updateReasonCodeRequest = UpdateReasonCodeRequestBuilder::init(
+    UpdateReasonCodeBuilder::init()
+        ->code('code4')
+        ->description('description6')
+        ->position(14)
+        ->build()
+)->build();
 ```
 

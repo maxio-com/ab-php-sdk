@@ -11,26 +11,38 @@
 |  --- | --- | --- | --- | --- | --- |
 | `invoices` | [`?(Invoice[])`](../../doc/models/invoice.md) | Optional | - | getInvoices(): ?array | setInvoices(?array invoices): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "invoices": [
-    {
-      "id": 196,
-      "uid": "uid6",
-      "site_id": 122,
-      "customer_id": 234,
-      "subscription_id": 50
-    },
-    {
-      "id": 196,
-      "uid": "uid6",
-      "site_id": 122,
-      "customer_id": 234,
-      "subscription_id": 50
-    }
-  ]
-}
+```php
+use AdvancedBillingLib\Models\Builders\ConsolidatedInvoiceBuilder;
+use AdvancedBillingLib\Models\Builders\InvoiceBuilder;
+
+$consolidatedInvoice = ConsolidatedInvoiceBuilder::init()
+    ->invoices(
+        [
+            InvoiceBuilder::init()
+                ->id(196)
+                ->uid('uid6')
+                ->siteId(122)
+                ->customerId(234)
+                ->subscriptionId(50)
+                ->build(),
+            InvoiceBuilder::init()
+                ->id(196)
+                ->uid('uid6')
+                ->siteId(122)
+                ->customerId(234)
+                ->subscriptionId(50)
+                ->build(),
+            InvoiceBuilder::init()
+                ->id(196)
+                ->uid('uid6')
+                ->siteId(122)
+                ->customerId(234)
+                ->subscriptionId(50)
+                ->build()
+        ]
+    )
+    ->build();
 ```
 

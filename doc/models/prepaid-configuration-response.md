@@ -11,17 +11,20 @@
 |  --- | --- | --- | --- | --- | --- |
 | `prepaidConfiguration` | [`PrepaidConfiguration`](../../doc/models/prepaid-configuration.md) | Required | - | getPrepaidConfiguration(): PrepaidConfiguration | setPrepaidConfiguration(PrepaidConfiguration prepaidConfiguration): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "prepaid_configuration": {
-    "id": 142,
-    "initial_funding_amount_in_cents": 74,
-    "replenish_to_amount_in_cents": 76,
-    "auto_replenish": false,
-    "replenish_threshold_amount_in_cents": 20
-  }
-}
+```php
+use AdvancedBillingLib\Models\Builders\PrepaidConfigurationResponseBuilder;
+use AdvancedBillingLib\Models\Builders\PrepaidConfigurationBuilder;
+
+$prepaidConfigurationResponse = PrepaidConfigurationResponseBuilder::init(
+    PrepaidConfigurationBuilder::init()
+        ->id(142)
+        ->initialFundingAmountInCents(74)
+        ->replenishToAmountInCents(76)
+        ->autoReplenish(false)
+        ->replenishThresholdAmountInCents(20)
+        ->build()
+)->build();
 ```
 

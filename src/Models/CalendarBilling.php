@@ -14,7 +14,7 @@ use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 /**
- * (Optional). Cannot be used when also specifying next_billing_at
+ * (Optional). Cannot be used when also specifying next_billing_at.
  */
 class CalendarBilling implements \JsonSerializable
 {

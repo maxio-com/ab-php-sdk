@@ -17,15 +17,17 @@
 | `salesRepId` | `?int` | Optional | - | getSalesRepId(): ?int | setSalesRepId(?int salesRepId): void |
 | `salesRepName` | `?string` | Optional | - | getSalesRepName(): ?string | setSalesRepName(?string salesRepName): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "customer_name": "customer_name8",
-  "subscription_id": 200,
-  "site_link": "site_link4",
-  "site_name": "site_name8",
-  "subscription_mrr": "subscription_mrr6"
-}
+```php
+use AdvancedBillingLib\Models\Builders\SaleRepSettingsBuilder;
+
+$saleRepSettings = SaleRepSettingsBuilder::init()
+    ->customerName('customer_name6')
+    ->subscriptionId(202)
+    ->siteLink('site_link2')
+    ->siteName('site_name6')
+    ->subscriptionMrr('subscription_mrr4')
+    ->build();
 ```
 

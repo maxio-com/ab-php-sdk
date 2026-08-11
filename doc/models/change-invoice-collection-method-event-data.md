@@ -14,12 +14,14 @@ Example schema for an `change_invoice_collection_method` event
 | `fromCollectionMethod` | `string` | Required | The previous collection method of the invoice. | getFromCollectionMethod(): string | setFromCollectionMethod(string fromCollectionMethod): void |
 | `toCollectionMethod` | `string` | Required | The new collection method of the invoice. | getToCollectionMethod(): string | setToCollectionMethod(string toCollectionMethod): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "from_collection_method": "from_collection_method4",
-  "to_collection_method": "to_collection_method2"
-}
+```php
+use AdvancedBillingLib\Models\Builders\ChangeInvoiceCollectionMethodEventDataBuilder;
+
+$changeInvoiceCollectionMethodEventData = ChangeInvoiceCollectionMethodEventDataBuilder::init(
+    'from_collection_method8',
+    'to_collection_method4'
+)->build();
 ```
 

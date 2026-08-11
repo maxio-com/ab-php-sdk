@@ -11,16 +11,20 @@
 |  --- | --- | --- | --- | --- | --- |
 | `prepayment` | [`SubscriptionGroupPrepayment`](../../doc/models/subscription-group-prepayment.md) | Required | - | getPrepayment(): SubscriptionGroupPrepayment | setPrepayment(SubscriptionGroupPrepayment prepayment): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "prepayment": {
-    "amount": 136,
-    "details": "details8",
-    "memo": "memo2",
-    "method": "paypal_account"
-  }
-}
+```php
+use AdvancedBillingLib\Models\Builders\SubscriptionGroupPrepaymentRequestBuilder;
+use AdvancedBillingLib\Models\Builders\SubscriptionGroupPrepaymentBuilder;
+use AdvancedBillingLib\Models\SubscriptionGroupPrepaymentMethod;
+
+$subscriptionGroupPrepaymentRequest = SubscriptionGroupPrepaymentRequestBuilder::init(
+    SubscriptionGroupPrepaymentBuilder::init(
+        136,
+        'details8',
+        'memo2',
+        SubscriptionGroupPrepaymentMethod::PAYPAL_ACCOUNT
+    )->build()
+)->build();
 ```
 

@@ -12,3 +12,11 @@
 | `TAX` |
 | `AVALARA` |
 
+## Example
+
+```php
+use AdvancedBillingLib\Models\ProformaInvoiceTaxSourceType;
+
+$proformaInvoiceTaxSourceType = ProformaInvoiceTaxSourceType::TAX;
+```
+

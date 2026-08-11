@@ -11,11 +11,13 @@
 |  --- | --- | --- | --- | --- | --- |
 | `customer` | `?string` | Optional | - | getCustomer(): ?string | setCustomer(?string customer): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "customer": "customer8"
-}
+```php
+use AdvancedBillingLib\Models\Builders\CustomerErrorBuilder;
+
+$customerError = CustomerErrorBuilder::init()
+    ->customer('customer8')
+    ->build();
 ```
 

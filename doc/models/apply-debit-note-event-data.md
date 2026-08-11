@@ -18,16 +18,20 @@ Example schema for an `apply_debit_note` event
 | `memo` | `?string` | Optional | The debit note memo. | getMemo(): ?string | setMemo(?string memo): void |
 | `transactionTime` | `?DateTime` | Optional | The time the debit note was applied, in ISO 8601 format, i.e. "2019-06-07T17:20:06Z" | getTransactionTime(): ?\DateTime | setTransactionTime(?\DateTime transactionTime): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "debit_note_number": "debit_note_number0",
-  "debit_note_uid": "debit_note_uid6",
-  "original_amount": "original_amount4",
-  "applied_amount": "applied_amount8",
-  "memo": "memo4",
-  "transaction_time": "2016-03-13T12:52:32.123Z"
-}
+```php
+use AdvancedBillingLib\Models\Builders\ApplyDebitNoteEventDataBuilder;
+use AdvancedBillingLib\Utils\DateTimeHelper;
+
+$applyDebitNoteEventData = ApplyDebitNoteEventDataBuilder::init(
+    'debit_note_number8',
+    'debit_note_uid4',
+    'original_amount2',
+    'applied_amount0'
+)
+    ->memo('memo2')
+    ->transactionTime(DateTimeHelper::fromRfc3339DateTime('2016-03-13T12:52:32.123Z'))
+    ->build();
 ```
 

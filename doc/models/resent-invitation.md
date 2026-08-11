@@ -16,16 +16,19 @@
 | `lastInviteSentAt` | `?DateTime` | Optional | - | getLastInviteSentAt(): ?\DateTime | setLastInviteSentAt(?\DateTime lastInviteSentAt): void |
 | `lastInviteAcceptedAt` | `?DateTime` | Optional | - | getLastInviteAcceptedAt(): ?\DateTime | setLastInviteAcceptedAt(?\DateTime lastInviteAcceptedAt): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "last_invite_sent_at": "01/01/2024 04:30:00",
-  "last_invite_accepted_at": "01/01/2024 04:35:00",
-  "last_sent_at": "last_sent_at8",
-  "last_accepted_at": "last_accepted_at8",
-  "send_invite_link_text": "send_invite_link_text6",
-  "uninvited_count": 6
-}
+```php
+use AdvancedBillingLib\Models\Builders\ResentInvitationBuilder;
+use AdvancedBillingLib\Utils\DateTimeHelper;
+
+$resentInvitation = ResentInvitationBuilder::init()
+    ->lastSentAt('last_sent_at0')
+    ->lastAcceptedAt('last_accepted_at0')
+    ->sendInviteLinkText('send_invite_link_text8')
+    ->uninvitedCount(178)
+    ->lastInviteSentAt(DateTimeHelper::fromRfc3339DateTime('2024-01-01T04:30:00+00:00'))
+    ->lastInviteAcceptedAt(DateTimeHelper::fromRfc3339DateTime('2024-01-01T04:35:00+00:00'))
+    ->build();
 ```
 

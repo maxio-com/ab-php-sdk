@@ -18,15 +18,17 @@
 | `lastFour` | `?string` | Optional | - | getLastFour(): ?string | setLastFour(?string lastFour): void |
 | `maskedCardNumber` | `?string` | Optional | - | getMaskedCardNumber(): ?string | setMaskedCardNumber(?string maskedCardNumber): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "details": "details8",
-  "kind": "kind6",
-  "memo": "memo2",
-  "type": "type8",
-  "card_brand": "card_brand8"
-}
+```php
+use AdvancedBillingLib\Models\Builders\InvoicePaymentMethodBuilder;
+
+$invoicePaymentMethod = InvoicePaymentMethodBuilder::init()
+    ->details('details2')
+    ->kind('kind0')
+    ->memo('memo6')
+    ->type('type8')
+    ->cardBrand('card_brand4')
+    ->build();
 ```
 

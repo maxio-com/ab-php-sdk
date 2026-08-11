@@ -58,8 +58,8 @@ class InsightsController extends BaseController
      * @deprecated
      *
      * @param \DateTime|null $atTime submit a timestamp in ISO8601 format to request MRR for a
-     *        historic time
-     * @param int|null $subscriptionId submit the id of a subscription in order to limit results
+     *        historic time.
+     * @param int|null $subscriptionId submit the id of a subscription in order to limit results.
      *
      * @return MRRResponse Response from the API call
      *
@@ -142,8 +142,7 @@ class InsightsController extends BaseController
     }
 
     /**
-     * This endpoint returns your site's current MRR, including plan and usage breakouts split per
-     * subscription.
+     * Lists your site's current MRR, including plan and usage breakouts split per subscription.
      *
      * @deprecated
      *

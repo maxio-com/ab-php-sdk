@@ -14,7 +14,9 @@
 
 ## Example
 
-```
-created_at
+```php
+use AdvancedBillingLib\Models\ListPrepaymentDateField;
+
+$listPrepaymentDateField = ListPrepaymentDateField::CREATED_AT;
 ```
 

@@ -15,15 +15,18 @@
 | `name` | `?string` | Optional | - | getName(): ?string | setName(?string name): void |
 | `handle` | `?string` | Optional | - | getHandle(): ?string | setHandle(?string handle): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "id": 180,
-  "item_type": "Component",
-  "item_id": 184,
-  "name": "name4",
-  "handle": "handle0"
-}
+```php
+use AdvancedBillingLib\Models\Builders\CouponRestrictionBuilder;
+use AdvancedBillingLib\Models\RestrictionType;
+
+$couponRestriction = CouponRestrictionBuilder::init()
+    ->id(66)
+    ->itemType(RestrictionType::COMPONENT)
+    ->itemId(214)
+    ->name('name0')
+    ->handle('handle6')
+    ->build();
 ```
 

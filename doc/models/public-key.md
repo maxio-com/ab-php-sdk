@@ -13,13 +13,16 @@
 | `requiresSecurityToken` | `?bool` | Optional | - | getRequiresSecurityToken(): ?bool | setRequiresSecurityToken(?bool requiresSecurityToken): void |
 | `createdAt` | `?DateTime` | Optional | - | getCreatedAt(): ?\DateTime | setCreatedAt(?\DateTime createdAt): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "public_key": "public_key8",
-  "requires_security_token": false,
-  "created_at": "2016-03-13T12:52:32.123Z"
-}
+```php
+use AdvancedBillingLib\Models\Builders\PublicKeyBuilder;
+use AdvancedBillingLib\Utils\DateTimeHelper;
+
+$publicKey = PublicKeyBuilder::init()
+    ->publicKey('public_key2')
+    ->requiresSecurityToken(false)
+    ->createdAt(DateTimeHelper::fromRfc3339DateTime('2016-03-13T12:52:32.123Z'))
+    ->build();
 ```
 

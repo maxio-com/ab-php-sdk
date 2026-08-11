@@ -11,11 +11,11 @@
 |  --- | --- | --- | --- | --- | --- |
 | `productPricePointId` | `string` | Required, Constant | Passed as a parameter to list methods to return only non null values.<br><br>**Value**: `'not_null'` | getProductPricePointId(): string | setProductPricePointId(string productPricePointId): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "product_price_point_id": "not_null"
-}
+```php
+use AdvancedBillingLib\Models\Builders\PrepaidProductPricePointFilterBuilder;
+
+$prepaidProductPricePointFilter = PrepaidProductPricePointFilterBuilder::init()->build();
 ```
 

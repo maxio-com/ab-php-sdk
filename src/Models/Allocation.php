@@ -143,7 +143,7 @@ class Allocation implements \JsonSerializable
 
     /**
      * Returns Allocation Id.
-     * The allocation unique id
+     * The allocation unique ID
      */
     public function getAllocationId(): ?int
     {
@@ -152,7 +152,7 @@ class Allocation implements \JsonSerializable
 
     /**
      * Sets Allocation Id.
-     * The allocation unique id
+     * The allocation unique ID
      *
      * @maps allocation_id
      */
@@ -164,7 +164,7 @@ class Allocation implements \JsonSerializable
     /**
      * Returns Component Id.
      * The integer component ID for the allocation. This references a component that you have created in
-     * your Product setup
+     * your Product setup.
      */
     public function getComponentId(): ?int
     {
@@ -174,7 +174,7 @@ class Allocation implements \JsonSerializable
     /**
      * Sets Component Id.
      * The integer component ID for the allocation. This references a component that you have created in
-     * your Product setup
+     * your Product setup.
      *
      * @maps component_id
      */
@@ -185,8 +185,7 @@ class Allocation implements \JsonSerializable
 
     /**
      * Returns Component Handle.
-     * The handle of the component. This references a component that you have created in your Product
-     * setup
+     * The handle of the component. This references a component that you have created in your Product setup.
      */
     public function getComponentHandle(): ?string
     {
@@ -198,8 +197,7 @@ class Allocation implements \JsonSerializable
 
     /**
      * Sets Component Handle.
-     * The handle of the component. This references a component that you have created in your Product
-     * setup
+     * The handle of the component. This references a component that you have created in your Product setup.
      *
      * @maps component_handle
      */
@@ -210,8 +208,7 @@ class Allocation implements \JsonSerializable
 
     /**
      * Unsets Component Handle.
-     * The handle of the component. This references a component that you have created in your Product
-     * setup
+     * The handle of the component. This references a component that you have created in your Product setup.
      */
     public function unsetComponentHandle(): void
     {
@@ -220,7 +217,7 @@ class Allocation implements \JsonSerializable
 
     /**
      * Returns Subscription Id.
-     * The integer subscription ID for the allocation. This references a unique subscription in your Site
+     * The integer subscription ID for the allocation. This references a unique subscription in your Site.
      */
     public function getSubscriptionId(): ?int
     {
@@ -229,7 +226,7 @@ class Allocation implements \JsonSerializable
 
     /**
      * Sets Subscription Id.
-     * The integer subscription ID for the allocation. This references a unique subscription in your Site
+     * The integer subscription ID for the allocation. This references a unique subscription in your Site.
      *
      * @maps subscription_id
      */
@@ -240,7 +237,7 @@ class Allocation implements \JsonSerializable
 
     /**
      * Returns Quantity.
-     * The allocated quantity set in to effect by the allocation. String for components supporting
+     * The allocated quantity set into effect by the allocation. String for components supporting
      * fractional quantities
      *
      * @return int|string|null
@@ -252,7 +249,7 @@ class Allocation implements \JsonSerializable
 
     /**
      * Sets Quantity.
-     * The allocated quantity set in to effect by the allocation. String for components supporting
+     * The allocated quantity set into effect by the allocation. String for components supporting
      * fractional quantities
      *
      * @maps quantity
@@ -326,7 +323,8 @@ class Allocation implements \JsonSerializable
 
     /**
      * Returns Timestamp.
-     * The time that the allocation was recorded, in format and UTC timezone, i.e. 2012-11-20T22:00:37Z
+     * The time that the allocation was recorded, in ISO 8601 format and UTC timezone, e.g., 2012-11-20T22:
+     * 00:37Z
      */
     public function getTimestamp(): ?\DateTime
     {
@@ -335,7 +333,8 @@ class Allocation implements \JsonSerializable
 
     /**
      * Sets Timestamp.
-     * The time that the allocation was recorded, in format and UTC timezone, i.e. 2012-11-20T22:00:37Z
+     * The time that the allocation was recorded, in ISO 8601 format and UTC timezone, e.g., 2012-11-20T22:
+     * 00:37Z
      *
      * @maps timestamp
      * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
@@ -466,7 +465,7 @@ class Allocation implements \JsonSerializable
 
     /**
      * Returns Interval.
-     * The numerical interval. i.e. an interval of ‘30’ coupled with an interval_unit of day would mean
+     * The numerical interval. e.g., an interval of ‘30’ coupled with an interval_unit of day would mean
      * this component price point would renew every 30 days. This property is only available for sites with
      * Multifrequency enabled.
      */
@@ -477,7 +476,7 @@ class Allocation implements \JsonSerializable
 
     /**
      * Sets Interval.
-     * The numerical interval. i.e. an interval of ‘30’ coupled with an interval_unit of day would mean
+     * The numerical interval. e.g., an interval of ‘30’ coupled with an interval_unit of day would mean
      * this component price point would renew every 30 days. This property is only available for sites with
      * Multifrequency enabled.
      *

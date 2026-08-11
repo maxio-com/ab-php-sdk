@@ -12,54 +12,68 @@
 | `currentBillingManifest` | [`?BillingManifest`](../../doc/models/billing-manifest.md) | Optional | - | getCurrentBillingManifest(): ?BillingManifest | setCurrentBillingManifest(?BillingManifest currentBillingManifest): void |
 | `nextBillingManifest` | [`?BillingManifest`](../../doc/models/billing-manifest.md) | Optional | - | getNextBillingManifest(): ?BillingManifest | setNextBillingManifest(?BillingManifest nextBillingManifest): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "current_billing_manifest": {
-    "line_items": [
-      {
-        "transaction_type": "credit",
-        "kind": "component",
-        "amount_in_cents": 24,
-        "memo": "memo2",
-        "discount_amount_in_cents": 172
-      }
-    ],
-    "total_in_cents": 38,
-    "total_discount_in_cents": 24,
-    "total_tax_in_cents": 18,
-    "subtotal_in_cents": 150
-  },
-  "next_billing_manifest": {
-    "line_items": [
-      {
-        "transaction_type": "credit",
-        "kind": "component",
-        "amount_in_cents": 24,
-        "memo": "memo2",
-        "discount_amount_in_cents": 172
-      },
-      {
-        "transaction_type": "credit",
-        "kind": "component",
-        "amount_in_cents": 24,
-        "memo": "memo2",
-        "discount_amount_in_cents": 172
-      },
-      {
-        "transaction_type": "credit",
-        "kind": "component",
-        "amount_in_cents": 24,
-        "memo": "memo2",
-        "discount_amount_in_cents": 172
-      }
-    ],
-    "total_in_cents": 62,
-    "total_discount_in_cents": 208,
-    "total_tax_in_cents": 42,
-    "subtotal_in_cents": 174
-  }
-}
+```php
+use AdvancedBillingLib\Models\Builders\SubscriptionPreviewBuilder;
+use AdvancedBillingLib\Models\Builders\BillingManifestBuilder;
+use AdvancedBillingLib\Models\Builders\BillingManifestItemBuilder;
+use AdvancedBillingLib\Models\LineItemTransactionType;
+use AdvancedBillingLib\Models\BillingManifestLineItemKind;
+
+$subscriptionPreview = SubscriptionPreviewBuilder::init()
+    ->currentBillingManifest(
+        BillingManifestBuilder::init()
+            ->lineItems(
+                [
+                    BillingManifestItemBuilder::init()
+                        ->transactionType(LineItemTransactionType::CREDIT)
+                        ->kind(BillingManifestLineItemKind::COMPONENT)
+                        ->amountInCents(24)
+                        ->memo('memo2')
+                        ->discountAmountInCents(172)
+                        ->build()
+                ]
+            )
+            ->totalInCents(38)
+            ->totalDiscountInCents(24)
+            ->totalTaxInCents(18)
+            ->subtotalInCents(150)
+            ->build()
+    )
+    ->nextBillingManifest(
+        BillingManifestBuilder::init()
+            ->lineItems(
+                [
+                    BillingManifestItemBuilder::init()
+                        ->transactionType(LineItemTransactionType::CREDIT)
+                        ->kind(BillingManifestLineItemKind::COMPONENT)
+                        ->amountInCents(24)
+                        ->memo('memo2')
+                        ->discountAmountInCents(172)
+                        ->build(),
+                    BillingManifestItemBuilder::init()
+                        ->transactionType(LineItemTransactionType::CREDIT)
+                        ->kind(BillingManifestLineItemKind::COMPONENT)
+                        ->amountInCents(24)
+                        ->memo('memo2')
+                        ->discountAmountInCents(172)
+                        ->build(),
+                    BillingManifestItemBuilder::init()
+                        ->transactionType(LineItemTransactionType::CREDIT)
+                        ->kind(BillingManifestLineItemKind::COMPONENT)
+                        ->amountInCents(24)
+                        ->memo('memo2')
+                        ->discountAmountInCents(172)
+                        ->build()
+                ]
+            )
+            ->totalInCents(62)
+            ->totalDiscountInCents(208)
+            ->totalTaxInCents(42)
+            ->subtotalInCents(174)
+            ->build()
+    )
+    ->build();
 ```
 

@@ -65,7 +65,7 @@ class ScheduledRenewalComponentCustomPrice implements \JsonSerializable
 
     /**
      * Returns Pricing Scheme.
-     * Omit for On/Off components
+     * Omit for On/Off components.
      */
     public function getPricingScheme(): string
     {
@@ -74,7 +74,7 @@ class ScheduledRenewalComponentCustomPrice implements \JsonSerializable
 
     /**
      * Sets Pricing Scheme.
-     * Omit for On/Off components
+     * Omit for On/Off components.
      *
      * @required
      * @maps pricing_scheme

@@ -19,7 +19,9 @@ One of the following: Business Software, Consumer Software, Digital Services, Ph
 
 ## Example
 
-```
-Business Software
+```php
+use AdvancedBillingLib\Models\ItemCategory;
+
+$itemCategory = ItemCategory::OTHER;
 ```
 

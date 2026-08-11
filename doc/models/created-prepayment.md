@@ -17,15 +17,18 @@
 | `startingBalanceInCents` | `?int` | Optional | **Constraints**: `>= 0` | getStartingBalanceInCents(): ?int | setStartingBalanceInCents(?int startingBalanceInCents): void |
 | `endingBalanceInCents` | `?int` | Optional | - | getEndingBalanceInCents(): ?int | setEndingBalanceInCents(?int endingBalanceInCents): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "id": 110,
-  "subscription_id": 220,
-  "amount_in_cents": 196,
-  "memo": "memo6",
-  "created_at": "2016-03-13T12:52:32.123Z"
-}
+```php
+use AdvancedBillingLib\Models\Builders\CreatedPrepaymentBuilder;
+use AdvancedBillingLib\Utils\DateTimeHelper;
+
+$createdPrepayment = CreatedPrepaymentBuilder::init()
+    ->id(186)
+    ->subscriptionId(40)
+    ->amountInCents(240)
+    ->memo('memo6')
+    ->createdAt(DateTimeHelper::fromRfc3339DateTime('2016-03-13T12:52:32.123Z'))
+    ->build();
 ```
 

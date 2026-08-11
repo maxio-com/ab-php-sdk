@@ -42,8 +42,19 @@ class ComponentsController extends BaseController
      * the start of every billing period. If you want to bill for a quantity of something that does not
      * change unless you change it, then you want quantity components, instead.
      *
+     * #### Hybrid Pricing
+     * A `volume`, `tiered`, or `stairstep` metered component can combine its primary pricing with a
+     * secondary pricing model (the `overage_pricing` parameter) so both bill as a single invoice line item
+     * instead of two. This does not apply to metered components configured for event-based billing (metric,
+     * meter, or formula). See [Hybrid Pricing](page:introduction/basic-concepts/hybrid-pricing) for
+     * requirements and configuration details.
+     *
      * For more information on components, see our documentation [here](https://maxio.zendesk.com/hc/en-
      * us/articles/24261141522189-Components-Overview).
+     *
+     * If you have the new [Catalog experience](page:help/announcements/2026-announcements#new-catalog-
+     * experience-and-terminology) enabled, taxable components must include a non-blank `tax_code`. Sending
+     * `"tax_code": ""` returns `422`.
      *
      * @param string $productFamilyId Either the product family's id or its handle prefixed with
      *        `handle:`
@@ -100,8 +111,18 @@ class ComponentsController extends BaseController
      * The allocated quantity for one-time quantity-based components immediately gets reset back to zero
      * after the allocation is made.
      *
+     * #### Hybrid Pricing
+     * A `volume`, `tiered`, or `stairstep` component can combine its primary pricing with a secondary
+     * pricing model (the `overage_pricing` parameter) so both bill as a single invoice line item instead
+     * of two. See [Hybrid Pricing](page:introduction/basic-concepts/hybrid-pricing) for requirements and
+     * configuration details.
+     *
      * For more information on components, see our documentation [here](https://maxio.zendesk.com/hc/en-
      * us/articles/24261141522189-Components-Overview).
+     *
+     * If you have the new [Catalog experience](page:help/announcements/2026-announcements#new-catalog-
+     * experience-and-terminology) enabled, taxable components must include a non-blank `tax_code`. Sending
+     * `"tax_code": ""` returns `422`.
      *
      * @param string $productFamilyId Either the product family's id or its handle prefixed with
      *        `handle:`
@@ -149,6 +170,10 @@ class ComponentsController extends BaseController
      *
      * For more information on components, see our documentation [here](https://maxio.zendesk.com/hc/en-
      * us/articles/24261141522189-Components-Overview).
+     *
+     * If you have the new [Catalog experience](page:help/announcements/2026-announcements#new-catalog-
+     * experience-and-terminology) enabled, taxable components must include a non-blank `tax_code`. Sending
+     * `"tax_code": ""` returns `422`.
      *
      * @param string $productFamilyId Either the product family's id or its handle prefixed with
      *        `handle:`
@@ -198,6 +223,10 @@ class ComponentsController extends BaseController
      *
      * For more information on components, see our documentation [here](https://maxio.zendesk.com/hc/en-
      * us/articles/24261141522189-Components-Overview).
+     *
+     * If you have the new [Catalog experience](page:help/announcements/2026-announcements#new-catalog-
+     * experience-and-terminology) enabled, taxable components must include a non-blank `tax_code`. Sending
+     * `"tax_code": ""` returns `422`.
      *
      * @param string $productFamilyId Either the product family's id or its handle prefixed with
      *        `handle:`
@@ -251,6 +280,10 @@ class ComponentsController extends BaseController
      *
      * For more information on components, see our documentation [here](https://maxio.zendesk.com/hc/en-
      * us/articles/24261141522189-Components-Overview).
+     *
+     * If you have the new [Catalog experience](page:help/announcements/2026-announcements#new-catalog-
+     * experience-and-terminology) enabled, taxable components must include a non-blank `tax_code`. Sending
+     * `"tax_code": ""` returns `422`.
      *
      * @param string $productFamilyId Either the product family's id or its handle prefixed with
      *        `handle:`
@@ -347,6 +380,10 @@ class ComponentsController extends BaseController
      *
      * You may read the component by either the component's id or handle. When using the handle, it must be
      * prefixed with `handle:`.
+     *
+     * If you have the new [Catalog experience](page:help/announcements/2026-announcements#new-catalog-
+     * experience-and-terminology) enabled, taxable components must include a non-blank `tax_code`. Sending
+     * `"tax_code": ""` returns `422`.
      *
      * @param int $productFamilyId The Advanced Billing id of the product family to which the
      *        component belongs
@@ -463,6 +500,10 @@ class ComponentsController extends BaseController
      *
      * You may read the component by either the component's id or handle. When using the handle, it must be
      * prefixed with `handle:`.
+     *
+     * If you have the new [Catalog experience](page:help/announcements/2026-announcements#new-catalog-
+     * experience-and-terminology) enabled, taxable components must include a non-blank `tax_code`. Sending
+     * `"tax_code": ""` returns `422`.
      *
      * @param string $componentId The id or handle of the component
      * @param UpdateComponentRequest|null $body

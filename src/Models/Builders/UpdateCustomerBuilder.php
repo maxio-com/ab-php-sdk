@@ -215,6 +215,17 @@ class UpdateCustomerBuilder
     }
 
     /**
+     * Sets surcharging field.
+     *
+     * @param bool|null $value
+     */
+    public function surcharging(?bool $value): self
+    {
+        $this->instance->setSurcharging($value);
+        return $this;
+    }
+
+    /**
      * Sets tax exempt reason field.
      *
      * @param string|null $value
@@ -282,6 +293,26 @@ class UpdateCustomerBuilder
     public function unsetSalesforceId(): self
     {
         $this->instance->unsetSalesforceId();
+        return $this;
+    }
+
+    /**
+     * Sets branding theme id field.
+     *
+     * @param int|null $value
+     */
+    public function brandingThemeId(?int $value): self
+    {
+        $this->instance->setBrandingThemeId($value);
+        return $this;
+    }
+
+    /**
+     * Unsets branding theme id field.
+     */
+    public function unsetBrandingThemeId(): self
+    {
+        $this->instance->unsetBrandingThemeId();
         return $this;
     }
 

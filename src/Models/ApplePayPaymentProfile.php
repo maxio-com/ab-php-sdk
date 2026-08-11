@@ -176,7 +176,7 @@ class ApplePayPaymentProfile implements \JsonSerializable
 
     /**
      * Returns Customer Id.
-     * The Chargify-assigned id for the customer record to which the Apple Pay account belongs
+     * The Chargify-assigned ID for the customer record to which the Apple Pay account belongs
      */
     public function getCustomerId(): ?int
     {
@@ -185,7 +185,7 @@ class ApplePayPaymentProfile implements \JsonSerializable
 
     /**
      * Sets Customer Id.
-     * The Chargify-assigned id for the customer record to which the Apple Pay account belongs
+     * The Chargify-assigned ID for the customer record to which the Apple Pay account belongs
      *
      * @maps customer_id
      */

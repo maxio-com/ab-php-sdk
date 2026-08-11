@@ -18,19 +18,26 @@ Nested filter used for List Subscription Components For Site Filter
 | `startDatetime` | `?DateTime` | Optional | The start date and time (format YYYY-MM-DD HH:MM:SS) with which to filter the date_field. Returns components that belong to the subscription with a timestamp at or after exact time provided in query. You can specify timezone in query - otherwise your site''s time zone will be used. If provided, this parameter will be used instead of start_date. To use this filter you also have to include the following param in the request `include=subscription`. | getStartDatetime(): ?\DateTime | setStartDatetime(?\DateTime startDatetime): void |
 | `endDatetime` | `?DateTime` | Optional | The end date and time (format YYYY-MM-DD HH:MM:SS) with which to filter the date_field. Returns components that belong to the subscription with a timestamp at or before exact time provided in query. You can specify timezone in query - otherwise your site''s time zone will be used. If provided, this parameter will be used instead of end_date. To use this filter you also have to include the following param in the request `include=subscription`. | getEndDatetime(): ?\DateTime | setEndDatetime(?\DateTime endDatetime): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "states": [
-    "active",
-    "canceled"
-  ],
-  "start_date": "2024-01-17",
-  "end_date": "2024-01-31",
-  "start_datetime": "01/17/2024 09:15:30",
-  "end_datetime": "01/17/2024 17:20:06",
-  "date_field": "updated_at"
-}
+```php
+use AdvancedBillingLib\Models\Builders\SubscriptionFilterBuilder;
+use AdvancedBillingLib\Models\SubscriptionStateFilter;
+use AdvancedBillingLib\Models\SubscriptionListDateField;
+use AdvancedBillingLib\Utils\DateTimeHelper;
+
+$subscriptionFilter = SubscriptionFilterBuilder::init()
+    ->states(
+        [
+            SubscriptionStateFilter::ACTIVE,
+            SubscriptionStateFilter::CANCELED
+        ]
+    )
+    ->dateField(SubscriptionListDateField::UPDATED_AT)
+    ->startDate(DateTimeHelper::fromSimpleDate('2024-01-17'))
+    ->endDate(DateTimeHelper::fromSimpleDate('2024-01-31'))
+    ->startDatetime(DateTimeHelper::fromRfc3339DateTime('2024-01-17T09:15:30+00:00'))
+    ->endDatetime(DateTimeHelper::fromRfc3339DateTime('2024-01-17T17:20:06Z'))
+    ->build();
 ```
 

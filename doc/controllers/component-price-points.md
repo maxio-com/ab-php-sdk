@@ -198,8 +198,6 @@ Lists the price points associated with a component.
 
 You may specify the component by using either the numeric id or the `handle:gold` syntax.
 
-When fetching a component's price points, if you have defined multiple currencies at the site level, you can optionally pass the `?currency_prices=true` query param to include an array of currency price data in the response.
-
 If the price point is set to `use_site_exchange_rate: true`, it will return pricing based on the current exchange rate. If the flag is set to false, it will return all of the defined prices for each currency.
 
 ```php
@@ -215,7 +213,7 @@ This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `componentId` | `int` | Template, Required | The Advanced Billing id of the component |
-| `currencyPrices` | `?bool` | Query, Optional | Include an array of currency price data |
+| `currencyPrices` | `?bool` | Query, Optional | Include an array of currency price data. |
 | `page` | `?int` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`.<br><br>**Default**: `1`<br><br>**Constraints**: `>= 1` |
 | `perPage` | `?int` | Query, Optional | This parameter indicates how many records to fetch in each request. Default value is 20. The maximum allowed values is 200; any per_page value over 200 will be changed to 200.<br>Use in query `per_page=200`.<br><br>**Default**: `20`<br><br>**Constraints**: `<= 200` |
 | `filterType` | [`?(string(PricePointType)[])`](../../doc/models/price-point-type.md) | Query, Optional | Use in query: `filter[type]=catalog,default`. |
@@ -713,7 +711,7 @@ This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
 |  --- | --- | --- | --- |
 | `componentId` | int\|string | Template, Required | This is a container for one-of cases. |
 | `pricePointId` | int\|string | Template, Required | This is a container for one-of cases. |
-| `currencyPrices` | `?bool` | Query, Optional | Include an array of currency price data |
+| `currencyPrices` | `?bool` | Query, Optional | Include an array of currency price data. |
 
 ## Response Type
 

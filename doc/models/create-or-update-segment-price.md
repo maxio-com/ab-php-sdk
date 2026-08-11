@@ -13,13 +13,16 @@
 | `endingQuantity` | `?int` | Optional | - | getEndingQuantity(): ?int | setEndingQuantity(?int endingQuantity): void |
 | `unitPrice` | string\|float | Required | This is a container for one-of cases. | getUnitPrice(): | setUnitPrice( unitPrice): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "starting_quantity": 78,
-  "ending_quantity": 52,
-  "unit_price": "String7"
-}
+```php
+use AdvancedBillingLib\Models\Builders\CreateOrUpdateSegmentPriceBuilder;
+
+$createOrUpdateSegmentPrice = CreateOrUpdateSegmentPriceBuilder::init(
+    'String9'
+)
+    ->startingQuantity(98)
+    ->endingQuantity(184)
+    ->build();
 ```
 

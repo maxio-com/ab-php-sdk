@@ -14,7 +14,7 @@ use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 /**
- * Used to Create or Update Endpoint
+ * Used to Create or Update Endpoint.
  */
 class CreateOrUpdateEndpointRequest implements \JsonSerializable
 {
@@ -33,7 +33,7 @@ class CreateOrUpdateEndpointRequest implements \JsonSerializable
 
     /**
      * Returns Endpoint.
-     * Used to Create or Update Endpoint
+     * Used to Create or Update Endpoint.
      */
     public function getEndpoint(): CreateOrUpdateEndpoint
     {
@@ -42,7 +42,7 @@ class CreateOrUpdateEndpointRequest implements \JsonSerializable
 
     /**
      * Sets Endpoint.
-     * Used to Create or Update Endpoint
+     * Used to Create or Update Endpoint.
      *
      * @required
      * @maps endpoint

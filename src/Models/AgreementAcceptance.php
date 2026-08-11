@@ -70,7 +70,7 @@ class AgreementAcceptance implements \JsonSerializable
 
     /**
      * Returns Terms Url.
-     * Required when creating a subscription with Maxio Payments. Either terms_url or provacy_policy_url
+     * Required when creating a subscription with Maxio Payments. Either terms_url or privacy_policy_url is
      * required when providing agreement_acceptance params.
      */
     public function getTermsUrl(): ?string
@@ -80,7 +80,7 @@ class AgreementAcceptance implements \JsonSerializable
 
     /**
      * Sets Terms Url.
-     * Required when creating a subscription with Maxio Payments. Either terms_url or provacy_policy_url
+     * Required when creating a subscription with Maxio Payments. Either terms_url or privacy_policy_url is
      * required when providing agreement_acceptance params.
      *
      * @maps terms_url

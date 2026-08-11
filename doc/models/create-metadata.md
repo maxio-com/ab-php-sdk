@@ -12,12 +12,14 @@
 | `name` | `?string` | Optional | - | getName(): ?string | setName(?string name): void |
 | `value` | `?string` | Optional | - | getValue(): ?string | setValue(?string value): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "name": "name4",
-  "value": "value6"
-}
+```php
+use AdvancedBillingLib\Models\Builders\CreateMetadataBuilder;
+
+$createMetadata = CreateMetadataBuilder::init()
+    ->name('name0')
+    ->value('value2')
+    ->build();
 ```
 

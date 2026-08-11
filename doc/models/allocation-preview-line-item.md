@@ -17,17 +17,21 @@
 | `taxableAmountInCents` | `?int` | Optional | - | getTaxableAmountInCents(): ?int | setTaxableAmountInCents(?int taxableAmountInCents): void |
 | `componentId` | `?int` | Optional | - | getComponentId(): ?int | setComponentId(?int componentId): void |
 | `componentHandle` | `?string` | Optional | - | getComponentHandle(): ?string | setComponentHandle(?string componentHandle): void |
-| `direction` | [`?string(AllocationPreviewDirection)`](../../doc/models/allocation-preview-direction.md) | Optional | Visible when using Fine-grained Component Control | getDirection(): ?string | setDirection(?string direction): void |
+| `direction` | [`?string(AllocationPreviewDirection)`](../../doc/models/allocation-preview-direction.md) | Optional | Visible when using Fine-grained Component Control. | getDirection(): ?string | setDirection(?string direction): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "transaction_type": "credit",
-  "kind": "quantity_based_component",
-  "amount_in_cents": 24,
-  "memo": "memo6",
-  "discount_amount_in_cents": 172
-}
+```php
+use AdvancedBillingLib\Models\Builders\AllocationPreviewLineItemBuilder;
+use AdvancedBillingLib\Models\LineItemTransactionType;
+use AdvancedBillingLib\Models\AllocationPreviewLineItemKind;
+
+$allocationPreviewLineItem = AllocationPreviewLineItemBuilder::init()
+    ->transactionType(LineItemTransactionType::CREDIT)
+    ->kind(AllocationPreviewLineItemKind::QUANTITY_BASED_COMPONENT)
+    ->amountInCents(236)
+    ->memo('memo6')
+    ->discountAmountInCents(40)
+    ->build();
 ```
 

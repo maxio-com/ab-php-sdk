@@ -176,7 +176,7 @@ class CouponUsage implements \JsonSerializable
 
     /**
      * Returns Revenue.
-     * Total revenue of the all subscriptions that have received a discount from this coupon.
+     * Total revenue of all subscriptions that have received a discount from this coupon.
      */
     public function getRevenue(): ?int
     {
@@ -188,7 +188,7 @@ class CouponUsage implements \JsonSerializable
 
     /**
      * Sets Revenue.
-     * Total revenue of the all subscriptions that have received a discount from this coupon.
+     * Total revenue of all subscriptions that have received a discount from this coupon.
      *
      * @maps revenue
      */
@@ -199,7 +199,7 @@ class CouponUsage implements \JsonSerializable
 
     /**
      * Unsets Revenue.
-     * Total revenue of the all subscriptions that have received a discount from this coupon.
+     * Total revenue of all subscriptions that have received a discount from this coupon.
      */
     public function unsetRevenue(): void
     {
@@ -208,7 +208,7 @@ class CouponUsage implements \JsonSerializable
 
     /**
      * Returns Revenue in Cents.
-     * Total revenue of the all subscriptions that have received a discount from this coupon.
+     * Total revenue of all subscriptions that have received a discount from this coupon.
      */
     public function getRevenueInCents(): ?int
     {
@@ -217,7 +217,7 @@ class CouponUsage implements \JsonSerializable
 
     /**
      * Sets Revenue in Cents.
-     * Total revenue of the all subscriptions that have received a discount from this coupon.
+     * Total revenue of all subscriptions that have received a discount from this coupon.
      *
      * @maps revenue_in_cents
      */

@@ -11,16 +11,23 @@
 |  --- | --- | --- | --- | --- | --- |
 | `components` | [`?(ComponentPricePointAssignment[])`](../../doc/models/component-price-point-assignment.md) | Optional | - | getComponents(): ?array | setComponents(?array components): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "components": [
-    {
-      "component_id": 108,
-      "price_point": "String5"
-    }
-  ]
-}
+```php
+use AdvancedBillingLib\Models\Builders\BulkComponentsPricePointAssignmentBuilder;
+use AdvancedBillingLib\Models\Builders\ComponentPricePointAssignmentBuilder;
+
+$bulkComponentsPricePointAssignment = BulkComponentsPricePointAssignmentBuilder::init()
+    ->components(
+        [
+            ComponentPricePointAssignmentBuilder::init()
+                ->componentId(108)
+                ->pricePoint(
+                    'String5'
+                )
+                ->build()
+        ]
+    )
+    ->build();
 ```
 

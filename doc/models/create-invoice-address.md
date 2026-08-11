@@ -21,15 +21,17 @@ Overrides the default address.
 | `zip` | `?string` | Optional | - | getZip(): ?string | setZip(?string zip): void |
 | `country` | `?string` | Optional | - | getCountry(): ?string | setCountry(?string country): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "first_name": "first_name4",
-  "last_name": "last_name2",
-  "phone": "phone6",
-  "address": "address0",
-  "address_2": "address_28"
-}
+```php
+use AdvancedBillingLib\Models\Builders\CreateInvoiceAddressBuilder;
+
+$createInvoiceAddress = CreateInvoiceAddressBuilder::init()
+    ->firstName('first_name6')
+    ->lastName('last_name4')
+    ->phone('phone4')
+    ->address('address2')
+    ->address2('address_20')
+    ->build();
 ```
 

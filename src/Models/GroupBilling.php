@@ -14,7 +14,8 @@ use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 /**
- * Optional attributes related to billing date and accrual. Note: Only applicable for new subscriptions.
+ * (Optional) Attributes related to billing date and accrual. Note: Only applicable for new
+ * subscriptions.
  */
 class GroupBilling implements \JsonSerializable
 {

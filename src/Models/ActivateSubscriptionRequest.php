@@ -23,9 +23,9 @@ class ActivateSubscriptionRequest implements \JsonSerializable
     /**
      * Returns Revert on Failure.
      * You may choose how to handle the activation failure. `true` means do not change the subscription’s
-     * state and billing period. `false`  means to continue through with the activation and enter an end of
-     * life state. If this parameter is omitted or `null` is passed it will default to value set in the
-     * site settings (default: `true`)
+     * state and billing period. `false` means to continue through with the activation and enter an end-of-
+     * life state. If this parameter is omitted or `null` is passed it will default to the value set in the
+     * site settings (default: `true`).
      */
     public function getRevertOnFailure(): ?bool
     {
@@ -38,9 +38,9 @@ class ActivateSubscriptionRequest implements \JsonSerializable
     /**
      * Sets Revert on Failure.
      * You may choose how to handle the activation failure. `true` means do not change the subscription’s
-     * state and billing period. `false`  means to continue through with the activation and enter an end of
-     * life state. If this parameter is omitted or `null` is passed it will default to value set in the
-     * site settings (default: `true`)
+     * state and billing period. `false` means to continue through with the activation and enter an end-of-
+     * life state. If this parameter is omitted or `null` is passed it will default to the value set in the
+     * site settings (default: `true`).
      *
      * @maps revert_on_failure
      */
@@ -52,9 +52,9 @@ class ActivateSubscriptionRequest implements \JsonSerializable
     /**
      * Unsets Revert on Failure.
      * You may choose how to handle the activation failure. `true` means do not change the subscription’s
-     * state and billing period. `false`  means to continue through with the activation and enter an end of
-     * life state. If this parameter is omitted or `null` is passed it will default to value set in the
-     * site settings (default: `true`)
+     * state and billing period. `false` means to continue through with the activation and enter an end-of-
+     * life state. If this parameter is omitted or `null` is passed it will default to the value set in the
+     * site settings (default: `true`).
      */
     public function unsetRevertOnFailure(): void
     {

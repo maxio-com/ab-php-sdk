@@ -14,14 +14,16 @@
 | `kind` | `?string` | Optional | - | getKind(): ?string | setKind(?string kind): void |
 | `on` | `?string` | Optional | - | getOn(): ?string | setOn(?string on): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "component_id": 188,
-  "message": "message0",
-  "kind": "kind8",
-  "on": "on0"
-}
+```php
+use AdvancedBillingLib\Models\Builders\ComponentAllocationErrorItemBuilder;
+
+$componentAllocationErrorItem = ComponentAllocationErrorItemBuilder::init()
+    ->componentId(122)
+    ->message('message8')
+    ->kind('kind6')
+    ->on('on8')
+    ->build();
 ```
 

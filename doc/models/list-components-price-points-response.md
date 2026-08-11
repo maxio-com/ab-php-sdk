@@ -11,19 +11,24 @@
 |  --- | --- | --- | --- | --- | --- |
 | `pricePoints` | [`ComponentPricePoint[]`](../../doc/models/component-price-point.md) | Required | - | getPricePoints(): array | setPricePoints(array pricePoints): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "price_points": [
-    {
-      "id": 40,
-      "type": "default",
-      "default": false,
-      "name": "name2",
-      "pricing_scheme": "per_unit"
-    }
-  ]
-}
+```php
+use AdvancedBillingLib\Models\Builders\ListComponentsPricePointsResponseBuilder;
+use AdvancedBillingLib\Models\Builders\ComponentPricePointBuilder;
+use AdvancedBillingLib\Models\PricePointType;
+use AdvancedBillingLib\Models\PricingScheme;
+
+$listComponentsPricePointsResponse = ListComponentsPricePointsResponseBuilder::init(
+    [
+        ComponentPricePointBuilder::init()
+            ->id(40)
+            ->type(PricePointType::DEFAULT_)
+            ->default(false)
+            ->name('name2')
+            ->pricingScheme(PricingScheme::PER_UNIT)
+            ->build()
+    ]
+)->build();
 ```
 

@@ -64,9 +64,9 @@ class CreateSubscriptionComponentBuilder
     /**
      * Sets unit balance field.
      *
-     * @param int|null $value
+     * @param int|string|null $value
      */
-    public function unitBalance(?int $value): self
+    public function unitBalance($value): self
     {
         $this->instance->setUnitBalance($value);
         return $this;

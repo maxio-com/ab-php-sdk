@@ -12,12 +12,14 @@
 | `resume` | `?bool` | Optional | - | getResume(): ?bool | setResume(?bool resume): void |
 | `resumeMembers` | `?bool` | Optional | - | getResumeMembers(): ?bool | setResumeMembers(?bool resumeMembers): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "resume": false,
-  "resume_members": false
-}
+```php
+use AdvancedBillingLib\Models\Builders\ReactivateSubscriptionGroupRequestBuilder;
+
+$reactivateSubscriptionGroupRequest = ReactivateSubscriptionGroupRequestBuilder::init()
+    ->resume(false)
+    ->resumeMembers(false)
+    ->build();
 ```
 

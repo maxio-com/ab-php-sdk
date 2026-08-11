@@ -11,11 +11,13 @@
 |  --- | --- | --- | --- | --- | --- |
 | `chargeUnbilledUsage` | `?bool` | Optional | - | getChargeUnbilledUsage(): ?bool | setChargeUnbilledUsage(?bool chargeUnbilledUsage): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "charge_unbilled_usage": false
-}
+```php
+use AdvancedBillingLib\Models\Builders\CancelGroupedSubscriptionsRequestBuilder;
+
+$cancelGroupedSubscriptionsRequest = CancelGroupedSubscriptionsRequestBuilder::init()
+    ->chargeUnbilledUsage(false)
+    ->build();
 ```
 

@@ -20,31 +20,43 @@ Object which contains subscription errors.
 | `paymentProfileExpirationYear` | `?(string[])` | Optional | - | getPaymentProfileExpirationYear(): ?array | setPaymentProfileExpirationYear(?array paymentProfileExpirationYear): void |
 | `paymentProfileFullNumber` | `?(string[])` | Optional | - | getPaymentProfileFullNumber(): ?array | setPaymentProfileFullNumber(?array paymentProfileFullNumber): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "product": [
-    "product7",
-    "product6"
-  ],
-  "product_price_point_id": [
-    "product_price_point_id9",
-    "product_price_point_id0"
-  ],
-  "payment_profile": [
-    "payment_profile4",
-    "payment_profile5"
-  ],
-  "payment_profile.chargify_token": [
-    "payment_profile.chargify_token8",
-    "payment_profile.chargify_token9"
-  ],
-  "base": [
-    "base7",
-    "base8",
-    "base9"
-  ]
-}
+```php
+use AdvancedBillingLib\Models\Builders\SubscriptionGroupSubscriptionErrorBuilder;
+
+$subscriptionGroupSubscriptionError = SubscriptionGroupSubscriptionErrorBuilder::init()
+    ->product(
+        [
+            'product7',
+            'product8'
+        ]
+    )
+    ->productPricePointId(
+        [
+            'product_price_point_id3',
+            'product_price_point_id4'
+        ]
+    )
+    ->paymentProfile(
+        [
+            'payment_profile8',
+            'payment_profile9'
+        ]
+    )
+    ->paymentProfileChargifyToken(
+        [
+            'payment_profile.chargify_token2',
+            'payment_profile.chargify_token3'
+        ]
+    )
+    ->base(
+        [
+            'base1',
+            'base2',
+            'base3'
+        ]
+    )
+    ->build();
 ```
 

@@ -15,31 +15,40 @@
 | `eventType` | [`string(InvoiceEventType)`](../../doc/models/invoice-event-type.md) | Required | **Default**: `InvoiceEventType::CHANGE_INVOICE_STATUS` | getEventType(): string | setEventType(string eventType): void |
 | `eventData` | [`ChangeInvoiceStatusEventData`](../../doc/models/change-invoice-status-event-data.md) | Required | Example schema for an `change_invoice_status` event | getEventData(): ChangeInvoiceStatusEventData | setEventData(ChangeInvoiceStatusEventData eventData): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "id": 92,
-  "timestamp": "2016-03-13T12:52:32.123Z",
-  "invoice": {
-    "issue_date": "2024-01-01",
-    "due_date": "2024-01-01",
-    "paid_date": "2024-01-01",
-    "public_url_expires_on": "2024-01-21",
-    "id": 166,
-    "uid": "uid6",
-    "site_id": 92,
-    "customer_id": 204,
-    "subscription_id": 20
-  },
-  "event_type": "change_invoice_status",
-  "event_data": {
-    "gateway_trans_id": "gateway_trans_id2",
-    "amount": "amount8",
-    "from_status": "open",
-    "to_status": "pending",
-    "consolidation_level": "child"
-  }
-}
+```php
+use AdvancedBillingLib\Models\Builders\ChangeInvoiceStatusEventBuilder;
+use AdvancedBillingLib\Utils\DateTimeHelper;
+use AdvancedBillingLib\Models\Builders\InvoiceBuilder;
+use AdvancedBillingLib\Models\InvoiceStatus;
+use AdvancedBillingLib\Models\InvoiceConsolidationLevel;
+use AdvancedBillingLib\Models\InvoiceEventType;
+use AdvancedBillingLib\Models\Builders\ChangeInvoiceStatusEventDataBuilder;
+
+$changeInvoiceStatusEvent = ChangeInvoiceStatusEventBuilder::init(
+    148,
+    DateTimeHelper::fromRfc3339DateTimeRequired('2016-03-13T12:52:32.123Z'),
+    InvoiceBuilder::init()
+        ->id(166)
+        ->uid('uid6')
+        ->siteId(92)
+        ->customerId(204)
+        ->subscriptionId(20)
+        ->issueDate(DateTimeHelper::fromSimpleDate('2024-01-01'))
+        ->dueDate(DateTimeHelper::fromSimpleDate('2024-01-01'))
+        ->paidDate(DateTimeHelper::fromSimpleDate('2024-01-01'))
+        ->publicUrlExpiresOn(DateTimeHelper::fromSimpleDate('2024-01-21'))
+        ->build(),
+    InvoiceEventType::CHANGE_INVOICE_STATUS,
+    ChangeInvoiceStatusEventDataBuilder::init(
+        InvoiceStatus::OPEN,
+        InvoiceStatus::PENDING
+    )
+        ->gatewayTransId('gateway_trans_id2')
+        ->amount('amount8')
+        ->consolidationLevel(InvoiceConsolidationLevel::CHILD)
+        ->build()
+)->build();
 ```
 

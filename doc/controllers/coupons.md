@@ -30,11 +30,7 @@ $couponsController = $client->getCouponsController();
 
 Creates a coupon under the specified product family.
 
-You can create either a flat amount coupon by specifying amount_in_cents, or a percentage coupon by specifying percentage
-You can restrict a coupon to only apply to specific products / components by optionally passing in `restricted_products` and/or `restricted_components` objects in the format:
-`{ "<product_id/component_id>": boolean_value }`
-
-Coupons can be administered in the Advanced Billing application or created via API. See [creating coupons](https://maxio.zendesk.com/hc/en-us/articles/24261212433165-Creating-Editing-Deleting-Coupons) for more information.
+You can create either a flat amount coupon, by specifying `amount_in_cents`, or percentage coupon by specifying `percentage`.
 
 See [Apply Coupons to Subscriptions](https://maxio.zendesk.com/hc/en-us/articles/24261259337101-Coupons-and-Subscriptions) for information on applying a coupon to a subscription in the Advanced Billing UI.
 
@@ -139,7 +135,7 @@ This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
 | `page` | `?int` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`.<br><br>**Default**: `1`<br><br>**Constraints**: `>= 1` |
 | `perPage` | `?int` | Query, Optional | This parameter indicates how many records to fetch in each request. Default value is 30. The maximum allowed values is 200; any per_page value over 200 will be changed to 200.<br>Use in query `per_page=200`.<br><br>**Default**: `30`<br><br>**Constraints**: `<= 200` |
 | `filter` | [`?ListCouponsFilter`](../../doc/models/list-coupons-filter.md) | Query, Optional | Filter to use for List Coupons operations |
-| `currencyPrices` | `?bool` | Query, Optional | When fetching coupons, if you have defined multiple currencies at the site level, you can optionally pass the `?currency_prices=true` query param to include an array of currency price data in the response. Use in query `currency_prices=true`. |
+| `currencyPrices` | `?bool` | Query, Optional | (Optional) If you have defined multiple currencies at the site level, you can pass `?currency_prices=true` to include an array of currency price data in the response. Use in query `currency_prices=true`. |
 
 ## Response Type
 
@@ -303,7 +299,7 @@ This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
 |  --- | --- | --- | --- |
 | `productFamilyId` | `?int` | Query, Optional | The Advanced Billing id of the product family to which the coupon belongs |
 | `code` | `?string` | Query, Optional | The code of the coupon |
-| `currencyPrices` | `?bool` | Query, Optional | When fetching coupons, if you have defined multiple currencies at the site level, you can optionally pass the `?currency_prices=true` query param to include an array of currency price data in the response. |
+| `currencyPrices` | `?bool` | Query, Optional | (Optional) If you have defined multiple currencies at the site level, you can pass `?currency_prices=true` to include an array of currency price data in the response. |
 
 ## Response Type
 
@@ -337,8 +333,6 @@ try {
 Returns a coupon by its Advanced Billing-assigned ID. You must identify the Coupon in this call by the ID parameter that Advanced Billing assigns.
 If instead you would like to find a Coupon using a Coupon code, see the Coupon Find method.
 
-When fetching a coupon, if you have defined multiple currencies at the site level, you can optionally pass the `?currency_prices=true` query param to include an array of currency price data in the response.
-
 If the coupon is set to `use_site_exchange_rate: true`, it will return pricing based on the current exchange rate. If the flag is set to false, it will return all of the defined prices for each currency.
 
 ```php
@@ -355,7 +349,7 @@ This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
 |  --- | --- | --- | --- |
 | `productFamilyId` | `int` | Template, Required | The Advanced Billing id of the product family to which the coupon belongs |
 | `couponId` | `int` | Template, Required | The Advanced Billing id of the coupon |
-| `currencyPrices` | `?bool` | Query, Optional | When fetching coupons, if you have defined multiple currencies at the site level, you can optionally pass the `?currency_prices=true` query param to include an array of currency price data in the response. |
+| `currencyPrices` | `?bool` | Query, Optional | (Optional) If you have defined multiple currencies at the site level, you can pass `?currency_prices=true` to include an array of currency price data in the response. |
 
 ## Response Type
 
@@ -633,7 +627,7 @@ This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
 | `page` | `?int` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`.<br><br>**Default**: `1`<br><br>**Constraints**: `>= 1` |
 | `perPage` | `?int` | Query, Optional | This parameter indicates how many records to fetch in each request. Default value is 30. The maximum allowed values is 200; any per_page value over 200 will be changed to 200.<br>Use in query `per_page=200`.<br><br>**Default**: `30`<br><br>**Constraints**: `<= 200` |
 | `filter` | [`?ListCouponsFilter`](../../doc/models/list-coupons-filter.md) | Query, Optional | Filter to use for List Coupons operations |
-| `currencyPrices` | `?bool` | Query, Optional | When fetching coupons, if you have defined multiple currencies at the site level, you can optionally pass the `?currency_prices=true` query param to include an array of currency price data in the response. Use in query `currency_prices=true`. |
+| `currencyPrices` | `?bool` | Query, Optional | (Optional) If you have defined multiple currencies at the site level, you can pass `?currency_prices=true` to include an array of currency price data in the response. Use in query `currency_prices=true`. |
 
 ## Response Type
 
@@ -1023,7 +1017,7 @@ This request allows you to create specific subcodes underneath an existing coupo
     _ to %5F
     . to %2E
 
-So, if the coupon subcode is `20%OFF`, the URL to delete this coupon subcode would be: `https://<subdomain>.chargify.com/coupons/567/codes/20%25OFF.<format>`
+So, if the coupon subcode is `20%OFF`, the URL to delete this coupon subcode would be: `https://<subdomain>.chargify.com/coupons/567/codes/20%25OFF.<format>`.
 
 ```php
 function createCouponSubcodes(int $couponId, ?CouponSubcodes $body = null): CouponSubcodesResponse
@@ -1254,7 +1248,7 @@ Note: If you are using any of the allowed special characters (“%”, “@”, 
 
 ## Percent Encoding Example
 
-Or if the coupon subcode is 20%OFF, the URL to delete this coupon subcode would be: @https://<subdomain>.chargify.com/coupons/567/codes/20%25OFF.<format>
+Or if the coupon subcode is 20%OFF, the URL to delete this coupon subcode would be: @https://<subdomain>.chargify.com/coupons/567/codes/20%25OFF.<format>.
 
 ```php
 function deleteCouponSubcode(int $couponId, string $subcode): void

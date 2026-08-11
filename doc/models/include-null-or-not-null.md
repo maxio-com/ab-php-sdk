@@ -16,7 +16,9 @@ Allows to filter by `not_null` or `null`.
 
 ## Example
 
-```
-not_null
+```php
+use AdvancedBillingLib\Models\IncludeNullOrNotNull;
+
+$includeNullOrNotNull = IncludeNullOrNotNull::NOT_NULL;
 ```
 

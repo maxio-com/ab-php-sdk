@@ -11,11 +11,13 @@
 |  --- | --- | --- | --- | --- | --- |
 | `reason` | `string` | Required | **Constraints**: *Minimum Length*: `1` | getReason(): string | setReason(string reason): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "reason": "reason2"
-}
+```php
+use AdvancedBillingLib\Models\Builders\VoidInvoiceBuilder;
+
+$voidInvoice = VoidInvoiceBuilder::init(
+    'reason8'
+)->build();
 ```
 

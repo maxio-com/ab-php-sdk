@@ -11,32 +11,47 @@
 |  --- | --- | --- | --- | --- | --- |
 | `renewalConfigurationItem` | [ScheduledRenewalItemRequestBodyComponent](../../doc/models/scheduled-renewal-item-request-body-component.md)\|[ScheduledRenewalItemRequestBodyProduct](../../doc/models/scheduled-renewal-item-request-body-product.md) | Required | This is a container for one-of cases. | getRenewalConfigurationItem(): | setRenewalConfigurationItem( renewalConfigurationItem): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "renewal_configuration_item": {
-    "item_type": "Component",
-    "item_id": 108,
-    "price_point_id": 122,
-    "quantity": 212,
-    "custom_price": {
-      "tax_included": false,
-      "pricing_scheme": "stairstep",
-      "prices": [
-        {
-          "starting_quantity": 242,
-          "ending_quantity": 40,
-          "unit_price": 23.26
-        },
-        {
-          "starting_quantity": 242,
-          "ending_quantity": 40,
-          "unit_price": 23.26
-        }
-      ]
-    }
-  }
-}
+```php
+use AdvancedBillingLib\Models\Builders\ScheduledRenewalConfigurationItemRequestBuilder;
+use AdvancedBillingLib\Models\Builders\ScheduledRenewalItemRequestBodyComponentBuilder;
+use AdvancedBillingLib\Models\Builders\ScheduledRenewalComponentCustomPriceBuilder;
+use AdvancedBillingLib\Models\PricingScheme;
+use AdvancedBillingLib\Models\Builders\PriceBuilder;
+
+$scheduledRenewalConfigurationItemRequest = ScheduledRenewalConfigurationItemRequestBuilder::init(
+    ScheduledRenewalItemRequestBodyComponentBuilder::init(
+        108
+    )
+        ->pricePointId(122)
+        ->quantity(212)
+        ->customPrice(
+            ScheduledRenewalComponentCustomPriceBuilder::init(
+                PricingScheme::STAIRSTEP,
+                [
+                    PriceBuilder::init(
+                        242,
+                        23.26
+                    )
+                        ->endingQuantity(
+                            40
+                        )
+                        ->build(),
+                    PriceBuilder::init(
+                        242,
+                        23.26
+                    )
+                        ->endingQuantity(
+                            40
+                        )
+                        ->build()
+                ]
+            )
+                ->taxIncluded(false)
+                ->build()
+        )
+        ->build()
+)->build();
 ```
 

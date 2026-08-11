@@ -13,13 +13,15 @@
 | `message` | `?string` | Optional | - | getMessage(): ?string | setMessage(?string message): void |
 | `pricePoint` | `?int` | Optional | - | getPricePoint(): ?int | setPricePoint(?int pricePoint): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "component_id": 206,
-  "message": "message4",
-  "price_point": 152
-}
+```php
+use AdvancedBillingLib\Models\Builders\ComponentPricePointErrorItemBuilder;
+
+$componentPricePointErrorItem = ComponentPricePointErrorItemBuilder::init()
+    ->componentId(174)
+    ->message('message2')
+    ->pricePoint(72)
+    ->build();
 ```
 

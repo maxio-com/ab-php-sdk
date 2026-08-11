@@ -169,6 +169,26 @@ class EBBComponentBuilder
     }
 
     /**
+     * Sets unspsc code field.
+     *
+     * @param string|null $value
+     */
+    public function unspscCode(?string $value): self
+    {
+        $this->instance->setUnspscCode($value);
+        return $this;
+    }
+
+    /**
+     * Unsets unspsc code field.
+     */
+    public function unsetUnspscCode(): self
+    {
+        $this->instance->unsetUnspscCode();
+        return $this;
+    }
+
+    /**
      * Add an additional property to this model.
      *
      * @param string $name Name of property.

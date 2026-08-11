@@ -14,3 +14,11 @@ Applicable only to stackable coupons. For `compound`, Percentage-based discounts
 | `COMPOUND` |
 | `FULLPRICE` |
 
+## Example
+
+```php
+use AdvancedBillingLib\Models\CompoundingStrategy;
+
+$compoundingStrategy = CompoundingStrategy::COMPOUND;
+```
+

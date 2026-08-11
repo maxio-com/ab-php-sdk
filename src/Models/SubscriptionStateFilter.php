@@ -27,13 +27,23 @@ class SubscriptionStateFilter
 
     public const EXPIRED_CARDS = 'expired_cards';
 
+    public const ENUM_EXPIRED_CARDS_LIVE_SUBSCRIPTIONS = 'expired_cards_(live_subscriptions)';
+
+    public const ENUM_EXPIRED_CARDS_ALL_SUBSCRIPTIONS = 'expired_cards_(all_subscriptions)';
+
     public const ON_HOLD = 'on_hold';
+
+    public const AWAITING_SIGNUP = 'awaiting_signup';
+
+    public const AWAITING_SIGNUP_DATE = 'awaiting_signup_date';
 
     public const PAST_DUE = 'past_due';
 
     public const PENDING_CANCELLATION = 'pending_cancellation';
 
     public const PENDING_RENEWAL = 'pending_renewal';
+
+    public const PREPAID_DUNNING = 'prepaid_dunning';
 
     public const SUSPENDED = 'suspended';
 
@@ -48,10 +58,15 @@ class SubscriptionStateFilter
         self::CANCELED,
         self::EXPIRED,
         self::EXPIRED_CARDS,
+        self::ENUM_EXPIRED_CARDS_LIVE_SUBSCRIPTIONS,
+        self::ENUM_EXPIRED_CARDS_ALL_SUBSCRIPTIONS,
         self::ON_HOLD,
+        self::AWAITING_SIGNUP,
+        self::AWAITING_SIGNUP_DATE,
         self::PAST_DUE,
         self::PENDING_CANCELLATION,
         self::PENDING_RENEWAL,
+        self::PREPAID_DUNNING,
         self::SUSPENDED,
         self::TRIAL_ENDED,
         self::TRIALING,

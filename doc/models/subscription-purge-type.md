@@ -12,3 +12,11 @@
 | `CUSTOMER` |
 | `PAYMENT_PROFILE` |
 
+## Example
+
+```php
+use AdvancedBillingLib\Models\SubscriptionPurgeType;
+
+$subscriptionPurgeType = SubscriptionPurgeType::CUSTOMER;
+```
+

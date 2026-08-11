@@ -180,7 +180,7 @@ class ComponentPricePoint implements \JsonSerializable
 
     /**
      * Returns Default.
-     * Note: Refer to type attribute instead
+     * Note: Refer to type attribute instead.
      */
     public function getDefault(): ?bool
     {
@@ -189,7 +189,7 @@ class ComponentPricePoint implements \JsonSerializable
 
     /**
      * Sets Default.
-     * Note: Refer to type attribute instead
+     * Note: Refer to type attribute instead.
      *
      * @maps default
      */
@@ -440,7 +440,7 @@ class ComponentPricePoint implements \JsonSerializable
 
     /**
      * Returns Interval.
-     * The numerical interval. i.e. an interval of ‘30’ coupled with an interval_unit of day would mean
+     * The numerical interval. e.g., an interval of ‘30’ coupled with an interval_unit of day would mean
      * this component price point would renew every 30 days. This property is only available for sites with
      * Multifrequency enabled.
      */
@@ -454,7 +454,7 @@ class ComponentPricePoint implements \JsonSerializable
 
     /**
      * Sets Interval.
-     * The numerical interval. i.e. an interval of ‘30’ coupled with an interval_unit of day would mean
+     * The numerical interval. e.g., an interval of ‘30’ coupled with an interval_unit of day would mean
      * this component price point would renew every 30 days. This property is only available for sites with
      * Multifrequency enabled.
      *
@@ -467,7 +467,7 @@ class ComponentPricePoint implements \JsonSerializable
 
     /**
      * Unsets Interval.
-     * The numerical interval. i.e. an interval of ‘30’ coupled with an interval_unit of day would mean
+     * The numerical interval. e.g., an interval of ‘30’ coupled with an interval_unit of day would mean
      * this component price point would renew every 30 days. This property is only available for sites with
      * Multifrequency enabled.
      */

@@ -121,6 +121,11 @@ class PrepaidUsageComponent implements \JsonSerializable
     private $publicSignupPageIds;
 
     /**
+     * @var array
+     */
+    private $unspscCode = [];
+
+    /**
      * @param string $name
      * @param string $unitName
      * @param string $pricingScheme
@@ -137,7 +142,7 @@ class PrepaidUsageComponent implements \JsonSerializable
     /**
      * Returns Name.
      * A name for this component that is suitable for showing customers and displaying on billing
-     * statements, ie. "Minutes".
+     * statements, e.g., "Minutes".
      */
     public function getName(): string
     {
@@ -147,7 +152,7 @@ class PrepaidUsageComponent implements \JsonSerializable
     /**
      * Sets Name.
      * A name for this component that is suitable for showing customers and displaying on billing
-     * statements, ie. "Minutes".
+     * statements, e.g., "Minutes".
      *
      * @required
      * @maps name
@@ -160,7 +165,7 @@ class PrepaidUsageComponent implements \JsonSerializable
     /**
      * Returns Unit Name.
      * The name of the unit of measurement for the component. It should be singular since it will be
-     * automatically pluralized when necessary. i.e. “message”, which may then be shown as “5 messages” on
+     * automatically pluralized when necessary. e.g., “message”, which may then be shown as “5 messages” on
      * a subscription’s component line-item
      */
     public function getUnitName(): string
@@ -171,7 +176,7 @@ class PrepaidUsageComponent implements \JsonSerializable
     /**
      * Sets Unit Name.
      * The name of the unit of measurement for the component. It should be singular since it will be
-     * automatically pluralized when necessary. i.e. “message”, which may then be shown as “5 messages” on
+     * automatically pluralized when necessary. e.g., “message”, which may then be shown as “5 messages” on
      * a subscription’s component line-item
      *
      * @required
@@ -204,7 +209,7 @@ class PrepaidUsageComponent implements \JsonSerializable
 
     /**
      * Returns Handle.
-     * A unique identifier for your use that can be used to retrieve this component is subsequent requests.
+     * A unique identifier for your use that can be used to retrieve this component in subsequent requests.
      * Must start with a letter or number and may only contain lowercase letters, numbers, or the
      * characters '.', ':', '-', or '_'.
      */
@@ -215,7 +220,7 @@ class PrepaidUsageComponent implements \JsonSerializable
 
     /**
      * Sets Handle.
-     * A unique identifier for your use that can be used to retrieve this component is subsequent requests.
+     * A unique identifier for your use that can be used to retrieve this component in subsequent requests.
      * Must start with a letter or number and may only contain lowercase letters, numbers, or the
      * characters '.', ':', '-', or '_'.
      *
@@ -396,7 +401,7 @@ class PrepaidUsageComponent implements \JsonSerializable
      * Returns Unit Price.
      * The amount the customer will be charged per unit when the pricing scheme is “per_unit”. For On/Off
      * Components, this is the amount that the customer will be charged when they turn the component on for
-     * the subscription. The price can contain up to 8 decimal places. i.e. 1.00 or 0.0012 or 0.00000065
+     * the subscription. The price can contain up to 8 decimal places. e.g., 1.00 or 0.0012 or 0.00000065
      *
      * @return string|float|null
      */
@@ -409,7 +414,7 @@ class PrepaidUsageComponent implements \JsonSerializable
      * Sets Unit Price.
      * The amount the customer will be charged per unit when the pricing scheme is “per_unit”. For On/Off
      * Components, this is the amount that the customer will be charged when they turn the component on for
-     * the subscription. The price can contain up to 8 decimal places. i.e. 1.00 or 0.0012 or 0.00000065
+     * the subscription. The price can contain up to 8 decimal places. e.g., 1.00 or 0.0012 or 0.00000065
      *
      * @maps unit_price
      * @mapsBy anyOf(oneOf(string,float),null)
@@ -486,7 +491,7 @@ class PrepaidUsageComponent implements \JsonSerializable
 
     /**
      * Returns Rollover Prepaid Remainder.
-     * Boolean which controls whether or not remaining units should be rolled over to the next period
+     * Boolean which controls whether or not remaining units should be rolled over to the next period.
      */
     public function getRolloverPrepaidRemainder(): ?bool
     {
@@ -495,7 +500,7 @@ class PrepaidUsageComponent implements \JsonSerializable
 
     /**
      * Sets Rollover Prepaid Remainder.
-     * Boolean which controls whether or not remaining units should be rolled over to the next period
+     * Boolean which controls whether or not remaining units should be rolled over to the next period.
      *
      * @maps rollover_prepaid_remainder
      */
@@ -507,7 +512,7 @@ class PrepaidUsageComponent implements \JsonSerializable
     /**
      * Returns Renew Prepaid Allocation.
      * Boolean which controls whether or not the allocated quantity should be renewed at the beginning of
-     * each period
+     * each period.
      */
     public function getRenewPrepaidAllocation(): ?bool
     {
@@ -517,7 +522,7 @@ class PrepaidUsageComponent implements \JsonSerializable
     /**
      * Sets Renew Prepaid Allocation.
      * Boolean which controls whether or not the allocated quantity should be renewed at the beginning of
-     * each period
+     * each period.
      *
      * @maps renew_prepaid_allocation
      */
@@ -637,6 +642,44 @@ class PrepaidUsageComponent implements \JsonSerializable
     }
 
     /**
+     * Returns Unspsc Code.
+     * (Optional) Custom UNSPSC commodity code for Level 3/CEDP payment data. When set, this value is sent
+     * as the commodity code on invoice line items for this component instead of the default derived from
+     * item_category.
+     */
+    public function getUnspscCode(): ?string
+    {
+        if (count($this->unspscCode) == 0) {
+            return null;
+        }
+        return $this->unspscCode['value'];
+    }
+
+    /**
+     * Sets Unspsc Code.
+     * (Optional) Custom UNSPSC commodity code for Level 3/CEDP payment data. When set, this value is sent
+     * as the commodity code on invoice line items for this component instead of the default derived from
+     * item_category.
+     *
+     * @maps unspsc_code
+     */
+    public function setUnspscCode(?string $unspscCode): void
+    {
+        $this->unspscCode['value'] = $unspscCode;
+    }
+
+    /**
+     * Unsets Unspsc Code.
+     * (Optional) Custom UNSPSC commodity code for Level 3/CEDP payment data. When set, this value is sent
+     * as the commodity code on invoice line items for this component instead of the default derived from
+     * item_category.
+     */
+    public function unsetUnspscCode(): void
+    {
+        $this->unspscCode = [];
+    }
+
+    /**
      * Converts the PrepaidUsageComponent object to a human-readable string representation.
      *
      * @return string The string representation of the PrepaidUsageComponent object.
@@ -667,6 +710,7 @@ class PrepaidUsageComponent implements \JsonSerializable
                 'displayOnHostedPage' => $this->displayOnHostedPage,
                 'allowFractionalQuantities' => $this->allowFractionalQuantities,
                 'publicSignupPageIds' => $this->publicSignupPageIds,
+                'unspscCode' => $this->getUnspscCode(),
                 'additionalProperties' => $this->additionalProperties
             ]
         );
@@ -773,6 +817,9 @@ class PrepaidUsageComponent implements \JsonSerializable
         }
         if (isset($this->publicSignupPageIds)) {
             $json['public_signup_page_ids']      = $this->publicSignupPageIds;
+        }
+        if (!empty($this->unspscCode)) {
+            $json['unspsc_code']                 = $this->unspscCode['value'];
         }
         $json = array_merge($json, $this->additionalProperties);
 

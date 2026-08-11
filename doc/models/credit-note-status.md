@@ -14,3 +14,11 @@ Current status of the credit note.
 | `OPEN` |
 | `APPLIED` |
 
+## Example
+
+```php
+use AdvancedBillingLib\Models\CreditNoteStatus;
+
+$creditNoteStatus = CreditNoteStatus::OPEN;
+```
+

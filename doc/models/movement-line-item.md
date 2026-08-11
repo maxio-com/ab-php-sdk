@@ -19,15 +19,17 @@
 | `prevQuantity` | `?int` | Optional | - | getPrevQuantity(): ?int | setPrevQuantity(?int prevQuantity): void |
 | `recurring` | `?bool` | Optional | When `true`, the line item's MRR value will contribute to the `plan` breakout. When `false`, the line item contributes to the `usage` breakout. | getRecurring(): ?bool | setRecurring(?bool recurring): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "product_id": 156,
-  "component_id": 68,
-  "price_point_id": 164,
-  "name": "name6",
-  "mrr": 154
-}
+```php
+use AdvancedBillingLib\Models\Builders\MovementLineItemBuilder;
+
+$movementLineItem = MovementLineItemBuilder::init()
+    ->productId(146)
+    ->componentId(58)
+    ->pricePointId(82)
+    ->name('name8')
+    ->mrr(92)
+    ->build();
 ```
 

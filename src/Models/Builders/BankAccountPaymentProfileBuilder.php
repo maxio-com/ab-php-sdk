@@ -278,26 +278,6 @@ class BankAccountPaymentProfileBuilder
     }
 
     /**
-     * Sets masked bank account number field.
-     *
-     * @param string|null $value
-     */
-    public function maskedBankAccountNumber(?string $value): self
-    {
-        $this->instance->setMaskedBankAccountNumber($value);
-        return $this;
-    }
-
-    /**
-     * Unsets masked bank account number field.
-     */
-    public function unsetMaskedBankAccountNumber(): self
-    {
-        $this->instance->unsetMaskedBankAccountNumber();
-        return $this;
-    }
-
-    /**
      * Sets bank account type field.
      *
      * @param string|null $value

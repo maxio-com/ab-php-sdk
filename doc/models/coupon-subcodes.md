@@ -11,13 +11,18 @@
 |  --- | --- | --- | --- | --- | --- |
 | `codes` | `?(string[])` | Optional | - | getCodes(): ?array | setCodes(?array codes): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "codes": [
-    "codes8"
-  ]
-}
+```php
+use AdvancedBillingLib\Models\Builders\CouponSubcodesBuilder;
+
+$couponSubcodes = CouponSubcodesBuilder::init()
+    ->codes(
+        [
+            'codes8',
+            'codes9'
+        ]
+    )
+    ->build();
 ```
 

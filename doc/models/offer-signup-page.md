@@ -16,15 +16,17 @@
 | `returnParams` | `?string` | Optional | - | getReturnParams(): ?string | setReturnParams(?string returnParams): void |
 | `url` | `?string` | Optional | - | getUrl(): ?string | setUrl(?string url): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "id": 50,
-  "nickname": "nickname8",
-  "enabled": false,
-  "return_url": "return_url2",
-  "return_params": "return_params0"
-}
+```php
+use AdvancedBillingLib\Models\Builders\OfferSignupPageBuilder;
+
+$offerSignupPage = OfferSignupPageBuilder::init()
+    ->id(102)
+    ->nickname('nickname6')
+    ->enabled(false)
+    ->returnUrl('return_url6')
+    ->returnParams('return_params8')
+    ->build();
 ```
 

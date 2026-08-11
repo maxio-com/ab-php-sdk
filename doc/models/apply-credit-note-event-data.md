@@ -19,32 +19,43 @@ Example schema for an `apply_credit_note` event
 | `transactionTime` | `?DateTime` | Optional | The time the credit note was applied, in ISO 8601 format, i.e. "2019-06-07T17:20:06Z" | getTransactionTime(): ?\DateTime | setTransactionTime(?\DateTime transactionTime): void |
 | `memo` | `?string` | Optional | The credit note memo. | getMemo(): ?string | setMemo(?string memo): void |
 | `role` | `?string` | Optional | The role of the credit note (e.g. 'general') | getRole(): ?string | setRole(?string role): void |
-| `consolidatedInvoice` | `?bool` | Optional | Shows whether it was applied to consolidated invoice or not | getConsolidatedInvoice(): ?bool | setConsolidatedInvoice(?bool consolidatedInvoice): void |
+| `consolidatedInvoice` | `?bool` | Optional | Shows whether it was applied to consolidated invoice or not. | getConsolidatedInvoice(): ?bool | setConsolidatedInvoice(?bool consolidatedInvoice): void |
 | `appliedCreditNotes` | [`?(AppliedCreditNoteData[])`](../../doc/models/applied-credit-note-data.md) | Optional | List of credit notes applied to children invoices (if consolidated invoice) | getAppliedCreditNotes(): ?array | setAppliedCreditNotes(?array appliedCreditNotes): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "uid": "uid2",
-  "credit_note_number": "credit_note_number4",
-  "credit_note_uid": "credit_note_uid4",
-  "original_amount": "original_amount6",
-  "applied_amount": "applied_amount6",
-  "transaction_time": "2016-03-13T12:52:32.123Z",
-  "memo": "memo6",
-  "role": "role4",
-  "consolidated_invoice": false,
-  "applied_credit_notes": [
-    {
-      "uid": "uid4",
-      "number": "number8"
-    },
-    {
-      "uid": "uid4",
-      "number": "number8"
-    }
-  ]
-}
+```php
+use AdvancedBillingLib\Models\Builders\ApplyCreditNoteEventDataBuilder;
+use AdvancedBillingLib\Utils\DateTimeHelper;
+use AdvancedBillingLib\Models\Builders\AppliedCreditNoteDataBuilder;
+
+$applyCreditNoteEventData = ApplyCreditNoteEventDataBuilder::init(
+    'uid0',
+    'credit_note_number6',
+    'credit_note_uid4',
+    'original_amount4',
+    'applied_amount8'
+)
+    ->transactionTime(DateTimeHelper::fromRfc3339DateTime('2016-03-13T12:52:32.123Z'))
+    ->memo('memo4')
+    ->role('role4')
+    ->consolidatedInvoice(false)
+    ->appliedCreditNotes(
+        [
+            AppliedCreditNoteDataBuilder::init()
+                ->uid('uid4')
+                ->number('number8')
+                ->build(),
+            AppliedCreditNoteDataBuilder::init()
+                ->uid('uid4')
+                ->number('number8')
+                ->build(),
+            AppliedCreditNoteDataBuilder::init()
+                ->uid('uid4')
+                ->number('number8')
+                ->build()
+        ]
+    )
+    ->build();
 ```
 

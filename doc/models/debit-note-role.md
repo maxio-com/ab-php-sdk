@@ -14,3 +14,11 @@ The role of the debit note.
 | `CHARGEBACK` |
 | `REFUND` |
 
+## Example
+
+```php
+use AdvancedBillingLib\Models\DebitNoteRole;
+
+$debitNoteRole = DebitNoteRole::CHARGEBACK;
+```
+

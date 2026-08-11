@@ -11,14 +11,17 @@
 |  --- | --- | --- | --- | --- | --- |
 | `bankAccountVerification` | [`BankAccountVerification`](../../doc/models/bank-account-verification.md) | Required | - | getBankAccountVerification(): BankAccountVerification | setBankAccountVerification(BankAccountVerification bankAccountVerification): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "bank_account_verification": {
-    "deposit_1_in_cents": 244,
-    "deposit_2_in_cents": 6
-  }
-}
+```php
+use AdvancedBillingLib\Models\Builders\BankAccountVerificationRequestBuilder;
+use AdvancedBillingLib\Models\Builders\BankAccountVerificationBuilder;
+
+$bankAccountVerificationRequest = BankAccountVerificationRequestBuilder::init(
+    BankAccountVerificationBuilder::init()
+        ->deposit1InCents(244)
+        ->deposit2InCents(6)
+        ->build()
+)->build();
 ```
 

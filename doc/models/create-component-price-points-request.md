@@ -11,64 +11,54 @@
 |  --- | --- | --- | --- | --- | --- |
 | `pricePoints` | array<[CreateComponentPricePoint](../../doc/models/create-component-price-point.md)\|[CreatePrepaidUsageComponentPricePoint](../../doc/models/create-prepaid-usage-component-price-point.md)> | Required | This is Array of a container for any-of cases. | getPricePoints(): array | setPricePoints(array pricePoints): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "price_points": [
-    {
-      "name": "name0",
-      "handle": "handle6",
-      "pricing_scheme": "per_unit",
-      "prices": [
-        {
-          "starting_quantity": 242,
-          "ending_quantity": 40,
-          "unit_price": 23.26
-        },
-        {
-          "starting_quantity": 242,
-          "ending_quantity": 40,
-          "unit_price": 23.26
-        },
-        {
-          "starting_quantity": 242,
-          "ending_quantity": 40,
-          "unit_price": 23.26
-        }
-      ],
-      "use_site_exchange_rate": false,
-      "tax_included": false,
-      "interval": 24,
-      "interval_unit": "day"
-    },
-    {
-      "name": "name0",
-      "handle": "handle6",
-      "pricing_scheme": "per_unit",
-      "prices": [
-        {
-          "starting_quantity": 242,
-          "ending_quantity": 40,
-          "unit_price": 23.26
-        },
-        {
-          "starting_quantity": 242,
-          "ending_quantity": 40,
-          "unit_price": 23.26
-        },
-        {
-          "starting_quantity": 242,
-          "ending_quantity": 40,
-          "unit_price": 23.26
-        }
-      ],
-      "use_site_exchange_rate": false,
-      "tax_included": false,
-      "interval": 24,
-      "interval_unit": "day"
-    }
-  ]
-}
+```php
+use AdvancedBillingLib\Models\Builders\CreateComponentPricePointsRequestBuilder;
+use AdvancedBillingLib\Models\Builders\CreateComponentPricePointBuilder;
+use AdvancedBillingLib\Models\PricingScheme;
+use AdvancedBillingLib\Models\Builders\PriceBuilder;
+use AdvancedBillingLib\Models\IntervalUnit;
+
+$createComponentPricePointsRequest = CreateComponentPricePointsRequestBuilder::init(
+    [
+        CreateComponentPricePointBuilder::init(
+            'name0',
+            PricingScheme::PER_UNIT,
+            [
+                PriceBuilder::init(
+                    242,
+                    23.26
+                )
+                    ->endingQuantity(
+                        40
+                    )
+                    ->build(),
+                PriceBuilder::init(
+                    242,
+                    23.26
+                )
+                    ->endingQuantity(
+                        40
+                    )
+                    ->build(),
+                PriceBuilder::init(
+                    242,
+                    23.26
+                )
+                    ->endingQuantity(
+                        40
+                    )
+                    ->build()
+            ]
+        )
+            ->handle('handle6')
+            ->useSiteExchangeRate(false)
+            ->taxIncluded(false)
+            ->interval(24)
+            ->intervalUnit(IntervalUnit::DAY)
+            ->build()
+    ]
+)->build();
 ```
 

@@ -212,7 +212,7 @@ class CreditNoteLineItem implements \JsonSerializable
      * Returns Unit Price.
      * The price per unit for the line item.
      *
-     * When tiered pricing was used (i.e. not every unit was actually priced at the same price) this will
+     * When tiered pricing was used (i.e., not every unit was actually priced at the same price) this will
      * be the blended average cost per unit and the `tiered_unit_price` field will be set to `true`.
      */
     public function getUnitPrice(): ?string
@@ -224,7 +224,7 @@ class CreditNoteLineItem implements \JsonSerializable
      * Sets Unit Price.
      * The price per unit for the line item.
      *
-     * When tiered pricing was used (i.e. not every unit was actually priced at the same price) this will
+     * When tiered pricing was used (i.e., not every unit was actually priced at the same price) this will
      * be the blended average cost per unit and the `tiered_unit_price` field will be set to `true`.
      *
      * @maps unit_price

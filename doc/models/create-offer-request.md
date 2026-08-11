@@ -11,32 +11,41 @@
 |  --- | --- | --- | --- | --- | --- |
 | `offer` | [`CreateOffer`](../../doc/models/create-offer.md) | Required | - | getOffer(): CreateOffer | setOffer(CreateOffer offer): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "offer": {
-    "name": "name4",
-    "handle": "handle0",
-    "description": "description6",
-    "product_id": 30,
-    "product_price_point_id": 150,
-    "components": [
-      {
-        "component_id": 108,
-        "price_point_id": 124,
-        "starting_quantity": 84
-      },
-      {
-        "component_id": 108,
-        "price_point_id": 124,
-        "starting_quantity": 84
-      }
-    ],
-    "coupons": [
-      "coupons6"
-    ]
-  }
-}
+```php
+use AdvancedBillingLib\Models\Builders\CreateOfferRequestBuilder;
+use AdvancedBillingLib\Models\Builders\CreateOfferBuilder;
+use AdvancedBillingLib\Models\Builders\CreateOfferComponentBuilder;
+
+$createOfferRequest = CreateOfferRequestBuilder::init(
+    CreateOfferBuilder::init(
+        'name4',
+        'handle0',
+        30
+    )
+        ->description('description6')
+        ->productPricePointId(150)
+        ->components(
+            [
+                CreateOfferComponentBuilder::init()
+                    ->componentId(108)
+                    ->pricePointId(124)
+                    ->startingQuantity(84)
+                    ->build(),
+                CreateOfferComponentBuilder::init()
+                    ->componentId(108)
+                    ->pricePointId(124)
+                    ->startingQuantity(84)
+                    ->build()
+            ]
+        )
+        ->coupons(
+            [
+                'coupons6'
+            ]
+        )
+        ->build()
+)->build();
 ```
 

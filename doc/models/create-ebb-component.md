@@ -11,35 +11,50 @@
 |  --- | --- | --- | --- | --- | --- |
 | `eventBasedComponent` | [`EBBComponent`](../../doc/models/ebb-component.md) | Required | - | getEventBasedComponent(): EBBComponent | setEventBasedComponent(EBBComponent eventBasedComponent): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "event_based_component": {
-    "name": "name8",
-    "unit_name": "unit_name0",
-    "description": "description8",
-    "handle": "handle4",
-    "taxable": false,
-    "pricing_scheme": "stairstep",
-    "prices": [
-      {
-        "starting_quantity": 242,
-        "ending_quantity": 40,
-        "unit_price": 23.26
-      }
-    ],
-    "price_points": [
-      {
-        "name": "name2",
-        "handle": "handle8",
-        "pricing_scheme": "per_unit",
-        "interval": 92,
-        "interval_unit": "day"
-      }
-    ],
-    "event_based_billing_metric_id": 68
-  }
-}
+```php
+use AdvancedBillingLib\Models\Builders\CreateEBBComponentBuilder;
+use AdvancedBillingLib\Models\Builders\EBBComponentBuilder;
+use AdvancedBillingLib\Models\PricingScheme;
+use AdvancedBillingLib\Models\Builders\PriceBuilder;
+use AdvancedBillingLib\Models\Builders\ComponentPricePointItemBuilder;
+use AdvancedBillingLib\Models\IntervalUnit;
+
+$createEBBComponent = CreateEBBComponentBuilder::init(
+    EBBComponentBuilder::init(
+        'name8',
+        'unit_name0',
+        PricingScheme::STAIRSTEP,
+        68
+    )
+        ->description('description8')
+        ->handle('handle4')
+        ->taxable(false)
+        ->prices(
+            [
+                PriceBuilder::init(
+                    242,
+                    23.26
+                )
+                    ->endingQuantity(
+                        40
+                    )
+                    ->build()
+            ]
+        )
+        ->pricePoints(
+            [
+                ComponentPricePointItemBuilder::init()
+                    ->name('name2')
+                    ->handle('handle8')
+                    ->pricingScheme(PricingScheme::PER_UNIT)
+                    ->interval(92)
+                    ->intervalUnit(IntervalUnit::DAY)
+                    ->build()
+            ]
+        )
+        ->build()
+)->build();
 ```
 

@@ -11,24 +11,30 @@
 |  --- | --- | --- | --- | --- | --- |
 | `pricePoints` | [`CreateProductPricePoint[]`](../../doc/models/create-product-price-point.md) | Required | - | getPricePoints(): array | setPricePoints(array pricePoints): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "price_points": [
-    {
-      "name": "name2",
-      "price_in_cents": 108,
-      "interval": 92,
-      "interval_unit": "day",
-      "use_site_exchange_rate": true,
-      "handle": "handle8",
-      "trial_price_in_cents": 196,
-      "trial_interval": 250,
-      "trial_interval_unit": "day",
-      "trial_type": "no_obligation"
-    }
-  ]
-}
+```php
+use AdvancedBillingLib\Models\Builders\BulkCreateProductPricePointsRequestBuilder;
+use AdvancedBillingLib\Models\Builders\CreateProductPricePointBuilder;
+use AdvancedBillingLib\Models\IntervalUnit;
+use AdvancedBillingLib\Models\TrialType;
+
+$bulkCreateProductPricePointsRequest = BulkCreateProductPricePointsRequestBuilder::init(
+    [
+        CreateProductPricePointBuilder::init(
+            'name2',
+            108,
+            92,
+            IntervalUnit::DAY
+        )
+            ->handle('handle8')
+            ->trialPriceInCents(196)
+            ->trialInterval(250)
+            ->trialIntervalUnit(IntervalUnit::DAY)
+            ->trialType(TrialType::NO_OBLIGATION)
+            ->useSiteExchangeRate(true)
+            ->build()
+    ]
+)->build();
 ```
 

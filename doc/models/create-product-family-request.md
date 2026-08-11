@@ -11,15 +11,20 @@
 |  --- | --- | --- | --- | --- | --- |
 | `productFamily` | [`CreateProductFamily`](../../doc/models/create-product-family.md) | Required | - | getProductFamily(): CreateProductFamily | setProductFamily(CreateProductFamily productFamily): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "product_family": {
-    "name": "name0",
-    "handle": "handle6",
-    "description": "description0"
-  }
-}
+```php
+use AdvancedBillingLib\Models\Builders\CreateProductFamilyRequestBuilder;
+use AdvancedBillingLib\Models\Builders\CreateProductFamilyBuilder;
+
+$createProductFamilyRequest = CreateProductFamilyRequestBuilder::init(
+    CreateProductFamilyBuilder::init(
+        'name0'
+    )
+        ->handle('handle6')
+        ->description('description0')
+        ->surcharging(false)
+        ->build()
+)->build();
 ```
 

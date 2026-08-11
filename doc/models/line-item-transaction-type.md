@@ -19,3 +19,11 @@ A handle for the line item transaction type
 | `INFO_TRANSACTION` |
 | `PAYMENT_AUTHORIZATION` |
 
+## Example
+
+```php
+use AdvancedBillingLib\Models\LineItemTransactionType;
+
+$lineItemTransactionType = LineItemTransactionType::PAYMENT;
+```
+

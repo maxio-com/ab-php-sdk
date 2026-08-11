@@ -14,30 +14,41 @@
 | `openInvoices` | [`?AccountBalance`](../../doc/models/account-balance.md) | Optional | - | getOpenInvoices(): ?AccountBalance | setOpenInvoices(?AccountBalance openInvoices): void |
 | `pendingDiscounts` | [`?AccountBalance`](../../doc/models/account-balance.md) | Optional | - | getPendingDiscounts(): ?AccountBalance | setPendingDiscounts(?AccountBalance pendingDiscounts): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "prepayments": {
-    "balance_in_cents": 192,
-    "automatic_balance_in_cents": 178,
-    "remittance_balance_in_cents": 146
-  },
-  "service_credits": {
-    "balance_in_cents": 84,
-    "automatic_balance_in_cents": 70,
-    "remittance_balance_in_cents": 38
-  },
-  "open_invoices": {
-    "balance_in_cents": 40,
-    "automatic_balance_in_cents": 202,
-    "remittance_balance_in_cents": 170
-  },
-  "pending_discounts": {
-    "balance_in_cents": 88,
-    "automatic_balance_in_cents": 154,
-    "remittance_balance_in_cents": 134
-  }
-}
+```php
+use AdvancedBillingLib\Models\Builders\SubscriptionGroupBalancesBuilder;
+use AdvancedBillingLib\Models\Builders\AccountBalanceBuilder;
+
+$subscriptionGroupBalances = SubscriptionGroupBalancesBuilder::init()
+    ->prepayments(
+        AccountBalanceBuilder::init()
+            ->balanceInCents(192)
+            ->automaticBalanceInCents(178)
+            ->remittanceBalanceInCents(146)
+            ->build()
+    )
+    ->serviceCredits(
+        AccountBalanceBuilder::init()
+            ->balanceInCents(84)
+            ->automaticBalanceInCents(70)
+            ->remittanceBalanceInCents(38)
+            ->build()
+    )
+    ->openInvoices(
+        AccountBalanceBuilder::init()
+            ->balanceInCents(40)
+            ->automaticBalanceInCents(202)
+            ->remittanceBalanceInCents(170)
+            ->build()
+    )
+    ->pendingDiscounts(
+        AccountBalanceBuilder::init()
+            ->balanceInCents(88)
+            ->automaticBalanceInCents(154)
+            ->remittanceBalanceInCents(134)
+            ->build()
+    )
+    ->build();
 ```
 

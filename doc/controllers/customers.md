@@ -130,6 +130,7 @@ try {
     "portal_invite_last_sent_at": null,
     "portal_invite_last_accepted_at": null,
     "tax_exempt": false,
+    "surcharging": false,
     "vat_number": null,
     "parent_id": null,
     "locale": "en-US"
@@ -236,7 +237,8 @@ try {
       "portal_customer_created_at": "2016-10-04T15:22:29-04:00",
       "portal_invite_last_sent_at": "2016-10-04T15:22:30-04:00",
       "portal_invite_last_accepted_at": null,
-      "tax_exempt": false
+      "tax_exempt": false,
+      "surcharging": false
     }
   },
   {
@@ -262,6 +264,7 @@ try {
       "portal_invite_last_sent_at": "2016-10-13T16:52:54-04:00",
       "portal_invite_last_accepted_at": null,
       "tax_exempt": false,
+      "surcharging": true,
       "parent_id": 123
     }
   },
@@ -288,6 +291,7 @@ try {
       "portal_invite_last_sent_at": "2016-10-19T10:49:19-04:00",
       "portal_invite_last_accepted_at": null,
       "tax_exempt": false,
+      "surcharging": false,
       "parent_id": null
     }
   }
@@ -363,6 +367,7 @@ try {
     "portal_invite_last_sent_at": null,
     "portal_invite_last_accepted_at": null,
     "tax_exempt": false,
+    "surcharging": false,
     "vat_number": null,
     "parent_id": null,
     "locale": "es-MX",
@@ -453,6 +458,7 @@ try {
     "portal_invite_last_sent_at": null,
     "portal_invite_last_accepted_at": null,
     "tax_exempt": false,
+    "surcharging": false,
     "vat_number": "012345678"
   }
 }
@@ -549,6 +555,8 @@ try {
 # List Customer Subscriptions
 
 Lists all subscriptions that belong to a customer.
+
+If you have the new [Catalog experience](page:help/announcements/2026-announcements#new-catalog-experience-and-terminology) enabled, subscriptions no longer require an associated product. For subscriptions without an associated product, 'product', 'product_price_point_id', and 'product_price_point_type' are returned as 'null'.
 
 ```php
 function listCustomerSubscriptions(int $customerId): array

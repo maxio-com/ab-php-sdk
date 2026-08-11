@@ -15,3 +15,11 @@ Role for the price.
 | `TRIAL` |
 | `INITIAL` |
 
+## Example
+
+```php
+use AdvancedBillingLib\Models\CurrencyPriceRole;
+
+$currencyPriceRole = CurrencyPriceRole::INITIAL;
+```
+

@@ -14,3 +14,11 @@
 | `SHIPPING_ONLY` |
 | `BILLING_ONLY` |
 
+## Example
+
+```php
+use AdvancedBillingLib\Models\TaxDestinationAddress;
+
+$taxDestinationAddress = TaxDestinationAddress::SHIPPING_ONLY;
+```
+

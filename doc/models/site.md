@@ -30,15 +30,17 @@
 | `portalEnabled` | `?bool` | Optional | Whether the Billing Portal is enabled for this site. | getPortalEnabled(): ?bool | setPortalEnabled(?bool portalEnabled): void |
 | `test` | `?bool` | Optional | - | getTest(): ?bool | setTest(?bool test): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "id": 34,
-  "name": "name0",
-  "subdomain": "subdomain4",
-  "currency": "currency0",
-  "seller_id": 198
-}
+```php
+use AdvancedBillingLib\Models\Builders\SiteBuilder;
+
+$site = SiteBuilder::init()
+    ->id(64)
+    ->name('name4')
+    ->subdomain('subdomain0')
+    ->currency('currency4')
+    ->sellerId(228)
+    ->build();
 ```
 

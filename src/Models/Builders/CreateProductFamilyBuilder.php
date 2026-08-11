@@ -81,6 +81,17 @@ class CreateProductFamilyBuilder
     }
 
     /**
+     * Sets surcharging field.
+     *
+     * @param bool|null $value
+     */
+    public function surcharging(?bool $value): self
+    {
+        $this->instance->setSurcharging($value);
+        return $this;
+    }
+
+    /**
      * Add an additional property to this model.
      *
      * @param string $name Name of property.

@@ -15,15 +15,18 @@
 | `currencyCode` | `string` | Required | - | getCurrencyCode(): string | setCurrencyCode(string currencyCode): void |
 | `atTime` | `DateTime` | Required | - | getAtTime(): \DateTime | setAtTime(\DateTime atTime): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "reason": "reason8",
-  "service_credit_account_balance_in_cents": 10,
-  "service_credit_balance_change_in_cents": 116,
-  "currency_code": "currency_code8",
-  "at_time": "2016-03-13T12:52:32.123Z"
-}
+```php
+use AdvancedBillingLib\Models\Builders\CreditAccountBalanceChangedBuilder;
+use AdvancedBillingLib\Utils\DateTimeHelper;
+
+$creditAccountBalanceChanged = CreditAccountBalanceChangedBuilder::init(
+    'reason4',
+    216,
+    166,
+    'currency_code6',
+    DateTimeHelper::fromRfc3339DateTimeRequired('2016-03-13T12:52:32.123Z')
+)->build();
 ```
 

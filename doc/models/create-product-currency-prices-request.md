@@ -11,17 +11,21 @@
 |  --- | --- | --- | --- | --- | --- |
 | `currencyPrices` | [`CreateProductCurrencyPrice[]`](../../doc/models/create-product-currency-price.md) | Required | - | getCurrencyPrices(): array | setCurrencyPrices(array currencyPrices): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "currency_prices": [
-    {
-      "currency": "currency8",
-      "price": 78,
-      "role": "initial"
-    }
-  ]
-}
+```php
+use AdvancedBillingLib\Models\Builders\CreateProductCurrencyPricesRequestBuilder;
+use AdvancedBillingLib\Models\Builders\CreateProductCurrencyPriceBuilder;
+use AdvancedBillingLib\Models\CurrencyPriceRole;
+
+$createProductCurrencyPricesRequest = CreateProductCurrencyPricesRequestBuilder::init(
+    [
+        CreateProductCurrencyPriceBuilder::init(
+            'currency8',
+            78,
+            CurrencyPriceRole::INITIAL
+        )->build()
+    ]
+)->build();
 ```
 

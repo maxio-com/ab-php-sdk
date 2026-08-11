@@ -91,6 +91,11 @@ class OnOffComponent implements \JsonSerializable
     private $intervalUnit = [];
 
     /**
+     * @var array
+     */
+    private $unspscCode = [];
+
+    /**
      * @param string $name
      * @param string|float $unitPrice
      */
@@ -103,7 +108,7 @@ class OnOffComponent implements \JsonSerializable
     /**
      * Returns Name.
      * A name for this component that is suitable for showing customers and displaying on billing
-     * statements, ie. "Minutes".
+     * statements, e.g., "Minutes".
      */
     public function getName(): string
     {
@@ -113,7 +118,7 @@ class OnOffComponent implements \JsonSerializable
     /**
      * Sets Name.
      * A name for this component that is suitable for showing customers and displaying on billing
-     * statements, ie. "Minutes".
+     * statements, e.g., "Minutes".
      *
      * @required
      * @maps name
@@ -145,7 +150,7 @@ class OnOffComponent implements \JsonSerializable
 
     /**
      * Returns Handle.
-     * A unique identifier for your use that can be used to retrieve this component is subsequent requests.
+     * A unique identifier for your use that can be used to retrieve this component in subsequent requests.
      * Must start with a letter or number and may only contain lowercase letters, numbers, or the
      * characters '.', ':', '-', or '_'.
      */
@@ -156,7 +161,7 @@ class OnOffComponent implements \JsonSerializable
 
     /**
      * Sets Handle.
-     * A unique identifier for your use that can be used to retrieve this component is subsequent requests.
+     * A unique identifier for your use that can be used to retrieve this component in subsequent requests.
      * Must start with a letter or number and may only contain lowercase letters, numbers, or the
      * characters '.', ':', '-', or '_'.
      *
@@ -284,7 +289,7 @@ class OnOffComponent implements \JsonSerializable
     /**
      * Returns Unit Price.
      * This is the amount that the customer will be charged when they turn the component on for the
-     * subscription. The price can contain up to 8 decimal places. i.e. 1.00 or 0.0012 or 0.00000065
+     * subscription. The price can contain up to 8 decimal places. e.g., 1.00 or 0.0012 or 0.00000065
      *
      * @return string|float
      */
@@ -296,7 +301,7 @@ class OnOffComponent implements \JsonSerializable
     /**
      * Sets Unit Price.
      * This is the amount that the customer will be charged when they turn the component on for the
-     * subscription. The price can contain up to 8 decimal places. i.e. 1.00 or 0.0012 or 0.00000065
+     * subscription. The price can contain up to 8 decimal places. e.g., 1.00 or 0.0012 or 0.00000065
      *
      * @required
      * @maps unit_price
@@ -413,7 +418,7 @@ class OnOffComponent implements \JsonSerializable
 
     /**
      * Returns Interval.
-     * The numerical interval. i.e. an interval of ‘30’ coupled with an interval_unit of day would mean
+     * The numerical interval. e.g., an interval of ‘30’ coupled with an interval_unit of day would mean
      * this component's default price point would renew every 30 days. This property is only available for
      * sites with Multifrequency enabled.
      */
@@ -424,7 +429,7 @@ class OnOffComponent implements \JsonSerializable
 
     /**
      * Sets Interval.
-     * The numerical interval. i.e. an interval of ‘30’ coupled with an interval_unit of day would mean
+     * The numerical interval. e.g., an interval of ‘30’ coupled with an interval_unit of day would mean
      * this component's default price point would renew every 30 days. This property is only available for
      * sites with Multifrequency enabled.
      *
@@ -472,6 +477,44 @@ class OnOffComponent implements \JsonSerializable
     }
 
     /**
+     * Returns Unspsc Code.
+     * (Optional) Custom UNSPSC commodity code for Level 3/CEDP payment data. When set, this value is sent
+     * as the commodity code on invoice line items for this component instead of the default derived from
+     * item_category.
+     */
+    public function getUnspscCode(): ?string
+    {
+        if (count($this->unspscCode) == 0) {
+            return null;
+        }
+        return $this->unspscCode['value'];
+    }
+
+    /**
+     * Sets Unspsc Code.
+     * (Optional) Custom UNSPSC commodity code for Level 3/CEDP payment data. When set, this value is sent
+     * as the commodity code on invoice line items for this component instead of the default derived from
+     * item_category.
+     *
+     * @maps unspsc_code
+     */
+    public function setUnspscCode(?string $unspscCode): void
+    {
+        $this->unspscCode['value'] = $unspscCode;
+    }
+
+    /**
+     * Unsets Unspsc Code.
+     * (Optional) Custom UNSPSC commodity code for Level 3/CEDP payment data. When set, this value is sent
+     * as the commodity code on invoice line items for this component instead of the default derived from
+     * item_category.
+     */
+    public function unsetUnspscCode(): void
+    {
+        $this->unspscCode = [];
+    }
+
+    /**
      * Converts the OnOffComponent object to a human-readable string representation.
      *
      * @return string The string representation of the OnOffComponent object.
@@ -496,6 +539,7 @@ class OnOffComponent implements \JsonSerializable
                 'publicSignupPageIds' => $this->publicSignupPageIds,
                 'interval' => $this->interval,
                 'intervalUnit' => $this->getIntervalUnit(),
+                'unspscCode' => $this->getUnspscCode(),
                 'additionalProperties' => $this->additionalProperties
             ]
         );
@@ -585,6 +629,9 @@ class OnOffComponent implements \JsonSerializable
         }
         if (!empty($this->intervalUnit)) {
             $json['interval_unit']               = IntervalUnit::checkValue($this->intervalUnit['value']);
+        }
+        if (!empty($this->unspscCode)) {
+            $json['unspsc_code']                 = $this->unspscCode['value'];
         }
         $json = array_merge($json, $this->additionalProperties);
 

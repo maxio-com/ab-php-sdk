@@ -1,9 +1,9 @@
 
-# List Subcription Group Prepayment Item
+# List Subscription Group Prepayment Item
 
 ## Structure
 
-`ListSubcriptionGroupPrepaymentItem`
+`ListSubscriptionGroupPrepaymentItem`
 
 ## Fields
 
@@ -19,15 +19,17 @@
 | `paymentType` | [`?string(PrepaymentMethod)`](../../doc/models/prepayment-method.md) | Optional | - | getPaymentType(): ?string | setPaymentType(?string paymentType): void |
 | `createdAt` | `?DateTime` | Optional | - | getCreatedAt(): ?\DateTime | setCreatedAt(?\DateTime createdAt): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "id": 254,
-  "subscription_group_uid": "subscription_group_uid6",
-  "amount_in_cents": 172,
-  "remaining_amount_in_cents": 142,
-  "details": "details2"
-}
+```php
+use AdvancedBillingLib\Models\Builders\ListSubscriptionGroupPrepaymentItemBuilder;
+
+$listSubscriptionGroupPrepaymentItem = ListSubscriptionGroupPrepaymentItemBuilder::init()
+    ->id(72)
+    ->subscriptionGroupUid('subscription_group_uid6')
+    ->amountInCents(98)
+    ->remainingAmountInCents(216)
+    ->details('details2')
+    ->build();
 ```
 

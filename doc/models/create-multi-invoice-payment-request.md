@@ -11,23 +11,29 @@
 |  --- | --- | --- | --- | --- | --- |
 | `payment` | [`CreateMultiInvoicePayment`](../../doc/models/create-multi-invoice-payment.md) | Required | - | getPayment(): CreateMultiInvoicePayment | setPayment(CreateMultiInvoicePayment payment): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "payment": {
-    "amount": "String9",
-    "applications": [
-      {
-        "invoice_uid": "invoice_uid8",
-        "amount": "amount0"
-      }
-    ],
-    "memo": "memo0",
-    "details": "details6",
-    "method": "ach",
-    "received_on": "received_on8"
-  }
-}
+```php
+use AdvancedBillingLib\Models\Builders\CreateMultiInvoicePaymentRequestBuilder;
+use AdvancedBillingLib\Models\Builders\CreateMultiInvoicePaymentBuilder;
+use AdvancedBillingLib\Models\Builders\CreateInvoicePaymentApplicationBuilder;
+use AdvancedBillingLib\Models\InvoicePaymentMethodType;
+
+$createMultiInvoicePaymentRequest = CreateMultiInvoicePaymentRequestBuilder::init(
+    CreateMultiInvoicePaymentBuilder::init(
+        'String9',
+        [
+            CreateInvoicePaymentApplicationBuilder::init(
+                'invoice_uid8',
+                'amount0'
+            )->build()
+        ]
+    )
+        ->memo('memo0')
+        ->details('details6')
+        ->method(InvoicePaymentMethodType::ACH)
+        ->receivedOn('received_on8')
+        ->build()
+)->build();
 ```
 

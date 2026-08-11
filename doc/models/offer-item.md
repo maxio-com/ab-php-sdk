@@ -17,18 +17,20 @@
 | `componentName` | `?string` | Optional | - | getComponentName(): ?string | setComponentName(?string componentName): void |
 | `pricePointName` | `?string` | Optional | - | getPricePointName(): ?string | setPricePointName(?string pricePointName): void |
 | `currencyPrices` | [`?(CurrencyPrice[])`](../../doc/models/currency-price.md) | Optional | - | getCurrencyPrices(): ?array | setCurrencyPrices(?array currencyPrices): void |
-| `interval` | `?int` | Optional | The numerical interval. i.e. an interval of '30' coupled with an interval_unit of day would mean this component price point would renew every 30 days. This property is only available for sites with Multifrequency enabled. | getInterval(): ?int | setInterval(?int interval): void |
+| `interval` | `?int` | Optional | The numerical interval. e.g., an interval of '30' coupled with an interval_unit of day would mean this component price point would renew every 30 days. This property is only available for sites with Multifrequency enabled. | getInterval(): ?int | setInterval(?int interval): void |
 | `intervalUnit` | [`?string(IntervalUnit)`](../../doc/models/interval-unit.md) | Optional | A string representing the interval unit for this component price point, either month or day. This property is only available for sites with Multifrequency enabled. | getIntervalUnit(): ?string | setIntervalUnit(?string intervalUnit): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "component_id": 216,
-  "price_point_id": 16,
-  "starting_quantity": "starting_quantity0",
-  "editable": false,
-  "component_unit_price": "component_unit_price8"
-}
+```php
+use AdvancedBillingLib\Models\Builders\OfferItemBuilder;
+
+$offerItem = OfferItemBuilder::init()
+    ->componentId(234)
+    ->pricePointId(254)
+    ->startingQuantity('starting_quantity6')
+    ->editable(false)
+    ->componentUnitPrice('component_unit_price2')
+    ->build();
 ```
 

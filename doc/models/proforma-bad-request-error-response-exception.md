@@ -11,18 +11,15 @@
 |  --- | --- | --- | --- | --- | --- |
 | `errors` | [`?ProformaError`](../../doc/models/proforma-error.md) | Optional | - | getErrors(): ?ProformaError | setErrors(?ProformaError errors): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "errors": {
-    "subscription": {
-      "base": [
-        "base3",
-        "base4"
-      ]
-    }
-  }
+```php
+try {
+    // make the API call
+} catch (ProformaBadRequestErrorResponseException $exp) {
+    echo 'Caught ProformaBadRequestErrorResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught ApiException:', $exp;
 }
 ```
 

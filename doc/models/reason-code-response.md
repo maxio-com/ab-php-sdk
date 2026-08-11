@@ -11,17 +11,20 @@
 |  --- | --- | --- | --- | --- | --- |
 | `reasonCode` | [`ReasonCode`](../../doc/models/reason-code.md) | Required | - | getReasonCode(): ReasonCode | setReasonCode(ReasonCode reasonCode): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "reason_code": {
-    "id": 240,
-    "site_id": 166,
-    "code": "code4",
-    "description": "description6",
-    "position": 14
-  }
-}
+```php
+use AdvancedBillingLib\Models\Builders\ReasonCodeResponseBuilder;
+use AdvancedBillingLib\Models\Builders\ReasonCodeBuilder;
+
+$reasonCodeResponse = ReasonCodeResponseBuilder::init(
+    ReasonCodeBuilder::init()
+        ->id(240)
+        ->siteId(166)
+        ->code('code4')
+        ->description('description6')
+        ->position(14)
+        ->build()
+)->build();
 ```
 

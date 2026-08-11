@@ -78,7 +78,7 @@ class CreateMetafield implements \JsonSerializable
     /**
      * Returns Input Type.
      * Indicates the type of metafield. A text metafield allows any string value. Dropdown and radio
-     * metafields have a set of values that can be selected.  Defaults to 'text'.
+     * metafields have a set of values that can be selected. Defaults to 'text'.
      */
     public function getInputType(): ?string
     {
@@ -88,7 +88,7 @@ class CreateMetafield implements \JsonSerializable
     /**
      * Sets Input Type.
      * Indicates the type of metafield. A text metafield allows any string value. Dropdown and radio
-     * metafields have a set of values that can be selected.  Defaults to 'text'.
+     * metafields have a set of values that can be selected. Defaults to 'text'.
      *
      * @maps input_type
      * @factory \AdvancedBillingLib\Models\MetafieldInput::checkValue

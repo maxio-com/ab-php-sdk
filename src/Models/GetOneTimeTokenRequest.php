@@ -16,22 +16,24 @@ use stdClass;
 class GetOneTimeTokenRequest implements \JsonSerializable
 {
     /**
-     * @var GetOneTimeTokenPaymentProfile
+     * @var GetOneTimeTokenPaymentProfile|GetOneTimeTokenBankAccountPaymentProfile
      */
     private $paymentProfile;
 
     /**
-     * @param GetOneTimeTokenPaymentProfile $paymentProfile
+     * @param GetOneTimeTokenPaymentProfile|GetOneTimeTokenBankAccountPaymentProfile $paymentProfile
      */
-    public function __construct(GetOneTimeTokenPaymentProfile $paymentProfile)
+    public function __construct($paymentProfile)
     {
         $this->paymentProfile = $paymentProfile;
     }
 
     /**
      * Returns Payment Profile.
+     *
+     * @return GetOneTimeTokenPaymentProfile|GetOneTimeTokenBankAccountPaymentProfile
      */
-    public function getPaymentProfile(): GetOneTimeTokenPaymentProfile
+    public function getPaymentProfile()
     {
         return $this->paymentProfile;
     }
@@ -41,8 +43,11 @@ class GetOneTimeTokenRequest implements \JsonSerializable
      *
      * @required
      * @maps payment_profile
+     * @mapsBy anyOf(GetOneTimeTokenPaymentProfile,GetOneTimeTokenBankAccountPaymentProfile)
+     *
+     * @param GetOneTimeTokenPaymentProfile|GetOneTimeTokenBankAccountPaymentProfile $paymentProfile
      */
-    public function setPaymentProfile(GetOneTimeTokenPaymentProfile $paymentProfile): void
+    public function setPaymentProfile($paymentProfile): void
     {
         $this->paymentProfile = $paymentProfile;
     }
@@ -100,7 +105,11 @@ class GetOneTimeTokenRequest implements \JsonSerializable
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
-        $json['payment_profile'] = $this->paymentProfile;
+        $json['payment_profile'] =
+            ApiHelper::getJsonHelper()->verifyTypes(
+                $this->paymentProfile,
+                'anyOf(GetOneTimeTokenPaymentProfile,GetOneTimeTokenBankAccountPaymentProfile)'
+            );
         $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;

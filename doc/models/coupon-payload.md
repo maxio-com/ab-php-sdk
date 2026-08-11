@@ -10,10 +10,10 @@
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
 | `name` | `?string` | Optional | Required when creating a new coupon. This name is not displayed to customers and is limited to 255 characters. | getName(): ?string | setName(?string name): void |
-| `code` | `?string` | Optional | Required when creating a new coupon. The code is limited to 255 characters. May contain uppercase alphanumeric characters and these special characters (which allow for email addresses to be used): “%”, “@”, “+”, “-”, “_”, and “.” | getCode(): ?string | setCode(?string code): void |
+| `code` | `?string` | Optional | Required when creating a new coupon. The code is limited to 255 characters. May contain uppercase alphanumeric characters and these special characters (which allow for email addresses to be used): “%”, “@”, “+”, “-”, “_”, and “.”. | getCode(): ?string | setCode(?string code): void |
 | `description` | `?string` | Optional | Required when creating a new coupon. A description of the coupon that can be displayed to customers in transactions and on statements. The description is limited to 255 characters. | getDescription(): ?string | setDescription(?string description): void |
 | `percentage` | string\|float\|null | Optional | This is a container for one-of cases. | getPercentage(): | setPercentage( percentage): void |
-| `amountInCents` | `?int` | Optional | Required when creating a new flat amount coupon. Can't be used together with percentage. Flat USD discount | getAmountInCents(): ?int | setAmountInCents(?int amountInCents): void |
+| `amountInCents` | `?int` | Optional | Required when creating a new flat amount coupon. Can't be used together with percentage. Flat USD discount. | getAmountInCents(): ?int | setAmountInCents(?int amountInCents): void |
 | `allowNegativeBalance` | `?bool` | Optional | If set to true, discount is not limited (credits will carry forward to next billing). Can't be used together with restrictions. | getAllowNegativeBalance(): ?bool | setAllowNegativeBalance(?bool allowNegativeBalance): void |
 | `recurring` | `?bool` | Optional | - | getRecurring(): ?bool | setRecurring(?bool recurring): void |
 | `endDate` | `?DateTime` | Optional | After the end of the given day, this coupon code will be invalid for new signups. Recurring discounts started before this date will continue to recur even after this date. | getEndDate(): ?\DateTime | setEndDate(?\DateTime endDate): void |
@@ -24,15 +24,19 @@
 | `applyOnCancelAtEndOfPeriod` | `?bool` | Optional | - | getApplyOnCancelAtEndOfPeriod(): ?bool | setApplyOnCancelAtEndOfPeriod(?bool applyOnCancelAtEndOfPeriod): void |
 | `applyOnSubscriptionExpiration` | `?bool` | Optional | - | getApplyOnSubscriptionExpiration(): ?bool | setApplyOnSubscriptionExpiration(?bool applyOnSubscriptionExpiration): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "name": "name8",
-  "code": "code6",
-  "description": "description8",
-  "percentage": "String7",
-  "amount_in_cents": 110
-}
+```php
+use AdvancedBillingLib\Models\Builders\CouponPayloadBuilder;
+
+$couponPayload = CouponPayloadBuilder::init()
+    ->name('name8')
+    ->code('code6')
+    ->description('description2')
+    ->percentage(
+        'String7'
+    )
+    ->amountInCents(124)
+    ->build();
 ```
 

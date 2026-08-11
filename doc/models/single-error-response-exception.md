@@ -11,11 +11,15 @@
 |  --- | --- | --- | --- | --- | --- |
 | `error` | `string` | Required | - | getError(): string | setError(string error): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "error": "error2"
+```php
+try {
+    // make the API call
+} catch (SingleErrorResponseException $exp) {
+    echo 'Caught SingleErrorResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught ApiException:', $exp;
 }
 ```
 

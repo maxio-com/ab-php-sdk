@@ -12,43 +12,35 @@
 | `subscriptionGroups` | [`?(ListSubscriptionGroupsItem[])`](../../doc/models/list-subscription-groups-item.md) | Optional | - | getSubscriptionGroups(): ?array | setSubscriptionGroups(?array subscriptionGroups): void |
 | `meta` | [`?ListSubscriptionGroupsMeta`](../../doc/models/list-subscription-groups-meta.md) | Optional | - | getMeta(): ?ListSubscriptionGroupsMeta | setMeta(?ListSubscriptionGroupsMeta meta): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "subscription_groups": [
-    {
-      "uid": "uid2",
-      "scheme": 166,
-      "customer_id": 186,
-      "payment_profile_id": 162,
-      "subscription_ids": [
-        40
-      ]
-    },
-    {
-      "uid": "uid2",
-      "scheme": 166,
-      "customer_id": 186,
-      "payment_profile_id": 162,
-      "subscription_ids": [
-        40
-      ]
-    },
-    {
-      "uid": "uid2",
-      "scheme": 166,
-      "customer_id": 186,
-      "payment_profile_id": 162,
-      "subscription_ids": [
-        40
-      ]
-    }
-  ],
-  "meta": {
-    "current_page": 126,
-    "total_count": 150
-  }
-}
+```php
+use AdvancedBillingLib\Models\Builders\ListSubscriptionGroupsResponseBuilder;
+use AdvancedBillingLib\Models\Builders\ListSubscriptionGroupsItemBuilder;
+use AdvancedBillingLib\Models\Builders\ListSubscriptionGroupsMetaBuilder;
+
+$listSubscriptionGroupsResponse = ListSubscriptionGroupsResponseBuilder::init()
+    ->subscriptionGroups(
+        [
+            ListSubscriptionGroupsItemBuilder::init()
+                ->uid('uid2')
+                ->scheme(166)
+                ->customerId(186)
+                ->paymentProfileId(162)
+                ->subscriptionIds(
+                    [
+                        40
+                    ]
+                )
+                ->build()
+        ]
+    )
+    ->meta(
+        ListSubscriptionGroupsMetaBuilder::init()
+            ->currentPage(126)
+            ->totalCount(150)
+            ->build()
+    )
+    ->build();
 ```
 

@@ -14,14 +14,16 @@
 | `prepaymentAccountBalanceInCents` | `int` | Required | - | getPrepaymentAccountBalanceInCents(): int | setPrepaymentAccountBalanceInCents(int prepaymentAccountBalanceInCents): void |
 | `currentUsageAmountInCents` | `int` | Required | - | getCurrentUsageAmountInCents(): int | setCurrentUsageAmountInCents(int currentUsageAmountInCents): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "reason": "reason8",
-  "current_account_balance_in_cents": 250,
-  "prepayment_account_balance_in_cents": 44,
-  "current_usage_amount_in_cents": 242
-}
+```php
+use AdvancedBillingLib\Models\Builders\PrepaidSubscriptionBalanceChangedBuilder;
+
+$prepaidSubscriptionBalanceChanged = PrepaidSubscriptionBalanceChangedBuilder::init(
+    'reason6',
+    194,
+    100,
+    186
+)->build();
 ```
 

@@ -18,3 +18,11 @@ The process used to cancel the subscription, if the subscription has been cancel
 | `UNKNOWN` |
 | `IMPORTED` |
 
+## Example
+
+```php
+use AdvancedBillingLib\Models\CancellationMethod;
+
+$cancellationMethod = CancellationMethod::MERCHANT_UI;
+```
+

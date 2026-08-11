@@ -11,14 +11,16 @@
 |  --- | --- | --- | --- | --- | --- |
 | `attribute` | `string[]` | Required | - | getAttribute(): array | setAttribute(array attribute): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "attribute": [
-    "attribute6",
-    "attribute7"
-  ]
-}
+```php
+use AdvancedBillingLib\Models\Builders\AttributeErrorBuilder;
+
+$attributeError = AttributeErrorBuilder::init(
+    [
+        'attribute8',
+        'attribute7'
+    ]
+)->build();
 ```
 

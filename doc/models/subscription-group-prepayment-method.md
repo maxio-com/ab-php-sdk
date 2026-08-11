@@ -16,3 +16,11 @@
 | `PAYPAL_ACCOUNT` |
 | `OTHER` |
 
+## Example
+
+```php
+use AdvancedBillingLib\Models\SubscriptionGroupPrepaymentMethod;
+
+$subscriptionGroupPrepaymentMethod = SubscriptionGroupPrepaymentMethod::CHECK;
+```
+

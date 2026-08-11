@@ -14,14 +14,16 @@
 | `lastName` | `?string` | Optional | - | getLastName(): ?string | setLastName(?string lastName): void |
 | `maskedCardNumber` | `?string` | Optional | - | getMaskedCardNumber(): ?string | setMaskedCardNumber(?string maskedCardNumber): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "id": 22,
-  "first_name": "first_name4",
-  "last_name": "last_name2",
-  "masked_card_number": "masked_card_number2"
-}
+```php
+use AdvancedBillingLib\Models\Builders\SubscriptionGroupPaymentProfileBuilder;
+
+$subscriptionGroupPaymentProfile = SubscriptionGroupPaymentProfileBuilder::init()
+    ->id(246)
+    ->firstName('first_name6')
+    ->lastName('last_name4')
+    ->maskedCardNumber('masked_card_number4')
+    ->build();
 ```
 

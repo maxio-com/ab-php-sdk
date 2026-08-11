@@ -14,14 +14,17 @@
 | `gatewayHandle` | `?string` | Optional | - | getGatewayHandle(): ?string | setGatewayHandle(?string gatewayHandle): void |
 | `customerVaultToken` | `?string` | Optional | - | getCustomerVaultToken(): ?string | setCustomerVaultToken(?string customerVaultToken): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "id": 72,
-  "vault_token": "vault_token2",
-  "gateway_handle": "gateway_handle8",
-  "customer_vault_token": "customer_vault_token8"
-}
+```php
+use AdvancedBillingLib\Models\Builders\TokenizedPaymentProfileBuilder;
+
+$tokenizedPaymentProfile = TokenizedPaymentProfileBuilder::init(
+    116
+)
+    ->vaultToken('vault_token0')
+    ->gatewayHandle('gateway_handle0')
+    ->customerVaultToken('customer_vault_token6')
+    ->build();
 ```
 

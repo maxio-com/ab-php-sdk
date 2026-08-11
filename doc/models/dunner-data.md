@@ -16,16 +16,19 @@
 | `attempts` | `int` | Required | - | getAttempts(): int | setAttempts(int attempts): void |
 | `lastAttemptedAt` | `DateTime` | Required | - | getLastAttemptedAt(): \DateTime | setLastAttemptedAt(\DateTime lastAttemptedAt): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "state": "state4",
-  "subscription_id": 126,
-  "revenue_at_risk_in_cents": 30,
-  "created_at": "2016-03-13T12:52:32.123Z",
-  "attempts": 110,
-  "last_attempted_at": "2016-03-13T12:52:32.123Z"
-}
+```php
+use AdvancedBillingLib\Models\Builders\DunnerDataBuilder;
+use AdvancedBillingLib\Utils\DateTimeHelper;
+
+$dunnerData = DunnerDataBuilder::init(
+    'state4',
+    230,
+    134,
+    DateTimeHelper::fromRfc3339DateTimeRequired('2016-03-13T12:52:32.123Z'),
+    6,
+    DateTimeHelper::fromRfc3339DateTimeRequired('2016-03-13T12:52:32.123Z')
+)->build();
 ```
 

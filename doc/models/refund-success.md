@@ -13,13 +13,15 @@
 | `gatewayTransactionId` | `int` | Required | - | getGatewayTransactionId(): int | setGatewayTransactionId(int gatewayTransactionId): void |
 | `productId` | `int` | Required | - | getProductId(): int | setProductId(int productId): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "refund_id": 12,
-  "gateway_transaction_id": 182,
-  "product_id": 168
-}
+```php
+use AdvancedBillingLib\Models\Builders\RefundSuccessBuilder;
+
+$refundSuccess = RefundSuccessBuilder::init(
+    34,
+    160,
+    190
+)->build();
 ```
 

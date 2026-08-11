@@ -13,7 +13,9 @@
 
 ## Example
 
-```
-created_at
+```php
+use AdvancedBillingLib\Models\ListEventsDateField;
+
+$listEventsDateField = ListEventsDateField::CREATED_AT;
 ```
 

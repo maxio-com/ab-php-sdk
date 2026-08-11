@@ -36,7 +36,7 @@ class SitesController extends BaseController
      * "whopays_default_payer": "self"
      * You can read more about these settings here:
      * [Who Pays & Customer Hierarchy](https://maxio.zendesk.com/hc/en-us/articles/24252185211533-Customer-
-     * Hierarchies-WhoPays)
+     * Hierarchies-WhoPays).
      *
      * @return SiteResponse Response from the API call
      *
@@ -84,7 +84,7 @@ class SitesController extends BaseController
     }
 
     /**
-     * Returns public keys used for Maxio.js (formerly Chargify.js).
+     * Lists public keys used for Maxio.js (formerly Chargify.js).
      *
      * @param array $options Array with all options for search
      *

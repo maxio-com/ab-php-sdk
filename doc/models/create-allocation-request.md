@@ -11,18 +11,22 @@
 |  --- | --- | --- | --- | --- | --- |
 | `allocation` | [`CreateAllocation`](../../doc/models/create-allocation.md) | Required | - | getAllocation(): CreateAllocation | setAllocation(CreateAllocation allocation): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "allocation": {
-    "quantity": 228.94,
-    "decimal_quantity": "decimal_quantity6",
-    "previous_quantity": 254.04,
-    "decimal_previous_quantity": "decimal_previous_quantity8",
-    "component_id": 8,
-    "memo": "memo2"
-  }
-}
+```php
+use AdvancedBillingLib\Models\Builders\CreateAllocationRequestBuilder;
+use AdvancedBillingLib\Models\Builders\CreateAllocationBuilder;
+
+$createAllocationRequest = CreateAllocationRequestBuilder::init(
+    CreateAllocationBuilder::init(
+        228.94
+    )
+        ->decimalQuantity('decimal_quantity6')
+        ->previousQuantity(254.04)
+        ->decimalPreviousQuantity('decimal_previous_quantity8')
+        ->componentId(8)
+        ->memo('memo2')
+        ->build()
+)->build();
 ```
 

@@ -275,7 +275,7 @@ class SubscriptionComponentsController extends BaseController
     }
 
     /**
-     * Returns the 50 most recent Allocations, ordered by most recent first.
+     * Lists the 50 most recent Allocations, ordered by most recent first.
      *
      * ## On/Off Components
      *
@@ -665,8 +665,8 @@ class SubscriptionComponentsController extends BaseController
     }
 
     /**
-     * Returns a list of usages associated with a subscription for a particular metered component. This
-     * will display the previously recorded components for a subscription.
+     * Lists usages associated with a subscription for a particular metered component. This will display
+     * the previously recorded components for a subscription.
      *
      * This endpoint is not compatible with quantity-based components.
      *
@@ -826,7 +826,8 @@ class SubscriptionComponentsController extends BaseController
      *
      * @param string $apiHandle Identifies the Stream for which the event should be published.
      * @param string|null $storeUid If you've attached your own Keen project as an Advanced Billing
-     *        event data-store, use this parameter to indicate the data-store.
+     *        event data-store, use this parameter to indicate the data-store. This applies to
+     *        Legacy Metering sites only — it has no effect on Maxio Metering sites.
      * @param EBBEvent|null $body
      *
      * @return void Response from the API call
@@ -859,7 +860,8 @@ class SubscriptionComponentsController extends BaseController
      *
      * @param string $apiHandle Identifies the Stream for which the events should be published.
      * @param string|null $storeUid If you've attached your own Keen project as an Advanced Billing
-     *        event data-store, use this parameter to indicate the data-store.
+     *        event data-store, use this parameter to indicate the data-store. This applies to
+     *        Legacy Metering sites only — it has no effect on Maxio Metering sites.
      * @param EBBEvent[]|null $body
      *
      * @return void Response from the API call

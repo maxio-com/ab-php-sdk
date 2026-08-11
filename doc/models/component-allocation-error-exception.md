@@ -11,30 +11,15 @@
 |  --- | --- | --- | --- | --- | --- |
 | `errors` | [`?(ComponentAllocationErrorItem[])`](../../doc/models/component-allocation-error-item.md) | Optional | - | getErrors(): ?array | setErrors(?array errors): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "errors": [
-    {
-      "component_id": 236,
-      "message": "message0",
-      "kind": "kind8",
-      "on": "on0"
-    },
-    {
-      "component_id": 236,
-      "message": "message0",
-      "kind": "kind8",
-      "on": "on0"
-    },
-    {
-      "component_id": 236,
-      "message": "message0",
-      "kind": "kind8",
-      "on": "on0"
-    }
-  ]
+```php
+try {
+    // make the API call
+} catch (ComponentAllocationErrorException $exp) {
+    echo 'Caught ComponentAllocationErrorException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught ApiException:', $exp;
 }
 ```
 

@@ -24,15 +24,18 @@
 | `type` | `?string` | Optional | - | getType(): ?string | setType(?string type): void |
 | `taxExemptAmount` | `?string` | Optional | - | getTaxExemptAmount(): ?string | setTaxExemptAmount(?string taxExemptAmount): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "uid": "uid8",
-  "title": "title6",
-  "description": "description2",
-  "source_type": "Tax",
-  "source_id": 164
-}
+```php
+use AdvancedBillingLib\Models\Builders\InvoiceTaxBuilder;
+use AdvancedBillingLib\Models\ProformaInvoiceTaxSourceType;
+
+$invoiceTax = InvoiceTaxBuilder::init()
+    ->uid('uid2')
+    ->title('title8')
+    ->description('description2')
+    ->sourceType(ProformaInvoiceTaxSourceType::TAX)
+    ->sourceId(86)
+    ->build();
 ```
 

@@ -11,17 +11,22 @@
 |  --- | --- | --- | --- | --- | --- |
 | `prepayment` | [`CreatePrepayment`](../../doc/models/create-prepayment.md) | Required | - | getPrepayment(): CreatePrepayment | setPrepayment(CreatePrepayment prepayment): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "prepayment": {
-    "amount": 11.6,
-    "details": "details8",
-    "memo": "memo2",
-    "method": "money_order",
-    "payment_profile_id": 240
-  }
-}
+```php
+use AdvancedBillingLib\Models\Builders\CreatePrepaymentRequestBuilder;
+use AdvancedBillingLib\Models\Builders\CreatePrepaymentBuilder;
+use AdvancedBillingLib\Models\CreatePrepaymentMethod;
+
+$createPrepaymentRequest = CreatePrepaymentRequestBuilder::init(
+    CreatePrepaymentBuilder::init(
+        11.6,
+        'details8',
+        'memo2',
+        CreatePrepaymentMethod::MONEY_ORDER
+    )
+        ->paymentProfileId(240)
+        ->build()
+)->build();
 ```
 

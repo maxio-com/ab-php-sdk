@@ -11,13 +11,15 @@
 |  --- | --- | --- | --- | --- | --- |
 | `errors` | [CustomerError](../../doc/models/customer-error.md)\|string[]\|null | Optional | This is a container for one-of cases. | getErrors(): | setErrors( errors): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "errors": {
-    "customer": "customer8"
-  }
+```php
+try {
+    // make the API call
+} catch (CustomerErrorResponseException $exp) {
+    echo 'Caught CustomerErrorResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught ApiException:', $exp;
 }
 ```
 

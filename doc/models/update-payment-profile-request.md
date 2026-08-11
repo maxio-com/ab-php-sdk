@@ -11,17 +11,21 @@
 |  --- | --- | --- | --- | --- | --- |
 | `paymentProfile` | [`UpdatePaymentProfile`](../../doc/models/update-payment-profile.md) | Required | - | getPaymentProfile(): UpdatePaymentProfile | setPaymentProfile(UpdatePaymentProfile paymentProfile): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "payment_profile": {
-    "full_number": "5424000000000015",
-    "first_name": "first_name4",
-    "last_name": "last_name2",
-    "card_type": "bogus",
-    "expiration_month": "expiration_month0"
-  }
-}
+```php
+use AdvancedBillingLib\Models\Builders\UpdatePaymentProfileRequestBuilder;
+use AdvancedBillingLib\Models\Builders\UpdatePaymentProfileBuilder;
+use AdvancedBillingLib\Models\CardType;
+
+$updatePaymentProfileRequest = UpdatePaymentProfileRequestBuilder::init(
+    UpdatePaymentProfileBuilder::init()
+        ->firstName('first_name4')
+        ->lastName('last_name2')
+        ->fullNumber('5424000000000015')
+        ->cardType(CardType::BOGUS)
+        ->expirationMonth('expiration_month0')
+        ->build()
+)->build();
 ```
 

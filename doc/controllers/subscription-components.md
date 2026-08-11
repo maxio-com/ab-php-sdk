@@ -627,7 +627,7 @@ try {
 
 # List Allocations
 
-Returns the 50 most recent Allocations, ordered by most recent first.
+Lists the 50 most recent Allocations, ordered by most recent first.
 
 ## On/Off Components
 
@@ -1349,7 +1349,7 @@ try {
 
 # List Usages
 
-Returns a list of usages associated with a subscription for a particular metered component. This will display the previously recorded components for a subscription.
+Lists usages associated with a subscription for a particular metered component. This will display the previously recorded components for a subscription.
 
 This endpoint is not compatible with quantity-based components.
 
@@ -1379,8 +1379,8 @@ This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
 |  --- | --- | --- | --- |
 | `subscriptionIdOrReference` | int\|string | Template, Required | This is a container for one-of cases. |
 | `componentId` | int\|string | Template, Required | This is a container for one-of cases. |
-| `sinceId` | `?int` | Query, Optional | Returns usages with an id greater than or equal to the one specified |
-| `maxId` | `?int` | Query, Optional | Returns usages with an id less than or equal to the one specified |
+| `sinceId` | `?int` | Query, Optional | Returns usages with an id greater than or equal to the one specified. |
+| `maxId` | `?int` | Query, Optional | Returns usages with an id less than or equal to the one specified. |
 | `sinceDate` | `?DateTime` | Query, Optional | Returns usages with a created_at date greater than or equal to midnight (12:00 AM) on the date specified. |
 | `untilDate` | `?DateTime` | Query, Optional | Returns usages with a created_at date less than or equal to midnight (12:00 AM) on the date specified. |
 | `page` | `?int` | Query, Optional | Result records are organized in pages. By default, the first page of results is displayed. The page parameter specifies a page number of results to fetch. You can start navigating through the pages to consume the results. You do this by passing in a page parameter. Retrieve the next page by adding ?page=2 to the query string. If there are no results to return, then an empty result set will be returned.<br>Use in query `page=1`.<br><br>**Default**: `1`<br><br>**Constraints**: `>= 1` |
@@ -1614,7 +1614,7 @@ This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `apiHandle` | `string` | Template, Required | Identifies the Stream for which the event should be published. |
-| `storeUid` | `?string` | Query, Optional | If you've attached your own Keen project as an Advanced Billing event data-store, use this parameter to indicate the data-store. |
+| `storeUid` | `?string` | Query, Optional | If you've attached your own Keen project as an Advanced Billing event data-store, use this parameter to indicate the data-store. This applies to Legacy Metering sites only — it has no effect on Maxio Metering sites. |
 | `body` | [`?EBBEvent`](../../doc/models/ebb-event.md) | Body, Optional | - |
 
 ## Response Type
@@ -1672,7 +1672,7 @@ This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `apiHandle` | `string` | Template, Required | Identifies the Stream for which the events should be published. |
-| `storeUid` | `?string` | Query, Optional | If you've attached your own Keen project as an Advanced Billing event data-store, use this parameter to indicate the data-store. |
+| `storeUid` | `?string` | Query, Optional | If you've attached your own Keen project as an Advanced Billing event data-store, use this parameter to indicate the data-store. This applies to Legacy Metering sites only — it has no effect on Maxio Metering sites. |
 | `body` | [`?(EBBEvent[])`](../../doc/models/ebb-event.md) | Body, Optional | - |
 
 ## Response Type

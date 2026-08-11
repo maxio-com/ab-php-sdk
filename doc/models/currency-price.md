@@ -18,15 +18,17 @@
 | `productPricePointId` | `?int` | Optional | - | getProductPricePointId(): ?int | setProductPricePointId(?int productPricePointId): void |
 | `role` | [`?string(CurrencyPriceRole)`](../../doc/models/currency-price-role.md) | Optional | Role for the price. | getRole(): ?string | setRole(?string role): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "id": 88,
-  "currency": "currency6",
-  "price": 41.36,
-  "formatted_price": "formatted_price4",
-  "price_id": 178
-}
+```php
+use AdvancedBillingLib\Models\Builders\CurrencyPriceBuilder;
+
+$currencyPrice = CurrencyPriceBuilder::init()
+    ->id(208)
+    ->currency('currency4')
+    ->price(70.88)
+    ->formattedPrice('formatted_price2')
+    ->priceId(214)
+    ->build();
 ```
 

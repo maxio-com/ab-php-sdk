@@ -3,13 +3,14 @@
 
 ## Data Type
 
-`SubscriptionProductChange|SubscriptionStateChange|PaymentRelatedEvents|RefundSuccess|ComponentAllocationChange|MeteredUsage|PrepaidUsage|DunningStepReached|InvoiceIssued|PendingCancellationChange|PrepaidSubscriptionBalanceChanged|ProformaInvoiceIssued|SubscriptionGroupSignupEventData|CreditAccountBalanceChanged|PrepaymentAccountBalanceChanged|PaymentCollectionMethodChanged|ItemPricePointChanged|CustomFieldValueChange|ChjsTokenizationSuccess|ChjsTokenizationFailure`
+`SubscriptionProductChange|SubscriptionProductChangeScheduled|SubscriptionStateChange|PaymentRelatedEvents|RefundSuccess|ComponentAllocationChange|MeteredUsage|PrepaidUsage|DunningStepReached|InvoiceIssued|PendingCancellationChange|PrepaidSubscriptionBalanceChanged|ProformaInvoiceIssued|SubscriptionGroupSignupEventData|CreditAccountBalanceChanged|PrepaymentAccountBalanceChanged|PaymentCollectionMethodChanged|ItemPricePointChanged|CustomFieldValueChange|ChjsTokenizationSuccess|ChjsTokenizationFailure`
 
 ## Cases
 
 | Type |
 |  --- |
 | [`SubscriptionProductChange`](../../../doc/models/subscription-product-change.md) |
+| [`SubscriptionProductChangeScheduled`](../../../doc/models/subscription-product-change-scheduled.md) |
 | [`SubscriptionStateChange`](../../../doc/models/subscription-state-change.md) |
 | [`PaymentRelatedEvents`](../../../doc/models/payment-related-events.md) |
 | [`RefundSuccess`](../../../doc/models/refund-success.md) |
@@ -40,6 +41,19 @@
 $value = SubscriptionProductChangeBuilder::init(
     126,
     12
+)->build();
+```
+
+## SubscriptionProductChangeScheduled
+
+### Initialization Code
+
+#### Example
+
+```php
+$value = SubscriptionProductChangeScheduledBuilder::init(
+    62,
+    52
 )->build();
 ```
 
@@ -109,7 +123,7 @@ $value = ComponentAllocationChangeBuilder::init(
 ```php
 $value = MeteredUsageBuilder::init(
     'previous_unit_balance6',
-    80,
+    2,
     42,
     4,
     'component_handle8',
@@ -127,8 +141,8 @@ $value = MeteredUsageBuilder::init(
 $value = PrepaidUsageBuilder::init(
     'previous_unit_balance0',
     'previous_overage_unit_balance4',
-    252,
-    224,
+    174,
+    146,
     214,
     106,
     176,

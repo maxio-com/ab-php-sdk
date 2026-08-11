@@ -14,7 +14,9 @@
 
 ## Example
 
-```
-updated_at
+```php
+use AdvancedBillingLib\Models\ListSubscriptionComponentsSort;
+
+$listSubscriptionComponentsSort = ListSubscriptionComponentsSort::ID;
 ```
 

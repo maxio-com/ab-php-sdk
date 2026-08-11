@@ -29,15 +29,17 @@
 | `productPriceInCents` | `?int` | Optional | - | getProductPriceInCents(): ?int | setProductPriceInCents(?int productPriceInCents): void |
 | `offerSignupPages` | [`?(OfferSignupPage[])`](../../doc/models/offer-signup-page.md) | Optional | - | getOfferSignupPages(): ?array | setOfferSignupPages(?array offerSignupPages): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "id": 154,
-  "site_id": 80,
-  "product_family_id": 158,
-  "product_id": 96,
-  "product_price_point_id": 20
-}
+```php
+use AdvancedBillingLib\Models\Builders\OfferBuilder;
+
+$offer = OfferBuilder::init()
+    ->id(28)
+    ->siteId(210)
+    ->productFamilyId(224)
+    ->productId(30)
+    ->productPricePointId(150)
+    ->build();
 ```
 

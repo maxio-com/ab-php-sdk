@@ -22,15 +22,21 @@
 | `productPricePointId` | string\|int\|null | Optional | This is a container for one-of cases. | getProductPricePointId(): | setProductPricePointId( productPricePointId): void |
 | `description` | `?string` | Optional | **Constraints**: *Maximum Length*: `255` | getDescription(): ?string | setDescription(?string description): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "title": "title2",
-  "quantity": 154.86,
-  "unit_price": 138.08,
-  "taxable": false,
-  "tax_code": "tax_code4"
-}
+```php
+use AdvancedBillingLib\Models\Builders\CreateInvoiceItemBuilder;
+
+$createInvoiceItem = CreateInvoiceItemBuilder::init()
+    ->title('title8')
+    ->quantity(
+        107.22
+    )
+    ->unitPrice(
+        90.44
+    )
+    ->taxable(false)
+    ->taxCode('tax_code0')
+    ->build();
 ```
 

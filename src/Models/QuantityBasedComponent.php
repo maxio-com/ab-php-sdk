@@ -111,6 +111,11 @@ class QuantityBasedComponent implements \JsonSerializable
     private $intervalUnit = [];
 
     /**
+     * @var array
+     */
+    private $unspscCode = [];
+
+    /**
      * @param string $name
      * @param string $unitName
      * @param string $pricingScheme
@@ -125,7 +130,7 @@ class QuantityBasedComponent implements \JsonSerializable
     /**
      * Returns Name.
      * A name for this component that is suitable for showing customers and displaying on billing
-     * statements, ie. "Minutes".
+     * statements, e.g., "Minutes".
      */
     public function getName(): string
     {
@@ -135,7 +140,7 @@ class QuantityBasedComponent implements \JsonSerializable
     /**
      * Sets Name.
      * A name for this component that is suitable for showing customers and displaying on billing
-     * statements, ie. "Minutes".
+     * statements, e.g., "Minutes".
      *
      * @required
      * @maps name
@@ -147,9 +152,9 @@ class QuantityBasedComponent implements \JsonSerializable
 
     /**
      * Returns Unit Name.
-     * The name of the unit of measurement for the component. It should be singular since it will be
-     * automatically pluralized when necessary. i.e. “message”, which may then be shown as “5 messages” on
-     * a subscription’s component line-item
+     * “The name of the unit of measurement for the component. It should be singular since it will be
+     * automatically pluralized when necessary. e.g., “message”, which may then be shown as “5 messages” on
+     * a subscription’s component line-item.”
      */
     public function getUnitName(): string
     {
@@ -158,9 +163,9 @@ class QuantityBasedComponent implements \JsonSerializable
 
     /**
      * Sets Unit Name.
-     * The name of the unit of measurement for the component. It should be singular since it will be
-     * automatically pluralized when necessary. i.e. “message”, which may then be shown as “5 messages” on
-     * a subscription’s component line-item
+     * “The name of the unit of measurement for the component. It should be singular since it will be
+     * automatically pluralized when necessary. e.g., “message”, which may then be shown as “5 messages” on
+     * a subscription’s component line-item.”
      *
      * @required
      * @maps unit_name
@@ -192,7 +197,7 @@ class QuantityBasedComponent implements \JsonSerializable
 
     /**
      * Returns Handle.
-     * A unique identifier for your use that can be used to retrieve this component is subsequent requests.
+     * A unique identifier for your use that can be used to retrieve this component in subsequent requests.
      * Must start with a letter or number and may only contain lowercase letters, numbers, or the
      * characters '.', ':', '-', or '_'.
      */
@@ -203,7 +208,7 @@ class QuantityBasedComponent implements \JsonSerializable
 
     /**
      * Sets Handle.
-     * A unique identifier for your use that can be used to retrieve this component is subsequent requests.
+     * A unique identifier for your use that can be used to retrieve this component in subsequent requests.
      * Must start with a letter or number and may only contain lowercase letters, numbers, or the
      * characters '.', ':', '-', or '_'.
      *
@@ -384,7 +389,7 @@ class QuantityBasedComponent implements \JsonSerializable
      * Returns Unit Price.
      * The amount the customer will be charged per unit when the pricing scheme is “per_unit”. For On/Off
      * Components, this is the amount that the customer will be charged when they turn the component on for
-     * the subscription. The price can contain up to 8 decimal places. i.e. 1.00 or 0.0012 or 0.00000065
+     * the subscription. The price can contain up to 8 decimal places. e.g., 1.00 or 0.0012 or 0.00000065
      *
      * @return string|float|null
      */
@@ -397,7 +402,7 @@ class QuantityBasedComponent implements \JsonSerializable
      * Sets Unit Price.
      * The amount the customer will be charged per unit when the pricing scheme is “per_unit”. For On/Off
      * Components, this is the amount that the customer will be charged when they turn the component on for
-     * the subscription. The price can contain up to 8 decimal places. i.e. 1.00 or 0.0012 or 0.00000065
+     * the subscription. The price can contain up to 8 decimal places. e.g., 1.00 or 0.0012 or 0.00000065
      *
      * @maps unit_price
      * @mapsBy anyOf(oneOf(string,float),null)
@@ -531,8 +536,8 @@ class QuantityBasedComponent implements \JsonSerializable
 
     /**
      * Returns Interval.
-     * The numerical interval. i.e. an interval of ‘30’ coupled with an interval_unit of day would mean
-     * this component's default price point would renew every 30 days. This property is only available for
+     * The numerical interval. e.g., an interval of ‘30’ coupled with an interval_unit of day would mean
+     * this component’s default price point would renew every 30 days. This property is only available for
      * sites with Multifrequency enabled.
      */
     public function getInterval(): ?int
@@ -542,8 +547,8 @@ class QuantityBasedComponent implements \JsonSerializable
 
     /**
      * Sets Interval.
-     * The numerical interval. i.e. an interval of ‘30’ coupled with an interval_unit of day would mean
-     * this component's default price point would renew every 30 days. This property is only available for
+     * The numerical interval. e.g., an interval of ‘30’ coupled with an interval_unit of day would mean
+     * this component’s default price point would renew every 30 days. This property is only available for
      * sites with Multifrequency enabled.
      *
      * @maps interval
@@ -590,6 +595,44 @@ class QuantityBasedComponent implements \JsonSerializable
     }
 
     /**
+     * Returns Unspsc Code.
+     * (Optional) Custom UNSPSC commodity code for Level 3/CEDP payment data. When set, this value is sent
+     * as the commodity code on invoice line items for this component instead of the default derived from
+     * item_category.
+     */
+    public function getUnspscCode(): ?string
+    {
+        if (count($this->unspscCode) == 0) {
+            return null;
+        }
+        return $this->unspscCode['value'];
+    }
+
+    /**
+     * Sets Unspsc Code.
+     * (Optional) Custom UNSPSC commodity code for Level 3/CEDP payment data. When set, this value is sent
+     * as the commodity code on invoice line items for this component instead of the default derived from
+     * item_category.
+     *
+     * @maps unspsc_code
+     */
+    public function setUnspscCode(?string $unspscCode): void
+    {
+        $this->unspscCode['value'] = $unspscCode;
+    }
+
+    /**
+     * Unsets Unspsc Code.
+     * (Optional) Custom UNSPSC commodity code for Level 3/CEDP payment data. When set, this value is sent
+     * as the commodity code on invoice line items for this component instead of the default derived from
+     * item_category.
+     */
+    public function unsetUnspscCode(): void
+    {
+        $this->unspscCode = [];
+    }
+
+    /**
      * Converts the QuantityBasedComponent object to a human-readable string representation.
      *
      * @return string The string representation of the QuantityBasedComponent object.
@@ -618,6 +661,7 @@ class QuantityBasedComponent implements \JsonSerializable
                 'publicSignupPageIds' => $this->publicSignupPageIds,
                 'interval' => $this->interval,
                 'intervalUnit' => $this->getIntervalUnit(),
+                'unspscCode' => $this->getUnspscCode(),
                 'additionalProperties' => $this->additionalProperties
             ]
         );
@@ -717,6 +761,9 @@ class QuantityBasedComponent implements \JsonSerializable
         }
         if (!empty($this->intervalUnit)) {
             $json['interval_unit']               = IntervalUnit::checkValue($this->intervalUnit['value']);
+        }
+        if (!empty($this->unspscCode)) {
+            $json['unspsc_code']                 = $this->unspscCode['value'];
         }
         $json = array_merge($json, $this->additionalProperties);
 

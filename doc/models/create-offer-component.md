@@ -13,13 +13,15 @@
 | `pricePointId` | `?int` | Optional | - | getPricePointId(): ?int | setPricePointId(?int pricePointId): void |
 | `startingQuantity` | `?int` | Optional | - | getStartingQuantity(): ?int | setStartingQuantity(?int startingQuantity): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "component_id": 242,
-  "price_point_id": 10,
-  "starting_quantity": 50
-}
+```php
+use AdvancedBillingLib\Models\Builders\CreateOfferComponentBuilder;
+
+$createOfferComponent = CreateOfferComponentBuilder::init()
+    ->componentId(252)
+    ->pricePointId(20)
+    ->startingQuantity(196)
+    ->build();
 ```
 

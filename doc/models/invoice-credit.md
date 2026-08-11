@@ -17,15 +17,18 @@
 | `originalAmount` | `?string` | Optional | - | getOriginalAmount(): ?string | setOriginalAmount(?string originalAmount): void |
 | `appliedAmount` | `?string` | Optional | - | getAppliedAmount(): ?string | setAppliedAmount(?string appliedAmount): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "uid": "uid6",
-  "credit_note_number": "credit_note_number0",
-  "credit_note_uid": "credit_note_uid0",
-  "transaction_time": "2016-03-13T12:52:32.123Z",
-  "memo": "memo0"
-}
+```php
+use AdvancedBillingLib\Models\Builders\InvoiceCreditBuilder;
+use AdvancedBillingLib\Utils\DateTimeHelper;
+
+$invoiceCredit = InvoiceCreditBuilder::init()
+    ->uid('uid8')
+    ->creditNoteNumber('credit_note_number2')
+    ->creditNoteUid('credit_note_uid2')
+    ->transactionTime(DateTimeHelper::fromRfc3339DateTime('2016-03-13T12:52:32.123Z'))
+    ->memo('memo2')
+    ->build();
 ```
 

@@ -11,22 +11,27 @@
 |  --- | --- | --- | --- | --- | --- |
 | `product` | [`CreateOrUpdateProduct`](../../doc/models/create-or-update-product.md) | Required | - | getProduct(): CreateOrUpdateProduct | setProduct(CreateOrUpdateProduct product): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "product": {
-    "name": "name0",
-    "handle": "handle6",
-    "description": "description0",
-    "accounting_code": "accounting_code6",
-    "require_credit_card": false,
-    "price_in_cents": 54,
-    "interval": 186,
-    "interval_unit": "day",
-    "trial_price_in_cents": 34,
-    "trial_interval": 88
-  }
-}
+```php
+use AdvancedBillingLib\Models\Builders\CreateOrUpdateProductRequestBuilder;
+use AdvancedBillingLib\Models\Builders\CreateOrUpdateProductBuilder;
+use AdvancedBillingLib\Models\IntervalUnit;
+
+$createOrUpdateProductRequest = CreateOrUpdateProductRequestBuilder::init(
+    CreateOrUpdateProductBuilder::init(
+        'name0',
+        'description0',
+        54,
+        186,
+        IntervalUnit::DAY
+    )
+        ->handle('handle6')
+        ->accountingCode('accounting_code6')
+        ->requireCreditCard(false)
+        ->trialPriceInCents(34)
+        ->trialInterval(88)
+        ->build()
+)->build();
 ```
 

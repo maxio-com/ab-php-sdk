@@ -13,13 +13,15 @@
 | `amountInCents` | `?int` | Optional | The amount in cents of the prepayment that was created as a result of this payment. | getAmountInCents(): ?int | setAmountInCents(?int amountInCents): void |
 | `endingBalanceInCents` | `?int` | Optional | The total balance of the prepayment account for this subscription including any prior prepayments | getEndingBalanceInCents(): ?int | setEndingBalanceInCents(?int endingBalanceInCents): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "subscription_id": 180,
-  "amount_in_cents": 100,
-  "ending_balance_in_cents": 60
-}
+```php
+use AdvancedBillingLib\Models\Builders\InvoicePrePaymentBuilder;
+
+$invoicePrePayment = InvoicePrePaymentBuilder::init()
+    ->subscriptionId(252)
+    ->amountInCents(28)
+    ->endingBalanceInCents(244)
+    ->build();
 ```
 

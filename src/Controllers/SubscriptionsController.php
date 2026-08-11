@@ -19,9 +19,12 @@ use AdvancedBillingLib\Exceptions\SubscriptionRemoveCouponErrorsException;
 use AdvancedBillingLib\Exceptions\SubscriptionResponseErrorException;
 use AdvancedBillingLib\Models\ActivateSubscriptionRequest;
 use AdvancedBillingLib\Models\AddCouponsRequest;
+use AdvancedBillingLib\Models\CollectionMethod1;
 use AdvancedBillingLib\Models\CreateSubscriptionRequest;
+use AdvancedBillingLib\Models\GroupStatus;
 use AdvancedBillingLib\Models\OverrideSubscriptionRequest;
 use AdvancedBillingLib\Models\PrepaidConfigurationResponse;
+use AdvancedBillingLib\Models\QScope;
 use AdvancedBillingLib\Models\SortingDirection;
 use AdvancedBillingLib\Models\SubscriptionDateField;
 use AdvancedBillingLib\Models\SubscriptionInclude;
@@ -56,6 +59,61 @@ class SubscriptionsController extends BaseController
      * Select an option from the **Request Examples** drop-down on the right side of the portal to see
      * examples of common scenarios for creating subscriptions.
      *
+     * ## List vs Sales Pricing
+     *
+     * When a subscription uses custom pricing as the sales price, you can optionally provide a list price
+     * for any item. If omitted, the list price defaults to the sales price. The difference between the
+     * list price and sales price is used to calculate implicit discounts, which appear on Invoices and in
+     * reporting. List price can also support revenue allocations in [Advanced Revenue](https://docs.maxio.
+     * com/hc/en-us/articles/24177001342861-Create-and-Configure-RevenueBooks).
+     *
+     * If your site has list pricing enabled, the API accepts `custom_price.list_price_point_id` for custom
+     * pricing, validates and persists it, and returns list price metadata in subscription responses. If
+     * list pricing is disabled, this input is ignored and related response fields are omitted.
+     *
+     * When list pricing is enabled:
+     *
+     * - Subscription → Product `product_price_point_list_price_point_id` (integer)
+     * - `product_price_point_list_price_point_handle` (string)
+     * - Subscription Components (when components are included in the response, such as with subscriptions
+     * built from components or component serialization paths) `component_id` (integer)
+     * - `price_point_id` (integer)
+     * - `list_price_point_id` (integer)
+     *
+     * When list pricing is disabled:
+     *
+     * - Subscription → Product `product_price_point_list_price_point_id`: omitted
+     * - `product_price_point_list_price_point_handle`: omitted
+     * - Subscription Components `list_price_point_id`: omitted
+     *
+     * This functionality is supported in the API, but is not currently supported in SDKs.
+     *
+     * ## Subscriptions can now work independently from the catalog
+     *
+     * If you have the new [Catalog experience](page:help/announcements/2026-announcements#new-catalog-
+     * experience-and-terminology) enabled, you can create subscriptions without a `product_id` or
+     * `product_handle` using POST /subscriptions, building them entirely from components.
+     *
+     * A valid subscription must include at least one active component with:
+     * - a positive `allocated_quantity`,
+     * - a positive `unit_balance`, or
+     * - 'enabled: true' (for on/off components)
+     * - a configured metered component
+     *
+     * `component_id` can be provided as a numeric ID or in handle: format. If `trial_interval` and
+     * `trial_interval_unit` are included, they are applied at creation.
+     *
+     * In the response, product and product price point fields are null, and component details are returned
+     * instead.
+     *
+     * This functionality is supported in the API, but is not currently supported in SDKs.
+     *
+     * ## Payment information
+     *
+     * Payment information may be required to create a subscription, depending on the options for the
+     * Product being subscribed. See [product options](https://docs.maxio.com/hc/en-
+     * us/articles/24261076617869-Edit-Products) for more information. See the [Payments
+     * Profile]($e/Payment%20Profiles/createPaymentProfile) endpoint for details on payment parameters.
      * See the [Subscription Signups](page:introduction/basic-concepts/subscription-signup) article for
      * more information on working with subscriptions in Advanced Billing.
      *
@@ -112,8 +170,13 @@ class SubscriptionsController extends BaseController
     }
 
     /**
-     * Returns an array of subscriptions from a Site. Pay close attention to query string filters and
-     * pagination in order to control responses from the server.
+     * Lists subscriptions for a site. Use the query string filters and pagination to control responses
+     * from the server.
+     *
+     * If you have the new [Catalog experience](page:help/announcements/2026-announcements#new-catalog-
+     * experience-and-terminology) enabled, some subscriptions may not have an associated product. For
+     * subscriptions without an associated product, 'product', 'product_price_point_id', and
+     * 'product_price_point_type' are returned as 'null'.
      *
      * ## Search for a subscription
      *
@@ -138,14 +201,36 @@ class SubscriptionsController extends BaseController
             ->parameters(
                 QueryParam::init('page', $options)->unIndexed()->extract('page', 1),
                 QueryParam::init('per_page', $options)->unIndexed()->extract('perPage', 20),
+                QueryParam::init('sort', $options)
+                    ->unIndexed()
+                    ->extract('sort', SubscriptionSort::SIGNUP_DATE)
+                    ->serializeBy([SubscriptionSort::class, 'checkValue']),
+                QueryParam::init('direction', $options)
+                    ->unIndexed()
+                    ->extract('direction')
+                    ->serializeBy([SortingDirection::class, 'checkValue']),
                 QueryParam::init('state', $options)
                     ->unIndexed()
                     ->extract('state')
                     ->serializeBy([SubscriptionStateFilter::class, 'checkValue']),
-                QueryParam::init('product', $options)->unIndexed()->extract('product'),
+                QueryParam::init('product', $options)
+                    ->unIndexed()
+                    ->extract('product')
+                    ->strictType('anyOf(oneOf(int,string),null)'),
+                QueryParam::init('q', $options)->unIndexed()->extract('q'),
+                QueryParam::init('q_scope', $options)
+                    ->unIndexed()
+                    ->extract('qScope')
+                    ->serializeBy([QScope::class, 'checkValue']),
+                QueryParam::init('customer_id', $options)->unIndexed()->extract('customerId'),
                 QueryParam::init('product_price_point_id', $options)->unIndexed()->extract('productPricePointId'),
                 QueryParam::init('coupon', $options)->unIndexed()->extract('coupon'),
                 QueryParam::init('coupon_code', $options)->unIndexed()->extract('couponCode'),
+                QueryParam::init('collection_method', $options)
+                    ->unIndexed()
+                    ->extract('collectionMethod')
+                    ->serializeBy([CollectionMethod1::class, 'checkValue']),
+                QueryParam::init('branding_theme_id', $options)->unIndexed()->extract('brandingThemeId'),
                 QueryParam::init('date_field', $options)
                     ->unIndexed()
                     ->extract('dateField')
@@ -167,14 +252,13 @@ class SubscriptionsController extends BaseController
                     ->extract('endDatetime')
                     ->serializeBy([DateTimeHelper::class, 'toRfc3339DateTime']),
                 QueryParam::init('metadata', $options)->unIndexed()->extract('metadata'),
-                QueryParam::init('direction', $options)
+                QueryParam::init('group_status', $options)
                     ->unIndexed()
-                    ->extract('direction')
-                    ->serializeBy([SortingDirection::class, 'checkValue']),
-                QueryParam::init('sort', $options)
-                    ->unIndexed()
-                    ->extract('sort', SubscriptionSort::SIGNUP_DATE)
-                    ->serializeBy([SubscriptionSort::class, 'checkValue']),
+                    ->extract('groupStatus')
+                    ->serializeBy([GroupStatus::class, 'checkValue']),
+                QueryParam::init('dunning_exemption', $options)->unIndexed()->extract('dunningExemption'),
+                QueryParam::init('payment_gateways', $options)->unIndexed()->extract('paymentGateways'),
+                QueryParam::init('currencies', $options)->unIndexed()->extract('currencies'),
                 QueryParam::init('include', $options)
                     ->unIndexed()
                     ->extract('mInclude')
@@ -265,9 +349,14 @@ class SubscriptionsController extends BaseController
      * eligible for calendar billing**.
      *
      * > Note: If you change the product associated with a subscription that contains a `snap_day` and
-     * immediately `READ/GET` the subscription data, it will still contain original `snap_day`. The
-     * `snap_day` will reset to null on the next billing cycle. This is because a product change is
+     * immediately READ/GET the subscription data, it will still contain the original `snap_day`. The
+     * `snap_day` will be reset to `null` on the next billing cycle. This is because a product change is
      * instantaneous and only affects the product associated with a subscription.
+     *
+     * If you have the new [Catalog experience](page:help/announcements/2026-announcements#new-catalog-
+     * experience-and-terminology) enabled, some subscriptions may not have an associated product. For
+     * subscriptions without an associated product, `product`, `product_price_point_id`, and
+     * `product_price_point_type` are returned as `null`.
      *
      * @param int $subscriptionId The Chargify id of the subscription.
      * @param UpdateSubscriptionRequest|null $body
@@ -303,6 +392,11 @@ class SubscriptionsController extends BaseController
 
     /**
      * Retrieves subscription details.
+     *
+     * If you have the new [Catalog experience](page:help/announcements/2026-announcements#new-catalog-
+     * experience-and-terminology) enabled, some subscriptions may not have an associated product. For
+     * subscriptions without an associated product, 'product', 'product_price_point_id', and
+     * 'product_price_point_type' are returned as 'null'.
      *
      * ## Self-Service Page token
      *
@@ -512,6 +606,25 @@ class SubscriptionsController extends BaseController
      *
      * For more information, see our documentation [here](https://maxio.zendesk.com/hc/en-
      * us/articles/24252493695757-Subscriber-Interface-Overview).
+     *
+     * ## Subscriptions can now work independently from the catalog
+     *
+     * If you have the new [Catalog experience](page:help/announcements/2026-announcements#new-catalog-
+     * experience-and-terminology) enabled, you can create subscriptions without a `product_id` or
+     * `product_handle` using POST /subscriptions, building them entirely from components.
+     *
+     * A valid subscription must include at least one active component with:
+     * - a positive `allocated_quantity`,
+     * - a positive `unit_balance`, or
+     * - 'enabled: true' (for on/off components)
+     *
+     * `component_id` can be provided as a numeric ID or in handle: format. If `trial_interval` and
+     * `trial_interval_unit` are included, they are applied at creation.
+     *
+     * In the response, product and product price point fields are null, and component details are returned
+     * instead.
+     *
+     * This functionality is supported in the API, but is not currently supported in SDKs.
      *
      * ## Taxable Subscriptions
      *

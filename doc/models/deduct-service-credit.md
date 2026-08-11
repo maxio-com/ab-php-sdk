@@ -12,12 +12,15 @@
 | `amount` | string\|float | Required | This is a container for one-of cases. | getAmount(): | setAmount( amount): void |
 | `memo` | `?string` | Optional | - | getMemo(): ?string | setMemo(?string memo): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "amount": "String1",
-  "memo": "memo2"
-}
+```php
+use AdvancedBillingLib\Models\Builders\DeductServiceCreditBuilder;
+
+$deductServiceCredit = DeductServiceCreditBuilder::init(
+    'String5'
+)
+    ->memo('memo6')
+    ->build();
 ```
 

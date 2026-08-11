@@ -1,7 +1,7 @@
 
 # Pause Request
 
-Allows to pause a Subscription
+Allows you to pause a Subscription.
 
 ## Structure
 
@@ -13,13 +13,19 @@ Allows to pause a Subscription
 |  --- | --- | --- | --- | --- | --- |
 | `hold` | [`?AutoResume`](../../doc/models/auto-resume.md) | Optional | - | getHold(): ?AutoResume | setHold(?AutoResume hold): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "hold": {
-    "automatically_resume_at": "2016-03-13T12:52:32.123Z"
-  }
-}
+```php
+use AdvancedBillingLib\Models\Builders\PauseRequestBuilder;
+use AdvancedBillingLib\Models\Builders\AutoResumeBuilder;
+use AdvancedBillingLib\Utils\DateTimeHelper;
+
+$pauseRequest = PauseRequestBuilder::init()
+    ->hold(
+        AutoResumeBuilder::init()
+            ->automaticallyResumeAt(DateTimeHelper::fromRfc3339DateTime('2016-03-13T12:52:32.123Z'))
+            ->build()
+    )
+    ->build();
 ```
 

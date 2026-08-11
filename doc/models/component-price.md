@@ -18,15 +18,17 @@
 | `formattedUnitPrice` | `?string` | Optional | - | getFormattedUnitPrice(): ?string | setFormattedUnitPrice(?string formattedUnitPrice): void |
 | `segmentId` | `?int` | Optional | - | getSegmentId(): ?int | setSegmentId(?int segmentId): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "id": 234,
-  "component_id": 88,
-  "starting_quantity": 104,
-  "ending_quantity": 78,
-  "unit_price": "unit_price0"
-}
+```php
+use AdvancedBillingLib\Models\Builders\ComponentPriceBuilder;
+
+$componentPrice = ComponentPriceBuilder::init()
+    ->id(18)
+    ->componentId(128)
+    ->startingQuantity(64)
+    ->endingQuantity(218)
+    ->unitPrice('unit_price4')
+    ->build();
 ```
 

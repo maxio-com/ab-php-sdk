@@ -215,7 +215,7 @@ class DebitNote implements \JsonSerializable
 
     /**
      * Returns Number.
-     * A unique, identifier that appears on the debit note and in places it is referenced.
+     * A unique identifier that appears on the debit note and in places it is referenced.
      */
     public function getNumber(): ?int
     {
@@ -224,7 +224,7 @@ class DebitNote implements \JsonSerializable
 
     /**
      * Sets Number.
-     * A unique, identifier that appears on the debit note and in places it is referenced.
+     * A unique identifier that appears on the debit note and in places it is referenced.
      *
      * @maps number
      */
@@ -283,7 +283,7 @@ class DebitNote implements \JsonSerializable
 
     /**
      * Returns Origin Credit Note Number.
-     * A unique, identifying string of the connected credit note.
+     * A unique identifying string of the connected credit note.
      */
     public function getOriginCreditNoteNumber(): ?string
     {
@@ -292,7 +292,7 @@ class DebitNote implements \JsonSerializable
 
     /**
      * Sets Origin Credit Note Number.
-     * A unique, identifying string of the connected credit note.
+     * A unique identifying string of the connected credit note.
      *
      * @maps origin_credit_note_number
      */
@@ -482,7 +482,7 @@ class DebitNote implements \JsonSerializable
 
     /**
      * Returns Customer.
-     * Information about the customer who is owner or recipient the debited subscription.
+     * Information about the customer who is the owner or recipient of the debited subscription.
      */
     public function getCustomer(): ?InvoiceCustomer
     {
@@ -491,7 +491,7 @@ class DebitNote implements \JsonSerializable
 
     /**
      * Sets Customer.
-     * Information about the customer who is owner or recipient the debited subscription.
+     * Information about the customer who is the owner or recipient of the debited subscription.
      *
      * @maps customer
      */

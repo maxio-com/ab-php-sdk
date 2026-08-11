@@ -17,30 +17,45 @@
 | `components` | [`?(CreateOfferComponent[])`](../../doc/models/create-offer-component.md) | Optional | - | getComponents(): ?array | setComponents(?array components): void |
 | `coupons` | `?(string[])` | Optional | - | getCoupons(): ?array | setCoupons(?array coupons): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "name": "name4",
-  "handle": "handle0",
-  "description": "description4",
-  "product_id": 208,
-  "product_price_point_id": 132,
-  "components": [
-    {
-      "component_id": 108,
-      "price_point_id": 124,
-      "starting_quantity": 84
-    },
-    {
-      "component_id": 108,
-      "price_point_id": 124,
-      "starting_quantity": 84
-    }
-  ],
-  "coupons": [
-    "coupons4"
-  ]
-}
+```php
+use AdvancedBillingLib\Models\Builders\CreateOfferBuilder;
+use AdvancedBillingLib\Models\Builders\CreateOfferComponentBuilder;
+
+$createOffer = CreateOfferBuilder::init(
+    'name6',
+    'handle2',
+    66
+)
+    ->description('description6')
+    ->productPricePointId(246)
+    ->components(
+        [
+            CreateOfferComponentBuilder::init()
+                ->componentId(108)
+                ->pricePointId(124)
+                ->startingQuantity(84)
+                ->build(),
+            CreateOfferComponentBuilder::init()
+                ->componentId(108)
+                ->pricePointId(124)
+                ->startingQuantity(84)
+                ->build(),
+            CreateOfferComponentBuilder::init()
+                ->componentId(108)
+                ->pricePointId(124)
+                ->startingQuantity(84)
+                ->build()
+        ]
+    )
+    ->coupons(
+        [
+            'coupons6',
+            'coupons5',
+            'coupons4'
+        ]
+    )
+    ->build();
 ```
 

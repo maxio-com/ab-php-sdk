@@ -62,7 +62,7 @@ class GroupTarget implements \JsonSerializable
     /**
      * Returns Id.
      * The id of the target customer or subscription to group the existing subscription with. Ignored and
-     * should not be included if type is "self" , "parent", or "eldest"
+     * should not be included if type is "self", "parent", or "eldest".
      */
     public function getId(): ?int
     {
@@ -72,7 +72,7 @@ class GroupTarget implements \JsonSerializable
     /**
      * Sets Id.
      * The id of the target customer or subscription to group the existing subscription with. Ignored and
-     * should not be included if type is "self" , "parent", or "eldest"
+     * should not be included if type is "self", "parent", or "eldest".
      *
      * @maps id
      */

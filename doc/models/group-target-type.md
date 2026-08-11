@@ -17,3 +17,11 @@ The type of object indicated by the id attribute.
 | `PARENT_` |
 | `ELDEST` |
 
+## Example
+
+```php
+use AdvancedBillingLib\Models\GroupTargetType;
+
+$groupTargetType = GroupTargetType::SELF_;
+```
+

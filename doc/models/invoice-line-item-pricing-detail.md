@@ -12,12 +12,14 @@
 | `label` | `?string` | Optional | - | getLabel(): ?string | setLabel(?string label): void |
 | `amount` | `?string` | Optional | - | getAmount(): ?string | setAmount(?string amount): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "label": "label0",
-  "amount": "amount2"
-}
+```php
+use AdvancedBillingLib\Models\Builders\InvoiceLineItemPricingDetailBuilder;
+
+$invoiceLineItemPricingDetail = InvoiceLineItemPricingDetailBuilder::init()
+    ->label('label4')
+    ->amount('amount6')
+    ->build();
 ```
 

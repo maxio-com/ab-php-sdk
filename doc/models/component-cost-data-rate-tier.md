@@ -15,15 +15,17 @@
 | `unitPrice` | `?string` | Optional | - | getUnitPrice(): ?string | setUnitPrice(?string unitPrice): void |
 | `amount` | `?string` | Optional | - | getAmount(): ?string | setAmount(?string amount): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "starting_quantity": 132,
-  "ending_quantity": 106,
-  "quantity": "quantity0",
-  "unit_price": "unit_price2",
-  "amount": "amount6"
-}
+```php
+use AdvancedBillingLib\Models\Builders\ComponentCostDataRateTierBuilder;
+
+$componentCostDataRateTier = ComponentCostDataRateTierBuilder::init()
+    ->startingQuantity(204)
+    ->endingQuantity(178)
+    ->quantity('quantity4')
+    ->unitPrice('unit_price6')
+    ->amount('amount0')
+    ->build();
 ```
 

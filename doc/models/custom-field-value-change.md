@@ -17,17 +17,20 @@
 | `resourceType` | `string` | Required | - | getResourceType(): string | setResourceType(string resourceType): void |
 | `resourceId` | `int` | Required | - | getResourceId(): int | setResourceId(int resourceId): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "event_type": "event_type2",
-  "metafield_name": "metafield_name6",
-  "metafield_id": 78,
-  "old_value": "old_value2",
-  "new_value": "new_value8",
-  "resource_type": "resource_type2",
-  "resource_id": 74
-}
+```php
+use AdvancedBillingLib\Models\Builders\CustomFieldValueChangeBuilder;
+
+$customFieldValueChange = CustomFieldValueChangeBuilder::init(
+    'event_type8',
+    'metafield_name2',
+    138,
+    'resource_type6',
+    14
+)
+    ->oldValue('old_value6')
+    ->newValue('new_value2')
+    ->build();
 ```
 

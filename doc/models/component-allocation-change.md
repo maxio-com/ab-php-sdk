@@ -17,17 +17,22 @@
 | `allocationId` | `int` | Required | - | getAllocationId(): int | setAllocationId(int allocationId): void |
 | `allocatedQuantity` | int\|string\|null | Optional | This is a container for one-of cases. | getAllocatedQuantity(): | setAllocatedQuantity( allocatedQuantity): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "previous_allocation": 94,
-  "new_allocation": 102,
-  "component_id": 88,
-  "component_handle": "component_handle8",
-  "memo": "memo2",
-  "allocation_id": 158,
-  "allocated_quantity": 104
-}
+```php
+use AdvancedBillingLib\Models\Builders\ComponentAllocationChangeBuilder;
+
+$componentAllocationChange = ComponentAllocationChangeBuilder::init(
+    78,
+    118,
+    72,
+    'component_handle8',
+    'memo2',
+    174
+)
+    ->allocatedQuantity(
+        88
+    )
+    ->build();
 ```
 

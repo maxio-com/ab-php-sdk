@@ -19,25 +19,33 @@
 | `trialPriceInCents` | string\|int\|null | Optional | This is a container for one-of cases. | getTrialPriceInCents(): | setTrialPriceInCents( trialPriceInCents): void |
 | `trialInterval` | string\|int\|null | Optional | This is a container for one-of cases. | getTrialInterval(): | setTrialInterval( trialInterval): void |
 | `trialIntervalUnit` | [`?string(IntervalUnit)`](../../doc/models/interval-unit.md) | Optional | (Optional) | getTrialIntervalUnit(): ?string | setTrialIntervalUnit(?string trialIntervalUnit): void |
-| `trialType` | [`?string(TrialType)`](../../doc/models/trial-type.md) | Optional | Indicates how a trial is handled when the trail period ends and there is no credit card on file. For `no_obligation`, the subscription transitions to a Trial Ended state. Maxio will not send any emails or statements. For `payment_expected`, the subscription transitions to a Past Due state. Maxio will send normal dunning emails and statements according to your other settings. | getTrialType(): ?string | setTrialType(?string trialType): void |
+| `trialType` | [`?string(TrialType)`](../../doc/models/trial-type.md) | Optional | Indicates how a trial is handled when the trial period ends and there is no credit card on file. For `no_obligation`, the subscription transitions to a Trial Ended state. Maxio will not send any emails or statements. For `payment_expected`, the subscription transitions to a Past Due state. Maxio will send normal dunning emails and statements according to your other settings. | getTrialType(): ?string | setTrialType(?string trialType): void |
 | `initialChargeInCents` | string\|int\|null | Optional | This is a container for one-of cases. | getInitialChargeInCents(): | setInitialChargeInCents( initialChargeInCents): void |
 | `initialChargeAfterTrial` | `?bool` | Optional | (Optional) | getInitialChargeAfterTrial(): ?bool | setInitialChargeAfterTrial(?bool initialChargeAfterTrial): void |
 | `expirationInterval` | string\|int\|null | Optional | This is a container for one-of cases. | getExpirationInterval(): | setExpirationInterval( expirationInterval): void |
 | `expirationIntervalUnit` | [`?string(ExpirationIntervalUnit)`](../../doc/models/expiration-interval-unit.md) | Optional | (Optional) | getExpirationIntervalUnit(): ?string | setExpirationIntervalUnit(?string expirationIntervalUnit): void |
 | `taxIncluded` | `?bool` | Optional | (Optional) | getTaxIncluded(): ?bool | setTaxIncluded(?bool taxIncluded): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "name": "name4",
-  "handle": "handle0",
-  "price_in_cents": "String3",
-  "interval": "String3",
-  "interval_unit": "day",
-  "trial_price_in_cents": "String3",
-  "trial_interval": "String5",
-  "trial_interval_unit": "day"
-}
+```php
+use AdvancedBillingLib\Models\Builders\SubscriptionCustomPriceBuilder;
+use AdvancedBillingLib\Models\IntervalUnit;
+
+$subscriptionCustomPrice = SubscriptionCustomPriceBuilder::init(
+    'String5',
+    'String1'
+)
+    ->name('name2')
+    ->handle('handle8')
+    ->intervalUnit(IntervalUnit::DAY)
+    ->trialPriceInCents(
+        'String5'
+    )
+    ->trialInterval(
+        'String9'
+    )
+    ->trialIntervalUnit(IntervalUnit::DAY)
+    ->build();
 ```
 

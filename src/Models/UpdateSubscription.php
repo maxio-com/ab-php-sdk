@@ -67,6 +67,11 @@ class UpdateSubscription implements \JsonSerializable
     private $nextBillingAt;
 
     /**
+     * @var array
+     */
+    private $brandingThemeId = [];
+
+    /**
      * @var \DateTime|null
      */
     private $expiresAt;
@@ -146,7 +151,7 @@ class UpdateSubscription implements \JsonSerializable
 
     /**
      * Returns Product Handle.
-     * Set to the handle of a different product to change the subscription's product
+     * Set to the handle of a different product to change the subscription's product.
      */
     public function getProductHandle(): ?string
     {
@@ -155,7 +160,7 @@ class UpdateSubscription implements \JsonSerializable
 
     /**
      * Sets Product Handle.
-     * Set to the handle of a different product to change the subscription's product
+     * Set to the handle of a different product to change the subscription's product.
      *
      * @maps product_handle
      */
@@ -166,7 +171,7 @@ class UpdateSubscription implements \JsonSerializable
 
     /**
      * Returns Product Id.
-     * Set to the id of a different product to change the subscription's product
+     * Set to the id of a different product to change the subscription's product.
      */
     public function getProductId(): ?int
     {
@@ -175,7 +180,7 @@ class UpdateSubscription implements \JsonSerializable
 
     /**
      * Sets Product Id.
-     * Set to the id of a different product to change the subscription's product
+     * Set to the id of a different product to change the subscription's product.
      *
      * @maps product_id
      */
@@ -269,7 +274,7 @@ class UpdateSubscription implements \JsonSerializable
      * Returns Initial Billing At.
      * (Optional) Set this attribute to a future date/time to update a subscription in the Awaiting Signup
      * Date state, to Awaiting Signup. In the Awaiting Signup state, a subscription behaves like any other.
-     * It can be canceled, allocated to, or have its billing date changed. etc. When the
+     * It can be canceled, allocated to, or have its billing date changed, etc. When the
      * `initial_billing_at` date hits, the subscription will transition to the expected state. If the
      * product has a trial, the subscription will enter a trial, otherwise it will go active. Setup fees
      * will be respected either before or after the trial, as configured on the price point. If the payment
@@ -287,7 +292,7 @@ class UpdateSubscription implements \JsonSerializable
      * Sets Initial Billing At.
      * (Optional) Set this attribute to a future date/time to update a subscription in the Awaiting Signup
      * Date state, to Awaiting Signup. In the Awaiting Signup state, a subscription behaves like any other.
-     * It can be canceled, allocated to, or have its billing date changed. etc. When the
+     * It can be canceled, allocated to, or have its billing date changed, etc. When the
      * `initial_billing_at` date hits, the subscription will transition to the expected state. If the
      * product has a trial, the subscription will enter a trial, otherwise it will go active. Setup fees
      * will be respected either before or after the trial, as configured on the price point. If the payment
@@ -353,6 +358,50 @@ class UpdateSubscription implements \JsonSerializable
     public function setNextBillingAt(?\DateTime $nextBillingAt): void
     {
         $this->nextBillingAt = $nextBillingAt;
+    }
+
+    /**
+     * Returns Branding Theme Id.
+     * The ID of the Branding Theme to assign to this subscription. When set, this subscription-level
+     * Branding Theme is used instead of the customer's default Branding Theme for subscription-related
+     * documents and communications that use subscription theming. Pass null or an empty value to clear the
+     * subscription-level Branding Theme. Available only when Branding Themes are enabled for the site. Not
+     * returned in the response.
+     */
+    public function getBrandingThemeId(): ?int
+    {
+        if (count($this->brandingThemeId) == 0) {
+            return null;
+        }
+        return $this->brandingThemeId['value'];
+    }
+
+    /**
+     * Sets Branding Theme Id.
+     * The ID of the Branding Theme to assign to this subscription. When set, this subscription-level
+     * Branding Theme is used instead of the customer's default Branding Theme for subscription-related
+     * documents and communications that use subscription theming. Pass null or an empty value to clear the
+     * subscription-level Branding Theme. Available only when Branding Themes are enabled for the site. Not
+     * returned in the response.
+     *
+     * @maps branding_theme_id
+     */
+    public function setBrandingThemeId(?int $brandingThemeId): void
+    {
+        $this->brandingThemeId['value'] = $brandingThemeId;
+    }
+
+    /**
+     * Unsets Branding Theme Id.
+     * The ID of the Branding Theme to assign to this subscription. When set, this subscription-level
+     * Branding Theme is used instead of the customer's default Branding Theme for subscription-related
+     * documents and communications that use subscription theming. Pass null or an empty value to clear the
+     * subscription-level Branding Theme. Available only when Branding Themes are enabled for the site. Not
+     * returned in the response.
+     */
+    public function unsetBrandingThemeId(): void
+    {
+        $this->brandingThemeId = [];
     }
 
     /**
@@ -637,6 +686,7 @@ class UpdateSubscription implements \JsonSerializable
                 'initialBillingAt' => $this->initialBillingAt,
                 'deferSignup' => $this->deferSignup,
                 'nextBillingAt' => $this->nextBillingAt,
+                'brandingThemeId' => $this->getBrandingThemeId(),
                 'expiresAt' => $this->expiresAt,
                 'paymentCollectionMethod' => $this->paymentCollectionMethod,
                 'receivesInvoiceEmails' => $this->receivesInvoiceEmails,
@@ -727,6 +777,9 @@ class UpdateSubscription implements \JsonSerializable
         }
         if (isset($this->nextBillingAt)) {
             $json['next_billing_at']                       = DateTimeHelper::toRfc3339DateTime($this->nextBillingAt);
+        }
+        if (!empty($this->brandingThemeId)) {
+            $json['branding_theme_id']                     = $this->brandingThemeId['value'];
         }
         if (isset($this->expiresAt)) {
             $json['expires_at']                            = DateTimeHelper::toRfc3339DateTime($this->expiresAt);

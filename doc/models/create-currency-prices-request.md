@@ -11,17 +11,20 @@
 |  --- | --- | --- | --- | --- | --- |
 | `currencyPrices` | [`CreateCurrencyPrice[]`](../../doc/models/create-currency-price.md) | Required | - | getCurrencyPrices(): array | setCurrencyPrices(array currencyPrices): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "currency_prices": [
-    {
-      "currency": "currency8",
-      "price": 233.74,
-      "price_id": 116
-    }
-  ]
-}
+```php
+use AdvancedBillingLib\Models\Builders\CreateCurrencyPricesRequestBuilder;
+use AdvancedBillingLib\Models\Builders\CreateCurrencyPriceBuilder;
+
+$createCurrencyPricesRequest = CreateCurrencyPricesRequestBuilder::init(
+    [
+        CreateCurrencyPriceBuilder::init()
+            ->currency('currency8')
+            ->price(233.74)
+            ->priceId(116)
+            ->build()
+    ]
+)->build();
 ```
 

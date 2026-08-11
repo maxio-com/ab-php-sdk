@@ -13,3 +13,11 @@ The vault that stores the payment profile with the provided vault_token.
 |  --- |
 | `BRAINTREE_BLUE` |
 
+## Example
+
+```php
+use AdvancedBillingLib\Models\ApplePayVault;
+
+$applePayVault = ApplePayVault::BRAINTREE_BLUE;
+```
+

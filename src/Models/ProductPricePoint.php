@@ -228,8 +228,8 @@ class ProductPricePoint implements \JsonSerializable
 
     /**
      * Returns Interval.
-     * The numerical interval. i.e. an interval of ‘30’ coupled with an interval_unit of day would mean
-     * this product price point would renew every 30 days
+     * The numerical interval. e.g., an interval of ‘30’ coupled with an interval_unit of day would mean
+     * this product price point would renew every 30 days.
      */
     public function getInterval(): ?int
     {
@@ -238,8 +238,8 @@ class ProductPricePoint implements \JsonSerializable
 
     /**
      * Sets Interval.
-     * The numerical interval. i.e. an interval of ‘30’ coupled with an interval_unit of day would mean
-     * this product price point would renew every 30 days
+     * The numerical interval. e.g., an interval of ‘30’ coupled with an interval_unit of day would mean
+     * this product price point would renew every 30 days.
      *
      * @maps interval
      */
@@ -303,8 +303,8 @@ class ProductPricePoint implements \JsonSerializable
 
     /**
      * Returns Trial Interval.
-     * The numerical trial interval. i.e. an interval of ‘30’ coupled with a trial_interval_unit of day
-     * would mean this product price point trial would last 30 days
+     * The numerical trial interval. e.g., an interval of ‘30’ coupled with a trial_interval_unit of day
+     * would mean this product price point trial would last 30 days.
      */
     public function getTrialInterval(): ?int
     {
@@ -316,8 +316,8 @@ class ProductPricePoint implements \JsonSerializable
 
     /**
      * Sets Trial Interval.
-     * The numerical trial interval. i.e. an interval of ‘30’ coupled with a trial_interval_unit of day
-     * would mean this product price point trial would last 30 days
+     * The numerical trial interval. e.g., an interval of ‘30’ coupled with a trial_interval_unit of day
+     * would mean this product price point trial would last 30 days.
      *
      * @maps trial_interval
      */
@@ -328,8 +328,8 @@ class ProductPricePoint implements \JsonSerializable
 
     /**
      * Unsets Trial Interval.
-     * The numerical trial interval. i.e. an interval of ‘30’ coupled with a trial_interval_unit of day
-     * would mean this product price point trial would last 30 days
+     * The numerical trial interval. e.g., an interval of ‘30’ coupled with a trial_interval_unit of day
+     * would mean this product price point trial would last 30 days.
      */
     public function unsetTrialInterval(): void
     {
@@ -371,7 +371,7 @@ class ProductPricePoint implements \JsonSerializable
 
     /**
      * Returns Trial Type.
-     * Indicates how a trial is handled when the trail period ends and there is no credit card on file. For
+     * Indicates how a trial is handled when the trial period ends and there is no credit card on file. For
      * `no_obligation`, the subscription transitions to a Trial Ended state. Maxio will not send any emails
      * or statements. For `payment_expected`, the subscription transitions to a Past Due state. Maxio will
      * send normal dunning emails and statements according to your other settings.
@@ -386,7 +386,7 @@ class ProductPricePoint implements \JsonSerializable
 
     /**
      * Sets Trial Type.
-     * Indicates how a trial is handled when the trail period ends and there is no credit card on file. For
+     * Indicates how a trial is handled when the trial period ends and there is no credit card on file. For
      * `no_obligation`, the subscription transitions to a Trial Ended state. Maxio will not send any emails
      * or statements. For `payment_expected`, the subscription transitions to a Past Due state. Maxio will
      * send normal dunning emails and statements according to your other settings.
@@ -401,7 +401,7 @@ class ProductPricePoint implements \JsonSerializable
 
     /**
      * Unsets Trial Type.
-     * Indicates how a trial is handled when the trail period ends and there is no credit card on file. For
+     * Indicates how a trial is handled when the trial period ends and there is no credit card on file. For
      * `no_obligation`, the subscription transitions to a Trial Ended state. Maxio will not send any emails
      * or statements. For `payment_expected`, the subscription transitions to a Past Due state. Maxio will
      * send normal dunning emails and statements according to your other settings.
@@ -506,8 +506,8 @@ class ProductPricePoint implements \JsonSerializable
 
     /**
      * Returns Expiration Interval.
-     * The numerical expiration interval. i.e. an expiration_interval of ‘30’ coupled with an
-     * expiration_interval_unit of day would mean this product price point would expire after 30 days
+     * The numerical expiration interval. e.g., an expiration_interval of ‘30’ coupled with an
+     * expiration_interval_unit of day would mean this product price point would expire after 30 days.
      */
     public function getExpirationInterval(): ?int
     {
@@ -519,8 +519,8 @@ class ProductPricePoint implements \JsonSerializable
 
     /**
      * Sets Expiration Interval.
-     * The numerical expiration interval. i.e. an expiration_interval of ‘30’ coupled with an
-     * expiration_interval_unit of day would mean this product price point would expire after 30 days
+     * The numerical expiration interval. e.g., an expiration_interval of ‘30’ coupled with an
+     * expiration_interval_unit of day would mean this product price point would expire after 30 days.
      *
      * @maps expiration_interval
      */
@@ -531,8 +531,8 @@ class ProductPricePoint implements \JsonSerializable
 
     /**
      * Unsets Expiration Interval.
-     * The numerical expiration interval. i.e. an expiration_interval of ‘30’ coupled with an
-     * expiration_interval_unit of day would mean this product price point would expire after 30 days
+     * The numerical expiration interval. e.g., an expiration_interval of ‘30’ coupled with an
+     * expiration_interval_unit of day would mean this product price point would expire after 30 days.
      */
     public function unsetExpirationInterval(): void
     {

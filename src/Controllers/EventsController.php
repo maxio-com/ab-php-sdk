@@ -31,9 +31,25 @@ class EventsController extends BaseController
      * **especially** useful to track down issues that arise when subscriptions are not created due to
      * errors.
      *
-     * Within the Advanced Billing UI, "Events" are referred to as "Site Activity".  Full documentation on
-     * how to view Events / Site Activity in the Advanced Billing UI can be located [here](https://maxio.
-     * zendesk.com/hc/en-us/articles/24250671733517-Site-Activity).
+     * Within the Advanced Billing UI, "Events" are referred to as "Site Activity".  See the [Site
+     * Activity](https://maxio.zendesk.com/hc/en-us/articles/24250671733517-Site-Activity) article in the
+     * product documentation for details on how to record view Events / Site Activty in the Advanced
+     * Billing UI.
+     *
+     * If you’re using the [enhanced Catalog experience](page:help/announcements/2026-announcements#new-
+     * catalog-experience-and-terminology), you’ll see updated naming in webhook events and messages.
+     *
+     * Event name changes:
+     *
+     * - subscription_product_change → subscription_plan_change
+     * - component_allocation_change → allocation_change
+     * - component_billing_date_change → product_billing_date_change
+     *
+     * Message updates:
+     *
+     * - “Plan changed on Subscription from previous plan to new plan”
+     * - “Successful payment for allocation changes to Product on Subscription”
+     * - “Failed payment for allocation changes to Product on Subscription”
      *
      * ## List Events for a Site
      *
@@ -69,7 +85,7 @@ class EventsController extends BaseController
      * "event": {
      * "id": 351,
      * "key": "subscription_product_change",
-     * "message": "Product changed on Marky Mark's subscription from 'Basic' to 'Pro'",
+     * "message": "Product changed on Mark Alan's subscription from 'Basic' to 'Pro'",
      * "subscription_id": 205,
      * "event_specific_data": {
      * "new_product_id": 3,
@@ -87,7 +103,7 @@ class EventsController extends BaseController
      * "event": {
      * "id": 353,
      * "key": "subscription_state_change",
-     * "message": "State changed on Marky Mark's subscription to Pro from trialing to active",
+     * "message": "State changed on Mark Alan's subscription to Pro from trialing to active",
      * "subscription_id": 205,
      * "event_specific_data": {
      * "new_subscription_state": "active",
@@ -143,6 +159,21 @@ class EventsController extends BaseController
      * The event type is identified by the key property. You can check supported keys
      * [here]($m/Event%20Key).
      *
+     * If you’re using the [enhanced Catalog experience](page:help/announcements/2026-announcements#new-
+     * catalog-experience-and-terminology), you’ll see updated naming in webhook events and messages.
+     *
+     * Event name changes:
+     *
+     * - subscription_product_change → subscription_plan_change
+     * - component_allocation_change → allocation_change
+     * - component_billing_date_change → product_billing_date_change
+     *
+     * Message updates:
+     *
+     * - “Successful payment for allocation changes to Product on Subscription”
+     * - “Failed payment for allocation changes to Product on Subscription”
+     * - “Plan changed on Subscription from previous plan to new plan”
+     *
      * ## Event Specific Data
      *
      * Different event types may include additional data in `event_specific_data` property.
@@ -182,6 +213,21 @@ class EventsController extends BaseController
 
     /**
      * Returns the total count of events for a given site.
+     *
+     * If you’re using the [enhanced Catalog experience](page:help/announcements/2026-announcements#new-
+     * catalog-experience-and-terminology), you’ll see updated naming in webhook events and messages.
+     *
+     * Event name changes:
+     *
+     * - subscription_product_change → subscription_plan_change
+     * - component_allocation_change → allocation_change
+     * - component_billing_date_change → product_billing_date_change
+     *
+     * Message updates:
+     *
+     * - “Successful payment for allocation changes to Product on Subscription”
+     * - “Failed payment for allocation changes to Product on Subscription”
+     * - “Plan changed on Subscription from previous plan to new plan”
      *
      * @param array $options Array with all options for search
      *

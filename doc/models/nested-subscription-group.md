@@ -14,14 +14,16 @@
 | `primarySubscriptionId` | `?int` | Optional | The subscription ID of the primary within the group. Applicable to scheme 1. | getPrimarySubscriptionId(): ?int | setPrimarySubscriptionId(?int primarySubscriptionId): void |
 | `primary` | `?bool` | Optional | A boolean indicating whether the subscription is the primary in the group. Applicable to scheme 1. | getPrimary(): ?bool | setPrimary(?bool primary): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "uid": "uid2",
-  "scheme": 62,
-  "primary_subscription_id": 10,
-  "primary": false
-}
+```php
+use AdvancedBillingLib\Models\Builders\NestedSubscriptionGroupBuilder;
+
+$nestedSubscriptionGroup = NestedSubscriptionGroupBuilder::init()
+    ->uid('uid6')
+    ->scheme(106)
+    ->primarySubscriptionId(54)
+    ->primary(false)
+    ->build();
 ```
 

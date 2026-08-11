@@ -11,17 +11,21 @@
 |  --- | --- | --- | --- | --- | --- |
 | `subscription` | [`OverrideSubscription`](../../doc/models/override-subscription.md) | Required | - | getSubscription(): OverrideSubscription | setSubscription(OverrideSubscription subscription): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "subscription": {
-    "activated_at": "2016-03-13T12:52:32.123Z",
-    "canceled_at": "2016-03-13T12:52:32.123Z",
-    "cancellation_message": "cancellation_message2",
-    "expires_at": "2016-03-13T12:52:32.123Z",
-    "current_period_starts_at": "2016-03-13T12:52:32.123Z"
-  }
-}
+```php
+use AdvancedBillingLib\Models\Builders\OverrideSubscriptionRequestBuilder;
+use AdvancedBillingLib\Models\Builders\OverrideSubscriptionBuilder;
+use AdvancedBillingLib\Utils\DateTimeHelper;
+
+$overrideSubscriptionRequest = OverrideSubscriptionRequestBuilder::init(
+    OverrideSubscriptionBuilder::init()
+        ->activatedAt(DateTimeHelper::fromRfc3339DateTime('2016-03-13T12:52:32.123Z'))
+        ->canceledAt(DateTimeHelper::fromRfc3339DateTime('2016-03-13T12:52:32.123Z'))
+        ->cancellationMessage('cancellation_message2')
+        ->expiresAt(DateTimeHelper::fromRfc3339DateTime('2016-03-13T12:52:32.123Z'))
+        ->currentPeriodStartsAt(DateTimeHelper::fromRfc3339DateTime('2016-03-13T12:52:32.123Z'))
+        ->build()
+)->build();
 ```
 

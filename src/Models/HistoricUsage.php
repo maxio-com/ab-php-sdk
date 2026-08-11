@@ -15,7 +15,7 @@ use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
 /**
- * Optional for Event Based Components. If the `include=historic_usages` query param is provided, the
+ * (Optional) For Event Based Components. If the `include=historic_usages` query param is provided, the
  * last ten billing periods will be returned.
  */
 class HistoricUsage implements \JsonSerializable

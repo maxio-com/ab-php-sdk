@@ -11,13 +11,15 @@
 |  --- | --- | --- | --- | --- | --- |
 | `subscription` | `string[]` | Required | - | getSubscription(): array | setSubscription(array subscription): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "subscription": [
-    "subscription0"
-  ]
+```php
+try {
+    // make the API call
+} catch (SubscriptionRemoveCouponErrorsException $exp) {
+    echo 'Caught SubscriptionRemoveCouponErrorsException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught ApiException:', $exp;
 }
 ```
 

@@ -11,33 +11,25 @@
 |  --- | --- | --- | --- | --- | --- |
 | `scheduledRenewalConfigurations` | [`?(ScheduledRenewalConfiguration[])`](../../doc/models/scheduled-renewal-configuration.md) | Optional | - | getScheduledRenewalConfigurations(): ?array | setScheduledRenewalConfigurations(?array scheduledRenewalConfigurations): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "scheduled_renewal_configurations": [
-    {
-      "id": 122,
-      "site_id": 48,
-      "subscription_id": 232,
-      "starts_at": "2016-03-13T12:52:32.123Z",
-      "ends_at": "2016-03-13T12:52:32.123Z"
-    },
-    {
-      "id": 122,
-      "site_id": 48,
-      "subscription_id": 232,
-      "starts_at": "2016-03-13T12:52:32.123Z",
-      "ends_at": "2016-03-13T12:52:32.123Z"
-    },
-    {
-      "id": 122,
-      "site_id": 48,
-      "subscription_id": 232,
-      "starts_at": "2016-03-13T12:52:32.123Z",
-      "ends_at": "2016-03-13T12:52:32.123Z"
-    }
-  ]
-}
+```php
+use AdvancedBillingLib\Models\Builders\ScheduledRenewalConfigurationsResponseBuilder;
+use AdvancedBillingLib\Models\Builders\ScheduledRenewalConfigurationBuilder;
+use AdvancedBillingLib\Utils\DateTimeHelper;
+
+$scheduledRenewalConfigurationsResponse = ScheduledRenewalConfigurationsResponseBuilder::init()
+    ->scheduledRenewalConfigurations(
+        [
+            ScheduledRenewalConfigurationBuilder::init()
+                ->id(122)
+                ->siteId(48)
+                ->subscriptionId(232)
+                ->startsAt(DateTimeHelper::fromRfc3339DateTime('2016-03-13T12:52:32.123Z'))
+                ->endsAt(DateTimeHelper::fromRfc3339DateTime('2016-03-13T12:52:32.123Z'))
+                ->build()
+        ]
+    )
+    ->build();
 ```
 

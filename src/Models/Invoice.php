@@ -297,6 +297,11 @@ class Invoice implements \JsonSerializable
     private $publicUrlExpiresOn;
 
     /**
+     * @var array
+     */
+    private $brandingThemeId = [];
+
+    /**
      * Returns Id.
      */
     public function getId(): ?int
@@ -424,7 +429,7 @@ class Invoice implements \JsonSerializable
 
     /**
      * Returns Sequence Number.
-     * A monotonically increasing number assigned to invoices as they are created.  This number is unique
+     * A monotonically increasing number assigned to invoices as they are created. This number is unique
      * within a site and can be used to sort and order invoices.
      */
     public function getSequenceNumber(): ?int
@@ -434,7 +439,7 @@ class Invoice implements \JsonSerializable
 
     /**
      * Sets Sequence Number.
-     * A monotonically increasing number assigned to invoices as they are created.  This number is unique
+     * A monotonically increasing number assigned to invoices as they are created. This number is unique
      * within a site and can be used to sort and order invoices.
      *
      * @maps sequence_number
@@ -503,7 +508,7 @@ class Invoice implements \JsonSerializable
 
     /**
      * Returns Issue Date.
-     * Date the invoice was issued to the customer.  This is the date that the invoice was made available
+     * Date the invoice was issued to the customer. This is the date that the invoice was made available
      * for payment.
      *
      * The format is `"YYYY-MM-DD"`.
@@ -515,7 +520,7 @@ class Invoice implements \JsonSerializable
 
     /**
      * Sets Issue Date.
-     * Date the invoice was issued to the customer.  This is the date that the invoice was made available
+     * Date the invoice was issued to the customer. This is the date that the invoice was made available
      * for payment.
      *
      * The format is `"YYYY-MM-DD"`.
@@ -741,7 +746,7 @@ class Invoice implements \JsonSerializable
 
     /**
      * Returns Consolidation Level.
-     * Consolidation level of the invoice, which is applicable to invoice consolidation.  It will hold one
+     * Consolidation level of the invoice, which is applicable to invoice consolidation. It will hold one
      * of the following values:
      *
      * * "none": A normal invoice with no consolidation.
@@ -761,7 +766,7 @@ class Invoice implements \JsonSerializable
 
     /**
      * Sets Consolidation Level.
-     * Consolidation level of the invoice, which is applicable to invoice consolidation.  It will hold one
+     * Consolidation level of the invoice, which is applicable to invoice consolidation. It will hold one
      * of the following values:
      *
      * * "none": A normal invoice with no consolidation.
@@ -978,7 +983,7 @@ class Invoice implements \JsonSerializable
 
     /**
      * Returns Customer.
-     * Information about the customer who is owner or recipient the invoiced subscription.
+     * Information about the customer who is owner or recipient of the invoiced subscription.
      */
     public function getCustomer(): ?InvoiceCustomer
     {
@@ -987,7 +992,7 @@ class Invoice implements \JsonSerializable
 
     /**
      * Sets Customer.
-     * Information about the customer who is owner or recipient the invoiced subscription.
+     * Information about the customer who is owner or recipient of the invoiced subscription.
      *
      * @maps customer
      */
@@ -1056,7 +1061,7 @@ class Invoice implements \JsonSerializable
 
     /**
      * Returns Memo.
-     * The memo printed on invoices of any collection type.  This message is in control of the merchant.
+     * The memo printed on invoices of any collection type. This message is in control of the merchant.
      */
     public function getMemo(): ?string
     {
@@ -1065,7 +1070,7 @@ class Invoice implements \JsonSerializable
 
     /**
      * Sets Memo.
-     * The memo printed on invoices of any collection type.  This message is in control of the merchant.
+     * The memo printed on invoices of any collection type. This message is in control of the merchant.
      *
      * @maps memo
      */
@@ -1176,7 +1181,7 @@ class Invoice implements \JsonSerializable
 
     /**
      * Returns Total Amount.
-     * The invoice total, which is `subtotal_amount - discount_amount + tax_amount`.'
+     * The invoice total, which is `subtotal_amount - discount_amount + tax_amount`.
      */
     public function getTotalAmount(): ?string
     {
@@ -1185,7 +1190,7 @@ class Invoice implements \JsonSerializable
 
     /**
      * Sets Total Amount.
-     * The invoice total, which is `subtotal_amount - discount_amount + tax_amount`.'
+     * The invoice total, which is `subtotal_amount - discount_amount + tax_amount`.
      *
      * @maps total_amount
      */
@@ -1568,6 +1573,44 @@ class Invoice implements \JsonSerializable
     }
 
     /**
+     * Returns Branding Theme Id.
+     * The ID of the Branding Theme associated with this invoice. This value represents the Branding Theme
+     * used for invoice theming, such as themed invoice rendering. Available only when Branding Themes are
+     * enabled for the site.
+     */
+    public function getBrandingThemeId(): ?int
+    {
+        if (count($this->brandingThemeId) == 0) {
+            return null;
+        }
+        return $this->brandingThemeId['value'];
+    }
+
+    /**
+     * Sets Branding Theme Id.
+     * The ID of the Branding Theme associated with this invoice. This value represents the Branding Theme
+     * used for invoice theming, such as themed invoice rendering. Available only when Branding Themes are
+     * enabled for the site.
+     *
+     * @maps branding_theme_id
+     */
+    public function setBrandingThemeId(?int $brandingThemeId): void
+    {
+        $this->brandingThemeId['value'] = $brandingThemeId;
+    }
+
+    /**
+     * Unsets Branding Theme Id.
+     * The ID of the Branding Theme associated with this invoice. This value represents the Branding Theme
+     * used for invoice theming, such as themed invoice rendering. Available only when Branding Themes are
+     * enabled for the site.
+     */
+    public function unsetBrandingThemeId(): void
+    {
+        $this->brandingThemeId = [];
+    }
+
+    /**
      * Converts the Invoice object to a human-readable string representation.
      *
      * @return string The string representation of the Invoice object.
@@ -1633,6 +1676,7 @@ class Invoice implements \JsonSerializable
                 'publicUrl' => $this->publicUrl,
                 'previousBalanceData' => $this->previousBalanceData,
                 'publicUrlExpiresOn' => $this->publicUrlExpiresOn,
+                'brandingThemeId' => $this->getBrandingThemeId(),
                 'additionalProperties' => $this->additionalProperties
             ]
         );
@@ -1845,6 +1889,9 @@ class Invoice implements \JsonSerializable
         }
         if (isset($this->publicUrlExpiresOn)) {
             $json['public_url_expires_on']         = DateTimeHelper::toSimpleDate($this->publicUrlExpiresOn);
+        }
+        if (!empty($this->brandingThemeId)) {
+            $json['branding_theme_id']             = $this->brandingThemeId['value'];
         }
         $json = array_merge($json, $this->additionalProperties);
 

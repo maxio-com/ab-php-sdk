@@ -513,9 +513,9 @@ class Subscription implements \JsonSerializable
 
     /**
      * Returns Product Price in Cents.
-     * (Added Nov 5 2013) The recurring amount of the product (and version),currently subscribed. NOTE:
-     * this may differ from the current price of,the product, if you’ve changed the price of the product
-     * but haven’t,moved this subscription to a newer version.
+     * (Added Nov 5 2013) The recurring amount of the product (and version), currently subscribed. NOTE:
+     * this may differ from the current price of the product, if you’ve changed the price of the product
+     * but haven’t moved this subscription to a newer version.
      */
     public function getProductPriceInCents(): ?int
     {
@@ -524,9 +524,9 @@ class Subscription implements \JsonSerializable
 
     /**
      * Sets Product Price in Cents.
-     * (Added Nov 5 2013) The recurring amount of the product (and version),currently subscribed. NOTE:
-     * this may differ from the current price of,the product, if you’ve changed the price of the product
-     * but haven’t,moved this subscription to a newer version.
+     * (Added Nov 5 2013) The recurring amount of the product (and version), currently subscribed. NOTE:
+     * this may differ from the current price of the product, if you’ve changed the price of the product
+     * but haven’t moved this subscription to a newer version.
      *
      * @maps product_price_in_cents
      */
@@ -559,7 +559,7 @@ class Subscription implements \JsonSerializable
 
     /**
      * Returns Current Period Ends At.
-     * Timestamp relating to the end of the current (recurring) period (i.e.,when the next regularly
+     * Timestamp relating to the end of the current (recurring) period (i.e., when the next regularly
      * scheduled attempted charge will occur)
      */
     public function getCurrentPeriodEndsAt(): ?\DateTime
@@ -572,7 +572,7 @@ class Subscription implements \JsonSerializable
 
     /**
      * Sets Current Period Ends At.
-     * Timestamp relating to the end of the current (recurring) period (i.e.,when the next regularly
+     * Timestamp relating to the end of the current (recurring) period (i.e., when the next regularly
      * scheduled attempted charge will occur)
      *
      * @maps current_period_ends_at
@@ -585,7 +585,7 @@ class Subscription implements \JsonSerializable
 
     /**
      * Unsets Current Period Ends At.
-     * Timestamp relating to the end of the current (recurring) period (i.e.,when the next regularly
+     * Timestamp relating to the end of the current (recurring) period (i.e., when the next regularly
      * scheduled attempted charge will occur)
      */
     public function unsetCurrentPeriodEndsAt(): void
@@ -595,11 +595,11 @@ class Subscription implements \JsonSerializable
 
     /**
      * Returns Next Assessment At.
-     * Timestamp that indicates when capture of payment will be tried or,retried. This value will usually
-     * track the current_period_ends_at, but,will diverge if a renewal payment fails and must be retried.
-     * In that,case, the current_period_ends_at will advance to the end of the next,period (time doesn’t
-     * stop because a payment was missed) but the,next_assessment_at will be scheduled for the auto-retry
-     * time (i.e. 24,hours in the future, in some cases)
+     * Timestamp that indicates when capture of payment will be tried or retried. This value will usually
+     * track the current_period_ends_at, but will diverge if a renewal payment fails and must be retried.
+     * In that case, the current_period_ends_at will advance to the end of the next period (time doesn’t
+     * stop because a payment was missed) but the next_assessment_at will be scheduled for the auto-retry
+     * time (e.g., 24 hours in the future, in some cases).
      */
     public function getNextAssessmentAt(): ?\DateTime
     {
@@ -611,11 +611,11 @@ class Subscription implements \JsonSerializable
 
     /**
      * Sets Next Assessment At.
-     * Timestamp that indicates when capture of payment will be tried or,retried. This value will usually
-     * track the current_period_ends_at, but,will diverge if a renewal payment fails and must be retried.
-     * In that,case, the current_period_ends_at will advance to the end of the next,period (time doesn’t
-     * stop because a payment was missed) but the,next_assessment_at will be scheduled for the auto-retry
-     * time (i.e. 24,hours in the future, in some cases)
+     * Timestamp that indicates when capture of payment will be tried or retried. This value will usually
+     * track the current_period_ends_at, but will diverge if a renewal payment fails and must be retried.
+     * In that case, the current_period_ends_at will advance to the end of the next period (time doesn’t
+     * stop because a payment was missed) but the next_assessment_at will be scheduled for the auto-retry
+     * time (e.g., 24 hours in the future, in some cases).
      *
      * @maps next_assessment_at
      * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
@@ -627,11 +627,11 @@ class Subscription implements \JsonSerializable
 
     /**
      * Unsets Next Assessment At.
-     * Timestamp that indicates when capture of payment will be tried or,retried. This value will usually
-     * track the current_period_ends_at, but,will diverge if a renewal payment fails and must be retried.
-     * In that,case, the current_period_ends_at will advance to the end of the next,period (time doesn’t
-     * stop because a payment was missed) but the,next_assessment_at will be scheduled for the auto-retry
-     * time (i.e. 24,hours in the future, in some cases)
+     * Timestamp that indicates when capture of payment will be tried or retried. This value will usually
+     * track the current_period_ends_at, but will diverge if a renewal payment fails and must be retried.
+     * In that case, the current_period_ends_at will advance to the end of the next period (time doesn’t
+     * stop because a payment was missed) but the next_assessment_at will be scheduled for the auto-retry
+     * time (e.g., 24 hours in the future, in some cases).
      */
     public function unsetNextAssessmentAt(): void
     {
@@ -706,7 +706,7 @@ class Subscription implements \JsonSerializable
 
     /**
      * Returns Activated At.
-     * Timestamp for when the subscription began (i.e. when it came out of trial, or when it began in the
+     * Timestamp for when the subscription began (i.e., when it came out of trial, or when it began in the
      * case of no trial)
      */
     public function getActivatedAt(): ?\DateTime
@@ -719,7 +719,7 @@ class Subscription implements \JsonSerializable
 
     /**
      * Sets Activated At.
-     * Timestamp for when the subscription began (i.e. when it came out of trial, or when it began in the
+     * Timestamp for when the subscription began (i.e., when it came out of trial, or when it began in the
      * case of no trial)
      *
      * @maps activated_at
@@ -732,7 +732,7 @@ class Subscription implements \JsonSerializable
 
     /**
      * Unsets Activated At.
-     * Timestamp for when the subscription began (i.e. when it came out of trial, or when it began in the
+     * Timestamp for when the subscription began (i.e., when it came out of trial, or when it began in the
      * case of no trial)
      */
     public function unsetActivatedAt(): void
@@ -984,7 +984,7 @@ class Subscription implements \JsonSerializable
     /**
      * Returns Previous State.
      * Only valid for webhook payloads The previous state for webhooks that have indicated a change in
-     * state. For normal API calls, this will always be the same as the state (current state)
+     * state. For normal API calls, this will always be the same as the state (current state).
      */
     public function getPreviousState(): ?string
     {
@@ -994,7 +994,7 @@ class Subscription implements \JsonSerializable
     /**
      * Sets Previous State.
      * Only valid for webhook payloads The previous state for webhooks that have indicated a change in
-     * state. For normal API calls, this will always be the same as the state (current state)
+     * state. For normal API calls, this will always be the same as the state (current state).
      *
      * @maps previous_state
      * @factory \AdvancedBillingLib\Models\SubscriptionState::checkValue
@@ -1026,8 +1026,8 @@ class Subscription implements \JsonSerializable
 
     /**
      * Returns Signup Revenue.
-     * The revenue, formatted as a string of decimal separated dollars and,cents, from the subscription
-     * signup ($50.00 would be formatted as,50.00)
+     * The revenue, formatted as a string of decimal separated dollars and cents, from the subscription
+     * signup ($50.00 would be formatted as 50.00)
      */
     public function getSignupRevenue(): ?string
     {
@@ -1036,8 +1036,8 @@ class Subscription implements \JsonSerializable
 
     /**
      * Sets Signup Revenue.
-     * The revenue, formatted as a string of decimal separated dollars and,cents, from the subscription
-     * signup ($50.00 would be formatted as,50.00)
+     * The revenue, formatted as a string of decimal separated dollars and cents, from the subscription
+     * signup ($50.00 would be formatted as 50.00)
      *
      * @maps signup_revenue
      */
@@ -1478,7 +1478,7 @@ class Subscription implements \JsonSerializable
 
     /**
      * Returns Reason Code.
-     * The churn reason code associated to a cancelled subscription.
+     * The churn reason code associated to a canceled subscription.
      */
     public function getReasonCode(): ?string
     {
@@ -1490,7 +1490,7 @@ class Subscription implements \JsonSerializable
 
     /**
      * Sets Reason Code.
-     * The churn reason code associated to a cancelled subscription.
+     * The churn reason code associated to a canceled subscription.
      *
      * @maps reason_code
      */
@@ -1501,7 +1501,7 @@ class Subscription implements \JsonSerializable
 
     /**
      * Unsets Reason Code.
-     * The churn reason code associated to a cancelled subscription.
+     * The churn reason code associated to a canceled subscription.
      */
     public function unsetReasonCode(): void
     {
@@ -1807,7 +1807,7 @@ class Subscription implements \JsonSerializable
 
     /**
      * Returns Reference.
-     * The reference value (provided by your app) for the subscription istelf.
+     * The reference value (provided by your app) for the subscription itself.
      */
     public function getReference(): ?string
     {
@@ -1819,7 +1819,7 @@ class Subscription implements \JsonSerializable
 
     /**
      * Sets Reference.
-     * The reference value (provided by your app) for the subscription istelf.
+     * The reference value (provided by your app) for the subscription itself.
      *
      * @maps reference
      */
@@ -1830,7 +1830,7 @@ class Subscription implements \JsonSerializable
 
     /**
      * Unsets Reference.
-     * The reference value (provided by your app) for the subscription istelf.
+     * The reference value (provided by your app) for the subscription itself.
      */
     public function unsetReference(): void
     {
@@ -1873,7 +1873,7 @@ class Subscription implements \JsonSerializable
     /**
      * Returns Prepaid Dunning.
      * Boolean representing whether the subscription is prepaid and currently in dunning. Only returned for
-     * Relationship Invoicing sites with the feature enabled
+     * Relationship Invoicing sites with the feature enabled.
      */
     public function getPrepaidDunning(): ?bool
     {
@@ -1883,7 +1883,7 @@ class Subscription implements \JsonSerializable
     /**
      * Sets Prepaid Dunning.
      * Boolean representing whether the subscription is prepaid and currently in dunning. Only returned for
-     * Relationship Invoicing sites with the feature enabled
+     * Relationship Invoicing sites with the feature enabled.
      *
      * @maps prepaid_dunning
      */
@@ -1894,8 +1894,8 @@ class Subscription implements \JsonSerializable
 
     /**
      * Returns Coupons.
-     * Additional coupon data. To use this data you also have to include the following param in the
-     * request`include[]=coupons`.
+     * Additional coupon data. To use this data you also have to include the following param in the request:
+     * `include[]=coupons`.
      * Only in Read Subscription Endpoint.
      *
      * @return SubscriptionIncludedCoupon[]|null
@@ -1907,8 +1907,8 @@ class Subscription implements \JsonSerializable
 
     /**
      * Sets Coupons.
-     * Additional coupon data. To use this data you also have to include the following param in the
-     * request`include[]=coupons`.
+     * Additional coupon data. To use this data you also have to include the following param in the request:
+     * `include[]=coupons`.
      * Only in Read Subscription Endpoint.
      *
      * @maps coupons

@@ -11,11 +11,13 @@
 |  --- | --- | --- | --- | --- | --- |
 | `ok` | `?string` | Optional | - | getOk(): ?string | setOk(?string ok): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "ok": "ok4"
-}
+```php
+use AdvancedBillingLib\Models\Builders\OkResponseBuilder;
+
+$okResponse = OkResponseBuilder::init()
+    ->ok('ok8')
+    ->build();
 ```
 

@@ -16,3 +16,11 @@ A handle for the line item kind for allocation preview
 | `COUPON` |
 | `TAX` |
 
+## Example
+
+```php
+use AdvancedBillingLib\Models\AllocationPreviewLineItemKind;
+
+$allocationPreviewLineItemKind = AllocationPreviewLineItemKind::COUPON;
+```
+

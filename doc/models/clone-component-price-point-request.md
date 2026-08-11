@@ -11,14 +11,18 @@
 |  --- | --- | --- | --- | --- | --- |
 | `pricePoint` | [`CloneComponentPricePoint`](../../doc/models/clone-component-price-point.md) | Required | - | getPricePoint(): CloneComponentPricePoint | setPricePoint(CloneComponentPricePoint pricePoint): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "price_point": {
-    "name": "name0",
-    "handle": "handle6"
-  }
-}
+```php
+use AdvancedBillingLib\Models\Builders\CloneComponentPricePointRequestBuilder;
+use AdvancedBillingLib\Models\Builders\CloneComponentPricePointBuilder;
+
+$cloneComponentPricePointRequest = CloneComponentPricePointRequestBuilder::init(
+    CloneComponentPricePointBuilder::init(
+        'name0'
+    )
+        ->handle('handle6')
+        ->build()
+)->build();
 ```
 

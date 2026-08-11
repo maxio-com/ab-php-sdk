@@ -11,18 +11,22 @@
 |  --- | --- | --- | --- | --- | --- |
 | `refund` | [RefundInvoice](../../doc/models/refund-invoice.md)\|[RefundConsolidatedInvoice](../../doc/models/refund-consolidated-invoice.md) | Required | This is a container for any-of cases. | getRefund(): | setRefund( refund): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "refund": {
-    "amount": "amount8",
-    "memo": "memo0",
-    "payment_id": 0,
-    "external": false,
-    "apply_credit": false,
-    "void_invoice": false
-  }
-}
+```php
+use AdvancedBillingLib\Models\Builders\RefundInvoiceRequestBuilder;
+use AdvancedBillingLib\Models\Builders\RefundInvoiceBuilder;
+
+$refundInvoiceRequest = RefundInvoiceRequestBuilder::init(
+    RefundInvoiceBuilder::init(
+        'amount8',
+        'memo0',
+        0
+    )
+        ->external(false)
+        ->applyCredit(false)
+        ->voidInvoice(false)
+        ->build()
+)->build();
 ```
 

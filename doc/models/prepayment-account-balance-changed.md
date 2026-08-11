@@ -14,14 +14,16 @@
 | `prepaymentBalanceChangeInCents` | `int` | Required | - | getPrepaymentBalanceChangeInCents(): int | setPrepaymentBalanceChangeInCents(int prepaymentBalanceChangeInCents): void |
 | `currencyCode` | `string` | Required | - | getCurrencyCode(): string | setCurrencyCode(string currencyCode): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "reason": "reason4",
-  "prepayment_account_balance_in_cents": 182,
-  "prepayment_balance_change_in_cents": 206,
-  "currency_code": "currency_code4"
-}
+```php
+use AdvancedBillingLib\Models\Builders\PrepaymentAccountBalanceChangedBuilder;
+
+$prepaymentAccountBalanceChanged = PrepaymentAccountBalanceChangedBuilder::init(
+    'reason8',
+    134,
+    158,
+    'currency_code8'
+)->build();
 ```
 

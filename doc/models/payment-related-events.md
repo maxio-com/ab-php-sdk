@@ -12,12 +12,14 @@
 | `productId` | `int` | Required | - | getProductId(): int | setProductId(int productId): void |
 | `accountTransactionId` | `int` | Required | - | getAccountTransactionId(): int | setAccountTransactionId(int accountTransactionId): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "product_id": 42,
-  "account_transaction_id": 58
-}
+```php
+use AdvancedBillingLib\Models\Builders\PaymentRelatedEventsBuilder;
+
+$paymentRelatedEvents = PaymentRelatedEventsBuilder::init(
+    186,
+    170
+)->build();
 ```
 

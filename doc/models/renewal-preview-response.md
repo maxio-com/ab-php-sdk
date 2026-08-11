@@ -11,17 +11,21 @@
 |  --- | --- | --- | --- | --- | --- |
 | `renewalPreview` | [`RenewalPreview`](../../doc/models/renewal-preview.md) | Required | - | getRenewalPreview(): RenewalPreview | setRenewalPreview(RenewalPreview renewalPreview): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "renewal_preview": {
-    "next_assessment_at": "2016-03-13T12:52:32.123Z",
-    "subtotal_in_cents": 132,
-    "total_tax_in_cents": 0,
-    "total_discount_in_cents": 250,
-    "total_in_cents": 20
-  }
-}
+```php
+use AdvancedBillingLib\Models\Builders\RenewalPreviewResponseBuilder;
+use AdvancedBillingLib\Models\Builders\RenewalPreviewBuilder;
+use AdvancedBillingLib\Utils\DateTimeHelper;
+
+$renewalPreviewResponse = RenewalPreviewResponseBuilder::init(
+    RenewalPreviewBuilder::init()
+        ->nextAssessmentAt(DateTimeHelper::fromRfc3339DateTime('2016-03-13T12:52:32.123Z'))
+        ->subtotalInCents(132)
+        ->totalTaxInCents(0)
+        ->totalDiscountInCents(250)
+        ->totalInCents(20)
+        ->build()
+)->build();
 ```
 

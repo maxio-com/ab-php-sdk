@@ -61,6 +61,11 @@ class UpdateComponent implements \JsonSerializable
     private $upgradeCharge = [];
 
     /**
+     * @var array
+     */
+    private $unspscCode = [];
+
+    /**
      * Returns Handle.
      */
     public function getHandle(): ?string
@@ -80,7 +85,7 @@ class UpdateComponent implements \JsonSerializable
 
     /**
      * Returns Name.
-     * The name of the Component, suitable for display on statements. i.e. Text Messages.
+     * The name of the Component, suitable for display on statements. e.g., Text Messages.
      */
     public function getName(): ?string
     {
@@ -89,7 +94,7 @@ class UpdateComponent implements \JsonSerializable
 
     /**
      * Sets Name.
-     * The name of the Component, suitable for display on statements. i.e. Text Messages.
+     * The name of the Component, suitable for display on statements. e.g., Text Messages.
      *
      * @maps name
      */
@@ -302,6 +307,44 @@ class UpdateComponent implements \JsonSerializable
     }
 
     /**
+     * Returns Unspsc Code.
+     * (Optional) Custom UNSPSC commodity code for Level 3/CEDP payment data. When set, this value is sent
+     * as the commodity code on invoice line items for this component instead of the default derived from
+     * item_category.
+     */
+    public function getUnspscCode(): ?string
+    {
+        if (count($this->unspscCode) == 0) {
+            return null;
+        }
+        return $this->unspscCode['value'];
+    }
+
+    /**
+     * Sets Unspsc Code.
+     * (Optional) Custom UNSPSC commodity code for Level 3/CEDP payment data. When set, this value is sent
+     * as the commodity code on invoice line items for this component instead of the default derived from
+     * item_category.
+     *
+     * @maps unspsc_code
+     */
+    public function setUnspscCode(?string $unspscCode): void
+    {
+        $this->unspscCode['value'] = $unspscCode;
+    }
+
+    /**
+     * Unsets Unspsc Code.
+     * (Optional) Custom UNSPSC commodity code for Level 3/CEDP payment data. When set, this value is sent
+     * as the commodity code on invoice line items for this component instead of the default derived from
+     * item_category.
+     */
+    public function unsetUnspscCode(): void
+    {
+        $this->unspscCode = [];
+    }
+
+    /**
      * Converts the UpdateComponent object to a human-readable string representation.
      *
      * @return string The string representation of the UpdateComponent object.
@@ -320,6 +363,7 @@ class UpdateComponent implements \JsonSerializable
                 'itemCategory' => $this->getItemCategory(),
                 'displayOnHostedPage' => $this->displayOnHostedPage,
                 'upgradeCharge' => $this->getUpgradeCharge(),
+                'unspscCode' => $this->getUnspscCode(),
                 'additionalProperties' => $this->additionalProperties
             ]
         );
@@ -391,6 +435,9 @@ class UpdateComponent implements \JsonSerializable
         }
         if (!empty($this->upgradeCharge)) {
             $json['upgrade_charge']         = CreditType::checkValue($this->upgradeCharge['value']);
+        }
+        if (!empty($this->unspscCode)) {
+            $json['unspsc_code']            = $this->unspscCode['value'];
         }
         $json = array_merge($json, $this->additionalProperties);
 

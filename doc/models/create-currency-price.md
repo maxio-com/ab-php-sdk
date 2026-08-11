@@ -13,13 +13,15 @@
 | `price` | `?float` | Optional | Price for the price level in this currency | getPrice(): ?float | setPrice(?float price): void |
 | `priceId` | `?int` | Optional | ID of the price that this corresponds with | getPriceId(): ?int | setPriceId(?int priceId): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "currency": "currency2",
-  "price": 10.4,
-  "price_id": 54
-}
+```php
+use AdvancedBillingLib\Models\Builders\CreateCurrencyPriceBuilder;
+
+$createCurrencyPrice = CreateCurrencyPriceBuilder::init()
+    ->currency('currency2')
+    ->price(54.8)
+    ->priceId(142)
+    ->build();
 ```
 

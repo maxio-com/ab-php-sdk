@@ -11,24 +11,19 @@
 |  --- | --- | --- | --- | --- | --- |
 | `base` | `?(array[])` | Optional | - | getBase(): ?array | setBase(?array base): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "base": [
-    {
-      "key1": "val1",
-      "key2": "val2"
-    },
-    {
-      "key1": "val1",
-      "key2": "val2"
-    },
-    {
-      "key1": "val1",
-      "key2": "val2"
-    }
-  ]
-}
+```php
+use AdvancedBillingLib\Models\Builders\BaseRefundErrorBuilder;
+use AdvancedBillingLib\ApiHelper;
+
+$baseRefundError = BaseRefundErrorBuilder::init()
+    ->base(
+        [
+            ApiHelper::deserialize('{"key1":"val1","key2":"val2"}'),
+            ApiHelper::deserialize('{"key1":"val1","key2":"val2"}')
+        ]
+    )
+    ->build();
 ```
 

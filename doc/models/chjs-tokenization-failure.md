@@ -12,16 +12,22 @@
 | `errors` | `string` | Required | - | getErrors(): string | setErrors(string errors): void |
 | `paymentProfileParams` | [`?PaymentProfileParams`](../../doc/models/payment-profile-params.md) | Optional | PCI-safe cardholder fields only. Full card numbers, CVV, and billing address are never included. | getPaymentProfileParams(): ?PaymentProfileParams | setPaymentProfileParams(?PaymentProfileParams paymentProfileParams): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "errors": "errors2",
-  "payment_profile_params": {
-    "first_name": "first_name2",
-    "last_name": "last_name0",
-    "card_type": "card_type2"
-  }
-}
+```php
+use AdvancedBillingLib\Models\Builders\ChjsTokenizationFailureBuilder;
+use AdvancedBillingLib\Models\Builders\PaymentProfileParamsBuilder;
+
+$chjsTokenizationFailure = ChjsTokenizationFailureBuilder::init(
+    'errors2'
+)
+    ->paymentProfileParams(
+        PaymentProfileParamsBuilder::init()
+            ->firstName('first_name2')
+            ->lastName('last_name0')
+            ->cardType('card_type2')
+            ->build()
+    )
+    ->build();
 ```
 

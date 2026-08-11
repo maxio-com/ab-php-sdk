@@ -15,15 +15,19 @@
 | `maskedCardNumber` | `string` | Required | - | getMaskedCardNumber(): string | setMaskedCardNumber(string maskedCardNumber): void |
 | `type` | [`string(InvoiceEventPaymentMethod)`](../../doc/models/invoice-event-payment-method.md) | Required | - | getType(): string | setType(string type): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "card_brand": "card_brand4",
-  "masked_card_number": "masked_card_number0",
-  "type": "credit_card",
-  "card_expiration": "card_expiration2",
-  "last_four": "last_four4"
-}
+```php
+use AdvancedBillingLib\Models\Builders\PaymentMethodCreditCardBuilder;
+use AdvancedBillingLib\Models\InvoiceEventPaymentMethod;
+
+$paymentMethodCreditCard = PaymentMethodCreditCardBuilder::init(
+    'card_brand4',
+    'masked_card_number0',
+    InvoiceEventPaymentMethod::CREDIT_CARD
+)
+    ->cardExpiration('card_expiration2')
+    ->lastFour('last_four6')
+    ->build();
 ```
 

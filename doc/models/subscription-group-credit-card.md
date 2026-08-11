@@ -30,16 +30,21 @@
 | `cvv` | `?string` | Optional | - | getCvv(): ?string | setCvv(?string cvv): void |
 | `paymentType` | `?string` | Optional | - | getPaymentType(): ?string | setPaymentType(?string paymentType): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "chargify_token": "tok_592nf92ng0sjd4300p",
-  "full_number": 4111111111111111,
-  "vault_token": "vault_token6",
-  "current_vault": "braintree_blue",
-  "gateway_handle": "gateway_handle6",
-  "first_name": "first_name4"
-}
+```php
+use AdvancedBillingLib\Models\Builders\SubscriptionGroupCreditCardBuilder;
+use AdvancedBillingLib\Models\CreditCardVault;
+
+$subscriptionGroupCreditCard = SubscriptionGroupCreditCardBuilder::init()
+    ->chargifyToken('tok_592nf92ng0sjd4300p')
+    ->vaultToken('vault_token0')
+    ->currentVault(CreditCardVault::BLUE_SNAP)
+    ->gatewayHandle('gateway_handle0')
+    ->firstName('first_name8')
+    ->fullNumber(
+        4111111111111111
+    )
+    ->build();
 ```
 
