@@ -32,6 +32,7 @@ final class ProductTestData
     public const PUBLIC_SIGNUP_PAGES = [];
     public const TAX_CODE = null;
     public const ITEM_CATEGORY = null;
+    public const UNSPSC_CODE = null;
     public const PRICE_IN_CENTS = 100;
     public const VERSION_NUMBER = 1;
 }
