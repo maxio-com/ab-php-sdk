@@ -11,8 +11,13 @@ declare(strict_types=1);
 namespace AdvancedBillingLib\Models;
 
 use AdvancedBillingLib\ApiHelper;
+use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
+/**
+ * Event data for both `subscription_product_change` and `subscription_product_change_scheduled`. The
+ * price point and `effective_at` fields are only populated for scheduled changes.
+ */
 class SubscriptionProductChange implements \JsonSerializable
 {
     /**
@@ -24,6 +29,21 @@ class SubscriptionProductChange implements \JsonSerializable
      * @var int
      */
     private $newProductId;
+
+    /**
+     * @var array
+     */
+    private $previousProductPricePointId = [];
+
+    /**
+     * @var array
+     */
+    private $newProductPricePointId = [];
+
+    /**
+     * @var array
+     */
+    private $effectiveAt = [];
 
     /**
      * @param int $previousProductId
@@ -74,6 +94,100 @@ class SubscriptionProductChange implements \JsonSerializable
     }
 
     /**
+     * Returns Previous Product Price Point Id.
+     */
+    public function getPreviousProductPricePointId(): ?int
+    {
+        if (count($this->previousProductPricePointId) == 0) {
+            return null;
+        }
+        return $this->previousProductPricePointId['value'];
+    }
+
+    /**
+     * Sets Previous Product Price Point Id.
+     *
+     * @maps previous_product_price_point_id
+     */
+    public function setPreviousProductPricePointId(?int $previousProductPricePointId): void
+    {
+        $this->previousProductPricePointId['value'] = $previousProductPricePointId;
+    }
+
+    /**
+     * Unsets Previous Product Price Point Id.
+     */
+    public function unsetPreviousProductPricePointId(): void
+    {
+        $this->previousProductPricePointId = [];
+    }
+
+    /**
+     * Returns New Product Price Point Id.
+     */
+    public function getNewProductPricePointId(): ?int
+    {
+        if (count($this->newProductPricePointId) == 0) {
+            return null;
+        }
+        return $this->newProductPricePointId['value'];
+    }
+
+    /**
+     * Sets New Product Price Point Id.
+     *
+     * @maps new_product_price_point_id
+     */
+    public function setNewProductPricePointId(?int $newProductPricePointId): void
+    {
+        $this->newProductPricePointId['value'] = $newProductPricePointId;
+    }
+
+    /**
+     * Unsets New Product Price Point Id.
+     */
+    public function unsetNewProductPricePointId(): void
+    {
+        $this->newProductPricePointId = [];
+    }
+
+    /**
+     * Returns Effective At.
+     * When the scheduled product change takes effect (the subscription's next renewal). Only sent for
+     * `subscription_product_change_scheduled`.
+     */
+    public function getEffectiveAt(): ?\DateTime
+    {
+        if (count($this->effectiveAt) == 0) {
+            return null;
+        }
+        return $this->effectiveAt['value'];
+    }
+
+    /**
+     * Sets Effective At.
+     * When the scheduled product change takes effect (the subscription's next renewal). Only sent for
+     * `subscription_product_change_scheduled`.
+     *
+     * @maps effective_at
+     * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
+     */
+    public function setEffectiveAt(?\DateTime $effectiveAt): void
+    {
+        $this->effectiveAt['value'] = $effectiveAt;
+    }
+
+    /**
+     * Unsets Effective At.
+     * When the scheduled product change takes effect (the subscription's next renewal). Only sent for
+     * `subscription_product_change_scheduled`.
+     */
+    public function unsetEffectiveAt(): void
+    {
+        $this->effectiveAt = [];
+    }
+
+    /**
      * Converts the SubscriptionProductChange object to a human-readable string representation.
      *
      * @return string The string representation of the SubscriptionProductChange object.
@@ -85,6 +199,9 @@ class SubscriptionProductChange implements \JsonSerializable
             [
                 'previousProductId' => $this->previousProductId,
                 'newProductId' => $this->newProductId,
+                'previousProductPricePointId' => $this->getPreviousProductPricePointId(),
+                'newProductPricePointId' => $this->getNewProductPricePointId(),
+                'effectiveAt' => $this->getEffectiveAt(),
                 'additionalProperties' => $this->additionalProperties
             ]
         );
@@ -130,8 +247,17 @@ class SubscriptionProductChange implements \JsonSerializable
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
-        $json['previous_product_id'] = $this->previousProductId;
-        $json['new_product_id']      = $this->newProductId;
+        $json['previous_product_id']                 = $this->previousProductId;
+        $json['new_product_id']                      = $this->newProductId;
+        if (!empty($this->previousProductPricePointId)) {
+            $json['previous_product_price_point_id'] = $this->previousProductPricePointId['value'];
+        }
+        if (!empty($this->newProductPricePointId)) {
+            $json['new_product_price_point_id']      = $this->newProductPricePointId['value'];
+        }
+        if (!empty($this->effectiveAt)) {
+            $json['effective_at']                    = DateTimeHelper::toRfc3339DateTime($this->effectiveAt['value']);
+        }
         $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;

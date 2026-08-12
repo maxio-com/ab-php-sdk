@@ -3,14 +3,13 @@
 
 ## Data Type
 
-`SubscriptionProductChange|SubscriptionProductChangeScheduled|SubscriptionStateChange|PaymentRelatedEvents|RefundSuccess|ComponentAllocationChange|MeteredUsage|PrepaidUsage|DunningStepReached|InvoiceIssued|PendingCancellationChange|PrepaidSubscriptionBalanceChanged|ProformaInvoiceIssued|SubscriptionGroupSignupEventData|CreditAccountBalanceChanged|PrepaymentAccountBalanceChanged|PaymentCollectionMethodChanged|ItemPricePointChanged|CustomFieldValueChange|ChjsTokenizationSuccess|ChjsTokenizationFailure`
+`SubscriptionProductChange|SubscriptionStateChange|PaymentRelatedEvents|RefundSuccess|ComponentAllocationChange|MeteredUsage|PrepaidUsage|DunningStepReached|InvoiceIssued|PendingCancellationChange|PrepaidSubscriptionBalanceChanged|ProformaInvoiceIssued|SubscriptionGroupSignupEventData|CreditAccountBalanceChanged|PrepaymentAccountBalanceChanged|PaymentCollectionMethodChanged|ItemPricePointChanged|CustomFieldValueChange|ChjsTokenizationSuccess|ChjsTokenizationFailure`
 
 ## Cases
 
 | Type |
 |  --- |
 | [`SubscriptionProductChange`](../../../doc/models/subscription-product-change.md) |
-| [`SubscriptionProductChangeScheduled`](../../../doc/models/subscription-product-change-scheduled.md) |
 | [`SubscriptionStateChange`](../../../doc/models/subscription-state-change.md) |
 | [`PaymentRelatedEvents`](../../../doc/models/payment-related-events.md) |
 | [`RefundSuccess`](../../../doc/models/refund-success.md) |
@@ -41,19 +40,6 @@
 $value = SubscriptionProductChangeBuilder::init(
     126,
     12
-)->build();
-```
-
-## SubscriptionProductChangeScheduled
-
-### Initialization Code
-
-#### Example
-
-```php
-$value = SubscriptionProductChangeScheduledBuilder::init(
-    62,
-    52
 )->build();
 ```
 

@@ -30,7 +30,6 @@ use AdvancedBillingLib\Models\ProformaInvoiceIssued;
 use AdvancedBillingLib\Models\RefundSuccess;
 use AdvancedBillingLib\Models\SubscriptionGroupSignupEventData;
 use AdvancedBillingLib\Models\SubscriptionProductChange;
-use AdvancedBillingLib\Models\SubscriptionProductChangeScheduled;
 use AdvancedBillingLib\Models\SubscriptionStateChange;
 use Core\Utils\CoreHelper;
 
@@ -89,7 +88,7 @@ class EventBuilder
     /**
      * Sets event specific data field.
      *
-     * @param SubscriptionProductChange|SubscriptionProductChangeScheduled|SubscriptionStateChange|PaymentRelatedEvents|RefundSuccess|ComponentAllocationChange|MeteredUsage|PrepaidUsage|DunningStepReached|InvoiceIssued|PendingCancellationChange|PrepaidSubscriptionBalanceChanged|ProformaInvoiceIssued|SubscriptionGroupSignupEventData|CreditAccountBalanceChanged|PrepaymentAccountBalanceChanged|PaymentCollectionMethodChanged|ItemPricePointChanged|CustomFieldValueChange|ChjsTokenizationSuccess|ChjsTokenizationFailure|null $value
+     * @param SubscriptionProductChange|SubscriptionStateChange|PaymentRelatedEvents|RefundSuccess|ComponentAllocationChange|MeteredUsage|PrepaidUsage|DunningStepReached|InvoiceIssued|PendingCancellationChange|PrepaidSubscriptionBalanceChanged|ProformaInvoiceIssued|SubscriptionGroupSignupEventData|CreditAccountBalanceChanged|PrepaymentAccountBalanceChanged|PaymentCollectionMethodChanged|ItemPricePointChanged|CustomFieldValueChange|ChjsTokenizationSuccess|ChjsTokenizationFailure|null $value
      */
     public function eventSpecificData($value): self
     {

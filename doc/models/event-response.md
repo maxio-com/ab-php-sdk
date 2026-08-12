@@ -33,8 +33,13 @@ $eventResponse = EventResponseBuilder::init(
             SubscriptionProductChangeBuilder::init(
                 126,
                 12
-            )->build()
-        )->build()
+            )
+                ->previousProductPricePointId(250)
+                ->newProductPricePointId(244)
+                ->effectiveAt(DateTimeHelper::fromRfc3339DateTime('2016-03-13T12:52:32.123Z'))
+                ->build()
+        )
+        ->build()
 )->build();
 ```
 
