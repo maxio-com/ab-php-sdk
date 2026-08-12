@@ -92,6 +92,11 @@ class BankAccountPaymentProfile implements \JsonSerializable
     private $maskedBankRoutingNumber = [];
 
     /**
+     * @var array
+     */
+    private $maskedBankAccountNumber = [];
+
+    /**
      * @var string|null
      */
     private $bankAccountType;
@@ -547,6 +552,41 @@ class BankAccountPaymentProfile implements \JsonSerializable
     }
 
     /**
+     * Returns Masked Bank Account Number.
+     * A string representation of the stored bank account number with all but the last 4 digits marked with
+     * X's (i.e. 'XXXXXXX1111').
+     */
+    public function getMaskedBankAccountNumber(): ?string
+    {
+        if (count($this->maskedBankAccountNumber) == 0) {
+            return null;
+        }
+        return $this->maskedBankAccountNumber['value'];
+    }
+
+    /**
+     * Sets Masked Bank Account Number.
+     * A string representation of the stored bank account number with all but the last 4 digits marked with
+     * X's (i.e. 'XXXXXXX1111').
+     *
+     * @maps masked_bank_account_number
+     */
+    public function setMaskedBankAccountNumber(?string $maskedBankAccountNumber): void
+    {
+        $this->maskedBankAccountNumber['value'] = $maskedBankAccountNumber;
+    }
+
+    /**
+     * Unsets Masked Bank Account Number.
+     * A string representation of the stored bank account number with all but the last 4 digits marked with
+     * X's (i.e. 'XXXXXXX1111').
+     */
+    public function unsetMaskedBankAccountNumber(): void
+    {
+        $this->maskedBankAccountNumber = [];
+    }
+
+    /**
      * Returns Bank Account Type.
      * Defaults to checking
      */
@@ -755,6 +795,7 @@ class BankAccountPaymentProfile implements \JsonSerializable
                 'billingAddress2' => $this->getBillingAddress2(),
                 'bankName' => $this->bankName,
                 'maskedBankRoutingNumber' => $this->getMaskedBankRoutingNumber(),
+                'maskedBankAccountNumber' => $this->getMaskedBankAccountNumber(),
                 'bankAccountType' => $this->bankAccountType,
                 'bankAccountHolderType' => $this->bankAccountHolderType,
                 'paymentType' => $this->paymentType,
@@ -852,6 +893,9 @@ class BankAccountPaymentProfile implements \JsonSerializable
         }
         if (!empty($this->maskedBankRoutingNumber)) {
             $json['masked_bank_routing_number'] = $this->maskedBankRoutingNumber['value'];
+        }
+        if (!empty($this->maskedBankAccountNumber)) {
+            $json['masked_bank_account_number'] = $this->maskedBankAccountNumber['value'];
         }
         if (isset($this->bankAccountType)) {
             $json['bank_account_type']          = BankAccountType::checkValue($this->bankAccountType);
