@@ -22,15 +22,12 @@ class SubscriptionListInclude
 
     public const CURRENT_BILLING_AMOUNT = 'current_billing_amount';
 
-    public const THREE_DS_ACTION_LINK = 'three_ds_action_link';
-
     public const COUPONS = 'coupons';
 
     private const _ALL_VALUES = [
         self::SELF_SERVICE_PAGE_TOKEN,
         self::CURRENT_ACCOUNT_BALANCE_IN_CENTS,
         self::CURRENT_BILLING_AMOUNT,
-        self::THREE_DS_ACTION_LINK,
         self::COUPONS
     ];
 

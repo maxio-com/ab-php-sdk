@@ -15,13 +15,12 @@
 | `ORGANIZATION` |
 | `CUSTOMER_REFERENCE` |
 | `SUBSCRIPTION_REFERENCE` |
-| `LAST_FOUR` |
 
 ## Example
 
 ```php
 use AdvancedBillingLib\Models\QScope;
 
-$qScope = QScope::CUSTOMER_REFERENCE;
+$qScope = QScope::LAST_NAME;
 ```
 

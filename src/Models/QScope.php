@@ -28,16 +28,13 @@ class QScope
 
     public const SUBSCRIPTION_REFERENCE = 'subscription_reference';
 
-    public const LAST_FOUR = 'last_four';
-
     private const _ALL_VALUES = [
         self::FULL_NAME,
         self::FIRST_NAME,
         self::LAST_NAME,
         self::ORGANIZATION,
         self::CUSTOMER_REFERENCE,
-        self::SUBSCRIPTION_REFERENCE,
-        self::LAST_FOUR
+        self::SUBSCRIPTION_REFERENCE
     ];
 
     /**
