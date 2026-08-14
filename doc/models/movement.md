@@ -19,15 +19,18 @@
 | `subscriptionId` | `?int` | Optional | - | getSubscriptionId(): ?int | setSubscriptionId(?int subscriptionId): void |
 | `subscriberName` | `?string` | Optional | - | getSubscriberName(): ?string | setSubscriberName(?string subscriberName): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "timestamp": "2016-03-13T12:52:32.123Z",
-  "amount_in_cents": 174,
-  "amount_formatted": "amount_formatted4",
-  "description": "description2",
-  "category": "category0"
-}
+```php
+use AdvancedBillingLib\Models\Builders\MovementBuilder;
+use AdvancedBillingLib\Utils\DateTimeHelper;
+
+$movement = MovementBuilder::init()
+    ->timestamp(DateTimeHelper::fromRfc3339DateTime('2016-03-13T12:52:32.123Z'))
+    ->amountInCents(34)
+    ->amountFormatted('amount_formatted6')
+    ->description('description4')
+    ->category('category2')
+    ->build();
 ```
 

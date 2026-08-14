@@ -11,11 +11,13 @@
 |  --- | --- | --- | --- | --- | --- |
 | `count` | `?int` | Optional | - | getCount(): ?int | setCount(?int count): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "count": 60
-}
+```php
+use AdvancedBillingLib\Models\Builders\CountResponseBuilder;
+
+$countResponse = CountResponseBuilder::init()
+    ->count(56)
+    ->build();
 ```
 

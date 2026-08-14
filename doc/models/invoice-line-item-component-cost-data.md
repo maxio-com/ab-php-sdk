@@ -11,33 +11,31 @@
 |  --- | --- | --- | --- | --- | --- |
 | `rates` | [`?(ComponentCostData[])`](../../doc/models/component-cost-data.md) | Optional | - | getRates(): ?array | setRates(?array rates): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "rates": [
-    {
-      "component_code_id": 116,
-      "price_point_id": 226,
-      "product_id": 94,
-      "quantity": "quantity0",
-      "amount": "amount6"
-    },
-    {
-      "component_code_id": 116,
-      "price_point_id": 226,
-      "product_id": 94,
-      "quantity": "quantity0",
-      "amount": "amount6"
-    },
-    {
-      "component_code_id": 116,
-      "price_point_id": 226,
-      "product_id": 94,
-      "quantity": "quantity0",
-      "amount": "amount6"
-    }
-  ]
-}
+```php
+use AdvancedBillingLib\Models\Builders\InvoiceLineItemComponentCostDataBuilder;
+use AdvancedBillingLib\Models\Builders\ComponentCostDataBuilder;
+
+$invoiceLineItemComponentCostData = InvoiceLineItemComponentCostDataBuilder::init()
+    ->rates(
+        [
+            ComponentCostDataBuilder::init()
+                ->componentCodeId(116)
+                ->pricePointId(226)
+                ->productId(94)
+                ->quantity('quantity0')
+                ->amount('amount6')
+                ->build(),
+            ComponentCostDataBuilder::init()
+                ->componentCodeId(116)
+                ->pricePointId(226)
+                ->productId(94)
+                ->quantity('quantity0')
+                ->amount('amount6')
+                ->build()
+        ]
+    )
+    ->build();
 ```
 

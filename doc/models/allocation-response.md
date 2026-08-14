@@ -11,17 +11,24 @@
 |  --- | --- | --- | --- | --- | --- |
 | `allocation` | [`?Allocation`](../../doc/models/allocation.md) | Optional | - | getAllocation(): ?Allocation | setAllocation(?Allocation allocation): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "allocation": {
-    "allocation_id": 238,
-    "component_id": 8,
-    "component_handle": "component_handle8",
-    "subscription_id": 8,
-    "quantity": 32
-  }
-}
+```php
+use AdvancedBillingLib\Models\Builders\AllocationResponseBuilder;
+use AdvancedBillingLib\Models\Builders\AllocationBuilder;
+
+$allocationResponse = AllocationResponseBuilder::init()
+    ->allocation(
+        AllocationBuilder::init()
+            ->allocationId(238)
+            ->componentId(8)
+            ->componentHandle('component_handle8')
+            ->subscriptionId(8)
+            ->quantity(
+                32
+            )
+            ->build()
+    )
+    ->build();
 ```
 

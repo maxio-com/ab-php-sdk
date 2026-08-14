@@ -16,3 +16,11 @@ The identifier for the pricing scheme. See [Product Components](https://help.cha
 | `PER_UNIT` |
 | `TIERED` |
 
+## Example
+
+```php
+use AdvancedBillingLib\Models\PricingScheme;
+
+$pricingScheme = PricingScheme::STAIRSTEP;
+```
+

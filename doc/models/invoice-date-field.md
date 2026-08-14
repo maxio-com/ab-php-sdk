@@ -17,7 +17,9 @@
 
 ## Example
 
-```
-issue_date
+```php
+use AdvancedBillingLib\Models\InvoiceDateField;
+
+$invoiceDateField = InvoiceDateField::UPDATED_AT;
 ```
 

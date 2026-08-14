@@ -11,19 +11,32 @@
 |  --- | --- | --- | --- | --- | --- |
 | `segments` | [`?(Segment[])`](../../doc/models/segment.md) | Optional | - | getSegments(): ?array | setSegments(?array segments): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "segments": [
-    {
-      "id": 50,
-      "component_id": 160,
-      "price_point_id": 184,
-      "event_based_billing_metric_id": 244,
-      "pricing_scheme": "stairstep"
-    }
-  ]
-}
+```php
+use AdvancedBillingLib\Models\Builders\ListSegmentsResponseBuilder;
+use AdvancedBillingLib\Models\Builders\SegmentBuilder;
+use AdvancedBillingLib\Models\PricingScheme;
+
+$listSegmentsResponse = ListSegmentsResponseBuilder::init()
+    ->segments(
+        [
+            SegmentBuilder::init()
+                ->id(50)
+                ->componentId(160)
+                ->pricePointId(184)
+                ->eventBasedBillingMetricId(244)
+                ->pricingScheme(PricingScheme::STAIRSTEP)
+                ->build(),
+            SegmentBuilder::init()
+                ->id(50)
+                ->componentId(160)
+                ->pricePointId(184)
+                ->eventBasedBillingMetricId(244)
+                ->pricingScheme(PricingScheme::STAIRSTEP)
+                ->build()
+        ]
+    )
+    ->build();
 ```
 

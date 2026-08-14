@@ -17,17 +17,19 @@
 | `amountInCents` | `?int` | Optional | **Constraints**: `>= 0` | getAmountInCents(): ?int | setAmountInCents(?int amountInCents): void |
 | `percentage` | `?string` | Optional | - | getPercentage(): ?string | setPercentage(?string percentage): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "code": "\"ABCD_10\"",
-  "use_count": 2,
-  "uses_allowed": 10,
-  "expires_at": "\"2023-07-13T05:18:58-04:00\"",
-  "amount_in_cents": 1000,
-  "percentage": "\"15.0\"",
-  "recurring": false
-}
+```php
+use AdvancedBillingLib\Models\Builders\SubscriptionIncludedCouponBuilder;
+
+$subscriptionIncludedCoupon = SubscriptionIncludedCouponBuilder::init()
+    ->code('"ABCD_10"')
+    ->useCount(2)
+    ->usesAllowed(10)
+    ->expiresAt('"2023-07-13T05:18:58-04:00"')
+    ->recurring(false)
+    ->amountInCents(1000)
+    ->percentage('"15.0"')
+    ->build();
 ```
 

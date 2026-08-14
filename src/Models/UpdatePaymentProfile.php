@@ -164,7 +164,7 @@ class UpdatePaymentProfile implements \JsonSerializable
     /**
      * Returns Expiration Month.
      * (Optional when performing an Import via vault_token, required otherwise) The 1- or 2-digit credit
-     * card expiration month, as an integer or string, i.e. 5
+     * card expiration month, as an integer or string, e.g., 5
      */
     public function getExpirationMonth(): ?string
     {
@@ -174,7 +174,7 @@ class UpdatePaymentProfile implements \JsonSerializable
     /**
      * Sets Expiration Month.
      * (Optional when performing an Import via vault_token, required otherwise) The 1- or 2-digit credit
-     * card expiration month, as an integer or string, i.e. 5
+     * card expiration month, as an integer or string, e.g., 5
      *
      * @maps expiration_month
      */
@@ -185,8 +185,8 @@ class UpdatePaymentProfile implements \JsonSerializable
 
     /**
      * Returns Expiration Year.
-     * (Optional when performing a Import via vault_token, required otherwise) The 4-digit credit card
-     * expiration year, as an integer or string, i.e. 2012
+     * (Optional when performing an Import via vault_token, required otherwise) The 4-digit credit card
+     * expiration year, as an integer or string, e.g., 2012
      */
     public function getExpirationYear(): ?string
     {
@@ -195,8 +195,8 @@ class UpdatePaymentProfile implements \JsonSerializable
 
     /**
      * Sets Expiration Year.
-     * (Optional when performing a Import via vault_token, required otherwise) The 4-digit credit card
-     * expiration year, as an integer or string, i.e. 2012
+     * (Optional when performing an Import via vault_token, required otherwise) The 4-digit credit card
+     * expiration year, as an integer or string, e.g., 2012
      *
      * @maps expiration_year
      */
@@ -228,7 +228,7 @@ class UpdatePaymentProfile implements \JsonSerializable
 
     /**
      * Returns Billing Address.
-     * The credit card or bank account billing street address (i.e. 123 Main St.). This value is merely
+     * The credit card or bank account billing street address (e.g., 123 Main St.). This value is merely
      * passed through to the payment gateway.
      */
     public function getBillingAddress(): ?string
@@ -238,7 +238,7 @@ class UpdatePaymentProfile implements \JsonSerializable
 
     /**
      * Sets Billing Address.
-     * The credit card or bank account billing street address (i.e. 123 Main St.). This value is merely
+     * The credit card or bank account billing street address (e.g., 123 Main St.). This value is merely
      * passed through to the payment gateway.
      *
      * @maps billing_address
@@ -250,7 +250,7 @@ class UpdatePaymentProfile implements \JsonSerializable
 
     /**
      * Returns Billing City.
-     * The credit card or bank account billing address city (i.e. “Boston”). This value is merely passed
+     * The credit card or bank account billing address city (e.g., “Boston”). This value is merely passed
      * through to the payment gateway.
      */
     public function getBillingCity(): ?string
@@ -260,7 +260,7 @@ class UpdatePaymentProfile implements \JsonSerializable
 
     /**
      * Sets Billing City.
-     * The credit card or bank account billing address city (i.e. “Boston”). This value is merely passed
+     * The credit card or bank account billing address city (e.g., “Boston”). This value is merely passed
      * through to the payment gateway.
      *
      * @maps billing_city
@@ -272,9 +272,9 @@ class UpdatePaymentProfile implements \JsonSerializable
 
     /**
      * Returns Billing State.
-     * The credit card or bank account billing address state (i.e. MA). This value is merely passed through
-     * to the payment gateway. This must conform to the [ISO_3166-1](https://en.wikipedia.org/wiki/ISO_3166-
-     * 1#Current_codes) in order to be valid for tax locale purposes.
+     * The credit card or bank account billing address state (e.g., MA). This value is merely passed
+     * through to the payment gateway. This must conform to the [ISO_3166-1](https://en.wikipedia.
+     * org/wiki/ISO_3166-1#Current_codes) in order to be valid for tax locale purposes.
      */
     public function getBillingState(): ?string
     {
@@ -283,9 +283,9 @@ class UpdatePaymentProfile implements \JsonSerializable
 
     /**
      * Sets Billing State.
-     * The credit card or bank account billing address state (i.e. MA). This value is merely passed through
-     * to the payment gateway. This must conform to the [ISO_3166-1](https://en.wikipedia.org/wiki/ISO_3166-
-     * 1#Current_codes) in order to be valid for tax locale purposes.
+     * The credit card or bank account billing address state (e.g., MA). This value is merely passed
+     * through to the payment gateway. This must conform to the [ISO_3166-1](https://en.wikipedia.
+     * org/wiki/ISO_3166-1#Current_codes) in order to be valid for tax locale purposes.
      *
      * @maps billing_state
      */
@@ -296,7 +296,7 @@ class UpdatePaymentProfile implements \JsonSerializable
 
     /**
      * Returns Billing Zip.
-     * The credit card or bank account billing address zip code (i.e. 12345). This value is merely passed
+     * The credit card or bank account billing address zip code (e.g., 12345). This value is merely passed
      * through to the payment gateway.
      */
     public function getBillingZip(): ?string
@@ -306,7 +306,7 @@ class UpdatePaymentProfile implements \JsonSerializable
 
     /**
      * Sets Billing Zip.
-     * The credit card or bank account billing address zip code (i.e. 12345). This value is merely passed
+     * The credit card or bank account billing address zip code (e.g., 12345). This value is merely passed
      * through to the payment gateway.
      *
      * @maps billing_zip
@@ -319,7 +319,7 @@ class UpdatePaymentProfile implements \JsonSerializable
     /**
      * Returns Billing Country.
      * The credit card or bank account billing address country, required in [ISO_3166-1 alpha-2](https://en.
-     * wikipedia.org/wiki/ISO_3166-1_alpha-2) format (i.e. “US”). This value is merely passed through to
+     * wikipedia.org/wiki/ISO_3166-1_alpha-2) format (e.g., “US”). This value is merely passed through to
      * the payment gateway. Some gateways require country codes in a specific format. Check your gateway’s
      * documentation. If creating an ACH subscription, only US is supported at this time.
      */
@@ -331,7 +331,7 @@ class UpdatePaymentProfile implements \JsonSerializable
     /**
      * Sets Billing Country.
      * The credit card or bank account billing address country, required in [ISO_3166-1 alpha-2](https://en.
-     * wikipedia.org/wiki/ISO_3166-1_alpha-2) format (i.e. “US”). This value is merely passed through to
+     * wikipedia.org/wiki/ISO_3166-1_alpha-2) format (e.g., “US”). This value is merely passed through to
      * the payment gateway. Some gateways require country codes in a specific format. Check your gateway’s
      * documentation. If creating an ACH subscription, only US is supported at this time.
      *
@@ -344,7 +344,7 @@ class UpdatePaymentProfile implements \JsonSerializable
 
     /**
      * Returns Billing Address 2.
-     * Second line of the customer’s billing address i.e. Apt. 100
+     * Second line of the customer’s billing address, e.g., Apt. 100
      */
     public function getBillingAddress2(): ?string
     {
@@ -356,7 +356,7 @@ class UpdatePaymentProfile implements \JsonSerializable
 
     /**
      * Sets Billing Address 2.
-     * Second line of the customer’s billing address i.e. Apt. 100
+     * Second line of the customer’s billing address, e.g., Apt. 100
      *
      * @maps billing_address_2
      */
@@ -367,7 +367,7 @@ class UpdatePaymentProfile implements \JsonSerializable
 
     /**
      * Unsets Billing Address 2.
-     * Second line of the customer’s billing address i.e. Apt. 100
+     * Second line of the customer’s billing address, e.g., Apt. 100
      */
     public function unsetBillingAddress2(): void
     {

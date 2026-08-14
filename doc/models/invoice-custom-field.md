@@ -15,15 +15,18 @@
 | `value` | `?string` | Optional | **Constraints**: *Minimum Length*: `1` | getValue(): ?string | setValue(?string value): void |
 | `metadatumId` | `?int` | Optional | - | getMetadatumId(): ?int | setMetadatumId(?int metadatumId): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "owner_id": 142,
-  "owner_type": "Customer",
-  "name": "name0",
-  "value": "value2",
-  "metadatum_id": 142
-}
+```php
+use AdvancedBillingLib\Models\Builders\InvoiceCustomFieldBuilder;
+use AdvancedBillingLib\Models\CustomFieldOwner;
+
+$invoiceCustomField = InvoiceCustomFieldBuilder::init()
+    ->ownerId(14)
+    ->ownerType(CustomFieldOwner::CUSTOMER)
+    ->name('name0')
+    ->value('value2')
+    ->metadatumId(14)
+    ->build();
 ```
 

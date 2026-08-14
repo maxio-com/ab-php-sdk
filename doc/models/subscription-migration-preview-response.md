@@ -11,16 +11,19 @@
 |  --- | --- | --- | --- | --- | --- |
 | `migration` | [`SubscriptionMigrationPreview`](../../doc/models/subscription-migration-preview.md) | Required | - | getMigration(): SubscriptionMigrationPreview | setMigration(SubscriptionMigrationPreview migration): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "migration": {
-    "prorated_adjustment_in_cents": 196,
-    "charge_in_cents": 78,
-    "payment_due_in_cents": 250,
-    "credit_applied_in_cents": 210
-  }
-}
+```php
+use AdvancedBillingLib\Models\Builders\SubscriptionMigrationPreviewResponseBuilder;
+use AdvancedBillingLib\Models\Builders\SubscriptionMigrationPreviewBuilder;
+
+$subscriptionMigrationPreviewResponse = SubscriptionMigrationPreviewResponseBuilder::init(
+    SubscriptionMigrationPreviewBuilder::init()
+        ->proratedAdjustmentInCents(196)
+        ->chargeInCents(78)
+        ->paymentDueInCents(250)
+        ->creditAppliedInCents(210)
+        ->build()
+)->build();
 ```
 

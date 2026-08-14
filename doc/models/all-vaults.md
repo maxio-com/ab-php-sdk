@@ -46,3 +46,11 @@ The vault that stores the payment profile with the provided `vault_token`. Use `
 | `UNIPAAS` |
 | `WIRECARD` |
 
+## Example
+
+```php
+use AdvancedBillingLib\Models\AllVaults;
+
+$allVaults = AllVaults::EWAY_RAPID_STD;
+```
+

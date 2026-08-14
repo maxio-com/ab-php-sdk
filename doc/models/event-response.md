@@ -11,34 +11,35 @@
 |  --- | --- | --- | --- | --- | --- |
 | `event` | [`Event`](../../doc/models/event.md) | Required | - | getEvent(): Event | setEvent(Event event): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "event": {
-    "id": 242,
-    "key": "maxio_payments_direct_debit_payment_rejected",
-    "message": "message0",
-    "subscription_id": 96,
-    "customer_id": 24,
-    "created_at": "2016-03-13T12:52:32.123Z",
-    "event_specific_data": {
-      "previous_unit_balance": null,
-      "previous_overage_unit_balance": null,
-      "new_unit_balance": null,
-      "new_overage_unit_balance": null,
-      "usage_quantity": null,
-      "overage_usage_quantity": null,
-      "component_id": null,
-      "component_handle": null,
-      "memo": null,
-      "allocation_details": [
-        null
-      ],
-      "previous_product_id": 126,
-      "new_product_id": 12
-    }
-  }
-}
+```php
+use AdvancedBillingLib\Models\Builders\EventResponseBuilder;
+use AdvancedBillingLib\Models\Builders\EventBuilder;
+use AdvancedBillingLib\Models\EventKey;
+use AdvancedBillingLib\Utils\DateTimeHelper;
+use AdvancedBillingLib\Models\Builders\SubscriptionProductChangeBuilder;
+
+$eventResponse = EventResponseBuilder::init(
+    EventBuilder::init(
+        242,
+        EventKey::SUBSCRIPTION_REMOVED_FROM_GROUP,
+        'message0',
+        DateTimeHelper::fromRfc3339DateTimeRequired('2016-03-13T12:52:32.123Z')
+    )
+        ->subscriptionId(96)
+        ->customerId(24)
+        ->eventSpecificData(
+            SubscriptionProductChangeBuilder::init(
+                126,
+                12
+            )
+                ->previousProductPricePointId(250)
+                ->newProductPricePointId(244)
+                ->effectiveAt(DateTimeHelper::fromRfc3339DateTime('2016-03-13T12:52:32.123Z'))
+                ->build()
+        )
+        ->build()
+)->build();
 ```
 

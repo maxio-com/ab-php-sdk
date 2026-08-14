@@ -12,39 +12,47 @@
 | `proformaInvoices` | [`?(ProformaInvoice[])`](../../doc/models/proforma-invoice.md) | Optional | - | getProformaInvoices(): ?array | setProformaInvoices(?array proformaInvoices): void |
 | `meta` | [`?ListProformaInvoicesMeta`](../../doc/models/list-proforma-invoices-meta.md) | Optional | - | getMeta(): ?ListProformaInvoicesMeta | setMeta(?ListProformaInvoicesMeta meta): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "proforma_invoices": [
-    {
-      "uid": "uid0",
-      "site_id": 140,
-      "customer_id": 252,
-      "subscription_id": 68,
-      "number": 56
-    },
-    {
-      "uid": "uid0",
-      "site_id": 140,
-      "customer_id": 252,
-      "subscription_id": 68,
-      "number": 56
-    },
-    {
-      "uid": "uid0",
-      "site_id": 140,
-      "customer_id": 252,
-      "subscription_id": 68,
-      "number": 56
-    }
-  ],
-  "meta": {
-    "total_count": 150,
-    "current_page": 126,
-    "total_pages": 138,
-    "status_code": 168
-  }
-}
+```php
+use AdvancedBillingLib\Models\Builders\ListProformaInvoicesResponseBuilder;
+use AdvancedBillingLib\Models\Builders\ProformaInvoiceBuilder;
+use AdvancedBillingLib\Models\Builders\ListProformaInvoicesMetaBuilder;
+
+$listProformaInvoicesResponse = ListProformaInvoicesResponseBuilder::init()
+    ->proformaInvoices(
+        [
+            ProformaInvoiceBuilder::init()
+                ->uid('uid0')
+                ->siteId(140)
+                ->customerId(252)
+                ->subscriptionId(68)
+                ->number(56)
+                ->build(),
+            ProformaInvoiceBuilder::init()
+                ->uid('uid0')
+                ->siteId(140)
+                ->customerId(252)
+                ->subscriptionId(68)
+                ->number(56)
+                ->build(),
+            ProformaInvoiceBuilder::init()
+                ->uid('uid0')
+                ->siteId(140)
+                ->customerId(252)
+                ->subscriptionId(68)
+                ->number(56)
+                ->build()
+        ]
+    )
+    ->meta(
+        ListProformaInvoicesMetaBuilder::init()
+            ->totalCount(150)
+            ->currentPage(126)
+            ->totalPages(138)
+            ->statusCode(168)
+            ->build()
+    )
+    ->build();
 ```
 

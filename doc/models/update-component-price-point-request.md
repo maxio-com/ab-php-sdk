@@ -11,17 +11,23 @@
 |  --- | --- | --- | --- | --- | --- |
 | `pricePoint` | [`?UpdateComponentPricePoint`](../../doc/models/update-component-price-point.md) | Optional | - | getPricePoint(): ?UpdateComponentPricePoint | setPricePoint(?UpdateComponentPricePoint pricePoint): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "price_point": {
-    "name": "name0",
-    "handle": "handle6",
-    "pricing_scheme": "per_unit",
-    "use_site_exchange_rate": false,
-    "tax_included": false
-  }
-}
+```php
+use AdvancedBillingLib\Models\Builders\UpdateComponentPricePointRequestBuilder;
+use AdvancedBillingLib\Models\Builders\UpdateComponentPricePointBuilder;
+use AdvancedBillingLib\Models\PricingScheme;
+
+$updateComponentPricePointRequest = UpdateComponentPricePointRequestBuilder::init()
+    ->pricePoint(
+        UpdateComponentPricePointBuilder::init()
+            ->name('name0')
+            ->handle('handle6')
+            ->pricingScheme(PricingScheme::PER_UNIT)
+            ->useSiteExchangeRate(false)
+            ->taxIncluded(false)
+            ->build()
+    )
+    ->build();
 ```
 

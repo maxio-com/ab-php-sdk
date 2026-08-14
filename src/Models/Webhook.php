@@ -98,7 +98,7 @@ class Webhook implements \JsonSerializable
 
     /**
      * Returns Id.
-     * The unique identifier for the webhooks (unique across all of Chargify). This is not changed on a
+     * The unique identifier for the webhook (unique across all of Chargify). This is not changed on a
      * retry/replay of the same webhook, so it may be used to avoid duplicate action for the same event.
      */
     public function getId(): ?int
@@ -108,7 +108,7 @@ class Webhook implements \JsonSerializable
 
     /**
      * Sets Id.
-     * The unique identifier for the webhooks (unique across all of Chargify). This is not changed on a
+     * The unique identifier for the webhook (unique across all of Chargify). This is not changed on a
      * retry/replay of the same webhook, so it may be used to avoid duplicate action for the same event.
      *
      * @maps id
@@ -263,9 +263,9 @@ class Webhook implements \JsonSerializable
 
     /**
      * Returns Successful.
-     * A boolean flag describing whether the webhook was accepted by the webhook endpoint for the most
+     * “A boolean flag describing whether the webhook was accepted by the webhook endpoint for the most
      * recent attempt. (Acceptance is defined by receiving a “200 OK” HTTP response within a reasonable
-     * timeframe, i.e. 15 seconds)
+     * timeframe, e.g., 15 seconds.)”
      */
     public function getSuccessful(): ?bool
     {
@@ -274,9 +274,9 @@ class Webhook implements \JsonSerializable
 
     /**
      * Sets Successful.
-     * A boolean flag describing whether the webhook was accepted by the webhook endpoint for the most
+     * “A boolean flag describing whether the webhook was accepted by the webhook endpoint for the most
      * recent attempt. (Acceptance is defined by receiving a “200 OK” HTTP response within a reasonable
-     * timeframe, i.e. 15 seconds)
+     * timeframe, e.g., 15 seconds.)”
      *
      * @maps successful
      */

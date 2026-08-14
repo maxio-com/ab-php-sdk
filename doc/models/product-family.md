@@ -14,19 +14,22 @@
 | `handle` | `?string` | Optional | - | getHandle(): ?string | setHandle(?string handle): void |
 | `accountingCode` | `?string` | Optional | - | getAccountingCode(): ?string | setAccountingCode(?string accountingCode): void |
 | `description` | `?string` | Optional | - | getDescription(): ?string | setDescription(?string description): void |
+| `surcharging` | `?bool` | Optional | Whether surcharging applies to this product family. Only included on sites where surcharging is enabled. | getSurcharging(): ?bool | setSurcharging(?bool surcharging): void |
 | `createdAt` | `?DateTime` | Optional | - | getCreatedAt(): ?\DateTime | setCreatedAt(?\DateTime createdAt): void |
 | `updatedAt` | `?DateTime` | Optional | - | getUpdatedAt(): ?\DateTime | setUpdatedAt(?\DateTime updatedAt): void |
 | `archivedAt` | `?DateTime` | Optional | Timestamp indicating when this product family was archived. `null` if the product family is not archived. | getArchivedAt(): ?\DateTime | setArchivedAt(?\DateTime archivedAt): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "id": 194,
-  "name": "name2",
-  "handle": "handle8",
-  "accounting_code": "accounting_code8",
-  "description": "description8"
-}
+```php
+use AdvancedBillingLib\Models\Builders\ProductFamilyBuilder;
+
+$productFamily = ProductFamilyBuilder::init()
+    ->id(134)
+    ->name('name4')
+    ->handle('handle0')
+    ->accountingCode('accounting_code0')
+    ->description('description4')
+    ->build();
 ```
 

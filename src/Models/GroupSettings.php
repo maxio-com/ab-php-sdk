@@ -58,7 +58,8 @@ class GroupSettings implements \JsonSerializable
 
     /**
      * Returns Billing.
-     * Optional attributes related to billing date and accrual. Note: Only applicable for new subscriptions.
+     * (Optional) Attributes related to billing date and accrual. Note: Only applicable for new
+     * subscriptions.
      */
     public function getBilling(): ?GroupBilling
     {
@@ -67,7 +68,8 @@ class GroupSettings implements \JsonSerializable
 
     /**
      * Sets Billing.
-     * Optional attributes related to billing date and accrual. Note: Only applicable for new subscriptions.
+     * (Optional) Attributes related to billing date and accrual. Note: Only applicable for new
+     * subscriptions.
      *
      * @maps billing
      */

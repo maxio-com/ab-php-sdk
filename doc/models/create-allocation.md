@@ -9,7 +9,7 @@
 
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
-| `quantity` | `float` | Required | The allocated quantity to which to set the line-items allocated quantity. By default, this is an integer. If decimal allocations are enabled for the component, it will be a decimal number. For On/Off components, use 1for on and 0 for off. | getQuantity(): float | setQuantity(float quantity): void |
+| `quantity` | `float` | Required | The allocated quantity to which to set the line-items allocated quantity. By default, this is an integer. If decimal allocations are enabled for the component, it will be a decimal number. For On/Off components, use 1 for on and 0 for off. | getQuantity(): float | setQuantity(float quantity): void |
 | `decimalQuantity` | `?string` | Optional | Decimal representation of the allocated quantity. Only valid when decimal<br>allocations are enabled for the component. | getDecimalQuantity(): ?string | setDecimalQuantity(?string decimalQuantity): void |
 | `previousQuantity` | `?float` | Optional | The quantity that was in effect before this allocation. Responses always<br>include this value; it may be supplied on preview requests to ensure the<br>expected change is evaluated. | getPreviousQuantity(): ?float | setPreviousQuantity(?float previousQuantity): void |
 | `decimalPreviousQuantity` | `?string` | Optional | Decimal representation of `previous_quantity`. Only valid when decimal<br>allocations are enabled for the component. | getDecimalPreviousQuantity(): ?string | setDecimalPreviousQuantity(?string decimalPreviousQuantity): void |
@@ -25,16 +25,19 @@
 | `billingSchedule` | [`?BillingSchedule`](../../doc/models/billing-schedule.md) | Optional | Billing schedule settings for component allocations or usages on multi-frequency subscriptions. Use this to start a component's billing period on a custom date instead of aligning with the product charge schedule. | getBillingSchedule(): ?BillingSchedule | setBillingSchedule(?BillingSchedule billingSchedule): void |
 | `customPrice` | [`?ComponentCustomPrice`](../../doc/models/component-custom-price.md) | Optional | Create or update custom pricing unique to the subscription. Used in place of `price_point_id`. | getCustomPrice(): ?ComponentCustomPrice | setCustomPrice(?ComponentCustomPrice customPrice): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "quantity": 8.06,
-  "decimal_quantity": "decimal_quantity4",
-  "previous_quantity": 218.92,
-  "decimal_previous_quantity": "decimal_previous_quantity0",
-  "component_id": 192,
-  "memo": "memo4"
-}
+```php
+use AdvancedBillingLib\Models\Builders\CreateAllocationBuilder;
+
+$createAllocation = CreateAllocationBuilder::init(
+    6.56
+)
+    ->decimalQuantity('decimal_quantity6')
+    ->previousQuantity(35.58)
+    ->decimalPreviousQuantity('decimal_previous_quantity0')
+    ->componentId(42)
+    ->memo('memo4')
+    ->build();
 ```
 

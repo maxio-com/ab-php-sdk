@@ -11,14 +11,15 @@
 |  --- | --- | --- | --- | --- | --- |
 | `errors` | `?array<string,string>` | Optional | - | getErrors(): ?array | setErrors(?array errors): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "errors": {
-    "key0": "errors3",
-    "key1": "errors4"
-  }
+```php
+try {
+    // make the API call
+} catch (ErrorStringMapResponseException $exp) {
+    echo 'Caught ErrorStringMapResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught ApiException:', $exp;
 }
 ```
 

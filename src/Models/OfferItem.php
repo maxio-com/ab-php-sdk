@@ -215,7 +215,7 @@ class OfferItem implements \JsonSerializable
 
     /**
      * Returns Interval.
-     * The numerical interval. i.e. an interval of '30' coupled with an interval_unit of day would mean
+     * The numerical interval. e.g., an interval of '30' coupled with an interval_unit of day would mean
      * this component price point would renew every 30 days. This property is only available for sites with
      * Multifrequency enabled.
      */
@@ -226,7 +226,7 @@ class OfferItem implements \JsonSerializable
 
     /**
      * Sets Interval.
-     * The numerical interval. i.e. an interval of '30' coupled with an interval_unit of day would mean
+     * The numerical interval. e.g., an interval of '30' coupled with an interval_unit of day would mean
      * this component price point would renew every 30 days. This property is only available for sites with
      * Multifrequency enabled.
      *

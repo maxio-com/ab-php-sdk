@@ -13,7 +13,9 @@
 
 ## Example
 
-```
-next_proforma_invoice
+```php
+use AdvancedBillingLib\Models\CreateSignupProformaPreviewInclude;
+
+$createSignupProformaPreviewInclude = CreateSignupProformaPreviewInclude::NEXT_PROFORMA_INVOICE;
 ```
 

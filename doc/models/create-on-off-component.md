@@ -11,19 +11,24 @@
 |  --- | --- | --- | --- | --- | --- |
 | `onOffComponent` | [`OnOffComponent`](../../doc/models/on-off-component.md) | Required | - | getOnOffComponent(): OnOffComponent | setOnOffComponent(OnOffComponent onOffComponent): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "on_off_component": {
-    "name": "name6",
-    "description": "description6",
-    "handle": "handle2",
-    "taxable": false,
-    "upgrade_charge": "full",
-    "downgrade_credit": "full",
-    "unit_price": "String5"
-  }
-}
+```php
+use AdvancedBillingLib\Models\Builders\CreateOnOffComponentBuilder;
+use AdvancedBillingLib\Models\Builders\OnOffComponentBuilder;
+use AdvancedBillingLib\Models\CreditType;
+
+$createOnOffComponent = CreateOnOffComponentBuilder::init(
+    OnOffComponentBuilder::init(
+        'name6',
+        'String5'
+    )
+        ->description('description6')
+        ->handle('handle2')
+        ->taxable(false)
+        ->upgradeCharge(CreditType::FULL)
+        ->downgradeCredit(CreditType::FULL)
+        ->build()
+)->build();
 ```
 

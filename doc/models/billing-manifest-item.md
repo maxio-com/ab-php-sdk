@@ -24,15 +24,19 @@
 | `periodRangeStart` | `?string` | Optional | - | getPeriodRangeStart(): ?string | setPeriodRangeStart(?string periodRangeStart): void |
 | `periodRangeEnd` | `?string` | Optional | - | getPeriodRangeEnd(): ?string | setPeriodRangeEnd(?string periodRangeEnd): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "transaction_type": "info_transaction",
-  "kind": "baseline",
-  "amount_in_cents": 216,
-  "memo": "memo4",
-  "discount_amount_in_cents": 236
-}
+```php
+use AdvancedBillingLib\Models\Builders\BillingManifestItemBuilder;
+use AdvancedBillingLib\Models\LineItemTransactionType;
+use AdvancedBillingLib\Models\BillingManifestLineItemKind;
+
+$billingManifestItem = BillingManifestItemBuilder::init()
+    ->transactionType(LineItemTransactionType::PAYMENT)
+    ->kind(BillingManifestLineItemKind::TRIAL)
+    ->amountInCents(148)
+    ->memo('memo0')
+    ->discountAmountInCents(88)
+    ->build();
 ```
 

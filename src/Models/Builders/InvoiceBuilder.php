@@ -724,6 +724,26 @@ class InvoiceBuilder
     }
 
     /**
+     * Sets branding theme id field.
+     *
+     * @param int|null $value
+     */
+    public function brandingThemeId(?int $value): self
+    {
+        $this->instance->setBrandingThemeId($value);
+        return $this;
+    }
+
+    /**
+     * Unsets branding theme id field.
+     */
+    public function unsetBrandingThemeId(): self
+    {
+        $this->instance->unsetBrandingThemeId();
+        return $this;
+    }
+
+    /**
      * Add an additional property to this model.
      *
      * @param string $name Name of property.

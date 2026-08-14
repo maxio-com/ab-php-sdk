@@ -20,15 +20,17 @@
 | `totalRevenueInCents` | `?int` | Optional | - | getTotalRevenueInCents(): ?int | setTotalRevenueInCents(?int totalRevenueInCents): void |
 | `balanceInCents` | `?int` | Optional | - | getBalanceInCents(): ?int | setBalanceInCents(?int balanceInCents): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "id": 16,
-  "reference": "reference8",
-  "product_id": 214,
-  "product_handle": "product_handle4",
-  "product_price_point_id": 138
-}
+```php
+use AdvancedBillingLib\Models\Builders\SubscriptionGroupItemBuilder;
+
+$subscriptionGroupItem = SubscriptionGroupItemBuilder::init()
+    ->id(26)
+    ->reference('reference4')
+    ->productId(32)
+    ->productHandle('product_handle8')
+    ->productPricePointId(148)
+    ->build();
 ```
 

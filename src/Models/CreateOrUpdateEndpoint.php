@@ -14,7 +14,7 @@ use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 /**
- * Used to Create or Update Endpoint
+ * Used to Create or Update Endpoint.
  */
 class CreateOrUpdateEndpoint implements \JsonSerializable
 {

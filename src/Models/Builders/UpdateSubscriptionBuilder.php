@@ -152,6 +152,26 @@ class UpdateSubscriptionBuilder
     }
 
     /**
+     * Sets branding theme id field.
+     *
+     * @param int|null $value
+     */
+    public function brandingThemeId(?int $value): self
+    {
+        $this->instance->setBrandingThemeId($value);
+        return $this;
+    }
+
+    /**
+     * Unsets branding theme id field.
+     */
+    public function unsetBrandingThemeId(): self
+    {
+        $this->instance->unsetBrandingThemeId();
+        return $this;
+    }
+
+    /**
      * Sets expires at field.
      *
      * @param \DateTime|null $value

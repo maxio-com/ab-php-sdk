@@ -14,3 +14,11 @@ Used for sorting results.
 | `ASC` |
 | `DESC` |
 
+## Example
+
+```php
+use AdvancedBillingLib\Models\SortingDirection;
+
+$sortingDirection = SortingDirection::ASC;
+```
+

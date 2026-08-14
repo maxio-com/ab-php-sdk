@@ -15,34 +15,95 @@ Used in place of `price_point_id` to define a custom price point unique to the s
 | `prices` | [`?(Price[])`](../../doc/models/price.md) | Optional | - | getPrices(): ?array | setPrices(?array prices): void |
 | `overagePricing` | [`?(ComponentCustomPrice[])`](../../doc/models/component-custom-price.md) | Optional | - | getOveragePricing(): ?array | setOveragePricing(?array overagePricing): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "pricing_scheme": "per_unit",
-  "prices": [
-    {
-      "starting_quantity": 242,
-      "ending_quantity": 40,
-      "unit_price": 23.26
-    }
-  ],
-  "overage_pricing": [
-    {
-      "tax_included": false,
-      "pricing_scheme": "stairstep",
-      "interval": 230,
-      "interval_unit": "day",
-      "list_price_point_id": 10,
-      "prices": [
-        {
-          "starting_quantity": 242,
-          "ending_quantity": 40,
-          "unit_price": 23.26
-        }
-      ]
-    }
-  ]
-}
+```php
+use AdvancedBillingLib\Models\Builders\SubscriptionGroupComponentCustomPriceBuilder;
+use AdvancedBillingLib\Models\PricingScheme;
+use AdvancedBillingLib\Models\Builders\PriceBuilder;
+use AdvancedBillingLib\Models\Builders\ComponentCustomPriceBuilder;
+use AdvancedBillingLib\Models\IntervalUnit;
+
+$subscriptionGroupComponentCustomPrice = SubscriptionGroupComponentCustomPriceBuilder::init()
+    ->pricingScheme(PricingScheme::STAIRSTEP)
+    ->prices(
+        [
+            PriceBuilder::init(
+                242,
+                23.26
+            )
+                ->endingQuantity(
+                    40
+                )
+                ->build(),
+            PriceBuilder::init(
+                242,
+                23.26
+            )
+                ->endingQuantity(
+                    40
+                )
+                ->build()
+        ]
+    )
+    ->overagePricing(
+        [
+            ComponentCustomPriceBuilder::init(
+                [
+                    PriceBuilder::init(
+                        242,
+                        23.26
+                    )
+                        ->endingQuantity(
+                            40
+                        )
+                        ->build()
+                ]
+            )
+                ->taxIncluded(false)
+                ->pricingScheme(PricingScheme::STAIRSTEP)
+                ->interval(230)
+                ->intervalUnit(IntervalUnit::DAY)
+                ->listPricePointId(10)
+                ->build(),
+            ComponentCustomPriceBuilder::init(
+                [
+                    PriceBuilder::init(
+                        242,
+                        23.26
+                    )
+                        ->endingQuantity(
+                            40
+                        )
+                        ->build()
+                ]
+            )
+                ->taxIncluded(false)
+                ->pricingScheme(PricingScheme::STAIRSTEP)
+                ->interval(230)
+                ->intervalUnit(IntervalUnit::DAY)
+                ->listPricePointId(10)
+                ->build(),
+            ComponentCustomPriceBuilder::init(
+                [
+                    PriceBuilder::init(
+                        242,
+                        23.26
+                    )
+                        ->endingQuantity(
+                            40
+                        )
+                        ->build()
+                ]
+            )
+                ->taxIncluded(false)
+                ->pricingScheme(PricingScheme::STAIRSTEP)
+                ->interval(230)
+                ->intervalUnit(IntervalUnit::DAY)
+                ->listPricePointId(10)
+                ->build()
+        ]
+    )
+    ->build();
 ```
 

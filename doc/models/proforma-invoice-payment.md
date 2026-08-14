@@ -14,14 +14,16 @@
 | `appliedAmount` | `?string` | Optional | **Constraints**: *Minimum Length*: `1` | getAppliedAmount(): ?string | setAppliedAmount(?string appliedAmount): void |
 | `prepayment` | `?bool` | Optional | - | getPrepayment(): ?bool | setPrepayment(?bool prepayment): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "memo": "memo4",
-  "original_amount": "original_amount4",
-  "applied_amount": "applied_amount8",
-  "prepayment": false
-}
+```php
+use AdvancedBillingLib\Models\Builders\ProformaInvoicePaymentBuilder;
+
+$proformaInvoicePayment = ProformaInvoicePaymentBuilder::init()
+    ->memo('memo2')
+    ->originalAmount('original_amount2')
+    ->appliedAmount('applied_amount0')
+    ->prepayment(false)
+    ->build();
 ```
 

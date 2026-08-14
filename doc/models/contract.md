@@ -16,19 +16,24 @@ Contract linked to the scheduled renewal configuration.
 | `number` | `?string` | Optional | - | getNumber(): ?string | setNumber(?string number): void |
 | `register` | [`?Register`](../../doc/models/register.md) | Optional | - | getRegister(): ?Register | setRegister(?Register register): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "id": 136,
-  "maxio_id": "maxio_id8",
-  "number": "number6",
-  "register": {
-    "id": 54,
-    "maxio_id": "maxio_id4",
-    "name": "name2",
-    "currency_code": "currency_code2"
-  }
-}
+```php
+use AdvancedBillingLib\Models\Builders\ContractBuilder;
+use AdvancedBillingLib\Models\Builders\RegisterBuilder;
+
+$contract = ContractBuilder::init()
+    ->id(112)
+    ->maxioId('maxio_id6')
+    ->number('number2')
+    ->register(
+        RegisterBuilder::init()
+            ->id(54)
+            ->maxioId('maxio_id4')
+            ->name('name2')
+            ->currencyCode('currency_code2')
+            ->build()
+    )
+    ->build();
 ```
 

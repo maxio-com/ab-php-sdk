@@ -27,3 +27,11 @@ Invoice Event Type
 | `FAILED_PAYMENT` |
 | `CHANGE_CHARGEBACK_STATUS` |
 
+## Example
+
+```php
+use AdvancedBillingLib\Models\InvoiceEventType;
+
+$invoiceEventType = InvoiceEventType::CREATE_CREDIT_NOTE;
+```
+

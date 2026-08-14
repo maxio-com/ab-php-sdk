@@ -14,3 +14,11 @@ The type of entry
 | `CREDIT` |
 | `DEBIT` |
 
+## Example
+
+```php
+use AdvancedBillingLib\Models\ServiceCreditType;
+
+$serviceCreditType = ServiceCreditType::CREDIT;
+```
+

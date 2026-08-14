@@ -12,17 +12,22 @@
 | `paymentProfile` | [`TokenizedPaymentProfile`](../../doc/models/tokenized-payment-profile.md) | Required | - | getPaymentProfile(): TokenizedPaymentProfile | setPaymentProfile(TokenizedPaymentProfile paymentProfile): void |
 | `gatewayCustomerId` | `?int` | Optional | - | getGatewayCustomerId(): ?int | setGatewayCustomerId(?int gatewayCustomerId): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "payment_profile": {
-    "id": 44,
-    "vault_token": "vault_token6",
-    "gateway_handle": "gateway_handle4",
-    "customer_vault_token": "customer_vault_token2"
-  },
-  "gateway_customer_id": 44
-}
+```php
+use AdvancedBillingLib\Models\Builders\ChjsTokenizationSuccessBuilder;
+use AdvancedBillingLib\Models\Builders\TokenizedPaymentProfileBuilder;
+
+$chjsTokenizationSuccess = ChjsTokenizationSuccessBuilder::init(
+    TokenizedPaymentProfileBuilder::init(
+        44
+    )
+        ->vaultToken('vault_token6')
+        ->gatewayHandle('gateway_handle4')
+        ->customerVaultToken('customer_vault_token2')
+        ->build()
+)
+    ->gatewayCustomerId(228)
+    ->build();
 ```
 

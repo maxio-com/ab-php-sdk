@@ -14,7 +14,7 @@ use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 /**
- * Allows to pause a Subscription
+ * Allows you to pause a Subscription.
  */
 class PauseRequest implements \JsonSerializable
 {

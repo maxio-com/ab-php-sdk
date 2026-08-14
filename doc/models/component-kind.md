@@ -17,3 +17,11 @@ A handle for the component type
 | `PREPAID_USAGE_COMPONENT` |
 | `EVENT_BASED_COMPONENT` |
 
+## Example
+
+```php
+use AdvancedBillingLib\Models\ComponentKind;
+
+$componentKind = ComponentKind::PREPAID_USAGE_COMPONENT;
+```
+

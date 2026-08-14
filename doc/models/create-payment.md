@@ -14,14 +14,17 @@
 | `paymentDetails` | `string` | Required | - | getPaymentDetails(): string | setPaymentDetails(string paymentDetails): void |
 | `paymentMethod` | [`string(InvoicePaymentMethodType)`](../../doc/models/invoice-payment-method-type.md) | Required | The type of payment method used. Defaults to other. | getPaymentMethod(): string | setPaymentMethod(string paymentMethod): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "amount": "amount6",
-  "memo": "memo8",
-  "payment_details": "payment_details4",
-  "payment_method": "cash"
-}
+```php
+use AdvancedBillingLib\Models\Builders\CreatePaymentBuilder;
+use AdvancedBillingLib\Models\InvoicePaymentMethodType;
+
+$createPayment = CreatePaymentBuilder::init(
+    'amount6',
+    'memo8',
+    'payment_details4',
+    InvoicePaymentMethodType::CREDIT_CARD
+)->build();
 ```
 

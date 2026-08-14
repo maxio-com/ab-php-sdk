@@ -13,15 +13,15 @@ Error which contains list of messages.
 |  --- | --- | --- | --- | --- | --- |
 | `errors` | `string[]` | Required | - | getErrors(): array | setErrors(array errors): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "errors": [
-    "errors5",
-    "errors6",
-    "errors7"
-  ]
+```php
+try {
+    // make the API call
+} catch (ErrorListResponseException $exp) {
+    echo 'Caught ErrorListResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught ApiException:', $exp;
 }
 ```
 

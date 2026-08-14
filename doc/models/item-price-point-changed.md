@@ -16,24 +16,27 @@
 | `previousPricePoint` | [`ItemPricePointData`](../../doc/models/item-price-point-data.md) | Required | - | getPreviousPricePoint(): ItemPricePointData | setPreviousPricePoint(ItemPricePointData previousPricePoint): void |
 | `currentPricePoint` | [`ItemPricePointData`](../../doc/models/item-price-point-data.md) | Required | - | getCurrentPricePoint(): ItemPricePointData | setCurrentPricePoint(ItemPricePointData currentPricePoint): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "item_id": 66,
-  "item_type": "item_type6",
-  "item_handle": "item_handle4",
-  "item_name": "item_name8",
-  "previous_price_point": {
-    "id": 216,
-    "handle": "handle6",
-    "name": "name0"
-  },
-  "current_price_point": {
-    "id": 218,
-    "handle": "handle6",
-    "name": "name0"
-  }
-}
+```php
+use AdvancedBillingLib\Models\Builders\ItemPricePointChangedBuilder;
+use AdvancedBillingLib\Models\Builders\ItemPricePointDataBuilder;
+
+$itemPricePointChanged = ItemPricePointChangedBuilder::init(
+    30,
+    'item_type6',
+    'item_handle4',
+    'item_name8',
+    ItemPricePointDataBuilder::init()
+        ->id(216)
+        ->handle('handle6')
+        ->name('name0')
+        ->build(),
+    ItemPricePointDataBuilder::init()
+        ->id(218)
+        ->handle('handle6')
+        ->name('name0')
+        ->build()
+)->build();
 ```
 

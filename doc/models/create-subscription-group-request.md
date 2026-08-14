@@ -11,17 +11,23 @@
 |  --- | --- | --- | --- | --- | --- |
 | `subscriptionGroup` | [`CreateSubscriptionGroup`](../../doc/models/create-subscription-group.md) | Required | - | getSubscriptionGroup(): CreateSubscriptionGroup | setSubscriptionGroup(CreateSubscriptionGroup subscriptionGroup): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "subscription_group": {
-    "subscription_id": 36,
-    "member_ids": [
-      164,
-      165
-    ]
-  }
-}
+```php
+use AdvancedBillingLib\Models\Builders\CreateSubscriptionGroupRequestBuilder;
+use AdvancedBillingLib\Models\Builders\CreateSubscriptionGroupBuilder;
+
+$createSubscriptionGroupRequest = CreateSubscriptionGroupRequestBuilder::init(
+    CreateSubscriptionGroupBuilder::init(
+        36
+    )
+        ->memberIds(
+            [
+                164,
+                165
+            ]
+        )
+        ->build()
+)->build();
 ```
 

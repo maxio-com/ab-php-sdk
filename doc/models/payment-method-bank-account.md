@@ -13,13 +13,16 @@
 | `maskedRoutingNumber` | `string` | Required | - | getMaskedRoutingNumber(): string | setMaskedRoutingNumber(string maskedRoutingNumber): void |
 | `type` | [`string(InvoiceEventPaymentMethod)`](../../doc/models/invoice-event-payment-method.md) | Required | - | getType(): string | setType(string type): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "masked_account_number": "masked_account_number2",
-  "masked_routing_number": "masked_routing_number2",
-  "type": "bank_account"
-}
+```php
+use AdvancedBillingLib\Models\Builders\PaymentMethodBankAccountBuilder;
+use AdvancedBillingLib\Models\InvoiceEventPaymentMethod;
+
+$paymentMethodBankAccount = PaymentMethodBankAccountBuilder::init(
+    'masked_account_number4',
+    'masked_routing_number4',
+    InvoiceEventPaymentMethod::BANK_ACCOUNT
+)->build();
 ```
 

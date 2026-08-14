@@ -109,7 +109,7 @@ $value = ComponentAllocationChangeBuilder::init(
 ```php
 $value = MeteredUsageBuilder::init(
     'previous_unit_balance6',
-    80,
+    2,
     42,
     4,
     'component_handle8',
@@ -127,8 +127,8 @@ $value = MeteredUsageBuilder::init(
 $value = PrepaidUsageBuilder::init(
     'previous_unit_balance0',
     'previous_overage_unit_balance4',
-    252,
-    224,
+    174,
+    146,
     214,
     106,
     176,

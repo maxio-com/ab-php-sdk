@@ -16,3 +16,11 @@ The type of payment collection to be used in the subscription. For legacy Statem
 | `PREPAID` |
 | `INVOICE` |
 
+## Example
+
+```php
+use AdvancedBillingLib\Models\CollectionMethod;
+
+$collectionMethod = CollectionMethod::AUTOMATIC;
+```
+

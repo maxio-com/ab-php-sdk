@@ -167,8 +167,8 @@ class RefundInvoice implements \JsonSerializable
 
     /**
      * Returns Void Invoice.
-     * If `apply_credit` set to false and refunding full amount, if `void_invoice` set to true, invoice
-     * will be voided after refund. Defaults to `false`.
+     * If `apply_credit` is set to false and refunding full amount, if `void_invoice` is set to true,
+     * invoice will be voided after refund. Defaults to `false`.
      */
     public function getVoidInvoice(): ?bool
     {
@@ -177,8 +177,8 @@ class RefundInvoice implements \JsonSerializable
 
     /**
      * Sets Void Invoice.
-     * If `apply_credit` set to false and refunding full amount, if `void_invoice` set to true, invoice
-     * will be voided after refund. Defaults to `false`.
+     * If `apply_credit` is set to false and refunding full amount, if `void_invoice` is set to true,
+     * invoice will be voided after refund. Defaults to `false`.
      *
      * @maps void_invoice
      */

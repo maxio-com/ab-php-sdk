@@ -21,17 +21,22 @@
 | `accountBalances` | [`?SubscriptionGroupBalances`](../../doc/models/subscription-group-balances.md) | Optional | - | getAccountBalances(): ?SubscriptionGroupBalances | setAccountBalances(?SubscriptionGroupBalances accountBalances): void |
 | `groupType` | [`?string(GroupType)`](../../doc/models/group-type.md) | Optional | - | getGroupType(): ?string | setGroupType(?string groupType): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "uid": "uid0",
-  "scheme": 124,
-  "customer_id": 144,
-  "payment_profile_id": 52,
-  "subscription_ids": [
-    254
-  ]
-}
+```php
+use AdvancedBillingLib\Models\Builders\ListSubscriptionGroupsItemBuilder;
+
+$listSubscriptionGroupsItem = ListSubscriptionGroupsItemBuilder::init()
+    ->uid('uid0')
+    ->scheme(228)
+    ->customerId(248)
+    ->paymentProfileId(100)
+    ->subscriptionIds(
+        [
+            102,
+            103
+        ]
+    )
+    ->build();
 ```
 

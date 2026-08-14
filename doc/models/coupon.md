@@ -41,15 +41,17 @@
 | `couponRestrictions` | [`?(CouponRestriction[])`](../../doc/models/coupon-restriction.md) | Optional | - | getCouponRestrictions(): ?array | setCouponRestrictions(?array couponRestrictions): void |
 | `currencyPrices` | [`?(CouponCurrency[])`](../../doc/models/coupon-currency.md) | Optional | Returned in read, find, and list endpoints if the query parameter is provided. | getCurrencyPrices(): ?array | setCurrencyPrices(?array currencyPrices): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "id": 22,
-  "name": "name2",
-  "code": "code0",
-  "description": "description2",
-  "amount": 62.64
-}
+```php
+use AdvancedBillingLib\Models\Builders\CouponBuilder;
+
+$coupon = CouponBuilder::init()
+    ->id(196)
+    ->name('name4')
+    ->code('code2')
+    ->description('description6')
+    ->amount(97.66)
+    ->build();
 ```
 

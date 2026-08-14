@@ -11,13 +11,17 @@
 |  --- | --- | --- | --- | --- | --- |
 | `ids` | `int[]` | Required | - | getIds(): array | setIds(array ids): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "ids": [
-    15
-  ]
-}
+```php
+use AdvancedBillingLib\Models\Builders\ReplayWebhooksRequestBuilder;
+
+$replayWebhooksRequest = ReplayWebhooksRequestBuilder::init(
+    [
+        209,
+        210,
+        211
+    ]
+)->build();
 ```
 

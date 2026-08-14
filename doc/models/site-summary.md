@@ -15,21 +15,26 @@
 | `siteCurrency` | `?string` | Optional | - | getSiteCurrency(): ?string | setSiteCurrency(?string siteCurrency): void |
 | `stats` | [`?SiteStatistics`](../../doc/models/site-statistics.md) | Optional | - | getStats(): ?SiteStatistics | setStats(?SiteStatistics stats): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "seller_name": "seller_name0",
-  "site_name": "site_name4",
-  "site_id": 218,
-  "site_currency": "site_currency6",
-  "stats": {
-    "total_subscriptions": 110,
-    "subscriptions_today": 228,
-    "total_revenue": "total_revenue6",
-    "revenue_today": "revenue_today4",
-    "revenue_this_month": "revenue_this_month4"
-  }
-}
+```php
+use AdvancedBillingLib\Models\Builders\SiteSummaryBuilder;
+use AdvancedBillingLib\Models\Builders\SiteStatisticsBuilder;
+
+$siteSummary = SiteSummaryBuilder::init()
+    ->sellerName('seller_name4')
+    ->siteName('site_name8')
+    ->siteId(252)
+    ->siteCurrency('site_currency0')
+    ->stats(
+        SiteStatisticsBuilder::init()
+            ->totalSubscriptions(110)
+            ->subscriptionsToday(228)
+            ->totalRevenue('total_revenue6')
+            ->revenueToday('revenue_today4')
+            ->revenueThisMonth('revenue_this_month4')
+            ->build()
+    )
+    ->build();
 ```
 

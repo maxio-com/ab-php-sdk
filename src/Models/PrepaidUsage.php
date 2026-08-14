@@ -26,12 +26,12 @@ class PrepaidUsage implements \JsonSerializable
     private $previousOverageUnitBalance;
 
     /**
-     * @var int
+     * @var int|string
      */
     private $newUnitBalance;
 
     /**
-     * @var int
+     * @var int|string
      */
     private $newOverageUnitBalance;
 
@@ -68,8 +68,8 @@ class PrepaidUsage implements \JsonSerializable
     /**
      * @param string $previousUnitBalance
      * @param string $previousOverageUnitBalance
-     * @param int $newUnitBalance
-     * @param int $newOverageUnitBalance
+     * @param int|string $newUnitBalance
+     * @param int|string $newOverageUnitBalance
      * @param int $usageQuantity
      * @param int $overageUsageQuantity
      * @param int $componentId
@@ -80,8 +80,8 @@ class PrepaidUsage implements \JsonSerializable
     public function __construct(
         string $previousUnitBalance,
         string $previousOverageUnitBalance,
-        int $newUnitBalance,
-        int $newOverageUnitBalance,
+        $newUnitBalance,
+        $newOverageUnitBalance,
         int $usageQuantity,
         int $overageUsageQuantity,
         int $componentId,
@@ -141,8 +141,10 @@ class PrepaidUsage implements \JsonSerializable
 
     /**
      * Returns New Unit Balance.
+     *
+     * @return int|string
      */
-    public function getNewUnitBalance(): int
+    public function getNewUnitBalance()
     {
         return $this->newUnitBalance;
     }
@@ -152,16 +154,21 @@ class PrepaidUsage implements \JsonSerializable
      *
      * @required
      * @maps new_unit_balance
+     * @mapsBy oneOf(int,string)
+     *
+     * @param int|string $newUnitBalance
      */
-    public function setNewUnitBalance(int $newUnitBalance): void
+    public function setNewUnitBalance($newUnitBalance): void
     {
         $this->newUnitBalance = $newUnitBalance;
     }
 
     /**
      * Returns New Overage Unit Balance.
+     *
+     * @return int|string
      */
-    public function getNewOverageUnitBalance(): int
+    public function getNewOverageUnitBalance()
     {
         return $this->newOverageUnitBalance;
     }
@@ -171,8 +178,11 @@ class PrepaidUsage implements \JsonSerializable
      *
      * @required
      * @maps new_overage_unit_balance
+     * @mapsBy oneOf(int,string)
+     *
+     * @param int|string $newOverageUnitBalance
      */
-    public function setNewOverageUnitBalance(int $newOverageUnitBalance): void
+    public function setNewOverageUnitBalance($newOverageUnitBalance): void
     {
         $this->newOverageUnitBalance = $newOverageUnitBalance;
     }
@@ -362,8 +372,16 @@ class PrepaidUsage implements \JsonSerializable
         $json = [];
         $json['previous_unit_balance']         = $this->previousUnitBalance;
         $json['previous_overage_unit_balance'] = $this->previousOverageUnitBalance;
-        $json['new_unit_balance']              = $this->newUnitBalance;
-        $json['new_overage_unit_balance']      = $this->newOverageUnitBalance;
+        $json['new_unit_balance']              =
+            ApiHelper::getJsonHelper()->verifyTypes(
+                $this->newUnitBalance,
+                'oneOf(int,string)'
+            );
+        $json['new_overage_unit_balance']      =
+            ApiHelper::getJsonHelper()->verifyTypes(
+                $this->newOverageUnitBalance,
+                'oneOf(int,string)'
+            );
         $json['usage_quantity']                = $this->usageQuantity;
         $json['overage_usage_quantity']        = $this->overageUsageQuantity;
         $json['component_id']                  = $this->componentId;

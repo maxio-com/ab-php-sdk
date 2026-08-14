@@ -16,15 +16,17 @@
 | `zip` | `?string` | Optional | - | getZip(): ?string | setZip(?string zip): void |
 | `country` | `?string` | Optional | - | getCountry(): ?string | setCountry(?string country): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "street": "street0",
-  "line2": "line24",
-  "city": "city0",
-  "state": "state6",
-  "zip": "zip4"
-}
+```php
+use AdvancedBillingLib\Models\Builders\InvoiceAddressBuilder;
+
+$invoiceAddress = InvoiceAddressBuilder::init()
+    ->street('street2')
+    ->line2('line26')
+    ->city('city2')
+    ->state('state8')
+    ->zip('zip6')
+    ->build();
 ```
 

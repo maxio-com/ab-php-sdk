@@ -13,3 +13,11 @@
 | `FLAT_AMOUNT` |
 | `ROLLOVER` |
 
+## Example
+
+```php
+use AdvancedBillingLib\Models\InvoiceDiscountType;
+
+$invoiceDiscountType = InvoiceDiscountType::PERCENTAGE;
+```
+

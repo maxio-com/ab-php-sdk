@@ -11,17 +11,23 @@
 |  --- | --- | --- | --- | --- | --- |
 | `component` | [`?SubscriptionComponent`](../../doc/models/subscription-component.md) | Optional | - | getComponent(): ?SubscriptionComponent | setComponent(?SubscriptionComponent component): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "component": {
-    "id": 80,
-    "name": "name8",
-    "kind": "quantity_based_component",
-    "unit_name": "unit_name0",
-    "enabled": false
-  }
-}
+```php
+use AdvancedBillingLib\Models\Builders\SubscriptionComponentResponseBuilder;
+use AdvancedBillingLib\Models\Builders\SubscriptionComponentBuilder;
+use AdvancedBillingLib\Models\ComponentKind;
+
+$subscriptionComponentResponse = SubscriptionComponentResponseBuilder::init()
+    ->component(
+        SubscriptionComponentBuilder::init()
+            ->id(80)
+            ->name('name8')
+            ->kind(ComponentKind::QUANTITY_BASED_COMPONENT)
+            ->unitName('unit_name0')
+            ->enabled(false)
+            ->build()
+    )
+    ->build();
 ```
 

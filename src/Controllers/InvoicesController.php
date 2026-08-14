@@ -35,6 +35,7 @@ use AdvancedBillingLib\Models\RecordPaymentRequest;
 use AdvancedBillingLib\Models\RecordPaymentResponse;
 use AdvancedBillingLib\Models\RefundInvoiceRequest;
 use AdvancedBillingLib\Models\SendInvoiceRequest;
+use AdvancedBillingLib\Models\UpdateInvoiceRequest;
 use AdvancedBillingLib\Models\VoidInvoiceRequest;
 use Core\Request\Parameters\BodyParam;
 use Core\Request\Parameters\HeaderParam;
@@ -46,7 +47,7 @@ use CoreInterfaces\Core\Request\RequestMethod;
 class InvoicesController extends BaseController
 {
     /**
-     * Refund an invoice, segment, or consolidated invoice.
+     * Refunds an invoice, segment, or consolidated invoice.
      *
      * ## Partial Refund for Consolidated Invoice
      *
@@ -87,9 +88,10 @@ class InvoicesController extends BaseController
     }
 
     /**
-     * By default, invoices returned on the index will only include totals, not detailed breakdowns for
-     * `line_items`, `discounts`, `taxes`, `credits`, `payments`, `custom_fields`, or `refunds`. To include
-     * breakdowns, pass the specific field as a key in the query with a value set to `true`.
+     * Lists invoices for a site. By default, invoices returned on the index will only include totals, not
+     * detailed breakdowns for `line_items`, `discounts`, `taxes`, `credits`, `payments`, `custom_fields`,
+     * or `refunds`. To include breakdowns, pass the specific field as a key in the query with a value set
+     * to `true`.
      *
      * @param array $options Array with all options for search
      *
@@ -147,7 +149,7 @@ class InvoicesController extends BaseController
     }
 
     /**
-     * Use this endpoint to retrieve the details for an invoice.
+     * Returns the details for an invoice.
      *
      * ## PDF Invoice retrieval
      *
@@ -181,8 +183,8 @@ class InvoicesController extends BaseController
     }
 
     /**
-     * This endpoint returns a list of invoice events. Each event contains event "data" (such as an applied
-     * payment) as well as a snapshot of the `invoice` at the time of event completion.
+     * Lists invoice events for a site. Each event contains event "data" (such as an applied payment) as
+     * well as a snapshot of the `invoice` at the time of event completion.
      *
      * Exposed event types are:
      *
@@ -240,7 +242,8 @@ class InvoicesController extends BaseController
 
     /**
      * Applies a payment of a given type against a specific invoice. If you would like to apply a payment
-     * across multiple invoices, you can use the Bulk Payment endpoint.
+     * across multiple invoices, you can use the [Record Payment for Multiple
+     * Invoices]($e/Invoices/recordPaymentForMultipleInvoices) endpoint.
      *
      * @param string $uid The unique identifier for the invoice, this does not refer to the public
      *        facing invoice number.
@@ -274,31 +277,10 @@ class InvoicesController extends BaseController
     }
 
     /**
-     * This API call should be used when you want to record an external payment against multiple invoices.
+     * Records an external payment against multiple invoices.
      *
      * To apply a payment to multiple invoices, at minimum, specify the `amount` and `applications` (i.e.,
      * `invoice_uid` and `amount`) details.
-     *
-     * ```
-     * {
-     * "payment": {
-     * "memo": "to pay the bills",
-     * "details": "check number 8675309",
-     * "method": "check",
-     * "amount": "250.00",
-     * "applications": [
-     * {
-     * "invoice_uid": "inv_8gk5bwkct3gqt",
-     * "amount": "100.00"
-     * },
-     * {
-     * "invoice_uid": "inv_7bc6bwkct3lyt",
-     * "amount": "150.00"
-     * }
-     * ]
-     * }
-     * }
-     * ```
      *
      * Note that the invoice payment amounts must be greater than 0. Total amount must be greater or equal
      * to invoices payment amount sum.
@@ -330,7 +312,8 @@ class InvoicesController extends BaseController
     }
 
     /**
-     * Credit Notes are like inverse invoices. They reduce the amount a customer owes.
+     * Lists credit notes for a site. Credit Notes are like inverse invoices. They reduce the amount a
+     * customer owes.
      *
      * By default, the credit notes returned by this endpoint will exclude the arrays of `line_items`,
      * `discounts`, `taxes`, `applications`, or `refunds`. To include these arrays, pass the specific field
@@ -363,7 +346,7 @@ class InvoicesController extends BaseController
     }
 
     /**
-     * Use this endpoint to retrieve the details for a credit note.
+     * Returns the details for a credit note.
      *
      * @param string $uid The unique identifier of the credit note
      *
@@ -383,7 +366,7 @@ class InvoicesController extends BaseController
     }
 
     /**
-     * Record an external payment made against a subscription that will pay partially or in full one or
+     * Records an external payment made against a subscription that will pay partially or in full one or
      * more invoices.
      *
      * Payment will be applied starting with the oldest open invoice and then next oldest, and so on until
@@ -426,9 +409,8 @@ class InvoicesController extends BaseController
     }
 
     /**
-     * This endpoint allows you to reopen any invoice with the "canceled" status. Invoices enter "canceled"
-     * status if they were open at the time the subscription was canceled (whether through dunning or an
-     * intentional cancellation).
+     * Reopens any invoice with the "canceled" status. Invoices enter "canceled" status if they were open
+     * at the time the subscription was canceled (whether through dunning or an intentional cancellation).
      *
      * Invoices with "canceled" status are no longer considered to be due. Once reopened, they are
      * considered due for payment. Payment may then be captured in one of the following ways:
@@ -474,8 +456,8 @@ class InvoicesController extends BaseController
     }
 
     /**
-     * This endpoint allows you to void any invoice with the "open" or "canceled" status.  It will also
-     * allow voiding of an invoice with the "pending" status if it is not a consolidated invoice.
+     * Voids any invoice with the "open" or "canceled" status.  It will also allow voiding of an invoice
+     * with the "pending" status if it is not a consolidated invoice.
      *
      * @param string $uid The unique identifier for the invoice, this does not refer to the public
      *        facing invoice number.
@@ -510,8 +492,9 @@ class InvoicesController extends BaseController
     }
 
     /**
-     * Invoice segments returned on the index will only include totals, not detailed breakdowns for
-     * `line_items`, `discounts`, `taxes`, `credits`, `payments`, or `custom_fields`.
+     * Lists segments for a consolidated invoice. Invoice segments returned on the index will only include
+     * totals, not detailed breakdowns for `line_items`, `discounts`, `taxes`, `credits`, `payments`, or
+     * `custom_fields`.
      *
      * @param array $options Array with all options for search
      *
@@ -539,7 +522,7 @@ class InvoicesController extends BaseController
     }
 
     /**
-     * This endpoint will allow you to create an ad hoc invoice.
+     * Creates an ad hoc invoice.
      *
      * ### Basic Behavior
      *
@@ -788,10 +771,164 @@ class InvoicesController extends BaseController
     }
 
     /**
-     * This endpoint allows for invoices to be programmatically delivered via email. This endpoint supports
-     * the delivery of both ad-hoc and automatically generated invoices. Additionally, this endpoint
-     * supports email delivery to direct recipients, carbon-copy (cc) recipients, and blind carbon-copy
-     * (bcc) recipients.
+     * Updates an ad hoc invoice while it is in the `draft` state.
+     *
+     * **Important: only invoices with the `adhoc` role and `draft` status can be updated.** Any other
+     * invoice — issued, or with a different role (e.g. `renewal`, `signup`) — cannot be updated through
+     * this endpoint and the request returns a `422` error. If the invoice does not belong to the provided
+     * subscription, a `404` error is returned.
+     *
+     * Only the attributes submitted in the request are changed — omitted attributes keep their current
+     * values.
+     *
+     * ### Line Items
+     *
+     * The `line_items` array describes changes to the invoice's line items. Line items not referenced in
+     * the array remain unchanged.
+     *
+     * #### Adding a line item
+     *
+     * A line item without a `uid` is added to the invoice. The same line item types and options as on
+     * invoice creation are supported (custom items, `product_id`, `component_id`, price points, period
+     * date ranges, taxes).
+     *
+     * #### Updating a line item
+     *
+     * A line item with the `uid` of an existing line item updates that line item with the submitted
+     * attributes. Amounts and taxes are recalculated.
+     *
+     * #### Removing a line item
+     *
+     * A line item with a `uid` and `"_destroy": true` is removed from the invoice. Other line items remain
+     * unchanged.
+     *
+     * Referencing a `uid` which does not exist on the invoice returns a `422` error.
+     *
+     * ### Coupons
+     *
+     * When the `coupons` key is present, the submitted coupons replace all discounts currently applied to
+     * the invoice. Send an empty array to remove all discounts. Coupon options are the same as on invoice
+     * creation.
+     *
+     * ### Invoice Options
+     *
+     * #### Issue Date and Net Terms
+     *
+     * The `issue_date` parameter can be sent to change the invoice's issue date. Only today or dates in
+     * the past are accepted. The date is interpreted and validated in your site's time zone, using the
+     * `YYYY-MM-DD` format. The `net_terms` parameter indicates the number of days after the issue date on
+     * which the invoice is due. The due date is recalculated whenever the issue date or net terms change.
+     *
+     * #### Addresses
+     *
+     * The seller, shipping and billing addresses can be sent to replace the addresses on the invoice. Each
+     * address requires to send a `first_name` at a minimum in order to work. Taxes are recalculated after
+     * an address change.
+     *
+     * #### Memo and Payment Instructions
+     *
+     * A custom memo can be sent with the `memo` parameter. Likewise, custom payment instructions can be
+     * sent with the `payment_instructions` parameter.
+     *
+     * @param int $subscriptionId The Chargify id of the subscription.
+     * @param string $uid The unique identifier for the invoice, this does not refer to the public
+     *        facing invoice number.
+     * @param UpdateInvoiceRequest|null $body
+     *
+     * @return InvoiceResponse Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function updateInvoice(
+        int $subscriptionId,
+        string $uid,
+        ?UpdateInvoiceRequest $body = null
+    ): InvoiceResponse {
+        $_reqBuilder = $this->requestBuilder(
+            RequestMethod::PUT,
+            '/subscriptions/{subscription_id}/invoices/{uid}.json'
+        )
+            ->auth('BasicAuth')
+            ->parameters(
+                TemplateParam::init('subscription_id', $subscriptionId)->required(),
+                TemplateParam::init('uid', $uid)->required(),
+                HeaderParam::init('Content-Type', 'application/json'),
+                BodyParam::init($body)
+            );
+
+        $_resHandler = $this->responseHandler()
+            ->throwErrorOn(
+                '404',
+                ErrorType::initWithErrorTemplate(
+                    'Not Found:\'{$response.body}\'',
+                    ErrorListResponseException::class
+                )
+            )
+            ->throwErrorOn(
+                '422',
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorArrayMapResponseException::class
+                )
+            )
+            ->type(InvoiceResponse::class);
+
+        return $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
+     * Deletes an ad hoc invoice while it is in the `draft` state.
+     *
+     * **Important: only invoices with the `adhoc` role and `draft` status can be deleted.** Any other
+     * invoice — issued, or with a different role (e.g. `renewal`, `signup`) — cannot be deleted through
+     * this endpoint and the request returns a `422` error. Issued invoices should be voided instead. If
+     * the invoice does not belong to the provided subscription, a `404` error is returned.
+     *
+     * A successful deletion returns a `204 No Content` response and the invoice is permanently removed.
+     *
+     * @param int $subscriptionId The Chargify id of the subscription.
+     * @param string $uid The unique identifier for the invoice, this does not refer to the public
+     *        facing invoice number.
+     *
+     * @return void Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function deleteInvoice(int $subscriptionId, string $uid): void
+    {
+        $_reqBuilder = $this->requestBuilder(
+            RequestMethod::DELETE,
+            '/subscriptions/{subscription_id}/invoices/{uid}.json'
+        )
+            ->auth('BasicAuth')
+            ->parameters(
+                TemplateParam::init('subscription_id', $subscriptionId)->required(),
+                TemplateParam::init('uid', $uid)->required()
+            );
+
+        $_resHandler = $this->responseHandler()
+            ->throwErrorOn(
+                '404',
+                ErrorType::initWithErrorTemplate(
+                    'Not Found:\'{$response.body}\'',
+                    ErrorListResponseException::class
+                )
+            )
+            ->throwErrorOn(
+                '422',
+                ErrorType::initWithErrorTemplate(
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    ErrorListResponseException::class
+                )
+            );
+
+        $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
+     * Sends an invoice to the customer via email. This endpoint supports the delivery of both ad-hoc and
+     * automatically generated invoices. Additionally, this endpoint supports email delivery to direct
+     * recipients, carbon-copy (cc) recipients, and blind carbon-copy (bcc) recipients.
      *
      * **File Attachments**: You can attach files to invoice emails using `attachment_urls[]` parameter by
      * providing URLs to the files you want to attach. When using attachments, the request must use
@@ -837,9 +974,10 @@ class InvoicesController extends BaseController
     }
 
     /**
-     * Customer information may change after an invoice is issued, which may lead to a mismatch between
-     * customer information that is present on an open invoice and actual customer information. This
-     * endpoint allows you to preview these differences, if any.
+     * Previews the effect of customer information changes on an open invoice. Customer information may
+     * change after an invoice is issued, which may lead to a mismatch between customer information that is
+     * present on an open invoice and actual customer information. This endpoint allows you to preview
+     * these differences, if any.
      *
      * The endpoint doesn't accept a request body. Customer information differences are calculated on the
      * application side.
@@ -879,9 +1017,9 @@ class InvoicesController extends BaseController
     }
 
     /**
-     * This endpoint updates customer information on an open invoice and returns the updated invoice. If
-     * you would like to preview changes that will be applied, use the
-     * `/invoices/{uid}/customer_information/preview.json` endpoint first.
+     * Updates customer information on an open invoice and returns the updated invoice. If you would like
+     * to preview changes that will be applied, use the `/invoices/{uid}/customer_information/preview.json`
+     * endpoint first.
      *
      * The endpoint doesn't accept a request body. Customer information differences are calculated on the
      * application side.
@@ -920,9 +1058,8 @@ class InvoicesController extends BaseController
     }
 
     /**
-     * This endpoint allows you to issue an invoice that is in "pending" or "draft" status. For example,
-     * you can issue an invoice that was created when allocating new quantity on a component and using
-     * "accrue charges" option.
+     * Issues an invoice that is in "pending" or "draft" status. For example, you can issue an invoice that
+     * was created when allocating new quantity on a component and using "accrue charges" option.
      *
      * You cannot issue a pending child invoice that was created for a member subscription in a group.
      *

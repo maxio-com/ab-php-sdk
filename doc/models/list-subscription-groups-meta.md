@@ -12,12 +12,14 @@
 | `currentPage` | `?int` | Optional | - | getCurrentPage(): ?int | setCurrentPage(?int currentPage): void |
 | `totalCount` | `?int` | Optional | - | getTotalCount(): ?int | setTotalCount(?int totalCount): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "current_page": 14,
-  "total_count": 38
-}
+```php
+use AdvancedBillingLib\Models\Builders\ListSubscriptionGroupsMetaBuilder;
+
+$listSubscriptionGroupsMeta = ListSubscriptionGroupsMetaBuilder::init()
+    ->currentPage(104)
+    ->totalCount(128)
+    ->build();
 ```
 

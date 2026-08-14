@@ -11,18 +11,23 @@
 |  --- | --- | --- | --- | --- | --- |
 | `component` | [`Component`](../../doc/models/component.md) | Required | - | getComponent(): Component | setComponent(Component component): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "component": {
-    "item_category": "Business Software",
-    "id": 80,
-    "name": "name8",
-    "handle": "handle4",
-    "pricing_scheme": "per_unit",
-    "unit_name": "unit_name0"
-  }
-}
+```php
+use AdvancedBillingLib\Models\Builders\ComponentResponseBuilder;
+use AdvancedBillingLib\Models\Builders\ComponentBuilder;
+use AdvancedBillingLib\Models\PricingScheme;
+use AdvancedBillingLib\Models\ItemCategory;
+
+$componentResponse = ComponentResponseBuilder::init(
+    ComponentBuilder::init()
+        ->id(80)
+        ->name('name8')
+        ->handle('handle4')
+        ->pricingScheme(PricingScheme::PER_UNIT)
+        ->unitName('unit_name0')
+        ->itemCategory(ItemCategory::ENUM_BUSINESS_SOFTWARE)
+        ->build()
+)->build();
 ```
 

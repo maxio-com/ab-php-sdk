@@ -11,11 +11,13 @@
 |  --- | --- | --- | --- | --- | --- |
 | `status` | `?string` | Optional | - | getStatus(): ?string | setStatus(?string status): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "status": "status4"
-}
+```php
+use AdvancedBillingLib\Models\Builders\ReplayWebhooksResponseBuilder;
+
+$replayWebhooksResponse = ReplayWebhooksResponseBuilder::init()
+    ->status('status6')
+    ->build();
 ```
 

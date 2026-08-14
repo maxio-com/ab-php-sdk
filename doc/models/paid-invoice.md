@@ -14,14 +14,17 @@
 | `dueAmount` | `?string` | Optional | The remaining due amount on the invoice | getDueAmount(): ?string | setDueAmount(?string dueAmount): void |
 | `paidAmount` | `?string` | Optional | The total amount paid on this invoice (including any prior payments) | getPaidAmount(): ?string | setPaidAmount(?string paidAmount): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "invoice_id": "invoice_id6",
-  "status": "open",
-  "due_amount": "due_amount8",
-  "paid_amount": "paid_amount8"
-}
+```php
+use AdvancedBillingLib\Models\Builders\PaidInvoiceBuilder;
+use AdvancedBillingLib\Models\InvoiceStatus;
+
+$paidInvoice = PaidInvoiceBuilder::init()
+    ->invoiceId('invoice_id2')
+    ->status(InvoiceStatus::CANCELED)
+    ->dueAmount('due_amount4')
+    ->paidAmount('paid_amount6')
+    ->build();
 ```
 

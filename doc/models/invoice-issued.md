@@ -25,33 +25,38 @@
 | `consolidationLevel` | `string` | Required | - | getConsolidationLevel(): string | setConsolidationLevel(string consolidationLevel): void |
 | `lineItems` | [`InvoiceLineItemEventData[]`](../../doc/models/invoice-line-item-event-data.md) | Required | - | getLineItems(): array | setLineItems(array lineItems): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "uid": "uid4",
-  "number": "number8",
-  "role": "role2",
-  "due_date": "2016-03-13",
-  "issue_date": "issue_date0",
-  "paid_date": "paid_date6",
-  "due_amount": "due_amount6",
-  "paid_amount": "paid_amount4",
-  "tax_amount": "tax_amount2",
-  "refund_amount": "refund_amount0",
-  "total_amount": "total_amount0",
-  "status_amount": "status_amount4",
-  "product_name": "product_name0",
-  "consolidation_level": "consolidation_level4",
-  "line_items": [
-    {
-      "uid": "uid8",
-      "title": "title4",
-      "description": "description8",
-      "quantity": 102,
-      "quantity_delta": 204
-    }
-  ]
-}
+```php
+use AdvancedBillingLib\Models\Builders\InvoiceIssuedBuilder;
+use AdvancedBillingLib\Models\Builders\InvoiceLineItemEventDataBuilder;
+use AdvancedBillingLib\Utils\DateTimeHelper;
+
+$invoiceIssued = InvoiceIssuedBuilder::init(
+    'uid8',
+    'number4',
+    'role8',
+    'issue_date4',
+    'paid_date8',
+    'due_amount0',
+    'paid_amount0',
+    'tax_amount8',
+    'refund_amount6',
+    'total_amount4',
+    'status_amount8',
+    'product_name4',
+    'consolidation_level0',
+    [
+        InvoiceLineItemEventDataBuilder::init()
+            ->uid('uid8')
+            ->title('title4')
+            ->description('description8')
+            ->quantity(102)
+            ->quantityDelta(204)
+            ->build()
+    ]
+)
+    ->dueDate(DateTimeHelper::fromSimpleDate('2016-03-13'))
+    ->build();
 ```
 

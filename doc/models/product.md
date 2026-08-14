@@ -13,18 +13,18 @@
 | `name` | `?string` | Optional | The product name | getName(): ?string | setName(?string name): void |
 | `handle` | `?string` | Optional | The product API handle | getHandle(): ?string | setHandle(?string handle): void |
 | `description` | `?string` | Optional | The product description | getDescription(): ?string | setDescription(?string description): void |
-| `accountingCode` | `?string` | Optional | E.g. Internal ID or SKU Number | getAccountingCode(): ?string | setAccountingCode(?string accountingCode): void |
+| `accountingCode` | `?string` | Optional | E.g., Internal ID or SKU Number | getAccountingCode(): ?string | setAccountingCode(?string accountingCode): void |
 | `requestCreditCard` | `?bool` | Optional | Deprecated value that can be ignored unless you have legacy hosted pages. For Public Signup Page users, read this attribute from under the signup page. | getRequestCreditCard(): ?bool | setRequestCreditCard(?bool requestCreditCard): void |
-| `expirationInterval` | `?int` | Optional | A numerical interval for the length a subscription to this product will run before it expires. See the description of interval for a description of how this value is coupled with an interval unit to calculate the full interval | getExpirationInterval(): ?int | setExpirationInterval(?int expirationInterval): void |
+| `expirationInterval` | `?int` | Optional | A numerical interval for the length a subscription to this product will run before it expires. See the description of interval for a description of how this value is coupled with an interval unit to calculate the full interval. | getExpirationInterval(): ?int | setExpirationInterval(?int expirationInterval): void |
 | `expirationIntervalUnit` | [`?string(ExpirationIntervalUnit)`](../../doc/models/expiration-interval-unit.md) | Optional | A string representing the expiration interval unit for this product, either month, day or never | getExpirationIntervalUnit(): ?string | setExpirationIntervalUnit(?string expirationIntervalUnit): void |
 | `createdAt` | `?DateTime` | Optional | Timestamp indicating when this product was created | getCreatedAt(): ?\DateTime | setCreatedAt(?\DateTime createdAt): void |
 | `updatedAt` | `?DateTime` | Optional | Timestamp indicating when this product was last updated | getUpdatedAt(): ?\DateTime | setUpdatedAt(?\DateTime updatedAt): void |
 | `priceInCents` | `?int` | Optional | The product price, in integer cents | getPriceInCents(): ?int | setPriceInCents(?int priceInCents): void |
-| `interval` | `?int` | Optional | The numerical interval. i.e. an interval of ‘30’ coupled with an interval_unit of day would mean this product would renew every 30 days | getInterval(): ?int | setInterval(?int interval): void |
+| `interval` | `?int` | Optional | The numerical interval. e.g., an interval of ‘30’ coupled with an interval_unit of day would mean this product would renew every 30 days. | getInterval(): ?int | setInterval(?int interval): void |
 | `intervalUnit` | [`?string(IntervalUnit)`](../../doc/models/interval-unit.md) | Optional | A string representing the interval unit for this product, either month or day | getIntervalUnit(): ?string | setIntervalUnit(?string intervalUnit): void |
 | `initialChargeInCents` | `?int` | Optional | The up front charge you have specified. | getInitialChargeInCents(): ?int | setInitialChargeInCents(?int initialChargeInCents): void |
 | `trialPriceInCents` | `?int` | Optional | The price of the trial period for a subscription to this product, in integer cents. | getTrialPriceInCents(): ?int | setTrialPriceInCents(?int trialPriceInCents): void |
-| `trialInterval` | `?int` | Optional | A numerical interval for the length of the trial period of a subscription to this product. See the description of interval for a description of how this value is coupled with an interval unit to calculate the full interval | getTrialInterval(): ?int | setTrialInterval(?int trialInterval): void |
+| `trialInterval` | `?int` | Optional | A numerical interval for the length of the trial period of a subscription to this product. See the description of interval for a description of how this value is coupled with an interval unit to calculate the full interval. | getTrialInterval(): ?int | setTrialInterval(?int trialInterval): void |
 | `trialIntervalUnit` | [`?string(IntervalUnit)`](../../doc/models/interval-unit.md) | Optional | A string representing the trial interval unit for this product, either month or day | getTrialIntervalUnit(): ?string | setTrialIntervalUnit(?string trialIntervalUnit): void |
 | `archivedAt` | `?DateTime` | Optional | Timestamp indicating when this product was archived | getArchivedAt(): ?\DateTime | setArchivedAt(?\DateTime archivedAt): void |
 | `requireCreditCard` | `?bool` | Optional | Boolean that controls whether a payment profile is required to be entered for customers wishing to sign up on this product. | getRequireCreditCard(): ?bool | setRequireCreditCard(?bool requireCreditCard): void |
@@ -33,7 +33,7 @@
 | `updateReturnUrl` | `?string` | Optional | The url to which a customer will be returned after a successful account update | getUpdateReturnUrl(): ?string | setUpdateReturnUrl(?string updateReturnUrl): void |
 | `initialChargeAfterTrial` | `?bool` | Optional | - | getInitialChargeAfterTrial(): ?bool | setInitialChargeAfterTrial(?bool initialChargeAfterTrial): void |
 | `versionNumber` | `?int` | Optional | The version of the product | getVersionNumber(): ?int | setVersionNumber(?int versionNumber): void |
-| `updateReturnParams` | `?string` | Optional | The parameters will append to the url after a successful account update. See [help documentation](https://help.chargify.com/products/product-editing.html#return-parameters-after-account-update) | getUpdateReturnParams(): ?string | setUpdateReturnParams(?string updateReturnParams): void |
+| `updateReturnParams` | `?string` | Optional | The parameters will append to the url after a successful account update. See [help documentation](https://help.chargify.com/products/product-editing.html#return-parameters-after-account-update). | getUpdateReturnParams(): ?string | setUpdateReturnParams(?string updateReturnParams): void |
 | `productFamily` | [`?ProductFamily`](../../doc/models/product-family.md) | Optional | - | getProductFamily(): ?ProductFamily | setProductFamily(?ProductFamily productFamily): void |
 | `publicSignupPages` | [`?(PublicSignupPage[])`](../../doc/models/public-signup-page.md) | Optional | - | getPublicSignupPages(): ?array | setPublicSignupPages(?array publicSignupPages): void |
 | `productPricePointName` | `?string` | Optional | - | getProductPricePointName(): ?string | setProductPricePointName(?string productPricePointName): void |
@@ -46,16 +46,19 @@
 | `itemCategory` | `?string` | Optional | One of the following: Business Software, Consumer Software, Digital Services, Physical Goods, Other | getItemCategory(): ?string | setItemCategory(?string itemCategory): void |
 | `productPricePointId` | `?int` | Optional | - | getProductPricePointId(): ?int | setProductPricePointId(?int productPricePointId): void |
 | `productPricePointHandle` | `?string` | Optional | - | getProductPricePointHandle(): ?string | setProductPricePointHandle(?string productPricePointHandle): void |
+| `unspscCode` | `?string` | Optional | (Optional) Custom UNSPSC commodity code for Level 3/CEDP payment data. When set, this value is sent as the commodity code on invoice line items for this product instead of the default derived from item_category. | getUnspscCode(): ?string | setUnspscCode(?string unspscCode): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "id": 180,
-  "name": "name4",
-  "handle": "handle0",
-  "description": "description4",
-  "accounting_code": "accounting_code0"
-}
+```php
+use AdvancedBillingLib\Models\Builders\ProductBuilder;
+
+$product = ProductBuilder::init()
+    ->id(134)
+    ->name('name0')
+    ->handle('handle6')
+    ->description('description0')
+    ->accountingCode('accounting_code6')
+    ->build();
 ```
 

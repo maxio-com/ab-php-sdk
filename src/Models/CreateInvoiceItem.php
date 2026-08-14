@@ -95,7 +95,7 @@ class CreateInvoiceItem implements \JsonSerializable
 
     /**
      * Returns Quantity.
-     * The quantity can contain up to 8 decimal places. i.e. 1.00 or 0.0012 or 0.00000065. If you submit a
+     * The quantity can contain up to 8 decimal places. e.g., 1.00 or 0.0012 or 0.00000065. If you submit a
      * value with more than 8 decimal places, we will round it down to the 8th decimal place.
      *
      * @return float|string|null
@@ -107,7 +107,7 @@ class CreateInvoiceItem implements \JsonSerializable
 
     /**
      * Sets Quantity.
-     * The quantity can contain up to 8 decimal places. i.e. 1.00 or 0.0012 or 0.00000065. If you submit a
+     * The quantity can contain up to 8 decimal places. e.g., 1.00 or 0.0012 or 0.00000065. If you submit a
      * value with more than 8 decimal places, we will round it down to the 8th decimal place.
      *
      * @maps quantity
@@ -122,7 +122,7 @@ class CreateInvoiceItem implements \JsonSerializable
 
     /**
      * Returns Unit Price.
-     * The unit_price can contain up to 8 decimal places. i.e. 1.00 or 0.0012 or 0.00000065. If you submit
+     * The unit_price can contain up to 8 decimal places. e.g., 1.00 or 0.0012 or 0.00000065. If you submit
      * a value with more than 8 decimal places, we will round it down to the 8th decimal place.
      *
      * @return float|string|null
@@ -134,7 +134,7 @@ class CreateInvoiceItem implements \JsonSerializable
 
     /**
      * Sets Unit Price.
-     * The unit_price can contain up to 8 decimal places. i.e. 1.00 or 0.0012 or 0.00000065. If you submit
+     * The unit_price can contain up to 8 decimal places. e.g., 1.00 or 0.0012 or 0.00000065. If you submit
      * a value with more than 8 decimal places, we will round it down to the 8th decimal place.
      *
      * @maps unit_price

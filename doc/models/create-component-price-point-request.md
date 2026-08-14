@@ -11,26 +11,36 @@
 |  --- | --- | --- | --- | --- | --- |
 | `pricePoint` | [CreateComponentPricePoint](../../doc/models/create-component-price-point.md)\|[CreatePrepaidUsageComponentPricePoint](../../doc/models/create-prepaid-usage-component-price-point.md) | Required | This is a container for any-of cases. | getPricePoint(): | setPricePoint( pricePoint): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "price_point": {
-    "name": "name0",
-    "pricing_scheme": "per_unit",
-    "prices": [
-      {
-        "starting_quantity": 242,
-        "ending_quantity": 40,
-        "unit_price": 23.26
-      }
-    ],
-    "use_site_exchange_rate": true,
-    "handle": "handle6",
-    "tax_included": false,
-    "interval": 24,
-    "interval_unit": "day"
-  }
-}
+```php
+use AdvancedBillingLib\Models\Builders\CreateComponentPricePointRequestBuilder;
+use AdvancedBillingLib\Models\Builders\CreateComponentPricePointBuilder;
+use AdvancedBillingLib\Models\PricingScheme;
+use AdvancedBillingLib\Models\Builders\PriceBuilder;
+use AdvancedBillingLib\Models\IntervalUnit;
+
+$createComponentPricePointRequest = CreateComponentPricePointRequestBuilder::init(
+    CreateComponentPricePointBuilder::init(
+        'name0',
+        PricingScheme::PER_UNIT,
+        [
+            PriceBuilder::init(
+                242,
+                23.26
+            )
+                ->endingQuantity(
+                    40
+                )
+                ->build()
+        ]
+    )
+        ->handle('handle6')
+        ->useSiteExchangeRate(true)
+        ->taxIncluded(false)
+        ->interval(24)
+        ->intervalUnit(IntervalUnit::DAY)
+        ->build()
+)->build();
 ```
 

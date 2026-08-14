@@ -157,7 +157,7 @@ class ServiceCredit1 implements \JsonSerializable
 
     /**
      * Returns Invoice Uid.
-     * The invoice uid associated with the entry. Only present for debit entries
+     * The invoice uid associated with the entry. Only present for debit entries.
      */
     public function getInvoiceUid(): ?string
     {
@@ -169,7 +169,7 @@ class ServiceCredit1 implements \JsonSerializable
 
     /**
      * Sets Invoice Uid.
-     * The invoice uid associated with the entry. Only present for debit entries
+     * The invoice uid associated with the entry. Only present for debit entries.
      *
      * @maps invoice_uid
      */
@@ -180,7 +180,7 @@ class ServiceCredit1 implements \JsonSerializable
 
     /**
      * Unsets Invoice Uid.
-     * The invoice uid associated with the entry. Only present for debit entries
+     * The invoice uid associated with the entry. Only present for debit entries.
      */
     public function unsetInvoiceUid(): void
     {

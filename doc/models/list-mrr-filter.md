@@ -11,15 +11,19 @@
 |  --- | --- | --- | --- | --- | --- |
 | `subscriptionIds` | `?(int[])` | Optional | Submit ids in order to limit results. Use in query: `filter[subscription_ids]=1,2,3`.<br><br>**Constraints**: *Minimum Items*: `1` | getSubscriptionIds(): ?array | setSubscriptionIds(?array subscriptionIds): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "subscription_ids": [
-    1,
-    2,
-    3
-  ]
-}
+```php
+use AdvancedBillingLib\Models\Builders\ListMrrFilterBuilder;
+
+$listMrrFilter = ListMrrFilterBuilder::init()
+    ->subscriptionIds(
+        [
+            1,
+            2,
+            3
+        ]
+    )
+    ->build();
 ```
 

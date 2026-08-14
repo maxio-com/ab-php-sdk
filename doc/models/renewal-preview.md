@@ -19,15 +19,18 @@
 | `uncalculatedTaxes` | `?bool` | Optional | A boolean indicating whether or not additional taxes will be calculated at the time of renewal. This will be true if you are using Avalara and the address of the subscription is in one of your defined taxable regions. | getUncalculatedTaxes(): ?bool | setUncalculatedTaxes(?bool uncalculatedTaxes): void |
 | `lineItems` | [`?(RenewalPreviewLineItem[])`](../../doc/models/renewal-preview-line-item.md) | Optional | An array of objects representing the individual transactions that will be created at the next renewal | getLineItems(): ?array | setLineItems(?array lineItems): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "next_assessment_at": "2016-03-13T12:52:32.123Z",
-  "subtotal_in_cents": 160,
-  "total_tax_in_cents": 28,
-  "total_discount_in_cents": 34,
-  "total_in_cents": 48
-}
+```php
+use AdvancedBillingLib\Models\Builders\RenewalPreviewBuilder;
+use AdvancedBillingLib\Utils\DateTimeHelper;
+
+$renewalPreview = RenewalPreviewBuilder::init()
+    ->nextAssessmentAt(DateTimeHelper::fromRfc3339DateTime('2016-03-13T12:52:32.123Z'))
+    ->subtotalInCents(102)
+    ->totalTaxInCents(226)
+    ->totalDiscountInCents(232)
+    ->totalInCents(246)
+    ->build();
 ```
 

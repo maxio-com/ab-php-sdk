@@ -16,15 +16,17 @@
 | `email` | `?string` | Optional | - | getEmail(): ?string | setEmail(?string email): void |
 | `vatNumber` | `?string` | Optional | - | getVatNumber(): ?string | setVatNumber(?string vatNumber): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "chargify_id": 46,
-  "first_name": "first_name4",
-  "last_name": "last_name2",
-  "organization": "organization8",
-  "email": "email2"
-}
+```php
+use AdvancedBillingLib\Models\Builders\InvoicePayerBuilder;
+
+$invoicePayer = InvoicePayerBuilder::init()
+    ->chargifyId(198)
+    ->firstName('first_name2')
+    ->lastName('last_name0')
+    ->organization('organization4')
+    ->email('email4')
+    ->build();
 ```
 

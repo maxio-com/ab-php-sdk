@@ -13,11 +13,14 @@ Billing schedule settings for component allocations or usages on multi-frequency
 |  --- | --- | --- | --- | --- | --- |
 | `initialBillingAt` | `?DateTime` | Optional | Custom start date (ISO 8601 date, YYYY-MM-DD) for the component's first billing period. If omitted or null, billing aligns with the product schedule. If provided, date must be on or after the minimum allowed date for the subscription or component. | getInitialBillingAt(): ?\DateTime | setInitialBillingAt(?\DateTime initialBillingAt): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "initial_billing_at": "2026-01-01"
-}
+```php
+use AdvancedBillingLib\Models\Builders\BillingScheduleBuilder;
+use AdvancedBillingLib\Utils\DateTimeHelper;
+
+$billingSchedule = BillingScheduleBuilder::init()
+    ->initialBillingAt(DateTimeHelper::fromSimpleDate('2026-01-01'))
+    ->build();
 ```
 

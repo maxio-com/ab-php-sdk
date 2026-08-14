@@ -11,17 +11,20 @@
 |  --- | --- | --- | --- | --- | --- |
 | `pricePoint` | [`ProductPricePoint`](../../doc/models/product-price-point.md) | Required | - | getPricePoint(): ProductPricePoint | setPricePoint(ProductPricePoint pricePoint): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "price_point": {
-    "id": 248,
-    "name": "name0",
-    "handle": "handle6",
-    "price_in_cents": 196,
-    "interval": 44
-  }
-}
+```php
+use AdvancedBillingLib\Models\Builders\ProductPricePointResponseBuilder;
+use AdvancedBillingLib\Models\Builders\ProductPricePointBuilder;
+
+$productPricePointResponse = ProductPricePointResponseBuilder::init(
+    ProductPricePointBuilder::init()
+        ->id(248)
+        ->name('name0')
+        ->handle('handle6')
+        ->priceInCents(196)
+        ->interval(44)
+        ->build()
+)->build();
 ```
 

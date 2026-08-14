@@ -22,3 +22,11 @@ A handle for the line item kind
 | `COUPON` |
 | `TAX` |
 
+## Example
+
+```php
+use AdvancedBillingLib\Models\LineItemKind;
+
+$lineItemKind = LineItemKind::PREPAID_USAGE_COMPONENT;
+```
+

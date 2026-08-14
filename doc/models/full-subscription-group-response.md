@@ -22,19 +22,23 @@
 | `customer` | [`?SubscriptionGroupCustomer`](../../doc/models/subscription-group-customer.md) | Optional | - | getCustomer(): ?SubscriptionGroupCustomer | setCustomer(?SubscriptionGroupCustomer customer): void |
 | `accountBalances` | [`?SubscriptionGroupBalances`](../../doc/models/subscription-group-balances.md) | Optional | - | getAccountBalances(): ?SubscriptionGroupBalances | setAccountBalances(?SubscriptionGroupBalances accountBalances): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "uid": "uid8",
-  "scheme": 90,
-  "customer_id": 110,
-  "payment_profile_id": 18,
-  "subscription_ids": [
-    220,
-    221,
-    222
-  ]
-}
+```php
+use AdvancedBillingLib\Models\Builders\FullSubscriptionGroupResponseBuilder;
+
+$fullSubscriptionGroupResponse = FullSubscriptionGroupResponseBuilder::init()
+    ->uid('uid6')
+    ->scheme(80)
+    ->customerId(100)
+    ->paymentProfileId(8)
+    ->subscriptionIds(
+        [
+            210,
+            211,
+            212
+        ]
+    )
+    ->build();
 ```
 

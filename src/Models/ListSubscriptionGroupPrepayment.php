@@ -16,14 +16,14 @@ use stdClass;
 class ListSubscriptionGroupPrepayment implements \JsonSerializable
 {
     /**
-     * @var ListSubcriptionGroupPrepaymentItem
+     * @var ListSubscriptionGroupPrepaymentItem
      */
     private $prepayment;
 
     /**
-     * @param ListSubcriptionGroupPrepaymentItem $prepayment
+     * @param ListSubscriptionGroupPrepaymentItem $prepayment
      */
-    public function __construct(ListSubcriptionGroupPrepaymentItem $prepayment)
+    public function __construct(ListSubscriptionGroupPrepaymentItem $prepayment)
     {
         $this->prepayment = $prepayment;
     }
@@ -31,7 +31,7 @@ class ListSubscriptionGroupPrepayment implements \JsonSerializable
     /**
      * Returns Prepayment.
      */
-    public function getPrepayment(): ListSubcriptionGroupPrepaymentItem
+    public function getPrepayment(): ListSubscriptionGroupPrepaymentItem
     {
         return $this->prepayment;
     }
@@ -42,7 +42,7 @@ class ListSubscriptionGroupPrepayment implements \JsonSerializable
      * @required
      * @maps prepayment
      */
-    public function setPrepayment(ListSubcriptionGroupPrepaymentItem $prepayment): void
+    public function setPrepayment(ListSubscriptionGroupPrepaymentItem $prepayment): void
     {
         $this->prepayment = $prepayment;
     }

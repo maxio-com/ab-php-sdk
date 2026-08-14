@@ -16,14 +16,16 @@ Information for captured payment, if applicable
 | `success` | `?bool` | Optional | - | getSuccess(): ?bool | setSuccess(?bool success): void |
 | `memo` | `?string` | Optional | - | getMemo(): ?string | setMemo(?string memo): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "id": 72,
-  "amount_in_cents": 158,
-  "success": false,
-  "memo": "memo6"
-}
+```php
+use AdvancedBillingLib\Models\Builders\PaymentForAllocationBuilder;
+
+$paymentForAllocation = PaymentForAllocationBuilder::init()
+    ->id(68)
+    ->amountInCents(102)
+    ->success(false)
+    ->memo('memo6')
+    ->build();
 ```
 

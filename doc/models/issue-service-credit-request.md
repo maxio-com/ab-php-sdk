@@ -11,14 +11,18 @@
 |  --- | --- | --- | --- | --- | --- |
 | `serviceCredit` | [`IssueServiceCredit`](../../doc/models/issue-service-credit.md) | Required | - | getServiceCredit(): IssueServiceCredit | setServiceCredit(IssueServiceCredit serviceCredit): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "service_credit": {
-    "amount": 31.42,
-    "memo": "memo0"
-  }
-}
+```php
+use AdvancedBillingLib\Models\Builders\IssueServiceCreditRequestBuilder;
+use AdvancedBillingLib\Models\Builders\IssueServiceCreditBuilder;
+
+$issueServiceCreditRequest = IssueServiceCreditRequestBuilder::init(
+    IssueServiceCreditBuilder::init(
+        31.42
+    )
+        ->memo('memo0')
+        ->build()
+)->build();
 ```
 

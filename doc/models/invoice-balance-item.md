@@ -13,13 +13,15 @@
 | `number` | `?string` | Optional | - | getNumber(): ?string | setNumber(?string number): void |
 | `outstandingAmount` | `?string` | Optional | - | getOutstandingAmount(): ?string | setOutstandingAmount(?string outstandingAmount): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "uid": "uid8",
-  "number": "number6",
-  "outstanding_amount": "outstanding_amount6"
-}
+```php
+use AdvancedBillingLib\Models\Builders\InvoiceBalanceItemBuilder;
+
+$invoiceBalanceItem = InvoiceBalanceItemBuilder::init()
+    ->uid('uid8')
+    ->number('number6')
+    ->outstandingAmount('outstanding_amount6')
+    ->build();
 ```
 

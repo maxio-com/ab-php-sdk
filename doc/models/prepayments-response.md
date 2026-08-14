@@ -11,36 +11,32 @@
 |  --- | --- | --- | --- | --- | --- |
 | `prepayments` | [`?(Prepayment[])`](../../doc/models/prepayment.md) | Optional | **Constraints**: *Unique Items Required* | getPrepayments(): ?array | setPrepayments(?array prepayments): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "prepayments": [
-    {
-      "id": 76,
-      "subscription_id": 186,
-      "amount_in_cents": 94,
-      "remaining_amount_in_cents": 220,
-      "refunded_amount_in_cents": 170,
-      "details": "details6",
-      "external": false,
-      "memo": "memo0",
-      "payment_type": "cash",
-      "created_at": "2016-03-13T12:52:32.123Z"
-    },
-    {
-      "id": 76,
-      "subscription_id": 186,
-      "amount_in_cents": 94,
-      "remaining_amount_in_cents": 220,
-      "refunded_amount_in_cents": 170,
-      "details": "details6",
-      "external": false,
-      "memo": "memo0",
-      "payment_type": "cash",
-      "created_at": "2016-03-13T12:52:32.123Z"
-    }
-  ]
-}
+```php
+use AdvancedBillingLib\Models\Builders\PrepaymentsResponseBuilder;
+use AdvancedBillingLib\Models\Builders\PrepaymentBuilder;
+use AdvancedBillingLib\Utils\DateTimeHelper;
+use AdvancedBillingLib\Models\PrepaymentMethod;
+
+$prepaymentsResponse = PrepaymentsResponseBuilder::init()
+    ->prepayments(
+        [
+            PrepaymentBuilder::init(
+                76,
+                186,
+                94,
+                220,
+                false,
+                'memo0',
+                DateTimeHelper::fromRfc3339DateTimeRequired('2016-03-13T12:52:32.123Z')
+            )
+                ->refundedAmountInCents(170)
+                ->details('details6')
+                ->paymentType(PrepaymentMethod::CASH)
+                ->build()
+        ]
+    )
+    ->build();
 ```
 

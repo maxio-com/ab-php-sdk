@@ -12,3 +12,11 @@
 | `CUSTOMER` |
 | `SUBSCRIPTION` |
 
+## Example
+
+```php
+use AdvancedBillingLib\Models\CustomFieldOwner;
+
+$customFieldOwner = CustomFieldOwner::CUSTOMER;
+```
+

@@ -16,21 +16,26 @@
 | `receivedOn` | `?string` | Optional | Date reflecting when the payment was received from a customer. Must be in the past. | getReceivedOn(): ?string | setReceivedOn(?string receivedOn): void |
 | `applications` | [`CreateInvoicePaymentApplication[]`](../../doc/models/create-invoice-payment-application.md) | Required | - | getApplications(): array | setApplications(array applications): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "amount": "String7",
-  "applications": [
-    {
-      "invoice_uid": "invoice_uid8",
-      "amount": "amount0"
-    }
-  ],
-  "memo": "memo8",
-  "details": "details4",
-  "method": "credit_card",
-  "received_on": "received_on6"
-}
+```php
+use AdvancedBillingLib\Models\Builders\CreateMultiInvoicePaymentBuilder;
+use AdvancedBillingLib\Models\Builders\CreateInvoicePaymentApplicationBuilder;
+use AdvancedBillingLib\Models\InvoicePaymentMethodType;
+
+$createMultiInvoicePayment = CreateMultiInvoicePaymentBuilder::init(
+    'String9',
+    [
+        CreateInvoicePaymentApplicationBuilder::init(
+            'invoice_uid8',
+            'amount0'
+        )->build()
+    ]
+)
+    ->memo('memo0')
+    ->details('details6')
+    ->method(InvoicePaymentMethodType::ACH)
+    ->receivedOn('received_on8')
+    ->build();
 ```
 

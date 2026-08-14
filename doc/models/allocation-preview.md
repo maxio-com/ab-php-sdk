@@ -23,15 +23,18 @@
 | `periodType` | `?string` | Optional | - | getPeriodType(): ?string | setPeriodType(?string periodType): void |
 | `existingBalanceInCents` | `?int` | Optional | An integer representing the amount of the subscription's current balance | getExistingBalanceInCents(): ?int | setExistingBalanceInCents(?int existingBalanceInCents): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "start_date": "2016-03-13T12:52:32.123Z",
-  "end_date": "2016-03-13T12:52:32.123Z",
-  "subtotal_in_cents": 4,
-  "total_tax_in_cents": 128,
-  "total_discount_in_cents": 122
-}
+```php
+use AdvancedBillingLib\Models\Builders\AllocationPreviewBuilder;
+use AdvancedBillingLib\Utils\DateTimeHelper;
+
+$allocationPreview = AllocationPreviewBuilder::init()
+    ->startDate(DateTimeHelper::fromRfc3339DateTime('2016-03-13T12:52:32.123Z'))
+    ->endDate(DateTimeHelper::fromRfc3339DateTime('2016-03-13T12:52:32.123Z'))
+    ->subtotalInCents(140)
+    ->totalTaxInCents(8)
+    ->totalDiscountInCents(242)
+    ->build();
 ```
 

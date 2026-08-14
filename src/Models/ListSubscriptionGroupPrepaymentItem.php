@@ -14,7 +14,7 @@ use AdvancedBillingLib\ApiHelper;
 use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
-class ListSubcriptionGroupPrepaymentItem implements \JsonSerializable
+class ListSubscriptionGroupPrepaymentItem implements \JsonSerializable
 {
     /**
      * @var int|null
@@ -226,14 +226,14 @@ class ListSubcriptionGroupPrepaymentItem implements \JsonSerializable
     }
 
     /**
-     * Converts the ListSubcriptionGroupPrepaymentItem object to a human-readable string representation.
+     * Converts the ListSubscriptionGroupPrepaymentItem object to a human-readable string representation.
      *
-     * @return string The string representation of the ListSubcriptionGroupPrepaymentItem object.
+     * @return string The string representation of the ListSubscriptionGroupPrepaymentItem object.
      */
     public function __toString(): string
     {
         return ApiHelper::stringify(
-            'ListSubcriptionGroupPrepaymentItem',
+            'ListSubscriptionGroupPrepaymentItem',
             [
                 'id' => $this->id,
                 'subscriptionGroupUid' => $this->subscriptionGroupUid,

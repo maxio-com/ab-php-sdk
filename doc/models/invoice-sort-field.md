@@ -20,7 +20,9 @@
 
 ## Example
 
-```
-total_amount
+```php
+use AdvancedBillingLib\Models\InvoiceSortField;
+
+$invoiceSortField = InvoiceSortField::UPDATED_AT;
 ```
 

@@ -17,15 +17,17 @@
 | `currencySymbol` | `?string` | Optional | - | getCurrencySymbol(): ?string | setCurrencySymbol(?string currencySymbol): void |
 | `movements` | [`?(Movement[])`](../../doc/models/movement.md) | Optional | - | getMovements(): ?array | setMovements(?array movements): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "page": 150,
-  "per_page": 238,
-  "total_pages": 16,
-  "total_entries": 112,
-  "currency": "currency8"
-}
+```php
+use AdvancedBillingLib\Models\Builders\ListMRRResponseResultBuilder;
+
+$listMRRResponseResult = ListMRRResponseResultBuilder::init()
+    ->page(40)
+    ->perPage(208)
+    ->totalPages(82)
+    ->totalEntries(78)
+    ->currency('currency6')
+    ->build();
 ```
 

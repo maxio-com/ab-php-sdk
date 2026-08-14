@@ -15,15 +15,23 @@
 | `destroy` | `?bool` | Optional | - | getDestroy(): ?bool | setDestroy(?bool destroy): void |
 | `startingQuantity` | int\|string\|null | Optional | This is a container for one-of cases. | getStartingQuantity(): | setStartingQuantity( startingQuantity): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "id": 18,
-  "ending_quantity": 216,
-  "unit_price": 166.62,
-  "_destroy": false,
-  "starting_quantity": 242
-}
+```php
+use AdvancedBillingLib\Models\Builders\UpdatePriceBuilder;
+
+$updatePrice = UpdatePriceBuilder::init()
+    ->id(206)
+    ->endingQuantity(
+        28
+    )
+    ->unitPrice(
+        181.3
+    )
+    ->destroy(false)
+    ->startingQuantity(
+        54
+    )
+    ->build();
 ```
 

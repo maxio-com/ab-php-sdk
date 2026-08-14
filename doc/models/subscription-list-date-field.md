@@ -13,7 +13,9 @@
 
 ## Example
 
-```
-updated_at
+```php
+use AdvancedBillingLib\Models\SubscriptionListDateField;
+
+$subscriptionListDateField = SubscriptionListDateField::UPDATED_AT;
 ```
 

@@ -15,3 +15,11 @@
 | `EXTERNAL` |
 | `PAYPAL_ACCOUNT` |
 
+## Example
+
+```php
+use AdvancedBillingLib\Models\InvoiceEventPaymentMethod;
+
+$invoiceEventPaymentMethod = InvoiceEventPaymentMethod::CREDIT_CARD;
+```
+

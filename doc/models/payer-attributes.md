@@ -28,19 +28,23 @@
 | `taxExemptReason` | `?string` | Optional | - | getTaxExemptReason(): ?string | setTaxExemptReason(?string taxExemptReason): void |
 | `metafields` | `?array<string,string>` | Optional | (Optional) A set of key/value pairs representing custom fields and their values. Metafields will be created “on-the-fly” in your site for a given key, if they have not been created yet. | getMetafields(): ?array | setMetafields(?array metafields): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "metafields": {
-    "custom_field_name_1": "custom_field_value_1",
-    "custom_field_name_2": "custom_field_value_2"
-  },
-  "first_name": "first_name4",
-  "last_name": "last_name2",
-  "email": "email2",
-  "cc_emails": "cc_emails4",
-  "organization": "organization8"
-}
+```php
+use AdvancedBillingLib\Models\Builders\PayerAttributesBuilder;
+
+$payerAttributes = PayerAttributesBuilder::init()
+    ->firstName('first_name2')
+    ->lastName('last_name0')
+    ->email('email4')
+    ->ccEmails('cc_emails8')
+    ->organization('organization4')
+    ->metafields(
+        [
+            'custom_field_name_1' => 'custom_field_value_1',
+            'custom_field_name_2' => 'custom_field_value_2'
+        ]
+    )
+    ->build();
 ```
 

@@ -21,15 +21,17 @@
 | `decimalQuantity` | `?string` | Optional | - | getDecimalQuantity(): ?string | setDecimalQuantity(?string decimalQuantity): void |
 | `createdAt` | `?DateTime` | Optional | - | getCreatedAt(): ?\DateTime | setCreatedAt(?\DateTime createdAt): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "id": 146,
-  "subscription_id": 0,
-  "subscription_renewal_configuration_id": 156,
-  "item_id": 38,
-  "item_type": "item_type4"
-}
+```php
+use AdvancedBillingLib\Models\Builders\ScheduledRenewalConfigurationItemBuilder;
+
+$scheduledRenewalConfigurationItem = ScheduledRenewalConfigurationItemBuilder::init()
+    ->id(54)
+    ->subscriptionId(164)
+    ->subscriptionRenewalConfigurationId(64)
+    ->itemId(202)
+    ->itemType('item_type0')
+    ->build();
 ```
 

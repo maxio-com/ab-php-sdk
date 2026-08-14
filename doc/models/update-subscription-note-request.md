@@ -13,14 +13,17 @@ Updatable fields for Subscription Note
 |  --- | --- | --- | --- | --- | --- |
 | `note` | [`UpdateSubscriptionNote`](../../doc/models/update-subscription-note.md) | Required | Updatable fields for Subscription Note | getNote(): UpdateSubscriptionNote | setNote(UpdateSubscriptionNote note): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "note": {
-    "body": "body0",
-    "sticky": false
-  }
-}
+```php
+use AdvancedBillingLib\Models\Builders\UpdateSubscriptionNoteRequestBuilder;
+use AdvancedBillingLib\Models\Builders\UpdateSubscriptionNoteBuilder;
+
+$updateSubscriptionNoteRequest = UpdateSubscriptionNoteRequestBuilder::init(
+    UpdateSubscriptionNoteBuilder::init(
+        'body0',
+        false
+    )->build()
+)->build();
 ```
 

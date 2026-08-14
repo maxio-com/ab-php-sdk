@@ -16,32 +16,44 @@
 | `pricingScheme` | [`string(PricingScheme)`](../../doc/models/pricing-scheme.md) | Required | The identifier for the pricing scheme. See [Product Components](https://help.chargify.com/products/product-components.html) for an overview of pricing schemes. | getPricingScheme(): string | setPricingScheme(string pricingScheme): void |
 | `prices` | [`?(CreateOrUpdateSegmentPrice[])`](../../doc/models/create-or-update-segment-price.md) | Optional | - | getPrices(): ?array | setPrices(?array prices): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "segment_property_1_value": "String9",
-  "segment_property_2_value": "String1",
-  "segment_property_3_value": "String3",
-  "segment_property_4_value": "String3",
-  "pricing_scheme": "per_unit",
-  "prices": [
-    {
-      "starting_quantity": 64,
-      "ending_quantity": 38,
-      "unit_price": "String3"
-    },
-    {
-      "starting_quantity": 64,
-      "ending_quantity": 38,
-      "unit_price": "String3"
-    },
-    {
-      "starting_quantity": 64,
-      "ending_quantity": 38,
-      "unit_price": "String3"
-    }
-  ]
-}
+```php
+use AdvancedBillingLib\Models\Builders\CreateSegmentBuilder;
+use AdvancedBillingLib\Models\PricingScheme;
+use AdvancedBillingLib\Models\Builders\CreateOrUpdateSegmentPriceBuilder;
+
+$createSegment = CreateSegmentBuilder::init(
+    PricingScheme::STAIRSTEP
+)
+    ->segmentProperty1Value(
+        'String7'
+    )
+    ->segmentProperty2Value(
+        'String9'
+    )
+    ->segmentProperty3Value(
+        'String5'
+    )
+    ->segmentProperty4Value(
+        'String1'
+    )
+    ->prices(
+        [
+            CreateOrUpdateSegmentPriceBuilder::init(
+                'String3'
+            )
+                ->startingQuantity(64)
+                ->endingQuantity(38)
+                ->build(),
+            CreateOrUpdateSegmentPriceBuilder::init(
+                'String3'
+            )
+                ->startingQuantity(64)
+                ->endingQuantity(38)
+                ->build()
+        ]
+    )
+    ->build();
 ```
 

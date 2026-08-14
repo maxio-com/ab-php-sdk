@@ -18,15 +18,19 @@
 | `discountAmount` | `?string` | Optional | **Constraints**: *Minimum Length*: `1` | getDiscountAmount(): ?string | setDiscountAmount(?string discountAmount): void |
 | `lineItemBreakouts` | [`?(InvoiceDiscountBreakout[])`](../../doc/models/invoice-discount-breakout.md) | Optional | **Constraints**: *Minimum Items*: `1`, *Unique Items Required* | getLineItemBreakouts(): ?array | setLineItemBreakouts(?array lineItemBreakouts): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "uid": "uid2",
-  "title": "title8",
-  "code": "code0",
-  "source_type": "Coupon",
-  "discount_type": "percentage"
-}
+```php
+use AdvancedBillingLib\Models\Builders\ProformaInvoiceDiscountBuilder;
+use AdvancedBillingLib\Models\ProformaInvoiceDiscountSourceType;
+use AdvancedBillingLib\Models\InvoiceDiscountType;
+
+$proformaInvoiceDiscount = ProformaInvoiceDiscountBuilder::init()
+    ->uid('uid2')
+    ->title('title8')
+    ->code('code0')
+    ->sourceType(ProformaInvoiceDiscountSourceType::COUPON)
+    ->discountType(InvoiceDiscountType::PERCENTAGE)
+    ->build();
 ```
 

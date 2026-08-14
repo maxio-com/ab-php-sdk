@@ -13,13 +13,15 @@
 | `chargeId` | `?int` | Optional | - | getChargeId(): ?int | setChargeId(?int chargeId): void |
 | `usageQuantity` | `?int` | Optional | - | getUsageQuantity(): ?int | setUsageQuantity(?int usageQuantity): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "allocation_id": 72,
-  "charge_id": 30,
-  "usage_quantity": 212
-}
+```php
+use AdvancedBillingLib\Models\Builders\PrepaidUsageAllocationDetailBuilder;
+
+$prepaidUsageAllocationDetail = PrepaidUsageAllocationDetailBuilder::init()
+    ->allocationId(144)
+    ->chargeId(214)
+    ->usageQuantity(140)
+    ->build();
 ```
 

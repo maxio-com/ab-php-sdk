@@ -76,6 +76,8 @@ class WebhookSubscription
 
     public const SUBSCRIPTION_PRODUCT_CHANGE = 'subscription_product_change';
 
+    public const SUBSCRIPTION_PRODUCT_CHANGE_SCHEDULED = 'subscription_product_change_scheduled';
+
     public const SUBSCRIPTION_STATE_CHANGE = 'subscription_state_change';
 
     public const TRIAL_END_NOTICE = 'trial_end_notice';
@@ -124,6 +126,7 @@ class WebhookSubscription
         self::SUBSCRIPTION_CARD_UPDATE,
         self::SUBSCRIPTION_GROUP_CARD_UPDATE,
         self::SUBSCRIPTION_PRODUCT_CHANGE,
+        self::SUBSCRIPTION_PRODUCT_CHANGE_SCHEDULED,
         self::SUBSCRIPTION_STATE_CHANGE,
         self::TRIAL_END_NOTICE,
         self::UPCOMING_RENEWAL_NOTICE,

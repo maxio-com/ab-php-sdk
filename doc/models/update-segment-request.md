@@ -11,30 +11,41 @@
 |  --- | --- | --- | --- | --- | --- |
 | `segment` | [`UpdateSegment`](../../doc/models/update-segment.md) | Required | - | getSegment(): UpdateSegment | setSegment(UpdateSegment segment): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "segment": {
-    "pricing_scheme": "stairstep",
-    "prices": [
-      {
-        "starting_quantity": 64,
-        "ending_quantity": 38,
-        "unit_price": "String3"
-      },
-      {
-        "starting_quantity": 64,
-        "ending_quantity": 38,
-        "unit_price": "String3"
-      },
-      {
-        "starting_quantity": 64,
-        "ending_quantity": 38,
-        "unit_price": "String3"
-      }
-    ]
-  }
-}
+```php
+use AdvancedBillingLib\Models\Builders\UpdateSegmentRequestBuilder;
+use AdvancedBillingLib\Models\Builders\UpdateSegmentBuilder;
+use AdvancedBillingLib\Models\PricingScheme;
+use AdvancedBillingLib\Models\Builders\CreateOrUpdateSegmentPriceBuilder;
+
+$updateSegmentRequest = UpdateSegmentRequestBuilder::init(
+    UpdateSegmentBuilder::init(
+        PricingScheme::STAIRSTEP
+    )
+        ->prices(
+            [
+                CreateOrUpdateSegmentPriceBuilder::init(
+                    'String3'
+                )
+                    ->startingQuantity(64)
+                    ->endingQuantity(38)
+                    ->build(),
+                CreateOrUpdateSegmentPriceBuilder::init(
+                    'String3'
+                )
+                    ->startingQuantity(64)
+                    ->endingQuantity(38)
+                    ->build(),
+                CreateOrUpdateSegmentPriceBuilder::init(
+                    'String3'
+                )
+                    ->startingQuantity(64)
+                    ->endingQuantity(38)
+                    ->build()
+            ]
+        )
+        ->build()
+)->build();
 ```
 

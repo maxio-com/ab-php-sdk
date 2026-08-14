@@ -11,17 +11,22 @@
 |  --- | --- | --- | --- | --- | --- |
 | `scheduledRenewalConfigurationItem` | [`?ScheduledRenewalConfigurationItem`](../../doc/models/scheduled-renewal-configuration-item.md) | Optional | - | getScheduledRenewalConfigurationItem(): ?ScheduledRenewalConfigurationItem | setScheduledRenewalConfigurationItem(?ScheduledRenewalConfigurationItem scheduledRenewalConfigurationItem): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "scheduled_renewal_configuration_item": {
-    "id": 98,
-    "subscription_id": 208,
-    "subscription_renewal_configuration_id": 108,
-    "item_id": 246,
-    "item_type": "item_type2"
-  }
-}
+```php
+use AdvancedBillingLib\Models\Builders\ScheduledRenewalConfigurationItemResponseBuilder;
+use AdvancedBillingLib\Models\Builders\ScheduledRenewalConfigurationItemBuilder;
+
+$scheduledRenewalConfigurationItemResponse = ScheduledRenewalConfigurationItemResponseBuilder::init()
+    ->scheduledRenewalConfigurationItem(
+        ScheduledRenewalConfigurationItemBuilder::init()
+            ->id(98)
+            ->subscriptionId(208)
+            ->subscriptionRenewalConfigurationId(108)
+            ->itemId(246)
+            ->itemType('item_type2')
+            ->build()
+    )
+    ->build();
 ```
 

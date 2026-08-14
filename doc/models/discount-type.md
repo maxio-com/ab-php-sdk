@@ -12,3 +12,11 @@
 | `AMOUNT` |
 | `PERCENT` |
 
+## Example
+
+```php
+use AdvancedBillingLib\Models\DiscountType;
+
+$discountType = DiscountType::AMOUNT;
+```
+

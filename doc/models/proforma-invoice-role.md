@@ -1,7 +1,7 @@
 
 # Proforma Invoice Role
 
-'proforma' value is deprecated in favor of proforma_adhoc and proforma_automatic
+'proforma' value is deprecated in favor of proforma_adhoc and proforma_automatic.
 
 ## Enumeration
 
@@ -15,4 +15,12 @@
 | `PROFORMA` |
 | `PROFORMA_ADHOC` |
 | `PROFORMA_AUTOMATIC` |
+
+## Example
+
+```php
+use AdvancedBillingLib\Models\ProformaInvoiceRole;
+
+$proformaInvoiceRole = ProformaInvoiceRole::UNSET_;
+```
 

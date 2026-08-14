@@ -19,24 +19,32 @@
 | `useSiteExchangeRate` | `?bool` | Optional | If true, restricts the list to coupons whose pricing is recalculated from the site’s current exchange rates, so their currency_prices array contains on-the-fly conversions rather than stored price records. If false, restricts the list to coupons that have manually defined amounts for each currency, ensuring the response includes the saved currency_prices entries instead of exchange-rate-derived values. Use in query `filter[use_site_exchange_rate]=true`. | getUseSiteExchangeRate(): ?bool | setUseSiteExchangeRate(?bool useSiteExchangeRate): void |
 | `includeArchived` | `?bool` | Optional | Controls returning archived coupons. | getIncludeArchived(): ?bool | setIncludeArchived(?bool includeArchived): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "start_date": "2011-12-17",
-  "end_date": "2011-12-15",
-  "start_datetime": "12/19/2011 09:15:30",
-  "end_datetime": "06/07/2019 17:20:06",
-  "ids": [
-    1,
-    2,
-    3
-  ],
-  "codes": [
-    "free",
-    "free_trial"
-  ],
-  "date_field": "updated_at"
-}
+```php
+use AdvancedBillingLib\Models\Builders\ListCouponsFilterBuilder;
+use AdvancedBillingLib\Models\BasicDateField;
+use AdvancedBillingLib\Utils\DateTimeHelper;
+
+$listCouponsFilter = ListCouponsFilterBuilder::init()
+    ->dateField(BasicDateField::UPDATED_AT)
+    ->startDate(DateTimeHelper::fromSimpleDate('2011-12-17'))
+    ->endDate(DateTimeHelper::fromSimpleDate('2011-12-15'))
+    ->startDatetime(DateTimeHelper::fromRfc3339DateTime('2011-12-19T09:15:30+00:00'))
+    ->endDatetime(DateTimeHelper::fromRfc3339DateTime('2019-06-07T17:20:06Z'))
+    ->ids(
+        [
+            1,
+            2,
+            3
+        ]
+    )
+    ->codes(
+        [
+            'free',
+            'free_trial'
+        ]
+    )
+    ->build();
 ```
 

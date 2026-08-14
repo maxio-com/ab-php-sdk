@@ -96,6 +96,11 @@ class CreateOrUpdateProduct implements \JsonSerializable
     private $taxCode;
 
     /**
+     * @var array
+     */
+    private $unspscCode = [];
+
+    /**
      * @param string $name
      * @param string $description
      * @param int $priceInCents
@@ -243,8 +248,8 @@ class CreateOrUpdateProduct implements \JsonSerializable
 
     /**
      * Returns Interval.
-     * The numerical interval. i.e. an interval of ‘30’ coupled with an interval_unit of day would mean
-     * this product would renew every 30 days
+     * The numerical interval. e.g., an interval of ‘30’ coupled with an interval_unit of day would mean
+     * this product would renew every 30 days.
      */
     public function getInterval(): int
     {
@@ -253,8 +258,8 @@ class CreateOrUpdateProduct implements \JsonSerializable
 
     /**
      * Sets Interval.
-     * The numerical interval. i.e. an interval of ‘30’ coupled with an interval_unit of day would mean
-     * this product would renew every 30 days
+     * The numerical interval. e.g., an interval of ‘30’ coupled with an interval_unit of day would mean
+     * this product would renew every 30 days.
      *
      * @required
      * @maps interval
@@ -308,7 +313,7 @@ class CreateOrUpdateProduct implements \JsonSerializable
 
     /**
      * Returns Trial Interval.
-     * The numerical trial interval. i.e. an interval of ‘30’ coupled with a trial_interval_unit of day
+     * The numerical trial interval. e.g., an interval of ‘30’ coupled with a trial_interval_unit of day
      * would mean this product trial would last 30 days.
      */
     public function getTrialInterval(): ?int
@@ -318,7 +323,7 @@ class CreateOrUpdateProduct implements \JsonSerializable
 
     /**
      * Sets Trial Interval.
-     * The numerical trial interval. i.e. an interval of ‘30’ coupled with a trial_interval_unit of day
+     * The numerical trial interval. e.g., an interval of ‘30’ coupled with a trial_interval_unit of day
      * would mean this product trial would last 30 days.
      *
      * @maps trial_interval
@@ -363,7 +368,7 @@ class CreateOrUpdateProduct implements \JsonSerializable
 
     /**
      * Returns Trial Type.
-     * Indicates how a trial is handled when the trail period ends and there is no credit card on file. For
+     * Indicates how a trial is handled when the trial period ends and there is no credit card on file. For
      * `no_obligation`, the subscription transitions to a Trial Ended state. Maxio will not send any emails
      * or statements. For `payment_expected`, the subscription transitions to a Past Due state. Maxio will
      * send normal dunning emails and statements according to your other settings.
@@ -378,7 +383,7 @@ class CreateOrUpdateProduct implements \JsonSerializable
 
     /**
      * Sets Trial Type.
-     * Indicates how a trial is handled when the trail period ends and there is no credit card on file. For
+     * Indicates how a trial is handled when the trial period ends and there is no credit card on file. For
      * `no_obligation`, the subscription transitions to a Trial Ended state. Maxio will not send any emails
      * or statements. For `payment_expected`, the subscription transitions to a Past Due state. Maxio will
      * send normal dunning emails and statements according to your other settings.
@@ -393,7 +398,7 @@ class CreateOrUpdateProduct implements \JsonSerializable
 
     /**
      * Unsets Trial Type.
-     * Indicates how a trial is handled when the trail period ends and there is no credit card on file. For
+     * Indicates how a trial is handled when the trial period ends and there is no credit card on file. For
      * `no_obligation`, the subscription transitions to a Trial Ended state. Maxio will not send any emails
      * or statements. For `payment_expected`, the subscription transitions to a Past Due state. Maxio will
      * send normal dunning emails and statements according to your other settings.
@@ -405,7 +410,7 @@ class CreateOrUpdateProduct implements \JsonSerializable
 
     /**
      * Returns Expiration Interval.
-     * The numerical expiration interval. i.e. an expiration_interval of ‘30’ coupled with an
+     * The numerical expiration interval. e.g., an expiration_interval of ‘30’ coupled with an
      * expiration_interval_unit of day would mean this product would expire after 30 days.
      */
     public function getExpirationInterval(): ?int
@@ -415,7 +420,7 @@ class CreateOrUpdateProduct implements \JsonSerializable
 
     /**
      * Sets Expiration Interval.
-     * The numerical expiration interval. i.e. an expiration_interval of ‘30’ coupled with an
+     * The numerical expiration interval. e.g., an expiration_interval of ‘30’ coupled with an
      * expiration_interval_unit of day would mean this product would expire after 30 days.
      *
      * @maps expiration_interval
@@ -499,6 +504,44 @@ class CreateOrUpdateProduct implements \JsonSerializable
     }
 
     /**
+     * Returns Unspsc Code.
+     * (Optional) Custom UNSPSC commodity code for Level 3/CEDP payment data. When set, this value is sent
+     * as the commodity code on invoice line items for this product instead of the default derived from
+     * item_category.
+     */
+    public function getUnspscCode(): ?string
+    {
+        if (count($this->unspscCode) == 0) {
+            return null;
+        }
+        return $this->unspscCode['value'];
+    }
+
+    /**
+     * Sets Unspsc Code.
+     * (Optional) Custom UNSPSC commodity code for Level 3/CEDP payment data. When set, this value is sent
+     * as the commodity code on invoice line items for this product instead of the default derived from
+     * item_category.
+     *
+     * @maps unspsc_code
+     */
+    public function setUnspscCode(?string $unspscCode): void
+    {
+        $this->unspscCode['value'] = $unspscCode;
+    }
+
+    /**
+     * Unsets Unspsc Code.
+     * (Optional) Custom UNSPSC commodity code for Level 3/CEDP payment data. When set, this value is sent
+     * as the commodity code on invoice line items for this product instead of the default derived from
+     * item_category.
+     */
+    public function unsetUnspscCode(): void
+    {
+        $this->unspscCode = [];
+    }
+
+    /**
      * Converts the CreateOrUpdateProduct object to a human-readable string representation.
      *
      * @return string The string representation of the CreateOrUpdateProduct object.
@@ -524,6 +567,7 @@ class CreateOrUpdateProduct implements \JsonSerializable
                 'expirationIntervalUnit' => $this->getExpirationIntervalUnit(),
                 'autoCreateSignupPage' => $this->autoCreateSignupPage,
                 'taxCode' => $this->taxCode,
+                'unspscCode' => $this->getUnspscCode(),
                 'additionalProperties' => $this->additionalProperties
             ]
         );
@@ -609,6 +653,9 @@ class CreateOrUpdateProduct implements \JsonSerializable
         }
         if (isset($this->taxCode)) {
             $json['tax_code']                 = $this->taxCode;
+        }
+        if (!empty($this->unspscCode)) {
+            $json['unspsc_code']              = $this->unspscCode['value'];
         }
         $json = array_merge($json, $this->additionalProperties);
 

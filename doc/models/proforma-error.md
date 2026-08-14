@@ -11,16 +11,23 @@
 |  --- | --- | --- | --- | --- | --- |
 | `subscription` | [`?BaseStringError`](../../doc/models/base-string-error.md) | Optional | The error is base if it is not directly associated with a single attribute. | getSubscription(): ?BaseStringError | setSubscription(?BaseStringError subscription): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "subscription": {
-    "base": [
-      "base3",
-      "base4"
-    ]
-  }
-}
+```php
+use AdvancedBillingLib\Models\Builders\ProformaErrorBuilder;
+use AdvancedBillingLib\Models\Builders\BaseStringErrorBuilder;
+
+$proformaError = ProformaErrorBuilder::init()
+    ->subscription(
+        BaseStringErrorBuilder::init()
+            ->base(
+                [
+                    'base3',
+                    'base4'
+                ]
+            )
+            ->build()
+    )
+    ->build();
 ```
 

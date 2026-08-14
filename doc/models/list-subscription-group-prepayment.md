@@ -9,19 +9,22 @@
 
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
-| `prepayment` | [`ListSubcriptionGroupPrepaymentItem`](../../doc/models/list-subcription-group-prepayment-item.md) | Required | - | getPrepayment(): ListSubcriptionGroupPrepaymentItem | setPrepayment(ListSubcriptionGroupPrepaymentItem prepayment): void |
+| `prepayment` | [`ListSubscriptionGroupPrepaymentItem`](../../doc/models/list-subscription-group-prepayment-item.md) | Required | - | getPrepayment(): ListSubscriptionGroupPrepaymentItem | setPrepayment(ListSubscriptionGroupPrepaymentItem prepayment): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "prepayment": {
-    "id": 38,
-    "subscription_group_uid": "subscription_group_uid2",
-    "amount_in_cents": 124,
-    "remaining_amount_in_cents": 182,
-    "details": "details8"
-  }
-}
+```php
+use AdvancedBillingLib\Models\Builders\ListSubscriptionGroupPrepaymentBuilder;
+use AdvancedBillingLib\Models\Builders\ListSubscriptionGroupPrepaymentItemBuilder;
+
+$listSubscriptionGroupPrepayment = ListSubscriptionGroupPrepaymentBuilder::init(
+    ListSubscriptionGroupPrepaymentItemBuilder::init()
+        ->id(38)
+        ->subscriptionGroupUid('subscription_group_uid2')
+        ->amountInCents(124)
+        ->remainingAmountInCents(182)
+        ->details('details8')
+        ->build()
+)->build();
 ```
 

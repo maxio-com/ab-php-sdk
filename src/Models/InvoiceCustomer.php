@@ -14,7 +14,7 @@ use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 /**
- * Information about the customer who is owner or recipient the invoiced subscription.
+ * Information about the customer who is owner or recipient of the invoiced subscription.
  */
 class InvoiceCustomer implements \JsonSerializable
 {

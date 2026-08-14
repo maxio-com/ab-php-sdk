@@ -192,6 +192,11 @@ class Component implements \JsonSerializable
     private $intervalUnit = [];
 
     /**
+     * @var array
+     */
+    private $unspscCode = [];
+
+    /**
      * Returns Id.
      * The unique ID assigned to the component by Chargify. This ID can be used to fetch the component from
      * the API.
@@ -215,7 +220,7 @@ class Component implements \JsonSerializable
 
     /**
      * Returns Name.
-     * The name of the Component, suitable for display on statements. i.e. Text Messages.
+     * The name of the Component, suitable for display on statements. e.g., Text Messages.
      */
     public function getName(): ?string
     {
@@ -224,7 +229,7 @@ class Component implements \JsonSerializable
 
     /**
      * Sets Name.
-     * The name of the Component, suitable for display on statements. i.e. Text Messages.
+     * The name of the Component, suitable for display on statements. e.g., Text Messages.
      *
      * @maps name
      */
@@ -297,7 +302,7 @@ class Component implements \JsonSerializable
 
     /**
      * Returns Unit Name.
-     * The name of the unit that the component’s usage is measured in. i.e. message
+     * The name of the unit that the component’s usage is measured in. e.g., message
      */
     public function getUnitName(): ?string
     {
@@ -306,7 +311,7 @@ class Component implements \JsonSerializable
 
     /**
      * Sets Unit Name.
-     * The name of the unit that the component’s usage is measured in. i.e. message
+     * The name of the unit that the component’s usage is measured in. e.g., message
      *
      * @maps unit_name
      */
@@ -412,7 +417,7 @@ class Component implements \JsonSerializable
 
     /**
      * Returns Price Per Unit in Cents.
-     * deprecated - use unit_price instead
+     * deprecated - use unit_price instead.
      */
     public function getPricePerUnitInCents(): ?int
     {
@@ -424,7 +429,7 @@ class Component implements \JsonSerializable
 
     /**
      * Sets Price Per Unit in Cents.
-     * deprecated - use unit_price instead
+     * deprecated - use unit_price instead.
      *
      * @maps price_per_unit_in_cents
      */
@@ -435,7 +440,7 @@ class Component implements \JsonSerializable
 
     /**
      * Unsets Price Per Unit in Cents.
-     * deprecated - use unit_price instead
+     * deprecated - use unit_price instead.
      */
     public function unsetPricePerUnitInCents(): void
     {
@@ -1067,8 +1072,8 @@ class Component implements \JsonSerializable
 
     /**
      * Returns Interval.
-     * The numerical interval. i.e. an interval of ‘30’ coupled with an interval_unit of day would mean
-     * this component's default price point would renew every 30 days. This property is only available for
+     * The numerical interval. e.g., an interval of ‘30’ coupled with an interval_unit of day would mean
+     * this component’s default price point would renew every 30 days. This property is only available for
      * sites with Multifrequency enabled.
      */
     public function getInterval(): ?int
@@ -1078,8 +1083,8 @@ class Component implements \JsonSerializable
 
     /**
      * Sets Interval.
-     * The numerical interval. i.e. an interval of ‘30’ coupled with an interval_unit of day would mean
-     * this component's default price point would renew every 30 days. This property is only available for
+     * The numerical interval. e.g., an interval of ‘30’ coupled with an interval_unit of day would mean
+     * this component’s default price point would renew every 30 days. This property is only available for
      * sites with Multifrequency enabled.
      *
      * @maps interval
@@ -1123,6 +1128,44 @@ class Component implements \JsonSerializable
     public function unsetIntervalUnit(): void
     {
         $this->intervalUnit = [];
+    }
+
+    /**
+     * Returns Unspsc Code.
+     * (Optional) Custom UNSPSC commodity code for Level 3/CEDP payment data. When set, this value is sent
+     * as the commodity code on invoice line items for this component instead of the default derived from
+     * item_category.
+     */
+    public function getUnspscCode(): ?string
+    {
+        if (count($this->unspscCode) == 0) {
+            return null;
+        }
+        return $this->unspscCode['value'];
+    }
+
+    /**
+     * Sets Unspsc Code.
+     * (Optional) Custom UNSPSC commodity code for Level 3/CEDP payment data. When set, this value is sent
+     * as the commodity code on invoice line items for this component instead of the default derived from
+     * item_category.
+     *
+     * @maps unspsc_code
+     */
+    public function setUnspscCode(?string $unspscCode): void
+    {
+        $this->unspscCode['value'] = $unspscCode;
+    }
+
+    /**
+     * Unsets Unspsc Code.
+     * (Optional) Custom UNSPSC commodity code for Level 3/CEDP payment data. When set, this value is sent
+     * as the commodity code on invoice line items for this component instead of the default derived from
+     * item_category.
+     */
+    public function unsetUnspscCode(): void
+    {
+        $this->unspscCode = [];
     }
 
     /**
@@ -1170,6 +1213,7 @@ class Component implements \JsonSerializable
                 'eventBasedBillingMetricId' => $this->eventBasedBillingMetricId,
                 'interval' => $this->interval,
                 'intervalUnit' => $this->getIntervalUnit(),
+                'unspscCode' => $this->getUnspscCode(),
                 'additionalProperties' => $this->additionalProperties
             ]
         );
@@ -1319,6 +1363,9 @@ class Component implements \JsonSerializable
         }
         if (!empty($this->intervalUnit)) {
             $json['interval_unit']                 = IntervalUnit::checkValue($this->intervalUnit['value']);
+        }
+        if (!empty($this->unspscCode)) {
+            $json['unspsc_code']                   = $this->unspscCode['value'];
         }
         $json = array_merge($json, $this->additionalProperties);
 

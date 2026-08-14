@@ -18,21 +18,26 @@
 | `bankAccountAttributes` | [`?SubscriptionGroupBankAccount`](../../doc/models/subscription-group-bank-account.md) | Optional | - | getBankAccountAttributes(): ?SubscriptionGroupBankAccount | setBankAccountAttributes(?SubscriptionGroupBankAccount bankAccountAttributes): void |
 | `subscriptions` | [`?(SubscriptionGroupSignupItem[])`](../../doc/models/subscription-group-signup-item.md) | Optional | - | getSubscriptions(): ?array | setSubscriptions(?array subscriptions): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "payer_id": 16,
-  "payer_reference": "payer_reference8",
-  "payment_profile_id": 6,
-  "payment_collection_method": "payment_collection_method0",
-  "payer_attributes": {
-    "first_name": "first_name2",
-    "last_name": "last_name0",
-    "email": "email4",
-    "cc_emails": "cc_emails2",
-    "organization": "organization6"
-  }
-}
+```php
+use AdvancedBillingLib\Models\Builders\SubscriptionGroupSignupFailureDataBuilder;
+use AdvancedBillingLib\Models\Builders\PayerAttributesBuilder;
+
+$subscriptionGroupSignupFailureData = SubscriptionGroupSignupFailureDataBuilder::init()
+    ->payerId(236)
+    ->payerReference('payer_reference2')
+    ->paymentProfileId(42)
+    ->paymentCollectionMethod('payment_collection_method4')
+    ->payerAttributes(
+        PayerAttributesBuilder::init()
+            ->firstName('first_name2')
+            ->lastName('last_name0')
+            ->email('email4')
+            ->ccEmails('cc_emails2')
+            ->organization('organization6')
+            ->build()
+    )
+    ->build();
 ```
 

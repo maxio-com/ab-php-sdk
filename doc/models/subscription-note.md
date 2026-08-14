@@ -16,15 +16,18 @@
 | `updatedAt` | `?DateTime` | Optional | - | getUpdatedAt(): ?\DateTime | setUpdatedAt(?\DateTime updatedAt): void |
 | `sticky` | `?bool` | Optional | - | getSticky(): ?bool | setSticky(?bool sticky): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "id": 36,
-  "body": "body4",
-  "subscription_id": 146,
-  "created_at": "2016-03-13T12:52:32.123Z",
-  "updated_at": "2016-03-13T12:52:32.123Z"
-}
+```php
+use AdvancedBillingLib\Models\Builders\SubscriptionNoteBuilder;
+use AdvancedBillingLib\Utils\DateTimeHelper;
+
+$subscriptionNote = SubscriptionNoteBuilder::init()
+    ->id(18)
+    ->body('body6')
+    ->subscriptionId(128)
+    ->createdAt(DateTimeHelper::fromRfc3339DateTime('2016-03-13T12:52:32.123Z'))
+    ->updatedAt(DateTimeHelper::fromRfc3339DateTime('2016-03-13T12:52:32.123Z'))
+    ->build();
 ```
 

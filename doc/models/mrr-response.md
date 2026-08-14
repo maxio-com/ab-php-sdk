@@ -11,22 +11,28 @@
 |  --- | --- | --- | --- | --- | --- |
 | `mrr` | [`MRR`](../../doc/models/mrr.md) | Required | - | getMrr(): MRR | setMrr(MRR mrr): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "mrr": {
-    "amount_in_cents": 198,
-    "amount_formatted": "amount_formatted6",
-    "currency": "currency4",
-    "currency_symbol": "currency_symbol2",
-    "breakouts": {
-      "plan_amount_in_cents": 254,
-      "plan_amount_formatted": "plan_amount_formatted0",
-      "usage_amount_in_cents": 106,
-      "usage_amount_formatted": "usage_amount_formatted8"
-    }
-  }
-}
+```php
+use AdvancedBillingLib\Models\Builders\MRRResponseBuilder;
+use AdvancedBillingLib\Models\Builders\MRRBuilder;
+use AdvancedBillingLib\Models\Builders\BreakoutsBuilder;
+
+$mRRResponse = MRRResponseBuilder::init(
+    MRRBuilder::init()
+        ->amountInCents(198)
+        ->amountFormatted('amount_formatted6')
+        ->currency('currency4')
+        ->currencySymbol('currency_symbol2')
+        ->breakouts(
+            BreakoutsBuilder::init()
+                ->planAmountInCents(254)
+                ->planAmountFormatted('plan_amount_formatted0')
+                ->usageAmountInCents(106)
+                ->usageAmountFormatted('usage_amount_formatted8')
+                ->build()
+        )
+        ->build()
+)->build();
 ```
 

@@ -19,3 +19,11 @@ Price point type. We expose the following types:
 | `DEFAULT_` |
 | `CUSTOM` |
 
+## Example
+
+```php
+use AdvancedBillingLib\Models\PricePointType;
+
+$pricePointType = PricePointType::DEFAULT_;
+```
+

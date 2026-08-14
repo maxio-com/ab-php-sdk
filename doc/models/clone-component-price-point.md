@@ -12,12 +12,15 @@
 | `name` | `string` | Required | - | getName(): string | setName(string name): void |
 | `handle` | `?string` | Optional | - | getHandle(): ?string | setHandle(?string handle): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "name": "name2",
-  "handle": "handle8"
-}
+```php
+use AdvancedBillingLib\Models\Builders\CloneComponentPricePointBuilder;
+
+$cloneComponentPricePoint = CloneComponentPricePointBuilder::init(
+    'name4'
+)
+    ->handle('handle0')
+    ->build();
 ```
 

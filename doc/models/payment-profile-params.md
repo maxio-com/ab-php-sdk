@@ -15,13 +15,15 @@ PCI-safe cardholder fields only. Full card numbers, CVV, and billing address are
 | `lastName` | `?string` | Optional | - | getLastName(): ?string | setLastName(?string lastName): void |
 | `cardType` | `?string` | Optional | - | getCardType(): ?string | setCardType(?string cardType): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "first_name": "first_name2",
-  "last_name": "last_name0",
-  "card_type": "card_type8"
-}
+```php
+use AdvancedBillingLib\Models\Builders\PaymentProfileParamsBuilder;
+
+$paymentProfileParams = PaymentProfileParamsBuilder::init()
+    ->firstName('first_name2')
+    ->lastName('last_name0')
+    ->cardType('card_type2')
+    ->build();
 ```
 

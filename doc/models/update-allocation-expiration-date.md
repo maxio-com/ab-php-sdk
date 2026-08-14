@@ -11,13 +11,19 @@
 |  --- | --- | --- | --- | --- | --- |
 | `allocation` | [`?AllocationExpirationDate`](../../doc/models/allocation-expiration-date.md) | Optional | - | getAllocation(): ?AllocationExpirationDate | setAllocation(?AllocationExpirationDate allocation): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "allocation": {
-    "expires_at": "2016-03-13T12:52:32.123Z"
-  }
-}
+```php
+use AdvancedBillingLib\Models\Builders\UpdateAllocationExpirationDateBuilder;
+use AdvancedBillingLib\Models\Builders\AllocationExpirationDateBuilder;
+use AdvancedBillingLib\Utils\DateTimeHelper;
+
+$updateAllocationExpirationDate = UpdateAllocationExpirationDateBuilder::init()
+    ->allocation(
+        AllocationExpirationDateBuilder::init()
+            ->expiresAt(DateTimeHelper::fromRfc3339DateTime('2016-03-13T12:52:32.123Z'))
+            ->build()
+    )
+    ->build();
 ```
 

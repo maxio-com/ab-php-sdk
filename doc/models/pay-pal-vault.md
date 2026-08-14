@@ -16,3 +16,11 @@ The vault that stores the payment profile with the provided vault_token.
 | `MODUSLINK` |
 | `PAYPAL_COMPLETE` |
 
+## Example
+
+```php
+use AdvancedBillingLib\Models\PayPalVault;
+
+$payPalVault = PayPalVault::MODUSLINK;
+```
+

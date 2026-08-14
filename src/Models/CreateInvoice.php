@@ -177,7 +177,7 @@ class CreateInvoice implements \JsonSerializable
 
     /**
      * Returns Seller Address.
-     * Overrides the defaults for the site
+     * Overrides the defaults for the site.
      */
     public function getSellerAddress(): ?CreateInvoiceAddress
     {
@@ -186,7 +186,7 @@ class CreateInvoice implements \JsonSerializable
 
     /**
      * Sets Seller Address.
-     * Overrides the defaults for the site
+     * Overrides the defaults for the site.
      *
      * @maps seller_address
      */
@@ -197,7 +197,7 @@ class CreateInvoice implements \JsonSerializable
 
     /**
      * Returns Billing Address.
-     * Overrides the default for the customer
+     * Overrides the default for the customer.
      */
     public function getBillingAddress(): ?CreateInvoiceAddress
     {
@@ -206,7 +206,7 @@ class CreateInvoice implements \JsonSerializable
 
     /**
      * Sets Billing Address.
-     * Overrides the default for the customer
+     * Overrides the default for the customer.
      *
      * @maps billing_address
      */
@@ -217,7 +217,7 @@ class CreateInvoice implements \JsonSerializable
 
     /**
      * Returns Shipping Address.
-     * Overrides the default for the customer
+     * Overrides the default for the customer.
      */
     public function getShippingAddress(): ?CreateInvoiceAddress
     {
@@ -226,7 +226,7 @@ class CreateInvoice implements \JsonSerializable
 
     /**
      * Sets Shipping Address.
-     * Overrides the default for the customer
+     * Overrides the default for the customer.
      *
      * @maps shipping_address
      */

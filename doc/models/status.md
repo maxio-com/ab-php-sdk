@@ -16,3 +16,11 @@
 | `ACTIVE` |
 | `FULFILLED` |
 
+## Example
+
+```php
+use AdvancedBillingLib\Models\Status;
+
+$status = Status::PENDING;
+```
+

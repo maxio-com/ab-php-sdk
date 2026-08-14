@@ -15,15 +15,18 @@
 | `commitDate` | `?DateTime` | Optional | - | getCommitDate(): ?\DateTime | setCommitDate(?\DateTime commitDate): void |
 | `modifyDate` | `?DateTime` | Optional | - | getModifyDate(): ?\DateTime | setModifyDate(?\DateTime modifyDate): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "id": 112,
-  "status": "status2",
-  "document_code": "document_code0",
-  "commit_date": "2016-03-13T12:52:32.123Z",
-  "modify_date": "2016-03-13T12:52:32.123Z"
-}
+```php
+use AdvancedBillingLib\Models\Builders\InvoiceAvataxDetailsBuilder;
+use AdvancedBillingLib\Utils\DateTimeHelper;
+
+$invoiceAvataxDetails = InvoiceAvataxDetailsBuilder::init()
+    ->id(184)
+    ->status('status2')
+    ->documentCode('document_code4')
+    ->commitDate(DateTimeHelper::fromRfc3339DateTime('2016-03-13T12:52:32.123Z'))
+    ->modifyDate(DateTimeHelper::fromRfc3339DateTime('2016-03-13T12:52:32.123Z'))
+    ->build();
 ```
 

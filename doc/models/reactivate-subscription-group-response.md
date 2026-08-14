@@ -19,18 +19,23 @@
 | `state` | `?string` | Optional | - | getState(): ?string | setState(?string state): void |
 | `cancelAtEndOfPeriod` | `?bool` | Optional | - | getCancelAtEndOfPeriod(): ?bool | setCancelAtEndOfPeriod(?bool cancelAtEndOfPeriod): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "uid": "uid4",
-  "scheme": 66,
-  "customer_id": 86,
-  "payment_profile_id": 250,
-  "subscription_ids": [
-    196,
-    197
-  ]
-}
+```php
+use AdvancedBillingLib\Models\Builders\ReactivateSubscriptionGroupResponseBuilder;
+
+$reactivateSubscriptionGroupResponse = ReactivateSubscriptionGroupResponseBuilder::init()
+    ->uid('uid0')
+    ->scheme(10)
+    ->customerId(30)
+    ->paymentProfileId(62)
+    ->subscriptionIds(
+        [
+            140,
+            141,
+            142
+        ]
+    )
+    ->build();
 ```
 

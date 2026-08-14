@@ -30,15 +30,17 @@
 | `billingScheduleItemId` | `?int` | Optional | - | getBillingScheduleItemId(): ?int | setBillingScheduleItemId(?int billingScheduleItemId): void |
 | `customItem` | `?bool` | Optional | - | getCustomItem(): ?bool | setCustomItem(?bool customItem): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "uid": "uid4",
-  "title": "title0",
-  "description": "description6",
-  "quantity": 40,
-  "quantity_delta": 114
-}
+```php
+use AdvancedBillingLib\Models\Builders\InvoiceLineItemEventDataBuilder;
+
+$invoiceLineItemEventData = InvoiceLineItemEventDataBuilder::init()
+    ->uid('uid4')
+    ->title('title0')
+    ->description('description4')
+    ->quantity(190)
+    ->quantityDelta(36)
+    ->build();
 ```
 

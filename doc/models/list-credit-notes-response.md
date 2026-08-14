@@ -11,19 +11,22 @@
 |  --- | --- | --- | --- | --- | --- |
 | `creditNotes` | [`CreditNote[]`](../../doc/models/credit-note.md) | Required | - | getCreditNotes(): array | setCreditNotes(array creditNotes): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "credit_notes": [
-    {
-      "uid": "uid2",
-      "site_id": 112,
-      "customer_id": 224,
-      "subscription_id": 40,
-      "number": "number0"
-    }
-  ]
-}
+```php
+use AdvancedBillingLib\Models\Builders\ListCreditNotesResponseBuilder;
+use AdvancedBillingLib\Models\Builders\CreditNoteBuilder;
+
+$listCreditNotesResponse = ListCreditNotesResponseBuilder::init(
+    [
+        CreditNoteBuilder::init()
+            ->uid('uid2')
+            ->siteId(112)
+            ->customerId(224)
+            ->subscriptionId(40)
+            ->number('number0')
+            ->build()
+    ]
+)->build();
 ```
 

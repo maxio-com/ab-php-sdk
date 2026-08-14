@@ -17,15 +17,17 @@
 | `createdAt` | `?DateTime` | Optional | - | getCreatedAt(): ?\DateTime | setCreatedAt(?\DateTime createdAt): void |
 | `updatedAt` | `?DateTime` | Optional | - | getUpdatedAt(): ?\DateTime | setUpdatedAt(?\DateTime updatedAt): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "id": 164,
-  "site_id": 90,
-  "code": "code0",
-  "description": "description2",
-  "position": 194
-}
+```php
+use AdvancedBillingLib\Models\Builders\ReasonCodeBuilder;
+
+$reasonCode = ReasonCodeBuilder::init()
+    ->id(174)
+    ->siteId(100)
+    ->code('code4')
+    ->description('description6')
+    ->position(204)
+    ->build();
 ```
 

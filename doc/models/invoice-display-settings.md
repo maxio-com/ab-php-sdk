@@ -12,12 +12,14 @@
 | `hideZeroSubtotalLines` | `?bool` | Optional | - | getHideZeroSubtotalLines(): ?bool | setHideZeroSubtotalLines(?bool hideZeroSubtotalLines): void |
 | `includeDiscountsOnLines` | `?bool` | Optional | - | getIncludeDiscountsOnLines(): ?bool | setIncludeDiscountsOnLines(?bool includeDiscountsOnLines): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "hide_zero_subtotal_lines": false,
-  "include_discounts_on_lines": false
-}
+```php
+use AdvancedBillingLib\Models\Builders\InvoiceDisplaySettingsBuilder;
+
+$invoiceDisplaySettings = InvoiceDisplaySettingsBuilder::init()
+    ->hideZeroSubtotalLines(false)
+    ->includeDiscountsOnLines(false)
+    ->build();
 ```
 

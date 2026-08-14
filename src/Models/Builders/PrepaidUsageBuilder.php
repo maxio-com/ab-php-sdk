@@ -36,8 +36,8 @@ class PrepaidUsageBuilder
      *
      * @param string $previousUnitBalance
      * @param string $previousOverageUnitBalance
-     * @param int $newUnitBalance
-     * @param int $newOverageUnitBalance
+     * @param int|string $newUnitBalance
+     * @param int|string $newOverageUnitBalance
      * @param int $usageQuantity
      * @param int $overageUsageQuantity
      * @param int $componentId
@@ -48,8 +48,8 @@ class PrepaidUsageBuilder
     public static function init(
         string $previousUnitBalance,
         string $previousOverageUnitBalance,
-        int $newUnitBalance,
-        int $newOverageUnitBalance,
+        $newUnitBalance,
+        $newOverageUnitBalance,
         int $usageQuantity,
         int $overageUsageQuantity,
         int $componentId,

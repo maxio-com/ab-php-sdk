@@ -12,14 +12,18 @@ Attributes of the target customer who will be the responsible payer of the creat
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
 | `type` | [`string(GroupTargetType)`](../../doc/models/group-target-type.md) | Required | The type of object indicated by the id attribute. | getType(): string | setType(string type): void |
-| `id` | `?int` | Optional | The id of the target customer or subscription to group the existing subscription with. Ignored and should not be included if type is "self" , "parent", or "eldest" | getId(): ?int | setId(?int id): void |
+| `id` | `?int` | Optional | The id of the target customer or subscription to group the existing subscription with. Ignored and should not be included if type is "self", "parent", or "eldest". | getId(): ?int | setId(?int id): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "type": "self",
-  "id": 134
-}
+```php
+use AdvancedBillingLib\Models\Builders\GroupTargetBuilder;
+use AdvancedBillingLib\Models\GroupTargetType;
+
+$groupTarget = GroupTargetBuilder::init(
+    GroupTargetType::PARENT_
+)
+    ->id(234)
+    ->build();
 ```
 

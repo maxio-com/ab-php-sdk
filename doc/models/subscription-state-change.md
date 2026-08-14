@@ -12,12 +12,14 @@
 | `previousSubscriptionState` | `string` | Required | **Constraints**: *Minimum Length*: `1` | getPreviousSubscriptionState(): string | setPreviousSubscriptionState(string previousSubscriptionState): void |
 | `newSubscriptionState` | `string` | Required | **Constraints**: *Minimum Length*: `1` | getNewSubscriptionState(): string | setNewSubscriptionState(string newSubscriptionState): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "previous_subscription_state": "previous_subscription_state2",
-  "new_subscription_state": "new_subscription_state6"
-}
+```php
+use AdvancedBillingLib\Models\Builders\SubscriptionStateChangeBuilder;
+
+$subscriptionStateChange = SubscriptionStateChangeBuilder::init(
+    'previous_subscription_state8',
+    'new_subscription_state2'
+)->build();
 ```
 

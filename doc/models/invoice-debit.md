@@ -18,15 +18,19 @@
 | `originalAmount` | `?string` | Optional | - | getOriginalAmount(): ?string | setOriginalAmount(?string originalAmount): void |
 | `appliedAmount` | `?string` | Optional | - | getAppliedAmount(): ?string | setAppliedAmount(?string appliedAmount): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "uid": "uid2",
-  "debit_note_number": "debit_note_number2",
-  "debit_note_uid": "debit_note_uid8",
-  "role": "chargeback",
-  "transaction_time": "2016-03-13T12:52:32.123Z"
-}
+```php
+use AdvancedBillingLib\Models\Builders\InvoiceDebitBuilder;
+use AdvancedBillingLib\Models\DebitNoteRole;
+use AdvancedBillingLib\Utils\DateTimeHelper;
+
+$invoiceDebit = InvoiceDebitBuilder::init()
+    ->uid('uid8')
+    ->debitNoteNumber('debit_note_number8')
+    ->debitNoteUid('debit_note_uid4')
+    ->role(DebitNoteRole::CHARGEBACK)
+    ->transactionTime(DateTimeHelper::fromRfc3339DateTime('2016-03-13T12:52:32.123Z'))
+    ->build();
 ```
 

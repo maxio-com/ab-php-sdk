@@ -15,15 +15,17 @@
 | `email` | `?string` | Optional | - | getEmail(): ?string | setEmail(?string email): void |
 | `reference` | `?string` | Optional | - | getReference(): ?string | setReference(?string reference): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "first_name": "first_name4",
-  "last_name": "last_name2",
-  "organization": "organization2",
-  "email": "email2",
-  "reference": "reference0"
-}
+```php
+use AdvancedBillingLib\Models\Builders\SubscriptionGroupCustomerBuilder;
+
+$subscriptionGroupCustomer = SubscriptionGroupCustomerBuilder::init()
+    ->firstName('first_name6')
+    ->lastName('last_name4')
+    ->organization('organization0')
+    ->email('email0')
+    ->reference('reference8')
+    ->build();
 ```
 

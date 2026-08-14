@@ -11,18 +11,22 @@
 |  --- | --- | --- | --- | --- | --- |
 | `component` | [`UpdateComponent`](../../doc/models/update-component.md) | Required | - | getComponent(): UpdateComponent | setComponent(UpdateComponent component): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "component": {
-    "item_category": "Business Software",
-    "handle": "handle4",
-    "name": "name8",
-    "description": "description2",
-    "accounting_code": "accounting_code4",
-    "taxable": false
-  }
-}
+```php
+use AdvancedBillingLib\Models\Builders\UpdateComponentRequestBuilder;
+use AdvancedBillingLib\Models\Builders\UpdateComponentBuilder;
+use AdvancedBillingLib\Models\ItemCategory;
+
+$updateComponentRequest = UpdateComponentRequestBuilder::init(
+    UpdateComponentBuilder::init()
+        ->handle('handle4')
+        ->name('name8')
+        ->description('description2')
+        ->accountingCode('accounting_code4')
+        ->taxable(false)
+        ->itemCategory(ItemCategory::ENUM_BUSINESS_SOFTWARE)
+        ->build()
+)->build();
 ```
 

@@ -11,22 +11,15 @@
 |  --- | --- | --- | --- | --- | --- |
 | `errors` | [`?Errors`](../../doc/models/errors.md) | Optional | - | getErrors(): ?Errors | setErrors(?Errors errors): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "errors": {
-    "per_page": [
-      "per_page1",
-      "per_page2",
-      "per_page3"
-    ],
-    "price_point": [
-      "price_point0",
-      "price_point9",
-      "price_point8"
-    ]
-  }
+```php
+try {
+    // make the API call
+} catch (EventBasedBillingListSegmentsErrorsException $exp) {
+    echo 'Caught EventBasedBillingListSegmentsErrorsException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught ApiException:', $exp;
 }
 ```
 

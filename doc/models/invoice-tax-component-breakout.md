@@ -24,15 +24,17 @@
 | `stateAssignedNo` | `?string` | Optional | - | getStateAssignedNo(): ?string | setStateAssignedNo(?string stateAssignedNo): void |
 | `taxSubType` | `?string` | Optional | - | getTaxSubType(): ?string | setTaxSubType(?string taxSubType): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "tax_rule_id": 226,
-  "percentage": "percentage0",
-  "country_code": "country_code8",
-  "subdivision_code": "subdivision_code6",
-  "tax_amount": "tax_amount4"
-}
+```php
+use AdvancedBillingLib\Models\Builders\InvoiceTaxComponentBreakoutBuilder;
+
+$invoiceTaxComponentBreakout = InvoiceTaxComponentBreakoutBuilder::init()
+    ->taxRuleId(66)
+    ->percentage('percentage0')
+    ->countryCode('country_code2')
+    ->subdivisionCode('subdivision_code6')
+    ->taxAmount('tax_amount4')
+    ->build();
 ```
 

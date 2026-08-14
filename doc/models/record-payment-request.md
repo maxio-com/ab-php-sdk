@@ -11,16 +11,20 @@
 |  --- | --- | --- | --- | --- | --- |
 | `payment` | [`CreatePayment`](../../doc/models/create-payment.md) | Required | - | getPayment(): CreatePayment | setPayment(CreatePayment payment): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "payment": {
-    "amount": "amount8",
-    "memo": "memo0",
-    "payment_details": "payment_details6",
-    "payment_method": "cash"
-  }
-}
+```php
+use AdvancedBillingLib\Models\Builders\RecordPaymentRequestBuilder;
+use AdvancedBillingLib\Models\Builders\CreatePaymentBuilder;
+use AdvancedBillingLib\Models\InvoicePaymentMethodType;
+
+$recordPaymentRequest = RecordPaymentRequestBuilder::init(
+    CreatePaymentBuilder::init(
+        'amount8',
+        'memo0',
+        'payment_details6',
+        InvoicePaymentMethodType::CASH
+    )->build()
+)->build();
 ```
 

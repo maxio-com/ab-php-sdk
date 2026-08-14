@@ -42,6 +42,11 @@ class ProductFamily implements \JsonSerializable
     private $description = [];
 
     /**
+     * @var bool|null
+     */
+    private $surcharging;
+
+    /**
      * @var \DateTime|null
      */
     private $createdAt;
@@ -169,6 +174,28 @@ class ProductFamily implements \JsonSerializable
     }
 
     /**
+     * Returns Surcharging.
+     * Whether surcharging applies to this product family. Only included on sites where surcharging is
+     * enabled.
+     */
+    public function getSurcharging(): ?bool
+    {
+        return $this->surcharging;
+    }
+
+    /**
+     * Sets Surcharging.
+     * Whether surcharging applies to this product family. Only included on sites where surcharging is
+     * enabled.
+     *
+     * @maps surcharging
+     */
+    public function setSurcharging(?bool $surcharging): void
+    {
+        $this->surcharging = $surcharging;
+    }
+
+    /**
      * Returns Created At.
      */
     public function getCreatedAt(): ?\DateTime
@@ -257,6 +284,7 @@ class ProductFamily implements \JsonSerializable
                 'handle' => $this->handle,
                 'accountingCode' => $this->getAccountingCode(),
                 'description' => $this->getDescription(),
+                'surcharging' => $this->surcharging,
                 'createdAt' => $this->createdAt,
                 'updatedAt' => $this->updatedAt,
                 'archivedAt' => $this->getArchivedAt(),
@@ -319,6 +347,9 @@ class ProductFamily implements \JsonSerializable
         }
         if (!empty($this->description)) {
             $json['description']     = $this->description['value'];
+        }
+        if (isset($this->surcharging)) {
+            $json['surcharging']     = $this->surcharging;
         }
         if (isset($this->createdAt)) {
             $json['created_at']      = DateTimeHelper::toRfc3339DateTime($this->createdAt);

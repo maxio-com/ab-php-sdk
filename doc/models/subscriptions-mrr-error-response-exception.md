@@ -11,15 +11,15 @@
 |  --- | --- | --- | --- | --- | --- |
 | `errors` | [`AttributeError`](../../doc/models/attribute-error.md) | Required | - | getErrors(): AttributeError | setErrors(AttributeError errors): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "errors": {
-    "attribute": [
-      "supplied value is invalid, expected ISO 8601 format"
-    ]
-  }
+```php
+try {
+    // make the API call
+} catch (SubscriptionsMrrErrorResponseException $exp) {
+    echo 'Caught SubscriptionsMrrErrorResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught ApiException:', $exp;
 }
 ```
 

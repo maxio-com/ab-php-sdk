@@ -31,6 +31,11 @@ class CreateProductFamily implements \JsonSerializable
     private $description = [];
 
     /**
+     * @var bool|null
+     */
+    private $surcharging;
+
+    /**
      * @param string $name
      */
     public function __construct(string $name)
@@ -116,6 +121,28 @@ class CreateProductFamily implements \JsonSerializable
     }
 
     /**
+     * Returns Surcharging.
+     * Whether surcharging applies to this product family. Defaults to `true` when omitted. Only applied on
+     * sites where surcharging is enabled.
+     */
+    public function getSurcharging(): ?bool
+    {
+        return $this->surcharging;
+    }
+
+    /**
+     * Sets Surcharging.
+     * Whether surcharging applies to this product family. Defaults to `true` when omitted. Only applied on
+     * sites where surcharging is enabled.
+     *
+     * @maps surcharging
+     */
+    public function setSurcharging(?bool $surcharging): void
+    {
+        $this->surcharging = $surcharging;
+    }
+
+    /**
      * Converts the CreateProductFamily object to a human-readable string representation.
      *
      * @return string The string representation of the CreateProductFamily object.
@@ -128,6 +155,7 @@ class CreateProductFamily implements \JsonSerializable
                 'name' => $this->name,
                 'handle' => $this->getHandle(),
                 'description' => $this->getDescription(),
+                'surcharging' => $this->surcharging,
                 'additionalProperties' => $this->additionalProperties
             ]
         );
@@ -179,6 +207,9 @@ class CreateProductFamily implements \JsonSerializable
         }
         if (!empty($this->description)) {
             $json['description'] = $this->description['value'];
+        }
+        if (isset($this->surcharging)) {
+            $json['surcharging'] = $this->surcharging;
         }
         $json = array_merge($json, $this->additionalProperties);
 

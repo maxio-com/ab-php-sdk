@@ -11,11 +11,14 @@
 |  --- | --- | --- | --- | --- | --- |
 | `lockInAt` | `DateTime` | Required | Date to lock in the renewal. | getLockInAt(): \DateTime | setLockInAt(\DateTime lockInAt): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "lock_in_at": "2016-03-13"
-}
+```php
+use AdvancedBillingLib\Models\Builders\ScheduledRenewalLockInRequestBuilder;
+use AdvancedBillingLib\Utils\DateTimeHelper;
+
+$scheduledRenewalLockInRequest = ScheduledRenewalLockInRequestBuilder::init(
+    DateTimeHelper::fromSimpleDateRequired('2016-03-13')
+)->build();
 ```
 

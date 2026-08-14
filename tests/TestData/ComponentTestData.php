@@ -26,6 +26,7 @@ final class ComponentTestData
     public const ACCOUNTING_CODE = null;
     public const USE_SITE_EXCHANGE_RATE = true;
     public const ITEM_CATEGORY = null;
+    public const UNSPSC_CODE = null;
     public const ALLOW_FRACTIONAL_QUANTITIES = false;
     public const HIDE_DATE_RANGE_ON_INVOICE = false;
     public const ARCHIVED_AT = null;

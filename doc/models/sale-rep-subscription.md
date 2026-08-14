@@ -20,15 +20,17 @@
 | `lastPayment` | `?string` | Optional | - | getLastPayment(): ?string | setLastPayment(?string lastPayment): void |
 | `churnDate` | `?string` | Optional | - | getChurnDate(): ?string | setChurnDate(?string churnDate): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "id": 18,
-  "site_name": "site_name2",
-  "subscription_url": "subscription_url6",
-  "customer_name": "customer_name2",
-  "created_at": "created_at8"
-}
+```php
+use AdvancedBillingLib\Models\Builders\SaleRepSubscriptionBuilder;
+
+$saleRepSubscription = SaleRepSubscriptionBuilder::init()
+    ->id(68)
+    ->siteName('site_name8')
+    ->subscriptionUrl('subscription_url2')
+    ->customerName('customer_name8')
+    ->createdAt('created_at4')
+    ->build();
 ```
 

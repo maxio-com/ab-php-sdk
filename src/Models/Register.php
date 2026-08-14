@@ -91,7 +91,7 @@ class Register implements \JsonSerializable
 
     /**
      * Returns Currency Code.
-     * The ISO 4217 currency code (3 character string) representing the currency of invoice transaction.
+     * The ISO 4217 currency code (3 character string) representing the currency of an invoice transaction.
      */
     public function getCurrencyCode(): ?string
     {
@@ -100,7 +100,7 @@ class Register implements \JsonSerializable
 
     /**
      * Sets Currency Code.
-     * The ISO 4217 currency code (3 character string) representing the currency of invoice transaction.
+     * The ISO 4217 currency code (3 character string) representing the currency of an invoice transaction.
      *
      * @maps currency_code
      */

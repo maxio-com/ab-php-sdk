@@ -12,3 +12,11 @@
 | `COUPON` |
 | `REFERRAL` |
 
+## Example
+
+```php
+use AdvancedBillingLib\Models\ProformaInvoiceDiscountSourceType;
+
+$proformaInvoiceDiscountSourceType = ProformaInvoiceDiscountSourceType::COUPON;
+```
+

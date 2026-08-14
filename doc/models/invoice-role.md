@@ -20,3 +20,11 @@
 | `BACKPORT` |
 | `BACKPORTBALANCERECONCILIATION` |
 
+## Example
+
+```php
+use AdvancedBillingLib\Models\InvoiceRole;
+
+$invoiceRole = InvoiceRole::RENEWAL;
+```
+

@@ -83,7 +83,7 @@ class UpdatePrice implements \JsonSerializable
 
     /**
      * Returns Unit Price.
-     * The price can contain up to 8 decimal places. i.e. 1.00 or 0.0012 or 0.00000065
+     * The price can contain up to 8 decimal places. e.g., 1.00 or 0.0012 or 0.00000065
      *
      * @return float|string|null
      */
@@ -94,7 +94,7 @@ class UpdatePrice implements \JsonSerializable
 
     /**
      * Sets Unit Price.
-     * The price can contain up to 8 decimal places. i.e. 1.00 or 0.0012 or 0.00000065
+     * The price can contain up to 8 decimal places. e.g., 1.00 or 0.0012 or 0.00000065
      *
      * @maps unit_price
      * @mapsBy anyOf(oneOf(float,string),null)

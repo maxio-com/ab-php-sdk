@@ -15,35 +15,40 @@
 | `eventType` | [`string(InvoiceEventType)`](../../doc/models/invoice-event-type.md) | Required | **Default**: `InvoiceEventType::BACKPORT_INVOICE` | getEventType(): string | setEventType(string eventType): void |
 | `eventData` | [`Invoice`](../../doc/models/invoice.md) | Required | Example schema for an `backport_invoice` event | getEventData(): Invoice | setEventData(Invoice eventData): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "id": 78,
-  "timestamp": "2016-03-13T12:52:32.123Z",
-  "invoice": {
-    "issue_date": "2024-01-01",
-    "due_date": "2024-01-01",
-    "paid_date": "2024-01-01",
-    "public_url_expires_on": "2024-01-21",
-    "id": 166,
-    "uid": "uid6",
-    "site_id": 92,
-    "customer_id": 204,
-    "subscription_id": 20
-  },
-  "event_type": "backport_invoice",
-  "event_data": {
-    "issue_date": "2024-01-01",
-    "due_date": "2024-01-01",
-    "paid_date": "2024-01-01",
-    "public_url_expires_on": "2024-01-21",
-    "id": 206,
-    "uid": "uid6",
-    "site_id": 132,
-    "customer_id": 244,
-    "subscription_id": 60
-  }
-}
+```php
+use AdvancedBillingLib\Models\Builders\BackportInvoiceEventBuilder;
+use AdvancedBillingLib\Utils\DateTimeHelper;
+use AdvancedBillingLib\Models\Builders\InvoiceBuilder;
+use AdvancedBillingLib\Models\InvoiceEventType;
+
+$backportInvoiceEvent = BackportInvoiceEventBuilder::init(
+    210,
+    DateTimeHelper::fromRfc3339DateTimeRequired('2016-03-13T12:52:32.123Z'),
+    InvoiceBuilder::init()
+        ->id(166)
+        ->uid('uid6')
+        ->siteId(92)
+        ->customerId(204)
+        ->subscriptionId(20)
+        ->issueDate(DateTimeHelper::fromSimpleDate('2024-01-01'))
+        ->dueDate(DateTimeHelper::fromSimpleDate('2024-01-01'))
+        ->paidDate(DateTimeHelper::fromSimpleDate('2024-01-01'))
+        ->publicUrlExpiresOn(DateTimeHelper::fromSimpleDate('2024-01-21'))
+        ->build(),
+    InvoiceEventType::BACKPORT_INVOICE,
+    InvoiceBuilder::init()
+        ->id(206)
+        ->uid('uid6')
+        ->siteId(132)
+        ->customerId(244)
+        ->subscriptionId(60)
+        ->issueDate(DateTimeHelper::fromSimpleDate('2024-01-01'))
+        ->dueDate(DateTimeHelper::fromSimpleDate('2024-01-01'))
+        ->paidDate(DateTimeHelper::fromSimpleDate('2024-01-01'))
+        ->publicUrlExpiresOn(DateTimeHelper::fromSimpleDate('2024-01-21'))
+        ->build()
+)->build();
 ```
 

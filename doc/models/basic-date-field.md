@@ -16,7 +16,9 @@ Allows to filter by `created_at` or `updated_at`.
 
 ## Example
 
-```
-updated_at
+```php
+use AdvancedBillingLib\Models\BasicDateField;
+
+$basicDateField = BasicDateField::UPDATED_AT;
 ```
 

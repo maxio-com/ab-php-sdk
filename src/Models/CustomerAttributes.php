@@ -91,6 +91,11 @@ class CustomerAttributes implements \JsonSerializable
     private $taxExempt;
 
     /**
+     * @var bool|null
+     */
+    private $surcharging;
+
+    /**
      * @var string|null
      */
     private $vatNumber;
@@ -177,7 +182,7 @@ class CustomerAttributes implements \JsonSerializable
 
     /**
      * Returns Cc Emails.
-     * A list of emails that should be cc’d on all customer communications. Optional.
+     * (Optional) A list of emails that should be cc’d on all customer communications.
      */
     public function getCcEmails(): ?string
     {
@@ -186,7 +191,7 @@ class CustomerAttributes implements \JsonSerializable
 
     /**
      * Sets Cc Emails.
-     * A list of emails that should be cc’d on all customer communications. Optional.
+     * (Optional) A list of emails that should be cc’d on all customer communications.
      *
      * @maps cc_emails
      */
@@ -197,7 +202,7 @@ class CustomerAttributes implements \JsonSerializable
 
     /**
      * Returns Organization.
-     * The organization/company of the customer. Optional.
+     * (Optional) The organization/company of the customer.
      */
     public function getOrganization(): ?string
     {
@@ -206,7 +211,7 @@ class CustomerAttributes implements \JsonSerializable
 
     /**
      * Sets Organization.
-     * The organization/company of the customer. Optional.
+     * (Optional) The organization/company of the customer.
      *
      * @maps organization
      */
@@ -217,9 +222,9 @@ class CustomerAttributes implements \JsonSerializable
 
     /**
      * Returns Reference.
-     * A customer “reference”, or unique identifier from your app, stored in Chargify. Can be used so that
-     * you may reference your customer’s within Chargify using the same unique value you use in your
-     * application. Optional.
+     * (Optional) A customer “reference”, or unique identifier from your app, stored in Chargify. Can be
+     * used so that you may reference your customer’s within Chargify using the same unique value you use
+     * in your application.
      */
     public function getReference(): ?string
     {
@@ -228,9 +233,9 @@ class CustomerAttributes implements \JsonSerializable
 
     /**
      * Sets Reference.
-     * A customer “reference”, or unique identifier from your app, stored in Chargify. Can be used so that
-     * you may reference your customer’s within Chargify using the same unique value you use in your
-     * application. Optional.
+     * (Optional) A customer “reference”, or unique identifier from your app, stored in Chargify. Can be
+     * used so that you may reference your customer’s within Chargify using the same unique value you use
+     * in your application.
      *
      * @maps reference
      */
@@ -241,7 +246,7 @@ class CustomerAttributes implements \JsonSerializable
 
     /**
      * Returns Address.
-     * (Optional) The customer’s shipping street address (i.e. “123 Main St.”).
+     * (Optional) The customer’s shipping street address (e.g., “123 Main St.”).
      */
     public function getAddress(): ?string
     {
@@ -250,7 +255,7 @@ class CustomerAttributes implements \JsonSerializable
 
     /**
      * Sets Address.
-     * (Optional) The customer’s shipping street address (i.e. “123 Main St.”).
+     * (Optional) The customer’s shipping street address (e.g., “123 Main St.”).
      *
      * @maps address
      */
@@ -261,7 +266,7 @@ class CustomerAttributes implements \JsonSerializable
 
     /**
      * Returns Address 2.
-     * (Optional) Second line of the customer’s shipping address i.e. “Apt. 100”
+     * (Optional) Second line of the customer’s shipping address e.g., “Apt. 100”
      */
     public function getAddress2(): ?string
     {
@@ -273,7 +278,7 @@ class CustomerAttributes implements \JsonSerializable
 
     /**
      * Sets Address 2.
-     * (Optional) Second line of the customer’s shipping address i.e. “Apt. 100”
+     * (Optional) Second line of the customer’s shipping address e.g., “Apt. 100”
      *
      * @maps address_2
      */
@@ -284,7 +289,7 @@ class CustomerAttributes implements \JsonSerializable
 
     /**
      * Unsets Address 2.
-     * (Optional) Second line of the customer’s shipping address i.e. “Apt. 100”
+     * (Optional) Second line of the customer’s shipping address e.g., “Apt. 100”
      */
     public function unsetAddress2(): void
     {
@@ -293,7 +298,7 @@ class CustomerAttributes implements \JsonSerializable
 
     /**
      * Returns City.
-     * (Optional) The customer’s shipping address city (i.e. “Boston”).
+     * (Optional) The customer’s shipping address city (e.g., “Boston”).
      */
     public function getCity(): ?string
     {
@@ -302,7 +307,7 @@ class CustomerAttributes implements \JsonSerializable
 
     /**
      * Sets City.
-     * (Optional) The customer’s shipping address city (i.e. “Boston”).
+     * (Optional) The customer’s shipping address city (e.g., “Boston”).
      *
      * @maps city
      */
@@ -313,9 +318,9 @@ class CustomerAttributes implements \JsonSerializable
 
     /**
      * Returns State.
-     * (Optional) The customer’s shipping address state (i.e. “MA”). This must conform to the [ISO_3166-
+     * “(Optional) The customer’s shipping address state (e.g., “MA”). This must conform to the [ISO_3166-
      * 1](https://en.wikipedia.org/wiki/ISO_3166-1#Current_codes) in order to be valid for tax locale
-     * purposes.
+     * purposes.”
      */
     public function getState(): ?string
     {
@@ -324,9 +329,9 @@ class CustomerAttributes implements \JsonSerializable
 
     /**
      * Sets State.
-     * (Optional) The customer’s shipping address state (i.e. “MA”). This must conform to the [ISO_3166-
+     * “(Optional) The customer’s shipping address state (e.g., “MA”). This must conform to the [ISO_3166-
      * 1](https://en.wikipedia.org/wiki/ISO_3166-1#Current_codes) in order to be valid for tax locale
-     * purposes.
+     * purposes.”
      *
      * @maps state
      */
@@ -337,7 +342,7 @@ class CustomerAttributes implements \JsonSerializable
 
     /**
      * Returns Zip.
-     * (Optional) The customer’s shipping address zip code (i.e. “12345”).
+     * (Optional) The customer’s shipping address zip code (e.g., “12345”).
      */
     public function getZip(): ?string
     {
@@ -346,7 +351,7 @@ class CustomerAttributes implements \JsonSerializable
 
     /**
      * Sets Zip.
-     * (Optional) The customer’s shipping address zip code (i.e. “12345”).
+     * (Optional) The customer’s shipping address zip code (e.g., “12345”).
      *
      * @maps zip
      */
@@ -357,8 +362,8 @@ class CustomerAttributes implements \JsonSerializable
 
     /**
      * Returns Country.
-     * (Optional) The customer shipping address country, required in [ISO_3166-1 alpha-2](https://en.
-     * wikipedia.org/wiki/ISO_3166-1_alpha-2) format (i.e. “US”).
+     * “(Optional) The customer shipping address country, required in [ISO_3166-1 alpha-2](https://en.
+     * wikipedia.org/wiki/ISO_3166-1_alpha-2) format (e.g., “US”).”
      */
     public function getCountry(): ?string
     {
@@ -367,8 +372,8 @@ class CustomerAttributes implements \JsonSerializable
 
     /**
      * Sets Country.
-     * (Optional) The customer shipping address country, required in [ISO_3166-1 alpha-2](https://en.
-     * wikipedia.org/wiki/ISO_3166-1_alpha-2) format (i.e. “US”).
+     * “(Optional) The customer shipping address country, required in [ISO_3166-1 alpha-2](https://en.
+     * wikipedia.org/wiki/ISO_3166-1_alpha-2) format (e.g., “US”).”
      *
      * @maps country
      */
@@ -438,8 +443,30 @@ class CustomerAttributes implements \JsonSerializable
     }
 
     /**
+     * Returns Surcharging.
+     * (Optional) Whether surcharging is enabled for the customer. Defaults to `true` when omitted. Only
+     * applied on sites where surcharging control is enabled.
+     */
+    public function getSurcharging(): ?bool
+    {
+        return $this->surcharging;
+    }
+
+    /**
+     * Sets Surcharging.
+     * (Optional) Whether surcharging is enabled for the customer. Defaults to `true` when omitted. Only
+     * applied on sites where surcharging control is enabled.
+     *
+     * @maps surcharging
+     */
+    public function setSurcharging(?bool $surcharging): void
+    {
+        $this->surcharging = $surcharging;
+    }
+
+    /**
      * Returns Vat Number.
-     * (Optional) Supplying the VAT number allows EU customer’s to opt-out of the Value Added Tax assuming
+     * (Optional) Supplying the VAT number allows EU customers to opt-out of the Value Added Tax assuming
      * the merchant address and customer billing address are not within the same EU country. It’s important
      * to omit the country code from the VAT number upon entry. Otherwise, taxes will be assessed upon the
      * purchase.
@@ -451,7 +478,7 @@ class CustomerAttributes implements \JsonSerializable
 
     /**
      * Sets Vat Number.
-     * (Optional) Supplying the VAT number allows EU customer’s to opt-out of the Value Added Tax assuming
+     * (Optional) Supplying the VAT number allows EU customers to opt-out of the Value Added Tax assuming
      * the merchant address and customer billing address are not within the same EU country. It’s important
      * to omit the country code from the VAT number upon entry. Otherwise, taxes will be assessed upon the
      * purchase.
@@ -610,6 +637,7 @@ class CustomerAttributes implements \JsonSerializable
                 'phone' => $this->phone,
                 'verified' => $this->verified,
                 'taxExempt' => $this->taxExempt,
+                'surcharging' => $this->surcharging,
                 'vatNumber' => $this->vatNumber,
                 'metafields' => $this->metafields,
                 'parentId' => $this->getParentId(),
@@ -704,6 +732,9 @@ class CustomerAttributes implements \JsonSerializable
         }
         if (isset($this->taxExempt)) {
             $json['tax_exempt']                      = $this->taxExempt;
+        }
+        if (isset($this->surcharging)) {
+            $json['surcharging']                     = $this->surcharging;
         }
         if (isset($this->vatNumber)) {
             $json['vat_number']                      = $this->vatNumber;

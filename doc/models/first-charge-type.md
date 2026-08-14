@@ -13,3 +13,11 @@
 | `IMMEDIATE` |
 | `DELAYED` |
 
+## Example
+
+```php
+use AdvancedBillingLib\Models\FirstChargeType;
+
+$firstChargeType = FirstChargeType::DELAYED;
+```
+

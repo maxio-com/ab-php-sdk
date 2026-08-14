@@ -16,15 +16,20 @@
 | `paymentProfileId` | `?int` | Optional | The ID of the payment profile to be used for the payment. | getPaymentProfileId(): ?int | setPaymentProfileId(?int paymentProfileId): void |
 | `receivedOn` | `?DateTime` | Optional | Date reflecting when the payment was received from a customer. Must be in the past. Applicable only to<br>`external` payments. | getReceivedOn(): ?\DateTime | setReceivedOn(?\DateTime receivedOn): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "amount": "String9",
-  "memo": "memo0",
-  "method": "cash",
-  "details": "details6",
-  "payment_profile_id": 122
-}
+```php
+use AdvancedBillingLib\Models\Builders\CreateInvoicePaymentBuilder;
+use AdvancedBillingLib\Models\InvoicePaymentMethodType;
+
+$createInvoicePayment = CreateInvoicePaymentBuilder::init()
+    ->amount(
+        'String7'
+    )
+    ->memo('memo8')
+    ->method(InvoicePaymentMethodType::ACH)
+    ->details('details4')
+    ->paymentProfileId(30)
+    ->build();
 ```
 

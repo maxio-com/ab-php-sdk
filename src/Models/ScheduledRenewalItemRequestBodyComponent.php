@@ -111,7 +111,7 @@ class ScheduledRenewalItemRequestBodyComponent implements \JsonSerializable
 
     /**
      * Returns Quantity.
-     * Optional quantity for the item.
+     * (Optional) Quantity for the item.
      */
     public function getQuantity(): ?int
     {
@@ -120,7 +120,7 @@ class ScheduledRenewalItemRequestBodyComponent implements \JsonSerializable
 
     /**
      * Sets Quantity.
-     * Optional quantity for the item.
+     * (Optional) Quantity for the item.
      *
      * @maps quantity
      */

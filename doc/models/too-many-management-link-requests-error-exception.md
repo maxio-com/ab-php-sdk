@@ -11,14 +11,15 @@
 |  --- | --- | --- | --- | --- | --- |
 | `errors` | [`TooManyManagementLinkRequests`](../../doc/models/too-many-management-link-requests.md) | Required | - | getErrors(): TooManyManagementLinkRequests | setErrors(TooManyManagementLinkRequests errors): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "errors": {
-    "error": "error4",
-    "new_link_available_at": "2016-03-13T12:52:32.123Z"
-  }
+```php
+try {
+    // make the API call
+} catch (TooManyManagementLinkRequestsErrorException $exp) {
+    echo 'Caught TooManyManagementLinkRequestsErrorException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught ApiException:', $exp;
 }
 ```
 

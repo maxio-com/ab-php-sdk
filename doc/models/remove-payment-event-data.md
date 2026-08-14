@@ -19,19 +19,25 @@ Example schema for an `remove_payment` event
 | `paymentMethod` | [PaymentMethodApplePay](../../doc/models/payment-method-apple-pay.md)\|[PaymentMethodBankAccount](../../doc/models/payment-method-bank-account.md)\|[PaymentMethodCreditCard](../../doc/models/payment-method-credit-card.md)\|[PaymentMethodExternal](../../doc/models/payment-method-external.md)\|[PaymentMethodPaypal](../../doc/models/payment-method-paypal.md) | Required | A nested data structure detailing the method of payment | getPaymentMethod(): | setPaymentMethod( paymentMethod): void |
 | `prepayment` | `bool` | Required | The flag that shows whether the original payment was a prepayment or not | getPrepayment(): bool | setPrepayment(bool prepayment): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "transaction_id": 180,
-  "memo": "memo0",
-  "applied_amount": "applied_amount2",
-  "transaction_time": "2016-03-13T12:52:32.123Z",
-  "payment_method": {
-    "type": "apple_pay"
-  },
-  "prepayment": false,
-  "original_amount": "original_amount0"
-}
+```php
+use AdvancedBillingLib\Models\Builders\RemovePaymentEventDataBuilder;
+use AdvancedBillingLib\Utils\DateTimeHelper;
+use AdvancedBillingLib\Models\Builders\PaymentMethodApplePayBuilder;
+use AdvancedBillingLib\Models\InvoiceEventPaymentMethod;
+
+$removePaymentEventData = RemovePaymentEventDataBuilder::init(
+    20,
+    'memo4',
+    'applied_amount8',
+    DateTimeHelper::fromRfc3339DateTimeRequired('2016-03-13T12:52:32.123Z'),
+    PaymentMethodApplePayBuilder::init(
+        InvoiceEventPaymentMethod::APPLE_PAY
+    )->build(),
+    false
+)
+    ->originalAmount('original_amount4')
+    ->build();
 ```
 

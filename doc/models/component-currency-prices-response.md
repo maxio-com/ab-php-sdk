@@ -11,19 +11,22 @@
 |  --- | --- | --- | --- | --- | --- |
 | `currencyPrices` | [`ComponentCurrencyPrice[]`](../../doc/models/component-currency-price.md) | Required | - | getCurrencyPrices(): array | setCurrencyPrices(array currencyPrices): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "currency_prices": [
-    {
-      "id": 50,
-      "currency": "currency8",
-      "price": "price4",
-      "formatted_price": "formatted_price6",
-      "price_id": 116
-    }
-  ]
-}
+```php
+use AdvancedBillingLib\Models\Builders\ComponentCurrencyPricesResponseBuilder;
+use AdvancedBillingLib\Models\Builders\ComponentCurrencyPriceBuilder;
+
+$componentCurrencyPricesResponse = ComponentCurrencyPricesResponseBuilder::init(
+    [
+        ComponentCurrencyPriceBuilder::init()
+            ->id(50)
+            ->currency('currency8')
+            ->price('price4')
+            ->formattedPrice('formatted_price6')
+            ->priceId(116)
+            ->build()
+    ]
+)->build();
 ```
 

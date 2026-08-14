@@ -212,7 +212,7 @@ class AllocationPreviewLineItem implements \JsonSerializable
 
     /**
      * Returns Direction.
-     * Visible when using Fine-grained Component Control
+     * Visible when using Fine-grained Component Control.
      */
     public function getDirection(): ?string
     {
@@ -221,7 +221,7 @@ class AllocationPreviewLineItem implements \JsonSerializable
 
     /**
      * Sets Direction.
-     * Visible when using Fine-grained Component Control
+     * Visible when using Fine-grained Component Control.
      *
      * @maps direction
      * @factory \AdvancedBillingLib\Models\AllocationPreviewDirection::checkValue

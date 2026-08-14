@@ -10,8 +10,8 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models\Builders;
 
-use AdvancedBillingLib\Models\ListSubcriptionGroupPrepaymentItem;
 use AdvancedBillingLib\Models\ListSubscriptionGroupPrepayment;
+use AdvancedBillingLib\Models\ListSubscriptionGroupPrepaymentItem;
 use Core\Utils\CoreHelper;
 
 /**
@@ -34,9 +34,9 @@ class ListSubscriptionGroupPrepaymentBuilder
     /**
      * Initializes a new List Subscription Group Prepayment Builder object.
      *
-     * @param ListSubcriptionGroupPrepaymentItem $prepayment
+     * @param ListSubscriptionGroupPrepaymentItem $prepayment
      */
-    public static function init(ListSubcriptionGroupPrepaymentItem $prepayment): self
+    public static function init(ListSubscriptionGroupPrepaymentItem $prepayment): self
     {
         return new self(new ListSubscriptionGroupPrepayment($prepayment));
     }

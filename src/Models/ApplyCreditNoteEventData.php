@@ -274,7 +274,7 @@ class ApplyCreditNoteEventData implements \JsonSerializable
 
     /**
      * Returns Consolidated Invoice.
-     * Shows whether it was applied to consolidated invoice or not
+     * Shows whether it was applied to consolidated invoice or not.
      */
     public function getConsolidatedInvoice(): ?bool
     {
@@ -283,7 +283,7 @@ class ApplyCreditNoteEventData implements \JsonSerializable
 
     /**
      * Sets Consolidated Invoice.
-     * Shows whether it was applied to consolidated invoice or not
+     * Shows whether it was applied to consolidated invoice or not.
      *
      * @maps consolidated_invoice
      */

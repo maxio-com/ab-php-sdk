@@ -14,14 +14,16 @@
 | `totalPages` | `?int` | Optional | - | getTotalPages(): ?int | setTotalPages(?int totalPages): void |
 | `perPage` | `?int` | Optional | - | getPerPage(): ?int | setPerPage(?int perPage): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "total_count": 22,
-  "current_page": 254,
-  "total_pages": 10,
-  "per_page": 24
-}
+```php
+use AdvancedBillingLib\Models\Builders\ListPublicKeysMetaBuilder;
+
+$listPublicKeysMeta = ListPublicKeysMetaBuilder::init()
+    ->totalCount(232)
+    ->currentPage(208)
+    ->totalPages(220)
+    ->perPage(70)
+    ->build();
 ```
 

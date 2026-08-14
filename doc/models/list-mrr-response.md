@@ -11,17 +11,20 @@
 |  --- | --- | --- | --- | --- | --- |
 | `mrr` | [`ListMRRResponseResult`](../../doc/models/list-mrr-response-result.md) | Required | - | getMrr(): ListMRRResponseResult | setMrr(ListMRRResponseResult mrr): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "mrr": {
-    "page": 30,
-    "per_page": 198,
-    "total_pages": 92,
-    "total_entries": 188,
-    "currency": "currency4"
-  }
-}
+```php
+use AdvancedBillingLib\Models\Builders\ListMRRResponseBuilder;
+use AdvancedBillingLib\Models\Builders\ListMRRResponseResultBuilder;
+
+$listMRRResponse = ListMRRResponseBuilder::init(
+    ListMRRResponseResultBuilder::init()
+        ->page(30)
+        ->perPage(198)
+        ->totalPages(92)
+        ->totalEntries(188)
+        ->currency('currency4')
+        ->build()
+)->build();
 ```
 

@@ -11,16 +11,19 @@
 |  --- | --- | --- | --- | --- | --- |
 | `currencyPrices` | [`UpdateCurrencyPrice[]`](../../doc/models/update-currency-price.md) | Required | - | getCurrencyPrices(): array | setCurrencyPrices(array currencyPrices): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "currency_prices": [
-    {
-      "id": 50,
-      "price": 233.74
-    }
-  ]
-}
+```php
+use AdvancedBillingLib\Models\Builders\UpdateCurrencyPricesRequestBuilder;
+use AdvancedBillingLib\Models\Builders\UpdateCurrencyPriceBuilder;
+
+$updateCurrencyPricesRequest = UpdateCurrencyPricesRequestBuilder::init(
+    [
+        UpdateCurrencyPriceBuilder::init(
+            50,
+            233.74
+        )->build()
+    ]
+)->build();
 ```
 

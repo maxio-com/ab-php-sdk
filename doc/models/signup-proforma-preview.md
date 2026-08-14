@@ -12,24 +12,31 @@
 | `currentProformaInvoice` | [`?ProformaInvoice`](../../doc/models/proforma-invoice.md) | Optional | - | getCurrentProformaInvoice(): ?ProformaInvoice | setCurrentProformaInvoice(?ProformaInvoice currentProformaInvoice): void |
 | `nextProformaInvoice` | [`?ProformaInvoice`](../../doc/models/proforma-invoice.md) | Optional | - | getNextProformaInvoice(): ?ProformaInvoice | setNextProformaInvoice(?ProformaInvoice nextProformaInvoice): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "current_proforma_invoice": {
-    "uid": "uid6",
-    "site_id": 72,
-    "customer_id": 184,
-    "subscription_id": 0,
-    "number": 132
-  },
-  "next_proforma_invoice": {
-    "uid": "uid8",
-    "site_id": 212,
-    "customer_id": 68,
-    "subscription_id": 140,
-    "number": 16
-  }
-}
+```php
+use AdvancedBillingLib\Models\Builders\SignupProformaPreviewBuilder;
+use AdvancedBillingLib\Models\Builders\ProformaInvoiceBuilder;
+
+$signupProformaPreview = SignupProformaPreviewBuilder::init()
+    ->currentProformaInvoice(
+        ProformaInvoiceBuilder::init()
+            ->uid('uid6')
+            ->siteId(72)
+            ->customerId(184)
+            ->subscriptionId(0)
+            ->number(132)
+            ->build()
+    )
+    ->nextProformaInvoice(
+        ProformaInvoiceBuilder::init()
+            ->uid('uid8')
+            ->siteId(212)
+            ->customerId(68)
+            ->subscriptionId(140)
+            ->number(16)
+            ->build()
+    )
+    ->build();
 ```
 

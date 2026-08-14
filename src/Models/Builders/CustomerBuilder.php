@@ -436,6 +436,17 @@ class CustomerBuilder
     }
 
     /**
+     * Sets surcharging field.
+     *
+     * @param bool|null $value
+     */
+    public function surcharging(?bool $value): self
+    {
+        $this->instance->setSurcharging($value);
+        return $this;
+    }
+
+    /**
      * Sets vat number field.
      *
      * @param string|null $value
@@ -592,6 +603,26 @@ class CustomerBuilder
     public function unsetMaxioid(): self
     {
         $this->instance->unsetMaxioid();
+        return $this;
+    }
+
+    /**
+     * Sets branding theme id field.
+     *
+     * @param int|null $value
+     */
+    public function brandingThemeId(?int $value): self
+    {
+        $this->instance->setBrandingThemeId($value);
+        return $this;
+    }
+
+    /**
+     * Unsets branding theme id field.
+     */
+    public function unsetBrandingThemeId(): self
+    {
+        $this->instance->unsetBrandingThemeId();
         return $this;
     }
 

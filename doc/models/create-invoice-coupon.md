@@ -17,15 +17,21 @@
 | `productFamilyId` | string\|int\|null | Optional | This is a container for one-of cases. | getProductFamilyId(): | setProductFamilyId( productFamilyId): void |
 | `compoundingStrategy` | [`?string(CompoundingStrategy)`](../../doc/models/compounding-strategy.md) | Optional | Applicable only to stackable coupons. For `compound`, Percentage-based discounts will be calculated against the remaining price, after prior discounts have been calculated. For `full-price`, Percentage-based discounts will always be calculated against the original item price, before other discounts are applied. | getCompoundingStrategy(): ?string | setCompoundingStrategy(?string compoundingStrategy): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "percentage": 50.0,
-  "code": "code4",
-  "subcode": "subcode8",
-  "amount": "String9",
-  "description": "description4"
-}
+```php
+use AdvancedBillingLib\Models\Builders\CreateInvoiceCouponBuilder;
+
+$createInvoiceCoupon = CreateInvoiceCouponBuilder::init()
+    ->code('code8')
+    ->subcode('subcode4')
+    ->percentage(
+        50
+    )
+    ->amount(
+        'String9'
+    )
+    ->description('description0')
+    ->build();
 ```
 

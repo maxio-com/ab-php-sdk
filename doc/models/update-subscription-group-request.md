@@ -11,16 +11,21 @@
 |  --- | --- | --- | --- | --- | --- |
 | `subscriptionGroup` | [`UpdateSubscriptionGroup`](../../doc/models/update-subscription-group.md) | Required | - | getSubscriptionGroup(): UpdateSubscriptionGroup | setSubscriptionGroup(UpdateSubscriptionGroup subscriptionGroup): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "subscription_group": {
-    "member_ids": [
-      164,
-      165
-    ]
-  }
-}
+```php
+use AdvancedBillingLib\Models\Builders\UpdateSubscriptionGroupRequestBuilder;
+use AdvancedBillingLib\Models\Builders\UpdateSubscriptionGroupBuilder;
+
+$updateSubscriptionGroupRequest = UpdateSubscriptionGroupRequestBuilder::init(
+    UpdateSubscriptionGroupBuilder::init()
+        ->memberIds(
+            [
+                164,
+                165
+            ]
+        )
+        ->build()
+)->build();
 ```
 

@@ -12,3 +12,11 @@
 | `DAY` |
 | `MONTH` |
 
+## Example
+
+```php
+use AdvancedBillingLib\Models\IntervalUnit;
+
+$intervalUnit = IntervalUnit::DAY;
+```
+

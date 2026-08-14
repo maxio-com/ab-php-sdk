@@ -13,13 +13,15 @@
 | `couponId` | `?int` | Optional | - | getCouponId(): ?int | setCouponId(?int couponId): void |
 | `couponName` | `?string` | Optional | - | getCouponName(): ?string | setCouponName(?string couponName): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "coupon_code": "coupon_code8",
-  "coupon_id": 86,
-  "coupon_name": "coupon_name4"
-}
+```php
+use AdvancedBillingLib\Models\Builders\OfferDiscountBuilder;
+
+$offerDiscount = OfferDiscountBuilder::init()
+    ->couponCode('coupon_code6')
+    ->couponId(202)
+    ->couponName('coupon_name6')
+    ->build();
 ```
 

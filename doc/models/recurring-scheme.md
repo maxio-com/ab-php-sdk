@@ -13,3 +13,11 @@
 | `RECUR_INDEFINITELY` |
 | `RECUR_WITH_DURATION` |
 
+## Example
+
+```php
+use AdvancedBillingLib\Models\RecurringScheme;
+
+$recurringScheme = RecurringScheme::RECUR_INDEFINITELY;
+```
+

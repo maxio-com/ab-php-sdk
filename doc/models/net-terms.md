@@ -15,15 +15,17 @@
 | `netTermsOnRemittanceSignupsEnabled` | `?bool` | Optional | **Default**: `false` | getNetTermsOnRemittanceSignupsEnabled(): ?bool | setNetTermsOnRemittanceSignupsEnabled(?bool netTermsOnRemittanceSignupsEnabled): void |
 | `customNetTermsEnabled` | `?bool` | Optional | **Default**: `false` | getCustomNetTermsEnabled(): ?bool | setCustomNetTermsEnabled(?bool customNetTermsEnabled): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "default_net_terms": 0,
-  "automatic_net_terms": 0,
-  "remittance_net_terms": 0,
-  "net_terms_on_remittance_signups_enabled": false,
-  "custom_net_terms_enabled": false
-}
+```php
+use AdvancedBillingLib\Models\Builders\NetTermsBuilder;
+
+$netTerms = NetTermsBuilder::init()
+    ->defaultNetTerms(0)
+    ->automaticNetTerms(0)
+    ->remittanceNetTerms(0)
+    ->netTermsOnRemittanceSignupsEnabled(false)
+    ->customNetTermsEnabled(false)
+    ->build();
 ```
 

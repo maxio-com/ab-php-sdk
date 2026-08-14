@@ -14,3 +14,11 @@ Defaults to checking
 | `CHECKING` |
 | `SAVINGS` |
 
+## Example
+
+```php
+use AdvancedBillingLib\Models\BankAccountType;
+
+$bankAccountType = BankAccountType::CHECKING;
+```
+

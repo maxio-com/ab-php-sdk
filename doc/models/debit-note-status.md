@@ -16,3 +16,11 @@ Current status of the debit note.
 | `BANISHED` |
 | `PAID` |
 
+## Example
+
+```php
+use AdvancedBillingLib\Models\DebitNoteStatus;
+
+$debitNoteStatus = DebitNoteStatus::OPEN;
+```
+

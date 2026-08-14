@@ -111,7 +111,7 @@ class RefundInvoiceEventData implements \JsonSerializable
 
     /**
      * Returns Consolidation Level.
-     * Consolidation level of the invoice, which is applicable to invoice consolidation.  It will hold one
+     * Consolidation level of the invoice, which is applicable to invoice consolidation. It will hold one
      * of the following values:
      *
      * * "none": A normal invoice with no consolidation.
@@ -131,7 +131,7 @@ class RefundInvoiceEventData implements \JsonSerializable
 
     /**
      * Sets Consolidation Level.
-     * Consolidation level of the invoice, which is applicable to invoice consolidation.  It will hold one
+     * Consolidation level of the invoice, which is applicable to invoice consolidation. It will hold one
      * of the following values:
      *
      * * "none": A normal invoice with no consolidation.

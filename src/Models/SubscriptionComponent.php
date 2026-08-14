@@ -42,7 +42,7 @@ class SubscriptionComponent implements \JsonSerializable
     private $enabled;
 
     /**
-     * @var int|null
+     * @var int|string|null
      */
     private $unitBalance;
 
@@ -253,7 +253,7 @@ class SubscriptionComponent implements \JsonSerializable
 
     /**
      * Returns Enabled.
-     * (for on/off components) indicates if the component is enabled for the subscription
+     * (for on/off components) indicates if the component is enabled for the subscription.
      */
     public function getEnabled(): ?bool
     {
@@ -262,7 +262,7 @@ class SubscriptionComponent implements \JsonSerializable
 
     /**
      * Sets Enabled.
-     * (for on/off components) indicates if the component is enabled for the subscription
+     * (for on/off components) indicates if the component is enabled for the subscription.
      *
      * @maps enabled
      */
@@ -273,8 +273,10 @@ class SubscriptionComponent implements \JsonSerializable
 
     /**
      * Returns Unit Balance.
+     *
+     * @return int|string|null
      */
-    public function getUnitBalance(): ?int
+    public function getUnitBalance()
     {
         return $this->unitBalance;
     }
@@ -283,8 +285,11 @@ class SubscriptionComponent implements \JsonSerializable
      * Sets Unit Balance.
      *
      * @maps unit_balance
+     * @mapsBy anyOf(oneOf(int,string),null)
+     *
+     * @param int|string|null $unitBalance
      */
-    public function setUnitBalance(?int $unitBalance): void
+    public function setUnitBalance($unitBalance): void
     {
         $this->unitBalance = $unitBalance;
     }
@@ -818,7 +823,7 @@ class SubscriptionComponent implements \JsonSerializable
 
     /**
      * Returns Subscription.
-     * An optional object, will be returned if provided `include=subscription` query param.
+     * (Optional) Object that will be returned if the `include=subscription` query param is provided.
      */
     public function getSubscription(): ?SubscriptionComponentSubscription
     {
@@ -827,7 +832,7 @@ class SubscriptionComponent implements \JsonSerializable
 
     /**
      * Sets Subscription.
-     * An optional object, will be returned if provided `include=subscription` query param.
+     * (Optional) Object that will be returned if the `include=subscription` query param is provided.
      *
      * @maps subscription
      */
@@ -878,7 +883,7 @@ class SubscriptionComponent implements \JsonSerializable
 
     /**
      * Returns Interval.
-     * The numerical interval. i.e. an interval of '30' coupled with an interval_unit of day would mean
+     * The numerical interval. e.g., an interval of '30' coupled with an interval_unit of day would mean
      * this component price point would renew every 30 days. This property is only available for sites with
      * Multifrequency enabled.
      */
@@ -889,7 +894,7 @@ class SubscriptionComponent implements \JsonSerializable
 
     /**
      * Sets Interval.
-     * The numerical interval. i.e. an interval of '30' coupled with an interval_unit of day would mean
+     * The numerical interval. e.g., an interval of '30' coupled with an interval_unit of day would mean
      * this component price point would renew every 30 days. This property is only available for sites with
      * Multifrequency enabled.
      *
@@ -1039,7 +1044,11 @@ class SubscriptionComponent implements \JsonSerializable
             $json['enabled']                     = $this->enabled;
         }
         if (isset($this->unitBalance)) {
-            $json['unit_balance']                = $this->unitBalance;
+            $json['unit_balance']                =
+                ApiHelper::getJsonHelper()->verifyTypes(
+                    $this->unitBalance,
+                    'anyOf(oneOf(int,string),null)'
+                );
         }
         if (isset($this->currency)) {
             $json['currency']                    = $this->currency;

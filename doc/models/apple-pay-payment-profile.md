@@ -12,7 +12,7 @@
 | `id` | `?int` | Optional | The Chargify-assigned ID of the Apple Pay payment profile. | getId(): ?int | setId(?int id): void |
 | `firstName` | `?string` | Optional | The first name of the Apple Pay account holder | getFirstName(): ?string | setFirstName(?string firstName): void |
 | `lastName` | `?string` | Optional | The last name of the Apple Pay account holder | getLastName(): ?string | setLastName(?string lastName): void |
-| `customerId` | `?int` | Optional | The Chargify-assigned id for the customer record to which the Apple Pay account belongs | getCustomerId(): ?int | setCustomerId(?int customerId): void |
+| `customerId` | `?int` | Optional | The Chargify-assigned ID for the customer record to which the Apple Pay account belongs | getCustomerId(): ?int | setCustomerId(?int customerId): void |
 | `currentVault` | [`?string(ApplePayVault)`](../../doc/models/apple-pay-vault.md) | Optional | The vault that stores the payment profile with the provided vault_token. | getCurrentVault(): ?string | setCurrentVault(?string currentVault): void |
 | `vaultToken` | `?string` | Optional | The “token” provided by your vault storage for an already stored payment profile | getVaultToken(): ?string | setVaultToken(?string vaultToken): void |
 | `billingAddress` | `?string` | Optional | The current billing street address for the Apple Pay account | getBillingAddress(): ?string | setBillingAddress(?string billingAddress): void |
@@ -28,16 +28,21 @@
 | `createdAt` | `?DateTime` | Optional | A timestamp indicating when this payment profile was created | getCreatedAt(): ?\DateTime | setCreatedAt(?\DateTime createdAt): void |
 | `updatedAt` | `?DateTime` | Optional | A timestamp indicating when this payment profile was last updated | getUpdatedAt(): ?\DateTime | setUpdatedAt(?\DateTime updatedAt): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "payment_type": "apple_pay",
-  "id": 60,
-  "first_name": "first_name2",
-  "last_name": "last_name0",
-  "customer_id": 98,
-  "current_vault": "braintree_blue"
-}
+```php
+use AdvancedBillingLib\Models\Builders\ApplePayPaymentProfileBuilder;
+use AdvancedBillingLib\Models\PaymentType;
+use AdvancedBillingLib\Models\ApplePayVault;
+
+$applePayPaymentProfile = ApplePayPaymentProfileBuilder::init(
+    PaymentType::APPLE_PAY
+)
+    ->id(252)
+    ->firstName('first_name0')
+    ->lastName('last_name8')
+    ->customerId(34)
+    ->currentVault(ApplePayVault::BRAINTREE_BLUE)
+    ->build();
 ```
 

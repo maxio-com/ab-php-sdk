@@ -19,15 +19,20 @@
 | `componentHandle` | `?string` | Optional | - | getComponentHandle(): ?string | setComponentHandle(?string componentHandle): void |
 | `subscriptionId` | `?int` | Optional | - | getSubscriptionId(): ?int | setSubscriptionId(?int subscriptionId): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "id": 252,
-  "memo": "memo8",
-  "created_at": "2016-03-13T12:52:32.123Z",
-  "price_point_id": 126,
-  "quantity": 130
-}
+```php
+use AdvancedBillingLib\Models\Builders\UsageBuilder;
+use AdvancedBillingLib\Utils\DateTimeHelper;
+
+$usage = UsageBuilder::init()
+    ->id(150)
+    ->memo('memo2')
+    ->createdAt(DateTimeHelper::fromRfc3339DateTime('2016-03-13T12:52:32.123Z'))
+    ->pricePointId(28)
+    ->quantity(
+        28
+    )
+    ->build();
 ```
 

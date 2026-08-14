@@ -22,15 +22,18 @@
 | `updatedAt` | `?DateTime` | Optional | - | getUpdatedAt(): ?\DateTime | setUpdatedAt(?\DateTime updatedAt): void |
 | `prices` | [`?(SegmentPrice[])`](../../doc/models/segment-price.md) | Optional | **Constraints**: *Minimum Items*: `1` | getPrices(): ?array | setPrices(?array prices): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "id": 6,
-  "component_id": 116,
-  "price_point_id": 140,
-  "event_based_billing_metric_id": 200,
-  "pricing_scheme": "stairstep"
-}
+```php
+use AdvancedBillingLib\Models\Builders\SegmentBuilder;
+use AdvancedBillingLib\Models\PricingScheme;
+
+$segment = SegmentBuilder::init()
+    ->id(118)
+    ->componentId(228)
+    ->pricePointId(4)
+    ->eventBasedBillingMetricId(56)
+    ->pricingScheme(PricingScheme::STAIRSTEP)
+    ->build();
 ```
 

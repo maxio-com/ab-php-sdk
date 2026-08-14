@@ -132,6 +132,11 @@ class Customer implements \JsonSerializable
     private $taxExempt;
 
     /**
+     * @var bool|null
+     */
+    private $surcharging;
+
+    /**
      * @var array
      */
     private $vatNumber = [];
@@ -170,6 +175,11 @@ class Customer implements \JsonSerializable
      * @var array
      */
     private $maxioid = [];
+
+    /**
+     * @var array
+     */
+    private $brandingThemeId = [];
 
     /**
      * Returns First Name.
@@ -233,8 +243,8 @@ class Customer implements \JsonSerializable
 
     /**
      * Returns Cc Emails.
-     * A comma-separated list of emails that should be cc’d on all customer communications (i.e.
-     * “joe@example.com, sue@example.com”)
+     * “A comma-separated list of emails that should be cc’d on all customer communications (e.g.,
+     * “joe@example.com, sue@example.com”)”
      */
     public function getCcEmails(): ?string
     {
@@ -246,8 +256,8 @@ class Customer implements \JsonSerializable
 
     /**
      * Sets Cc Emails.
-     * A comma-separated list of emails that should be cc’d on all customer communications (i.e.
-     * “joe@example.com, sue@example.com”)
+     * “A comma-separated list of emails that should be cc’d on all customer communications (e.g.,
+     * “joe@example.com, sue@example.com”)”
      *
      * @maps cc_emails
      */
@@ -258,8 +268,8 @@ class Customer implements \JsonSerializable
 
     /**
      * Unsets Cc Emails.
-     * A comma-separated list of emails that should be cc’d on all customer communications (i.e.
-     * “joe@example.com, sue@example.com”)
+     * “A comma-separated list of emails that should be cc’d on all customer communications (e.g.,
+     * “joe@example.com, sue@example.com”)”
      */
     public function unsetCcEmails(): void
     {
@@ -397,7 +407,7 @@ class Customer implements \JsonSerializable
 
     /**
      * Returns Address.
-     * The customer’s shipping street address (i.e. “123 Main St.”)
+     * The customer’s shipping street address (e.g., “123 Main St.”)
      */
     public function getAddress(): ?string
     {
@@ -409,7 +419,7 @@ class Customer implements \JsonSerializable
 
     /**
      * Sets Address.
-     * The customer’s shipping street address (i.e. “123 Main St.”)
+     * The customer’s shipping street address (e.g., “123 Main St.”)
      *
      * @maps address
      */
@@ -420,7 +430,7 @@ class Customer implements \JsonSerializable
 
     /**
      * Unsets Address.
-     * The customer’s shipping street address (i.e. “123 Main St.”)
+     * The customer’s shipping street address (e.g., “123 Main St.”)
      */
     public function unsetAddress(): void
     {
@@ -429,7 +439,7 @@ class Customer implements \JsonSerializable
 
     /**
      * Returns Address 2.
-     * Second line of the customer’s shipping address i.e. “Apt. 100”
+     * Second line of the customer’s shipping address e.g., “Apt. 100”
      */
     public function getAddress2(): ?string
     {
@@ -441,7 +451,7 @@ class Customer implements \JsonSerializable
 
     /**
      * Sets Address 2.
-     * Second line of the customer’s shipping address i.e. “Apt. 100”
+     * Second line of the customer’s shipping address e.g., “Apt. 100”
      *
      * @maps address_2
      */
@@ -452,7 +462,7 @@ class Customer implements \JsonSerializable
 
     /**
      * Unsets Address 2.
-     * Second line of the customer’s shipping address i.e. “Apt. 100”
+     * Second line of the customer’s shipping address e.g., “Apt. 100”
      */
     public function unsetAddress2(): void
     {
@@ -461,7 +471,7 @@ class Customer implements \JsonSerializable
 
     /**
      * Returns City.
-     * The customer’s shipping address city (i.e. “Boston”)
+     * The customer’s shipping address city (e.g., “Boston”)
      */
     public function getCity(): ?string
     {
@@ -473,7 +483,7 @@ class Customer implements \JsonSerializable
 
     /**
      * Sets City.
-     * The customer’s shipping address city (i.e. “Boston”)
+     * The customer’s shipping address city (e.g., “Boston”)
      *
      * @maps city
      */
@@ -484,7 +494,7 @@ class Customer implements \JsonSerializable
 
     /**
      * Unsets City.
-     * The customer’s shipping address city (i.e. “Boston”)
+     * The customer’s shipping address city (e.g., “Boston”)
      */
     public function unsetCity(): void
     {
@@ -493,7 +503,7 @@ class Customer implements \JsonSerializable
 
     /**
      * Returns State.
-     * The customer’s shipping address state (i.e. “MA”)
+     * The customer’s shipping address state (e.g., “MA”)
      */
     public function getState(): ?string
     {
@@ -505,7 +515,7 @@ class Customer implements \JsonSerializable
 
     /**
      * Sets State.
-     * The customer’s shipping address state (i.e. “MA”)
+     * The customer’s shipping address state (e.g., “MA”)
      *
      * @maps state
      */
@@ -516,7 +526,7 @@ class Customer implements \JsonSerializable
 
     /**
      * Unsets State.
-     * The customer’s shipping address state (i.e. “MA”)
+     * The customer’s shipping address state (e.g., “MA”)
      */
     public function unsetState(): void
     {
@@ -557,7 +567,7 @@ class Customer implements \JsonSerializable
 
     /**
      * Returns Zip.
-     * The customer’s shipping address zip code (i.e. “12345”)
+     * The customer’s shipping address zip code (e.g., “12345”)
      */
     public function getZip(): ?string
     {
@@ -569,7 +579,7 @@ class Customer implements \JsonSerializable
 
     /**
      * Sets Zip.
-     * The customer’s shipping address zip code (i.e. “12345”)
+     * The customer’s shipping address zip code (e.g., “12345”)
      *
      * @maps zip
      */
@@ -580,7 +590,7 @@ class Customer implements \JsonSerializable
 
     /**
      * Unsets Zip.
-     * The customer’s shipping address zip code (i.e. “12345”)
+     * The customer’s shipping address zip code (e.g., “12345”)
      */
     public function unsetZip(): void
     {
@@ -834,6 +844,28 @@ class Customer implements \JsonSerializable
     public function setTaxExempt(?bool $taxExempt): void
     {
         $this->taxExempt = $taxExempt;
+    }
+
+    /**
+     * Returns Surcharging.
+     * Whether surcharging is enabled for the customer. Only included on sites where surcharging control is
+     * enabled.
+     */
+    public function getSurcharging(): ?bool
+    {
+        return $this->surcharging;
+    }
+
+    /**
+     * Sets Surcharging.
+     * Whether surcharging is enabled for the customer. Only included on sites where surcharging control is
+     * enabled.
+     *
+     * @maps surcharging
+     */
+    public function setSurcharging(?bool $surcharging): void
+    {
+        $this->surcharging = $surcharging;
     }
 
     /**
@@ -1099,6 +1131,44 @@ class Customer implements \JsonSerializable
     }
 
     /**
+     * Returns Branding Theme Id.
+     * The ID of the Branding Theme assigned to this customer as the customer's default Branding Theme.
+     * This customer-level Branding Theme is used when a subscription does not have its own subscription-
+     * level Branding Theme.  Available only when Branding Themes are enabled for the site.
+     */
+    public function getBrandingThemeId(): ?int
+    {
+        if (count($this->brandingThemeId) == 0) {
+            return null;
+        }
+        return $this->brandingThemeId['value'];
+    }
+
+    /**
+     * Sets Branding Theme Id.
+     * The ID of the Branding Theme assigned to this customer as the customer's default Branding Theme.
+     * This customer-level Branding Theme is used when a subscription does not have its own subscription-
+     * level Branding Theme.  Available only when Branding Themes are enabled for the site.
+     *
+     * @maps branding_theme_id
+     */
+    public function setBrandingThemeId(?int $brandingThemeId): void
+    {
+        $this->brandingThemeId['value'] = $brandingThemeId;
+    }
+
+    /**
+     * Unsets Branding Theme Id.
+     * The ID of the Branding Theme assigned to this customer as the customer's default Branding Theme.
+     * This customer-level Branding Theme is used when a subscription does not have its own subscription-
+     * level Branding Theme.  Available only when Branding Themes are enabled for the site.
+     */
+    public function unsetBrandingThemeId(): void
+    {
+        $this->brandingThemeId = [];
+    }
+
+    /**
      * Converts the Customer object to a human-readable string representation.
      *
      * @return string The string representation of the Customer object.
@@ -1131,6 +1201,7 @@ class Customer implements \JsonSerializable
                 'portalInviteLastSentAt' => $this->getPortalInviteLastSentAt(),
                 'portalInviteLastAcceptedAt' => $this->getPortalInviteLastAcceptedAt(),
                 'taxExempt' => $this->taxExempt,
+                'surcharging' => $this->surcharging,
                 'vatNumber' => $this->getVatNumber(),
                 'parentId' => $this->getParentId(),
                 'locale' => $this->getLocale(),
@@ -1139,6 +1210,7 @@ class Customer implements \JsonSerializable
                 'taxExemptReason' => $this->getTaxExemptReason(),
                 'defaultAutoRenewalProfileId' => $this->getDefaultAutoRenewalProfileId(),
                 'maxioid' => $this->getMaxioid(),
+                'brandingThemeId' => $this->getBrandingThemeId(),
                 'additionalProperties' => $this->additionalProperties
             ]
         );
@@ -1262,6 +1334,9 @@ class Customer implements \JsonSerializable
         if (isset($this->taxExempt)) {
             $json['tax_exempt']                      = $this->taxExempt;
         }
+        if (isset($this->surcharging)) {
+            $json['surcharging']                     = $this->surcharging;
+        }
         if (!empty($this->vatNumber)) {
             $json['vat_number']                      = $this->vatNumber['value'];
         }
@@ -1285,6 +1360,9 @@ class Customer implements \JsonSerializable
         }
         if (!empty($this->maxioid)) {
             $json['maxioid']                         = $this->maxioid['value'];
+        }
+        if (!empty($this->brandingThemeId)) {
+            $json['branding_theme_id']               = $this->brandingThemeId['value'];
         }
         $json = array_merge($json, $this->additionalProperties);
 

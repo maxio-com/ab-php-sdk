@@ -1,7 +1,7 @@
 
 # Create or Update Endpoint
 
-Used to Create or Update Endpoint
+Used to Create or Update Endpoint.
 
 ## Structure
 
@@ -14,14 +14,19 @@ Used to Create or Update Endpoint
 | `url` | `string` | Required | - | getUrl(): string | setUrl(string url): void |
 | `webhookSubscriptions` | [`string(WebhookSubscription)[]`](../../doc/models/webhook-subscription.md) | Required | - | getWebhookSubscriptions(): array | setWebhookSubscriptions(array webhookSubscriptions): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "url": "url8",
-  "webhook_subscriptions": [
-    "refund_success"
-  ]
-}
+```php
+use AdvancedBillingLib\Models\Builders\CreateOrUpdateEndpointBuilder;
+use AdvancedBillingLib\Models\WebhookSubscription;
+
+$createOrUpdateEndpoint = CreateOrUpdateEndpointBuilder::init(
+    'url4',
+    [
+        WebhookSubscription::TRIAL_END_NOTICE,
+        WebhookSubscription::SUBSCRIPTION_STATE_CHANGE,
+        WebhookSubscription::SUBSCRIPTION_PRODUCT_CHANGE_SCHEDULED
+    ]
+)->build();
 ```
 

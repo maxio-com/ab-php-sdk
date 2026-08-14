@@ -13,26 +13,38 @@
 | `useSiteExchangeRate` | `?bool` | Optional | Allows fetching components allocation with matching use_site_exchange_rate based on provided value. Use in query `filter[use_site_exchange_rate]=true`. | getUseSiteExchangeRate(): ?bool | setUseSiteExchangeRate(?bool useSiteExchangeRate): void |
 | `subscription` | [`?SubscriptionFilter`](../../doc/models/subscription-filter.md) | Optional | Nested filter used for List Subscription Components For Site Filter | getSubscription(): ?SubscriptionFilter | setSubscription(?SubscriptionFilter subscription): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "currencies": [
-    "EUR",
-    "USD"
-  ],
-  "use_site_exchange_rate": false,
-  "subscription": {
-    "states": [
-      "active",
-      "canceled",
-      "expired"
-    ],
-    "date_field": "updated_at",
-    "start_date": "2016-03-13",
-    "end_date": "2016-03-13",
-    "start_datetime": "2016-03-13T12:52:32.123Z"
-  }
-}
+```php
+use AdvancedBillingLib\Models\Builders\ListSubscriptionComponentsForSiteFilterBuilder;
+use AdvancedBillingLib\Models\Builders\SubscriptionFilterBuilder;
+use AdvancedBillingLib\Models\SubscriptionStateFilter;
+use AdvancedBillingLib\Models\SubscriptionListDateField;
+use AdvancedBillingLib\Utils\DateTimeHelper;
+
+$listSubscriptionComponentsForSiteFilter = ListSubscriptionComponentsForSiteFilterBuilder::init()
+    ->currencies(
+        [
+            'EUR',
+            'USD'
+        ]
+    )
+    ->useSiteExchangeRate(false)
+    ->subscription(
+        SubscriptionFilterBuilder::init()
+            ->states(
+                [
+                    SubscriptionStateFilter::TRIALING,
+                    SubscriptionStateFilter::UNPAID,
+                    SubscriptionStateFilter::ACTIVE
+                ]
+            )
+            ->dateField(SubscriptionListDateField::UPDATED_AT)
+            ->startDate(DateTimeHelper::fromSimpleDate('2016-03-13'))
+            ->endDate(DateTimeHelper::fromSimpleDate('2016-03-13'))
+            ->startDatetime(DateTimeHelper::fromRfc3339DateTime('2016-03-13T12:52:32.123Z'))
+            ->build()
+    )
+    ->build();
 ```
 

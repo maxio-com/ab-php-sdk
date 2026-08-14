@@ -37,9 +37,9 @@ class CreditCardPaymentProfile implements \JsonSerializable
     private $maskedCardNumber;
 
     /**
-     * @var string|null
+     * @var array
      */
-    private $cardType;
+    private $cardType = [];
 
     /**
      * @var int|null
@@ -210,8 +210,8 @@ class CreditCardPaymentProfile implements \JsonSerializable
 
     /**
      * Returns Masked Card Number.
-     * A string representation of the credit card number with all but the last 4 digits masked with X’s (i.
-     * e. ‘XXXX-XXXX-XXXX-1234’).
+     * A string representation of the credit card number with all but the last 4 digits masked with X’s (e.
+     * g., ‘XXXX-XXXX-XXXX-1234’).
      */
     public function getMaskedCardNumber(): ?string
     {
@@ -220,8 +220,8 @@ class CreditCardPaymentProfile implements \JsonSerializable
 
     /**
      * Sets Masked Card Number.
-     * A string representation of the credit card number with all but the last 4 digits masked with X’s (i.
-     * e. ‘XXXX-XXXX-XXXX-1234’).
+     * A string representation of the credit card number with all but the last 4 digits masked with X’s (e.
+     * g., ‘XXXX-XXXX-XXXX-1234’).
      *
      * @maps masked_card_number
      */
@@ -236,7 +236,10 @@ class CreditCardPaymentProfile implements \JsonSerializable
      */
     public function getCardType(): ?string
     {
-        return $this->cardType;
+        if (count($this->cardType) == 0) {
+            return null;
+        }
+        return $this->cardType['value'];
     }
 
     /**
@@ -248,7 +251,16 @@ class CreditCardPaymentProfile implements \JsonSerializable
      */
     public function setCardType(?string $cardType): void
     {
-        $this->cardType = $cardType;
+        $this->cardType['value'] = $cardType;
+    }
+
+    /**
+     * Unsets Card Type.
+     * The type of card used.
+     */
+    public function unsetCardType(): void
+    {
+        $this->cardType = [];
     }
 
     /**
@@ -273,7 +285,7 @@ class CreditCardPaymentProfile implements \JsonSerializable
 
     /**
      * Returns Expiration Year.
-     * An integer representing the 4-digit expiration year of the card(i.e. ‘2012’).
+     * An integer representing the 4-digit expiration year of the card(e.g., ‘2012’).
      */
     public function getExpirationYear(): ?int
     {
@@ -282,7 +294,7 @@ class CreditCardPaymentProfile implements \JsonSerializable
 
     /**
      * Sets Expiration Year.
-     * An integer representing the 4-digit expiration year of the card(i.e. ‘2012’).
+     * An integer representing the 4-digit expiration year of the card(e.g., ‘2012’).
      *
      * @maps expiration_year
      */
@@ -632,8 +644,8 @@ class CreditCardPaymentProfile implements \JsonSerializable
     /**
      * Returns Chargify Token.
      * Token received after sending billing information using Maxio.js (formerly Chargify.js). This token
-     * will only be received if passed as a sole attribute of credit_card_attributes (i.e.
-     * tok_9g6hw85pnpt6knmskpwp4ttt)
+     * will only be received if passed as a sole attribute of credit_card_attributes (e.g.,
+     * tok_9g6hw85pnpt6knmskpwp4ttt).
      */
     public function getChargifyToken(): ?string
     {
@@ -643,8 +655,8 @@ class CreditCardPaymentProfile implements \JsonSerializable
     /**
      * Sets Chargify Token.
      * Token received after sending billing information using Maxio.js (formerly Chargify.js). This token
-     * will only be received if passed as a sole attribute of credit_card_attributes (i.e.
-     * tok_9g6hw85pnpt6knmskpwp4ttt)
+     * will only be received if passed as a sole attribute of credit_card_attributes (e.g.,
+     * tok_9g6hw85pnpt6knmskpwp4ttt).
      *
      * @maps chargify_token
      */
@@ -770,7 +782,7 @@ class CreditCardPaymentProfile implements \JsonSerializable
                 'firstName' => $this->firstName,
                 'lastName' => $this->lastName,
                 'maskedCardNumber' => $this->maskedCardNumber,
-                'cardType' => $this->cardType,
+                'cardType' => $this->getCardType(),
                 'expirationMonth' => $this->expirationMonth,
                 'expirationYear' => $this->expirationYear,
                 'customerId' => $this->customerId,
@@ -847,8 +859,8 @@ class CreditCardPaymentProfile implements \JsonSerializable
         if (isset($this->maskedCardNumber)) {
             $json['masked_card_number']      = $this->maskedCardNumber;
         }
-        if (isset($this->cardType)) {
-            $json['card_type']               = CardType::checkValue($this->cardType);
+        if (!empty($this->cardType)) {
+            $json['card_type']               = CardType::checkValue($this->cardType['value']);
         }
         if (isset($this->expirationMonth)) {
             $json['expiration_month']        = $this->expirationMonth;

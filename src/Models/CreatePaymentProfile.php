@@ -334,7 +334,7 @@ class CreatePaymentProfile implements \JsonSerializable
     /**
      * Returns Expiration Month.
      * (Optional when performing an Import via vault_token, required otherwise) The 1- or 2-digit credit
-     * card expiration month, as an integer or string, i.e. 5
+     * card expiration month, as an integer or string, e.g., 5
      *
      * @return int|string|null
      */
@@ -346,7 +346,7 @@ class CreatePaymentProfile implements \JsonSerializable
     /**
      * Sets Expiration Month.
      * (Optional when performing an Import via vault_token, required otherwise) The 1- or 2-digit credit
-     * card expiration month, as an integer or string, i.e. 5
+     * card expiration month, as an integer or string, e.g., 5
      *
      * @maps expiration_month
      * @mapsBy anyOf(oneOf(int,string),null)
@@ -360,8 +360,8 @@ class CreatePaymentProfile implements \JsonSerializable
 
     /**
      * Returns Expiration Year.
-     * (Optional when performing a Import via vault_token, required otherwise) The 4-digit credit card
-     * expiration year, as an integer or string, i.e. 2012
+     * (Optional when performing an Import via vault_token, required otherwise) The 4-digit credit card
+     * expiration year, as an integer or string, e.g., 2012
      *
      * @return int|string|null
      */
@@ -372,8 +372,8 @@ class CreatePaymentProfile implements \JsonSerializable
 
     /**
      * Sets Expiration Year.
-     * (Optional when performing a Import via vault_token, required otherwise) The 4-digit credit card
-     * expiration year, as an integer or string, i.e. 2012
+     * (Optional when performing an Import via vault_token, required otherwise) The 4-digit credit card
+     * expiration year, as an integer or string, e.g., 2012
      *
      * @maps expiration_year
      * @mapsBy anyOf(oneOf(int,string),null)
@@ -387,7 +387,7 @@ class CreatePaymentProfile implements \JsonSerializable
 
     /**
      * Returns Billing Address.
-     * The credit card or bank account billing street address (i.e. 123 Main St.). This value is merely
+     * The credit card or bank account billing street address (e.g., 123 Main St.). This value is merely
      * passed through to the payment gateway.
      */
     public function getBillingAddress(): ?string
@@ -397,7 +397,7 @@ class CreatePaymentProfile implements \JsonSerializable
 
     /**
      * Sets Billing Address.
-     * The credit card or bank account billing street address (i.e. 123 Main St.). This value is merely
+     * The credit card or bank account billing street address (e.g., 123 Main St.). This value is merely
      * passed through to the payment gateway.
      *
      * @maps billing_address
@@ -409,7 +409,7 @@ class CreatePaymentProfile implements \JsonSerializable
 
     /**
      * Returns Billing Address 2.
-     * Second line of the customer’s billing address i.e. Apt. 100
+     * Second line of the customer’s billing address e.g., Apt. 100
      */
     public function getBillingAddress2(): ?string
     {
@@ -421,7 +421,7 @@ class CreatePaymentProfile implements \JsonSerializable
 
     /**
      * Sets Billing Address 2.
-     * Second line of the customer’s billing address i.e. Apt. 100
+     * Second line of the customer’s billing address e.g., Apt. 100
      *
      * @maps billing_address_2
      */
@@ -432,7 +432,7 @@ class CreatePaymentProfile implements \JsonSerializable
 
     /**
      * Unsets Billing Address 2.
-     * Second line of the customer’s billing address i.e. Apt. 100
+     * Second line of the customer’s billing address e.g., Apt. 100
      */
     public function unsetBillingAddress2(): void
     {
@@ -441,7 +441,7 @@ class CreatePaymentProfile implements \JsonSerializable
 
     /**
      * Returns Billing City.
-     * The credit card or bank account billing address city (i.e. “Boston”). This value is merely passed
+     * The credit card or bank account billing address city (e.g., “Boston”). This value is merely passed
      * through to the payment gateway.
      */
     public function getBillingCity(): ?string
@@ -451,7 +451,7 @@ class CreatePaymentProfile implements \JsonSerializable
 
     /**
      * Sets Billing City.
-     * The credit card or bank account billing address city (i.e. “Boston”). This value is merely passed
+     * The credit card or bank account billing address city (e.g., “Boston”). This value is merely passed
      * through to the payment gateway.
      *
      * @maps billing_city
@@ -463,9 +463,9 @@ class CreatePaymentProfile implements \JsonSerializable
 
     /**
      * Returns Billing State.
-     * The credit card or bank account billing address state (i.e. MA). This value is merely passed through
-     * to the payment gateway. This must conform to the [ISO_3166-1](https://en.wikipedia.org/wiki/ISO_3166-
-     * 1#Current_codes) in order to be valid for tax locale purposes.
+     * The credit card or bank account billing address state (e.g., MA). This value is merely passed
+     * through to the payment gateway. This must conform to the [ISO_3166-1](https://en.wikipedia.
+     * org/wiki/ISO_3166-1#Current_codes) in order to be valid for tax locale purposes.
      */
     public function getBillingState(): ?string
     {
@@ -474,9 +474,9 @@ class CreatePaymentProfile implements \JsonSerializable
 
     /**
      * Sets Billing State.
-     * The credit card or bank account billing address state (i.e. MA). This value is merely passed through
-     * to the payment gateway. This must conform to the [ISO_3166-1](https://en.wikipedia.org/wiki/ISO_3166-
-     * 1#Current_codes) in order to be valid for tax locale purposes.
+     * The credit card or bank account billing address state (e.g., MA). This value is merely passed
+     * through to the payment gateway. This must conform to the [ISO_3166-1](https://en.wikipedia.
+     * org/wiki/ISO_3166-1#Current_codes) in order to be valid for tax locale purposes.
      *
      * @maps billing_state
      */
@@ -487,10 +487,10 @@ class CreatePaymentProfile implements \JsonSerializable
 
     /**
      * Returns Billing Country.
-     * The credit card or bank account billing address country, required in [ISO_3166-1 alpha-2](https://en.
-     * wikipedia.org/wiki/ISO_3166-1_alpha-2) format (i.e. “US”). This value is merely passed through to
-     * the payment gateway. Some gateways require country codes in a specific format. Check your gateway’s
-     * documentation. If creating an ACH subscription, only US is supported at this time.
+     * “The credit card or bank account billing address country, required in [ISO_3166-1 alpha-2](https:
+     * //en.wikipedia.org/wiki/ISO_3166-1_alpha-2) format (e.g., “US”). This value is merely passed through
+     * to the payment gateway. Some gateways require country codes in a specific format. Check your
+     * gateway’s documentation. If creating an ACH subscription, only US is supported at this time.”
      */
     public function getBillingCountry(): ?string
     {
@@ -499,10 +499,10 @@ class CreatePaymentProfile implements \JsonSerializable
 
     /**
      * Sets Billing Country.
-     * The credit card or bank account billing address country, required in [ISO_3166-1 alpha-2](https://en.
-     * wikipedia.org/wiki/ISO_3166-1_alpha-2) format (i.e. “US”). This value is merely passed through to
-     * the payment gateway. Some gateways require country codes in a specific format. Check your gateway’s
-     * documentation. If creating an ACH subscription, only US is supported at this time.
+     * “The credit card or bank account billing address country, required in [ISO_3166-1 alpha-2](https:
+     * //en.wikipedia.org/wiki/ISO_3166-1_alpha-2) format (e.g., “US”). This value is merely passed through
+     * to the payment gateway. Some gateways require country codes in a specific format. Check your
+     * gateway’s documentation. If creating an ACH subscription, only US is supported at this time.”
      *
      * @maps billing_country
      */
@@ -513,7 +513,7 @@ class CreatePaymentProfile implements \JsonSerializable
 
     /**
      * Returns Billing Zip.
-     * The credit card or bank account billing address zip code (i.e. 12345). This value is merely passed
+     * The credit card or bank account billing address zip code (e.g., 12345). This value is merely passed
      * through to the payment gateway.
      */
     public function getBillingZip(): ?string
@@ -523,7 +523,7 @@ class CreatePaymentProfile implements \JsonSerializable
 
     /**
      * Sets Billing Zip.
-     * The credit card or bank account billing address zip code (i.e. 12345). This value is merely passed
+     * The credit card or bank account billing address zip code (e.g., 12345). This value is merely passed
      * through to the payment gateway.
      *
      * @maps billing_zip
@@ -737,7 +737,7 @@ class CreatePaymentProfile implements \JsonSerializable
     /**
      * Returns Bank Iban.
      * (Optional when creating with GoCardless, required with Stripe Direct Debit). International Bank
-     * Account Number. Alternatively, local bank details can be provided
+     * Account Number. Alternatively, local bank details can be provided.
      */
     public function getBankIban(): ?string
     {
@@ -747,7 +747,7 @@ class CreatePaymentProfile implements \JsonSerializable
     /**
      * Sets Bank Iban.
      * (Optional when creating with GoCardless, required with Stripe Direct Debit). International Bank
-     * Account Number. Alternatively, local bank details can be provided
+     * Account Number. Alternatively, local bank details can be provided.
      *
      * @maps bank_iban
      */
@@ -759,7 +759,7 @@ class CreatePaymentProfile implements \JsonSerializable
     /**
      * Returns Bank Routing Number.
      * (Required when creating with ACH. Optional when creating a subscription with GoCardless). The
-     * routing number of the bank. It becomes bank_code while passing via GoCardless API
+     * routing number of the bank. It becomes bank_code while passing via GoCardless API.
      */
     public function getBankRoutingNumber(): ?string
     {
@@ -769,7 +769,7 @@ class CreatePaymentProfile implements \JsonSerializable
     /**
      * Sets Bank Routing Number.
      * (Required when creating with ACH. Optional when creating a subscription with GoCardless). The
-     * routing number of the bank. It becomes bank_code while passing via GoCardless API
+     * routing number of the bank. It becomes bank_code while passing via GoCardless API.
      *
      * @maps bank_routing_number
      */
@@ -803,7 +803,7 @@ class CreatePaymentProfile implements \JsonSerializable
     /**
      * Returns Bank Branch Code.
      * (Optional when creating with GoCardless, required with Stripe BECS or BACS Direct Debit) Branch/Sort
-     * code. Alternatively, an IBAN can be provided
+     * code. Alternatively, an IBAN can be provided.
      */
     public function getBankBranchCode(): ?string
     {
@@ -813,7 +813,7 @@ class CreatePaymentProfile implements \JsonSerializable
     /**
      * Sets Bank Branch Code.
      * (Optional when creating with GoCardless, required with Stripe BECS or BACS Direct Debit) Branch/Sort
-     * code. Alternatively, an IBAN can be provided
+     * code. Alternatively, an IBAN can be provided.
      *
      * @maps bank_branch_code
      */

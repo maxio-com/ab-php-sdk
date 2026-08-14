@@ -213,6 +213,17 @@ class CustomerAttributesBuilder
     }
 
     /**
+     * Sets surcharging field.
+     *
+     * @param bool|null $value
+     */
+    public function surcharging(?bool $value): self
+    {
+        $this->instance->setSurcharging($value);
+        return $this;
+    }
+
+    /**
      * Sets vat number field.
      *
      * @param string|null $value

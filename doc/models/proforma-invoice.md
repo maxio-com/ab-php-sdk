@@ -21,12 +21,12 @@
 | `collectionMethod` | [`?string(CollectionMethod)`](../../doc/models/collection-method.md) | Optional | The type of payment collection to be used in the subscription. For legacy Statements Architecture valid options are - `invoice`, `automatic`. For current Relationship Invoicing Architecture valid options are - `remittance`, `automatic`, `prepaid`. | getCollectionMethod(): ?string | setCollectionMethod(?string collectionMethod): void |
 | `paymentInstructions` | `?string` | Optional | - | getPaymentInstructions(): ?string | setPaymentInstructions(?string paymentInstructions): void |
 | `currency` | `?string` | Optional | - | getCurrency(): ?string | setCurrency(?string currency): void |
-| `consolidationLevel` | [`?string(InvoiceConsolidationLevel)`](../../doc/models/invoice-consolidation-level.md) | Optional | Consolidation level of the invoice, which is applicable to invoice consolidation.  It will hold one of the following values:<br><br>* "none": A normal invoice with no consolidation.<br>* "child": An invoice segment which has been combined into a consolidated invoice.<br>* "parent": A consolidated invoice, whose contents are composed of invoice segments.<br><br>"Parent" invoices do not have lines of their own, but they have subtotals and totals which aggregate the member invoice segments.<br><br>See also the [invoice consolidation documentation](https://maxio.zendesk.com/hc/en-us/articles/24252269909389-Invoice-Consolidation). | getConsolidationLevel(): ?string | setConsolidationLevel(?string consolidationLevel): void |
+| `consolidationLevel` | [`?string(InvoiceConsolidationLevel)`](../../doc/models/invoice-consolidation-level.md) | Optional | Consolidation level of the invoice, which is applicable to invoice consolidation. It will hold one of the following values:<br><br>* "none": A normal invoice with no consolidation.<br>* "child": An invoice segment which has been combined into a consolidated invoice.<br>* "parent": A consolidated invoice, whose contents are composed of invoice segments.<br><br>"Parent" invoices do not have lines of their own, but they have subtotals and totals which aggregate the member invoice segments.<br><br>See also the [invoice consolidation documentation](https://maxio.zendesk.com/hc/en-us/articles/24252269909389-Invoice-Consolidation). | getConsolidationLevel(): ?string | setConsolidationLevel(?string consolidationLevel): void |
 | `productName` | `?string` | Optional | - | getProductName(): ?string | setProductName(?string productName): void |
 | `productFamilyName` | `?string` | Optional | - | getProductFamilyName(): ?string | setProductFamilyName(?string productFamilyName): void |
-| `role` | [`?string(ProformaInvoiceRole)`](../../doc/models/proforma-invoice-role.md) | Optional | 'proforma' value is deprecated in favor of proforma_adhoc and proforma_automatic | getRole(): ?string | setRole(?string role): void |
+| `role` | [`?string(ProformaInvoiceRole)`](../../doc/models/proforma-invoice-role.md) | Optional | 'proforma' value is deprecated in favor of proforma_adhoc and proforma_automatic. | getRole(): ?string | setRole(?string role): void |
 | `seller` | [`?InvoiceSeller`](../../doc/models/invoice-seller.md) | Optional | Information about the seller (merchant) listed on the masthead of the invoice. | getSeller(): ?InvoiceSeller | setSeller(?InvoiceSeller seller): void |
-| `customer` | [`?InvoiceCustomer`](../../doc/models/invoice-customer.md) | Optional | Information about the customer who is owner or recipient the invoiced subscription. | getCustomer(): ?InvoiceCustomer | setCustomer(?InvoiceCustomer customer): void |
+| `customer` | [`?InvoiceCustomer`](../../doc/models/invoice-customer.md) | Optional | Information about the customer who is owner or recipient of the invoiced subscription. | getCustomer(): ?InvoiceCustomer | setCustomer(?InvoiceCustomer customer): void |
 | `memo` | `?string` | Optional | - | getMemo(): ?string | setMemo(?string memo): void |
 | `billingAddress` | [`?InvoiceAddress`](../../doc/models/invoice-address.md) | Optional | - | getBillingAddress(): ?InvoiceAddress | setBillingAddress(?InvoiceAddress billingAddress): void |
 | `shippingAddress` | [`?InvoiceAddress`](../../doc/models/invoice-address.md) | Optional | - | getShippingAddress(): ?InvoiceAddress | setShippingAddress(?InvoiceAddress shippingAddress): void |
@@ -47,15 +47,17 @@
 | `publicUrl` | `?string` | Optional | - | getPublicUrl(): ?string | setPublicUrl(?string publicUrl): void |
 | `availableActions` | [`?AvailableActions`](../../doc/models/available-actions.md) | Optional | - | getAvailableActions(): ?AvailableActions | setAvailableActions(?AvailableActions availableActions): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "uid": "uid6",
-  "site_id": 196,
-  "customer_id": 52,
-  "subscription_id": 124,
-  "number": 0
-}
+```php
+use AdvancedBillingLib\Models\Builders\ProformaInvoiceBuilder;
+
+$proformaInvoice = ProformaInvoiceBuilder::init()
+    ->uid('uid8')
+    ->siteId(94)
+    ->customerId(206)
+    ->subscriptionId(22)
+    ->number(102)
+    ->build();
 ```
 

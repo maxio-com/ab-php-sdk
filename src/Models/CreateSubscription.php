@@ -72,6 +72,11 @@ class CreateSubscription implements \JsonSerializable
     private $customerId;
 
     /**
+     * @var array
+     */
+    private $brandingThemeId = [];
+
+    /**
      * @var \DateTime|null
      */
     private $nextBillingAt;
@@ -512,6 +517,50 @@ class CreateSubscription implements \JsonSerializable
     }
 
     /**
+     * Returns Branding Theme Id.
+     * The ID of the Branding Theme to assign to this subscription. When set, this subscription-level
+     * Branding Theme is used instead of the customer's default Branding Theme for subscription-related
+     * documents and communications that use subscription theming. Pass null or an empty value to clear the
+     * subscription-level Branding Theme. Available only when Branding Themes are enabled for the site. Not
+     * returned in the response.
+     */
+    public function getBrandingThemeId(): ?int
+    {
+        if (count($this->brandingThemeId) == 0) {
+            return null;
+        }
+        return $this->brandingThemeId['value'];
+    }
+
+    /**
+     * Sets Branding Theme Id.
+     * The ID of the Branding Theme to assign to this subscription. When set, this subscription-level
+     * Branding Theme is used instead of the customer's default Branding Theme for subscription-related
+     * documents and communications that use subscription theming. Pass null or an empty value to clear the
+     * subscription-level Branding Theme. Available only when Branding Themes are enabled for the site. Not
+     * returned in the response.
+     *
+     * @maps branding_theme_id
+     */
+    public function setBrandingThemeId(?int $brandingThemeId): void
+    {
+        $this->brandingThemeId['value'] = $brandingThemeId;
+    }
+
+    /**
+     * Unsets Branding Theme Id.
+     * The ID of the Branding Theme to assign to this subscription. When set, this subscription-level
+     * Branding Theme is used instead of the customer's default Branding Theme for subscription-related
+     * documents and communications that use subscription theming. Pass null or an empty value to clear the
+     * subscription-level Branding Theme. Available only when Branding Themes are enabled for the site. Not
+     * returned in the response.
+     */
+    public function unsetBrandingThemeId(): void
+    {
+        $this->brandingThemeId = [];
+    }
+
+    /**
      * Returns Next Billing At.
      * (Optional) Set this attribute to a future date/time to sync imported subscriptions to your existing
      * renewal schedule. See the notes on “Date/Time Format” in our [subscription import
@@ -592,7 +641,7 @@ class CreateSubscription implements \JsonSerializable
     /**
      * Returns Defer Signup.
      * (Optional) Set this attribute to true to create the subscription in the Awaiting Signup Date state.
-     * Use this when you want to create a subscription that has an unknown first  billing date. When the
+     * Use this when you want to create a subscription that has an unknown first billing date. When the
      * first billing date is known, update a subscription and set the `initial_billing_at` date. The
      * subscription moves to the Awaiting Signup state with a scheduled initial billing date. You can omit
      * the initial_billing_at date to activate the subscription immediately. See [Subscription
@@ -607,7 +656,7 @@ class CreateSubscription implements \JsonSerializable
     /**
      * Sets Defer Signup.
      * (Optional) Set this attribute to true to create the subscription in the Awaiting Signup Date state.
-     * Use this when you want to create a subscription that has an unknown first  billing date. When the
+     * Use this when you want to create a subscription that has an unknown first billing date. When the
      * first billing date is known, update a subscription and set the `initial_billing_at` date. The
      * subscription moves to the Awaiting Signup state with a scheduled initial billing date. You can omit
      * the initial_billing_at date to activate the subscription immediately. See [Subscription
@@ -668,7 +717,7 @@ class CreateSubscription implements \JsonSerializable
      * or if you want to use a new (unstored) card or bank account for the subscription, use
      * `payment_profile_attributes` instead to create a new payment profile along with the subscription.
      * (This value is available on an existing subscription via the API as `credit_card` > id or
-     * `bank_account` > id)
+     * `bank_account` > id.)
      */
     public function getPaymentProfileId(): ?int
     {
@@ -682,7 +731,7 @@ class CreateSubscription implements \JsonSerializable
      * or if you want to use a new (unstored) card or bank account for the subscription, use
      * `payment_profile_attributes` instead to create a new payment profile along with the subscription.
      * (This value is available on an existing subscription via the API as `credit_card` > id or
-     * `bank_account` > id)
+     * `bank_account` > id.)
      *
      * @maps payment_profile_id
      */
@@ -819,7 +868,7 @@ class CreateSubscription implements \JsonSerializable
 
     /**
      * Returns Calendar Billing.
-     * (Optional). Cannot be used when also specifying next_billing_at
+     * (Optional). Cannot be used when also specifying next_billing_at.
      */
     public function getCalendarBilling(): ?CalendarBilling
     {
@@ -828,7 +877,7 @@ class CreateSubscription implements \JsonSerializable
 
     /**
      * Sets Calendar Billing.
-     * (Optional). Cannot be used when also specifying next_billing_at
+     * (Optional). Cannot be used when also specifying next_billing_at.
      *
      * @maps calendar_billing
      */
@@ -1175,7 +1224,7 @@ class CreateSubscription implements \JsonSerializable
     /**
      * Returns Offer Id.
      * Use in place of passing product and component information to set up the subscription with an
-     * existing offer. May be either the Chargify id of the offer or its handle prefixed with `handle:`.er
+     * existing offer. May be either the Chargify id of the offer or its handle prefixed with `handle:`.
      *
      * @return string|int|null
      */
@@ -1187,7 +1236,7 @@ class CreateSubscription implements \JsonSerializable
     /**
      * Sets Offer Id.
      * Use in place of passing product and component information to set up the subscription with an
-     * existing offer. May be either the Chargify id of the offer or its handle prefixed with `handle:`.er
+     * existing offer. May be either the Chargify id of the offer or its handle prefixed with `handle:`.
      *
      * @maps offer_id
      * @mapsBy anyOf(oneOf(string,int),null)
@@ -1447,6 +1496,7 @@ class CreateSubscription implements \JsonSerializable
                 'receivesInvoiceEmails' => $this->receivesInvoiceEmails,
                 'netTerms' => $this->netTerms,
                 'customerId' => $this->customerId,
+                'brandingThemeId' => $this->getBrandingThemeId(),
                 'nextBillingAt' => $this->nextBillingAt,
                 'initialBillingAt' => $this->initialBillingAt,
                 'deferSignup' => $this->deferSignup,
@@ -1566,6 +1616,9 @@ class CreateSubscription implements \JsonSerializable
         }
         if (isset($this->customerId)) {
             $json['customer_id']                           = $this->customerId;
+        }
+        if (!empty($this->brandingThemeId)) {
+            $json['branding_theme_id']                     = $this->brandingThemeId['value'];
         }
         if (isset($this->nextBillingAt)) {
             $json['next_billing_at']                       = DateTimeHelper::toRfc3339DateTime($this->nextBillingAt);

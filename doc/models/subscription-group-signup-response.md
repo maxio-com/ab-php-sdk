@@ -21,19 +21,21 @@
 | `subscriptions` | [`?(SubscriptionGroupItem[])`](../../doc/models/subscription-group-item.md) | Optional | - | getSubscriptions(): ?array | setSubscriptions(?array subscriptions): void |
 | `paymentCollectionMethod` | [`?string(CollectionMethod)`](../../doc/models/collection-method.md) | Optional | The type of payment collection to be used in the subscription. For legacy Statements Architecture valid options are - `invoice`, `automatic`. For current Relationship Invoicing Architecture valid options are - `remittance`, `automatic`, `prepaid`. | getPaymentCollectionMethod(): ?string | setPaymentCollectionMethod(?string paymentCollectionMethod): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "uid": "uid8",
-  "scheme": 28,
-  "customer_id": 48,
-  "payment_profile_id": 44,
-  "subscription_ids": [
-    158,
-    159,
-    160
-  ]
-}
+```php
+use AdvancedBillingLib\Models\Builders\SubscriptionGroupSignupResponseBuilder;
+
+$subscriptionGroupSignupResponse = SubscriptionGroupSignupResponseBuilder::init()
+    ->uid('uid4')
+    ->scheme(60)
+    ->customerId(80)
+    ->paymentProfileId(244)
+    ->subscriptionIds(
+        [
+            190
+        ]
+    )
+    ->build();
 ```
 

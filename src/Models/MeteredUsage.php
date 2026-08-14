@@ -21,7 +21,7 @@ class MeteredUsage implements \JsonSerializable
     private $previousUnitBalance;
 
     /**
-     * @var int
+     * @var int|string
      */
     private $newUnitBalance;
 
@@ -47,7 +47,7 @@ class MeteredUsage implements \JsonSerializable
 
     /**
      * @param string $previousUnitBalance
-     * @param int $newUnitBalance
+     * @param int|string $newUnitBalance
      * @param int $usageQuantity
      * @param int $componentId
      * @param string $componentHandle
@@ -55,7 +55,7 @@ class MeteredUsage implements \JsonSerializable
      */
     public function __construct(
         string $previousUnitBalance,
-        int $newUnitBalance,
+        $newUnitBalance,
         int $usageQuantity,
         int $componentId,
         string $componentHandle,
@@ -90,8 +90,10 @@ class MeteredUsage implements \JsonSerializable
 
     /**
      * Returns New Unit Balance.
+     *
+     * @return int|string
      */
-    public function getNewUnitBalance(): int
+    public function getNewUnitBalance()
     {
         return $this->newUnitBalance;
     }
@@ -101,8 +103,11 @@ class MeteredUsage implements \JsonSerializable
      *
      * @required
      * @maps new_unit_balance
+     * @mapsBy oneOf(int,string)
+     *
+     * @param int|string $newUnitBalance
      */
-    public function setNewUnitBalance(int $newUnitBalance): void
+    public function setNewUnitBalance($newUnitBalance): void
     {
         $this->newUnitBalance = $newUnitBalance;
     }
@@ -245,7 +250,11 @@ class MeteredUsage implements \JsonSerializable
     {
         $json = [];
         $json['previous_unit_balance'] = $this->previousUnitBalance;
-        $json['new_unit_balance']      = $this->newUnitBalance;
+        $json['new_unit_balance']      =
+            ApiHelper::getJsonHelper()->verifyTypes(
+                $this->newUnitBalance,
+                'oneOf(int,string)'
+            );
         $json['usage_quantity']        = $this->usageQuantity;
         $json['component_id']          = $this->componentId;
         $json['component_handle']      = $this->componentHandle;

@@ -14,14 +14,16 @@
 | `subscriberDelta` | `?int` | Optional | - | getSubscriberDelta(): ?int | setSubscriberDelta(?int subscriberDelta): void |
 | `leadDelta` | `?int` | Optional | - | getLeadDelta(): ?int | setLeadDelta(?int leadDelta): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "amount": 210,
-  "category": "category0",
-  "subscriber_delta": 170,
-  "lead_delta": 198
-}
+```php
+use AdvancedBillingLib\Models\Builders\MRRMovementBuilder;
+
+$mRRMovement = MRRMovementBuilder::init()
+    ->amount(116)
+    ->category('category4')
+    ->subscriberDelta(100)
+    ->leadDelta(128)
+    ->build();
 ```
 

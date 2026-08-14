@@ -103,7 +103,7 @@ class ComponentCustomPrice implements \JsonSerializable
 
     /**
      * Returns Pricing Scheme.
-     * Omit for On/Off components
+     * Omit for On/Off components.
      */
     public function getPricingScheme(): ?string
     {
@@ -112,7 +112,7 @@ class ComponentCustomPrice implements \JsonSerializable
 
     /**
      * Sets Pricing Scheme.
-     * Omit for On/Off components
+     * Omit for On/Off components.
      *
      * @maps pricing_scheme
      * @factory \AdvancedBillingLib\Models\PricingScheme::checkValue
@@ -124,7 +124,7 @@ class ComponentCustomPrice implements \JsonSerializable
 
     /**
      * Returns Interval.
-     * The numerical interval. i.e. an interval of ‘30’ coupled with an interval_unit of day would mean
+     * The numerical interval. e.g., an interval of ‘30’ coupled with an interval_unit of day would mean
      * this component price point would renew every 30 days. This property is only available for sites with
      * Multifrequency enabled.
      */
@@ -135,7 +135,7 @@ class ComponentCustomPrice implements \JsonSerializable
 
     /**
      * Sets Interval.
-     * The numerical interval. i.e. an interval of ‘30’ coupled with an interval_unit of day would mean
+     * The numerical interval. e.g., an interval of ‘30’ coupled with an interval_unit of day would mean
      * this component price point would renew every 30 days. This property is only available for sites with
      * Multifrequency enabled.
      *
@@ -184,7 +184,7 @@ class ComponentCustomPrice implements \JsonSerializable
 
     /**
      * Returns List Price Point Id.
-     * Optional id of the price point to use for list price calculations when
+     * (Optional) Id of the price point to use for list price calculations when
      * overriding the customer price.
      */
     public function getListPricePointId(): ?int
@@ -197,7 +197,7 @@ class ComponentCustomPrice implements \JsonSerializable
 
     /**
      * Sets List Price Point Id.
-     * Optional id of the price point to use for list price calculations when
+     * (Optional) Id of the price point to use for list price calculations when
      * overriding the customer price.
      *
      * @maps list_price_point_id
@@ -209,7 +209,7 @@ class ComponentCustomPrice implements \JsonSerializable
 
     /**
      * Unsets List Price Point Id.
-     * Optional id of the price point to use for list price calculations when
+     * (Optional) Id of the price point to use for list price calculations when
      * overriding the customer price.
      */
     public function unsetListPricePointId(): void

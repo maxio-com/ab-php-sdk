@@ -109,7 +109,7 @@ class CancellationOptions implements \JsonSerializable
 
     /**
      * Returns Scheduled Cancellation At.
-     * Schedules the cancellation on the provided date. This is option is not applicable for prepaid
+     * Schedules the cancellation on the provided date. This option is not applicable for prepaid
      * subscriptions. To use this option, the Schedule Subscription Cancellation feature must be enabled on
      * your site.
      */
@@ -123,7 +123,7 @@ class CancellationOptions implements \JsonSerializable
 
     /**
      * Sets Scheduled Cancellation At.
-     * Schedules the cancellation on the provided date. This is option is not applicable for prepaid
+     * Schedules the cancellation on the provided date. This option is not applicable for prepaid
      * subscriptions. To use this option, the Schedule Subscription Cancellation feature must be enabled on
      * your site.
      *
@@ -137,7 +137,7 @@ class CancellationOptions implements \JsonSerializable
 
     /**
      * Unsets Scheduled Cancellation At.
-     * Schedules the cancellation on the provided date. This is option is not applicable for prepaid
+     * Schedules the cancellation on the provided date. This option is not applicable for prepaid
      * subscriptions. To use this option, the Schedule Subscription Cancellation feature must be enabled on
      * your site.
      */

@@ -13,7 +13,9 @@
 
 ## Example
 
-```
-prepaid_product_price_point
+```php
+use AdvancedBillingLib\Models\ListProductsInclude;
+
+$listProductsInclude = ListProductsInclude::PREPAID_PRODUCT_PRICE_POINT;
 ```
 

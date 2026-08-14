@@ -14,7 +14,7 @@ use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 /**
- * Refund consolidated invoice
+ * Refund consolidated invoice.
  */
 class RefundConsolidatedInvoice implements \JsonSerializable
 {

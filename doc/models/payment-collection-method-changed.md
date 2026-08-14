@@ -12,12 +12,14 @@
 | `previousValue` | `string` | Required | - | getPreviousValue(): string | setPreviousValue(string previousValue): void |
 | `currentValue` | `string` | Required | - | getCurrentValue(): string | setCurrentValue(string currentValue): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "previous_value": "previous_value4",
-  "current_value": "current_value2"
-}
+```php
+use AdvancedBillingLib\Models\Builders\PaymentCollectionMethodChangedBuilder;
+
+$paymentCollectionMethodChanged = PaymentCollectionMethodChangedBuilder::init(
+    'previous_value4',
+    'current_value2'
+)->build();
 ```
 

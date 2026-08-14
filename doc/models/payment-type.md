@@ -14,3 +14,11 @@
 | `PAYPAL_ACCOUNT` |
 | `APPLE_PAY` |
 
+## Example
+
+```php
+use AdvancedBillingLib\Models\PaymentType;
+
+$paymentType = PaymentType::CREDIT_CARD;
+```
+

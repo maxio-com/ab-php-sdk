@@ -12,14 +12,19 @@
 | `subscriptionId` | `int` | Required | - | getSubscriptionId(): int | setSubscriptionId(int subscriptionId): void |
 | `memberIds` | `?(int[])` | Optional | - | getMemberIds(): ?array | setMemberIds(?array memberIds): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "subscription_id": 38,
-  "member_ids": [
-    162
-  ]
-}
+```php
+use AdvancedBillingLib\Models\Builders\CreateSubscriptionGroupBuilder;
+
+$createSubscriptionGroup = CreateSubscriptionGroupBuilder::init(
+    204
+)
+    ->memberIds(
+        [
+            48
+        ]
+    )
+    ->build();
 ```
 

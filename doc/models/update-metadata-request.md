@@ -11,15 +11,20 @@
 |  --- | --- | --- | --- | --- | --- |
 | `metadata` | [`?UpdateMetadata`](../../doc/models/update-metadata.md) | Optional | - | getMetadata(): ?UpdateMetadata | setMetadata(?UpdateMetadata metadata): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "metadata": {
-    "current_name": "current_name0",
-    "name": "name6",
-    "value": "value8"
-  }
-}
+```php
+use AdvancedBillingLib\Models\Builders\UpdateMetadataRequestBuilder;
+use AdvancedBillingLib\Models\Builders\UpdateMetadataBuilder;
+
+$updateMetadataRequest = UpdateMetadataRequestBuilder::init()
+    ->metadata(
+        UpdateMetadataBuilder::init()
+            ->currentName('current_name0')
+            ->name('name6')
+            ->value('value8')
+            ->build()
+    )
+    ->build();
 ```
 

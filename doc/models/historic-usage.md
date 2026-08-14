@@ -1,7 +1,7 @@
 
 # Historic Usage
 
-Optional for Event Based Components. If the `include=historic_usages` query param is provided, the last ten billing periods will be returned.
+(Optional) For Event Based Components. If the `include=historic_usages` query param is provided, the last ten billing periods will be returned.
 
 ## Structure
 
@@ -15,13 +15,16 @@ Optional for Event Based Components. If the `include=historic_usages` query para
 | `billingPeriodStartsAt` | `?DateTime` | Optional | Start date of billing period | getBillingPeriodStartsAt(): ?\DateTime | setBillingPeriodStartsAt(?\DateTime billingPeriodStartsAt): void |
 | `billingPeriodEndsAt` | `?DateTime` | Optional | End date of billing period | getBillingPeriodEndsAt(): ?\DateTime | setBillingPeriodEndsAt(?\DateTime billingPeriodEndsAt): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "total_usage_quantity": 26.6,
-  "billing_period_starts_at": "2016-03-13T12:52:32.123Z",
-  "billing_period_ends_at": "2016-03-13T12:52:32.123Z"
-}
+```php
+use AdvancedBillingLib\Models\Builders\HistoricUsageBuilder;
+use AdvancedBillingLib\Utils\DateTimeHelper;
+
+$historicUsage = HistoricUsageBuilder::init()
+    ->totalUsageQuantity(140.74)
+    ->billingPeriodStartsAt(DateTimeHelper::fromRfc3339DateTime('2016-03-13T12:52:32.123Z'))
+    ->billingPeriodEndsAt(DateTimeHelper::fromRfc3339DateTime('2016-03-13T12:52:32.123Z'))
+    ->build();
 ```
 

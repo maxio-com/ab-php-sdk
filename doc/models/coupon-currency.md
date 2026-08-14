@@ -14,14 +14,16 @@
 | `price` | `?float` | Optional | - | getPrice(): ?float | setPrice(?float price): void |
 | `couponId` | `?int` | Optional | - | getCouponId(): ?int | setCouponId(?int couponId): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "id": 228,
-  "currency": "currency8",
-  "price": 169.96,
-  "coupon_id": 210
-}
+```php
+use AdvancedBillingLib\Models\Builders\CouponCurrencyBuilder;
+
+$couponCurrency = CouponCurrencyBuilder::init()
+    ->id(202)
+    ->currency('currency0')
+    ->price(14.62)
+    ->couponId(184)
+    ->build();
 ```
 

@@ -20,20 +20,25 @@
 | `paymentType` | [`?string(PrepaymentMethod)`](../../doc/models/prepayment-method.md) | Optional | The payment type of the prepayment. | getPaymentType(): ?string | setPaymentType(?string paymentType): void |
 | `createdAt` | `DateTime` | Required | - | getCreatedAt(): \DateTime | setCreatedAt(\DateTime createdAt): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "id": 50,
-  "subscription_id": 160,
-  "amount_in_cents": 120,
-  "remaining_amount_in_cents": 194,
-  "refunded_amount_in_cents": 144,
-  "details": "details4",
-  "external": false,
-  "memo": "memo8",
-  "payment_type": "cash",
-  "created_at": "2016-03-13T12:52:32.123Z"
-}
+```php
+use AdvancedBillingLib\Models\Builders\PrepaymentBuilder;
+use AdvancedBillingLib\Utils\DateTimeHelper;
+use AdvancedBillingLib\Models\PrepaymentMethod;
+
+$prepayment = PrepaymentBuilder::init(
+    38,
+    148,
+    124,
+    182,
+    false,
+    'memo2',
+    DateTimeHelper::fromRfc3339DateTimeRequired('2016-03-13T12:52:32.123Z')
+)
+    ->refundedAmountInCents(132)
+    ->details('details8')
+    ->paymentType(PrepaymentMethod::CREDIT_CARD)
+    ->build();
 ```
 

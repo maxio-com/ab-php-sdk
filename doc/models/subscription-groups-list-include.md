@@ -11,3 +11,11 @@
 |  --- |
 | `ACCOUNT_BALANCES` |
 
+## Example
+
+```php
+use AdvancedBillingLib\Models\SubscriptionGroupsListInclude;
+
+$subscriptionGroupsListInclude = SubscriptionGroupsListInclude::ACCOUNT_BALANCES;
+```
+

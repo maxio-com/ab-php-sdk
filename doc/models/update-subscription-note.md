@@ -14,12 +14,14 @@ Updatable fields for Subscription Note
 | `body` | `string` | Required | - | getBody(): string | setBody(string body): void |
 | `sticky` | `bool` | Required | - | getSticky(): bool | setSticky(bool sticky): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "body": "body8",
-  "sticky": false
-}
+```php
+use AdvancedBillingLib\Models\Builders\UpdateSubscriptionNoteBuilder;
+
+$updateSubscriptionNote = UpdateSubscriptionNoteBuilder::init(
+    'body2',
+    false
+)->build();
 ```
 

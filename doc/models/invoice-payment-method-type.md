@@ -18,3 +18,11 @@ The type of payment method used. Defaults to other.
 | `ACH` |
 | `OTHER` |
 
+## Example
+
+```php
+use AdvancedBillingLib\Models\InvoicePaymentMethodType;
+
+$invoicePaymentMethodType = InvoicePaymentMethodType::CASH;
+```
+

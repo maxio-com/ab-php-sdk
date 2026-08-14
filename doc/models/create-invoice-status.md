@@ -14,7 +14,9 @@
 
 ## Example
 
-```
-draft
+```php
+use AdvancedBillingLib\Models\CreateInvoiceStatus;
+
+$createInvoiceStatus = CreateInvoiceStatus::DRAFT;
 ```
 

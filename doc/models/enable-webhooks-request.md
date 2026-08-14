@@ -11,11 +11,13 @@
 |  --- | --- | --- | --- | --- | --- |
 | `webhooksEnabled` | `bool` | Required | - | getWebhooksEnabled(): bool | setWebhooksEnabled(bool webhooksEnabled): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "webhooks_enabled": false
-}
+```php
+use AdvancedBillingLib\Models\Builders\EnableWebhooksRequestBuilder;
+
+$enableWebhooksRequest = EnableWebhooksRequestBuilder::init(
+    false
+)->build();
 ```
 

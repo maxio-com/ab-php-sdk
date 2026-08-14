@@ -16,3 +16,11 @@ The current chargeback status.
 | `WON` |
 | `CLOSED` |
 
+## Example
+
+```php
+use AdvancedBillingLib\Models\ChargebackStatus;
+
+$chargebackStatus = ChargebackStatus::OPEN;
+```
+

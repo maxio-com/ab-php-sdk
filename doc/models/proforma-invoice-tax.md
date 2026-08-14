@@ -17,15 +17,18 @@
 | `taxAmount` | `?string` | Optional | **Constraints**: *Minimum Length*: `1` | getTaxAmount(): ?string | setTaxAmount(?string taxAmount): void |
 | `lineItemBreakouts` | [`?(InvoiceTaxBreakout[])`](../../doc/models/invoice-tax-breakout.md) | Optional | **Constraints**: *Minimum Items*: `1`, *Unique Items Required* | getLineItemBreakouts(): ?array | setLineItemBreakouts(?array lineItemBreakouts): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "uid": "uid8",
-  "title": "title4",
-  "source_type": "Tax",
-  "percentage": "percentage6",
-  "taxable_amount": "taxable_amount2"
-}
+```php
+use AdvancedBillingLib\Models\Builders\ProformaInvoiceTaxBuilder;
+use AdvancedBillingLib\Models\ProformaInvoiceTaxSourceType;
+
+$proformaInvoiceTax = ProformaInvoiceTaxBuilder::init()
+    ->uid('uid4')
+    ->title('title0')
+    ->sourceType(ProformaInvoiceTaxSourceType::TAX)
+    ->percentage('percentage2')
+    ->taxableAmount('taxable_amount8')
+    ->build();
 ```
 

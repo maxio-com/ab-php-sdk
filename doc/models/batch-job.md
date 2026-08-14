@@ -15,15 +15,18 @@
 | `createdAt` | `?DateTime` | Optional | - | getCreatedAt(): ?\DateTime | setCreatedAt(?\DateTime createdAt): void |
 | `completed` | `?string` | Optional | - | getCompleted(): ?string | setCompleted(?string completed): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "id": 246,
-  "finished_at": "2016-03-13T12:52:32.123Z",
-  "row_count": 254,
-  "created_at": "2016-03-13T12:52:32.123Z",
-  "completed": "completed0"
-}
+```php
+use AdvancedBillingLib\Models\Builders\BatchJobBuilder;
+use AdvancedBillingLib\Utils\DateTimeHelper;
+
+$batchJob = BatchJobBuilder::init()
+    ->id(60)
+    ->finishedAt(DateTimeHelper::fromRfc3339DateTime('2016-03-13T12:52:32.123Z'))
+    ->rowCount(68)
+    ->createdAt(DateTimeHelper::fromRfc3339DateTime('2016-03-13T12:52:32.123Z'))
+    ->completed('completed6')
+    ->build();
 ```
 

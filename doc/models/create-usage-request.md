@@ -11,37 +11,57 @@
 |  --- | --- | --- | --- | --- | --- |
 | `usage` | [`CreateUsage`](../../doc/models/create-usage.md) | Required | - | getUsage(): CreateUsage | setUsage(CreateUsage usage): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "usage": {
-    "quantity": 162.34,
-    "price_point_id": "price_point_id0",
-    "memo": "memo2",
-    "billing_schedule": {
-      "initial_billing_at": "2016-03-13"
-    },
-    "custom_price": {
-      "tax_included": false,
-      "pricing_scheme": "stairstep",
-      "interval": 66,
-      "interval_unit": "day",
-      "list_price_point_id": 174,
-      "prices": [
-        {
-          "starting_quantity": 242,
-          "ending_quantity": 40,
-          "unit_price": 23.26
-        },
-        {
-          "starting_quantity": 242,
-          "ending_quantity": 40,
-          "unit_price": 23.26
-        }
-      ]
-    }
-  }
-}
+```php
+use AdvancedBillingLib\Models\Builders\CreateUsageRequestBuilder;
+use AdvancedBillingLib\Models\Builders\CreateUsageBuilder;
+use AdvancedBillingLib\Models\Builders\BillingScheduleBuilder;
+use AdvancedBillingLib\Utils\DateTimeHelper;
+use AdvancedBillingLib\Models\Builders\ComponentCustomPriceBuilder;
+use AdvancedBillingLib\Models\Builders\PriceBuilder;
+use AdvancedBillingLib\Models\PricingScheme;
+use AdvancedBillingLib\Models\IntervalUnit;
+
+$createUsageRequest = CreateUsageRequestBuilder::init(
+    CreateUsageBuilder::init()
+        ->quantity(162.34)
+        ->pricePointId('price_point_id0')
+        ->memo('memo2')
+        ->billingSchedule(
+            BillingScheduleBuilder::init()
+                ->initialBillingAt(DateTimeHelper::fromSimpleDate('2016-03-13'))
+                ->build()
+        )
+        ->customPrice(
+            ComponentCustomPriceBuilder::init(
+                [
+                    PriceBuilder::init(
+                        242,
+                        23.26
+                    )
+                        ->endingQuantity(
+                            40
+                        )
+                        ->build(),
+                    PriceBuilder::init(
+                        242,
+                        23.26
+                    )
+                        ->endingQuantity(
+                            40
+                        )
+                        ->build()
+                ]
+            )
+                ->taxIncluded(false)
+                ->pricingScheme(PricingScheme::STAIRSTEP)
+                ->interval(66)
+                ->intervalUnit(IntervalUnit::DAY)
+                ->listPricePointId(174)
+                ->build()
+        )
+        ->build()
+)->build();
 ```
 

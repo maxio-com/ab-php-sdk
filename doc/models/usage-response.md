@@ -11,17 +11,23 @@
 |  --- | --- | --- | --- | --- | --- |
 | `usage` | [`Usage`](../../doc/models/usage.md) | Required | - | getUsage(): Usage | setUsage(Usage usage): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "usage": {
-    "id": 150,
-    "memo": "memo2",
-    "created_at": "2016-03-13T12:52:32.123Z",
-    "price_point_id": 28,
-    "quantity": 28
-  }
-}
+```php
+use AdvancedBillingLib\Models\Builders\UsageResponseBuilder;
+use AdvancedBillingLib\Models\Builders\UsageBuilder;
+use AdvancedBillingLib\Utils\DateTimeHelper;
+
+$usageResponse = UsageResponseBuilder::init(
+    UsageBuilder::init()
+        ->id(150)
+        ->memo('memo2')
+        ->createdAt(DateTimeHelper::fromRfc3339DateTime('2016-03-13T12:52:32.123Z'))
+        ->pricePointId(28)
+        ->quantity(
+            28
+        )
+        ->build()
+)->build();
 ```
 

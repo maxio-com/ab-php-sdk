@@ -15,7 +15,7 @@ use AdvancedBillingLib\Utils\DateTimeHelper;
 use stdClass;
 
 /**
- * An optional object, will be returned if provided `include=subscription` query param.
+ * (Optional) Object that will be returned if the `include=subscription` query param is provided.
  */
 class SubscriptionComponentSubscription implements \JsonSerializable
 {

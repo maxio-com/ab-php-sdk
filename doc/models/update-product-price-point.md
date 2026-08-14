@@ -12,12 +12,14 @@
 | `handle` | `?string` | Optional | - | getHandle(): ?string | setHandle(?string handle): void |
 | `priceInCents` | `?int` | Optional | - | getPriceInCents(): ?int | setPriceInCents(?int priceInCents): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "handle": "handle6",
-  "price_in_cents": 220
-}
+```php
+use AdvancedBillingLib\Models\Builders\UpdateProductPricePointBuilder;
+
+$updateProductPricePoint = UpdateProductPricePointBuilder::init()
+    ->handle('handle2')
+    ->priceInCents(154)
+    ->build();
 ```
 

@@ -17,32 +17,32 @@
 | `createdAt` | `DateTime` | Required | - | getCreatedAt(): \DateTime | setCreatedAt(\DateTime createdAt): void |
 | `eventSpecificData` | [SubscriptionProductChange](../../doc/models/subscription-product-change.md)\|[SubscriptionStateChange](../../doc/models/subscription-state-change.md)\|[PaymentRelatedEvents](../../doc/models/payment-related-events.md)\|[RefundSuccess](../../doc/models/refund-success.md)\|[ComponentAllocationChange](../../doc/models/component-allocation-change.md)\|[MeteredUsage](../../doc/models/metered-usage.md)\|[PrepaidUsage](../../doc/models/prepaid-usage.md)\|[DunningStepReached](../../doc/models/dunning-step-reached.md)\|[InvoiceIssued](../../doc/models/invoice-issued.md)\|[PendingCancellationChange](../../doc/models/pending-cancellation-change.md)\|[PrepaidSubscriptionBalanceChanged](../../doc/models/prepaid-subscription-balance-changed.md)\|Proforma[InvoiceIssued](../../doc/models/invoice-issued.md)\|[SubscriptionGroupSignupEventData](../../doc/models/subscription-group-signup-event-data.md)\|[CreditAccountBalanceChanged](../../doc/models/credit-account-balance-changed.md)\|[PrepaymentAccountBalanceChanged](../../doc/models/prepayment-account-balance-changed.md)\|[PaymentCollectionMethodChanged](../../doc/models/payment-collection-method-changed.md)\|[ItemPricePointChanged](../../doc/models/item-price-point-changed.md)\|[CustomFieldValueChange](../../doc/models/custom-field-value-change.md)\|[ChjsTokenizationSuccess](../../doc/models/chjs-tokenization-success.md)\|[ChjsTokenizationFailure](../../doc/models/chjs-tokenization-failure.md)\|null | Required | This is a container for one-of cases. | getEventSpecificData(): | setEventSpecificData( eventSpecificData): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "id": 40,
-  "key": "subscription_group_signup_success",
-  "message": "message8",
-  "subscription_id": 150,
-  "customer_id": 78,
-  "created_at": "2016-03-13T12:52:32.123Z",
-  "event_specific_data": {
-    "previous_unit_balance": null,
-    "previous_overage_unit_balance": null,
-    "new_unit_balance": null,
-    "new_overage_unit_balance": null,
-    "usage_quantity": null,
-    "overage_usage_quantity": null,
-    "component_id": null,
-    "component_handle": null,
-    "memo": null,
-    "allocation_details": [
-      null
-    ],
-    "previous_product_id": 126,
-    "new_product_id": 12
-  }
-}
+```php
+use AdvancedBillingLib\Models\Builders\EventBuilder;
+use AdvancedBillingLib\Models\EventKey;
+use AdvancedBillingLib\Utils\DateTimeHelper;
+use AdvancedBillingLib\Models\Builders\SubscriptionProductChangeBuilder;
+
+$event = EventBuilder::init(
+    242,
+    EventKey::SUBSCRIPTION_REMOVED_FROM_GROUP,
+    'message0',
+    DateTimeHelper::fromRfc3339DateTimeRequired('2016-03-13T12:52:32.123Z')
+)
+    ->subscriptionId(96)
+    ->customerId(24)
+    ->eventSpecificData(
+        SubscriptionProductChangeBuilder::init(
+            126,
+            12
+        )
+            ->previousProductPricePointId(250)
+            ->newProductPricePointId(244)
+            ->effectiveAt(DateTimeHelper::fromRfc3339DateTime('2016-03-13T12:52:32.123Z'))
+            ->build()
+    )
+    ->build();
 ```
 

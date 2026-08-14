@@ -54,6 +54,7 @@ final class TestComponentFactory
             ->itemCategory(ComponentTestData::ITEM_CATEGORY)
             ->useSiteExchangeRate(ComponentTestData::USE_SITE_EXCHANGE_RATE)
             ->accountingCode(ComponentTestData::ACCOUNTING_CODE)
+            ->unspscCode(ComponentTestData::UNSPSC_CODE)
             ->createdAt($createdAt)
             ->build();
     }
@@ -115,6 +116,7 @@ final class TestComponentFactory
             ->itemCategory(ComponentTestData::ITEM_CATEGORY)
             ->useSiteExchangeRate(ComponentTestData::USE_SITE_EXCHANGE_RATE)
             ->accountingCode(ComponentTestData::ACCOUNTING_CODE)
+            ->unspscCode(ComponentTestData::UNSPSC_CODE)
             ->createdAt($createdAt)
             ->build();
     }

@@ -11,23 +11,29 @@
 |  --- | --- | --- | --- | --- | --- |
 | `subscription` | [`UpdateSubscription`](../../doc/models/update-subscription.md) | Required | - | getSubscription(): UpdateSubscription | setSubscription(UpdateSubscription subscription): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "subscription": {
-    "defer_signup": false,
-    "dunning_communication_delay_time_zone": "\"Eastern Time (US & Canada)\"",
-    "credit_card_attributes": {
-      "full_number": "full_number2",
-      "expiration_month": "expiration_month6",
-      "expiration_year": "expiration_year2"
-    },
-    "product_handle": "product_handle6",
-    "product_id": 206,
-    "product_change_delayed": false,
-    "next_product_id": "next_product_id6"
-  }
-}
+```php
+use AdvancedBillingLib\Models\Builders\UpdateSubscriptionRequestBuilder;
+use AdvancedBillingLib\Models\Builders\UpdateSubscriptionBuilder;
+use AdvancedBillingLib\Models\Builders\CreditCardAttributesBuilder;
+
+$updateSubscriptionRequest = UpdateSubscriptionRequestBuilder::init(
+    UpdateSubscriptionBuilder::init()
+        ->creditCardAttributes(
+            CreditCardAttributesBuilder::init()
+                ->fullNumber('full_number2')
+                ->expirationMonth('expiration_month6')
+                ->expirationYear('expiration_year2')
+                ->build()
+        )
+        ->productHandle('product_handle6')
+        ->productId(206)
+        ->productChangeDelayed(false)
+        ->nextProductId('next_product_id6')
+        ->deferSignup(false)
+        ->dunningCommunicationDelayTimeZone('"Eastern Time (US & Canada)"')
+        ->build()
+)->build();
 ```
 

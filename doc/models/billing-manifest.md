@@ -19,37 +19,30 @@
 | `periodType` | `?string` | Optional | - | getPeriodType(): ?string | setPeriodType(?string periodType): void |
 | `existingBalanceInCents` | `?int` | Optional | - | getExistingBalanceInCents(): ?int | setExistingBalanceInCents(?int existingBalanceInCents): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "line_items": [
-    {
-      "transaction_type": "credit",
-      "kind": "component",
-      "amount_in_cents": 24,
-      "memo": "memo2",
-      "discount_amount_in_cents": 172
-    },
-    {
-      "transaction_type": "credit",
-      "kind": "component",
-      "amount_in_cents": 24,
-      "memo": "memo2",
-      "discount_amount_in_cents": 172
-    },
-    {
-      "transaction_type": "credit",
-      "kind": "component",
-      "amount_in_cents": 24,
-      "memo": "memo2",
-      "discount_amount_in_cents": 172
-    }
-  ],
-  "total_in_cents": 192,
-  "total_discount_in_cents": 178,
-  "total_tax_in_cents": 172,
-  "subtotal_in_cents": 48
-}
+```php
+use AdvancedBillingLib\Models\Builders\BillingManifestBuilder;
+use AdvancedBillingLib\Models\Builders\BillingManifestItemBuilder;
+use AdvancedBillingLib\Models\LineItemTransactionType;
+use AdvancedBillingLib\Models\BillingManifestLineItemKind;
+
+$billingManifest = BillingManifestBuilder::init()
+    ->lineItems(
+        [
+            BillingManifestItemBuilder::init()
+                ->transactionType(LineItemTransactionType::CREDIT)
+                ->kind(BillingManifestLineItemKind::COMPONENT)
+                ->amountInCents(24)
+                ->memo('memo2')
+                ->discountAmountInCents(172)
+                ->build()
+        ]
+    )
+    ->totalInCents(96)
+    ->totalDiscountInCents(174)
+    ->totalTaxInCents(76)
+    ->subtotalInCents(208)
+    ->build();
 ```
 

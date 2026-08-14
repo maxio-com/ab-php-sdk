@@ -14,14 +14,17 @@
 | `memo` | `string` | Required | **Constraints**: *Minimum Length*: `1` | getMemo(): string | setMemo(string memo): void |
 | `external` | `?bool` | Optional | Specify the type of refund you wish to initiate. When the prepayment is external, the `external` flag is optional. But if the prepayment was made through a payment profile, the `external` flag is required. | getExternal(): ?bool | setExternal(?bool external): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "amount_in_cents": 110,
-  "amount": "String3",
-  "memo": "memo4",
-  "external": false
-}
+```php
+use AdvancedBillingLib\Models\Builders\RefundPrepaymentBuilder;
+
+$refundPrepayment = RefundPrepaymentBuilder::init(
+    'String1',
+    'memo2'
+)
+    ->amountInCents(22)
+    ->external(false)
+    ->build();
 ```
 

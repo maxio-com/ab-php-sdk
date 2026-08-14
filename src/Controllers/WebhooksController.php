@@ -139,7 +139,7 @@ class WebhooksController extends BaseController
     }
 
     /**
-     * Returns created endpoints for a site.
+     * Lists endpoints configured for a site.
      *
      * @return Endpoint[] Response from the API call
      *

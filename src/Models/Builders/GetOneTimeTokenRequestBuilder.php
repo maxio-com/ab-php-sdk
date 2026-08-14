@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models\Builders;
 
+use AdvancedBillingLib\Models\GetOneTimeTokenBankAccountPaymentProfile;
 use AdvancedBillingLib\Models\GetOneTimeTokenPaymentProfile;
 use AdvancedBillingLib\Models\GetOneTimeTokenRequest;
 use Core\Utils\CoreHelper;
@@ -34,9 +35,9 @@ class GetOneTimeTokenRequestBuilder
     /**
      * Initializes a new Get One Time Token Request Builder object.
      *
-     * @param GetOneTimeTokenPaymentProfile $paymentProfile
+     * @param GetOneTimeTokenPaymentProfile|GetOneTimeTokenBankAccountPaymentProfile $paymentProfile
      */
-    public static function init(GetOneTimeTokenPaymentProfile $paymentProfile): self
+    public static function init($paymentProfile): self
     {
         return new self(new GetOneTimeTokenRequest($paymentProfile));
     }

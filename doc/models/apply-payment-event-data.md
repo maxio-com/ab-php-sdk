@@ -23,23 +23,30 @@ Example schema for an `apply_payment` event
 | `prepayment` | `?bool` | Optional | - | getPrepayment(): ?bool | setPrepayment(?bool prepayment): void |
 | `external` | `?bool` | Optional | - | getExternal(): ?bool | setExternal(?bool external): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "consolidation_level": "child",
-  "memo": "memo8",
-  "original_amount": "original_amount8",
-  "applied_amount": "applied_amount4",
-  "transaction_time": "2016-03-13T12:52:32.123Z",
-  "payment_method": {
-    "type": "apple_pay"
-  },
-  "transaction_id": 196,
-  "parent_invoice_number": 174,
-  "remaining_prepayment_amount": "remaining_prepayment_amount6",
-  "prepayment": false,
-  "external": false
-}
+```php
+use AdvancedBillingLib\Models\Builders\ApplyPaymentEventDataBuilder;
+use AdvancedBillingLib\Models\InvoiceConsolidationLevel;
+use AdvancedBillingLib\Utils\DateTimeHelper;
+use AdvancedBillingLib\Models\Builders\PaymentMethodApplePayBuilder;
+use AdvancedBillingLib\Models\InvoiceEventPaymentMethod;
+
+$applyPaymentEventData = ApplyPaymentEventDataBuilder::init(
+    InvoiceConsolidationLevel::CHILD,
+    'memo0',
+    'original_amount0',
+    'applied_amount2',
+    DateTimeHelper::fromRfc3339DateTimeRequired('2016-03-13T12:52:32.123Z'),
+    PaymentMethodApplePayBuilder::init(
+        InvoiceEventPaymentMethod::APPLE_PAY
+    )->build()
+)
+    ->transactionId(142)
+    ->parentInvoiceNumber(228)
+    ->remainingPrepaymentAmount('remaining_prepayment_amount4')
+    ->prepayment(false)
+    ->external(false)
+    ->build();
 ```
 

@@ -13,13 +13,16 @@
 | `description` | `string` | Required | The friendly summary of what the code signifies | getDescription(): string | setDescription(string description): void |
 | `position` | `?int` | Optional | The order that code appears in lists | getPosition(): ?int | setPosition(?int position): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "code": "code4",
-  "description": "description6",
-  "position": 86
-}
+```php
+use AdvancedBillingLib\Models\Builders\CreateReasonCodeBuilder;
+
+$createReasonCode = CreateReasonCodeBuilder::init(
+    'code4',
+    'description6'
+)
+    ->position(40)
+    ->build();
 ```
 

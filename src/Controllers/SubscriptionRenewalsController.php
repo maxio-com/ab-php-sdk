@@ -235,7 +235,7 @@ class SubscriptionRenewalsController extends BaseController
     }
 
     /**
-     * Returns a scheduled renewal configuration to an editable state.
+     * Restores a scheduled renewal configuration to an editable state.
      *
      * @param int $subscriptionId The Chargify id of the subscription.
      * @param int $id The renewal id.
@@ -305,6 +305,11 @@ class SubscriptionRenewalsController extends BaseController
     /**
      * Adds product and component line items to the scheduled renewal.
      *
+     * If your site has list vs sales pricing enabled, accepts renewal_configuration_item.custom_price.
+     * list_price_point_id, validates and persists it; omitted value follows existing/default behavior;
+     * with list vs sales pricing disabled, parameter is ignored (no validation/behavioral impact). This
+     * functionality is supported in the API, but is not currently supported in SDKs.
+     *
      * @param int $subscriptionId The Chargify id of the subscription.
      * @param int $scheduledRenewalsConfigurationId The scheduled renewal configuration id.
      * @param ScheduledRenewalConfigurationItemRequest|null $body
@@ -344,6 +349,11 @@ class SubscriptionRenewalsController extends BaseController
 
     /**
      * Updates an existing configuration item’s pricing and quantity.
+     *
+     * If you site has list vs sales pricing enabled, accepts renewal_configuration_item.custom_price.
+     * list_price_point_id, validates and persists it; omitted value follows existing/default behavior;
+     * with list vs sales pricing disabled, parameter is ignored (no validation/behavioral impact). This
+     * functionality is supported in the API, but is not currently supported in SDKs.
      *
      * @param int $subscriptionId The Chargify id of the subscription.
      * @param int $scheduledRenewalsConfigurationId The scheduled renewal configuration id.

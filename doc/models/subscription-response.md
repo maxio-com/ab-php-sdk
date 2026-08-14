@@ -11,17 +11,23 @@
 |  --- | --- | --- | --- | --- | --- |
 | `subscription` | [`?Subscription`](../../doc/models/subscription.md) | Optional | - | getSubscription(): ?Subscription | setSubscription(?Subscription subscription): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "subscription": {
-    "id": 8,
-    "state": "paused",
-    "balance_in_cents": 124,
-    "total_revenue_in_cents": 48,
-    "product_price_in_cents": 238
-  }
-}
+```php
+use AdvancedBillingLib\Models\Builders\SubscriptionResponseBuilder;
+use AdvancedBillingLib\Models\Builders\SubscriptionBuilder;
+use AdvancedBillingLib\Models\SubscriptionState;
+
+$subscriptionResponse = SubscriptionResponseBuilder::init()
+    ->subscription(
+        SubscriptionBuilder::init()
+            ->id(8)
+            ->state(SubscriptionState::PAUSED)
+            ->balanceInCents(124)
+            ->totalRevenueInCents(48)
+            ->productPriceInCents(238)
+            ->build()
+    )
+    ->build();
 ```
 

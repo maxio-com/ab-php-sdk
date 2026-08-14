@@ -207,7 +207,7 @@ class CreatePrepaidUsageComponentPricePoint implements \JsonSerializable
     /**
      * Returns Rollover Prepaid Remainder.
      * (only for prepaid usage components) Boolean which controls whether or not remaining units should be
-     * rolled over to the next period
+     * rolled over to the next period.
      */
     public function getRolloverPrepaidRemainder(): ?bool
     {
@@ -217,7 +217,7 @@ class CreatePrepaidUsageComponentPricePoint implements \JsonSerializable
     /**
      * Sets Rollover Prepaid Remainder.
      * (only for prepaid usage components) Boolean which controls whether or not remaining units should be
-     * rolled over to the next period
+     * rolled over to the next period.
      *
      * @maps rollover_prepaid_remainder
      */
@@ -229,7 +229,7 @@ class CreatePrepaidUsageComponentPricePoint implements \JsonSerializable
     /**
      * Returns Renew Prepaid Allocation.
      * (only for prepaid usage components) Boolean which controls whether or not the allocated quantity
-     * should be renewed at the beginning of each period
+     * should be renewed at the beginning of each period.
      */
     public function getRenewPrepaidAllocation(): ?bool
     {
@@ -239,7 +239,7 @@ class CreatePrepaidUsageComponentPricePoint implements \JsonSerializable
     /**
      * Sets Renew Prepaid Allocation.
      * (only for prepaid usage components) Boolean which controls whether or not the allocated quantity
-     * should be renewed at the beginning of each period
+     * should be renewed at the beginning of each period.
      *
      * @maps renew_prepaid_allocation
      */
@@ -251,7 +251,7 @@ class CreatePrepaidUsageComponentPricePoint implements \JsonSerializable
     /**
      * Returns Expiration Interval.
      * (only for prepaid usage components where rollover_prepaid_remainder is true) The number of
-     * `expiration_interval_unit`s after which rollover amounts should expire
+     * `expiration_interval_unit`s after which rollover amounts should expire.
      */
     public function getExpirationInterval(): ?float
     {
@@ -261,7 +261,7 @@ class CreatePrepaidUsageComponentPricePoint implements \JsonSerializable
     /**
      * Sets Expiration Interval.
      * (only for prepaid usage components where rollover_prepaid_remainder is true) The number of
-     * `expiration_interval_unit`s after which rollover amounts should expire
+     * `expiration_interval_unit`s after which rollover amounts should expire.
      *
      * @maps expiration_interval
      */
@@ -273,7 +273,7 @@ class CreatePrepaidUsageComponentPricePoint implements \JsonSerializable
     /**
      * Returns Expiration Interval Unit.
      * (only for prepaid usage components where rollover_prepaid_remainder is true) A string representing
-     * the expiration interval unit for this component, either month or day
+     * the expiration interval unit for this component, either month or day.
      */
     public function getExpirationIntervalUnit(): ?string
     {
@@ -286,7 +286,7 @@ class CreatePrepaidUsageComponentPricePoint implements \JsonSerializable
     /**
      * Sets Expiration Interval Unit.
      * (only for prepaid usage components where rollover_prepaid_remainder is true) A string representing
-     * the expiration interval unit for this component, either month or day
+     * the expiration interval unit for this component, either month or day.
      *
      * @maps expiration_interval_unit
      * @factory \AdvancedBillingLib\Models\ExpirationIntervalUnit::checkValue
@@ -299,7 +299,7 @@ class CreatePrepaidUsageComponentPricePoint implements \JsonSerializable
     /**
      * Unsets Expiration Interval Unit.
      * (only for prepaid usage components where rollover_prepaid_remainder is true) A string representing
-     * the expiration interval unit for this component, either month or day
+     * the expiration interval unit for this component, either month or day.
      */
     public function unsetExpirationIntervalUnit(): void
     {

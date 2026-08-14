@@ -15,15 +15,18 @@
 | `entryType` | [`?string(ServiceCreditType)`](../../doc/models/service-credit-type.md) | Optional | The type of entry | getEntryType(): ?string | setEntryType(?string entryType): void |
 | `memo` | `?string` | Optional | The memo attached to the entry | getMemo(): ?string | setMemo(?string memo): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "id": 216,
-  "amount_in_cents": 210,
-  "ending_balance_in_cents": 86,
-  "entry_type": "Credit",
-  "memo": "memo2"
-}
+```php
+use AdvancedBillingLib\Models\Builders\ServiceCreditBuilder;
+use AdvancedBillingLib\Models\ServiceCreditType;
+
+$serviceCredit = ServiceCreditBuilder::init()
+    ->id(132)
+    ->amountInCents(218)
+    ->endingBalanceInCents(2)
+    ->entryType(ServiceCreditType::CREDIT)
+    ->memo('memo8')
+    ->build();
 ```
 

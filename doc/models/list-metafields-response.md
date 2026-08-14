@@ -15,29 +15,69 @@
 | `perPage` | `?int` | Optional | - | getPerPage(): ?int | setPerPage(?int perPage): void |
 | `metafields` | [`?(Metafield[])`](../../doc/models/metafield.md) | Optional | - | getMetafields(): ?array | setMetafields(?array metafields): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "total_count": 210,
-  "current_page": 186,
-  "total_pages": 198,
-  "per_page": 92,
-  "metafields": [
-    {
-      "id": 22,
-      "name": "name2",
-      "scope": {
-        "csv": "0",
-        "invoices": "0",
-        "statements": "0",
-        "portal": "0",
-        "public_show": "0"
-      },
-      "data_count": 10,
-      "input_type": "balance_tracker"
-    }
-  ]
-}
+```php
+use AdvancedBillingLib\Models\Builders\ListMetafieldsResponseBuilder;
+use AdvancedBillingLib\Models\Builders\MetafieldBuilder;
+use AdvancedBillingLib\Models\Builders\MetafieldScopeBuilder;
+use AdvancedBillingLib\Models\IncludeOption;
+use AdvancedBillingLib\Models\MetafieldInput;
+
+$listMetafieldsResponse = ListMetafieldsResponseBuilder::init()
+    ->totalCount(228)
+    ->currentPage(204)
+    ->totalPages(216)
+    ->perPage(74)
+    ->metafields(
+        [
+            MetafieldBuilder::init()
+                ->id(22)
+                ->name('name2')
+                ->scope(
+                    MetafieldScopeBuilder::init()
+                        ->csv(IncludeOption::EXCLUDE)
+                        ->invoices(IncludeOption::EXCLUDE)
+                        ->statements(IncludeOption::EXCLUDE)
+                        ->portal(IncludeOption::EXCLUDE)
+                        ->publicShow(IncludeOption::EXCLUDE)
+                        ->build()
+                )
+                ->dataCount(10)
+                ->inputType(MetafieldInput::BALANCE_TRACKER)
+                ->build(),
+            MetafieldBuilder::init()
+                ->id(22)
+                ->name('name2')
+                ->scope(
+                    MetafieldScopeBuilder::init()
+                        ->csv(IncludeOption::EXCLUDE)
+                        ->invoices(IncludeOption::EXCLUDE)
+                        ->statements(IncludeOption::EXCLUDE)
+                        ->portal(IncludeOption::EXCLUDE)
+                        ->publicShow(IncludeOption::EXCLUDE)
+                        ->build()
+                )
+                ->dataCount(10)
+                ->inputType(MetafieldInput::BALANCE_TRACKER)
+                ->build(),
+            MetafieldBuilder::init()
+                ->id(22)
+                ->name('name2')
+                ->scope(
+                    MetafieldScopeBuilder::init()
+                        ->csv(IncludeOption::EXCLUDE)
+                        ->invoices(IncludeOption::EXCLUDE)
+                        ->statements(IncludeOption::EXCLUDE)
+                        ->portal(IncludeOption::EXCLUDE)
+                        ->publicShow(IncludeOption::EXCLUDE)
+                        ->build()
+                )
+                ->dataCount(10)
+                ->inputType(MetafieldInput::BALANCE_TRACKER)
+                ->build()
+        ]
+    )
+    ->build();
 ```
 

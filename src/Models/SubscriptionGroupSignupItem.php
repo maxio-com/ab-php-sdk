@@ -167,7 +167,7 @@ class SubscriptionGroupSignupItem implements \JsonSerializable
     /**
      * Returns Offer Id.
      * Use in place of passing product and component information to set up the subscription with an
-     * existing offer. May be either the Chargify ID of the offer or its handle prefixed with `handle:`
+     * existing offer. May be either the Chargify ID of the offer or its handle prefixed with `handle:`.
      */
     public function getOfferId(): ?int
     {
@@ -177,7 +177,7 @@ class SubscriptionGroupSignupItem implements \JsonSerializable
     /**
      * Sets Offer Id.
      * Use in place of passing product and component information to set up the subscription with an
-     * existing offer. May be either the Chargify ID of the offer or its handle prefixed with `handle:`
+     * existing offer. May be either the Chargify ID of the offer or its handle prefixed with `handle:`.
      *
      * @maps offer_id
      */
@@ -188,7 +188,7 @@ class SubscriptionGroupSignupItem implements \JsonSerializable
 
     /**
      * Returns Reference.
-     * The reference value (provided by your app) for the subscription itelf.
+     * The reference value (provided by your app) for the subscription itself.
      */
     public function getReference(): ?string
     {
@@ -197,7 +197,7 @@ class SubscriptionGroupSignupItem implements \JsonSerializable
 
     /**
      * Sets Reference.
-     * The reference value (provided by your app) for the subscription itelf.
+     * The reference value (provided by your app) for the subscription itself.
      *
      * @maps reference
      */
@@ -322,7 +322,7 @@ class SubscriptionGroupSignupItem implements \JsonSerializable
 
     /**
      * Returns Calendar Billing.
-     * (Optional). Cannot be used when also specifying next_billing_at
+     * (Optional). Cannot be used when also specifying next_billing_at.
      */
     public function getCalendarBilling(): ?CalendarBilling
     {
@@ -331,7 +331,7 @@ class SubscriptionGroupSignupItem implements \JsonSerializable
 
     /**
      * Sets Calendar Billing.
-     * (Optional). Cannot be used when also specifying next_billing_at
+     * (Optional). Cannot be used when also specifying next_billing_at.
      *
      * @maps calendar_billing
      */

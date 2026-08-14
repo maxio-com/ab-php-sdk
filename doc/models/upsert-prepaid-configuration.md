@@ -14,14 +14,16 @@
 | `autoReplenish` | `?bool` | Optional | - | getAutoReplenish(): ?bool | setAutoReplenish(?bool autoReplenish): void |
 | `replenishThresholdAmountInCents` | `?int` | Optional | - | getReplenishThresholdAmountInCents(): ?int | setReplenishThresholdAmountInCents(?int replenishThresholdAmountInCents): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "initial_funding_amount_in_cents": 40,
-  "replenish_to_amount_in_cents": 42,
-  "auto_replenish": false,
-  "replenish_threshold_amount_in_cents": 242
-}
+```php
+use AdvancedBillingLib\Models\Builders\UpsertPrepaidConfigurationBuilder;
+
+$upsertPrepaidConfiguration = UpsertPrepaidConfigurationBuilder::init()
+    ->initialFundingAmountInCents(244)
+    ->replenishToAmountInCents(246)
+    ->autoReplenish(false)
+    ->replenishThresholdAmountInCents(190)
+    ->build();
 ```
 

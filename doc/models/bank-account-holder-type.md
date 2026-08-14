@@ -14,3 +14,11 @@ Defaults to personal
 | `PERSONAL` |
 | `BUSINESS` |
 
+## Example
+
+```php
+use AdvancedBillingLib\Models\BankAccountHolderType;
+
+$bankAccountHolderType = BankAccountHolderType::PERSONAL;
+```
+

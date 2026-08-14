@@ -21,29 +21,33 @@
 | `productName` | `string` | Required | - | getProductName(): string | setProductName(string productName): void |
 | `lineItems` | [`InvoiceLineItemEventData[]`](../../doc/models/invoice-line-item-event-data.md) | Required | - | getLineItems(): array | setLineItems(array lineItems): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "uid": "uid0",
-  "number": "number2",
-  "role": "role6",
-  "delivery_date": "2016-03-13",
-  "created_at": "2016-03-13T12:52:32.123Z",
-  "due_amount": "due_amount2",
-  "paid_amount": "paid_amount8",
-  "tax_amount": "tax_amount6",
-  "total_amount": "total_amount6",
-  "product_name": "product_name6",
-  "line_items": [
-    {
-      "uid": "uid8",
-      "title": "title4",
-      "description": "description8",
-      "quantity": 102,
-      "quantity_delta": 204
-    }
-  ]
-}
+```php
+use AdvancedBillingLib\Models\Builders\ProformaInvoiceIssuedBuilder;
+use AdvancedBillingLib\Utils\DateTimeHelper;
+use AdvancedBillingLib\Models\Builders\InvoiceLineItemEventDataBuilder;
+
+$proformaInvoiceIssued = ProformaInvoiceIssuedBuilder::init(
+    'uid6',
+    'number4',
+    'role0',
+    DateTimeHelper::fromSimpleDateRequired('2016-03-13'),
+    DateTimeHelper::fromRfc3339DateTimeRequired('2016-03-13T12:52:32.123Z'),
+    'due_amount8',
+    'paid_amount8',
+    'tax_amount0',
+    'total_amount2',
+    'product_name2',
+    [
+        InvoiceLineItemEventDataBuilder::init()
+            ->uid('uid8')
+            ->title('title4')
+            ->description('description8')
+            ->quantity(102)
+            ->quantityDelta(204)
+            ->build()
+    ]
+)->build();
 ```
 

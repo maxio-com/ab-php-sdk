@@ -40,6 +40,8 @@ class EventKey
 
     public const SUBSCRIPTION_PRODUCT_CHANGE = 'subscription_product_change';
 
+    public const SUBSCRIPTION_PRODUCT_CHANGE_SCHEDULED = 'subscription_product_change_scheduled';
+
     public const PENDING_CANCELLATION_CHANGE = 'pending_cancellation_change';
 
     public const EXPIRING_CARD = 'expiring_card';
@@ -196,6 +198,7 @@ class EventKey
         self::RENEWAL_FAILURE,
         self::SUBSCRIPTION_STATE_CHANGE,
         self::SUBSCRIPTION_PRODUCT_CHANGE,
+        self::SUBSCRIPTION_PRODUCT_CHANGE_SCHEDULED,
         self::PENDING_CANCELLATION_CHANGE,
         self::EXPIRING_CARD,
         self::CUSTOMER_UPDATE,

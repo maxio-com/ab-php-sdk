@@ -14,7 +14,9 @@
 
 ## Example
 
-```
-subscription
+```php
+use AdvancedBillingLib\Models\ListSubscriptionComponentsInclude;
+
+$listSubscriptionComponentsInclude = ListSubscriptionComponentsInclude::SUBSCRIPTION;
 ```
 

@@ -11,22 +11,28 @@
 |  --- | --- | --- | --- | --- | --- |
 | `prepayment` | [`Prepayment`](../../doc/models/prepayment.md) | Required | - | getPrepayment(): Prepayment | setPrepayment(Prepayment prepayment): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "prepayment": {
-    "id": 38,
-    "subscription_id": 148,
-    "amount_in_cents": 124,
-    "remaining_amount_in_cents": 182,
-    "refunded_amount_in_cents": 132,
-    "details": "details8",
-    "external": false,
-    "memo": "memo2",
-    "payment_type": "credit_card",
-    "created_at": "2016-03-13T12:52:32.123Z"
-  }
-}
+```php
+use AdvancedBillingLib\Models\Builders\PrepaymentResponseBuilder;
+use AdvancedBillingLib\Models\Builders\PrepaymentBuilder;
+use AdvancedBillingLib\Utils\DateTimeHelper;
+use AdvancedBillingLib\Models\PrepaymentMethod;
+
+$prepaymentResponse = PrepaymentResponseBuilder::init(
+    PrepaymentBuilder::init(
+        38,
+        148,
+        124,
+        182,
+        false,
+        'memo2',
+        DateTimeHelper::fromRfc3339DateTimeRequired('2016-03-13T12:52:32.123Z')
+    )
+        ->refundedAmountInCents(132)
+        ->details('details8')
+        ->paymentType(PrepaymentMethod::CREDIT_CARD)
+        ->build()
+)->build();
 ```
 

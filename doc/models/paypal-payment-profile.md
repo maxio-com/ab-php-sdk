@@ -29,16 +29,21 @@
 | `createdAt` | `?DateTime` | Optional | A timestamp indicating when this payment profile was created | getCreatedAt(): ?\DateTime | setCreatedAt(?\DateTime createdAt): void |
 | `updatedAt` | `?DateTime` | Optional | A timestamp indicating when this payment profile was last updated | getUpdatedAt(): ?\DateTime | setUpdatedAt(?\DateTime updatedAt): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "payment_type": "paypal_account",
-  "id": 10,
-  "first_name": "first_name0",
-  "last_name": "last_name8",
-  "customer_id": 48,
-  "current_vault": "moduslink"
-}
+```php
+use AdvancedBillingLib\Models\Builders\PaypalPaymentProfileBuilder;
+use AdvancedBillingLib\Models\PaymentType;
+use AdvancedBillingLib\Models\PayPalVault;
+
+$paypalPaymentProfile = PaypalPaymentProfileBuilder::init(
+    PaymentType::PAYPAL_ACCOUNT
+)
+    ->id(214)
+    ->firstName('first_name0')
+    ->lastName('last_name8')
+    ->customerId(252)
+    ->currentVault(PayPalVault::MODUSLINK)
+    ->build();
 ```
 

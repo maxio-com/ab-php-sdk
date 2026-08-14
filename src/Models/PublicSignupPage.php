@@ -57,7 +57,7 @@ class PublicSignupPage implements \JsonSerializable
 
     /**
      * Returns Return Url.
-     * The url to which a customer will be returned after a successful signup (public_signup_pages only)
+     * The url to which a customer will be returned after a successful signup (public_signup_pages only).
      */
     public function getReturnUrl(): ?string
     {
@@ -69,7 +69,7 @@ class PublicSignupPage implements \JsonSerializable
 
     /**
      * Sets Return Url.
-     * The url to which a customer will be returned after a successful signup (public_signup_pages only)
+     * The url to which a customer will be returned after a successful signup (public_signup_pages only).
      *
      * @maps return_url
      */
@@ -80,7 +80,7 @@ class PublicSignupPage implements \JsonSerializable
 
     /**
      * Unsets Return Url.
-     * The url to which a customer will be returned after a successful signup (public_signup_pages only)
+     * The url to which a customer will be returned after a successful signup (public_signup_pages only).
      */
     public function unsetReturnUrl(): void
     {
@@ -121,7 +121,7 @@ class PublicSignupPage implements \JsonSerializable
 
     /**
      * Returns Url.
-     * The url where the signup page can be viewed (public_signup_pages only)
+     * The url where the signup page can be viewed (public_signup_pages only).
      */
     public function getUrl(): ?string
     {
@@ -130,7 +130,7 @@ class PublicSignupPage implements \JsonSerializable
 
     /**
      * Sets Url.
-     * The url where the signup page can be viewed (public_signup_pages only)
+     * The url where the signup page can be viewed (public_signup_pages only).
      *
      * @maps url
      */

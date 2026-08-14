@@ -16,14 +16,16 @@
 | `authorizerLastName` | `?string` | Optional | (Required when providing ACH agreement params) The last name of the person authorizing the ACH agreement. | getAuthorizerLastName(): ?string | setAuthorizerLastName(?string authorizerLastName): void |
 | `ipAddress` | `?string` | Optional | (Required when providing ACH agreement params) The IP address of the person authorizing the ACH agreement. | getIpAddress(): ?string | setIpAddress(?string ipAddress): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "agreement_terms": "agreement_terms4",
-  "authorizer_first_name": "authorizer_first_name2",
-  "authorizer_last_name": "authorizer_last_name2",
-  "ip_address": "ip_address2"
-}
+```php
+use AdvancedBillingLib\Models\Builders\ACHAgreementBuilder;
+
+$aCHAgreement = ACHAgreementBuilder::init()
+    ->agreementTerms('agreement_terms4')
+    ->authorizerFirstName('authorizer_first_name2')
+    ->authorizerLastName('authorizer_last_name2')
+    ->ipAddress('ip_address2')
+    ->build();
 ```
 

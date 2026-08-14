@@ -11,11 +11,13 @@
 |  --- | --- | --- | --- | --- | --- |
 | `force` | `?bool` | Optional | - | getForce(): ?bool | setForce(?bool force): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "force": false
-}
+```php
+use AdvancedBillingLib\Models\Builders\IssueAdvanceInvoiceRequestBuilder;
+
+$issueAdvanceInvoiceRequest = IssueAdvanceInvoiceRequestBuilder::init()
+    ->force(false)
+    ->build();
 ```
 

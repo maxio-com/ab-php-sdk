@@ -18,25 +18,34 @@
 | `ids` | `?(int[])` | Optional | Allows fetching price points with matching id based on provided values. Use in query: `filter[ids]=1,2,3`. | getIds(): ?array | setIds(?array ids): void |
 | `archivedAt` | [`?string(IncludeNullOrNotNull)`](../../doc/models/include-null-or-not-null.md) | Optional | Allows fetching price points only if archived_at is present or not. Use in query: `filter[archived_at]=not_null`. | getArchivedAt(): ?string | setArchivedAt(?string archivedAt): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "start_date": "2011-12-17",
-  "end_date": "2011-12-15",
-  "start_datetime": "12/19/2011 09:15:30",
-  "end_datetime": "06/07/2019 17:20:06",
-  "type": [
-    "catalog",
-    "default",
-    "custom"
-  ],
-  "ids": [
-    1,
-    2,
-    3
-  ],
-  "date_field": "updated_at"
-}
+```php
+use AdvancedBillingLib\Models\Builders\ListPricePointsFilterBuilder;
+use AdvancedBillingLib\Models\BasicDateField;
+use AdvancedBillingLib\Utils\DateTimeHelper;
+use AdvancedBillingLib\Models\PricePointType;
+
+$listPricePointsFilter = ListPricePointsFilterBuilder::init()
+    ->dateField(BasicDateField::UPDATED_AT)
+    ->startDate(DateTimeHelper::fromSimpleDate('2011-12-17'))
+    ->endDate(DateTimeHelper::fromSimpleDate('2011-12-15'))
+    ->startDatetime(DateTimeHelper::fromRfc3339DateTime('2011-12-19T09:15:30+00:00'))
+    ->endDatetime(DateTimeHelper::fromRfc3339DateTime('2019-06-07T17:20:06Z'))
+    ->type(
+        [
+            PricePointType::CATALOG,
+            PricePointType::DEFAULT_,
+            PricePointType::CUSTOM
+        ]
+    )
+    ->ids(
+        [
+            1,
+            2,
+            3
+        ]
+    )
+    ->build();
 ```
 

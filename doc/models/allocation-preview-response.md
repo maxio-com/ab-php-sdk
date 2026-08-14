@@ -11,17 +11,21 @@
 |  --- | --- | --- | --- | --- | --- |
 | `allocationPreview` | [`AllocationPreview`](../../doc/models/allocation-preview.md) | Required | - | getAllocationPreview(): AllocationPreview | setAllocationPreview(AllocationPreview allocationPreview): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "allocation_preview": {
-    "start_date": "2016-03-13T12:52:32.123Z",
-    "end_date": "2016-03-13T12:52:32.123Z",
-    "subtotal_in_cents": 240,
-    "total_tax_in_cents": 108,
-    "total_discount_in_cents": 142
-  }
-}
+```php
+use AdvancedBillingLib\Models\Builders\AllocationPreviewResponseBuilder;
+use AdvancedBillingLib\Models\Builders\AllocationPreviewBuilder;
+use AdvancedBillingLib\Utils\DateTimeHelper;
+
+$allocationPreviewResponse = AllocationPreviewResponseBuilder::init(
+    AllocationPreviewBuilder::init()
+        ->startDate(DateTimeHelper::fromRfc3339DateTime('2016-03-13T12:52:32.123Z'))
+        ->endDate(DateTimeHelper::fromRfc3339DateTime('2016-03-13T12:52:32.123Z'))
+        ->subtotalInCents(240)
+        ->totalTaxInCents(108)
+        ->totalDiscountInCents(142)
+        ->build()
+)->build();
 ```
 

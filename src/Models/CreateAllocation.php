@@ -102,7 +102,7 @@ class CreateAllocation implements \JsonSerializable
      * Returns Quantity.
      * The allocated quantity to which to set the line-items allocated quantity. By default, this is an
      * integer. If decimal allocations are enabled for the component, it will be a decimal number. For
-     * On/Off components, use 1for on and 0 for off.
+     * On/Off components, use 1 for on and 0 for off.
      */
     public function getQuantity(): float
     {
@@ -113,7 +113,7 @@ class CreateAllocation implements \JsonSerializable
      * Sets Quantity.
      * The allocated quantity to which to set the line-items allocated quantity. By default, this is an
      * integer. If decimal allocations are enabled for the component, it will be a decimal number. For
-     * On/Off components, use 1for on and 0 for off.
+     * On/Off components, use 1 for on and 0 for off.
      *
      * @required
      * @maps quantity

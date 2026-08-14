@@ -11,14 +11,17 @@
 |  --- | --- | --- | --- | --- | --- |
 | `pricePoint` | [`UpdateProductPricePoint`](../../doc/models/update-product-price-point.md) | Required | - | getPricePoint(): UpdateProductPricePoint | setPricePoint(UpdateProductPricePoint pricePoint): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "price_point": {
-    "handle": "handle6",
-    "price_in_cents": 196
-  }
-}
+```php
+use AdvancedBillingLib\Models\Builders\UpdateProductPricePointRequestBuilder;
+use AdvancedBillingLib\Models\Builders\UpdateProductPricePointBuilder;
+
+$updateProductPricePointRequest = UpdateProductPricePointRequestBuilder::init(
+    UpdateProductPricePointBuilder::init()
+        ->handle('handle6')
+        ->priceInCents(196)
+        ->build()
+)->build();
 ```
 

@@ -16,20 +16,25 @@
 | `breakouts` | [`?Breakouts`](../../doc/models/breakouts.md) | Optional | - | getBreakouts(): ?Breakouts | setBreakouts(?Breakouts breakouts): void |
 | `atTime` | `?DateTime` | Optional | ISO8601 timestamp | getAtTime(): ?\DateTime | setAtTime(?\DateTime atTime): void |
 
-## Example (as JSON)
+## Example
 
-```json
-{
-  "amount_in_cents": 208,
-  "amount_formatted": "amount_formatted2",
-  "currency": "currency0",
-  "currency_symbol": "currency_symbol8",
-  "breakouts": {
-    "plan_amount_in_cents": 254,
-    "plan_amount_formatted": "plan_amount_formatted0",
-    "usage_amount_in_cents": 106,
-    "usage_amount_formatted": "usage_amount_formatted8"
-  }
-}
+```php
+use AdvancedBillingLib\Models\Builders\MRRBuilder;
+use AdvancedBillingLib\Models\Builders\BreakoutsBuilder;
+
+$mRR = MRRBuilder::init()
+    ->amountInCents(122)
+    ->amountFormatted('amount_formatted4')
+    ->currency('currency2')
+    ->currencySymbol('currency_symbol0')
+    ->breakouts(
+        BreakoutsBuilder::init()
+            ->planAmountInCents(254)
+            ->planAmountFormatted('plan_amount_formatted0')
+            ->usageAmountInCents(106)
+            ->usageAmountFormatted('usage_amount_formatted8')
+            ->build()
+    )
+    ->build();
 ```
 

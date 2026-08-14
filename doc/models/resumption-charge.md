@@ -15,3 +15,11 @@
 | `IMMEDIATE` |
 | `DELAYED` |
 
+## Example
+
+```php
+use AdvancedBillingLib\Models\ResumptionCharge;
+
+$resumptionCharge = ResumptionCharge::IMMEDIATE;
+```
+
