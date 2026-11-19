@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2e093754f5811ebb4c35c03ac3571efe",
+    "content-hash": "ba5475abd2fef1cce507f7abd2d25d0f",
     "packages": [
         {
             "name": "apimatic/core",
@@ -2197,7 +2197,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": "^7.2 || ^8.0",
+        "php": ">=7.2 <8.2 || ~8.2.35 || ~8.3.36 || ~8.4.27 || ^8.5.12",
         "ext-json": "*",
         "ext-curl": "*"
     },
