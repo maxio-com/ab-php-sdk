@@ -575,6 +575,17 @@ class ComponentBuilder
     }
 
     /**
+     * Sets metering meter id field.
+     *
+     * @param int|null $value
+     */
+    public function meteringMeterId(?int $value): self
+    {
+        $this->instance->setMeteringMeterId($value);
+        return $this;
+    }
+
+    /**
      * Sets interval field.
      *
      * @param int|null $value

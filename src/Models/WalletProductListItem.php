@@ -189,6 +189,11 @@ class WalletProductListItem implements \JsonSerializable
     /**
      * @var int|null
      */
+    private $meteringMeterId;
+
+    /**
+     * @var int|null
+     */
     private $interval;
 
     /**
@@ -1115,8 +1120,9 @@ class WalletProductListItem implements \JsonSerializable
 
     /**
      * Returns Event Based Billing Metric Id.
-     * (Only for Event Based Components) This is an ID of a metric attached to the component. This metric
-     * is used to bill upon collected events.
+     * The ID of an attached metric from legacy Events Based Billing. Omitted if no metric is attached. If
+     * the metric is linked to a Maxio Metering meter, the response can include both
+     * event_based_billing_metric_id and metering_meter_id.
      */
     public function getEventBasedBillingMetricId(): ?int
     {
@@ -1125,14 +1131,39 @@ class WalletProductListItem implements \JsonSerializable
 
     /**
      * Sets Event Based Billing Metric Id.
-     * (Only for Event Based Components) This is an ID of a metric attached to the component. This metric
-     * is used to bill upon collected events.
+     * The ID of an attached metric from legacy Events Based Billing. Omitted if no metric is attached. If
+     * the metric is linked to a Maxio Metering meter, the response can include both
+     * event_based_billing_metric_id and metering_meter_id.
      *
      * @maps event_based_billing_metric_id
      */
     public function setEventBasedBillingMetricId(?int $eventBasedBillingMetricId): void
     {
         $this->eventBasedBillingMetricId = $eventBasedBillingMetricId;
+    }
+
+    /**
+     * Returns Metering Meter Id.
+     * The ID of an attached single Maxio Metering meter. Omitted if no single meter is attached, including
+     * when the component uses only an Advanced Formula. If a legacy Events Based Billing metric is linked
+     * to the meter, the response can include both metering_meter_id and event_based_billing_metric_id.
+     */
+    public function getMeteringMeterId(): ?int
+    {
+        return $this->meteringMeterId;
+    }
+
+    /**
+     * Sets Metering Meter Id.
+     * The ID of an attached single Maxio Metering meter. Omitted if no single meter is attached, including
+     * when the component uses only an Advanced Formula. If a legacy Events Based Billing metric is linked
+     * to the meter, the response can include both metering_meter_id and event_based_billing_metric_id.
+     *
+     * @maps metering_meter_id
+     */
+    public function setMeteringMeterId(?int $meteringMeterId): void
+    {
+        $this->meteringMeterId = $meteringMeterId;
     }
 
     /**
@@ -1357,6 +1388,7 @@ class WalletProductListItem implements \JsonSerializable
                 'useSiteExchangeRate' => $this->getUseSiteExchangeRate(),
                 'accountingCode' => $this->getAccountingCode(),
                 'eventBasedBillingMetricId' => $this->eventBasedBillingMetricId,
+                'meteringMeterId' => $this->meteringMeterId,
                 'interval' => $this->interval,
                 'intervalUnit' => $this->getIntervalUnit(),
                 'unspscCode' => $this->getUnspscCode(),
@@ -1506,6 +1538,9 @@ class WalletProductListItem implements \JsonSerializable
         }
         if (isset($this->eventBasedBillingMetricId)) {
             $json['event_based_billing_metric_id'] = $this->eventBasedBillingMetricId;
+        }
+        if (isset($this->meteringMeterId)) {
+            $json['metering_meter_id']             = $this->meteringMeterId;
         }
         if (isset($this->interval)) {
             $json['interval']                      = $this->interval;

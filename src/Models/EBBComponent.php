@@ -71,9 +71,19 @@ class EBBComponent implements \JsonSerializable
     private $hideDateRangeOnInvoice;
 
     /**
-     * @var int
+     * @var int|null
      */
     private $eventBasedBillingMetricId;
+
+    /**
+     * @var int|null
+     */
+    private $meteringMeterId;
+
+    /**
+     * @var string|null
+     */
+    private $meteringFormula;
 
     /**
      * @var int|null
@@ -94,14 +104,12 @@ class EBBComponent implements \JsonSerializable
      * @param string $name
      * @param string $unitName
      * @param string $pricingScheme
-     * @param int $eventBasedBillingMetricId
      */
-    public function __construct(string $name, string $unitName, string $pricingScheme, int $eventBasedBillingMetricId)
+    public function __construct(string $name, string $unitName, string $pricingScheme)
     {
         $this->name = $name;
         $this->unitName = $unitName;
         $this->pricingScheme = $pricingScheme;
-        $this->eventBasedBillingMetricId = $eventBasedBillingMetricId;
     }
 
     /**
@@ -363,23 +371,74 @@ class EBBComponent implements \JsonSerializable
 
     /**
      * Returns Event Based Billing Metric Id.
-     * The ID of an event based billing metric that will be attached to this component.
+     * ID of a site-owned metric. Required to create a component with legacy Events Based Billing. During
+     * migration, a meter linked to the metric is attached automatically when present. Sites using Maxio
+     * Metering ignore this input; provide metering_meter_id or metering_formula instead.
      */
-    public function getEventBasedBillingMetricId(): int
+    public function getEventBasedBillingMetricId(): ?int
     {
         return $this->eventBasedBillingMetricId;
     }
 
     /**
      * Sets Event Based Billing Metric Id.
-     * The ID of an event based billing metric that will be attached to this component.
+     * ID of a site-owned metric. Required to create a component with legacy Events Based Billing. During
+     * migration, a meter linked to the metric is attached automatically when present. Sites using Maxio
+     * Metering ignore this input; provide metering_meter_id or metering_formula instead.
      *
-     * @required
      * @maps event_based_billing_metric_id
      */
-    public function setEventBasedBillingMetricId(int $eventBasedBillingMetricId): void
+    public function setEventBasedBillingMetricId(?int $eventBasedBillingMetricId): void
     {
         $this->eventBasedBillingMetricId = $eventBasedBillingMetricId;
+    }
+
+    /**
+     * Returns Metering Meter Id.
+     * ID of a merchant-owned Maxio Metering meter. To create a component with Maxio Metering, provide this
+     * ID or metering_formula, but not both. Meter IDs and legacy metric IDs identify different resources.
+     * Sites using Events Based Billing ignore this input and require event_based_billing_metric_id instead.
+     */
+    public function getMeteringMeterId(): ?int
+    {
+        return $this->meteringMeterId;
+    }
+
+    /**
+     * Sets Metering Meter Id.
+     * ID of a merchant-owned Maxio Metering meter. To create a component with Maxio Metering, provide this
+     * ID or metering_formula, but not both. Meter IDs and legacy metric IDs identify different resources.
+     * Sites using Events Based Billing ignore this input and require event_based_billing_metric_id instead.
+     *
+     * @maps metering_meter_id
+     */
+    public function setMeteringMeterId(?int $meteringMeterId): void
+    {
+        $this->meteringMeterId = $meteringMeterId;
+    }
+
+    /**
+     * Returns Metering Formula.
+     * An Advanced Formula using Maxio Metering meters available to the site. To create a component with
+     * Maxio Metering, provide a non-blank formula or metering_meter_id, but not both. Sites using Events
+     * Based Billing ignore this input and require event_based_billing_metric_id instead.
+     */
+    public function getMeteringFormula(): ?string
+    {
+        return $this->meteringFormula;
+    }
+
+    /**
+     * Sets Metering Formula.
+     * An Advanced Formula using Maxio Metering meters available to the site. To create a component with
+     * Maxio Metering, provide a non-blank formula or metering_meter_id, but not both. Sites using Events
+     * Based Billing ignore this input and require event_based_billing_metric_id instead.
+     *
+     * @maps metering_formula
+     */
+    public function setMeteringFormula(?string $meteringFormula): void
+    {
+        $this->meteringFormula = $meteringFormula;
     }
 
     /**
@@ -502,6 +561,8 @@ class EBBComponent implements \JsonSerializable
                 'taxCode' => $this->taxCode,
                 'hideDateRangeOnInvoice' => $this->hideDateRangeOnInvoice,
                 'eventBasedBillingMetricId' => $this->eventBasedBillingMetricId,
+                'meteringMeterId' => $this->meteringMeterId,
+                'meteringFormula' => $this->meteringFormula,
                 'interval' => $this->interval,
                 'intervalUnit' => $this->getIntervalUnit(),
                 'unspscCode' => $this->getUnspscCode(),
@@ -550,46 +611,54 @@ class EBBComponent implements \JsonSerializable
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
-        $json['name']                           = $this->name;
-        $json['unit_name']                      = $this->unitName;
+        $json['name']                              = $this->name;
+        $json['unit_name']                         = $this->unitName;
         if (isset($this->description)) {
-            $json['description']                = $this->description;
+            $json['description']                   = $this->description;
         }
         if (isset($this->handle)) {
-            $json['handle']                     = $this->handle;
+            $json['handle']                        = $this->handle;
         }
         if (isset($this->taxable)) {
-            $json['taxable']                    = $this->taxable;
+            $json['taxable']                       = $this->taxable;
         }
-        $json['pricing_scheme']                 = PricingScheme::checkValue($this->pricingScheme);
+        $json['pricing_scheme']                    = PricingScheme::checkValue($this->pricingScheme);
         if (isset($this->prices)) {
-            $json['prices']                     = $this->prices;
+            $json['prices']                        = $this->prices;
         }
         if (isset($this->pricePoints)) {
-            $json['price_points']               = $this->pricePoints;
+            $json['price_points']                  = $this->pricePoints;
         }
         if (isset($this->unitPrice)) {
-            $json['unit_price']                 =
+            $json['unit_price']                    =
                 ApiHelper::getJsonHelper()->verifyTypes(
                     $this->unitPrice,
                     'anyOf(oneOf(string,float),null)'
                 );
         }
         if (isset($this->taxCode)) {
-            $json['tax_code']                   = $this->taxCode;
+            $json['tax_code']                      = $this->taxCode;
         }
         if (isset($this->hideDateRangeOnInvoice)) {
-            $json['hide_date_range_on_invoice'] = $this->hideDateRangeOnInvoice;
+            $json['hide_date_range_on_invoice']    = $this->hideDateRangeOnInvoice;
         }
-        $json['event_based_billing_metric_id']  = $this->eventBasedBillingMetricId;
+        if (isset($this->eventBasedBillingMetricId)) {
+            $json['event_based_billing_metric_id'] = $this->eventBasedBillingMetricId;
+        }
+        if (isset($this->meteringMeterId)) {
+            $json['metering_meter_id']             = $this->meteringMeterId;
+        }
+        if (isset($this->meteringFormula)) {
+            $json['metering_formula']              = $this->meteringFormula;
+        }
         if (isset($this->interval)) {
-            $json['interval']                   = $this->interval;
+            $json['interval']                      = $this->interval;
         }
         if (!empty($this->intervalUnit)) {
-            $json['interval_unit']              = IntervalUnit::checkValue($this->intervalUnit['value']);
+            $json['interval_unit']                 = IntervalUnit::checkValue($this->intervalUnit['value']);
         }
         if (!empty($this->unspscCode)) {
-            $json['unspsc_code']                = $this->unspscCode['value'];
+            $json['unspsc_code']                   = $this->unspscCode['value'];
         }
         $json = array_merge($json, $this->additionalProperties);
 

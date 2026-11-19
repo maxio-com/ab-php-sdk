@@ -25,8 +25,7 @@ $createEBBComponent = CreateEBBComponentBuilder::init(
     EBBComponentBuilder::init(
         'name8',
         'unit_name0',
-        PricingScheme::STAIRSTEP,
-        68
+        PricingScheme::STAIRSTEP
     )
         ->description('description8')
         ->handle('handle4')

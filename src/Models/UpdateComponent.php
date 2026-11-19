@@ -61,6 +61,21 @@ class UpdateComponent implements \JsonSerializable
     private $upgradeCharge = [];
 
     /**
+     * @var int|null
+     */
+    private $eventBasedBillingMetricId;
+
+    /**
+     * @var int|null
+     */
+    private $meteringMeterId;
+
+    /**
+     * @var string|null
+     */
+    private $meteringFormula;
+
+    /**
      * @var array
      */
     private $unspscCode = [];
@@ -307,6 +322,78 @@ class UpdateComponent implements \JsonSerializable
     }
 
     /**
+     * Returns Event Based Billing Metric Id.
+     * For components using legacy Events Based Billing, changes the attached site-owned metric. An
+     * unchanged metric ID does not change the source. Sites using Maxio Metering ignore this input. This
+     * ID does not identify a Maxio Metering meter.
+     */
+    public function getEventBasedBillingMetricId(): ?int
+    {
+        return $this->eventBasedBillingMetricId;
+    }
+
+    /**
+     * Sets Event Based Billing Metric Id.
+     * For components using legacy Events Based Billing, changes the attached site-owned metric. An
+     * unchanged metric ID does not change the source. Sites using Maxio Metering ignore this input. This
+     * ID does not identify a Maxio Metering meter.
+     *
+     * @maps event_based_billing_metric_id
+     */
+    public function setEventBasedBillingMetricId(?int $eventBasedBillingMetricId): void
+    {
+        $this->eventBasedBillingMetricId = $eventBasedBillingMetricId;
+    }
+
+    /**
+     * Returns Metering Meter Id.
+     * For components using Maxio Metering, changes the attached merchant-owned meter. Do not supply
+     * together with a non-blank metering_formula. Ignored for components using legacy Events Based Billing;
+     * not applicable to other component kinds.
+     */
+    public function getMeteringMeterId(): ?int
+    {
+        return $this->meteringMeterId;
+    }
+
+    /**
+     * Sets Metering Meter Id.
+     * For components using Maxio Metering, changes the attached merchant-owned meter. Do not supply
+     * together with a non-blank metering_formula. Ignored for components using legacy Events Based Billing;
+     * not applicable to other component kinds.
+     *
+     * @maps metering_meter_id
+     */
+    public function setMeteringMeterId(?int $meteringMeterId): void
+    {
+        $this->meteringMeterId = $meteringMeterId;
+    }
+
+    /**
+     * Returns Metering Formula.
+     * For components using Maxio Metering, sets an Advanced Formula using meters available to the site.
+     * Supply a non-blank formula; do not supply together with metering_meter_id. Ignored for components
+     * using legacy Events Based Billing; not applicable to other component kinds.
+     */
+    public function getMeteringFormula(): ?string
+    {
+        return $this->meteringFormula;
+    }
+
+    /**
+     * Sets Metering Formula.
+     * For components using Maxio Metering, sets an Advanced Formula using meters available to the site.
+     * Supply a non-blank formula; do not supply together with metering_meter_id. Ignored for components
+     * using legacy Events Based Billing; not applicable to other component kinds.
+     *
+     * @maps metering_formula
+     */
+    public function setMeteringFormula(?string $meteringFormula): void
+    {
+        $this->meteringFormula = $meteringFormula;
+    }
+
+    /**
      * Returns Unspsc Code.
      * (Optional) Custom UNSPSC commodity code for Level 3/CEDP payment data. When set, this value is sent
      * as the commodity code on invoice line items for this component instead of the default derived from
@@ -363,6 +450,9 @@ class UpdateComponent implements \JsonSerializable
                 'itemCategory' => $this->getItemCategory(),
                 'displayOnHostedPage' => $this->displayOnHostedPage,
                 'upgradeCharge' => $this->getUpgradeCharge(),
+                'eventBasedBillingMetricId' => $this->eventBasedBillingMetricId,
+                'meteringMeterId' => $this->meteringMeterId,
+                'meteringFormula' => $this->meteringFormula,
                 'unspscCode' => $this->getUnspscCode(),
                 'additionalProperties' => $this->additionalProperties
             ]
@@ -410,34 +500,43 @@ class UpdateComponent implements \JsonSerializable
     {
         $json = [];
         if (isset($this->handle)) {
-            $json['handle']                 = $this->handle;
+            $json['handle']                        = $this->handle;
         }
         if (isset($this->name)) {
-            $json['name']                   = $this->name;
+            $json['name']                          = $this->name;
         }
         if (!empty($this->description)) {
-            $json['description']            = $this->description['value'];
+            $json['description']                   = $this->description['value'];
         }
         if (!empty($this->accountingCode)) {
-            $json['accounting_code']        = $this->accountingCode['value'];
+            $json['accounting_code']               = $this->accountingCode['value'];
         }
         if (isset($this->taxable)) {
-            $json['taxable']                = $this->taxable;
+            $json['taxable']                       = $this->taxable;
         }
         if (!empty($this->taxCode)) {
-            $json['tax_code']               = $this->taxCode['value'];
+            $json['tax_code']                      = $this->taxCode['value'];
         }
         if (!empty($this->itemCategory)) {
-            $json['item_category']          = ItemCategory::checkValue($this->itemCategory['value']);
+            $json['item_category']                 = ItemCategory::checkValue($this->itemCategory['value']);
         }
         if (isset($this->displayOnHostedPage)) {
-            $json['display_on_hosted_page'] = $this->displayOnHostedPage;
+            $json['display_on_hosted_page']        = $this->displayOnHostedPage;
         }
         if (!empty($this->upgradeCharge)) {
-            $json['upgrade_charge']         = CreditType::checkValue($this->upgradeCharge['value']);
+            $json['upgrade_charge']                = CreditType::checkValue($this->upgradeCharge['value']);
+        }
+        if (isset($this->eventBasedBillingMetricId)) {
+            $json['event_based_billing_metric_id'] = $this->eventBasedBillingMetricId;
+        }
+        if (isset($this->meteringMeterId)) {
+            $json['metering_meter_id']             = $this->meteringMeterId;
+        }
+        if (isset($this->meteringFormula)) {
+            $json['metering_formula']              = $this->meteringFormula;
         }
         if (!empty($this->unspscCode)) {
-            $json['unspsc_code']            = $this->unspscCode['value'];
+            $json['unspsc_code']                   = $this->unspscCode['value'];
         }
         $json = array_merge($json, $this->additionalProperties);
 

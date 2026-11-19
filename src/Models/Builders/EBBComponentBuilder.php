@@ -38,15 +38,10 @@ class EBBComponentBuilder
      * @param string $name
      * @param string $unitName
      * @param string $pricingScheme
-     * @param int $eventBasedBillingMetricId
      */
-    public static function init(
-        string $name,
-        string $unitName,
-        string $pricingScheme,
-        int $eventBasedBillingMetricId
-    ): self {
-        return new self(new EBBComponent($name, $unitName, $pricingScheme, $eventBasedBillingMetricId));
+    public static function init(string $name, string $unitName, string $pricingScheme): self
+    {
+        return new self(new EBBComponent($name, $unitName, $pricingScheme));
     }
 
     /**
@@ -134,6 +129,39 @@ class EBBComponentBuilder
     public function hideDateRangeOnInvoice(?bool $value): self
     {
         $this->instance->setHideDateRangeOnInvoice($value);
+        return $this;
+    }
+
+    /**
+     * Sets event based billing metric id field.
+     *
+     * @param int|null $value
+     */
+    public function eventBasedBillingMetricId(?int $value): self
+    {
+        $this->instance->setEventBasedBillingMetricId($value);
+        return $this;
+    }
+
+    /**
+     * Sets metering meter id field.
+     *
+     * @param int|null $value
+     */
+    public function meteringMeterId(?int $value): self
+    {
+        $this->instance->setMeteringMeterId($value);
+        return $this;
+    }
+
+    /**
+     * Sets metering formula field.
+     *
+     * @param string|null $value
+     */
+    public function meteringFormula(?string $value): self
+    {
+        $this->instance->setMeteringFormula($value);
         return $this;
     }
 
