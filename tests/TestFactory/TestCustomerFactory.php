@@ -49,6 +49,9 @@ final class TestCustomerFactory
             ->additionalProperty('business_type', null)
             ->additionalProperty('entity_identifier_kind', 'company_reg')
             ->additionalProperty('entity_identifier_value', 'TEST VAT NUMBER')
+            ->additionalProperty('electronic_address_kind', null)
+            ->additionalProperty('electronic_address_value', null)
+            ->additionalProperty('autopay_enrollment', null)
             ->additionalProperty('maxioid', null)
             ->build();
     }
