@@ -91,6 +91,16 @@ class SubscriptionCustomPrice implements \JsonSerializable
     private $taxIncluded;
 
     /**
+     * @var array
+     */
+    private $listPricePointId = [];
+
+    /**
+     * @var bool|null
+     */
+    private $useDefaultListPrice;
+
+    /**
      * @param string|int $priceInCents
      * @param string|int $interval
      */
@@ -450,6 +460,63 @@ class SubscriptionCustomPrice implements \JsonSerializable
     }
 
     /**
+     * Returns List Price Point Id.
+     * (Optional) The ID of a catalog price point of the same product to use as the list price. Ignored
+     * unless list vs sales pricing is enabled for the site.
+     */
+    public function getListPricePointId(): ?int
+    {
+        if (count($this->listPricePointId) == 0) {
+            return null;
+        }
+        return $this->listPricePointId['value'];
+    }
+
+    /**
+     * Sets List Price Point Id.
+     * (Optional) The ID of a catalog price point of the same product to use as the list price. Ignored
+     * unless list vs sales pricing is enabled for the site.
+     *
+     * @maps list_price_point_id
+     */
+    public function setListPricePointId(?int $listPricePointId): void
+    {
+        $this->listPricePointId['value'] = $listPricePointId;
+    }
+
+    /**
+     * Unsets List Price Point Id.
+     * (Optional) The ID of a catalog price point of the same product to use as the list price. Ignored
+     * unless list vs sales pricing is enabled for the site.
+     */
+    public function unsetListPricePointId(): void
+    {
+        $this->listPricePointId = [];
+    }
+
+    /**
+     * Returns Use Default List Price.
+     * (Optional) When list vs sales pricing is enabled and `list_price_point_id` is omitted, the product's
+     * default price point is used as the list price unless this is `false`. Defaults to `true`.
+     */
+    public function getUseDefaultListPrice(): ?bool
+    {
+        return $this->useDefaultListPrice;
+    }
+
+    /**
+     * Sets Use Default List Price.
+     * (Optional) When list vs sales pricing is enabled and `list_price_point_id` is omitted, the product's
+     * default price point is used as the list price unless this is `false`. Defaults to `true`.
+     *
+     * @maps use_default_list_price
+     */
+    public function setUseDefaultListPrice(?bool $useDefaultListPrice): void
+    {
+        $this->useDefaultListPrice = $useDefaultListPrice;
+    }
+
+    /**
      * Converts the SubscriptionCustomPrice object to a human-readable string representation.
      *
      * @return string The string representation of the SubscriptionCustomPrice object.
@@ -473,6 +540,8 @@ class SubscriptionCustomPrice implements \JsonSerializable
                 'expirationInterval' => $this->expirationInterval,
                 'expirationIntervalUnit' => $this->getExpirationIntervalUnit(),
                 'taxIncluded' => $this->taxIncluded,
+                'listPricePointId' => $this->getListPricePointId(),
+                'useDefaultListPrice' => $this->useDefaultListPrice,
                 'additionalProperties' => $this->additionalProperties
             ]
         );
@@ -580,6 +649,12 @@ class SubscriptionCustomPrice implements \JsonSerializable
         }
         if (isset($this->taxIncluded)) {
             $json['tax_included']               = $this->taxIncluded;
+        }
+        if (!empty($this->listPricePointId)) {
+            $json['list_price_point_id']        = $this->listPricePointId['value'];
+        }
+        if (isset($this->useDefaultListPrice)) {
+            $json['use_default_list_price']     = $this->useDefaultListPrice;
         }
         $json = array_merge($json, $this->additionalProperties);
 

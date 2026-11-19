@@ -1,5 +1,9 @@
 # Products
 
+The Product object defines what you sell, including default pricing, billing interval, and trial configuration. With the new catalog experience, the UI labels products as Plans, while the API keeps the product name. See [Catalog terminology](https://docs.maxio.com/billing/catalog/overview/using-the-new-product-catalog#catalog-terminology).
+
+Products are grouped under a Product Family and are the base type a customer subscribes to. Products can also grant features to subscribers through [Create Product Feature Catalog Item](../../doc/controllers/product-features.md#create-product-feature). For more information, see [Understand Plans](https://docs.maxio.com/billing/catalog/plans/understand-plans).
+
 ```php
 $productsController = $client->getProductsController();
 ```
@@ -26,8 +30,8 @@ If you have the new [Catalog experience](page:help/announcements/2026-announceme
 
 For more information, see:
 
-+ [Products Overview](https://maxio.zendesk.com/hc/en-us/articles/24261090117645-Products-Overview)
-+ [Changing a Subscription's Product](https://maxio.zendesk.com/hc/en-us/articles/24252069837581-Product-Changes-and-Migrations)
++ [Products Overview](https://docs.maxio.com/billing/catalog/plans/understand-plans)
++ [Changing a Subscription's Product](https://docs.maxio.com/billing/subscriptions/management/subscription-actions/understand-upgrade-and-downgrade-scenarios)
 
 ```php
 function createProduct(string $productFamilyId, ?CreateOrUpdateProductRequest $body = null): ProductResponse
@@ -148,7 +152,7 @@ try {
 Reads the current details of a product.
 
 ```php
-function readProduct(int $productId): ProductResponse
+function readProduct(int $productId, ?bool $includeFeatures = false): ProductResponse
 ```
 
 ## Authentication
@@ -160,6 +164,7 @@ This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `productId` | `int` | Template, Required | The Advanced Billing id of the product |
+| `includeFeatures` | `?bool` | Query, Optional | When `true`, embeds the active feature catalog items for each result in a `features` array. Default value is `false`. Ignored on sites without Entitlements enabled: no `features` key is returned and no error is raised.<br><br>**Default**: `false` |
 
 ## Response Type
 
@@ -172,10 +177,15 @@ This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
 ```php
 $productId = 202;
 
+$includeFeatures = false;
+
 $productsController = $client->getProductsController();
 
 try {
-    $result = $productsController->readProduct($productId);
+    $result = $productsController->readProduct(
+        $productId,
+        $includeFeatures
+    );
     echo 'ProductResponse:';
     var_dump($result);
 } catch (ApiException $exp) {
@@ -562,6 +572,7 @@ This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
 | `perPage` | `?int` | Query, Optional | This parameter indicates how many records to fetch in each request. Default value is 20. The maximum allowed values is 200; any per_page value over 200 will be changed to 200.<br>Use in query `per_page=200`.<br><br>**Default**: `20`<br><br>**Constraints**: `<= 200` |
 | `includeArchived` | `?bool` | Query, Optional | Include archived products. Use in query: `include_archived=true`. |
 | `mInclude` | [`?string(ListProductsInclude)`](../../doc/models/list-products-include.md) | Query, Optional | Allows including additional data in the response. Use in query `include=prepaid_product_price_point`. |
+| `includeFeatures` | `?bool` | Query, Optional | When `true`, embeds the active feature catalog items for each result in a `features` array. Default value is `false`. Ignored on sites without Entitlements enabled: no `features` key is returned and no error is raised.<br><br>**Default**: `false` |
 
 ## Response Type
 
@@ -586,7 +597,8 @@ $collect = [
     'page' => 1,
     'perPage' => 50,
     'includeArchived' => true,
-    'mInclude' => ListProductsInclude::PREPAID_PRODUCT_PRICE_POINT
+    'mInclude' => ListProductsInclude::PREPAID_PRODUCT_PRICE_POINT,
+    'includeFeatures' => false
 ];
 
 $productsController = $client->getProductsController();

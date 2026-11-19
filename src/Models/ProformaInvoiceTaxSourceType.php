@@ -14,13 +14,28 @@ use Core\Utils\CoreHelper;
 use Exception;
 use stdClass;
 
+/**
+ * The source of the tax. `Tax` is a tax configured in Advanced Billing. The other values identify the
+ * tax service that calculated the tax.
+ */
 class ProformaInvoiceTaxSourceType
 {
     public const TAX = 'Tax';
 
     public const AVALARA = 'Avalara';
 
-    private const _ALL_VALUES = [self::TAX, self::AVALARA];
+    public const ANROK = 'Anrok';
+
+    public const TAXJAR = 'TaxJar';
+
+    public const NUMERAL = 'Numeral';
+
+    public const SPHERE = 'Sphere';
+
+    public const TAXWIRE = 'Taxwire';
+
+    private const _ALL_VALUES =
+        [self::TAX, self::AVALARA, self::ANROK, self::TAXJAR, self::NUMERAL, self::SPHERE, self::TAXWIRE];
 
     /**
      * Ensures that all the given values are present in this Enum.

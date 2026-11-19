@@ -46,7 +46,10 @@
 | `itemCategory` | `?string` | Optional | One of the following: Business Software, Consumer Software, Digital Services, Physical Goods, Other | getItemCategory(): ?string | setItemCategory(?string itemCategory): void |
 | `productPricePointId` | `?int` | Optional | - | getProductPricePointId(): ?int | setProductPricePointId(?int productPricePointId): void |
 | `productPricePointHandle` | `?string` | Optional | - | getProductPricePointHandle(): ?string | setProductPricePointHandle(?string productPricePointHandle): void |
+| `productPricePointListPricePointId` | `?int` | Optional | The ID of the catalog price point used as the list price for the subscription's custom product price. Returned only when list vs sales pricing is enabled for the site. | getProductPricePointListPricePointId(): ?int | setProductPricePointListPricePointId(?int productPricePointListPricePointId): void |
+| `productPricePointListPricePointHandle` | `?string` | Optional | The handle of the catalog price point used as the list price for the subscription's custom product price. Returned only when list vs sales pricing is enabled for the site. | getProductPricePointListPricePointHandle(): ?string | setProductPricePointListPricePointHandle(?string productPricePointListPricePointHandle): void |
 | `unspscCode` | `?string` | Optional | (Optional) Custom UNSPSC commodity code for Level 3/CEDP payment data. When set, this value is sent as the commodity code on invoice line items for this product instead of the default derived from item_category. | getUnspscCode(): ?string | setUnspscCode(?string unspscCode): void |
+| `features` | [`?(FeatureCatalogItem[])`](../../doc/models/feature-catalog-item.md) | Optional | The active feature catalog items attached to this product. Present only when the request includes `include_features=true`. | getFeatures(): ?array | setFeatures(?array features): void |
 
 ## Example
 

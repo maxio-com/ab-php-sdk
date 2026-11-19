@@ -88,6 +88,8 @@ class ProformaInvoiceTax implements \JsonSerializable
 
     /**
      * Returns Source Type.
+     * The source of the tax. `Tax` is a tax configured in Advanced Billing. The other values identify the
+     * tax service that calculated the tax.
      */
     public function getSourceType(): ?string
     {
@@ -96,6 +98,8 @@ class ProformaInvoiceTax implements \JsonSerializable
 
     /**
      * Sets Source Type.
+     * The source of the tax. `Tax` is a tax configured in Advanced Billing. The other values identify the
+     * tax service that calculated the tax.
      *
      * @maps source_type
      * @factory \AdvancedBillingLib\Models\ProformaInvoiceTaxSourceType::checkValue

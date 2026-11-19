@@ -21,6 +21,7 @@
 | `createdAt` | `?DateTime` | Optional | - | getCreatedAt(): ?\DateTime | setCreatedAt(?\DateTime createdAt): void |
 | `updatedAt` | `?DateTime` | Optional | - | getUpdatedAt(): ?\DateTime | setUpdatedAt(?\DateTime updatedAt): void |
 | `prices` | [`?(SegmentPrice[])`](../../doc/models/segment-price.md) | Optional | **Constraints**: *Minimum Items*: `1` | getPrices(): ?array | setPrices(?array prices): void |
+| `currencyPrices` | [`?(ComponentCurrencyPrice[])`](../../doc/models/component-currency-price.md) | Optional | Prices of the segment in the site's non-primary currencies, one entry for each price and currency. This field is present only when the request includes `currency_prices=true`. If the price point uses the site exchange rate, the prices are calculated from the current rate and each `id` is `null`. | getCurrencyPrices(): ?array | setCurrencyPrices(?array currencyPrices): void |
 
 ## Example
 

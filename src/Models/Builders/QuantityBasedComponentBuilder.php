@@ -13,6 +13,7 @@ namespace AdvancedBillingLib\Models\Builders;
 use AdvancedBillingLib\Models\ComponentPricePointItem;
 use AdvancedBillingLib\Models\Price;
 use AdvancedBillingLib\Models\QuantityBasedComponent;
+use AdvancedBillingLib\Models\SecondaryPricing;
 use Core\Utils\CoreHelper;
 
 /**
@@ -85,6 +86,17 @@ class QuantityBasedComponentBuilder
     public function prices(?array $value): self
     {
         $this->instance->setPrices($value);
+        return $this;
+    }
+
+    /**
+     * Sets secondary pricing field.
+     *
+     * @param SecondaryPricing|null $value
+     */
+    public function secondaryPricing(?SecondaryPricing $value): self
+    {
+        $this->instance->setSecondaryPricing($value);
         return $this;
     }
 

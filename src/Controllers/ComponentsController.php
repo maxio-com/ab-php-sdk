@@ -44,13 +44,13 @@ class ComponentsController extends BaseController
      *
      * #### Hybrid Pricing
      * A `volume`, `tiered`, or `stairstep` metered component can combine its primary pricing with a
-     * secondary pricing model (the `overage_pricing` parameter) so both bill as a single invoice line item
-     * instead of two. This does not apply to metered components configured for event-based billing (metric,
-     * meter, or formula). See [Hybrid Pricing](page:introduction/basic-concepts/hybrid-pricing) for
-     * requirements and configuration details.
+     * secondary pricing model (the `secondary_pricing` parameter) so both bill as a single invoice line
+     * item instead of two. This does not apply to metered components configured for event-based billing
+     * (metric, meter, or formula). See [Hybrid Pricing](page:introduction/basic-concepts/hybrid-pricing)
+     * for requirements and configuration details.
      *
-     * For more information on components, see our documentation [here](https://maxio.zendesk.com/hc/en-
-     * us/articles/24261141522189-Components-Overview).
+     * For more information on components, see our documentation [here](https://docs.maxio.
+     * com/billing/catalog/products/understand-products).
      *
      * If you have the new [Catalog experience](page:help/announcements/2026-announcements#new-catalog-
      * experience-and-terminology) enabled, taxable components must include a non-blank `tax_code`. Sending
@@ -111,16 +111,16 @@ class ComponentsController extends BaseController
      * The allocated quantity for one-time quantity-based components immediately gets reset back to zero
      * after the allocation is made.
      *
-     * For more information, see [Components Overview](https://maxio.zendesk.com/hc/en-
-     * us/articles/24261141522189-Components-Overview).
+     * For more information, see [Understand Products](https://docs.maxio.
+     * com/billing/catalog/products/understand-products).
      * #### Hybrid Pricing
      * A `volume`, `tiered`, or `stairstep` component can combine its primary pricing with a secondary
-     * pricing model (the `overage_pricing` parameter) so both bill as a single invoice line item instead
+     * pricing model (the `secondary_pricing` parameter) so both bill as a single invoice line item instead
      * of two. See [Hybrid Pricing](page:introduction/basic-concepts/hybrid-pricing) for requirements and
      * configuration details.
      *
-     * For more information on components, see our documentation [here](https://maxio.zendesk.com/hc/en-
-     * us/articles/24261141522189-Components-Overview).
+     * For more information on components, see our documentation [here](https://docs.maxio.
+     * com/billing/catalog/products/understand-products).
      *
      * If you have the new [Catalog experience](page:help/announcements/2026-announcements#new-catalog-
      * experience-and-terminology) enabled, taxable components must include a non-blank `tax_code`. Sending
@@ -170,8 +170,8 @@ class ComponentsController extends BaseController
      * On/off components are used for any flat fee, recurring add on (think $99/month for tech support or a
      * flat add on shipping fee).
      *
-     * For more information on components, see our documentation [here](https://maxio.zendesk.com/hc/en-
-     * us/articles/24261141522189-Components-Overview).
+     * For more information on components, see our documentation [here](https://docs.maxio.
+     * com/billing/catalog/products/understand-products).
      *
      * If you have the new [Catalog experience](page:help/announcements/2026-announcements#new-catalog-
      * experience-and-terminology) enabled, taxable components must include a non-blank `tax_code`. Sending
@@ -223,8 +223,8 @@ class ComponentsController extends BaseController
      * charge at the end of the period for the amount of units used, prepaid components are charged for at
      * the time of purchase, and usage is subsequently tracked against the amount purchased.
      *
-     * For more information, see [Components Overview](https://maxio.zendesk.com/hc/en-
-     * us/articles/24261141522189-Components-Overview).
+     * For more information, see [Understand Products](https://docs.maxio.
+     * com/billing/catalog/products/understand-products).
      *
      * If you have the new [Catalog experience](page:help/announcements/2026-announcements#new-catalog-
      * experience-and-terminology) enabled, taxable components must include a non-blank `tax_code`; sending
@@ -280,8 +280,8 @@ class ComponentsController extends BaseController
      * So, instead of reporting usage directly for each component (as you would with metered components),
      * the usage is derived from analysis of your events.
      *
-     * For more information, see [Components Overview](https://maxio.zendesk.com/hc/en-
-     * us/articles/24261141522189-Components-Overview).
+     * For more information, see [Understand Products](https://docs.maxio.
+     * com/billing/catalog/products/understand-products).
      *
      * If you have the new [Catalog experience](page:help/announcements/2026-announcements#new-catalog-
      * experience-and-terminology) enabled, taxable components must include a non-blank `tax_code`; sending
@@ -355,13 +355,19 @@ class ComponentsController extends BaseController
      *        component belongs
      * @param string $componentId Either the Advanced Billing id of the component or the handle for
      *        the component prefixed with `handle:`
+     * @param bool|null $includeFeatures When `true`, embeds the active feature catalog items for
+     *        each result in a `features` array. Default value is `false`. Ignored on sites
+     *        without Entitlements enabled: no `features` key is returned and no error is raised.
      *
      * @return ComponentResponse Response from the API call
      *
      * @throws ApiException Thrown if API call fails
      */
-    public function readComponent(int $productFamilyId, string $componentId): ComponentResponse
-    {
+    public function readComponent(
+        int $productFamilyId,
+        string $componentId,
+        ?bool $includeFeatures = false
+    ): ComponentResponse {
         $_reqBuilder = $this->requestBuilder(
             RequestMethod::GET,
             '/product_families/{product_family_id}/components/{component_id}.json'
@@ -369,7 +375,8 @@ class ComponentsController extends BaseController
             ->auth('BasicAuth')
             ->parameters(
                 TemplateParam::init('product_family_id', $productFamilyId)->required(),
-                TemplateParam::init('component_id', $componentId)->required()
+                TemplateParam::init('component_id', $componentId)->required(),
+                QueryParam::init('include_features', $includeFeatures)->commaSeparated()
             );
 
         $_resHandler = $this->responseHandler()->type(ComponentResponse::class);

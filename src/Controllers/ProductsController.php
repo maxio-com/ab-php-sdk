@@ -35,9 +35,10 @@ class ProductsController extends BaseController
      *
      * For more information, see:
      *
-     * + [Products Overview](https://maxio.zendesk.com/hc/en-us/articles/24261090117645-Products-Overview)
-     * + [Changing a Subscription's Product](https://maxio.zendesk.com/hc/en-us/articles/24252069837581-
-     * Product-Changes-and-Migrations)
+     * + [Products Overview](https://docs.maxio.com/billing/catalog/plans/understand-plans)
+     * + [Changing a Subscription's Product](https://docs.maxio.
+     * com/billing/subscriptions/management/subscription-actions/understand-upgrade-and-downgrade-
+     * scenarios)
      *
      * @param string $productFamilyId Either the product family's id or its handle prefixed with
      *        `handle:`
@@ -77,16 +78,22 @@ class ProductsController extends BaseController
      * Reads the current details of a product.
      *
      * @param int $productId The Advanced Billing id of the product
+     * @param bool|null $includeFeatures When `true`, embeds the active feature catalog items for
+     *        each result in a `features` array. Default value is `false`. Ignored on sites
+     *        without Entitlements enabled: no `features` key is returned and no error is raised.
      *
      * @return ProductResponse Response from the API call
      *
      * @throws ApiException Thrown if API call fails
      */
-    public function readProduct(int $productId): ProductResponse
+    public function readProduct(int $productId, ?bool $includeFeatures = false): ProductResponse
     {
         $_reqBuilder = $this->requestBuilder(RequestMethod::GET, '/products/{product_id}.json')
             ->auth('BasicAuth')
-            ->parameters(TemplateParam::init('product_id', $productId)->required());
+            ->parameters(
+                TemplateParam::init('product_id', $productId)->required(),
+                QueryParam::init('include_features', $includeFeatures)->commaSeparated()
+            );
 
         $_resHandler = $this->responseHandler()->type(ProductResponse::class);
 
@@ -230,7 +237,8 @@ class ProductsController extends BaseController
                 QueryParam::init('include', $options)
                     ->commaSeparated()
                     ->extract('mInclude')
-                    ->serializeBy([ListProductsInclude::class, 'checkValue'])
+                    ->serializeBy([ListProductsInclude::class, 'checkValue']),
+                QueryParam::init('include_features', $options)->commaSeparated()->extract('includeFeatures', false)
             );
 
         $_resHandler = $this->responseHandler()->type(ProductResponse::class, 1);

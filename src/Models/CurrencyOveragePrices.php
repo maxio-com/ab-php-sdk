@@ -115,6 +115,16 @@ class CurrencyOveragePrices implements \JsonSerializable
     private $overagePricingScheme;
 
     /**
+     * @var ComponentPrice[]|null
+     */
+    private $secondaryPrices;
+
+    /**
+     * @var string|null
+     */
+    private $secondaryPricingScheme;
+
+    /**
      * @var bool|null
      */
     private $renewPrepaidAllocation;
@@ -138,6 +148,11 @@ class CurrencyOveragePrices implements \JsonSerializable
      * @var ComponentCurrencyPrice[]|null
      */
     private $currencyOveragePrices;
+
+    /**
+     * @var ComponentCurrencyPrice[]|null
+     */
+    private $currencySecondaryPrices;
 
     /**
      * Returns Id.
@@ -596,6 +611,53 @@ class CurrencyOveragePrices implements \JsonSerializable
     }
 
     /**
+     * Returns Secondary Prices.
+     * Returned only for hybrid price points. An array of secondary price brackets. Hybrid price points
+     * never return `overage_prices` or `overage_pricing_scheme`.
+     *
+     * @return ComponentPrice[]|null
+     */
+    public function getSecondaryPrices(): ?array
+    {
+        return $this->secondaryPrices;
+    }
+
+    /**
+     * Sets Secondary Prices.
+     * Returned only for hybrid price points. An array of secondary price brackets. Hybrid price points
+     * never return `overage_prices` or `overage_pricing_scheme`.
+     *
+     * @maps secondary_prices
+     *
+     * @param ComponentPrice[]|null $secondaryPrices
+     */
+    public function setSecondaryPrices(?array $secondaryPrices): void
+    {
+        $this->secondaryPrices = $secondaryPrices;
+    }
+
+    /**
+     * Returns Secondary Pricing Scheme.
+     * Returned only for hybrid price points. Pricing scheme for the secondary pricing model.
+     */
+    public function getSecondaryPricingScheme(): ?string
+    {
+        return $this->secondaryPricingScheme;
+    }
+
+    /**
+     * Sets Secondary Pricing Scheme.
+     * Returned only for hybrid price points. Pricing scheme for the secondary pricing model.
+     *
+     * @maps secondary_pricing_scheme
+     * @factory \AdvancedBillingLib\Models\PricingScheme::checkValue
+     */
+    public function setSecondaryPricingScheme(?string $secondaryPricingScheme): void
+    {
+        $this->secondaryPricingScheme = $secondaryPricingScheme;
+    }
+
+    /**
      * Returns Renew Prepaid Allocation.
      * Applicable only to prepaid usage components. Boolean which controls whether or not the allocated
      * quantity should be renewed at the beginning of each period.
@@ -735,6 +797,34 @@ class CurrencyOveragePrices implements \JsonSerializable
     }
 
     /**
+     * Returns Currency Secondary Prices.
+     * Returned only for hybrid price points, by List All Component Price Points with
+     * `include=currency_secondary_prices` or `include=currency_overage_prices`. An array of currency
+     * pricing data for secondary prices.
+     *
+     * @return ComponentCurrencyPrice[]|null
+     */
+    public function getCurrencySecondaryPrices(): ?array
+    {
+        return $this->currencySecondaryPrices;
+    }
+
+    /**
+     * Sets Currency Secondary Prices.
+     * Returned only for hybrid price points, by List All Component Price Points with
+     * `include=currency_secondary_prices` or `include=currency_overage_prices`. An array of currency
+     * pricing data for secondary prices.
+     *
+     * @maps currency_secondary_prices
+     *
+     * @param ComponentCurrencyPrice[]|null $currencySecondaryPrices
+     */
+    public function setCurrencySecondaryPrices(?array $currencySecondaryPrices): void
+    {
+        $this->currencySecondaryPrices = $currencySecondaryPrices;
+    }
+
+    /**
      * Converts the CurrencyOveragePrices object to a human-readable string representation.
      *
      * @return string The string representation of the CurrencyOveragePrices object.
@@ -763,11 +853,14 @@ class CurrencyOveragePrices implements \JsonSerializable
                 'currencyPrices' => $this->currencyPrices,
                 'overagePrices' => $this->overagePrices,
                 'overagePricingScheme' => $this->overagePricingScheme,
+                'secondaryPrices' => $this->secondaryPrices,
+                'secondaryPricingScheme' => $this->secondaryPricingScheme,
                 'renewPrepaidAllocation' => $this->renewPrepaidAllocation,
                 'rolloverPrepaidRemainder' => $this->rolloverPrepaidRemainder,
                 'expirationInterval' => $this->getExpirationInterval(),
                 'expirationIntervalUnit' => $this->getExpirationIntervalUnit(),
                 'currencyOveragePrices' => $this->currencyOveragePrices,
+                'currencySecondaryPrices' => $this->currencySecondaryPrices,
                 'additionalProperties' => $this->additionalProperties
             ]
         );
@@ -870,6 +963,12 @@ class CurrencyOveragePrices implements \JsonSerializable
         if (isset($this->overagePricingScheme)) {
             $json['overage_pricing_scheme']     = PricingScheme::checkValue($this->overagePricingScheme);
         }
+        if (isset($this->secondaryPrices)) {
+            $json['secondary_prices']           = $this->secondaryPrices;
+        }
+        if (isset($this->secondaryPricingScheme)) {
+            $json['secondary_pricing_scheme']   = PricingScheme::checkValue($this->secondaryPricingScheme);
+        }
         if (isset($this->renewPrepaidAllocation)) {
             $json['renew_prepaid_allocation']   = $this->renewPrepaidAllocation;
         }
@@ -887,6 +986,9 @@ class CurrencyOveragePrices implements \JsonSerializable
         }
         if (isset($this->currencyOveragePrices)) {
             $json['currency_overage_prices']    = $this->currencyOveragePrices;
+        }
+        if (isset($this->currencySecondaryPrices)) {
+            $json['currency_secondary_prices']  = $this->currencySecondaryPrices;
         }
         $json = array_merge($json, $this->additionalProperties);
 

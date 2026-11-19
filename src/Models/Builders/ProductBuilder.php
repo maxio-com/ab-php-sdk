@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models\Builders;
 
+use AdvancedBillingLib\Models\FeatureCatalogItem;
 use AdvancedBillingLib\Models\Product;
 use AdvancedBillingLib\Models\ProductFamily;
 use AdvancedBillingLib\Models\PublicSignupPage;
@@ -610,6 +611,46 @@ class ProductBuilder
     }
 
     /**
+     * Sets product price point list price point id field.
+     *
+     * @param int|null $value
+     */
+    public function productPricePointListPricePointId(?int $value): self
+    {
+        $this->instance->setProductPricePointListPricePointId($value);
+        return $this;
+    }
+
+    /**
+     * Unsets product price point list price point id field.
+     */
+    public function unsetProductPricePointListPricePointId(): self
+    {
+        $this->instance->unsetProductPricePointListPricePointId();
+        return $this;
+    }
+
+    /**
+     * Sets product price point list price point handle field.
+     *
+     * @param string|null $value
+     */
+    public function productPricePointListPricePointHandle(?string $value): self
+    {
+        $this->instance->setProductPricePointListPricePointHandle($value);
+        return $this;
+    }
+
+    /**
+     * Unsets product price point list price point handle field.
+     */
+    public function unsetProductPricePointListPricePointHandle(): self
+    {
+        $this->instance->unsetProductPricePointListPricePointHandle();
+        return $this;
+    }
+
+    /**
      * Sets unspsc code field.
      *
      * @param string|null $value
@@ -626,6 +667,26 @@ class ProductBuilder
     public function unsetUnspscCode(): self
     {
         $this->instance->unsetUnspscCode();
+        return $this;
+    }
+
+    /**
+     * Sets features field.
+     *
+     * @param FeatureCatalogItem[]|null $value
+     */
+    public function features(?array $value): self
+    {
+        $this->instance->setFeatures($value);
+        return $this;
+    }
+
+    /**
+     * Unsets features field.
+     */
+    public function unsetFeatures(): self
+    {
+        $this->instance->unsetFeatures();
         return $this;
     }
 

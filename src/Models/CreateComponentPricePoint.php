@@ -36,6 +36,16 @@ class CreateComponentPricePoint implements \JsonSerializable
     private $prices;
 
     /**
+     * @var SecondaryPricing|null
+     */
+    private $secondaryPricing;
+
+    /**
+     * @var string|null
+     */
+    private $secondaryPricingScheme;
+
+    /**
      * @var bool|null
      */
     private $useSiteExchangeRate = true;
@@ -149,6 +159,55 @@ class CreateComponentPricePoint implements \JsonSerializable
     public function setPrices(array $prices): void
     {
         $this->prices = $prices;
+    }
+
+    /**
+     * Returns Secondary Pricing.
+     * Hybrid Pricing only. The secondary pricing model that takes over once usage passes the primary
+     * model's included threshold. Applies to Quantity-Based and Metered Components on Sites with Hybrid
+     * Pricing enabled; ignored otherwise. Its `prices` brackets start at `1`, not at the primary model's
+     * highest `ending_quantity`. See [Hybrid Pricing](page:introduction/basic-concepts/hybrid-pricing).
+     */
+    public function getSecondaryPricing(): ?SecondaryPricing
+    {
+        return $this->secondaryPricing;
+    }
+
+    /**
+     * Sets Secondary Pricing.
+     * Hybrid Pricing only. The secondary pricing model that takes over once usage passes the primary
+     * model's included threshold. Applies to Quantity-Based and Metered Components on Sites with Hybrid
+     * Pricing enabled; ignored otherwise. Its `prices` brackets start at `1`, not at the primary model's
+     * highest `ending_quantity`. See [Hybrid Pricing](page:introduction/basic-concepts/hybrid-pricing).
+     *
+     * @maps secondary_pricing
+     */
+    public function setSecondaryPricing(?SecondaryPricing $secondaryPricing): void
+    {
+        $this->secondaryPricing = $secondaryPricing;
+    }
+
+    /**
+     * Returns Secondary Pricing Scheme.
+     * Hybrid Pricing only. Alternative to `secondary_pricing.pricing_scheme`; when both are sent,
+     * `secondary_pricing.pricing_scheme` is used. Setting not supported when creating price points in bulk.
+     */
+    public function getSecondaryPricingScheme(): ?string
+    {
+        return $this->secondaryPricingScheme;
+    }
+
+    /**
+     * Sets Secondary Pricing Scheme.
+     * Hybrid Pricing only. Alternative to `secondary_pricing.pricing_scheme`; when both are sent,
+     * `secondary_pricing.pricing_scheme` is used. Setting not supported when creating price points in bulk.
+     *
+     * @maps secondary_pricing_scheme
+     * @factory \AdvancedBillingLib\Models\PricingScheme::checkValue
+     */
+    public function setSecondaryPricingScheme(?string $secondaryPricingScheme): void
+    {
+        $this->secondaryPricingScheme = $secondaryPricingScheme;
     }
 
     /**
@@ -269,6 +328,8 @@ class CreateComponentPricePoint implements \JsonSerializable
                 'handle' => $this->handle,
                 'pricingScheme' => $this->pricingScheme,
                 'prices' => $this->prices,
+                'secondaryPricing' => $this->secondaryPricing,
+                'secondaryPricingScheme' => $this->secondaryPricingScheme,
                 'useSiteExchangeRate' => $this->useSiteExchangeRate,
                 'taxIncluded' => $this->taxIncluded,
                 'interval' => $this->interval,
@@ -318,23 +379,29 @@ class CreateComponentPricePoint implements \JsonSerializable
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
-        $json['name']                       = $this->name;
+        $json['name']                         = $this->name;
         if (isset($this->handle)) {
-            $json['handle']                 = $this->handle;
+            $json['handle']                   = $this->handle;
         }
-        $json['pricing_scheme']             = PricingScheme::checkValue($this->pricingScheme);
-        $json['prices']                     = $this->prices;
+        $json['pricing_scheme']               = PricingScheme::checkValue($this->pricingScheme);
+        $json['prices']                       = $this->prices;
+        if (isset($this->secondaryPricing)) {
+            $json['secondary_pricing']        = $this->secondaryPricing;
+        }
+        if (isset($this->secondaryPricingScheme)) {
+            $json['secondary_pricing_scheme'] = PricingScheme::checkValue($this->secondaryPricingScheme);
+        }
         if (isset($this->useSiteExchangeRate)) {
-            $json['use_site_exchange_rate'] = $this->useSiteExchangeRate;
+            $json['use_site_exchange_rate']   = $this->useSiteExchangeRate;
         }
         if (isset($this->taxIncluded)) {
-            $json['tax_included']           = $this->taxIncluded;
+            $json['tax_included']             = $this->taxIncluded;
         }
         if (isset($this->interval)) {
-            $json['interval']               = $this->interval;
+            $json['interval']                 = $this->interval;
         }
         if (!empty($this->intervalUnit)) {
-            $json['interval_unit']          = IntervalUnit::checkValue($this->intervalUnit['value']);
+            $json['interval_unit']            = IntervalUnit::checkValue($this->intervalUnit['value']);
         }
         $json = array_merge($json, $this->additionalProperties);
 

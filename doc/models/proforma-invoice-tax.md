@@ -11,7 +11,7 @@
 |  --- | --- | --- | --- | --- | --- |
 | `uid` | `?string` | Optional | **Constraints**: *Minimum Length*: `1` | getUid(): ?string | setUid(?string uid): void |
 | `title` | `?string` | Optional | **Constraints**: *Minimum Length*: `1` | getTitle(): ?string | setTitle(?string title): void |
-| `sourceType` | [`?string(ProformaInvoiceTaxSourceType)`](../../doc/models/proforma-invoice-tax-source-type.md) | Optional | - | getSourceType(): ?string | setSourceType(?string sourceType): void |
+| `sourceType` | [`?string(ProformaInvoiceTaxSourceType)`](../../doc/models/proforma-invoice-tax-source-type.md) | Optional | The source of the tax. `Tax` is a tax configured in Advanced Billing. The other values identify the tax service that calculated the tax. | getSourceType(): ?string | setSourceType(?string sourceType): void |
 | `percentage` | `?string` | Optional | **Constraints**: *Minimum Length*: `1` | getPercentage(): ?string | setPercentage(?string percentage): void |
 | `taxableAmount` | `?string` | Optional | **Constraints**: *Minimum Length*: `1` | getTaxableAmount(): ?string | setTaxableAmount(?string taxableAmount): void |
 | `taxAmount` | `?string` | Optional | **Constraints**: *Minimum Length*: `1` | getTaxAmount(): ?string | setTaxAmount(?string taxAmount): void |
@@ -26,7 +26,7 @@ use AdvancedBillingLib\Models\ProformaInvoiceTaxSourceType;
 $proformaInvoiceTax = ProformaInvoiceTaxBuilder::init()
     ->uid('uid4')
     ->title('title0')
-    ->sourceType(ProformaInvoiceTaxSourceType::TAX)
+    ->sourceType(ProformaInvoiceTaxSourceType::NUMERAL)
     ->percentage('percentage2')
     ->taxableAmount('taxable_amount8')
     ->build();

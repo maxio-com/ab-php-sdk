@@ -51,6 +51,11 @@ class QuantityBasedComponent implements \JsonSerializable
     private $prices;
 
     /**
+     * @var SecondaryPricing|null
+     */
+    private $secondaryPricing;
+
+    /**
      * @var array
      */
     private $upgradeCharge = [];
@@ -266,8 +271,8 @@ class QuantityBasedComponent implements \JsonSerializable
     /**
      * Returns Prices.
      * (Not required for ‘per_unit’ pricing schemes) One or more price brackets. See [Price Bracket
-     * Rules](https://maxio.zendesk.com/hc/en-us/articles/24261149166733-Component-Pricing-Schemes#price-
-     * bracket-rules) for an overview of how price brackets work for different pricing schemes.
+     * Rules](https://docs.maxio.com/billing/catalog/products/use-product-pricing-schemes#price-bracket-
+     * rules) for an overview of how price brackets work for different pricing schemes.
      *
      * @return Price[]|null
      */
@@ -279,8 +284,8 @@ class QuantityBasedComponent implements \JsonSerializable
     /**
      * Sets Prices.
      * (Not required for ‘per_unit’ pricing schemes) One or more price brackets. See [Price Bracket
-     * Rules](https://maxio.zendesk.com/hc/en-us/articles/24261149166733-Component-Pricing-Schemes#price-
-     * bracket-rules) for an overview of how price brackets work for different pricing schemes.
+     * Rules](https://docs.maxio.com/billing/catalog/products/use-product-pricing-schemes#price-bracket-
+     * rules) for an overview of how price brackets work for different pricing schemes.
      *
      * @maps prices
      *
@@ -289,6 +294,32 @@ class QuantityBasedComponent implements \JsonSerializable
     public function setPrices(?array $prices): void
     {
         $this->prices = $prices;
+    }
+
+    /**
+     * Returns Secondary Pricing.
+     * Hybrid Pricing only. The secondary pricing model that takes over once usage passes the primary
+     * model's included threshold. Applies to Quantity-Based and Metered Components on Sites with Hybrid
+     * Pricing enabled; ignored otherwise. Its `prices` brackets start at `1`, not at the primary model's
+     * highest `ending_quantity`. See [Hybrid Pricing](page:introduction/basic-concepts/hybrid-pricing).
+     */
+    public function getSecondaryPricing(): ?SecondaryPricing
+    {
+        return $this->secondaryPricing;
+    }
+
+    /**
+     * Sets Secondary Pricing.
+     * Hybrid Pricing only. The secondary pricing model that takes over once usage passes the primary
+     * model's included threshold. Applies to Quantity-Based and Metered Components on Sites with Hybrid
+     * Pricing enabled; ignored otherwise. Its `prices` brackets start at `1`, not at the primary model's
+     * highest `ending_quantity`. See [Hybrid Pricing](page:introduction/basic-concepts/hybrid-pricing).
+     *
+     * @maps secondary_pricing
+     */
+    public function setSecondaryPricing(?SecondaryPricing $secondaryPricing): void
+    {
+        $this->secondaryPricing = $secondaryPricing;
     }
 
     /**
@@ -649,6 +680,7 @@ class QuantityBasedComponent implements \JsonSerializable
                 'taxable' => $this->taxable,
                 'pricingScheme' => $this->pricingScheme,
                 'prices' => $this->prices,
+                'secondaryPricing' => $this->secondaryPricing,
                 'upgradeCharge' => $this->getUpgradeCharge(),
                 'downgradeCredit' => $this->getDowngradeCredit(),
                 'pricePoints' => $this->pricePoints,
@@ -721,6 +753,9 @@ class QuantityBasedComponent implements \JsonSerializable
         $json['pricing_scheme']                  = PricingScheme::checkValue($this->pricingScheme);
         if (isset($this->prices)) {
             $json['prices']                      = $this->prices;
+        }
+        if (isset($this->secondaryPricing)) {
+            $json['secondary_pricing']           = $this->secondaryPricing;
         }
         if (!empty($this->upgradeCharge)) {
             $json['upgrade_charge']              = CreditType::checkValue($this->upgradeCharge['value']);

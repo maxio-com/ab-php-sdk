@@ -103,6 +103,15 @@ class CreditNoteBuilder
     }
 
     /**
+     * Unsets number field.
+     */
+    public function unsetNumber(): self
+    {
+        $this->instance->unsetNumber();
+        return $this;
+    }
+
+    /**
      * Sets sequence number field.
      *
      * @param int|null $value
@@ -110,6 +119,15 @@ class CreditNoteBuilder
     public function sequenceNumber(?int $value): self
     {
         $this->instance->setSequenceNumber($value);
+        return $this;
+    }
+
+    /**
+     * Unsets sequence number field.
+     */
+    public function unsetSequenceNumber(): self
+    {
+        $this->instance->unsetSequenceNumber();
         return $this;
     }
 

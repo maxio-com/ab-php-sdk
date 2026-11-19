@@ -1,0 +1,52 @@
+<?php
+
+declare(strict_types=1);
+
+/*
+ * AdvancedBilling
+ *
+ * This file was automatically generated for Maxio by APIMATIC v3.0 ( https://www.apimatic.io ).
+ */
+
+namespace AdvancedBillingLib\Models;
+
+use Core\Utils\CoreHelper;
+use Exception;
+use stdClass;
+
+/**
+ * The behavior of a feature:
+ * - `access_right`: a boolean entitlement. A subscriber either has access or does not.
+ * - `usage_limit`: a quantified allowance measured over a recurring period (for example, "10,000 API
+ * calls per month").
+ * - `service_right`: a free-form value (text, boolean, or number) that isn't a simple access flag or a
+ * metered limit.
+ */
+class FeatureKind
+{
+    public const ACCESS_RIGHT = 'access_right';
+
+    public const USAGE_LIMIT = 'usage_limit';
+
+    public const SERVICE_RIGHT = 'service_right';
+
+    private const _ALL_VALUES = [self::ACCESS_RIGHT, self::USAGE_LIMIT, self::SERVICE_RIGHT];
+
+    /**
+     * Ensures that all the given values are present in this Enum.
+     *
+     * @param array|stdClass|null|string $value Value or a list/map of values to be checked
+     *
+     * @return array|null|string Input value(s), if all are a part of this Enum
+     *
+     * @throws Exception Throws exception if any given value is not in this Enum
+     */
+    public static function checkValue($value)
+    {
+        $value = json_decode(json_encode($value), true); // converts stdClass into array
+        if (CoreHelper::checkValueOrValuesInList($value, self::_ALL_VALUES)) {
+            return $value;
+        }
+        throw new Exception("$value is invalid for FeatureKind.");
+    }
+}

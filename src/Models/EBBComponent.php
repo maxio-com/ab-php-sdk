@@ -243,8 +243,8 @@ class EBBComponent implements \JsonSerializable
     /**
      * Returns Prices.
      * (Not required for ‘per_unit’ pricing schemes) One or more price brackets. See [Price Bracket
-     * Rules](https://maxio.zendesk.com/hc/en-us/articles/24261149166733-Component-Pricing-Schemes#price-
-     * bracket-rules) for an overview of how price brackets work for different pricing schemes.
+     * Rules](https://docs.maxio.com/billing/catalog/products/use-product-pricing-schemes#price-bracket-
+     * rules) for an overview of how price brackets work for different pricing schemes.
      *
      * @return Price[]|null
      */
@@ -256,8 +256,8 @@ class EBBComponent implements \JsonSerializable
     /**
      * Sets Prices.
      * (Not required for ‘per_unit’ pricing schemes) One or more price brackets. See [Price Bracket
-     * Rules](https://maxio.zendesk.com/hc/en-us/articles/24261149166733-Component-Pricing-Schemes#price-
-     * bracket-rules) for an overview of how price brackets work for different pricing schemes.
+     * Rules](https://docs.maxio.com/billing/catalog/products/use-product-pricing-schemes#price-bracket-
+     * rules) for an overview of how price brackets work for different pricing schemes.
      *
      * @maps prices
      *

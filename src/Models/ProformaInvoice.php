@@ -483,8 +483,8 @@ class ProformaInvoice implements \JsonSerializable
      * "Parent" invoices do not have lines of their own, but they have subtotals and totals which aggregate
      * the member invoice segments.
      *
-     * See also the [invoice consolidation documentation](https://maxio.zendesk.com/hc/en-
-     * us/articles/24252269909389-Invoice-Consolidation).
+     * See also the [invoice consolidation documentation](https://docs.maxio.com/billing/invoicing/working-
+     * with-invoices/understand-invoice-consolidation).
      */
     public function getConsolidationLevel(): ?string
     {
@@ -503,8 +503,8 @@ class ProformaInvoice implements \JsonSerializable
      * "Parent" invoices do not have lines of their own, but they have subtotals and totals which aggregate
      * the member invoice segments.
      *
-     * See also the [invoice consolidation documentation](https://maxio.zendesk.com/hc/en-
-     * us/articles/24252269909389-Invoice-Consolidation).
+     * See also the [invoice consolidation documentation](https://docs.maxio.com/billing/invoicing/working-
+     * with-invoices/understand-invoice-consolidation).
      *
      * @maps consolidation_level
      * @factory \AdvancedBillingLib\Models\InvoiceConsolidationLevel::checkValue

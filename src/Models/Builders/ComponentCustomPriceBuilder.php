@@ -12,6 +12,7 @@ namespace AdvancedBillingLib\Models\Builders;
 
 use AdvancedBillingLib\Models\ComponentCustomPrice;
 use AdvancedBillingLib\Models\Price;
+use AdvancedBillingLib\Models\SubscriptionComponentCustomPriceSegment;
 use Core\Utils\CoreHelper;
 
 /**
@@ -184,6 +185,17 @@ class ComponentCustomPriceBuilder
     public function unsetExpirationIntervalUnit(): self
     {
         $this->instance->unsetExpirationIntervalUnit();
+        return $this;
+    }
+
+    /**
+     * Sets segments field.
+     *
+     * @param SubscriptionComponentCustomPriceSegment[]|null $value
+     */
+    public function segments(?array $value): self
+    {
+        $this->instance->setSegments($value);
         return $this;
     }
 

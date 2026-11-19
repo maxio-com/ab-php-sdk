@@ -47,19 +47,19 @@ class Component implements \JsonSerializable
     private $unitPrice = [];
 
     /**
-     * @var int|null
+     * @var array
      */
-    private $productFamilyId;
+    private $productFamilyId = [];
 
     /**
-     * @var string|null
+     * @var array
      */
-    private $productFamilyName;
+    private $productFamilyName = [];
 
     /**
-     * @var string|null
+     * @var array
      */
-    private $productFamilyHandle;
+    private $productFamilyHandle = [];
 
     /**
      * @var array
@@ -195,6 +195,11 @@ class Component implements \JsonSerializable
      * @var array
      */
     private $unspscCode = [];
+
+    /**
+     * @var array
+     */
+    private $features = [];
 
     /**
      * Returns Id.
@@ -357,62 +362,107 @@ class Component implements \JsonSerializable
 
     /**
      * Returns Product Family Id.
-     * The id of the Product Family to which the Component belongs
+     * The id of the Product Family to which the Component belongs. `null` for a Wallet Product, which has
+     * no Product Family.
      */
     public function getProductFamilyId(): ?int
     {
-        return $this->productFamilyId;
+        if (count($this->productFamilyId) == 0) {
+            return null;
+        }
+        return $this->productFamilyId['value'];
     }
 
     /**
      * Sets Product Family Id.
-     * The id of the Product Family to which the Component belongs
+     * The id of the Product Family to which the Component belongs. `null` for a Wallet Product, which has
+     * no Product Family.
      *
      * @maps product_family_id
      */
     public function setProductFamilyId(?int $productFamilyId): void
     {
-        $this->productFamilyId = $productFamilyId;
+        $this->productFamilyId['value'] = $productFamilyId;
+    }
+
+    /**
+     * Unsets Product Family Id.
+     * The id of the Product Family to which the Component belongs. `null` for a Wallet Product, which has
+     * no Product Family.
+     */
+    public function unsetProductFamilyId(): void
+    {
+        $this->productFamilyId = [];
     }
 
     /**
      * Returns Product Family Name.
-     * The name of the Product Family to which the Component belongs
+     * The name of the Product Family to which the Component belongs. `null` for a Wallet Product, which
+     * has no Product Family.
      */
     public function getProductFamilyName(): ?string
     {
-        return $this->productFamilyName;
+        if (count($this->productFamilyName) == 0) {
+            return null;
+        }
+        return $this->productFamilyName['value'];
     }
 
     /**
      * Sets Product Family Name.
-     * The name of the Product Family to which the Component belongs
+     * The name of the Product Family to which the Component belongs. `null` for a Wallet Product, which
+     * has no Product Family.
      *
      * @maps product_family_name
      */
     public function setProductFamilyName(?string $productFamilyName): void
     {
-        $this->productFamilyName = $productFamilyName;
+        $this->productFamilyName['value'] = $productFamilyName;
+    }
+
+    /**
+     * Unsets Product Family Name.
+     * The name of the Product Family to which the Component belongs. `null` for a Wallet Product, which
+     * has no Product Family.
+     */
+    public function unsetProductFamilyName(): void
+    {
+        $this->productFamilyName = [];
     }
 
     /**
      * Returns Product Family Handle.
-     * The handle of the Product Family to which the Component belongs
+     * The handle of the Product Family to which the Component belongs. `null` for a Wallet Product, which
+     * has no Product Family.
      */
     public function getProductFamilyHandle(): ?string
     {
-        return $this->productFamilyHandle;
+        if (count($this->productFamilyHandle) == 0) {
+            return null;
+        }
+        return $this->productFamilyHandle['value'];
     }
 
     /**
      * Sets Product Family Handle.
-     * The handle of the Product Family to which the Component belongs
+     * The handle of the Product Family to which the Component belongs. `null` for a Wallet Product, which
+     * has no Product Family.
      *
      * @maps product_family_handle
      */
     public function setProductFamilyHandle(?string $productFamilyHandle): void
     {
-        $this->productFamilyHandle = $productFamilyHandle;
+        $this->productFamilyHandle['value'] = $productFamilyHandle;
+    }
+
+    /**
+     * Unsets Product Family Handle.
+     * The handle of the Product Family to which the Component belongs. `null` for a Wallet Product, which
+     * has no Product Family.
+     */
+    public function unsetProductFamilyHandle(): void
+    {
+        $this->productFamilyHandle = [];
     }
 
     /**
@@ -1169,6 +1219,45 @@ class Component implements \JsonSerializable
     }
 
     /**
+     * Returns Features.
+     * The active feature catalog items attached to this component. Present only when the request includes
+     * `include_features=true`.
+     *
+     * @return FeatureCatalogItem[]|null
+     */
+    public function getFeatures(): ?array
+    {
+        if (count($this->features) == 0) {
+            return null;
+        }
+        return $this->features['value'];
+    }
+
+    /**
+     * Sets Features.
+     * The active feature catalog items attached to this component. Present only when the request includes
+     * `include_features=true`.
+     *
+     * @maps features
+     *
+     * @param FeatureCatalogItem[]|null $features
+     */
+    public function setFeatures(?array $features): void
+    {
+        $this->features['value'] = $features;
+    }
+
+    /**
+     * Unsets Features.
+     * The active feature catalog items attached to this component. Present only when the request includes
+     * `include_features=true`.
+     */
+    public function unsetFeatures(): void
+    {
+        $this->features = [];
+    }
+
+    /**
      * Converts the Component object to a human-readable string representation.
      *
      * @return string The string representation of the Component object.
@@ -1184,9 +1273,9 @@ class Component implements \JsonSerializable
                 'pricingScheme' => $this->getPricingScheme(),
                 'unitName' => $this->unitName,
                 'unitPrice' => $this->getUnitPrice(),
-                'productFamilyId' => $this->productFamilyId,
-                'productFamilyName' => $this->productFamilyName,
-                'productFamilyHandle' => $this->productFamilyHandle,
+                'productFamilyId' => $this->getProductFamilyId(),
+                'productFamilyName' => $this->getProductFamilyName(),
+                'productFamilyHandle' => $this->getProductFamilyHandle(),
                 'pricePerUnitInCents' => $this->getPricePerUnitInCents(),
                 'kind' => $this->kind,
                 'archived' => $this->archived,
@@ -1214,6 +1303,7 @@ class Component implements \JsonSerializable
                 'interval' => $this->interval,
                 'intervalUnit' => $this->getIntervalUnit(),
                 'unspscCode' => $this->getUnspscCode(),
+                'features' => $this->getFeatures(),
                 'additionalProperties' => $this->additionalProperties
             ]
         );
@@ -1277,14 +1367,14 @@ class Component implements \JsonSerializable
         if (!empty($this->unitPrice)) {
             $json['unit_price']                    = $this->unitPrice['value'];
         }
-        if (isset($this->productFamilyId)) {
-            $json['product_family_id']             = $this->productFamilyId;
+        if (!empty($this->productFamilyId)) {
+            $json['product_family_id']             = $this->productFamilyId['value'];
         }
-        if (isset($this->productFamilyName)) {
-            $json['product_family_name']           = $this->productFamilyName;
+        if (!empty($this->productFamilyName)) {
+            $json['product_family_name']           = $this->productFamilyName['value'];
         }
-        if (isset($this->productFamilyHandle)) {
-            $json['product_family_handle']         = $this->productFamilyHandle;
+        if (!empty($this->productFamilyHandle)) {
+            $json['product_family_handle']         = $this->productFamilyHandle['value'];
         }
         if (!empty($this->pricePerUnitInCents)) {
             $json['price_per_unit_in_cents']       = $this->pricePerUnitInCents['value'];
@@ -1366,6 +1456,9 @@ class Component implements \JsonSerializable
         }
         if (!empty($this->unspscCode)) {
             $json['unspsc_code']                   = $this->unspscCode['value'];
+        }
+        if (!empty($this->features)) {
+            $json['features']                      = $this->features['value'];
         }
         $json = array_merge($json, $this->additionalProperties);
 

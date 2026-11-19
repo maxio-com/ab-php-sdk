@@ -310,6 +310,15 @@ class SubscriptionRenewalsController extends BaseController
      * with list vs sales pricing disabled, parameter is ignored (no validation/behavioral impact). This
      * functionality is supported in the API, but is not currently supported in SDKs.
      *
+     * ## Segment-Level Custom Pricing
+     *
+     * This endpoint does not support segment-level custom pricing. A request whose component
+     * `custom_price` includes a `segments` key, whatever its value, returns `422 Unprocessable Entity`
+     * with a message such as "Segment-level custom pricing is not supported on this endpoint", and nothing
+     * is saved. To set segment rates for a subscription, send `custom_price.segments` to [Create
+     * Subscription]($e/Subscriptions/createSubscription) or [Update
+     * Subscription]($e/Subscriptions/updateSubscription).
+     *
      * @param int $subscriptionId The Chargify id of the subscription.
      * @param int $scheduledRenewalsConfigurationId The scheduled renewal configuration id.
      * @param ScheduledRenewalConfigurationItemRequest|null $body
@@ -354,6 +363,15 @@ class SubscriptionRenewalsController extends BaseController
      * list_price_point_id, validates and persists it; omitted value follows existing/default behavior;
      * with list vs sales pricing disabled, parameter is ignored (no validation/behavioral impact). This
      * functionality is supported in the API, but is not currently supported in SDKs.
+     *
+     * ## Segment-Level Custom Pricing
+     *
+     * This endpoint does not support segment-level custom pricing. A request whose component
+     * `custom_price` includes a `segments` key, whatever its value, returns `422 Unprocessable Entity`
+     * with a message such as "Segment-level custom pricing is not supported on this endpoint", and nothing
+     * is saved. To set segment rates for a subscription, send `custom_price.segments` to [Create
+     * Subscription]($e/Subscriptions/createSubscription) or [Update
+     * Subscription]($e/Subscriptions/updateSubscription).
      *
      * @param int $subscriptionId The Chargify id of the subscription.
      * @param int $scheduledRenewalsConfigurationId The scheduled renewal configuration id.

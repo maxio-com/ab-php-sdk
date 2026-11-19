@@ -12,6 +12,7 @@ namespace AdvancedBillingLib\Models\Builders;
 
 use AdvancedBillingLib\Models\Component;
 use AdvancedBillingLib\Models\ComponentPrice;
+use AdvancedBillingLib\Models\FeatureCatalogItem;
 use Core\Utils\CoreHelper;
 
 /**
@@ -144,6 +145,15 @@ class ComponentBuilder
     }
 
     /**
+     * Unsets product family id field.
+     */
+    public function unsetProductFamilyId(): self
+    {
+        $this->instance->unsetProductFamilyId();
+        return $this;
+    }
+
+    /**
      * Sets product family name field.
      *
      * @param string|null $value
@@ -155,6 +165,15 @@ class ComponentBuilder
     }
 
     /**
+     * Unsets product family name field.
+     */
+    public function unsetProductFamilyName(): self
+    {
+        $this->instance->unsetProductFamilyName();
+        return $this;
+    }
+
+    /**
      * Sets product family handle field.
      *
      * @param string|null $value
@@ -162,6 +181,15 @@ class ComponentBuilder
     public function productFamilyHandle(?string $value): self
     {
         $this->instance->setProductFamilyHandle($value);
+        return $this;
+    }
+
+    /**
+     * Unsets product family handle field.
+     */
+    public function unsetProductFamilyHandle(): self
+    {
+        $this->instance->unsetProductFamilyHandle();
         return $this;
     }
 
@@ -594,6 +622,26 @@ class ComponentBuilder
     public function unsetUnspscCode(): self
     {
         $this->instance->unsetUnspscCode();
+        return $this;
+    }
+
+    /**
+     * Sets features field.
+     *
+     * @param FeatureCatalogItem[]|null $value
+     */
+    public function features(?array $value): self
+    {
+        $this->instance->setFeatures($value);
+        return $this;
+    }
+
+    /**
+     * Unsets features field.
+     */
+    public function unsetFeatures(): self
+    {
+        $this->instance->unsetFeatures();
         return $this;
     }
 

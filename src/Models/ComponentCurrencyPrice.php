@@ -16,9 +16,9 @@ use stdClass;
 class ComponentCurrencyPrice implements \JsonSerializable
 {
     /**
-     * @var int|null
+     * @var array
      */
-    private $id;
+    private $id = [];
 
     /**
      * @var string|null
@@ -47,20 +47,37 @@ class ComponentCurrencyPrice implements \JsonSerializable
 
     /**
      * Returns Id.
+     * The ID of the stored currency price. This is `null` when the price point uses the site exchange rate
+     * (`use_site_exchange_rate: true`), because the price is calculated from the rate and is not stored.
      */
     public function getId(): ?int
     {
-        return $this->id;
+        if (count($this->id) == 0) {
+            return null;
+        }
+        return $this->id['value'];
     }
 
     /**
      * Sets Id.
+     * The ID of the stored currency price. This is `null` when the price point uses the site exchange rate
+     * (`use_site_exchange_rate: true`), because the price is calculated from the rate and is not stored.
      *
      * @maps id
      */
     public function setId(?int $id): void
     {
-        $this->id = $id;
+        $this->id['value'] = $id;
+    }
+
+    /**
+     * Unsets Id.
+     * The ID of the stored currency price. This is `null` when the price point uses the site exchange rate
+     * (`use_site_exchange_rate: true`), because the price is calculated from the rate and is not stored.
+     */
+    public function unsetId(): void
+    {
+        $this->id = [];
     }
 
     /**
@@ -163,7 +180,7 @@ class ComponentCurrencyPrice implements \JsonSerializable
         return ApiHelper::stringify(
             'ComponentCurrencyPrice',
             [
-                'id' => $this->id,
+                'id' => $this->getId(),
                 'currency' => $this->currency,
                 'price' => $this->price,
                 'formattedPrice' => $this->formattedPrice,
@@ -214,8 +231,8 @@ class ComponentCurrencyPrice implements \JsonSerializable
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
-        if (isset($this->id)) {
-            $json['id']              = $this->id;
+        if (!empty($this->id)) {
+            $json['id']              = $this->id['value'];
         }
         if (isset($this->currency)) {
             $json['currency']        = $this->currency;

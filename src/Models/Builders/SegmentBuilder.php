@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models\Builders;
 
+use AdvancedBillingLib\Models\ComponentCurrencyPrice;
 use AdvancedBillingLib\Models\Segment;
 use AdvancedBillingLib\Models\SegmentPrice;
 use Core\Utils\CoreHelper;
@@ -168,6 +169,17 @@ class SegmentBuilder
     public function prices(?array $value): self
     {
         $this->instance->setPrices($value);
+        return $this;
+    }
+
+    /**
+     * Sets currency prices field.
+     *
+     * @param ComponentCurrencyPrice[]|null $value
+     */
+    public function currencyPrices(?array $value): self
+    {
+        $this->instance->setCurrencyPrices($value);
         return $this;
     }
 

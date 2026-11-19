@@ -470,6 +470,26 @@ class SubscriptionComponentBuilder
     }
 
     /**
+     * Sets list price point id field.
+     *
+     * @param int|null $value
+     */
+    public function listPricePointId(?int $value): self
+    {
+        $this->instance->setListPricePointId($value);
+        return $this;
+    }
+
+    /**
+     * Unsets list price point id field.
+     */
+    public function unsetListPricePointId(): self
+    {
+        $this->instance->unsetListPricePointId();
+        return $this;
+    }
+
+    /**
      * Sets interval field.
      *
      * @param int|null $value
