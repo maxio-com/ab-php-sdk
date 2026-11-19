@@ -11,7 +11,7 @@ permissions:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     steps:
     - uses: actions/checkout@v3
@@ -32,7 +32,7 @@ jobs:
       run: composer install --prefer-dist --no-progress
 
   cleanup_site_before_tests:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     needs: build
 
     steps:
@@ -51,7 +51,7 @@ jobs:
 
 
   run_tests:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     needs: cleanup_site_before_tests
 
     steps:
@@ -82,7 +82,7 @@ jobs:
           DOMAIN: ${{ secrets.DOMAIN }}
 
   cleanup_site_after_tests:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     needs: run_tests
 
     steps:
