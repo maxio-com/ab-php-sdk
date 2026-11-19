@@ -167,6 +167,11 @@ class SubscriptionComponent implements \JsonSerializable
     private $displayOnHostedPage;
 
     /**
+     * @var array
+     */
+    private $listPricePointId = [];
+
+    /**
      * @var int|null
      */
     private $interval;
@@ -882,6 +887,41 @@ class SubscriptionComponent implements \JsonSerializable
     }
 
     /**
+     * Returns List Price Point Id.
+     * The ID of the catalog price point used as the list price for this component's custom price. Returned
+     * only when list vs sales pricing is enabled for the site.
+     */
+    public function getListPricePointId(): ?int
+    {
+        if (count($this->listPricePointId) == 0) {
+            return null;
+        }
+        return $this->listPricePointId['value'];
+    }
+
+    /**
+     * Sets List Price Point Id.
+     * The ID of the catalog price point used as the list price for this component's custom price. Returned
+     * only when list vs sales pricing is enabled for the site.
+     *
+     * @maps list_price_point_id
+     */
+    public function setListPricePointId(?int $listPricePointId): void
+    {
+        $this->listPricePointId['value'] = $listPricePointId;
+    }
+
+    /**
+     * Unsets List Price Point Id.
+     * The ID of the catalog price point used as the list price for this component's custom price. Returned
+     * only when list vs sales pricing is enabled for the site.
+     */
+    public function unsetListPricePointId(): void
+    {
+        $this->listPricePointId = [];
+    }
+
+    /**
      * Returns Interval.
      * The numerical interval. e.g., an interval of '30' coupled with an interval_unit of day would mean
      * this component price point would renew every 30 days. This property is only available for sites with
@@ -981,6 +1021,7 @@ class SubscriptionComponent implements \JsonSerializable
                 'subscription' => $this->subscription,
                 'historicUsages' => $this->historicUsages,
                 'displayOnHostedPage' => $this->displayOnHostedPage,
+                'listPricePointId' => $this->getListPricePointId(),
                 'interval' => $this->interval,
                 'intervalUnit' => $this->getIntervalUnit(),
                 'additionalProperties' => $this->additionalProperties
@@ -1125,6 +1166,9 @@ class SubscriptionComponent implements \JsonSerializable
         }
         if (isset($this->displayOnHostedPage)) {
             $json['display_on_hosted_page']      = $this->displayOnHostedPage;
+        }
+        if (!empty($this->listPricePointId)) {
+            $json['list_price_point_id']         = $this->listPricePointId['value'];
         }
         if (isset($this->interval)) {
             $json['interval']                    = $this->interval;

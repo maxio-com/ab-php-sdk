@@ -18,6 +18,7 @@ use AdvancedBillingLib\Models\CreateInvoicePaymentRequest;
 use AdvancedBillingLib\Models\CreateInvoiceRequest;
 use AdvancedBillingLib\Models\CreateMultiInvoicePaymentRequest;
 use AdvancedBillingLib\Models\CreditNote;
+use AdvancedBillingLib\Models\CreditNoteDateField;
 use AdvancedBillingLib\Models\CustomerChangesPreviewResponse;
 use AdvancedBillingLib\Models\Direction;
 use AdvancedBillingLib\Models\Invoice;
@@ -331,8 +332,20 @@ class InvoicesController extends BaseController
             ->auth('BasicAuth')
             ->parameters(
                 QueryParam::init('subscription_id', $options)->commaSeparated()->extract('subscriptionId'),
+                QueryParam::init('date_field', $options)
+                    ->commaSeparated()
+                    ->extract('dateField', CreditNoteDateField::ISSUE_DATE)
+                    ->serializeBy([CreditNoteDateField::class, 'checkValue']),
+                QueryParam::init('start_date', $options)->commaSeparated()->extract('startDate'),
+                QueryParam::init('end_date', $options)->commaSeparated()->extract('endDate'),
+                QueryParam::init('start_datetime', $options)->commaSeparated()->extract('startDatetime'),
+                QueryParam::init('end_datetime', $options)->commaSeparated()->extract('endDatetime'),
                 QueryParam::init('page', $options)->commaSeparated()->extract('page', 1),
                 QueryParam::init('per_page', $options)->commaSeparated()->extract('perPage', 20),
+                QueryParam::init('direction', $options)
+                    ->commaSeparated()
+                    ->extract('direction', Direction::DESC)
+                    ->serializeBy([Direction::class, 'checkValue']),
                 QueryParam::init('line_items', $options)->commaSeparated()->extract('lineItems', false),
                 QueryParam::init('discounts', $options)->commaSeparated()->extract('discounts', false),
                 QueryParam::init('taxes', $options)->commaSeparated()->extract('taxes', false),
@@ -580,6 +593,9 @@ class InvoicesController extends BaseController
      * overwritten by passing `unit_price` or `price_point_id`. At this moment price points are supported
      * only for quantity based, on/off and metered components. For prepaid and event based billing
      * components `unit_price` is required.
+     * A Wallet Product can't be invoiced this way: a line item for one returns `422` ("Wallet Products can
+     * only be invoiced through a wallet purchase"). Use [Create Wallet
+     * Purchase]($e/Wallet%20Purchases/createWalletPurchase) instead.
      *
      * ### Coupons
      * When creating ad hoc invoice, new discounts can be applied in following way:
@@ -941,7 +957,9 @@ class InvoicesController extends BaseController
      * On success, a 204 no-content response will be returned. The response does not indicate that email(s)
      * have been delivered, but instead indicates that emails have been successfully queued for delivery.
      * If _any_ invalid or malformed email address is found in the request body, the entire request will be
-     * rejected and a 422 response will be returned.
+     * rejected and a 422 response will be returned. A 422 response will also be returned if the invoice is
+     * in `draft`, `pending`, or `processing` status, or if the invoice cannot be found within the site
+     * instance.
      *
      * @param string $uid The unique identifier for the invoice, this does not refer to the public
      *        facing invoice number.

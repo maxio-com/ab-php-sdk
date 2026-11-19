@@ -37,14 +37,14 @@ class CreditNote implements \JsonSerializable
     private $subscriptionId;
 
     /**
-     * @var string|null
+     * @var array
      */
-    private $number;
+    private $number = [];
 
     /**
-     * @var int|null
+     * @var array
      */
-    private $sequenceNumber;
+    private $sequenceNumber = [];
 
     /**
      * @var \DateTime|null
@@ -239,10 +239,16 @@ class CreditNote implements \JsonSerializable
      *
      * While the UID is long and not appropriate to show to customers, the number is usually shorter and
      * consumable by the customer and the merchant alike.
+     *
+     * A saved credit note always has a number. The value is `null` only in `refund_invoice` event data
+     * when the refund did not create a credit note (`apply_credit` is `false`).
      */
     public function getNumber(): ?string
     {
-        return $this->number;
+        if (count($this->number) == 0) {
+            return null;
+        }
+        return $this->number['value'];
     }
 
     /**
@@ -252,21 +258,45 @@ class CreditNote implements \JsonSerializable
      * While the UID is long and not appropriate to show to customers, the number is usually shorter and
      * consumable by the customer and the merchant alike.
      *
+     * A saved credit note always has a number. The value is `null` only in `refund_invoice` event data
+     * when the refund did not create a credit note (`apply_credit` is `false`).
+     *
      * @maps number
      */
     public function setNumber(?string $number): void
     {
-        $this->number = $number;
+        $this->number['value'] = $number;
+    }
+
+    /**
+     * Unsets Number.
+     * A unique, identifying string that appears on the credit note and in places it is referenced.
+     *
+     * While the UID is long and not appropriate to show to customers, the number is usually shorter and
+     * consumable by the customer and the merchant alike.
+     *
+     * A saved credit note always has a number. The value is `null` only in `refund_invoice` event data
+     * when the refund did not create a credit note (`apply_credit` is `false`).
+     */
+    public function unsetNumber(): void
+    {
+        $this->number = [];
     }
 
     /**
      * Returns Sequence Number.
      * A monotonically increasing number assigned to credit notes as they are created.  This number is
      * unique within a site and can be used to sort and order credit notes.
+     *
+     * A saved credit note always has a sequence number. The value is `null` only in `refund_invoice` event
+     * data when the refund did not create a credit note (`apply_credit` is `false`).
      */
     public function getSequenceNumber(): ?int
     {
-        return $this->sequenceNumber;
+        if (count($this->sequenceNumber) == 0) {
+            return null;
+        }
+        return $this->sequenceNumber['value'];
     }
 
     /**
@@ -274,11 +304,27 @@ class CreditNote implements \JsonSerializable
      * A monotonically increasing number assigned to credit notes as they are created.  This number is
      * unique within a site and can be used to sort and order credit notes.
      *
+     * A saved credit note always has a sequence number. The value is `null` only in `refund_invoice` event
+     * data when the refund did not create a credit note (`apply_credit` is `false`).
+     *
      * @maps sequence_number
      */
     public function setSequenceNumber(?int $sequenceNumber): void
     {
-        $this->sequenceNumber = $sequenceNumber;
+        $this->sequenceNumber['value'] = $sequenceNumber;
+    }
+
+    /**
+     * Unsets Sequence Number.
+     * A monotonically increasing number assigned to credit notes as they are created.  This number is
+     * unique within a site and can be used to sort and order credit notes.
+     *
+     * A saved credit note always has a sequence number. The value is `null` only in `refund_invoice` event
+     * data when the refund did not create a credit note (`apply_credit` is `false`).
+     */
+    public function unsetSequenceNumber(): void
+    {
+        $this->sequenceNumber = [];
     }
 
     /**
@@ -735,8 +781,8 @@ class CreditNote implements \JsonSerializable
     /**
      * Returns Origin Invoices.
      * An array of origin invoices for the credit note. Learn more about [Origin Invoice from our
-     * docs](https://maxio.zendesk.com/hc/en-us/articles/24252261284749-Credit-Notes-Proration#origin-
-     * invoices).
+     * docs](https://docs.maxio.com/billing/invoicing/working-with-invoices/how-credit-notes-work#how-
+     * origin-invoices-work).
      *
      * @return OriginInvoice[]|null
      */
@@ -748,8 +794,8 @@ class CreditNote implements \JsonSerializable
     /**
      * Sets Origin Invoices.
      * An array of origin invoices for the credit note. Learn more about [Origin Invoice from our
-     * docs](https://maxio.zendesk.com/hc/en-us/articles/24252261284749-Credit-Notes-Proration#origin-
-     * invoices).
+     * docs](https://docs.maxio.com/billing/invoicing/working-with-invoices/how-credit-notes-work#how-
+     * origin-invoices-work).
      *
      * @maps origin_invoices
      *
@@ -774,8 +820,8 @@ class CreditNote implements \JsonSerializable
                 'siteId' => $this->siteId,
                 'customerId' => $this->customerId,
                 'subscriptionId' => $this->subscriptionId,
-                'number' => $this->number,
-                'sequenceNumber' => $this->sequenceNumber,
+                'number' => $this->getNumber(),
+                'sequenceNumber' => $this->getSequenceNumber(),
                 'issueDate' => $this->issueDate,
                 'appliedDate' => $this->appliedDate,
                 'status' => $this->status,
@@ -854,11 +900,11 @@ class CreditNote implements \JsonSerializable
         if (isset($this->subscriptionId)) {
             $json['subscription_id']  = $this->subscriptionId;
         }
-        if (isset($this->number)) {
-            $json['number']           = $this->number;
+        if (!empty($this->number)) {
+            $json['number']           = $this->number['value'];
         }
-        if (isset($this->sequenceNumber)) {
-            $json['sequence_number']  = $this->sequenceNumber;
+        if (!empty($this->sequenceNumber)) {
+            $json['sequence_number']  = $this->sequenceNumber['value'];
         }
         if (isset($this->issueDate)) {
             $json['issue_date']       = DateTimeHelper::toSimpleDate($this->issueDate);

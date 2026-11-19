@@ -11,6 +11,7 @@ Object which contains subscription errors.
 
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
+| `customer` | `?(string[])` | Optional | - | getCustomer(): ?array | setCustomer(?array customer): void |
 | `product` | `?(string[])` | Optional | - | getProduct(): ?array | setProduct(?array product): void |
 | `productPricePointId` | `?(string[])` | Optional | - | getProductPricePointId(): ?array | setProductPricePointId(?array productPricePointId): void |
 | `paymentProfile` | `?(string[])` | Optional | - | getPaymentProfile(): ?array | setPaymentProfile(?array paymentProfile): void |
@@ -26,6 +27,13 @@ Object which contains subscription errors.
 use AdvancedBillingLib\Models\Builders\SubscriptionGroupSubscriptionErrorBuilder;
 
 $subscriptionGroupSubscriptionError = SubscriptionGroupSubscriptionErrorBuilder::init()
+    ->customer(
+        [
+            'customer7',
+            'customer8',
+            'customer9'
+        ]
+    )
     ->product(
         [
             'product7',
@@ -48,13 +56,6 @@ $subscriptionGroupSubscriptionError = SubscriptionGroupSubscriptionErrorBuilder:
         [
             'payment_profile.chargify_token2',
             'payment_profile.chargify_token3'
-        ]
-    )
-    ->base(
-        [
-            'base1',
-            'base2',
-            'base3'
         ]
     )
     ->build();

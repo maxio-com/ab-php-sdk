@@ -286,6 +286,28 @@ class CurrencyOveragePricesBuilder
     }
 
     /**
+     * Sets secondary prices field.
+     *
+     * @param ComponentPrice[]|null $value
+     */
+    public function secondaryPrices(?array $value): self
+    {
+        $this->instance->setSecondaryPrices($value);
+        return $this;
+    }
+
+    /**
+     * Sets secondary pricing scheme field.
+     *
+     * @param string|null $value
+     */
+    public function secondaryPricingScheme(?string $value): self
+    {
+        $this->instance->setSecondaryPricingScheme($value);
+        return $this;
+    }
+
+    /**
      * Sets renew prepaid allocation field.
      *
      * @param bool|null $value
@@ -355,6 +377,17 @@ class CurrencyOveragePricesBuilder
     public function currencyOveragePrices(?array $value): self
     {
         $this->instance->setCurrencyOveragePrices($value);
+        return $this;
+    }
+
+    /**
+     * Sets currency secondary prices field.
+     *
+     * @param ComponentCurrencyPrice[]|null $value
+     */
+    public function currencySecondaryPrices(?array $value): self
+    {
+        $this->instance->setCurrencySecondaryPrices($value);
         return $this;
     }
 

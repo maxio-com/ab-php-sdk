@@ -39,6 +39,17 @@ class SubscriptionGroupSubscriptionErrorBuilder
     }
 
     /**
+     * Sets customer field.
+     *
+     * @param string[]|null $value
+     */
+    public function customer(?array $value): self
+    {
+        $this->instance->setCustomer($value);
+        return $this;
+    }
+
+    /**
      * Sets product field.
      *
      * @param string[]|null $value

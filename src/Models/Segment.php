@@ -77,6 +77,11 @@ class Segment implements \JsonSerializable
     private $prices;
 
     /**
+     * @var ComponentCurrencyPrice[]|null
+     */
+    private $currencyPrices;
+
+    /**
      * Returns Id.
      */
     public function getId(): ?int
@@ -324,6 +329,34 @@ class Segment implements \JsonSerializable
     }
 
     /**
+     * Returns Currency Prices.
+     * Prices of the segment in the site's non-primary currencies, one entry for each price and currency.
+     * This field is present only when the request includes `currency_prices=true`. If the price point uses
+     * the site exchange rate, the prices are calculated from the current rate and each `id` is `null`.
+     *
+     * @return ComponentCurrencyPrice[]|null
+     */
+    public function getCurrencyPrices(): ?array
+    {
+        return $this->currencyPrices;
+    }
+
+    /**
+     * Sets Currency Prices.
+     * Prices of the segment in the site's non-primary currencies, one entry for each price and currency.
+     * This field is present only when the request includes `currency_prices=true`. If the price point uses
+     * the site exchange rate, the prices are calculated from the current rate and each `id` is `null`.
+     *
+     * @maps currency_prices
+     *
+     * @param ComponentCurrencyPrice[]|null $currencyPrices
+     */
+    public function setCurrencyPrices(?array $currencyPrices): void
+    {
+        $this->currencyPrices = $currencyPrices;
+    }
+
+    /**
      * Converts the Segment object to a human-readable string representation.
      *
      * @return string The string representation of the Segment object.
@@ -345,6 +378,7 @@ class Segment implements \JsonSerializable
                 'createdAt' => $this->createdAt,
                 'updatedAt' => $this->updatedAt,
                 'prices' => $this->prices,
+                'currencyPrices' => $this->currencyPrices,
                 'additionalProperties' => $this->additionalProperties
             ]
         );
@@ -441,6 +475,9 @@ class Segment implements \JsonSerializable
         }
         if (isset($this->prices)) {
             $json['prices']                        = $this->prices;
+        }
+        if (isset($this->currencyPrices)) {
+            $json['currency_prices']               = $this->currencyPrices;
         }
         $json = array_merge($json, $this->additionalProperties);
 

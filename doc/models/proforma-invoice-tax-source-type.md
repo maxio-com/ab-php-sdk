@@ -1,6 +1,8 @@
 
 # Proforma Invoice Tax Source Type
 
+The source of the tax. `Tax` is a tax configured in Advanced Billing. The other values identify the tax service that calculated the tax.
+
 ## Enumeration
 
 `ProformaInvoiceTaxSourceType`
@@ -11,12 +13,17 @@
 |  --- |
 | `TAX` |
 | `AVALARA` |
+| `ANROK` |
+| `TAXJAR` |
+| `NUMERAL` |
+| `SPHERE` |
+| `TAXWIRE` |
 
 ## Example
 
 ```php
 use AdvancedBillingLib\Models\ProformaInvoiceTaxSourceType;
 
-$proformaInvoiceTaxSourceType = ProformaInvoiceTaxSourceType::TAX;
+$proformaInvoiceTaxSourceType = ProformaInvoiceTaxSourceType::TAXJAR;
 ```
 

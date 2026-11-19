@@ -32,32 +32,12 @@ class ErrorsBuilder
 
     /**
      * Initializes a new Errors Builder object.
-     */
-    public static function init(): self
-    {
-        return new self(new Errors());
-    }
-
-    /**
-     * Sets per page field.
      *
-     * @param string[]|null $value
+     * @param string[] $pricePoint
      */
-    public function perPage(?array $value): self
+    public static function init(array $pricePoint): self
     {
-        $this->instance->setPerPage($value);
-        return $this;
-    }
-
-    /**
-     * Sets price point field.
-     *
-     * @param string[]|null $value
-     */
-    public function pricePoint(?array $value): self
-    {
-        $this->instance->setPricePoint($value);
-        return $this;
+        return new self(new Errors($pricePoint));
     }
 
     /**

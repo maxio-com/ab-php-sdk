@@ -144,6 +144,21 @@ class Customer implements \JsonSerializable
     /**
      * @var array
      */
+    private $vatCountry = [];
+
+    /**
+     * @var array
+     */
+    private $entityIdentifierKind = [];
+
+    /**
+     * @var array
+     */
+    private $entityIdentifierValue = [];
+
+    /**
+     * @var array
+     */
     private $parentId = [];
 
     /**
@@ -873,7 +888,8 @@ class Customer implements \JsonSerializable
      * The VAT business identification number for the customer. This number is used to determine VAT tax
      * opt out rules. It is not validated when added or updated on a customer record. Instead, it is
      * validated via VIES before calculating taxes. Only valid business identification numbers will allow
-     * for VAT opt out.
+     * for VAT opt out. When the customer holds an entity identifier, this field returns that identifier's
+     * value, whatever its kind.
      */
     public function getVatNumber(): ?string
     {
@@ -888,7 +904,8 @@ class Customer implements \JsonSerializable
      * The VAT business identification number for the customer. This number is used to determine VAT tax
      * opt out rules. It is not validated when added or updated on a customer record. Instead, it is
      * validated via VIES before calculating taxes. Only valid business identification numbers will allow
-     * for VAT opt out.
+     * for VAT opt out. When the customer holds an entity identifier, this field returns that identifier's
+     * value, whatever its kind.
      *
      * @maps vat_number
      */
@@ -902,11 +919,121 @@ class Customer implements \JsonSerializable
      * The VAT business identification number for the customer. This number is used to determine VAT tax
      * opt out rules. It is not validated when added or updated on a customer record. Instead, it is
      * validated via VIES before calculating taxes. Only valid business identification numbers will allow
-     * for VAT opt out.
+     * for VAT opt out. When the customer holds an entity identifier, this field returns that identifier's
+     * value, whatever its kind.
      */
     public function unsetVatNumber(): void
     {
         $this->vatNumber = [];
+    }
+
+    /**
+     * Returns Vat Country.
+     * The two-letter ISO 3166-1 country code that qualifies the customer's VAT number. Set to `null` when
+     * an identifier is stored through `entity_identifier_kind` for a kind that is not tied to a VAT
+     * country, meaning `company_reg`, `gln`, `duns`, or `lei`.
+     */
+    public function getVatCountry(): ?string
+    {
+        if (count($this->vatCountry) == 0) {
+            return null;
+        }
+        return $this->vatCountry['value'];
+    }
+
+    /**
+     * Sets Vat Country.
+     * The two-letter ISO 3166-1 country code that qualifies the customer's VAT number. Set to `null` when
+     * an identifier is stored through `entity_identifier_kind` for a kind that is not tied to a VAT
+     * country, meaning `company_reg`, `gln`, `duns`, or `lei`.
+     *
+     * @maps vat_country
+     */
+    public function setVatCountry(?string $vatCountry): void
+    {
+        $this->vatCountry['value'] = $vatCountry;
+    }
+
+    /**
+     * Unsets Vat Country.
+     * The two-letter ISO 3166-1 country code that qualifies the customer's VAT number. Set to `null` when
+     * an identifier is stored through `entity_identifier_kind` for a kind that is not tied to a VAT
+     * country, meaning `company_reg`, `gln`, `duns`, or `lei`.
+     */
+    public function unsetVatCountry(): void
+    {
+        $this->vatCountry = [];
+    }
+
+    /**
+     * Returns Entity Identifier Kind.
+     * The kind of tax or business identifier held by the customer. Returned as `null` when the customer
+     * has no entity identifier, including a legacy customer whose `vat_number` predates entity identifiers.
+     */
+    public function getEntityIdentifierKind(): ?string
+    {
+        if (count($this->entityIdentifierKind) == 0) {
+            return null;
+        }
+        return $this->entityIdentifierKind['value'];
+    }
+
+    /**
+     * Sets Entity Identifier Kind.
+     * The kind of tax or business identifier held by the customer. Returned as `null` when the customer
+     * has no entity identifier, including a legacy customer whose `vat_number` predates entity identifiers.
+     *
+     * @maps entity_identifier_kind
+     * @factory \AdvancedBillingLib\Models\EntityIdentifierKind::checkValue
+     */
+    public function setEntityIdentifierKind(?string $entityIdentifierKind): void
+    {
+        $this->entityIdentifierKind['value'] = $entityIdentifierKind;
+    }
+
+    /**
+     * Unsets Entity Identifier Kind.
+     * The kind of tax or business identifier held by the customer. Returned as `null` when the customer
+     * has no entity identifier, including a legacy customer whose `vat_number` predates entity identifiers.
+     */
+    public function unsetEntityIdentifierKind(): void
+    {
+        $this->entityIdentifierKind = [];
+    }
+
+    /**
+     * Returns Entity Identifier Value.
+     * The value of the customer's tax or business identifier. Returned as `null` when the customer has no
+     * entity identifier.
+     */
+    public function getEntityIdentifierValue(): ?string
+    {
+        if (count($this->entityIdentifierValue) == 0) {
+            return null;
+        }
+        return $this->entityIdentifierValue['value'];
+    }
+
+    /**
+     * Sets Entity Identifier Value.
+     * The value of the customer's tax or business identifier. Returned as `null` when the customer has no
+     * entity identifier.
+     *
+     * @maps entity_identifier_value
+     */
+    public function setEntityIdentifierValue(?string $entityIdentifierValue): void
+    {
+        $this->entityIdentifierValue['value'] = $entityIdentifierValue;
+    }
+
+    /**
+     * Unsets Entity Identifier Value.
+     * The value of the customer's tax or business identifier. Returned as `null` when the customer has no
+     * entity identifier.
+     */
+    public function unsetEntityIdentifierValue(): void
+    {
+        $this->entityIdentifierValue = [];
     }
 
     /**
@@ -1203,6 +1330,9 @@ class Customer implements \JsonSerializable
                 'taxExempt' => $this->taxExempt,
                 'surcharging' => $this->surcharging,
                 'vatNumber' => $this->getVatNumber(),
+                'vatCountry' => $this->getVatCountry(),
+                'entityIdentifierKind' => $this->getEntityIdentifierKind(),
+                'entityIdentifierValue' => $this->getEntityIdentifierValue(),
                 'parentId' => $this->getParentId(),
                 'locale' => $this->getLocale(),
                 'defaultSubscriptionGroupUid' => $this->getDefaultSubscriptionGroupUid(),
@@ -1339,6 +1469,18 @@ class Customer implements \JsonSerializable
         }
         if (!empty($this->vatNumber)) {
             $json['vat_number']                      = $this->vatNumber['value'];
+        }
+        if (!empty($this->vatCountry)) {
+            $json['vat_country']                     = $this->vatCountry['value'];
+        }
+        if (!empty($this->entityIdentifierKind)) {
+            $json['entity_identifier_kind']          =
+                EntityIdentifierKind::checkValue(
+                    $this->entityIdentifierKind['value']
+                );
+        }
+        if (!empty($this->entityIdentifierValue)) {
+            $json['entity_identifier_value']         = $this->entityIdentifierValue['value'];
         }
         if (!empty($this->parentId)) {
             $json['parent_id']                       = $this->parentId['value'];

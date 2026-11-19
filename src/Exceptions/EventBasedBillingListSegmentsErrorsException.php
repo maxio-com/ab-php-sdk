@@ -15,14 +15,14 @@ use AdvancedBillingLib\ApiHelper;
 class EventBasedBillingListSegmentsErrorsException extends ApiException
 {
     /**
-     * @var \AdvancedBillingLib\Models\Errors|null
+     * @var \AdvancedBillingLib\Models\Errors1|null
      */
     private $errors;
 
     /**
      * Returns Errors.
      */
-    public function getErrors(): ?\AdvancedBillingLib\Models\Errors
+    public function getErrors(): ?\AdvancedBillingLib\Models\Errors1
     {
         return $this->errors;
     }
@@ -32,7 +32,7 @@ class EventBasedBillingListSegmentsErrorsException extends ApiException
      *
      * @maps errors
      */
-    public function setErrors(?\AdvancedBillingLib\Models\Errors $errors): void
+    public function setErrors(?\AdvancedBillingLib\Models\Errors1 $errors): void
     {
         $this->errors = $errors;
     }

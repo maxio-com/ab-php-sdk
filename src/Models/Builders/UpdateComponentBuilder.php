@@ -183,6 +183,39 @@ class UpdateComponentBuilder
     }
 
     /**
+     * Sets event based billing metric id field.
+     *
+     * @param int|null $value
+     */
+    public function eventBasedBillingMetricId(?int $value): self
+    {
+        $this->instance->setEventBasedBillingMetricId($value);
+        return $this;
+    }
+
+    /**
+     * Sets metering meter id field.
+     *
+     * @param int|null $value
+     */
+    public function meteringMeterId(?int $value): self
+    {
+        $this->instance->setMeteringMeterId($value);
+        return $this;
+    }
+
+    /**
+     * Sets metering formula field.
+     *
+     * @param string|null $value
+     */
+    public function meteringFormula(?string $value): self
+    {
+        $this->instance->setMeteringFormula($value);
+        return $this;
+    }
+
+    /**
      * Sets unspsc code field.
      *
      * @param string|null $value

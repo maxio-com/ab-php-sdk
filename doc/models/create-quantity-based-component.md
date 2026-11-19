@@ -18,7 +18,7 @@ use AdvancedBillingLib\Models\Builders\CreateQuantityBasedComponentBuilder;
 use AdvancedBillingLib\Models\Builders\QuantityBasedComponentBuilder;
 use AdvancedBillingLib\Models\PricingScheme;
 use AdvancedBillingLib\Models\Builders\PriceBuilder;
-use AdvancedBillingLib\Models\CreditType;
+use AdvancedBillingLib\Models\Builders\SecondaryPricingBuilder;
 
 $createQuantityBasedComponent = CreateQuantityBasedComponentBuilder::init(
     QuantityBasedComponentBuilder::init(
@@ -49,7 +49,31 @@ $createQuantityBasedComponent = CreateQuantityBasedComponentBuilder::init(
                     ->build()
             ]
         )
-        ->upgradeCharge(CreditType::PRORATED)
+        ->secondaryPricing(
+            SecondaryPricingBuilder::init()
+                ->pricingScheme(PricingScheme::STAIRSTEP)
+                ->prices(
+                    [
+                        PriceBuilder::init(
+                            242,
+                            23.26
+                        )
+                            ->endingQuantity(
+                                40
+                            )
+                            ->build(),
+                        PriceBuilder::init(
+                            242,
+                            23.26
+                        )
+                            ->endingQuantity(
+                                40
+                            )
+                            ->build()
+                    ]
+                )
+                ->build()
+        )
         ->build()
 )->build();
 ```

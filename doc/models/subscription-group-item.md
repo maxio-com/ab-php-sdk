@@ -11,6 +11,7 @@
 |  --- | --- | --- | --- | --- | --- |
 | `id` | `?int` | Optional | - | getId(): ?int | setId(?int id): void |
 | `reference` | `?string` | Optional | - | getReference(): ?string | setReference(?string reference): void |
+| `customerId` | `?int` | Optional | The ID of the customer the subscription belongs to. This is the payer unless the signup request named another customer for the subscription. | getCustomerId(): ?int | setCustomerId(?int customerId): void |
 | `productId` | `?int` | Optional | - | getProductId(): ?int | setProductId(?int productId): void |
 | `productHandle` | `?string` | Optional | - | getProductHandle(): ?string | setProductHandle(?string productHandle): void |
 | `productPricePointId` | `?int` | Optional | - | getProductPricePointId(): ?int | setProductPricePointId(?int productPricePointId): void |
@@ -28,9 +29,9 @@ use AdvancedBillingLib\Models\Builders\SubscriptionGroupItemBuilder;
 $subscriptionGroupItem = SubscriptionGroupItemBuilder::init()
     ->id(26)
     ->reference('reference4')
+    ->customerId(64)
     ->productId(32)
     ->productHandle('product_handle8')
-    ->productPricePointId(148)
     ->build();
 ```
 

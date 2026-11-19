@@ -608,8 +608,8 @@ class Invoice implements \JsonSerializable
 
     /**
      * Returns Status.
-     * The current status of the invoice. See [Invoice Statuses](https://maxio.zendesk.com/hc/en-
-     * us/articles/24252287829645-Advanced-Billing-Invoices-Overview#invoice-statuses) for more.
+     * The current status of the invoice. See [Invoice Statuses](https://docs.maxio.
+     * com/billing/invoicing/overview/understand-how-invoices-are-generated#invoice-statuses) for more.
      */
     public function getStatus(): ?string
     {
@@ -618,8 +618,8 @@ class Invoice implements \JsonSerializable
 
     /**
      * Sets Status.
-     * The current status of the invoice. See [Invoice Statuses](https://maxio.zendesk.com/hc/en-
-     * us/articles/24252287829645-Advanced-Billing-Invoices-Overview#invoice-statuses) for more.
+     * The current status of the invoice. See [Invoice Statuses](https://docs.maxio.
+     * com/billing/invoicing/overview/understand-how-invoices-are-generated#invoice-statuses) for more.
      *
      * @maps status
      * @factory \AdvancedBillingLib\Models\InvoiceStatus::checkValue
@@ -756,8 +756,8 @@ class Invoice implements \JsonSerializable
      * "Parent" invoices do not have lines of their own, but they have subtotals and totals which aggregate
      * the member invoice segments.
      *
-     * See also the [invoice consolidation documentation](https://maxio.zendesk.com/hc/en-
-     * us/articles/24252269909389-Invoice-Consolidation).
+     * See also the [invoice consolidation documentation](https://docs.maxio.com/billing/invoicing/working-
+     * with-invoices/understand-invoice-consolidation).
      */
     public function getConsolidationLevel(): ?string
     {
@@ -776,8 +776,8 @@ class Invoice implements \JsonSerializable
      * "Parent" invoices do not have lines of their own, but they have subtotals and totals which aggregate
      * the member invoice segments.
      *
-     * See also the [invoice consolidation documentation](https://maxio.zendesk.com/hc/en-
-     * us/articles/24252269909389-Invoice-Consolidation).
+     * See also the [invoice consolidation documentation](https://docs.maxio.com/billing/invoicing/working-
+     * with-invoices/understand-invoice-consolidation).
      *
      * @maps consolidation_level
      * @factory \AdvancedBillingLib\Models\InvoiceConsolidationLevel::checkValue

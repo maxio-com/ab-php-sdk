@@ -9,7 +9,7 @@
 
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
-| `errors` | [`?Errors`](../../doc/models/errors.md) | Optional | - | getErrors(): ?Errors | setErrors(?Errors errors): void |
+| `errors` | [`?Errors1`](../../doc/models/errors-1.md) | Optional | - | getErrors(): ?Errors1 | setErrors(?Errors1 errors): void |
 
 ## Example
 

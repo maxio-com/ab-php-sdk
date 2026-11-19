@@ -108,6 +108,16 @@ class Site implements \JsonSerializable
     /**
      * @var bool|null
      */
+    private $listPricingEnabled;
+
+    /**
+     * @var bool|null
+     */
+    private $planlessSubscriptionsEnabled;
+
+    /**
+     * @var bool|null
+     */
     private $portalEnabled;
 
     /**
@@ -450,6 +460,46 @@ class Site implements \JsonSerializable
     }
 
     /**
+     * Returns List Pricing Enabled.
+     * Indicates whether the site has list vs sales pricing enabled.
+     */
+    public function getListPricingEnabled(): ?bool
+    {
+        return $this->listPricingEnabled;
+    }
+
+    /**
+     * Sets List Pricing Enabled.
+     * Indicates whether the site has list vs sales pricing enabled.
+     *
+     * @maps list_pricing_enabled
+     */
+    public function setListPricingEnabled(?bool $listPricingEnabled): void
+    {
+        $this->listPricingEnabled = $listPricingEnabled;
+    }
+
+    /**
+     * Returns Planless Subscriptions Enabled.
+     * Indicates whether the site allows subscriptions without a plan.
+     */
+    public function getPlanlessSubscriptionsEnabled(): ?bool
+    {
+        return $this->planlessSubscriptionsEnabled;
+    }
+
+    /**
+     * Sets Planless Subscriptions Enabled.
+     * Indicates whether the site allows subscriptions without a plan.
+     *
+     * @maps planless_subscriptions_enabled
+     */
+    public function setPlanlessSubscriptionsEnabled(?bool $planlessSubscriptionsEnabled): void
+    {
+        $this->planlessSubscriptionsEnabled = $planlessSubscriptionsEnabled;
+    }
+
+    /**
      * Returns Portal Enabled.
      * Whether the Billing Portal is enabled for this site.
      */
@@ -515,6 +565,8 @@ class Site implements \JsonSerializable
                 'netTerms' => $this->netTerms,
                 'multiFrequencyEnabled' => $this->multiFrequencyEnabled,
                 'autoRenewalsEnabled' => $this->autoRenewalsEnabled,
+                'listPricingEnabled' => $this->listPricingEnabled,
+                'planlessSubscriptionsEnabled' => $this->planlessSubscriptionsEnabled,
                 'portalEnabled' => $this->portalEnabled,
                 'test' => $this->test,
                 'additionalProperties' => $this->additionalProperties
@@ -615,6 +667,12 @@ class Site implements \JsonSerializable
         }
         if (isset($this->autoRenewalsEnabled)) {
             $json['auto_renewals_enabled']                      = $this->autoRenewalsEnabled;
+        }
+        if (isset($this->listPricingEnabled)) {
+            $json['list_pricing_enabled']                       = $this->listPricingEnabled;
+        }
+        if (isset($this->planlessSubscriptionsEnabled)) {
+            $json['planless_subscriptions_enabled']             = $this->planlessSubscriptionsEnabled;
         }
         if (isset($this->portalEnabled)) {
             $json['portal_enabled']                             = $this->portalEnabled;

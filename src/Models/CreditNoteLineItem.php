@@ -104,6 +104,21 @@ class CreditNoteLineItem implements \JsonSerializable
     /**
      * @var array
      */
+    private $listUnitPrice = [];
+
+    /**
+     * @var array
+     */
+    private $listTotalAmount = [];
+
+    /**
+     * @var array
+     */
+    private $listPricePointId = [];
+
+    /**
+     * @var array
+     */
     private $billingScheduleItemId = [];
 
     /**
@@ -557,6 +572,102 @@ class CreditNoteLineItem implements \JsonSerializable
     }
 
     /**
+     * Returns List Unit Price.
+     * The unit price from the list price point, in decimal format
+     */
+    public function getListUnitPrice(): ?string
+    {
+        if (count($this->listUnitPrice) == 0) {
+            return null;
+        }
+        return $this->listUnitPrice['value'];
+    }
+
+    /**
+     * Sets List Unit Price.
+     * The unit price from the list price point, in decimal format
+     *
+     * @maps list_unit_price
+     */
+    public function setListUnitPrice(?string $listUnitPrice): void
+    {
+        $this->listUnitPrice['value'] = $listUnitPrice;
+    }
+
+    /**
+     * Unsets List Unit Price.
+     * The unit price from the list price point, in decimal format
+     */
+    public function unsetListUnitPrice(): void
+    {
+        $this->listUnitPrice = [];
+    }
+
+    /**
+     * Returns List Total Amount.
+     * The total amount for the line item at the list price, in decimal format
+     */
+    public function getListTotalAmount(): ?string
+    {
+        if (count($this->listTotalAmount) == 0) {
+            return null;
+        }
+        return $this->listTotalAmount['value'];
+    }
+
+    /**
+     * Sets List Total Amount.
+     * The total amount for the line item at the list price, in decimal format
+     *
+     * @maps list_total_amount
+     */
+    public function setListTotalAmount(?string $listTotalAmount): void
+    {
+        $this->listTotalAmount['value'] = $listTotalAmount;
+    }
+
+    /**
+     * Unsets List Total Amount.
+     * The total amount for the line item at the list price, in decimal format
+     */
+    public function unsetListTotalAmount(): void
+    {
+        $this->listTotalAmount = [];
+    }
+
+    /**
+     * Returns List Price Point Id.
+     * The ID of the list price point this line item's sales price is compared against
+     */
+    public function getListPricePointId(): ?int
+    {
+        if (count($this->listPricePointId) == 0) {
+            return null;
+        }
+        return $this->listPricePointId['value'];
+    }
+
+    /**
+     * Sets List Price Point Id.
+     * The ID of the list price point this line item's sales price is compared against
+     *
+     * @maps list_price_point_id
+     */
+    public function setListPricePointId(?int $listPricePointId): void
+    {
+        $this->listPricePointId['value'] = $listPricePointId;
+    }
+
+    /**
+     * Unsets List Price Point Id.
+     * The ID of the list price point this line item's sales price is compared against
+     */
+    public function unsetListPricePointId(): void
+    {
+        $this->listPricePointId = [];
+    }
+
+    /**
      * Returns Billing Schedule Item Id.
      */
     public function getBillingScheduleItemId(): ?int
@@ -666,6 +777,9 @@ class CreditNoteLineItem implements \JsonSerializable
                 'productVersion' => $this->productVersion,
                 'componentId' => $this->getComponentId(),
                 'pricePointId' => $this->getPricePointId(),
+                'listUnitPrice' => $this->getListUnitPrice(),
+                'listTotalAmount' => $this->getListTotalAmount(),
+                'listPricePointId' => $this->getListPricePointId(),
                 'billingScheduleItemId' => $this->getBillingScheduleItemId(),
                 'customItem' => $this->customItem,
                 'prepaidAllocationExpiresAt' => $this->getPrepaidAllocationExpiresAt(),
@@ -764,6 +878,15 @@ class CreditNoteLineItem implements \JsonSerializable
         }
         if (!empty($this->pricePointId)) {
             $json['price_point_id']                = $this->pricePointId['value'];
+        }
+        if (!empty($this->listUnitPrice)) {
+            $json['list_unit_price']               = $this->listUnitPrice['value'];
+        }
+        if (!empty($this->listTotalAmount)) {
+            $json['list_total_amount']             = $this->listTotalAmount['value'];
+        }
+        if (!empty($this->listPricePointId)) {
+            $json['list_price_point_id']           = $this->listPricePointId['value'];
         }
         if (!empty($this->billingScheduleItemId)) {
             $json['billing_schedule_item_id']      = $this->billingScheduleItemId['value'];

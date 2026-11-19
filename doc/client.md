@@ -50,17 +50,21 @@ The gateway for the SDK. This class acts as a factory for the Controllers and al
 | getAdvanceInvoiceController() | Gets AdvanceInvoiceController |
 | getBillingPortalController() | Gets BillingPortalController |
 | getCouponsController() | Gets CouponsController |
+| getComponentFeaturesController() | Gets ComponentFeaturesController |
 | getComponentsController() | Gets ComponentsController |
 | getComponentPricePointsController() | Gets ComponentPricePointsController |
 | getCustomersController() | Gets CustomersController |
 | getCustomFieldsController() | Gets CustomFieldsController |
+| getEntitlementsController() | Gets EntitlementsController |
 | getEventsController() | Gets EventsController |
 | getEventsBasedBillingSegmentsController() | Gets EventsBasedBillingSegmentsController |
+| getFeatureTemplatesController() | Gets FeatureTemplatesController |
 | getInsightsController() | Gets InsightsController |
 | getInvoicesController() | Gets InvoicesController |
 | getOffersController() | Gets OffersController |
 | getPaymentProfilesController() | Gets PaymentProfilesController |
 | getProductFamiliesController() | Gets ProductFamiliesController |
+| getProductFeaturesController() | Gets ProductFeaturesController |
 | getProductsController() | Gets ProductsController |
 | getProductPricePointsController() | Gets ProductPricePointsController |
 | getProformaInvoicesController() | Gets ProformaInvoicesController |
@@ -78,5 +82,10 @@ The gateway for the SDK. This class acts as a factory for the Controllers and al
 | getSubscriptionProductsController() | Gets SubscriptionProductsController |
 | getSubscriptionRenewalsController() | Gets SubscriptionRenewalsController |
 | getSubscriptionStatusController() | Gets SubscriptionStatusController |
+| getWalletsController() | Gets WalletsController |
+| getWalletTransactionsController() | Gets WalletTransactionsController |
+| getWalletAdjustmentsController() | Gets WalletAdjustmentsController |
+| getWalletPurchasesController() | Gets WalletPurchasesController |
+| getWalletProductsController() | Gets WalletProductsController |
 | getWebhooksController() | Gets WebhooksController |
 

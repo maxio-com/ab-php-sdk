@@ -15,18 +15,22 @@ use AdvancedBillingLib\Authentication\BasicAuthManager;
 use AdvancedBillingLib\Controllers\AdvanceInvoiceController;
 use AdvancedBillingLib\Controllers\APIExportsController;
 use AdvancedBillingLib\Controllers\BillingPortalController;
+use AdvancedBillingLib\Controllers\ComponentFeaturesController;
 use AdvancedBillingLib\Controllers\ComponentPricePointsController;
 use AdvancedBillingLib\Controllers\ComponentsController;
 use AdvancedBillingLib\Controllers\CouponsController;
 use AdvancedBillingLib\Controllers\CustomersController;
 use AdvancedBillingLib\Controllers\CustomFieldsController;
+use AdvancedBillingLib\Controllers\EntitlementsController;
 use AdvancedBillingLib\Controllers\EventsBasedBillingSegmentsController;
 use AdvancedBillingLib\Controllers\EventsController;
+use AdvancedBillingLib\Controllers\FeatureTemplatesController;
 use AdvancedBillingLib\Controllers\InsightsController;
 use AdvancedBillingLib\Controllers\InvoicesController;
 use AdvancedBillingLib\Controllers\OffersController;
 use AdvancedBillingLib\Controllers\PaymentProfilesController;
 use AdvancedBillingLib\Controllers\ProductFamiliesController;
+use AdvancedBillingLib\Controllers\ProductFeaturesController;
 use AdvancedBillingLib\Controllers\ProductPricePointsController;
 use AdvancedBillingLib\Controllers\ProductsController;
 use AdvancedBillingLib\Controllers\ProformaInvoicesController;
@@ -44,6 +48,11 @@ use AdvancedBillingLib\Controllers\SubscriptionProductsController;
 use AdvancedBillingLib\Controllers\SubscriptionRenewalsController;
 use AdvancedBillingLib\Controllers\SubscriptionsController;
 use AdvancedBillingLib\Controllers\SubscriptionStatusController;
+use AdvancedBillingLib\Controllers\WalletAdjustmentsController;
+use AdvancedBillingLib\Controllers\WalletProductsController;
+use AdvancedBillingLib\Controllers\WalletPurchasesController;
+use AdvancedBillingLib\Controllers\WalletsController;
+use AdvancedBillingLib\Controllers\WalletTransactionsController;
 use AdvancedBillingLib\Controllers\WebhooksController;
 use AdvancedBillingLib\Proxy\ProxyConfigurationBuilder;
 use AdvancedBillingLib\Utils\CompatibilityConverter;
@@ -64,6 +73,8 @@ class AdvancedBillingClient implements ConfigurationInterface
 
     private $coupons;
 
+    private $componentFeatures;
+
     private $components;
 
     private $componentPricePoints;
@@ -72,9 +83,13 @@ class AdvancedBillingClient implements ConfigurationInterface
 
     private $customFields;
 
+    private $entitlements;
+
     private $events;
 
     private $eventsBasedBillingSegments;
+
+    private $featureTemplates;
 
     private $insights;
 
@@ -85,6 +100,8 @@ class AdvancedBillingClient implements ConfigurationInterface
     private $paymentProfiles;
 
     private $productFamilies;
+
+    private $productFeatures;
 
     private $products;
 
@@ -120,6 +137,16 @@ class AdvancedBillingClient implements ConfigurationInterface
 
     private $subscriptionStatus;
 
+    private $wallets;
+
+    private $walletTransactions;
+
+    private $walletAdjustments;
+
+    private $walletPurchases;
+
+    private $walletProducts;
+
     private $webhooks;
 
     private $basicAuthManager;
@@ -147,7 +174,7 @@ class AdvancedBillingClient implements ConfigurationInterface
             ->converter(new CompatibilityConverter())
             ->jsonHelper(ApiHelper::getJsonHelper())
             ->apiCallback($this->config['httpCallback'] ?? null)
-            ->userAgent('AB SDK PHP:10.0.0 on OS {os-info}')
+            ->userAgent('AB SDK PHP:11.0.0 on OS {os-info}')
             ->globalConfig($this->getGlobalConfiguration())
             ->globalErrors($this->getGlobalErrors())
             ->serverUrls(self::ENVIRONMENT_MAP[$this->getEnvironment()], Server::PRODUCTION)
@@ -347,6 +374,17 @@ class AdvancedBillingClient implements ConfigurationInterface
     }
 
     /**
+     * Returns Component Features Controller
+     */
+    public function getComponentFeaturesController(): ComponentFeaturesController
+    {
+        if ($this->componentFeatures == null) {
+            $this->componentFeatures = new ComponentFeaturesController($this->client);
+        }
+        return $this->componentFeatures;
+    }
+
+    /**
      * Returns Components Controller
      */
     public function getComponentsController(): ComponentsController
@@ -391,6 +429,17 @@ class AdvancedBillingClient implements ConfigurationInterface
     }
 
     /**
+     * Returns Entitlements Controller
+     */
+    public function getEntitlementsController(): EntitlementsController
+    {
+        if ($this->entitlements == null) {
+            $this->entitlements = new EntitlementsController($this->client);
+        }
+        return $this->entitlements;
+    }
+
+    /**
      * Returns Events Controller
      */
     public function getEventsController(): EventsController
@@ -410,6 +459,17 @@ class AdvancedBillingClient implements ConfigurationInterface
             $this->eventsBasedBillingSegments = new EventsBasedBillingSegmentsController($this->client);
         }
         return $this->eventsBasedBillingSegments;
+    }
+
+    /**
+     * Returns Feature Templates Controller
+     */
+    public function getFeatureTemplatesController(): FeatureTemplatesController
+    {
+        if ($this->featureTemplates == null) {
+            $this->featureTemplates = new FeatureTemplatesController($this->client);
+        }
+        return $this->featureTemplates;
     }
 
     /**
@@ -465,6 +525,17 @@ class AdvancedBillingClient implements ConfigurationInterface
             $this->productFamilies = new ProductFamiliesController($this->client);
         }
         return $this->productFamilies;
+    }
+
+    /**
+     * Returns Product Features Controller
+     */
+    public function getProductFeaturesController(): ProductFeaturesController
+    {
+        if ($this->productFeatures == null) {
+            $this->productFeatures = new ProductFeaturesController($this->client);
+        }
+        return $this->productFeatures;
     }
 
     /**
@@ -652,6 +723,61 @@ class AdvancedBillingClient implements ConfigurationInterface
             $this->subscriptionStatus = new SubscriptionStatusController($this->client);
         }
         return $this->subscriptionStatus;
+    }
+
+    /**
+     * Returns Wallets Controller
+     */
+    public function getWalletsController(): WalletsController
+    {
+        if ($this->wallets == null) {
+            $this->wallets = new WalletsController($this->client);
+        }
+        return $this->wallets;
+    }
+
+    /**
+     * Returns Wallet Transactions Controller
+     */
+    public function getWalletTransactionsController(): WalletTransactionsController
+    {
+        if ($this->walletTransactions == null) {
+            $this->walletTransactions = new WalletTransactionsController($this->client);
+        }
+        return $this->walletTransactions;
+    }
+
+    /**
+     * Returns Wallet Adjustments Controller
+     */
+    public function getWalletAdjustmentsController(): WalletAdjustmentsController
+    {
+        if ($this->walletAdjustments == null) {
+            $this->walletAdjustments = new WalletAdjustmentsController($this->client);
+        }
+        return $this->walletAdjustments;
+    }
+
+    /**
+     * Returns Wallet Purchases Controller
+     */
+    public function getWalletPurchasesController(): WalletPurchasesController
+    {
+        if ($this->walletPurchases == null) {
+            $this->walletPurchases = new WalletPurchasesController($this->client);
+        }
+        return $this->walletPurchases;
+    }
+
+    /**
+     * Returns Wallet Products Controller
+     */
+    public function getWalletProductsController(): WalletProductsController
+    {
+        if ($this->walletProducts == null) {
+            $this->walletProducts = new WalletProductsController($this->client);
+        }
+        return $this->walletProducts;
     }
 
     /**

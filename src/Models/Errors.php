@@ -16,43 +16,24 @@ use stdClass;
 class Errors implements \JsonSerializable
 {
     /**
-     * @var string[]|null
-     */
-    private $perPage;
-
-    /**
-     * @var string[]|null
+     * @var string[]
      */
     private $pricePoint;
 
     /**
-     * Returns Per Page.
-     *
-     * @return string[]|null
+     * @param string[] $pricePoint
      */
-    public function getPerPage(): ?array
+    public function __construct(array $pricePoint)
     {
-        return $this->perPage;
-    }
-
-    /**
-     * Sets Per Page.
-     *
-     * @maps per_page
-     *
-     * @param string[]|null $perPage
-     */
-    public function setPerPage(?array $perPage): void
-    {
-        $this->perPage = $perPage;
+        $this->pricePoint = $pricePoint;
     }
 
     /**
      * Returns Price Point.
      *
-     * @return string[]|null
+     * @return string[]
      */
-    public function getPricePoint(): ?array
+    public function getPricePoint(): array
     {
         return $this->pricePoint;
     }
@@ -60,11 +41,12 @@ class Errors implements \JsonSerializable
     /**
      * Sets Price Point.
      *
+     * @required
      * @maps price_point
      *
-     * @param string[]|null $pricePoint
+     * @param string[] $pricePoint
      */
-    public function setPricePoint(?array $pricePoint): void
+    public function setPricePoint(array $pricePoint): void
     {
         $this->pricePoint = $pricePoint;
     }
@@ -78,11 +60,7 @@ class Errors implements \JsonSerializable
     {
         return ApiHelper::stringify(
             'Errors',
-            [
-                'perPage' => $this->perPage,
-                'pricePoint' => $this->pricePoint,
-                'additionalProperties' => $this->additionalProperties
-            ]
+            ['pricePoint' => $this->pricePoint, 'additionalProperties' => $this->additionalProperties]
         );
     }
 
@@ -126,12 +104,7 @@ class Errors implements \JsonSerializable
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
-        if (isset($this->perPage)) {
-            $json['per_page']    = $this->perPage;
-        }
-        if (isset($this->pricePoint)) {
-            $json['price_point'] = $this->pricePoint;
-        }
+        $json['price_point'] = $this->pricePoint;
         $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;

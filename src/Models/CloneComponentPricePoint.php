@@ -26,6 +26,11 @@ class CloneComponentPricePoint implements \JsonSerializable
     private $handle;
 
     /**
+     * @var CloneFeatureCatalogItem[]|null
+     */
+    private $featureCatalogItems;
+
+    /**
      * @param string $name
      */
     public function __construct(string $name)
@@ -71,6 +76,32 @@ class CloneComponentPricePoint implements \JsonSerializable
     }
 
     /**
+     * Returns Feature Catalog Items.
+     * The features the clone gets. The clone does not copy the source price point's features, so send
+     * every feature it should have.
+     *
+     * @return CloneFeatureCatalogItem[]|null
+     */
+    public function getFeatureCatalogItems(): ?array
+    {
+        return $this->featureCatalogItems;
+    }
+
+    /**
+     * Sets Feature Catalog Items.
+     * The features the clone gets. The clone does not copy the source price point's features, so send
+     * every feature it should have.
+     *
+     * @maps feature_catalog_items
+     *
+     * @param CloneFeatureCatalogItem[]|null $featureCatalogItems
+     */
+    public function setFeatureCatalogItems(?array $featureCatalogItems): void
+    {
+        $this->featureCatalogItems = $featureCatalogItems;
+    }
+
+    /**
      * Converts the CloneComponentPricePoint object to a human-readable string representation.
      *
      * @return string The string representation of the CloneComponentPricePoint object.
@@ -82,6 +113,7 @@ class CloneComponentPricePoint implements \JsonSerializable
             [
                 'name' => $this->name,
                 'handle' => $this->handle,
+                'featureCatalogItems' => $this->featureCatalogItems,
                 'additionalProperties' => $this->additionalProperties
             ]
         );
@@ -127,9 +159,12 @@ class CloneComponentPricePoint implements \JsonSerializable
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
-        $json['name']       = $this->name;
+        $json['name']                      = $this->name;
         if (isset($this->handle)) {
-            $json['handle'] = $this->handle;
+            $json['handle']                = $this->handle;
+        }
+        if (isset($this->featureCatalogItems)) {
+            $json['feature_catalog_items'] = $this->featureCatalogItems;
         }
         $json = array_merge($json, $this->additionalProperties);
 

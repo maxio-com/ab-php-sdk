@@ -18,8 +18,7 @@ use AdvancedBillingLib\Models\Builders\CreateMeteredComponentBuilder;
 use AdvancedBillingLib\Models\Builders\MeteredComponentBuilder;
 use AdvancedBillingLib\Models\PricingScheme;
 use AdvancedBillingLib\Models\Builders\PriceBuilder;
-use AdvancedBillingLib\Models\Builders\ComponentPricePointItemBuilder;
-use AdvancedBillingLib\Models\IntervalUnit;
+use AdvancedBillingLib\Models\Builders\SecondaryPricingBuilder;
 
 $createMeteredComponent = CreateMeteredComponentBuilder::init(
     MeteredComponentBuilder::init(
@@ -58,30 +57,30 @@ $createMeteredComponent = CreateMeteredComponentBuilder::init(
                     ->build()
             ]
         )
-        ->pricePoints(
-            [
-                ComponentPricePointItemBuilder::init()
-                    ->name('name2')
-                    ->handle('handle8')
-                    ->pricingScheme(PricingScheme::PER_UNIT)
-                    ->interval(92)
-                    ->intervalUnit(IntervalUnit::DAY)
-                    ->build(),
-                ComponentPricePointItemBuilder::init()
-                    ->name('name2')
-                    ->handle('handle8')
-                    ->pricingScheme(PricingScheme::PER_UNIT)
-                    ->interval(92)
-                    ->intervalUnit(IntervalUnit::DAY)
-                    ->build(),
-                ComponentPricePointItemBuilder::init()
-                    ->name('name2')
-                    ->handle('handle8')
-                    ->pricingScheme(PricingScheme::PER_UNIT)
-                    ->interval(92)
-                    ->intervalUnit(IntervalUnit::DAY)
-                    ->build()
-            ]
+        ->secondaryPricing(
+            SecondaryPricingBuilder::init()
+                ->pricingScheme(PricingScheme::STAIRSTEP)
+                ->prices(
+                    [
+                        PriceBuilder::init(
+                            242,
+                            23.26
+                        )
+                            ->endingQuantity(
+                                40
+                            )
+                            ->build(),
+                        PriceBuilder::init(
+                            242,
+                            23.26
+                        )
+                            ->endingQuantity(
+                                40
+                            )
+                            ->build()
+                    ]
+                )
+                ->build()
         )
         ->build()
 )->build();

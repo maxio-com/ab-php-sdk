@@ -18,7 +18,7 @@ use AdvancedBillingLib\Models\Builders\CreateComponentPricePointsRequestBuilder;
 use AdvancedBillingLib\Models\Builders\CreateComponentPricePointBuilder;
 use AdvancedBillingLib\Models\PricingScheme;
 use AdvancedBillingLib\Models\Builders\PriceBuilder;
-use AdvancedBillingLib\Models\IntervalUnit;
+use AdvancedBillingLib\Models\Builders\SecondaryPricingBuilder;
 
 $createComponentPricePointsRequest = CreateComponentPricePointsRequestBuilder::init(
     [
@@ -53,10 +53,34 @@ $createComponentPricePointsRequest = CreateComponentPricePointsRequestBuilder::i
             ]
         )
             ->handle('handle6')
+            ->secondaryPricing(
+                SecondaryPricingBuilder::init()
+                    ->pricingScheme(PricingScheme::STAIRSTEP)
+                    ->prices(
+                        [
+                            PriceBuilder::init(
+                                242,
+                                23.26
+                            )
+                                ->endingQuantity(
+                                    40
+                                )
+                                ->build(),
+                            PriceBuilder::init(
+                                242,
+                                23.26
+                            )
+                                ->endingQuantity(
+                                    40
+                                )
+                                ->build()
+                        ]
+                    )
+                    ->build()
+            )
+            ->secondaryPricingScheme(PricingScheme::STAIRSTEP)
             ->useSiteExchangeRate(false)
             ->taxIncluded(false)
-            ->interval(24)
-            ->intervalUnit(IntervalUnit::DAY)
             ->build()
     ]
 )->build();

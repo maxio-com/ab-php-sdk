@@ -26,6 +26,9 @@
 | `productVersion` | `?int` | Optional | The version of the product being credited. | getProductVersion(): ?int | setProductVersion(?int productVersion): void |
 | `componentId` | `?int` | Optional | The ID of the component being credited. Will be `nil` for non-component credits. | getComponentId(): ?int | setComponentId(?int componentId): void |
 | `pricePointId` | `?int` | Optional | The price point ID of the component being credited. Will be `nil` for non-component credits. | getPricePointId(): ?int | setPricePointId(?int pricePointId): void |
+| `listUnitPrice` | `?string` | Optional | The unit price from the list price point, in decimal format | getListUnitPrice(): ?string | setListUnitPrice(?string listUnitPrice): void |
+| `listTotalAmount` | `?string` | Optional | The total amount for the line item at the list price, in decimal format | getListTotalAmount(): ?string | setListTotalAmount(?string listTotalAmount): void |
+| `listPricePointId` | `?int` | Optional | The ID of the list price point this line item's sales price is compared against | getListPricePointId(): ?int | setListPricePointId(?int listPricePointId): void |
 | `billingScheduleItemId` | `?int` | Optional | - | getBillingScheduleItemId(): ?int | setBillingScheduleItemId(?int billingScheduleItemId): void |
 | `customItem` | `?bool` | Optional | - | getCustomItem(): ?bool | setCustomItem(?bool customItem): void |
 | `prepaidAllocationExpiresAt` | `?DateTime` | Optional | The date a prepaid allocation is set to expire. Only present on line items representing prepaid component allocations. The format is `"YYYY-MM-DD"`. | getPrepaidAllocationExpiresAt(): ?\DateTime | setPrepaidAllocationExpiresAt(?\DateTime prepaidAllocationExpiresAt): void |

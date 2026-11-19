@@ -18,7 +18,12 @@ class ListComponentsPricePointsInclude
 {
     public const CURRENCY_PRICES = 'currency_prices';
 
-    private const _ALL_VALUES = [self::CURRENCY_PRICES];
+    public const CURRENCY_OVERAGE_PRICES = 'currency_overage_prices';
+
+    public const CURRENCY_SECONDARY_PRICES = 'currency_secondary_prices';
+
+    private const _ALL_VALUES =
+        [self::CURRENCY_PRICES, self::CURRENCY_OVERAGE_PRICES, self::CURRENCY_SECONDARY_PRICES];
 
     /**
      * Ensures that all the given values are present in this Enum.

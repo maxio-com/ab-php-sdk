@@ -46,6 +46,11 @@ class ComponentPricePointItem implements \JsonSerializable
     private $prices;
 
     /**
+     * @var SecondaryPricing|null
+     */
+    private $secondaryPricing;
+
+    /**
      * Returns Name.
      */
     public function getName(): ?string
@@ -187,6 +192,32 @@ class ComponentPricePointItem implements \JsonSerializable
     }
 
     /**
+     * Returns Secondary Pricing.
+     * Hybrid Pricing only. Applies only to price points of Quantity-Based and Metered Components on Sites
+     * with Hybrid Pricing enabled; ignored for other component types and on Sites without Hybrid Pricing.
+     * Omit it to create a normal, non-hybrid price point. See [Hybrid Pricing](page:introduction/basic-
+     * concepts/hybrid-pricing).
+     */
+    public function getSecondaryPricing(): ?SecondaryPricing
+    {
+        return $this->secondaryPricing;
+    }
+
+    /**
+     * Sets Secondary Pricing.
+     * Hybrid Pricing only. Applies only to price points of Quantity-Based and Metered Components on Sites
+     * with Hybrid Pricing enabled; ignored for other component types and on Sites without Hybrid Pricing.
+     * Omit it to create a normal, non-hybrid price point. See [Hybrid Pricing](page:introduction/basic-
+     * concepts/hybrid-pricing).
+     *
+     * @maps secondary_pricing
+     */
+    public function setSecondaryPricing(?SecondaryPricing $secondaryPricing): void
+    {
+        $this->secondaryPricing = $secondaryPricing;
+    }
+
+    /**
      * Converts the ComponentPricePointItem object to a human-readable string representation.
      *
      * @return string The string representation of the ComponentPricePointItem object.
@@ -202,6 +233,7 @@ class ComponentPricePointItem implements \JsonSerializable
                 'interval' => $this->interval,
                 'intervalUnit' => $this->getIntervalUnit(),
                 'prices' => $this->prices,
+                'secondaryPricing' => $this->secondaryPricing,
                 'additionalProperties' => $this->additionalProperties
             ]
         );
@@ -248,22 +280,25 @@ class ComponentPricePointItem implements \JsonSerializable
     {
         $json = [];
         if (isset($this->name)) {
-            $json['name']           = $this->name;
+            $json['name']              = $this->name;
         }
         if (isset($this->handle)) {
-            $json['handle']         = $this->handle;
+            $json['handle']            = $this->handle;
         }
         if (isset($this->pricingScheme)) {
-            $json['pricing_scheme'] = PricingScheme::checkValue($this->pricingScheme);
+            $json['pricing_scheme']    = PricingScheme::checkValue($this->pricingScheme);
         }
         if (isset($this->interval)) {
-            $json['interval']       = $this->interval;
+            $json['interval']          = $this->interval;
         }
         if (!empty($this->intervalUnit)) {
-            $json['interval_unit']  = IntervalUnit::checkValue($this->intervalUnit['value']);
+            $json['interval_unit']     = IntervalUnit::checkValue($this->intervalUnit['value']);
         }
         if (isset($this->prices)) {
-            $json['prices']         = $this->prices;
+            $json['prices']            = $this->prices;
+        }
+        if (isset($this->secondaryPricing)) {
+            $json['secondary_pricing'] = $this->secondaryPricing;
         }
         $json = array_merge($json, $this->additionalProperties);
 

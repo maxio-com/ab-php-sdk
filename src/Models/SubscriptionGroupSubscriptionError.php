@@ -21,6 +21,11 @@ class SubscriptionGroupSubscriptionError implements \JsonSerializable
     /**
      * @var string[]|null
      */
+    private $customer;
+
+    /**
+     * @var string[]|null
+     */
     private $product;
 
     /**
@@ -57,6 +62,28 @@ class SubscriptionGroupSubscriptionError implements \JsonSerializable
      * @var string[]|null
      */
     private $paymentProfileFullNumber;
+
+    /**
+     * Returns Customer.
+     *
+     * @return string[]|null
+     */
+    public function getCustomer(): ?array
+    {
+        return $this->customer;
+    }
+
+    /**
+     * Sets Customer.
+     *
+     * @maps customer
+     *
+     * @param string[]|null $customer
+     */
+    public function setCustomer(?array $customer): void
+    {
+        $this->customer = $customer;
+    }
 
     /**
      * Returns Product.
@@ -244,6 +271,7 @@ class SubscriptionGroupSubscriptionError implements \JsonSerializable
         return ApiHelper::stringify(
             'SubscriptionGroupSubscriptionError',
             [
+                'customer' => $this->customer,
                 'product' => $this->product,
                 'productPricePointId' => $this->productPricePointId,
                 'paymentProfile' => $this->paymentProfile,
@@ -297,6 +325,9 @@ class SubscriptionGroupSubscriptionError implements \JsonSerializable
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
+        if (isset($this->customer)) {
+            $json['customer']                         = $this->customer;
+        }
         if (isset($this->product)) {
             $json['product']                          = $this->product;
         }

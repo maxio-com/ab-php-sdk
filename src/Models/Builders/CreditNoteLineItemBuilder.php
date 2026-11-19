@@ -244,6 +244,66 @@ class CreditNoteLineItemBuilder
     }
 
     /**
+     * Sets list unit price field.
+     *
+     * @param string|null $value
+     */
+    public function listUnitPrice(?string $value): self
+    {
+        $this->instance->setListUnitPrice($value);
+        return $this;
+    }
+
+    /**
+     * Unsets list unit price field.
+     */
+    public function unsetListUnitPrice(): self
+    {
+        $this->instance->unsetListUnitPrice();
+        return $this;
+    }
+
+    /**
+     * Sets list total amount field.
+     *
+     * @param string|null $value
+     */
+    public function listTotalAmount(?string $value): self
+    {
+        $this->instance->setListTotalAmount($value);
+        return $this;
+    }
+
+    /**
+     * Unsets list total amount field.
+     */
+    public function unsetListTotalAmount(): self
+    {
+        $this->instance->unsetListTotalAmount();
+        return $this;
+    }
+
+    /**
+     * Sets list price point id field.
+     *
+     * @param int|null $value
+     */
+    public function listPricePointId(?int $value): self
+    {
+        $this->instance->setListPricePointId($value);
+        return $this;
+    }
+
+    /**
+     * Unsets list price point id field.
+     */
+    public function unsetListPricePointId(): self
+    {
+        $this->instance->unsetListPricePointId();
+        return $this;
+    }
+
+    /**
      * Sets billing schedule item id field.
      *
      * @param int|null $value

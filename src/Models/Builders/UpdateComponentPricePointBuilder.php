@@ -12,6 +12,7 @@ namespace AdvancedBillingLib\Models\Builders;
 
 use AdvancedBillingLib\Models\UpdateComponentPricePoint;
 use AdvancedBillingLib\Models\UpdatePrice;
+use AdvancedBillingLib\Models\UpdateSecondaryPricing;
 use Core\Utils\CoreHelper;
 
 /**
@@ -133,6 +134,28 @@ class UpdateComponentPricePointBuilder
     public function prices(?array $value): self
     {
         $this->instance->setPrices($value);
+        return $this;
+    }
+
+    /**
+     * Sets secondary pricing field.
+     *
+     * @param UpdateSecondaryPricing|null $value
+     */
+    public function secondaryPricing(?UpdateSecondaryPricing $value): self
+    {
+        $this->instance->setSecondaryPricing($value);
+        return $this;
+    }
+
+    /**
+     * Sets secondary pricing scheme field.
+     *
+     * @param string|null $value
+     */
+    public function secondaryPricingScheme(?string $value): self
+    {
+        $this->instance->setSecondaryPricingScheme($value);
         return $this;
     }
 

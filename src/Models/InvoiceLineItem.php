@@ -127,6 +127,31 @@ class InvoiceLineItem implements \JsonSerializable
     private $productPricePointId = [];
 
     /**
+     * @var array
+     */
+    private $listUnitPrice = [];
+
+    /**
+     * @var array
+     */
+    private $listTotalAmount = [];
+
+    /**
+     * @var array
+     */
+    private $listDiscountAmount = [];
+
+    /**
+     * @var array
+     */
+    private $listDiscountRate = [];
+
+    /**
+     * @var array
+     */
+    private $listPricePointId = [];
+
+    /**
      * @var bool|null
      */
     private $customItem;
@@ -757,6 +782,172 @@ class InvoiceLineItem implements \JsonSerializable
     }
 
     /**
+     * Returns List Unit Price.
+     * The unit price from the list price point, in decimal format. Returned only when list vs sales
+     * pricing is enabled for the site.
+     */
+    public function getListUnitPrice(): ?string
+    {
+        if (count($this->listUnitPrice) == 0) {
+            return null;
+        }
+        return $this->listUnitPrice['value'];
+    }
+
+    /**
+     * Sets List Unit Price.
+     * The unit price from the list price point, in decimal format. Returned only when list vs sales
+     * pricing is enabled for the site.
+     *
+     * @maps list_unit_price
+     */
+    public function setListUnitPrice(?string $listUnitPrice): void
+    {
+        $this->listUnitPrice['value'] = $listUnitPrice;
+    }
+
+    /**
+     * Unsets List Unit Price.
+     * The unit price from the list price point, in decimal format. Returned only when list vs sales
+     * pricing is enabled for the site.
+     */
+    public function unsetListUnitPrice(): void
+    {
+        $this->listUnitPrice = [];
+    }
+
+    /**
+     * Returns List Total Amount.
+     * The total amount for the line item at the list price, in decimal format
+     */
+    public function getListTotalAmount(): ?string
+    {
+        if (count($this->listTotalAmount) == 0) {
+            return null;
+        }
+        return $this->listTotalAmount['value'];
+    }
+
+    /**
+     * Sets List Total Amount.
+     * The total amount for the line item at the list price, in decimal format
+     *
+     * @maps list_total_amount
+     */
+    public function setListTotalAmount(?string $listTotalAmount): void
+    {
+        $this->listTotalAmount['value'] = $listTotalAmount;
+    }
+
+    /**
+     * Unsets List Total Amount.
+     * The total amount for the line item at the list price, in decimal format
+     */
+    public function unsetListTotalAmount(): void
+    {
+        $this->listTotalAmount = [];
+    }
+
+    /**
+     * Returns List Discount Amount.
+     * The difference between the list total and the sales total, in decimal format
+     */
+    public function getListDiscountAmount(): ?string
+    {
+        if (count($this->listDiscountAmount) == 0) {
+            return null;
+        }
+        return $this->listDiscountAmount['value'];
+    }
+
+    /**
+     * Sets List Discount Amount.
+     * The difference between the list total and the sales total, in decimal format
+     *
+     * @maps list_discount_amount
+     */
+    public function setListDiscountAmount(?string $listDiscountAmount): void
+    {
+        $this->listDiscountAmount['value'] = $listDiscountAmount;
+    }
+
+    /**
+     * Unsets List Discount Amount.
+     * The difference between the list total and the sales total, in decimal format
+     */
+    public function unsetListDiscountAmount(): void
+    {
+        $this->listDiscountAmount = [];
+    }
+
+    /**
+     * Returns List Discount Rate.
+     * The list discount as a fraction of the list total, in decimal format. For example, `"0.25"` is a 25%
+     * discount.
+     */
+    public function getListDiscountRate(): ?string
+    {
+        if (count($this->listDiscountRate) == 0) {
+            return null;
+        }
+        return $this->listDiscountRate['value'];
+    }
+
+    /**
+     * Sets List Discount Rate.
+     * The list discount as a fraction of the list total, in decimal format. For example, `"0.25"` is a 25%
+     * discount.
+     *
+     * @maps list_discount_rate
+     */
+    public function setListDiscountRate(?string $listDiscountRate): void
+    {
+        $this->listDiscountRate['value'] = $listDiscountRate;
+    }
+
+    /**
+     * Unsets List Discount Rate.
+     * The list discount as a fraction of the list total, in decimal format. For example, `"0.25"` is a 25%
+     * discount.
+     */
+    public function unsetListDiscountRate(): void
+    {
+        $this->listDiscountRate = [];
+    }
+
+    /**
+     * Returns List Price Point Id.
+     * The ID of the list price point this line item's sales price is compared against
+     */
+    public function getListPricePointId(): ?int
+    {
+        if (count($this->listPricePointId) == 0) {
+            return null;
+        }
+        return $this->listPricePointId['value'];
+    }
+
+    /**
+     * Sets List Price Point Id.
+     * The ID of the list price point this line item's sales price is compared against
+     *
+     * @maps list_price_point_id
+     */
+    public function setListPricePointId(?int $listPricePointId): void
+    {
+        $this->listPricePointId['value'] = $listPricePointId;
+    }
+
+    /**
+     * Unsets List Price Point Id.
+     * The ID of the list price point this line item's sales price is compared against
+     */
+    public function unsetListPricePointId(): void
+    {
+        $this->listPricePointId = [];
+    }
+
+    /**
      * Returns Custom Item.
      */
     public function getCustomItem(): ?bool
@@ -860,6 +1051,11 @@ class InvoiceLineItem implements \JsonSerializable
                 'hide' => $this->hide,
                 'componentCostData' => $this->getComponentCostData(),
                 'productPricePointId' => $this->getProductPricePointId(),
+                'listUnitPrice' => $this->getListUnitPrice(),
+                'listTotalAmount' => $this->getListTotalAmount(),
+                'listDiscountAmount' => $this->getListDiscountAmount(),
+                'listDiscountRate' => $this->getListDiscountRate(),
+                'listPricePointId' => $this->getListPricePointId(),
                 'customItem' => $this->customItem,
                 'kind' => $this->kind,
                 'prepaidAllocationExpiresAt' => $this->getPrepaidAllocationExpiresAt(),
@@ -973,6 +1169,21 @@ class InvoiceLineItem implements \JsonSerializable
         }
         if (!empty($this->productPricePointId)) {
             $json['product_price_point_id']        = $this->productPricePointId['value'];
+        }
+        if (!empty($this->listUnitPrice)) {
+            $json['list_unit_price']               = $this->listUnitPrice['value'];
+        }
+        if (!empty($this->listTotalAmount)) {
+            $json['list_total_amount']             = $this->listTotalAmount['value'];
+        }
+        if (!empty($this->listDiscountAmount)) {
+            $json['list_discount_amount']          = $this->listDiscountAmount['value'];
+        }
+        if (!empty($this->listDiscountRate)) {
+            $json['list_discount_rate']            = $this->listDiscountRate['value'];
+        }
+        if (!empty($this->listPricePointId)) {
+            $json['list_price_point_id']           = $this->listPricePointId['value'];
         }
         if (isset($this->customItem)) {
             $json['custom_item']                   = $this->customItem;
