@@ -10,34 +10,34 @@ declare(strict_types=1);
 
 namespace AdvancedBillingLib\Models\Builders;
 
-use AdvancedBillingLib\Models\EventBasedBillingSegmentSingleError;
+use AdvancedBillingLib\Models\SegmentPricePointErrorDetails;
 use Core\Utils\CoreHelper;
 
 /**
- * Builder for model EventBasedBillingSegmentSingleError
+ * Builder for model SegmentPricePointErrorDetails
  *
- * @see EventBasedBillingSegmentSingleError
+ * @see SegmentPricePointErrorDetails
  */
-class EventBasedBillingSegmentSingleErrorBuilder
+class SegmentPricePointErrorDetailsBuilder
 {
     /**
-     * @var EventBasedBillingSegmentSingleError
+     * @var SegmentPricePointErrorDetails
      */
     private $instance;
 
-    private function __construct(EventBasedBillingSegmentSingleError $instance)
+    private function __construct(SegmentPricePointErrorDetails $instance)
     {
         $this->instance = $instance;
     }
 
     /**
-     * Initializes a new Event Based Billing Segment Single Error Builder object.
+     * Initializes a new Segment Price Point Error Details Builder object.
      *
      * @param string[] $pricePoint
      */
     public static function init(array $pricePoint): self
     {
-        return new self(new EventBasedBillingSegmentSingleError($pricePoint));
+        return new self(new SegmentPricePointErrorDetails($pricePoint));
     }
 
     /**
@@ -53,9 +53,9 @@ class EventBasedBillingSegmentSingleErrorBuilder
     }
 
     /**
-     * Initializes a new Event Based Billing Segment Single Error object.
+     * Initializes a new Segment Price Point Error Details object.
      */
-    public function build(): EventBasedBillingSegmentSingleError
+    public function build(): SegmentPricePointErrorDetails
     {
         return CoreHelper::clone($this->instance);
     }

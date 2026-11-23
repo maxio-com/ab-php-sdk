@@ -334,7 +334,7 @@ class InvoicesController extends BaseController
                 QueryParam::init('subscription_id', $options)->commaSeparated()->extract('subscriptionId'),
                 QueryParam::init('date_field', $options)
                     ->commaSeparated()
-                    ->extract('dateField', CreditNoteDateField::ISSUE_DATE)
+                    ->extract('dateField')
                     ->serializeBy([CreditNoteDateField::class, 'checkValue']),
                 QueryParam::init('start_date', $options)->commaSeparated()->extract('startDate'),
                 QueryParam::init('end_date', $options)->commaSeparated()->extract('endDate'),

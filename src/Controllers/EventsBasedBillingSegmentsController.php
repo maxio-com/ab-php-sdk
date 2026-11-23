@@ -13,7 +13,7 @@ namespace AdvancedBillingLib\Controllers;
 use AdvancedBillingLib\Exceptions\ApiException;
 use AdvancedBillingLib\Exceptions\EventBasedBillingListSegmentsErrorsException;
 use AdvancedBillingLib\Exceptions\EventBasedBillingSegmentWriteErrorResponseException;
-use AdvancedBillingLib\Exceptions\SegmentPricePointErrorsErrorException;
+use AdvancedBillingLib\Exceptions\SegmentPricePointErrorsException;
 use AdvancedBillingLib\Models\BulkCreateSegments;
 use AdvancedBillingLib\Models\BulkUpdateSegments;
 use AdvancedBillingLib\Models\CreateSegmentRequest;
@@ -188,7 +188,8 @@ class EventsBasedBillingSegmentsController extends BaseController
             ->throwErrorOn(
                 '422',
                 ErrorType::initWithErrorTemplate(
-                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.'
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    EventBasedBillingSegmentWriteErrorResponseException::class
                 )
             )
             ->type(SegmentResponse::class);
@@ -239,7 +240,7 @@ class EventsBasedBillingSegmentsController extends BaseController
                 '422',
                 ErrorType::initWithErrorTemplate(
                     'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
-                    SegmentPricePointErrorsErrorException::class
+                    SegmentPricePointErrorsException::class
                 )
             );
 

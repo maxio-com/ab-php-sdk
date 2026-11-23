@@ -13,27 +13,49 @@ namespace AdvancedBillingLib\Models;
 use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
+/**
+ * Validation error details for listing segments.
+ */
 class Errors implements \JsonSerializable
 {
     /**
-     * @var string[]
+     * @var string[]|null
+     */
+    private $perPage;
+
+    /**
+     * @var string[]|null
      */
     private $pricePoint;
 
     /**
-     * @param string[] $pricePoint
+     * Returns Per Page.
+     *
+     * @return string[]|null
      */
-    public function __construct(array $pricePoint)
+    public function getPerPage(): ?array
     {
-        $this->pricePoint = $pricePoint;
+        return $this->perPage;
+    }
+
+    /**
+     * Sets Per Page.
+     *
+     * @maps per_page
+     *
+     * @param string[]|null $perPage
+     */
+    public function setPerPage(?array $perPage): void
+    {
+        $this->perPage = $perPage;
     }
 
     /**
      * Returns Price Point.
      *
-     * @return string[]
+     * @return string[]|null
      */
-    public function getPricePoint(): array
+    public function getPricePoint(): ?array
     {
         return $this->pricePoint;
     }
@@ -41,12 +63,11 @@ class Errors implements \JsonSerializable
     /**
      * Sets Price Point.
      *
-     * @required
      * @maps price_point
      *
-     * @param string[] $pricePoint
+     * @param string[]|null $pricePoint
      */
-    public function setPricePoint(array $pricePoint): void
+    public function setPricePoint(?array $pricePoint): void
     {
         $this->pricePoint = $pricePoint;
     }
@@ -60,7 +81,11 @@ class Errors implements \JsonSerializable
     {
         return ApiHelper::stringify(
             'Errors',
-            ['pricePoint' => $this->pricePoint, 'additionalProperties' => $this->additionalProperties]
+            [
+                'perPage' => $this->perPage,
+                'pricePoint' => $this->pricePoint,
+                'additionalProperties' => $this->additionalProperties
+            ]
         );
     }
 
@@ -104,7 +129,12 @@ class Errors implements \JsonSerializable
     public function jsonSerialize(bool $asArrayWhenEmpty = false)
     {
         $json = [];
-        $json['price_point'] = $this->pricePoint;
+        if (isset($this->perPage)) {
+            $json['per_page']    = $this->perPage;
+        }
+        if (isset($this->pricePoint)) {
+            $json['price_point'] = $this->pricePoint;
+        }
         $json = array_merge($json, $this->additionalProperties);
 
         return (!$asArrayWhenEmpty && empty($json)) ? new stdClass() : $json;

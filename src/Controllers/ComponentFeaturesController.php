@@ -219,7 +219,7 @@ class ComponentFeaturesController extends BaseController
      *        `false` (default), the feature catalog item is archived and existing entitlements
      *        are preserved.
      *
-     * @return FeatureCatalogItemResponse Response from the API call
+     * @return FeatureCatalogItemResponse|null Response from the API call
      *
      * @throws ApiException Thrown if API call fails
      */
@@ -227,7 +227,7 @@ class ComponentFeaturesController extends BaseController
         int $componentId,
         int $id,
         ?bool $destroyEntitlements = false
-    ): FeatureCatalogItemResponse {
+    ): ?FeatureCatalogItemResponse {
         $_reqBuilder = $this->requestBuilder(
             RequestMethod::DELETE,
             '/components/{component_id}/features/{id}.json'
@@ -252,6 +252,7 @@ class ComponentFeaturesController extends BaseController
                     ErrorListResponseException::class
                 )
             )
+            ->nullableType()
             ->type(FeatureCatalogItemResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);

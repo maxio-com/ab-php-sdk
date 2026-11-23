@@ -16,10 +16,10 @@ use AdvancedBillingLib\ApiHelper;
  * Returned when a segment write targets a subscription's custom price point. Segments on a custom
  * price point can only be set through `custom_price` on the subscription or component endpoints.
  */
-class SegmentPricePointErrorsErrorException extends ApiException
+class SegmentPricePointErrorsException extends ApiException
 {
     /**
-     * @var \AdvancedBillingLib\Models\Errors
+     * @var \AdvancedBillingLib\Models\SegmentPricePointErrorDetails
      */
     private $errors;
 
@@ -27,13 +27,13 @@ class SegmentPricePointErrorsErrorException extends ApiException
      * @param string $reason
      * @param \AdvancedBillingLib\Http\HttpRequest $request
      * @param \AdvancedBillingLib\Http\HttpResponse $response
-     * @param \AdvancedBillingLib\Models\Errors $errors
+     * @param \AdvancedBillingLib\Models\SegmentPricePointErrorDetails $errors
      */
     public function __construct(
         string $reason,
         \AdvancedBillingLib\Http\HttpRequest $request,
         \AdvancedBillingLib\Http\HttpResponse $response,
-        \AdvancedBillingLib\Models\Errors $errors
+        \AdvancedBillingLib\Models\SegmentPricePointErrorDetails $errors
     ) {
         parent::__construct($reason, $request, $response);
         $this->errors = $errors;
@@ -41,32 +41,34 @@ class SegmentPricePointErrorsErrorException extends ApiException
 
     /**
      * Returns Errors.
+     * Price-point validation error details for segment writes.
      */
-    public function getErrors(): \AdvancedBillingLib\Models\Errors
+    public function getErrors(): \AdvancedBillingLib\Models\SegmentPricePointErrorDetails
     {
         return $this->errors;
     }
 
     /**
      * Sets Errors.
+     * Price-point validation error details for segment writes.
      *
      * @required
      * @maps errors
      */
-    public function setErrors(\AdvancedBillingLib\Models\Errors $errors): void
+    public function setErrors(\AdvancedBillingLib\Models\SegmentPricePointErrorDetails $errors): void
     {
         $this->errors = $errors;
     }
 
     /**
-     * Converts the SegmentPricePointErrorsErrorException object to a human-readable string representation.
+     * Converts the SegmentPricePointErrorsException object to a human-readable string representation.
      *
-     * @return string The string representation of the SegmentPricePointErrorsErrorException object.
+     * @return string The string representation of the SegmentPricePointErrorsException object.
      */
     public function __toString(): string
     {
         return ApiHelper::stringify(
-            'SegmentPricePointErrorsErrorException',
+            'SegmentPricePointErrorsException',
             ['errors' => $this->errors, 'additionalProperties' => $this->additionalProperties],
             parent::__toString()
         );

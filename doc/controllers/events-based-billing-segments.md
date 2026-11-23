@@ -243,6 +243,8 @@ try {
     );
     echo 'SegmentResponse:';
     var_dump($result);
+} catch (EventBasedBillingSegmentWriteErrorResponseException $exp) {
+    echo 'Caught EventBasedBillingSegmentWriteErrorResponseException:', $exp;
 } catch (ApiException $exp) {
     echo 'Caught:', $exp;
 }
@@ -253,7 +255,7 @@ try {
 | HTTP Status Code | Error Description | Exception Class |
 |  --- | --- | --- |
 | 404 | Not Found | `ApiException` |
-| 422 | Unprocessable Entity (WebDAV) | `ApiException` |
+| 422 | Unprocessable Entity (WebDAV) | [`EventBasedBillingSegmentWriteErrorResponseException`](../../doc/models/event-based-billing-segment-write-error-response-exception.md) |
 
 
 # Delete Segment
@@ -305,8 +307,8 @@ try {
         $pricePointId,
         $id
     );
-} catch (SegmentPricePointErrorsErrorException $exp) {
-    echo 'Caught SegmentPricePointErrorsErrorException:', $exp;
+} catch (SegmentPricePointErrorsException $exp) {
+    echo 'Caught SegmentPricePointErrorsException:', $exp;
 } catch (ApiException $exp) {
     echo 'Caught:', $exp;
 }
@@ -317,7 +319,7 @@ try {
 | HTTP Status Code | Error Description | Exception Class |
 |  --- | --- | --- |
 | 404 | Not Found | `ApiException` |
-| 422 | Unprocessable Entity (WebDAV) | [`SegmentPricePointErrorsErrorException`](../../doc/models/segment-price-point-errors-error-exception.md) |
+| 422 | Unprocessable Entity (WebDAV) | [`SegmentPricePointErrorsException`](../../doc/models/segment-price-point-errors-exception.md) |
 
 
 # Bulk Create Segments

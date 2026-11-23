@@ -19,30 +19,24 @@ use AdvancedBillingLib\ApiHelper;
 class EventBasedBillingSegmentWriteErrorResponseException extends ApiException
 {
     /**
-     * @var \AdvancedBillingLib\Models\EventBasedBillingSegmentSingleError|null
+     * @var array|null
      */
     private $errors;
 
     /**
      * Returns Errors.
-     * The key of the object would be a number (an index in the request array) where the error occurred. In
-     * the value object, the key represents the field and the value is an array with error messages. In
-     * most cases, this object would contain just one key.
      */
-    public function getErrors(): ?\AdvancedBillingLib\Models\EventBasedBillingSegmentSingleError
+    public function getErrors(): ?array
     {
         return $this->errors;
     }
 
     /**
      * Sets Errors.
-     * The key of the object would be a number (an index in the request array) where the error occurred. In
-     * the value object, the key represents the field and the value is an array with error messages. In
-     * most cases, this object would contain just one key.
      *
      * @maps errors
      */
-    public function setErrors(?\AdvancedBillingLib\Models\EventBasedBillingSegmentSingleError $errors): void
+    public function setErrors(?array $errors): void
     {
         $this->errors = $errors;
     }

@@ -278,7 +278,7 @@ function removeComponentFeature(
     int $componentId,
     int $id,
     ?bool $destroyEntitlements = false
-): FeatureCatalogItemResponse
+): ?FeatureCatalogItemResponse
 ```
 
 ## Authentication
@@ -297,7 +297,7 @@ This endpoint requires [BasicAuth](../../doc/auth/basic-authentication.md)
 
 **200**: The price point had subscribers, so the removal was made on a clone of it. Returns the archived feature catalog item on the clone.
 
-[`FeatureCatalogItemResponse`](../../doc/models/feature-catalog-item-response.md)
+[`?FeatureCatalogItemResponse`](../../doc/models/feature-catalog-item-response.md)
 
 ## Example Usage
 
@@ -316,7 +316,7 @@ try {
         $id,
         $destroyEntitlements
     );
-    echo 'FeatureCatalogItemResponse:';
+    echo 'FeatureCatalogItemResponse|null:';
     var_dump($result);
 } catch (ErrorListResponseException $exp) {
     echo 'Caught ErrorListResponseException:', $exp;

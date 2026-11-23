@@ -14,11 +14,9 @@ use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
 /**
- * The key of the object would be a number (an index in the request array) where the error occurred. In
- * the value object, the key represents the field and the value is an array with error messages. In
- * most cases, this object would contain just one key.
+ * Price-point validation error details for segment writes.
  */
-class EventBasedBillingSegmentSingleError implements \JsonSerializable
+class SegmentPricePointErrorDetails implements \JsonSerializable
 {
     /**
      * @var string[]
@@ -57,14 +55,14 @@ class EventBasedBillingSegmentSingleError implements \JsonSerializable
     }
 
     /**
-     * Converts the EventBasedBillingSegmentSingleError object to a human-readable string representation.
+     * Converts the SegmentPricePointErrorDetails object to a human-readable string representation.
      *
-     * @return string The string representation of the EventBasedBillingSegmentSingleError object.
+     * @return string The string representation of the SegmentPricePointErrorDetails object.
      */
     public function __toString(): string
     {
         return ApiHelper::stringify(
-            'EventBasedBillingSegmentSingleError',
+            'SegmentPricePointErrorDetails',
             ['pricePoint' => $this->pricePoint, 'additionalProperties' => $this->additionalProperties]
         );
     }

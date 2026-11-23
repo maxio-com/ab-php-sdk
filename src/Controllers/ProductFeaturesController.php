@@ -216,7 +216,7 @@ class ProductFeaturesController extends BaseController
      *        `false` (default), the feature catalog item is archived and existing entitlements
      *        are preserved.
      *
-     * @return FeatureCatalogItemResponse Response from the API call
+     * @return FeatureCatalogItemResponse|null Response from the API call
      *
      * @throws ApiException Thrown if API call fails
      */
@@ -224,7 +224,7 @@ class ProductFeaturesController extends BaseController
         int $productId,
         int $id,
         ?bool $destroyEntitlements = false
-    ): FeatureCatalogItemResponse {
+    ): ?FeatureCatalogItemResponse {
         $_reqBuilder = $this->requestBuilder(RequestMethod::DELETE, '/products/{product_id}/features/{id}.json')
             ->auth('BasicAuth')
             ->parameters(
@@ -246,6 +246,7 @@ class ProductFeaturesController extends BaseController
                     ErrorListResponseException::class
                 )
             )
+            ->nullableType()
             ->type(FeatureCatalogItemResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
