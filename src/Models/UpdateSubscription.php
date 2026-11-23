@@ -280,8 +280,8 @@ class UpdateSubscription implements \JsonSerializable
      * will be respected either before or after the trial, as configured on the price point. If the payment
      * is due at the initial_billing_at and it fails the subscription will be immediately canceled. You can
      * omit the initial_billing_at date to activate the subscription immediately. See the [subscription
-     * import](https://maxio.zendesk.com/hc/en-us/articles/24251489107213-Advanced-Billing-Subscription-
-     * Imports#date-format) documentation for more information about Date/Time formats.
+     * import](https://docs.maxio.com/configuration/importing/import-subscriptions-from-a-csv#date-format)
+     * documentation for more information about Date/Time formats.
      */
     public function getInitialBillingAt(): ?\DateTime
     {
@@ -298,8 +298,8 @@ class UpdateSubscription implements \JsonSerializable
      * will be respected either before or after the trial, as configured on the price point. If the payment
      * is due at the initial_billing_at and it fails the subscription will be immediately canceled. You can
      * omit the initial_billing_at date to activate the subscription immediately. See the [subscription
-     * import](https://maxio.zendesk.com/hc/en-us/articles/24251489107213-Advanced-Billing-Subscription-
-     * Imports#date-format) documentation for more information about Date/Time formats.
+     * import](https://docs.maxio.com/configuration/importing/import-subscriptions-from-a-csv#date-format)
+     * documentation for more information about Date/Time formats.
      *
      * @maps initial_billing_at
      * @factory \AdvancedBillingLib\Utils\DateTimeHelper::fromRfc3339DateTime
@@ -316,8 +316,8 @@ class UpdateSubscription implements \JsonSerializable
      * date. When the first billing date is known, update a subscription to set the `initial_billing_at`
      * date. The subscription moves to the awaiting signup with a scheduled initial billing date. You can
      * omit the initial_billing_at date to activate the subscription immediately. See [Subscription
-     * States](https://maxio-chargify.zendesk.com/hc/en-us/articles/5404222005773-Subscription-States) for
-     * more information.
+     * States](https://docs.maxio.com/billing/subscriptions/management/subscription-states/understand-
+     * subscription-states#setup-and-transient-states) for more information.
      */
     public function getDeferSignup(): ?bool
     {
@@ -331,8 +331,8 @@ class UpdateSubscription implements \JsonSerializable
      * date. When the first billing date is known, update a subscription to set the `initial_billing_at`
      * date. The subscription moves to the awaiting signup with a scheduled initial billing date. You can
      * omit the initial_billing_at date to activate the subscription immediately. See [Subscription
-     * States](https://maxio-chargify.zendesk.com/hc/en-us/articles/5404222005773-Subscription-States) for
-     * more information.
+     * States](https://docs.maxio.com/billing/subscriptions/management/subscription-states/understand-
+     * subscription-states#setup-and-transient-states) for more information.
      *
      * @maps defer_signup
      */

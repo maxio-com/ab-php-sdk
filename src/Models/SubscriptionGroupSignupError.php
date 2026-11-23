@@ -47,8 +47,8 @@ class SubscriptionGroupSignupError implements \JsonSerializable
 
     /**
      * Returns Subscriptions.
-     * Object that as key have subscription position in request subscriptions array and as value
-     * subscription errors object.
+     * Subscription errors keyed by the subscription's `reference` from the request, or by its zero-based
+     * position in the `subscriptions` array when it has no reference.
      *
      * @return array<string,SubscriptionGroupSubscriptionError>|null
      */
@@ -59,8 +59,8 @@ class SubscriptionGroupSignupError implements \JsonSerializable
 
     /**
      * Sets Subscriptions.
-     * Object that as key have subscription position in request subscriptions array and as value
-     * subscription errors object.
+     * Subscription errors keyed by the subscription's `reference` from the request, or by its zero-based
+     * position in the `subscriptions` array when it has no reference.
      *
      * @maps subscriptions
      *

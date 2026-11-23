@@ -31,6 +31,11 @@
 | `hide` | `?bool` | Optional | - | getHide(): ?bool | setHide(?bool hide): void |
 | `componentCostData` | [`?InvoiceLineItemComponentCostData`](../../doc/models/invoice-line-item-component-cost-data.md) | Optional | - | getComponentCostData(): ?InvoiceLineItemComponentCostData | setComponentCostData(?InvoiceLineItemComponentCostData componentCostData): void |
 | `productPricePointId` | `?int` | Optional | The price point ID of the line item's product | getProductPricePointId(): ?int | setProductPricePointId(?int productPricePointId): void |
+| `listUnitPrice` | `?string` | Optional | The unit price from the list price point, in decimal format. Returned only when list vs sales pricing is enabled for the site. | getListUnitPrice(): ?string | setListUnitPrice(?string listUnitPrice): void |
+| `listTotalAmount` | `?string` | Optional | The total amount for the line item at the list price, in decimal format | getListTotalAmount(): ?string | setListTotalAmount(?string listTotalAmount): void |
+| `listDiscountAmount` | `?string` | Optional | The difference between the list total and the sales total, in decimal format | getListDiscountAmount(): ?string | setListDiscountAmount(?string listDiscountAmount): void |
+| `listDiscountRate` | `?string` | Optional | The list discount as a fraction of the list total, in decimal format. For example, `"0.25"` is a 25% discount. | getListDiscountRate(): ?string | setListDiscountRate(?string listDiscountRate): void |
+| `listPricePointId` | `?int` | Optional | The ID of the list price point this line item's sales price is compared against | getListPricePointId(): ?int | setListPricePointId(?int listPricePointId): void |
 | `customItem` | `?bool` | Optional | - | getCustomItem(): ?bool | setCustomItem(?bool customItem): void |
 | `kind` | `?string` | Optional | - | getKind(): ?string | setKind(?string kind): void |
 | `prepaidAllocationExpiresAt` | `?DateTime` | Optional | The date a prepaid allocation is set to expire. Only present on line items representing prepaid component allocations. The format is `"YYYY-MM-DD"`. | getPrepaidAllocationExpiresAt(): ?\DateTime | setPrepaidAllocationExpiresAt(?\DateTime prepaidAllocationExpiresAt): void |

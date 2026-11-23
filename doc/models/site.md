@@ -27,6 +27,8 @@
 | `netTerms` | [`?NetTerms`](../../doc/models/net-terms.md) | Optional | - | getNetTerms(): ?NetTerms | setNetTerms(?NetTerms netTerms): void |
 | `multiFrequencyEnabled` | `?bool` | Optional | Whether the site has the multi-frequency billing feature enabled. Only present when relationship invoicing is active. | getMultiFrequencyEnabled(): ?bool | setMultiFrequencyEnabled(?bool multiFrequencyEnabled): void |
 | `autoRenewalsEnabled` | `?bool` | Optional | Whether the auto-renewals feature is enabled for this site. | getAutoRenewalsEnabled(): ?bool | setAutoRenewalsEnabled(?bool autoRenewalsEnabled): void |
+| `listPricingEnabled` | `?bool` | Optional | Indicates whether the site has list vs sales pricing enabled. | getListPricingEnabled(): ?bool | setListPricingEnabled(?bool listPricingEnabled): void |
+| `planlessSubscriptionsEnabled` | `?bool` | Optional | Indicates whether the site allows subscriptions without a plan. | getPlanlessSubscriptionsEnabled(): ?bool | setPlanlessSubscriptionsEnabled(?bool planlessSubscriptionsEnabled): void |
 | `portalEnabled` | `?bool` | Optional | Whether the Billing Portal is enabled for this site. | getPortalEnabled(): ?bool | setPortalEnabled(?bool portalEnabled): void |
 | `test` | `?bool` | Optional | - | getTest(): ?bool | setTest(?bool test): void |
 

@@ -24,8 +24,27 @@ class TaxConfigurationKind
 
     public const ENUM_DIGITAL_RIVER = 'digital river';
 
-    private const _ALL_VALUES =
-        [self::CUSTOM, self::ENUM_MANAGED_AVALARA, self::ENUM_LINKED_AVALARA, self::ENUM_DIGITAL_RIVER];
+    public const ANROK = 'anrok';
+
+    public const TAXJAR = 'taxjar';
+
+    public const NUMERAL = 'numeral';
+
+    public const SPHERE = 'sphere';
+
+    public const TAXWIRE = 'taxwire';
+
+    private const _ALL_VALUES = [
+        self::CUSTOM,
+        self::ENUM_MANAGED_AVALARA,
+        self::ENUM_LINKED_AVALARA,
+        self::ENUM_DIGITAL_RIVER,
+        self::ANROK,
+        self::TAXJAR,
+        self::NUMERAL,
+        self::SPHERE,
+        self::TAXWIRE
+    ];
 
     /**
      * Ensures that all the given values are present in this Enum.

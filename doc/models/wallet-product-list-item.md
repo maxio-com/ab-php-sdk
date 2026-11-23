@@ -1,0 +1,71 @@
+
+# Wallet Product List Item
+
+A Wallet Product as it appears in [List Wallet Products](../../doc/controllers/wallet-products.md#list-wallet-products): the full Component field set, plus a usage count and a price point summary that only the list response reports.
+
+## Structure
+
+`WalletProductListItem`
+
+## Fields
+
+| Name | Type | Tags | Description | Getter | Setter |
+|  --- | --- | --- | --- | --- | --- |
+| `id` | `?int` | Optional | The unique ID assigned to the component by Chargify. This ID can be used to fetch the component from the API. | getId(): ?int | setId(?int id): void |
+| `name` | `?string` | Optional | The name of the Component, suitable for display on statements. e.g., Text Messages. | getName(): ?string | setName(?string name): void |
+| `handle` | `?string` | Optional | The component API handle | getHandle(): ?string | setHandle(?string handle): void |
+| `pricingScheme` | [`?string(PricingScheme)`](../../doc/models/pricing-scheme.md) | Optional | - | getPricingScheme(): ?string | setPricingScheme(?string pricingScheme): void |
+| `unitName` | `?string` | Optional | The name of the unit that the component’s usage is measured in. e.g., message | getUnitName(): ?string | setUnitName(?string unitName): void |
+| `unitPrice` | `?string` | Optional | The amount the customer will be charged per unit. This field is only populated for ‘per_unit’ pricing schemes, otherwise it may be null. | getUnitPrice(): ?string | setUnitPrice(?string unitPrice): void |
+| `productFamilyId` | `?int` | Optional | The id of the Product Family to which the Component belongs. `null` for a Wallet Product, which has no Product Family. | getProductFamilyId(): ?int | setProductFamilyId(?int productFamilyId): void |
+| `productFamilyName` | `?string` | Optional | The name of the Product Family to which the Component belongs. `null` for a Wallet Product, which has no Product Family. | getProductFamilyName(): ?string | setProductFamilyName(?string productFamilyName): void |
+| `productFamilyHandle` | `?string` | Optional | The handle of the Product Family to which the Component belongs. `null` for a Wallet Product, which has no Product Family. | getProductFamilyHandle(): ?string | setProductFamilyHandle(?string productFamilyHandle): void |
+| `pricePerUnitInCents` | `?int` | Optional | deprecated - use unit_price instead. | getPricePerUnitInCents(): ?int | setPricePerUnitInCents(?int pricePerUnitInCents): void |
+| `kind` | [`?string(ComponentKind)`](../../doc/models/component-kind.md) | Optional | A handle for the component type | getKind(): ?string | setKind(?string kind): void |
+| `archived` | `?bool` | Optional | Boolean flag describing whether a component is archived or not. | getArchived(): ?bool | setArchived(?bool archived): void |
+| `description` | `?string` | Optional | The description of the component. | getDescription(): ?string | setDescription(?string description): void |
+| `defaultPricePointId` | `?int` | Optional | - | getDefaultPricePointId(): ?int | setDefaultPricePointId(?int defaultPricePointId): void |
+| `overagePrices` | [`?(ComponentPrice[])`](../../doc/models/component-price.md) | Optional | Applicable only to prepaid usage components. An array of overage price brackets. | getOveragePrices(): ?array | setOveragePrices(?array overagePrices): void |
+| `prices` | [`?(ComponentPrice[])`](../../doc/models/component-price.md) | Optional | An array of price brackets. If the component uses the ‘per_unit’ pricing scheme, this array will be empty. | getPrices(): ?array | setPrices(?array prices): void |
+| `pricePointCount` | `?int` | Optional | Count for the number of price points associated with the component | getPricePointCount(): ?int | setPricePointCount(?int pricePointCount): void |
+| `pricePointsUrl` | `?string` | Optional | URL that points to the location to read the existing price points via GET request | getPricePointsUrl(): ?string | setPricePointsUrl(?string pricePointsUrl): void |
+| `defaultPricePointName` | `?string` | Optional | - | getDefaultPricePointName(): ?string | setDefaultPricePointName(?string defaultPricePointName): void |
+| `taxable` | `?bool` | Optional | Boolean flag describing whether a component is taxable or not. | getTaxable(): ?bool | setTaxable(?bool taxable): void |
+| `taxCode` | `?string` | Optional | A string representing the tax code related to the component type. This is especially important when using AvaTax to tax based on locale. This attribute has a max length of 25 characters. | getTaxCode(): ?string | setTaxCode(?string taxCode): void |
+| `recurring` | `?bool` | Optional | - | getRecurring(): ?bool | setRecurring(?bool recurring): void |
+| `upgradeCharge` | [`?string(CreditType)`](../../doc/models/credit-type.md) | Optional | The type of credit to be created when upgrading/downgrading. Defaults to the component and then site setting if one is not provided. | getUpgradeCharge(): ?string | setUpgradeCharge(?string upgradeCharge): void |
+| `downgradeCredit` | [`?string(CreditType)`](../../doc/models/credit-type.md) | Optional | The type of credit to be created when upgrading/downgrading. Defaults to the component and then site setting if one is not provided. | getDowngradeCredit(): ?string | setDowngradeCredit(?string downgradeCredit): void |
+| `createdAt` | `?DateTime` | Optional | Timestamp indicating when this component was created | getCreatedAt(): ?\DateTime | setCreatedAt(?\DateTime createdAt): void |
+| `updatedAt` | `?DateTime` | Optional | Timestamp indicating when this component was updated | getUpdatedAt(): ?\DateTime | setUpdatedAt(?\DateTime updatedAt): void |
+| `archivedAt` | `?DateTime` | Optional | Timestamp indicating when this component was archived | getArchivedAt(): ?\DateTime | setArchivedAt(?\DateTime archivedAt): void |
+| `hideDateRangeOnInvoice` | `?bool` | Optional | (Only available on Relationship Invoicing sites) Boolean flag describing if the service date range should show for the component on generated invoices. | getHideDateRangeOnInvoice(): ?bool | setHideDateRangeOnInvoice(?bool hideDateRangeOnInvoice): void |
+| `allowFractionalQuantities` | `?bool` | Optional | - | getAllowFractionalQuantities(): ?bool | setAllowFractionalQuantities(?bool allowFractionalQuantities): void |
+| `itemCategory` | [`?string(ItemCategory)`](../../doc/models/item-category.md) | Optional | One of the following: Business Software, Consumer Software, Digital Services, Physical Goods, Other | getItemCategory(): ?string | setItemCategory(?string itemCategory): void |
+| `useSiteExchangeRate` | `?bool` | Optional | - | getUseSiteExchangeRate(): ?bool | setUseSiteExchangeRate(?bool useSiteExchangeRate): void |
+| `accountingCode` | `?string` | Optional | E.g. Internal ID or SKU Number | getAccountingCode(): ?string | setAccountingCode(?string accountingCode): void |
+| `eventBasedBillingMetricId` | `?int` | Optional | The ID of an attached metric from legacy Events Based Billing. Omitted if no metric is attached. If the metric is linked to a Maxio Metering meter, the response can include both event_based_billing_metric_id and metering_meter_id. | getEventBasedBillingMetricId(): ?int | setEventBasedBillingMetricId(?int eventBasedBillingMetricId): void |
+| `meteringMeterId` | `?int` | Optional | The ID of an attached single Maxio Metering meter. Omitted if no single meter is attached, including when the component uses only an Advanced Formula. If a legacy Events Based Billing metric is linked to the meter, the response can include both metering_meter_id and event_based_billing_metric_id. | getMeteringMeterId(): ?int | setMeteringMeterId(?int meteringMeterId): void |
+| `interval` | `?int` | Optional | The numerical interval. e.g., an interval of ‘30’ coupled with an interval_unit of day would mean this component’s default price point would renew every 30 days. This property is only available for sites with Multifrequency enabled. | getInterval(): ?int | setInterval(?int interval): void |
+| `intervalUnit` | [`?string(IntervalUnit)`](../../doc/models/interval-unit.md) | Optional | A string representing the interval unit for this component's default price point, either month or day. This property is only available for sites with Multifrequency enabled. | getIntervalUnit(): ?string | setIntervalUnit(?string intervalUnit): void |
+| `unspscCode` | `?string` | Optional | (Optional) Custom UNSPSC commodity code for Level 3/CEDP payment data. When set, this value is sent as the commodity code on invoice line items for this component instead of the default derived from item_category. | getUnspscCode(): ?string | setUnspscCode(?string unspscCode): void |
+| `features` | [`?(FeatureCatalogItem[])`](../../doc/models/feature-catalog-item.md) | Optional | The active feature catalog items attached to this component. Present only when the request includes `include_features=true`. | getFeatures(): ?array | setFeatures(?array features): void |
+| `usedBy` | [`?WalletProductUsageCount`](../../doc/models/wallet-product-usage-count.md) | Optional | A rollup of what's using this Wallet Product, for the catalog listing. | getUsedBy(): ?WalletProductUsageCount | setUsedBy(?WalletProductUsageCount usedBy): void |
+| `pricePointSummary` | [`?WalletProductPricePointSummary`](../../doc/models/wallet-product-price-point-summary.md) | Optional | A summary of the Wallet Product's default price point, for rendering a catalog listing without a separate price points call. | getPricePointSummary(): ?WalletProductPricePointSummary | setPricePointSummary(?WalletProductPricePointSummary pricePointSummary): void |
+
+## Example
+
+```php
+use AdvancedBillingLib\Models\Builders\WalletProductListItemBuilder;
+use AdvancedBillingLib\Models\PricingScheme;
+use AdvancedBillingLib\Models\ItemCategory;
+
+$walletProductListItem = WalletProductListItemBuilder::init()
+    ->id(146)
+    ->name('name2')
+    ->handle('handle8')
+    ->pricingScheme(PricingScheme::STAIRSTEP)
+    ->unitName('unit_name4')
+    ->itemCategory(ItemCategory::ENUM_BUSINESS_SOFTWARE)
+    ->build();
+```
+

@@ -46,6 +46,16 @@ class SubscriptionGroupSignupItem implements \JsonSerializable
     private $reference;
 
     /**
+     * @var int|null
+     */
+    private $customerId;
+
+    /**
+     * @var string|null
+     */
+    private $customerReference;
+
+    /**
      * @var bool|null
      */
     private $primary;
@@ -204,6 +214,52 @@ class SubscriptionGroupSignupItem implements \JsonSerializable
     public function setReference(?string $reference): void
     {
         $this->reference = $reference;
+    }
+
+    /**
+     * Returns Customer Id.
+     * (Optional) The ID of the customer the subscription belongs to. The customer must be the payer or a
+     * customer below the payer in the customer hierarchy. If you omit both `customer_id` and
+     * `customer_reference`, the subscription belongs to the payer.
+     */
+    public function getCustomerId(): ?int
+    {
+        return $this->customerId;
+    }
+
+    /**
+     * Sets Customer Id.
+     * (Optional) The ID of the customer the subscription belongs to. The customer must be the payer or a
+     * customer below the payer in the customer hierarchy. If you omit both `customer_id` and
+     * `customer_reference`, the subscription belongs to the payer.
+     *
+     * @maps customer_id
+     */
+    public function setCustomerId(?int $customerId): void
+    {
+        $this->customerId = $customerId;
+    }
+
+    /**
+     * Returns Customer Reference.
+     * (Optional) The reference of the customer the subscription belongs to, matched case-insensitively.
+     * Use in place of `customer_id`. If you pass both, `customer_id` is used.
+     */
+    public function getCustomerReference(): ?string
+    {
+        return $this->customerReference;
+    }
+
+    /**
+     * Sets Customer Reference.
+     * (Optional) The reference of the customer the subscription belongs to, matched case-insensitively.
+     * Use in place of `customer_id`. If you pass both, `customer_id` is used.
+     *
+     * @maps customer_reference
+     */
+    public function setCustomerReference(?string $customerReference): void
+    {
+        $this->customerReference = $customerReference;
     }
 
     /**
@@ -382,6 +438,8 @@ class SubscriptionGroupSignupItem implements \JsonSerializable
                 'productPricePointHandle' => $this->productPricePointHandle,
                 'offerId' => $this->offerId,
                 'reference' => $this->reference,
+                'customerId' => $this->customerId,
+                'customerReference' => $this->customerReference,
                 'primary' => $this->primary,
                 'currency' => $this->currency,
                 'couponCodes' => $this->couponCodes,
@@ -451,6 +509,12 @@ class SubscriptionGroupSignupItem implements \JsonSerializable
         }
         if (isset($this->reference)) {
             $json['reference']                  = $this->reference;
+        }
+        if (isset($this->customerId)) {
+            $json['customer_id']                = $this->customerId;
+        }
+        if (isset($this->customerReference)) {
+            $json['customer_reference']         = $this->customerReference;
         }
         if (isset($this->primary)) {
             $json['primary']                    = $this->primary;

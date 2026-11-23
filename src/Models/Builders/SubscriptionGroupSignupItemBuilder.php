@@ -108,6 +108,28 @@ class SubscriptionGroupSignupItemBuilder
     }
 
     /**
+     * Sets customer id field.
+     *
+     * @param int|null $value
+     */
+    public function customerId(?int $value): self
+    {
+        $this->instance->setCustomerId($value);
+        return $this;
+    }
+
+    /**
+     * Sets customer reference field.
+     *
+     * @param string|null $value
+     */
+    public function customerReference(?string $value): self
+    {
+        $this->instance->setCustomerReference($value);
+        return $this;
+    }
+
+    /**
      * Sets primary field.
      *
      * @param bool|null $value

@@ -74,6 +74,11 @@ class ComponentCustomPrice implements \JsonSerializable
     private $expirationIntervalUnit = [];
 
     /**
+     * @var SubscriptionComponentCustomPriceSegment[]|null
+     */
+    private $segments;
+
+    /**
      * @param Price[] $prices
      */
     public function __construct(array $prices)
@@ -219,8 +224,8 @@ class ComponentCustomPrice implements \JsonSerializable
 
     /**
      * Returns Use Default List Price.
-     * When true, list price calculations will continue to use the default price point even when a
-     * `custom_price` is supplied.
+     * (Optional) When list vs sales pricing is enabled and `list_price_point_id` is omitted, the
+     * component's default price point is used as the list price unless this is `false`. Defaults to `true`.
      */
     public function getUseDefaultListPrice(): ?bool
     {
@@ -229,8 +234,8 @@ class ComponentCustomPrice implements \JsonSerializable
 
     /**
      * Sets Use Default List Price.
-     * When true, list price calculations will continue to use the default price point even when a
-     * `custom_price` is supplied.
+     * (Optional) When list vs sales pricing is enabled and `list_price_point_id` is omitted, the
+     * component's default price point is used as the list price unless this is `false`. Defaults to `true`.
      *
      * @maps use_default_list_price
      */
@@ -377,6 +382,58 @@ class ComponentCustomPrice implements \JsonSerializable
     }
 
     /**
+     * Returns Segments.
+     * Applicable only to segmented event-based components on sites using Maxio Metering. Per-segment rates
+     * for the component: each entry sets the pricing scheme and prices for one segment of the component's
+     * meter, identified by its property values.
+     *
+     * Accepted only by Create Subscription and Update Subscription, which save the segment rates. Preview
+     * Subscription and the signup proforma invoice endpoints validate segments the same way but do not
+     * save them. Every other endpoint that accepts a component `custom_price` returns `422 Unprocessable
+     * Entity` when the `segments` key is present, even when its value is `null` or an empty array. Omit
+     * this property unless you are setting segment rates.
+     *
+     * Saved segment rates take effect as soon as the request succeeds and price all of the current billing
+     * period's usage at the new rates, including usage recorded before the request. To read them back,
+     * take the `price_point_id` of the subscription's component (for example, from [Read Subscription
+     * Component]($e/Subscription%20Components/readSubscriptionComponent)) and call `GET
+     * /components/{component_id}/price_points/{price_point_id}/segments.json`.
+     *
+     * @return SubscriptionComponentCustomPriceSegment[]|null
+     */
+    public function getSegments(): ?array
+    {
+        return $this->segments;
+    }
+
+    /**
+     * Sets Segments.
+     * Applicable only to segmented event-based components on sites using Maxio Metering. Per-segment rates
+     * for the component: each entry sets the pricing scheme and prices for one segment of the component's
+     * meter, identified by its property values.
+     *
+     * Accepted only by Create Subscription and Update Subscription, which save the segment rates. Preview
+     * Subscription and the signup proforma invoice endpoints validate segments the same way but do not
+     * save them. Every other endpoint that accepts a component `custom_price` returns `422 Unprocessable
+     * Entity` when the `segments` key is present, even when its value is `null` or an empty array. Omit
+     * this property unless you are setting segment rates.
+     *
+     * Saved segment rates take effect as soon as the request succeeds and price all of the current billing
+     * period's usage at the new rates, including usage recorded before the request. To read them back,
+     * take the `price_point_id` of the subscription's component (for example, from [Read Subscription
+     * Component]($e/Subscription%20Components/readSubscriptionComponent)) and call `GET
+     * /components/{component_id}/price_points/{price_point_id}/segments.json`.
+     *
+     * @maps segments
+     *
+     * @param SubscriptionComponentCustomPriceSegment[]|null $segments
+     */
+    public function setSegments(?array $segments): void
+    {
+        $this->segments = $segments;
+    }
+
+    /**
      * Converts the ComponentCustomPrice object to a human-readable string representation.
      *
      * @return string The string representation of the ComponentCustomPrice object.
@@ -397,6 +454,7 @@ class ComponentCustomPrice implements \JsonSerializable
                 'rolloverPrepaidRemainder' => $this->rolloverPrepaidRemainder,
                 'expirationInterval' => $this->getExpirationInterval(),
                 'expirationIntervalUnit' => $this->getExpirationIntervalUnit(),
+                'segments' => $this->segments,
                 'additionalProperties' => $this->additionalProperties
             ]
         );
@@ -475,6 +533,9 @@ class ComponentCustomPrice implements \JsonSerializable
                 ExpirationIntervalUnit::checkValue(
                     $this->expirationIntervalUnit['value']
                 );
+        }
+        if (isset($this->segments)) {
+            $json['segments']                   = $this->segments;
         }
         $json = array_merge($json, $this->additionalProperties);
 

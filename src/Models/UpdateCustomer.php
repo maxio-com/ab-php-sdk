@@ -91,6 +91,21 @@ class UpdateCustomer implements \JsonSerializable
     private $vatNumber;
 
     /**
+     * @var string|null
+     */
+    private $vatCountry;
+
+    /**
+     * @var string|null
+     */
+    private $entityIdentifierKind;
+
+    /**
+     * @var string|null
+     */
+    private $entityIdentifierValue;
+
+    /**
      * @var bool|null
      */
     private $taxExempt;
@@ -398,6 +413,95 @@ class UpdateCustomer implements \JsonSerializable
     }
 
     /**
+     * Returns Vat Country.
+     * The two-letter ISO 3166-1 country code that qualifies the customer's tax ID. Required when
+     * `entity_identifier_kind` is `vat_eu` or `national_tax`, and used to derive the kind when only the
+     * legacy `vat_number` is sent.
+     */
+    public function getVatCountry(): ?string
+    {
+        return $this->vatCountry;
+    }
+
+    /**
+     * Sets Vat Country.
+     * The two-letter ISO 3166-1 country code that qualifies the customer's tax ID. Required when
+     * `entity_identifier_kind` is `vat_eu` or `national_tax`, and used to derive the kind when only the
+     * legacy `vat_number` is sent.
+     *
+     * @maps vat_country
+     */
+    public function setVatCountry(?string $vatCountry): void
+    {
+        $this->vatCountry = $vatCountry;
+    }
+
+    /**
+     * Returns Entity Identifier Kind.
+     * The kind of tax or business identifier held by the customer:
+     * - `vat_eu`: an EU VAT number. Requires `vat_country` to be an EU member state code or `GB`.
+     * - `national_tax`: a national tax ID registered outside the EU. Requires `vat_country` to be one of
+     * `AL`, `AM`, `AR`, `AU`, `BR`, `CA`, `CH`, `DZ`, `IN`, `MX`, `NO`, `NZ`, or `ZA`.
+     * - `company_reg`: a company registration number, such as a French SIREN. No `vat_country` is required.
+     * - `gln`: a Global Location Number. The value must be 13 digits.
+     * - `duns`: a D-U-N-S Number. The value must be 9 digits.
+     * - `lei`: a Legal Entity Identifier. The value must be 20 characters: 18 letters or digits followed
+     * by 2 digits.
+     *
+     * A customer holds one identifier at a time. Saving an identifier of a different kind replaces the
+     * existing one.
+     */
+    public function getEntityIdentifierKind(): ?string
+    {
+        return $this->entityIdentifierKind;
+    }
+
+    /**
+     * Sets Entity Identifier Kind.
+     * The kind of tax or business identifier held by the customer:
+     * - `vat_eu`: an EU VAT number. Requires `vat_country` to be an EU member state code or `GB`.
+     * - `national_tax`: a national tax ID registered outside the EU. Requires `vat_country` to be one of
+     * `AL`, `AM`, `AR`, `AU`, `BR`, `CA`, `CH`, `DZ`, `IN`, `MX`, `NO`, `NZ`, or `ZA`.
+     * - `company_reg`: a company registration number, such as a French SIREN. No `vat_country` is required.
+     * - `gln`: a Global Location Number. The value must be 13 digits.
+     * - `duns`: a D-U-N-S Number. The value must be 9 digits.
+     * - `lei`: a Legal Entity Identifier. The value must be 20 characters: 18 letters or digits followed
+     * by 2 digits.
+     *
+     * A customer holds one identifier at a time. Saving an identifier of a different kind replaces the
+     * existing one.
+     *
+     * @maps entity_identifier_kind
+     * @factory \AdvancedBillingLib\Models\EntityIdentifierKind::checkValue
+     */
+    public function setEntityIdentifierKind(?string $entityIdentifierKind): void
+    {
+        $this->entityIdentifierKind = $entityIdentifierKind;
+    }
+
+    /**
+     * Returns Entity Identifier Value.
+     * The customer's tax or business identifier, sent together with `entity_identifier_kind`. Advanced
+     * Billing trims surrounding whitespace and stores the value in uppercase.
+     */
+    public function getEntityIdentifierValue(): ?string
+    {
+        return $this->entityIdentifierValue;
+    }
+
+    /**
+     * Sets Entity Identifier Value.
+     * The customer's tax or business identifier, sent together with `entity_identifier_kind`. Advanced
+     * Billing trims surrounding whitespace and stores the value in uppercase.
+     *
+     * @maps entity_identifier_value
+     */
+    public function setEntityIdentifierValue(?string $entityIdentifierValue): void
+    {
+        $this->entityIdentifierValue = $entityIdentifierValue;
+    }
+
+    /**
      * Returns Tax Exempt.
      */
     public function getTaxExempt(): ?bool
@@ -611,6 +715,9 @@ class UpdateCustomer implements \JsonSerializable
                 'phone' => $this->phone,
                 'locale' => $this->locale,
                 'vatNumber' => $this->vatNumber,
+                'vatCountry' => $this->vatCountry,
+                'entityIdentifierKind' => $this->entityIdentifierKind,
+                'entityIdentifierValue' => $this->entityIdentifierValue,
                 'taxExempt' => $this->taxExempt,
                 'surcharging' => $this->surcharging,
                 'taxExemptReason' => $this->taxExemptReason,
@@ -664,70 +771,79 @@ class UpdateCustomer implements \JsonSerializable
     {
         $json = [];
         if (isset($this->firstName)) {
-            $json['first_name']        = $this->firstName;
+            $json['first_name']              = $this->firstName;
         }
         if (isset($this->lastName)) {
-            $json['last_name']         = $this->lastName;
+            $json['last_name']               = $this->lastName;
         }
         if (isset($this->email)) {
-            $json['email']             = $this->email;
+            $json['email']                   = $this->email;
         }
         if (isset($this->ccEmails)) {
-            $json['cc_emails']         = $this->ccEmails;
+            $json['cc_emails']               = $this->ccEmails;
         }
         if (isset($this->organization)) {
-            $json['organization']      = $this->organization;
+            $json['organization']            = $this->organization;
         }
         if (isset($this->reference)) {
-            $json['reference']         = $this->reference;
+            $json['reference']               = $this->reference;
         }
         if (isset($this->address)) {
-            $json['address']           = $this->address;
+            $json['address']                 = $this->address;
         }
         if (isset($this->address2)) {
-            $json['address_2']         = $this->address2;
+            $json['address_2']               = $this->address2;
         }
         if (isset($this->city)) {
-            $json['city']              = $this->city;
+            $json['city']                    = $this->city;
         }
         if (isset($this->state)) {
-            $json['state']             = $this->state;
+            $json['state']                   = $this->state;
         }
         if (isset($this->zip)) {
-            $json['zip']               = $this->zip;
+            $json['zip']                     = $this->zip;
         }
         if (isset($this->country)) {
-            $json['country']           = $this->country;
+            $json['country']                 = $this->country;
         }
         if (isset($this->phone)) {
-            $json['phone']             = $this->phone;
+            $json['phone']                   = $this->phone;
         }
         if (isset($this->locale)) {
-            $json['locale']            = $this->locale;
+            $json['locale']                  = $this->locale;
         }
         if (isset($this->vatNumber)) {
-            $json['vat_number']        = $this->vatNumber;
+            $json['vat_number']              = $this->vatNumber;
+        }
+        if (isset($this->vatCountry)) {
+            $json['vat_country']             = $this->vatCountry;
+        }
+        if (isset($this->entityIdentifierKind)) {
+            $json['entity_identifier_kind']  = EntityIdentifierKind::checkValue($this->entityIdentifierKind);
+        }
+        if (isset($this->entityIdentifierValue)) {
+            $json['entity_identifier_value'] = $this->entityIdentifierValue;
         }
         if (isset($this->taxExempt)) {
-            $json['tax_exempt']        = $this->taxExempt;
+            $json['tax_exempt']              = $this->taxExempt;
         }
         if (isset($this->surcharging)) {
-            $json['surcharging']       = $this->surcharging;
+            $json['surcharging']             = $this->surcharging;
         }
         if (isset($this->taxExemptReason)) {
-            $json['tax_exempt_reason'] = $this->taxExemptReason;
+            $json['tax_exempt_reason']       = $this->taxExemptReason;
         }
         if (!empty($this->parentId)) {
-            $json['parent_id']         = $this->parentId['value'];
+            $json['parent_id']               = $this->parentId['value'];
         }
         if (!empty($this->verified)) {
-            $json['verified']          = $this->verified['value'];
+            $json['verified']                = $this->verified['value'];
         }
         if (!empty($this->salesforceId)) {
-            $json['salesforce_id']     = $this->salesforceId['value'];
+            $json['salesforce_id']           = $this->salesforceId['value'];
         }
         if (!empty($this->brandingThemeId)) {
-            $json['branding_theme_id'] = $this->brandingThemeId['value'];
+            $json['branding_theme_id']       = $this->brandingThemeId['value'];
         }
         $json = array_merge($json, $this->additionalProperties);
 

@@ -16,12 +16,13 @@ A handle for the component type
 | `ON_OFF_COMPONENT` |
 | `PREPAID_USAGE_COMPONENT` |
 | `EVENT_BASED_COMPONENT` |
+| `WALLET_PRODUCT` |
 
 ## Example
 
 ```php
 use AdvancedBillingLib\Models\ComponentKind;
 
-$componentKind = ComponentKind::PREPAID_USAGE_COMPONENT;
+$componentKind = ComponentKind::EVENT_BASED_COMPONENT;
 ```
 

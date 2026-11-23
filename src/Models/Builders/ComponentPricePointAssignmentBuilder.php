@@ -41,9 +41,9 @@ class ComponentPricePointAssignmentBuilder
     /**
      * Sets component id field.
      *
-     * @param int|null $value
+     * @param int|string|null $value
      */
-    public function componentId(?int $value): self
+    public function componentId($value): self
     {
         $this->instance->setComponentId($value);
         return $this;

@@ -21,6 +21,7 @@ class EventBasedBillingListSegmentsErrorsException extends ApiException
 
     /**
      * Returns Errors.
+     * Validation error details for listing segments.
      */
     public function getErrors(): ?\AdvancedBillingLib\Models\Errors
     {
@@ -29,6 +30,7 @@ class EventBasedBillingListSegmentsErrorsException extends ApiException
 
     /**
      * Sets Errors.
+     * Validation error details for listing segments.
      *
      * @maps errors
      */

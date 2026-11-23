@@ -29,12 +29,15 @@ class ComponentKind
 
     public const EVENT_BASED_COMPONENT = 'event_based_component';
 
+    public const WALLET_PRODUCT = 'wallet_product';
+
     private const _ALL_VALUES = [
         self::METERED_COMPONENT,
         self::QUANTITY_BASED_COMPONENT,
         self::ON_OFF_COMPONENT,
         self::PREPAID_USAGE_COMPONENT,
-        self::EVENT_BASED_COMPONENT
+        self::EVENT_BASED_COMPONENT,
+        self::WALLET_PRODUCT
     ];
 
     /**

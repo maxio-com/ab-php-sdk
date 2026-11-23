@@ -39,6 +39,11 @@ final class TestSiteFactory
             ->additionalProperty("brighton_v1_enabled", false)
             ->additionalProperty("auto_renewals_enabled", false)
             ->additionalProperty("portal_enabled", false)
+            ->listPricingEnabled(false)
+            ->planlessSubscriptionsEnabled(false)
+            ->additionalProperty('entitlements_enabled', false)
+            ->additionalProperty('wallets_enabled', false)
+            ->additionalProperty('accepted_payment_types', ['credit_card'])
             ->scheduleSubscriptionCancellationEnabled(false)
             ->test(TestSiteData::TEST)
             ->build();

@@ -241,6 +241,28 @@ class SiteBuilder
     }
 
     /**
+     * Sets list pricing enabled field.
+     *
+     * @param bool|null $value
+     */
+    public function listPricingEnabled(?bool $value): self
+    {
+        $this->instance->setListPricingEnabled($value);
+        return $this;
+    }
+
+    /**
+     * Sets planless subscriptions enabled field.
+     *
+     * @param bool|null $value
+     */
+    public function planlessSubscriptionsEnabled(?bool $value): self
+    {
+        $this->instance->setPlanlessSubscriptionsEnabled($value);
+        return $this;
+    }
+
+    /**
      * Sets portal enabled field.
      *
      * @param bool|null $value

@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace AdvancedBillingLib\Models\Builders;
 
 use AdvancedBillingLib\Models\CloneComponentPricePoint;
+use AdvancedBillingLib\Models\CloneFeatureCatalogItem;
 use Core\Utils\CoreHelper;
 
 /**
@@ -48,6 +49,17 @@ class CloneComponentPricePointBuilder
     public function handle(?string $value): self
     {
         $this->instance->setHandle($value);
+        return $this;
+    }
+
+    /**
+     * Sets feature catalog items field.
+     *
+     * @param CloneFeatureCatalogItem[]|null $value
+     */
+    public function featureCatalogItems(?array $value): self
+    {
+        $this->instance->setFeatureCatalogItems($value);
         return $this;
     }
 

@@ -204,7 +204,22 @@ class Product implements \JsonSerializable
     /**
      * @var array
      */
+    private $productPricePointListPricePointId = [];
+
+    /**
+     * @var array
+     */
+    private $productPricePointListPricePointHandle = [];
+
+    /**
+     * @var array
+     */
     private $unspscCode = [];
+
+    /**
+     * @var array
+     */
+    private $features = [];
 
     /**
      * Returns Id.
@@ -1178,6 +1193,76 @@ class Product implements \JsonSerializable
     }
 
     /**
+     * Returns Product Price Point List Price Point Id.
+     * The ID of the catalog price point used as the list price for the subscription's custom product price.
+     * Returned only when list vs sales pricing is enabled for the site.
+     */
+    public function getProductPricePointListPricePointId(): ?int
+    {
+        if (count($this->productPricePointListPricePointId) == 0) {
+            return null;
+        }
+        return $this->productPricePointListPricePointId['value'];
+    }
+
+    /**
+     * Sets Product Price Point List Price Point Id.
+     * The ID of the catalog price point used as the list price for the subscription's custom product price.
+     * Returned only when list vs sales pricing is enabled for the site.
+     *
+     * @maps product_price_point_list_price_point_id
+     */
+    public function setProductPricePointListPricePointId(?int $productPricePointListPricePointId): void
+    {
+        $this->productPricePointListPricePointId['value'] = $productPricePointListPricePointId;
+    }
+
+    /**
+     * Unsets Product Price Point List Price Point Id.
+     * The ID of the catalog price point used as the list price for the subscription's custom product price.
+     * Returned only when list vs sales pricing is enabled for the site.
+     */
+    public function unsetProductPricePointListPricePointId(): void
+    {
+        $this->productPricePointListPricePointId = [];
+    }
+
+    /**
+     * Returns Product Price Point List Price Point Handle.
+     * The handle of the catalog price point used as the list price for the subscription's custom product
+     * price. Returned only when list vs sales pricing is enabled for the site.
+     */
+    public function getProductPricePointListPricePointHandle(): ?string
+    {
+        if (count($this->productPricePointListPricePointHandle) == 0) {
+            return null;
+        }
+        return $this->productPricePointListPricePointHandle['value'];
+    }
+
+    /**
+     * Sets Product Price Point List Price Point Handle.
+     * The handle of the catalog price point used as the list price for the subscription's custom product
+     * price. Returned only when list vs sales pricing is enabled for the site.
+     *
+     * @maps product_price_point_list_price_point_handle
+     */
+    public function setProductPricePointListPricePointHandle(?string $productPricePointListPricePointHandle): void
+    {
+        $this->productPricePointListPricePointHandle['value'] = $productPricePointListPricePointHandle;
+    }
+
+    /**
+     * Unsets Product Price Point List Price Point Handle.
+     * The handle of the catalog price point used as the list price for the subscription's custom product
+     * price. Returned only when list vs sales pricing is enabled for the site.
+     */
+    public function unsetProductPricePointListPricePointHandle(): void
+    {
+        $this->productPricePointListPricePointHandle = [];
+    }
+
+    /**
      * Returns Unspsc Code.
      * (Optional) Custom UNSPSC commodity code for Level 3/CEDP payment data. When set, this value is sent
      * as the commodity code on invoice line items for this product instead of the default derived from
@@ -1213,6 +1298,45 @@ class Product implements \JsonSerializable
     public function unsetUnspscCode(): void
     {
         $this->unspscCode = [];
+    }
+
+    /**
+     * Returns Features.
+     * The active feature catalog items attached to this product. Present only when the request includes
+     * `include_features=true`.
+     *
+     * @return FeatureCatalogItem[]|null
+     */
+    public function getFeatures(): ?array
+    {
+        if (count($this->features) == 0) {
+            return null;
+        }
+        return $this->features['value'];
+    }
+
+    /**
+     * Sets Features.
+     * The active feature catalog items attached to this product. Present only when the request includes
+     * `include_features=true`.
+     *
+     * @maps features
+     *
+     * @param FeatureCatalogItem[]|null $features
+     */
+    public function setFeatures(?array $features): void
+    {
+        $this->features['value'] = $features;
+    }
+
+    /**
+     * Unsets Features.
+     * The active feature catalog items attached to this product. Present only when the request includes
+     * `include_features=true`.
+     */
+    public function unsetFeatures(): void
+    {
+        $this->features = [];
     }
 
     /**
@@ -1262,7 +1386,10 @@ class Product implements \JsonSerializable
                 'itemCategory' => $this->getItemCategory(),
                 'productPricePointId' => $this->productPricePointId,
                 'productPricePointHandle' => $this->getProductPricePointHandle(),
+                'productPricePointListPricePointId' => $this->getProductPricePointListPricePointId(),
+                'productPricePointListPricePointHandle' => $this->getProductPricePointListPricePointHandle(),
                 'unspscCode' => $this->getUnspscCode(),
+                'features' => $this->getFeatures(),
                 'additionalProperties' => $this->additionalProperties
             ]
         );
@@ -1309,121 +1436,137 @@ class Product implements \JsonSerializable
     {
         $json = [];
         if (isset($this->id)) {
-            $json['id']                             = $this->id;
+            $json['id']                                          = $this->id;
         }
         if (isset($this->name)) {
-            $json['name']                           = $this->name;
+            $json['name']                                        = $this->name;
         }
         if (!empty($this->handle)) {
-            $json['handle']                         = $this->handle['value'];
+            $json['handle']                                      = $this->handle['value'];
         }
         if (!empty($this->description)) {
-            $json['description']                    = $this->description['value'];
+            $json['description']                                 = $this->description['value'];
         }
         if (!empty($this->accountingCode)) {
-            $json['accounting_code']                = $this->accountingCode['value'];
+            $json['accounting_code']                             = $this->accountingCode['value'];
         }
         if (isset($this->requestCreditCard)) {
-            $json['request_credit_card']            = $this->requestCreditCard;
+            $json['request_credit_card']                         = $this->requestCreditCard;
         }
         if (!empty($this->expirationInterval)) {
-            $json['expiration_interval']            = $this->expirationInterval['value'];
+            $json['expiration_interval']                         = $this->expirationInterval['value'];
         }
         if (!empty($this->expirationIntervalUnit)) {
-            $json['expiration_interval_unit']       =
+            $json['expiration_interval_unit']                    =
                 ExpirationIntervalUnit::checkValue(
                     $this->expirationIntervalUnit['value']
                 );
         }
         if (isset($this->createdAt)) {
-            $json['created_at']                     = DateTimeHelper::toRfc3339DateTime($this->createdAt);
+            $json['created_at']                                  = DateTimeHelper::toRfc3339DateTime($this->createdAt);
         }
         if (isset($this->updatedAt)) {
-            $json['updated_at']                     = DateTimeHelper::toRfc3339DateTime($this->updatedAt);
+            $json['updated_at']                                  = DateTimeHelper::toRfc3339DateTime($this->updatedAt);
         }
         if (isset($this->priceInCents)) {
-            $json['price_in_cents']                 = $this->priceInCents;
+            $json['price_in_cents']                              = $this->priceInCents;
         }
         if (isset($this->interval)) {
-            $json['interval']                       = $this->interval;
+            $json['interval']                                    = $this->interval;
         }
         if (isset($this->intervalUnit)) {
-            $json['interval_unit']                  = IntervalUnit::checkValue($this->intervalUnit);
+            $json['interval_unit']                               = IntervalUnit::checkValue($this->intervalUnit);
         }
         if (!empty($this->initialChargeInCents)) {
-            $json['initial_charge_in_cents']        = $this->initialChargeInCents['value'];
+            $json['initial_charge_in_cents']                     = $this->initialChargeInCents['value'];
         }
         if (!empty($this->trialPriceInCents)) {
-            $json['trial_price_in_cents']           = $this->trialPriceInCents['value'];
+            $json['trial_price_in_cents']                        = $this->trialPriceInCents['value'];
         }
         if (!empty($this->trialInterval)) {
-            $json['trial_interval']                 = $this->trialInterval['value'];
+            $json['trial_interval']                              = $this->trialInterval['value'];
         }
         if (!empty($this->trialIntervalUnit)) {
-            $json['trial_interval_unit']            = IntervalUnit::checkValue($this->trialIntervalUnit['value']);
+            $json['trial_interval_unit']                         =
+                IntervalUnit::checkValue(
+                    $this->trialIntervalUnit['value']
+                );
         }
         if (!empty($this->archivedAt)) {
-            $json['archived_at']                    = DateTimeHelper::toRfc3339DateTime($this->archivedAt['value']);
+            $json['archived_at']                                 =
+                DateTimeHelper::toRfc3339DateTime(
+                    $this->archivedAt['value']
+                );
         }
         if (isset($this->requireCreditCard)) {
-            $json['require_credit_card']            = $this->requireCreditCard;
+            $json['require_credit_card']                         = $this->requireCreditCard;
         }
         if (!empty($this->returnParams)) {
-            $json['return_params']                  = $this->returnParams['value'];
+            $json['return_params']                               = $this->returnParams['value'];
         }
         if (isset($this->taxable)) {
-            $json['taxable']                        = $this->taxable;
+            $json['taxable']                                     = $this->taxable;
         }
         if (!empty($this->updateReturnUrl)) {
-            $json['update_return_url']              = $this->updateReturnUrl['value'];
+            $json['update_return_url']                           = $this->updateReturnUrl['value'];
         }
         if (!empty($this->initialChargeAfterTrial)) {
-            $json['initial_charge_after_trial']     = $this->initialChargeAfterTrial['value'];
+            $json['initial_charge_after_trial']                  = $this->initialChargeAfterTrial['value'];
         }
         if (isset($this->versionNumber)) {
-            $json['version_number']                 = $this->versionNumber;
+            $json['version_number']                              = $this->versionNumber;
         }
         if (!empty($this->updateReturnParams)) {
-            $json['update_return_params']           = $this->updateReturnParams['value'];
+            $json['update_return_params']                        = $this->updateReturnParams['value'];
         }
         if (isset($this->productFamily)) {
-            $json['product_family']                 = $this->productFamily;
+            $json['product_family']                              = $this->productFamily;
         }
         if (isset($this->publicSignupPages)) {
-            $json['public_signup_pages']            = $this->publicSignupPages;
+            $json['public_signup_pages']                         = $this->publicSignupPages;
         }
         if (isset($this->productPricePointName)) {
-            $json['product_price_point_name']       = $this->productPricePointName;
+            $json['product_price_point_name']                    = $this->productPricePointName;
         }
         if (isset($this->requestBillingAddress)) {
-            $json['request_billing_address']        = $this->requestBillingAddress;
+            $json['request_billing_address']                     = $this->requestBillingAddress;
         }
         if (isset($this->requireBillingAddress)) {
-            $json['require_billing_address']        = $this->requireBillingAddress;
+            $json['require_billing_address']                     = $this->requireBillingAddress;
         }
         if (isset($this->requireShippingAddress)) {
-            $json['require_shipping_address']       = $this->requireShippingAddress;
+            $json['require_shipping_address']                    = $this->requireShippingAddress;
         }
         if (!empty($this->taxCode)) {
-            $json['tax_code']                       = $this->taxCode['value'];
+            $json['tax_code']                                    = $this->taxCode['value'];
         }
         if (isset($this->defaultProductPricePointId)) {
-            $json['default_product_price_point_id'] = $this->defaultProductPricePointId;
+            $json['default_product_price_point_id']              = $this->defaultProductPricePointId;
         }
         if (!empty($this->useSiteExchangeRate)) {
-            $json['use_site_exchange_rate']         = $this->useSiteExchangeRate['value'];
+            $json['use_site_exchange_rate']                      = $this->useSiteExchangeRate['value'];
         }
         if (!empty($this->itemCategory)) {
-            $json['item_category']                  = $this->itemCategory['value'];
+            $json['item_category']                               = $this->itemCategory['value'];
         }
         if (isset($this->productPricePointId)) {
-            $json['product_price_point_id']         = $this->productPricePointId;
+            $json['product_price_point_id']                      = $this->productPricePointId;
         }
         if (!empty($this->productPricePointHandle)) {
-            $json['product_price_point_handle']     = $this->productPricePointHandle['value'];
+            $json['product_price_point_handle']                  = $this->productPricePointHandle['value'];
+        }
+        if (!empty($this->productPricePointListPricePointId)) {
+            $json['product_price_point_list_price_point_id']     = $this->productPricePointListPricePointId['value'];
+        }
+        if (!empty($this->productPricePointListPricePointHandle)) {
+            $json['product_price_point_list_price_point_handle'] =
+                $this->productPricePointListPricePointHandle['value'];
         }
         if (!empty($this->unspscCode)) {
-            $json['unspsc_code']                    = $this->unspscCode['value'];
+            $json['unspsc_code']                                 = $this->unspscCode['value'];
+        }
+        if (!empty($this->features)) {
+            $json['features']                                    = $this->features['value'];
         }
         $json = array_merge($json, $this->additionalProperties);
 

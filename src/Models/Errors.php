@@ -13,6 +13,9 @@ namespace AdvancedBillingLib\Models;
 use AdvancedBillingLib\ApiHelper;
 use stdClass;
 
+/**
+ * Validation error details for listing segments.
+ */
 class Errors implements \JsonSerializable
 {
     /**

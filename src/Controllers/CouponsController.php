@@ -36,9 +36,8 @@ class CouponsController extends BaseController
      * You can create either a flat amount coupon, by specifying `amount_in_cents`, or percentage coupon by
      * specifying `percentage`.
      *
-     * See [Apply Coupons to Subscriptions](https://maxio.zendesk.com/hc/en-us/articles/24261259337101-
-     * Coupons-and-Subscriptions) for information on applying a coupon to a subscription in the Advanced
-     * Billing UI.
+     * See [Apply Coupons to Subscriptions](https://docs.maxio.com/billing/catalog/coupons/apply-coupons-to-
+     * subscriptions) for information on applying a coupon to a subscription in the Advanced Billing UI.
      *
      * @param int $productFamilyId The Advanced Billing id of the product family to which the coupon
      *        belongs
@@ -435,8 +434,8 @@ class CouponsController extends BaseController
      * //<subdomain>.chargify.com/coupons/567/codes/20%25OFF.<format>`.
      *
      * For more information on coupon codes and applying coupons to subscriptions, see [Coupon Codes](https:
-     * //maxio.zendesk.com/hc/en-us/articles/24261208729229-Coupon-Codes) and [Coupons and
-     * Subscriptions](https://maxio.zendesk.com/hc/en-us/articles/24261259337101-Coupons-and-Subscriptions).
+     * //docs.maxio.com/billing/catalog/coupons/set-coupon-codes) and [Coupons and Subscriptions](https:
+     * //docs.maxio.com/billing/catalog/coupons/apply-coupons-to-subscriptions).
      *
      * @param int $couponId The Advanced Billing id of the coupon
      * @param CouponSubcodes|null $body

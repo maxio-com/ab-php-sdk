@@ -28,6 +28,11 @@ class SubscriptionGroupItem implements \JsonSerializable
     /**
      * @var int|null
      */
+    private $customerId;
+
+    /**
+     * @var int|null
+     */
     private $productId;
 
     /**
@@ -110,6 +115,28 @@ class SubscriptionGroupItem implements \JsonSerializable
     public function unsetReference(): void
     {
         $this->reference = [];
+    }
+
+    /**
+     * Returns Customer Id.
+     * The ID of the customer the subscription belongs to. This is the payer unless the signup request
+     * named another customer for the subscription.
+     */
+    public function getCustomerId(): ?int
+    {
+        return $this->customerId;
+    }
+
+    /**
+     * Sets Customer Id.
+     * The ID of the customer the subscription belongs to. This is the payer unless the signup request
+     * named another customer for the subscription.
+     *
+     * @maps customer_id
+     */
+    public function setCustomerId(?int $customerId): void
+    {
+        $this->customerId = $customerId;
     }
 
     /**
@@ -290,6 +317,7 @@ class SubscriptionGroupItem implements \JsonSerializable
             [
                 'id' => $this->id,
                 'reference' => $this->getReference(),
+                'customerId' => $this->customerId,
                 'productId' => $this->productId,
                 'productHandle' => $this->getProductHandle(),
                 'productPricePointId' => $this->productPricePointId,
@@ -348,6 +376,9 @@ class SubscriptionGroupItem implements \JsonSerializable
         }
         if (!empty($this->reference)) {
             $json['reference']                  = $this->reference['value'];
+        }
+        if (isset($this->customerId)) {
+            $json['customer_id']                = $this->customerId;
         }
         if (isset($this->productId)) {
             $json['product_id']                 = $this->productId;

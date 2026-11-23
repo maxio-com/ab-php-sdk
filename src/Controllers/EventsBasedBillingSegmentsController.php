@@ -12,8 +12,8 @@ namespace AdvancedBillingLib\Controllers;
 
 use AdvancedBillingLib\Exceptions\ApiException;
 use AdvancedBillingLib\Exceptions\EventBasedBillingListSegmentsErrorsException;
-use AdvancedBillingLib\Exceptions\EventBasedBillingSegmentErrorsException;
-use AdvancedBillingLib\Exceptions\EventBasedBillingSegmentException;
+use AdvancedBillingLib\Exceptions\EventBasedBillingSegmentWriteErrorResponseException;
+use AdvancedBillingLib\Exceptions\SegmentPricePointErrorsException;
 use AdvancedBillingLib\Models\BulkCreateSegments;
 use AdvancedBillingLib\Models\BulkUpdateSegments;
 use AdvancedBillingLib\Models\CreateSegmentRequest;
@@ -36,6 +36,15 @@ class EventsBasedBillingSegmentsController extends BaseController
      *
      * You may specify component and/or price point by using either the numeric ID or the `handle:gold`
      * syntax.
+     *
+     * ## Custom Price Points
+     *
+     * This endpoint changes segments on catalog price points only. If the price point is a subscription's
+     * custom price point, the request returns `422 Unprocessable Entity` with a `price_point` error such
+     * as "Segments on a subscription's custom price point can't be changed here. Set them with
+     * custom_price on the subscription or component endpoints.", and nothing is saved. To change a
+     * subscription's segment rates, send `custom_price.segments` to [Update
+     * Subscription]($e/Subscriptions/updateSubscription).
      *
      * @param string $componentId ID or Handle for the Component
      * @param string $pricePointId ID or Handle for the Price Point belonging to the Component
@@ -68,7 +77,7 @@ class EventsBasedBillingSegmentsController extends BaseController
                 '422',
                 ErrorType::initWithErrorTemplate(
                     'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
-                    EventBasedBillingSegmentErrorsException::class
+                    EventBasedBillingSegmentWriteErrorResponseException::class
                 )
             )
             ->type(SegmentResponse::class);
@@ -84,6 +93,15 @@ class EventsBasedBillingSegmentsController extends BaseController
      *
      * You may specify component and/or price point by using either the numeric ID or the `handle:gold`
      * syntax.
+     *
+     * ## Subscription Segment Rates
+     *
+     * This endpoint also returns the segments of a subscription's custom price point, including segment
+     * rates set through `custom_price.segments` on [Create
+     * Subscription]($e/Subscriptions/createSubscription) or [Update
+     * Subscription]($e/Subscriptions/updateSubscription). Use the subscription component's
+     * `price_point_id`, available from [Read Subscription
+     * Component]($e/Subscription%20Components/readSubscriptionComponent).
      *
      * @param array $options Array with all options for search
      *
@@ -103,7 +121,8 @@ class EventsBasedBillingSegmentsController extends BaseController
                 TemplateParam::init('price_point_id', $options)->extract('pricePointId')->required(),
                 QueryParam::init('page', $options)->commaSeparated()->extract('page', 1),
                 QueryParam::init('per_page', $options)->commaSeparated()->extract('perPage', 30),
-                QueryParam::init('filter', $options)->commaSeparated()->extract('filter')
+                QueryParam::init('filter', $options)->commaSeparated()->extract('filter'),
+                QueryParam::init('currency_prices', $options)->commaSeparated()->extract('currencyPrices')
             );
 
         $_resHandler = $this->responseHandler()
@@ -126,6 +145,15 @@ class EventsBasedBillingSegmentsController extends BaseController
      *
      * You can specify component and/or price point by using either the numeric ID or the `handle:gold`
      * syntax.
+     *
+     * ## Custom Price Points
+     *
+     * This endpoint changes segments on catalog price points only. If the segment belongs to a
+     * subscription's custom price point, or the `price_point_id` in the URL names one, the request returns
+     * `422 Unprocessable Entity` with a `price_point` error such as "Segments on a subscription's custom
+     * price point can't be changed here. Set them with custom_price on the subscription or component
+     * endpoints.", and nothing is saved. To change a subscription's segment rates, send `custom_price.
+     * segments` to [Update Subscription]($e/Subscriptions/updateSubscription).
      *
      * @param string $componentId ID or Handle of the Component
      * @param string $pricePointId ID or Handle of the Price Point belonging to the Component
@@ -161,7 +189,7 @@ class EventsBasedBillingSegmentsController extends BaseController
                 '422',
                 ErrorType::initWithErrorTemplate(
                     'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
-                    EventBasedBillingSegmentErrorsException::class
+                    EventBasedBillingSegmentWriteErrorResponseException::class
                 )
             )
             ->type(SegmentResponse::class);
@@ -174,6 +202,16 @@ class EventsBasedBillingSegmentsController extends BaseController
      *
      * You may specify component and/or price point by using either the numeric ID or the `handle:gold`
      * syntax.
+     *
+     * ## Custom Price Points
+     *
+     * This endpoint changes segments on catalog price points only. If the segment belongs to a
+     * subscription's custom price point, the request returns `422 Unprocessable Entity` with a
+     * `price_point` error such as "Segments on a subscription's custom price point can't be changed here.
+     * Set them with custom_price on the subscription or component endpoints.", and nothing is saved. The
+     * check uses the segment's own price point, whichever `price_point_id` the URL names. To change a
+     * subscription's segment rates, send `custom_price.segments` to [Update
+     * Subscription]($e/Subscriptions/updateSubscription).
      *
      * @param string $componentId ID or Handle of the Component
      * @param string $pricePointId ID or Handle of the Price Point belonging to the Component
@@ -201,7 +239,8 @@ class EventsBasedBillingSegmentsController extends BaseController
             ->throwErrorOn(
                 '422',
                 ErrorType::initWithErrorTemplate(
-                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.'
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
+                    SegmentPricePointErrorsException::class
                 )
             );
 
@@ -217,6 +256,15 @@ class EventsBasedBillingSegmentsController extends BaseController
      *
      * You may specify component and/or price point by using either the numeric ID or the `handle:gold`
      * syntax.
+     *
+     * ## Custom Price Points
+     *
+     * This endpoint changes segments on catalog price points only. If the price point is a subscription's
+     * custom price point, the request returns `422 Unprocessable Entity` with a `price_point` error such
+     * as "Segments on a subscription's custom price point can't be changed here. Set them with
+     * custom_price on the subscription or component endpoints.", and nothing is saved. To change a
+     * subscription's segment rates, send `custom_price.segments` to [Update
+     * Subscription]($e/Subscriptions/updateSubscription).
      *
      * @param string $componentId ID or Handle for the Component
      * @param string $pricePointId ID or Handle for the Price Point belonging to the Component
@@ -248,8 +296,7 @@ class EventsBasedBillingSegmentsController extends BaseController
             ->throwErrorOn(
                 '422',
                 ErrorType::initWithErrorTemplate(
-                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
-                    EventBasedBillingSegmentException::class
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.'
                 )
             )
             ->type(ListSegmentsResponse::class);
@@ -266,6 +313,15 @@ class EventsBasedBillingSegmentsController extends BaseController
      *
      * You may specify component and/or price point by using either the numeric ID or the `handle:gold`
      * syntax.
+     *
+     * ## Custom Price Points
+     *
+     * This endpoint changes segments on catalog price points only. If the price point is a subscription's
+     * custom price point, the request returns `422 Unprocessable Entity` with a `price_point` error such
+     * as "Segments on a subscription's custom price point can't be changed here. Set them with
+     * custom_price on the subscription or component endpoints.", and nothing is saved. To change a
+     * subscription's segment rates, send `custom_price.segments` to [Update
+     * Subscription]($e/Subscriptions/updateSubscription).
      *
      * @param string $componentId ID or Handle for the Component
      * @param string $pricePointId ID or Handle for the Price Point belonging to the Component
@@ -297,8 +353,7 @@ class EventsBasedBillingSegmentsController extends BaseController
             ->throwErrorOn(
                 '422',
                 ErrorType::initWithErrorTemplate(
-                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.',
-                    EventBasedBillingSegmentException::class
+                    'HTTP Response Not OK. Status code: {$statusCode}. Response: \'{$response.body}\'.'
                 )
             )
             ->type(ListSegmentsResponse::class);

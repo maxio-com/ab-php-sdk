@@ -21,7 +21,9 @@ $bulkComponentsPricePointAssignment = BulkComponentsPricePointAssignmentBuilder:
     ->components(
         [
             ComponentPricePointAssignmentBuilder::init()
-                ->componentId(108)
+                ->componentId(
+                    30
+                )
                 ->pricePoint(
                     'String5'
                 )

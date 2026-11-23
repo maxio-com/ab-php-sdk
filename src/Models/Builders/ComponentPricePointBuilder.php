@@ -286,6 +286,28 @@ class ComponentPricePointBuilder
     }
 
     /**
+     * Sets secondary prices field.
+     *
+     * @param ComponentPrice[]|null $value
+     */
+    public function secondaryPrices(?array $value): self
+    {
+        $this->instance->setSecondaryPrices($value);
+        return $this;
+    }
+
+    /**
+     * Sets secondary pricing scheme field.
+     *
+     * @param string|null $value
+     */
+    public function secondaryPricingScheme(?string $value): self
+    {
+        $this->instance->setSecondaryPricingScheme($value);
+        return $this;
+    }
+
+    /**
      * Sets renew prepaid allocation field.
      *
      * @param bool|null $value

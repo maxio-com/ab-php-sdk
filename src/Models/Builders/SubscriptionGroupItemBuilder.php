@@ -70,6 +70,17 @@ class SubscriptionGroupItemBuilder
     }
 
     /**
+     * Sets customer id field.
+     *
+     * @param int|null $value
+     */
+    public function customerId(?int $value): self
+    {
+        $this->instance->setCustomerId($value);
+        return $this;
+    }
+
+    /**
      * Sets product id field.
      *
      * @param int|null $value

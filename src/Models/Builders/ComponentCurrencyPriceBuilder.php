@@ -50,6 +50,15 @@ class ComponentCurrencyPriceBuilder
     }
 
     /**
+     * Unsets id field.
+     */
+    public function unsetId(): self
+    {
+        $this->instance->unsetId();
+        return $this;
+    }
+
+    /**
      * Sets currency field.
      *
      * @param string|null $value

@@ -9,7 +9,7 @@
 
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
-| `errors` | [`?Errors`](../../doc/models/errors.md) | Optional | - | getErrors(): ?Errors | setErrors(?Errors errors): void |
+| `errors` | [`?Errors`](../../doc/models/errors.md) | Optional | Validation error details for listing segments. | getErrors(): ?Errors | setErrors(?Errors errors): void |
 
 ## Example
 

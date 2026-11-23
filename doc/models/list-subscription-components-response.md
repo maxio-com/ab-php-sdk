@@ -23,7 +23,7 @@ $listSubscriptionComponentsResponse = ListSubscriptionComponentsResponseBuilder:
         SubscriptionComponentBuilder::init()
             ->id(138)
             ->name('name2')
-            ->kind(ComponentKind::METERED_COMPONENT)
+            ->kind(ComponentKind::EVENT_BASED_COMPONENT)
             ->unitName('unit_name4')
             ->enabled(false)
             ->build()

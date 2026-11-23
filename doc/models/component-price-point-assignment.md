@@ -9,7 +9,7 @@
 
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
-| `componentId` | `?int` | Optional | - | getComponentId(): ?int | setComponentId(?int componentId): void |
+| `componentId` | int\|string\|null | Optional | This is a container for one-of cases. | getComponentId(): | setComponentId( componentId): void |
 | `pricePoint` | string\|int\|null | Optional | This is a container for one-of cases. | getPricePoint(): | setPricePoint( pricePoint): void |
 
 ## Example
@@ -18,7 +18,9 @@
 use AdvancedBillingLib\Models\Builders\ComponentPricePointAssignmentBuilder;
 
 $componentPricePointAssignment = ComponentPricePointAssignmentBuilder::init()
-    ->componentId(190)
+    ->componentId(
+        112
+    )
     ->pricePoint(
         'String7'
     )

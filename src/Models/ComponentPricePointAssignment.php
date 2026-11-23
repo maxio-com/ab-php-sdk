@@ -16,7 +16,7 @@ use stdClass;
 class ComponentPricePointAssignment implements \JsonSerializable
 {
     /**
-     * @var int|null
+     * @var int|string|null
      */
     private $componentId;
 
@@ -27,18 +27,29 @@ class ComponentPricePointAssignment implements \JsonSerializable
 
     /**
      * Returns Component Id.
+     * The component to update. Pass the component ID as an integer, or the component handle as a string
+     * with the `handle:` prefix, for example `handle:my-component`. The response returns the value in the
+     * same form that you sent.
+     *
+     * @return int|string|null
      */
-    public function getComponentId(): ?int
+    public function getComponentId()
     {
         return $this->componentId;
     }
 
     /**
      * Sets Component Id.
+     * The component to update. Pass the component ID as an integer, or the component handle as a string
+     * with the `handle:` prefix, for example `handle:my-component`. The response returns the value in the
+     * same form that you sent.
      *
      * @maps component_id
+     * @mapsBy anyOf(oneOf(int,string),null)
+     *
+     * @param int|string|null $componentId
      */
-    public function setComponentId(?int $componentId): void
+    public function setComponentId($componentId): void
     {
         $this->componentId = $componentId;
     }
@@ -124,7 +135,11 @@ class ComponentPricePointAssignment implements \JsonSerializable
     {
         $json = [];
         if (isset($this->componentId)) {
-            $json['component_id'] = $this->componentId;
+            $json['component_id'] =
+                ApiHelper::getJsonHelper()->verifyTypes(
+                    $this->componentId,
+                    'anyOf(oneOf(int,string),null)'
+                );
         }
         if (isset($this->pricePoint)) {
             $json['price_point']  =

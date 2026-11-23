@@ -12,6 +12,7 @@ namespace AdvancedBillingLib\Models\Builders;
 
 use AdvancedBillingLib\Models\CreateComponentPricePoint;
 use AdvancedBillingLib\Models\Price;
+use AdvancedBillingLib\Models\SecondaryPricing;
 use Core\Utils\CoreHelper;
 
 /**
@@ -51,6 +52,28 @@ class CreateComponentPricePointBuilder
     public function handle(?string $value): self
     {
         $this->instance->setHandle($value);
+        return $this;
+    }
+
+    /**
+     * Sets secondary pricing field.
+     *
+     * @param SecondaryPricing|null $value
+     */
+    public function secondaryPricing(?SecondaryPricing $value): self
+    {
+        $this->instance->setSecondaryPricing($value);
+        return $this;
+    }
+
+    /**
+     * Sets secondary pricing scheme field.
+     *
+     * @param string|null $value
+     */
+    public function secondaryPricingScheme(?string $value): self
+    {
+        $this->instance->setSecondaryPricingScheme($value);
         return $this;
     }
 

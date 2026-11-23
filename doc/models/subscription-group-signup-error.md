@@ -9,7 +9,7 @@
 
 | Name | Type | Tags | Description | Getter | Setter |
 |  --- | --- | --- | --- | --- | --- |
-| `subscriptions` | [`?array<string,SubscriptionGroupSubscriptionError>`](../../doc/models/subscription-group-subscription-error.md) | Optional | Object that as key have subscription position in request subscriptions array and as value subscription errors object. | getSubscriptions(): ?array | setSubscriptions(?array subscriptions): void |
+| `subscriptions` | [`?array<string,SubscriptionGroupSubscriptionError>`](../../doc/models/subscription-group-subscription-error.md) | Optional | Subscription errors keyed by the subscription's `reference` from the request, or by its zero-based position in the `subscriptions` array when it has no reference. | getSubscriptions(): ?array | setSubscriptions(?array subscriptions): void |
 | `payerReference` | `?string` | Optional | - | getPayerReference(): ?string | setPayerReference(?string payerReference): void |
 | `payer` | [`?PayerError`](../../doc/models/payer-error.md) | Optional | - | getPayer(): ?PayerError | setPayer(?PayerError payer): void |
 | `subscriptionGroup` | `?(string[])` | Optional | - | getSubscriptionGroup(): ?array | setSubscriptionGroup(?array subscriptionGroup): void |
@@ -27,6 +27,12 @@ $subscriptionGroupSignupError = SubscriptionGroupSignupErrorBuilder::init()
     ->subscriptions(
         [
             'key0' => SubscriptionGroupSubscriptionErrorBuilder::init()
+                ->customer(
+                    [
+                        'customer1',
+                        'customer2'
+                    ]
+                )
                 ->product(
                     [
                         'product9'
@@ -45,16 +51,16 @@ $subscriptionGroupSignupError = SubscriptionGroupSignupErrorBuilder::init()
                 ->paymentProfileChargifyToken(
                     [
                         'payment_profile.chargify_token6'
-                    ]
-                )
-                ->base(
-                    [
-                        'base5',
-                        'base6'
                     ]
                 )
                 ->build(),
             'key1' => SubscriptionGroupSubscriptionErrorBuilder::init()
+                ->customer(
+                    [
+                        'customer1',
+                        'customer2'
+                    ]
+                )
                 ->product(
                     [
                         'product9'
@@ -73,16 +79,16 @@ $subscriptionGroupSignupError = SubscriptionGroupSignupErrorBuilder::init()
                 ->paymentProfileChargifyToken(
                     [
                         'payment_profile.chargify_token6'
-                    ]
-                )
-                ->base(
-                    [
-                        'base5',
-                        'base6'
                     ]
                 )
                 ->build(),
             'key2' => SubscriptionGroupSubscriptionErrorBuilder::init()
+                ->customer(
+                    [
+                        'customer1',
+                        'customer2'
+                    ]
+                )
                 ->product(
                     [
                         'product9'
@@ -101,12 +107,6 @@ $subscriptionGroupSignupError = SubscriptionGroupSignupErrorBuilder::init()
                 ->paymentProfileChargifyToken(
                     [
                         'payment_profile.chargify_token6'
-                    ]
-                )
-                ->base(
-                    [
-                        'base5',
-                        'base6'
                     ]
                 )
                 ->build()

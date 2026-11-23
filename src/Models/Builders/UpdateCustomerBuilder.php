@@ -204,6 +204,39 @@ class UpdateCustomerBuilder
     }
 
     /**
+     * Sets vat country field.
+     *
+     * @param string|null $value
+     */
+    public function vatCountry(?string $value): self
+    {
+        $this->instance->setVatCountry($value);
+        return $this;
+    }
+
+    /**
+     * Sets entity identifier kind field.
+     *
+     * @param string|null $value
+     */
+    public function entityIdentifierKind(?string $value): self
+    {
+        $this->instance->setEntityIdentifierKind($value);
+        return $this;
+    }
+
+    /**
+     * Sets entity identifier value field.
+     *
+     * @param string|null $value
+     */
+    public function entityIdentifierValue(?string $value): self
+    {
+        $this->instance->setEntityIdentifierValue($value);
+        return $this;
+    }
+
+    /**
      * Sets tax exempt field.
      *
      * @param bool|null $value

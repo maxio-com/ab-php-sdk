@@ -25,6 +25,8 @@
 | `expirationInterval` | string\|int\|null | Optional | This is a container for one-of cases. | getExpirationInterval(): | setExpirationInterval( expirationInterval): void |
 | `expirationIntervalUnit` | [`?string(ExpirationIntervalUnit)`](../../doc/models/expiration-interval-unit.md) | Optional | (Optional) | getExpirationIntervalUnit(): ?string | setExpirationIntervalUnit(?string expirationIntervalUnit): void |
 | `taxIncluded` | `?bool` | Optional | (Optional) | getTaxIncluded(): ?bool | setTaxIncluded(?bool taxIncluded): void |
+| `listPricePointId` | `?int` | Optional | (Optional) The ID of a catalog price point of the same product to use as the list price. Ignored unless list vs sales pricing is enabled for the site. | getListPricePointId(): ?int | setListPricePointId(?int listPricePointId): void |
+| `useDefaultListPrice` | `?bool` | Optional | (Optional) When list vs sales pricing is enabled and `list_price_point_id` is omitted, the product's default price point is used as the list price unless this is `false`. Defaults to `true`. | getUseDefaultListPrice(): ?bool | setUseDefaultListPrice(?bool useDefaultListPrice): void |
 
 ## Example
 

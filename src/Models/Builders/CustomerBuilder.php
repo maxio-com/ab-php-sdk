@@ -467,6 +467,66 @@ class CustomerBuilder
     }
 
     /**
+     * Sets vat country field.
+     *
+     * @param string|null $value
+     */
+    public function vatCountry(?string $value): self
+    {
+        $this->instance->setVatCountry($value);
+        return $this;
+    }
+
+    /**
+     * Unsets vat country field.
+     */
+    public function unsetVatCountry(): self
+    {
+        $this->instance->unsetVatCountry();
+        return $this;
+    }
+
+    /**
+     * Sets entity identifier kind field.
+     *
+     * @param string|null $value
+     */
+    public function entityIdentifierKind(?string $value): self
+    {
+        $this->instance->setEntityIdentifierKind($value);
+        return $this;
+    }
+
+    /**
+     * Unsets entity identifier kind field.
+     */
+    public function unsetEntityIdentifierKind(): self
+    {
+        $this->instance->unsetEntityIdentifierKind();
+        return $this;
+    }
+
+    /**
+     * Sets entity identifier value field.
+     *
+     * @param string|null $value
+     */
+    public function entityIdentifierValue(?string $value): self
+    {
+        $this->instance->setEntityIdentifierValue($value);
+        return $this;
+    }
+
+    /**
+     * Unsets entity identifier value field.
+     */
+    public function unsetEntityIdentifierValue(): self
+    {
+        $this->instance->unsetEntityIdentifierValue();
+        return $this;
+    }
+
+    /**
      * Sets parent id field.
      *
      * @param int|null $value

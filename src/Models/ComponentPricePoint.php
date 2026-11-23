@@ -112,6 +112,16 @@ class ComponentPricePoint implements \JsonSerializable
     private $overagePricingScheme;
 
     /**
+     * @var ComponentPrice[]|null
+     */
+    private $secondaryPrices;
+
+    /**
+     * @var string|null
+     */
+    private $secondaryPricingScheme;
+
+    /**
      * @var bool|null
      */
     private $renewPrepaidAllocation;
@@ -588,6 +598,53 @@ class ComponentPricePoint implements \JsonSerializable
     }
 
     /**
+     * Returns Secondary Prices.
+     * Returned only for hybrid price points. An array of secondary price brackets. Hybrid price points
+     * never return `overage_prices` or `overage_pricing_scheme`.
+     *
+     * @return ComponentPrice[]|null
+     */
+    public function getSecondaryPrices(): ?array
+    {
+        return $this->secondaryPrices;
+    }
+
+    /**
+     * Sets Secondary Prices.
+     * Returned only for hybrid price points. An array of secondary price brackets. Hybrid price points
+     * never return `overage_prices` or `overage_pricing_scheme`.
+     *
+     * @maps secondary_prices
+     *
+     * @param ComponentPrice[]|null $secondaryPrices
+     */
+    public function setSecondaryPrices(?array $secondaryPrices): void
+    {
+        $this->secondaryPrices = $secondaryPrices;
+    }
+
+    /**
+     * Returns Secondary Pricing Scheme.
+     * Returned only for hybrid price points. Pricing scheme for the secondary pricing model.
+     */
+    public function getSecondaryPricingScheme(): ?string
+    {
+        return $this->secondaryPricingScheme;
+    }
+
+    /**
+     * Sets Secondary Pricing Scheme.
+     * Returned only for hybrid price points. Pricing scheme for the secondary pricing model.
+     *
+     * @maps secondary_pricing_scheme
+     * @factory \AdvancedBillingLib\Models\PricingScheme::checkValue
+     */
+    public function setSecondaryPricingScheme(?string $secondaryPricingScheme): void
+    {
+        $this->secondaryPricingScheme = $secondaryPricingScheme;
+    }
+
+    /**
      * Returns Renew Prepaid Allocation.
      * Applicable only to prepaid usage components. Boolean which controls whether or not the allocated
      * quantity should be renewed at the beginning of each period.
@@ -731,6 +788,8 @@ class ComponentPricePoint implements \JsonSerializable
                 'currencyPrices' => $this->currencyPrices,
                 'overagePrices' => $this->overagePrices,
                 'overagePricingScheme' => $this->overagePricingScheme,
+                'secondaryPrices' => $this->secondaryPrices,
+                'secondaryPricingScheme' => $this->secondaryPricingScheme,
                 'renewPrepaidAllocation' => $this->renewPrepaidAllocation,
                 'rolloverPrepaidRemainder' => $this->rolloverPrepaidRemainder,
                 'expirationInterval' => $this->getExpirationInterval(),
@@ -836,6 +895,12 @@ class ComponentPricePoint implements \JsonSerializable
         }
         if (isset($this->overagePricingScheme)) {
             $json['overage_pricing_scheme']     = PricingScheme::checkValue($this->overagePricingScheme);
+        }
+        if (isset($this->secondaryPrices)) {
+            $json['secondary_prices']           = $this->secondaryPrices;
+        }
+        if (isset($this->secondaryPricingScheme)) {
+            $json['secondary_pricing_scheme']   = PricingScheme::checkValue($this->secondaryPricingScheme);
         }
         if (isset($this->renewPrepaidAllocation)) {
             $json['renew_prepaid_allocation']   = $this->renewPrepaidAllocation;
